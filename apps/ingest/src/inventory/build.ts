@@ -1,3 +1,4 @@
+import { z } from 'zod'
 import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { WikiClient } from '../wiki/client.js'
@@ -102,12 +103,31 @@ export async function buildInventory(
     .sort()
   log(`  ${byCategory.size} categories, ${candidates.length} worth testing as encounters\n`)
 
+  /** Snapshot-first `infobox_activity` lookup, so re-runs cost no requests. */
+  const activityCache = new Map<string, boolean>()
+  const activitySnapshots = new Set(await listSnapshots('activity'))
+  const isActivityCached = async (page: string): Promise<boolean> => {
+    const cached = activityCache.get(page)
+    if (cached !== undefined) return cached
+    const slug = slugify(page)
+    let activity: boolean
+    if (activitySnapshots.has(slug)) {
+      const parsed = BucketResponseSchema.parse((await readSnapshot('activity', slug)).body)
+      activity = (parsed.bucket?.length ?? 0) > 0
+    } else {
+      const fetched = await client.isActivity(page)
+      await writeSnapshot('activity', slug, fetched.record)
+      activitySnapshots.add(slug)
+      activity = fetched.activity
+    }
+    activityCache.set(page, activity)
+    return activity
+  }
+
   log('Testing candidates for an infobox_activity row')
   const encounters = new Set<string>()
   for (const candidate of candidates) {
-    const { activity, record } = await client.isActivity(candidate)
-    await writeSnapshot('activity', slugify(candidate), record)
-    if (activity) {
+    if (await isActivityCached(candidate)) {
       encounters.add(candidate)
       log(`  encounter: ${candidate}`)
     }
@@ -189,6 +209,24 @@ export async function buildInventory(
       if (encounters.has(name)) return name
     }
     return null
+  }
+
+  /**
+   * Every link on each tier-E page, for the sibling pass below. The reward
+   * scan already fetched this wikitext, so this costs no extra requests.
+   */
+  const allLinks = new Map<string, Set<string>>()
+  for (const title of [...tierE, ...encounterTitles]) {
+    const slug = slugify(title)
+    try {
+      const snapshot = await readSnapshot('wikitext', slug)
+      const parsed = z
+        .object({ parse: z.object({ wikitext: z.string() }).passthrough() })
+        .safeParse(snapshot.body)
+      if (parsed.success) allLinks.set(title, new Set(extractLinks(parsed.data.parse.wikitext)))
+    } catch {
+      // No wikitext snapshot; the page simply contributes no links.
+    }
   }
 
   const bosses: BossEntry[] = []
@@ -278,6 +316,51 @@ export async function buildInventory(
       entry.slug
     )
   }
+
+  // Sibling pass. A page that found nothing of its own may still link a page
+  // that did resolve to a reward container — Blood, Blue and Eclipse Moon all
+  // link Moons of Peril, which already resolved to the Lunar Chest. Their
+  // shared category is the dungeon they stand in, not the activity, so neither
+  // the category nor the reward-link scan reaches them.
+  const rewardSourceByTitle = new Map<string, string>()
+  for (const boss of bosses) {
+    if (boss.classification === 'reward-page') rewardSourceByTitle.set(boss.title, boss.lootSourceId)
+  }
+
+  let adopted = 0
+  for (const boss of bosses) {
+    if (boss.classification !== 'no-loot-data') continue
+    const links = allLinks.get(boss.title)
+    if (links === undefined) continue
+
+    let target: string | undefined
+    for (const link of links) {
+      const sourceId = rewardSourceByTitle.get(link)
+      if (sourceId === undefined) continue
+      // The link must be reciprocal. A one-way mention is not membership:
+      // Tarn mentions Barrows without belonging to it.
+      if (allLinks.get(link)?.has(boss.title) !== true) continue
+      // And the linked page must be the activity itself, not a sibling boss.
+      // Xamphur and Vasa Nistirio cross-reference each other as Kourend
+      // characters without sharing a loot source.
+      if (!(await isActivityCached(link))) continue
+      target = sourceId
+      break
+    }
+    if (target === undefined) continue
+
+    const previous = sources.get(boss.lootSourceId)
+    if (previous !== undefined) {
+      previous.bosses = previous.bosses.filter((slug) => slug !== boss.slug)
+      if (previous.bosses.length === 0) sources.delete(boss.lootSourceId)
+    }
+    boss.classification = 'reward-page'
+    boss.lootSourceId = target
+    sources.get(target)?.bosses.push(boss.slug)
+    adopted += 1
+    log(`  ${boss.title} adopts the loot source of a page it links: ${target}`)
+  }
+  if (adopted > 0) log(`  ${adopted} pages re-homed by link\n`)
 
   const inventory = InventorySchema.parse({
     inventoryVersion: INVENTORY_VERSION,

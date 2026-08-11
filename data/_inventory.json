@@ -1,6 +1,6 @@
 {
   "inventoryVersion": 1,
-  "generatedAt": "2026-08-11T09:37:30.135Z",
+  "generatedAt": "2026-08-11T10:19:55.654Z",
   "category": "Category:Bosses",
   "bosses": [
     {
@@ -239,8 +239,8 @@
       "title": "Blood Moon",
       "pageid": 459424,
       "revid": 15292459,
-      "lootSourceId": "blood-moon",
-      "classification": "no-loot-data",
+      "lootSourceId": "lunar-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
       "encounter": null
@@ -250,8 +250,8 @@
       "title": "Blue Moon",
       "pageid": 459416,
       "revid": 15292452,
-      "lootSourceId": "blue-moon",
-      "classification": "no-loot-data",
+      "lootSourceId": "lunar-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
       "encounter": null
@@ -668,8 +668,8 @@
       "title": "Eclipse Moon",
       "pageid": 459421,
       "revid": 15292454,
-      "lootSourceId": "eclipse-moon",
-      "classification": "no-loot-data",
+      "lootSourceId": "lunar-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
       "encounter": null
@@ -2108,30 +2108,6 @@
       ]
     },
     {
-      "id": "blood-moon",
-      "title": "Blood Moon",
-      "dropsPage": "Blood Moon",
-      "tier": "E",
-      "rowCount": 0,
-      "include": false,
-      "excludeReason": "no drop rows, no encounter, no reward page",
-      "bosses": [
-        "blood-moon"
-      ]
-    },
-    {
-      "id": "blue-moon",
-      "title": "Blue Moon",
-      "dropsPage": "Blue Moon",
-      "tier": "E",
-      "rowCount": 0,
-      "include": false,
-      "excludeReason": "no drop rows, no encounter, no reward page",
-      "bosses": [
-        "blue-moon"
-      ]
-    },
-    {
       "id": "boss-kill-count",
       "title": "Boss kill count",
       "dropsPage": "Boss kill count",
@@ -2536,18 +2512,6 @@
       ]
     },
     {
-      "id": "eclipse-moon",
-      "title": "Eclipse Moon",
-      "dropsPage": "Eclipse Moon",
-      "tier": "E",
-      "rowCount": 0,
-      "include": false,
-      "excludeReason": "no drop rows, no encounter, no reward page",
-      "bosses": [
-        "eclipse-moon"
-      ]
-    },
-    {
       "id": "eldric-the-ice-king",
       "title": "Eldric the Ice King",
       "dropsPage": "Eldric the Ice King",
@@ -2918,7 +2882,10 @@
       "include": true,
       "excludeReason": null,
       "bosses": [
-        "moons-of-peril"
+        "moons-of-peril",
+        "blood-moon",
+        "blue-moon",
+        "eclipse-moon"
       ]
     },
     {

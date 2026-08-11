@@ -1,0 +1,27 @@
+{
+  "watchlistVersion": 1,
+  "note": "Loot sources whose real mechanic is not visible in their drop rows. A watchlisted source fails the not_on_watchlist validation check and is forced to needs_review however cleanly it parses, because parsing cleanly proves nothing about a mechanic the rows do not encode. Remove an entry only when the mechanic is modelled and the simulation has been checked against the wiki's own figures.",
+  "entries": [
+    {
+      "lootSourceId": "lunar-chest",
+      "title": "Lunar Chest",
+      "mechanic": "without_replacement",
+      "detail": "Uniques are drawn without replacement across the chest's rolls, so the same unique cannot come up twice in one chest. The drop rows carry per-item rarities only and cannot express that. Model as a weighted table with rolls > 1 and withoutReplacement: true.",
+      "blockedBy": ["Blood Moon", "Blue Moon", "Eclipse Moon", "Moons of Peril"]
+    },
+    {
+      "lootSourceId": "reward-cart",
+      "title": "Reward Cart",
+      "mechanic": "point_scaled",
+      "detail": "Rolls scale with points earned during the activity rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the tempoross_points formula.",
+      "blockedBy": ["Tempoross"]
+    },
+    {
+      "lootSourceId": "reward-pool",
+      "title": "Reward pool",
+      "mechanic": "point_scaled",
+      "detail": "Rolls scale with points earned during the activity rather than being a fixed count per kill. Needs the wintertodt_points formula.",
+      "blockedBy": ["Wintertodt"]
+    }
+  ]
+}

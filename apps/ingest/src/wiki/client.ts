@@ -290,6 +290,40 @@ export class WikiClient {
     return { activity: (parsed.bucket?.length ?? 0) > 0, record }
   }
 
+  /**
+   * `infobox_monster` rows for a page. A page with a real combat level is a
+   * fightable monster, so finding one on a page we excluded for having no drop
+   * data is a signal that the exclusion needs a human look.
+   */
+  async monsterInfo(pageName: string): Promise<{
+    rows: { name: string | null; combatLevel: number | null; hitpoints: number | null }[]
+    record: RequestRecord
+  }> {
+    const escaped = pageName.replace(/'/g, "\\'")
+    const record = await this.request({
+      action: 'bucket',
+      query:
+        `bucket('infobox_monster')` +
+        `.select('page_name','name','combat_level','hitpoints')` +
+        `.where('page_name','${escaped}').limit(50).run()`,
+    })
+    const parsed = BucketResponseSchema.parse(record.body)
+    const rowSchema = z.object({
+      name: z.string().nullable().optional(),
+      combat_level: z.number().nullable().optional(),
+      hitpoints: z.number().nullable().optional(),
+    })
+    const rows = (parsed.bucket ?? []).map((raw) => {
+      const row = rowSchema.parse(raw)
+      return {
+        name: row.name ?? null,
+        combatLevel: row.combat_level ?? null,
+        hitpoints: row.hitpoints ?? null,
+      }
+    })
+    return { rows, record }
+  }
+
   /** Bucket names currently defined on the wiki. */
   async listBuckets(): Promise<{ names: string[]; record: RequestRecord }> {
     const record = await this.request({

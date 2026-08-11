@@ -63,7 +63,12 @@ describe('Brutus expected value', () => {
   it('converges on the analytic figure', () => {
     const analytic = expectedValue(brutus, members, { prices: brutusPrices })
     const observed = simulate(brutus, KILLS, members, SEED, { prices: brutusPrices })
-    expect(observed.gpPerKill).toBeCloseTo(analytic.gpPerKill, 0)
+    // The bottomless milk bucket is 9000 gp at 4/150, which dominates the
+    // variance: one standard error over a million kills is around 1.5 gp. A
+    // relative band is the honest tolerance here — an absolute ±0.5 would fail
+    // on sampling noise rather than on a defect.
+    const relative = Math.abs(observed.gpPerKill - analytic.gpPerKill) / analytic.gpPerKill
+    expect(relative).toBeLessThan(0.01)
   })
 
   it('is reproducible for a given seed', () => {
@@ -80,10 +85,10 @@ describe('Brutus members vs F2P', () => {
 
   it('gives members the seed and noted-steak slots and F2P the coin slot', () => {
     for (const itemId of [
-      BRUTUS_ITEM_IDS.guamSeed,
-      BRUTUS_ITEM_IDS.ranarrSeed,
-      BRUTUS_ITEM_IDS.snapdragonSeed,
-      BRUTUS_ITEM_IDS.clueScrollHard,
+      BRUTUS_ITEM_IDS.potatoSeed,
+      BRUTUS_ITEM_IDS.acorn,
+      BRUTUS_ITEM_IDS.clueScrollEasy,
+      BRUTUS_ITEM_IDS.beef,
     ]) {
       expect(dropCount(membersRun.drops, itemId)).toBeGreaterThan(0)
       expect(dropCount(f2pRun.drops, itemId)).toBe(0)
@@ -95,7 +100,7 @@ describe('Brutus members vs F2P', () => {
   it('keeps the shared slots at the same rate in both variants', () => {
     // Both variants have denominator 81, so a weight-15 slot is 15/81 either way,
     // discounted only by the 1/150 preroll.
-    const shared = [BRUTUS_ITEM_IDS.airRune, BRUTUS_ITEM_IDS.coal, BRUTUS_ITEM_IDS.ironOre]
+    const shared = [BRUTUS_ITEM_IDS.airRune, BRUTUS_ITEM_IDS.cowhide, BRUTUS_ITEM_IDS.logs]
     for (const itemId of shared) {
       const m = dropCount(membersRun.drops, itemId) / membersRun.kills
       const f = dropCount(f2pRun.drops, itemId) / f2pRun.kills
@@ -126,22 +131,30 @@ describe('Brutus members vs F2P', () => {
 describe('Brutus preroll', () => {
   it('short-circuits the main table but never the tertiary or 100% tables', () => {
     const run = simulate(brutus, 200_000, members, SEED, { logLimit: 200_000 })
+    const prerollItems = new Set<number>([
+      BRUTUS_ITEM_IDS.mooleta,
+      BRUTUS_ITEM_IDS.bottomlessMilkBucket,
+      BRUTUS_ITEM_IDS.cowSlippers,
+    ])
     const killsWithHorn = run.log.filter((kill) =>
-      kill.drops.some((drop) => drop.itemId === BRUTUS_ITEM_IDS.bullHorn)
+      kill.drops.some((drop) => prerollItems.has(drop.itemId))
     )
     expect(killsWithHorn.length).toBeGreaterThan(0)
 
     const mainItems = new Set<number>([
+      BRUTUS_ITEM_IDS.ironFullHelm,
       BRUTUS_ITEM_IDS.ironPlatebody,
-      BRUTUS_ITEM_IDS.steelFullHelm,
+      BRUTUS_ITEM_IDS.ironPlatelegs,
+      BRUTUS_ITEM_IDS.ironPlateskirt,
+      BRUTUS_ITEM_IDS.ironArrow,
       BRUTUS_ITEM_IDS.airRune,
-      BRUTUS_ITEM_IDS.fireRune,
-      BRUTUS_ITEM_IDS.deathRune,
-      BRUTUS_ITEM_IDS.guamSeed,
-      BRUTUS_ITEM_IDS.ranarrSeed,
-      BRUTUS_ITEM_IDS.snapdragonSeed,
-      BRUTUS_ITEM_IDS.coal,
-      BRUTUS_ITEM_IDS.ironOre,
+      BRUTUS_ITEM_IDS.mindRune,
+      BRUTUS_ITEM_IDS.chaosRune,
+      BRUTUS_ITEM_IDS.potatoSeed,
+      BRUTUS_ITEM_IDS.acorn,
+      BRUTUS_ITEM_IDS.cowhide,
+      BRUTUS_ITEM_IDS.oakLogs,
+      BRUTUS_ITEM_IDS.logs,
     ])
     for (const kill of killsWithHorn) {
       expect(kill.drops.some((drop) => mainItems.has(drop.itemId))).toBe(false)
@@ -150,7 +163,9 @@ describe('Brutus preroll', () => {
     }
     // Tertiary drops still land on preroll kills across 200k samples.
     expect(
-      killsWithHorn.some((kill) => kill.drops.some((drop) => drop.itemId === BRUTUS_ITEM_IDS.rawBeef))
+      killsWithHorn.some((kill) =>
+        kill.drops.some((drop) => drop.itemId === BRUTUS_ITEM_IDS.clueScrollBeginner)
+      )
     ).toBe(true)
   })
 })

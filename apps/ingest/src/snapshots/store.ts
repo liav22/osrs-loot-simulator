@@ -26,6 +26,7 @@ export type SnapshotKind =
   | 'categories'
   | 'activity'
   | 'wikitext'
+  | 'monster'
 
 /**
  * Page title to filename-safe key. The original title is always stored inside

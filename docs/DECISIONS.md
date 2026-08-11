@@ -241,3 +241,46 @@ columns, section 7 still hard-coded 588.65, and section 16's Phase 2 gate still 
 "at least 15 bosses at `status: 'verified'`" — pages, not loot sources. The
 reclassification above was carried out against direct instructions rather than against
 plan text, and the gate is reported as a measured number rather than as pass/fail.
+
+## Mechanics watchlist and the Brutus fixture rebuild
+
+- **`data/mechanics-watchlist.json` + the `not_on_watchlist` check.** Some loot sources
+  have a mechanic that is simply not present in their drop rows. Parsing them cleanly
+  proves nothing, because the rows never encoded the thing that matters. The check fails
+  for any listed source, forcing `needs_review` however well everything else validates.
+  Seeded with `lunar-chest` (uniques drawn without replacement), `reward-cart` and
+  `reward-pool` (rolls scale with activity points). `not_on_watchlist` was added to
+  `VALIDATION_CHECKS` in the loot model.
+- **Exclusion audit: 37 of the 42 `no-loot-data` pages carry a real combat level.** Only
+  five are genuinely not monsters — `Boss`, `Boss kill count`, `Dagannoth Kings`,
+  `Royal Titans`, `Wrathmaw` and `Arzinian Being of Bordanzan`. The rest are mostly quest
+  bosses that really do drop nothing. Suspicious cases are listed in the session report;
+  `Sol Heredit` and `Penance Queen` are the strongest candidates for having loot the
+  pipeline has not found.
+- **Encounter membership can also come from a reciprocal link to an activity.** Blood,
+  Blue and Eclipse Moon are categorised under `Neypotzli`, which is not an activity, so
+  neither the category rule nor the reward-link scan reached them, and all three were
+  wrongly excluded as `no-loot-data`. They each link `Moons of Peril`, which is an
+  activity and already resolved to `Lunar Chest`. Three constraints are all required to
+  avoid false positives: the link must resolve to a reward-page source, it must be
+  reciprocal (Tarn mentions Barrows one-way), and the target must itself be an activity
+  (Xamphur and Vasa Nistirio cross-reference each other as Kourend characters). With all
+  three, exactly the three Moons are re-homed.
+- **The Brutus fixture now matches the snapshot.** Pre-roll is 10/150 across three
+  entries, two members-only, not a single 1/150; the members' steak slot is three
+  unnoted steaks, not ten noted; tertiary is beginner clue 1/15, easy clue 1/40 (m) and
+  beef 1/1,000 (m). Item ids come from `bucket('item_id')`.
+- **`bucket('item_id')` does not resolve every dropped item.** It caps at 5,000 rows per
+  query and needs offset paging, and clue scrolls return the literal string `"N/A"`
+  because one page covers many ids. The fixture records easy clues as id 0 to mark them
+  unresolved rather than inventing one. `items_known` needs a rule for this before it can
+  be meaningful.
+- **The wiki's 597.57 cannot be recomputed from bucket data.** Summing rarity times the
+  snapshot's own `Drop Value` field over Brutus' rows gives roughly 268 gp/kill, not
+  597.57. Whatever `Template:Average drop value` does, `ev_matches` cannot reproduce it
+  from `dropsline`; it has to read the rendered figure and compare, and the fixture's
+  prices remain invented and tuned to match it.
+- **The Brutus convergence test uses a relative tolerance.** The bottomless milk bucket
+  is 9,000 gp at 4/150 and dominates the variance — one standard error across a million
+  kills is about 1.5 gp, so the previous absolute `toBeCloseTo(…, 0)` (±0.5) would fail
+  on sampling noise rather than on a defect. It now asserts agreement within 1%.

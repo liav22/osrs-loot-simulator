@@ -17,6 +17,7 @@ import {
 import { TIERS, TIER_LABELS, classify, type Tier, type TriageResult } from './triage/classify.js'
 import { renderTriageMarkdown } from './triage/report.js'
 import { INVENTORY_PATH, buildInventory } from './inventory/build.js'
+import { auditExclusions } from './inventory/audit.js'
 import {
   CLASSIFICATIONS,
   INCLUDED_CLASSIFICATIONS,
@@ -241,13 +242,27 @@ async function main(): Promise<void> {
       )
       return
     }
+    case 'audit-exclusions': {
+      const rows = await auditExclusions(client, log)
+      for (const row of rows) {
+        log(
+          `${row.suspicious ? '  !! ' : '     '}${row.title.padEnd(32)} ` +
+            `monster=${row.isMonster ? 'yes' : 'no '} ` +
+            `combat=${String(row.combatLevel ?? '—').padStart(4)} ` +
+            `hp=${String(row.hitpoints ?? '—').padStart(5)}`
+        )
+      }
+      const suspicious = rows.filter((row) => row.suspicious)
+      log(`\n${suspicious.length} of ${rows.length} exclusions carry a real combat level.`)
+      return
+    }
     case 'triage':
       await triage()
       return
     default:
-          log(
-        'Usage: ingest <verify-schema | fetch --all | fetch --page <Title> | sources | triage> ' +
-          '[--delay ms]'
+      log(
+        'Usage: ingest <verify-schema | fetch --all | fetch --page <Title> | sources | ' +
+          'audit-exclusions | triage> [--delay ms]'
       )
       process.exitCode = 1
   }

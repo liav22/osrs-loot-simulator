@@ -330,6 +330,14 @@ export const VALIDATION_CHECKS = [
   'qty_sane',
   'ev_matches',
   'items_known',
+  /**
+   * Fails when a loot source appears in `data/mechanics-watchlist.json`.
+   * A watchlisted source has a mechanic the parser cannot see in the drop rows
+   * — point scaling, uniques drawn without replacement — so parsing it
+   * cleanly proves nothing. The check exists to stop a plausible-looking
+   * result from being marked `verified`.
+   */
+  'not_on_watchlist',
 ] as const
 
 export const ValidationCheckSchema = z.enum(VALIDATION_CHECKS)
