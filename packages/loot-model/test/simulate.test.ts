@@ -14,7 +14,13 @@ import { ctxWith, dropCount, dropQuantity, makeBoss } from './helpers'
 const ctx = ctxWith()
 
 function item(itemId: number, name: string, qty = 1) {
-  return { kind: 'item', itemId, name, qty: { kind: 'exact', n: qty } } as const
+  return {
+    kind: 'item',
+    itemId,
+    itemKey: `item-${itemId}`,
+    name,
+    qty: { kind: 'exact', n: qty },
+  } as const
 }
 
 describe('simulate', () => {
@@ -378,13 +384,20 @@ describe('simulate', () => {
           mode: 'always',
           entries: [
             {
-              node: { kind: 'item', itemId: 1, name: 'Ranged', qty: { kind: 'range', min: 2, max: 4 } },
+              node: {
+                kind: 'item',
+                itemId: 1,
+                itemKey: 'item-1',
+                name: 'Ranged',
+                qty: { kind: 'range', min: 2, max: 4 },
+              },
               rate: { kind: 'always' },
             },
             {
               node: {
                 kind: 'item',
                 itemId: 2,
+                itemKey: 'item-2',
                 name: 'Chosen',
                 qty: { kind: 'choice', values: [10, 20] },
               },

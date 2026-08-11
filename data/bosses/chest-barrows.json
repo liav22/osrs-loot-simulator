@@ -1,0 +1,656 @@
+{
+  "slug": "chest-barrows",
+  "name": "Chest (Barrows)",
+  "aliases": [],
+  "wikiPage": "Chest (Barrows)",
+  "wikiRevId": 15199256,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "chest-barrows:0:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4708,
+            "itemKey": "ahrim-s-hood",
+            "name": "Ahrim's hood",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4712,
+            "itemKey": "ahrim-s-robetop",
+            "name": "Ahrim's robetop",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4714,
+            "itemKey": "ahrim-s-robeskirt",
+            "name": "Ahrim's robeskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4710,
+            "itemKey": "ahrim-s-staff",
+            "name": "Ahrim's staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4716,
+            "itemKey": "dharok-s-helm",
+            "name": "Dharok's helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4720,
+            "itemKey": "dharok-s-platebody",
+            "name": "Dharok's platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4722,
+            "itemKey": "dharok-s-platelegs",
+            "name": "Dharok's platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4718,
+            "itemKey": "dharok-s-greataxe",
+            "name": "Dharok's greataxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4724,
+            "itemKey": "guthan-s-helm",
+            "name": "Guthan's helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4728,
+            "itemKey": "guthan-s-platebody",
+            "name": "Guthan's platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4730,
+            "itemKey": "guthan-s-chainskirt",
+            "name": "Guthan's chainskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4726,
+            "itemKey": "guthan-s-warspear",
+            "name": "Guthan's warspear",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4732,
+            "itemKey": "karil-s-coif",
+            "name": "Karil's coif",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4736,
+            "itemKey": "karil-s-leathertop",
+            "name": "Karil's leathertop",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4738,
+            "itemKey": "karil-s-leatherskirt",
+            "name": "Karil's leatherskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4734,
+            "itemKey": "karil-s-crossbow",
+            "name": "Karil's crossbow",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4745,
+            "itemKey": "torag-s-helm",
+            "name": "Torag's helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4749,
+            "itemKey": "torag-s-platebody",
+            "name": "Torag's platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4751,
+            "itemKey": "torag-s-platelegs",
+            "name": "Torag's platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4747,
+            "itemKey": "torag-s-hammers",
+            "name": "Torag's hammers",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4753,
+            "itemKey": "verac-s-helm",
+            "name": "Verac's helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4757,
+            "itemKey": "verac-s-brassard",
+            "name": "Verac's brassard",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4759,
+            "itemKey": "verac-s-plateskirt",
+            "name": "Verac's plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4755,
+            "itemKey": "verac-s-flail",
+            "name": "Verac's flail",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2448
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "chest-barrows:1:main-table",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 1012,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 774
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 379
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 558,
+            "itemKey": "mind-rune",
+            "name": "Mind rune",
+            "qty": {
+              "kind": "range",
+              "min": 253,
+              "max": 336
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 125
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 112,
+              "max": 139
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 125
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 70,
+              "max": 83
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 125
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 37,
+              "max": 43
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 125
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4740,
+            "itemKey": "bolt-rack",
+            "name": "Bolt rack",
+            "qty": {
+              "kind": "range",
+              "min": 35,
+              "max": 40
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 125
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 987,
+            "itemKey": "loop-half-of-key",
+            "name": "Loop half of key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 985,
+            "itemKey": "tooth-half-of-key",
+            "name": "Tooth half of key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Main table"
+    },
+    {
+      "id": "chest-barrows:2:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

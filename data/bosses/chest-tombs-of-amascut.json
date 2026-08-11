@@ -1,0 +1,53 @@
+{
+  "slug": "chest-tombs-of-amascut",
+  "name": "Chest (Tombs of Amascut)",
+  "aliases": [],
+  "wikiPage": "Chest (Tombs of Amascut)",
+  "wikiRevId": 15200303,
+  "variants": [
+    "normal"
+  ],
+  "tables": [],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": false,
+        "detail": "point_scaled: Unique chance scales with raid invocation level and completion points, not with any fixed per-kill rarity — needs the toa_invocation formula. The chest's own dropsline rows are structural leftovers of the raid's point-purchase reward shop, not independent per-row rarities; parsing them as an ordinary weighted table would misrepresent the mechanic entirely regardless of whether the weights happen to reconcile."
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

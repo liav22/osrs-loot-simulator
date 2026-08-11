@@ -1,0 +1,36 @@
+{
+  "allowlistVersion": 1,
+  "note": "Item keys declared to legitimately never resolve to a single item id via bucket('item_id')/bucket('infobox_item'). See apps/ingest/src/items/allowlist.ts. Add an entry only when the page genuinely covers many in-game ids, not because the ingest run hasn't reached it yet.",
+  "entries": [
+    {
+      "itemKey": "clue-scroll-beginner",
+      "title": "Clue scroll (beginner)",
+      "reason": "17 distinct item ids in infobox_item — one per active clue instance, not one shared id, same shape as every other clue tier."
+    },
+    {
+      "itemKey": "clue-scroll-easy",
+      "title": "Clue scroll (easy)",
+      "reason": "169 distinct item ids in infobox_item (bucket('item_id') separately returns [\"N/A\"] for this page) — one per active clue instance, not one shared id."
+    },
+    {
+      "itemKey": "clue-scroll-medium",
+      "title": "Clue scroll (medium)",
+      "reason": "171 distinct item ids in infobox_item — one per active clue instance, not one shared id, same shape as every other clue tier."
+    },
+    {
+      "itemKey": "clue-scroll-hard",
+      "title": "Clue scroll (hard)",
+      "reason": "189 distinct item ids in infobox_item — one per active clue instance, not one shared id, same shape as every other clue tier."
+    },
+    {
+      "itemKey": "clue-scroll-elite",
+      "title": "Clue scroll (elite)",
+      "reason": "125 distinct item ids in infobox_item — one per active clue instance, not one shared id, same shape as every other clue tier."
+    },
+    {
+      "itemKey": "clue-scroll-master",
+      "title": "Clue scroll (master)",
+      "reason": "13 distinct item ids in infobox_item — one per active clue instance, not one shared id, same shape as every other clue tier."
+    }
+  ]
+}

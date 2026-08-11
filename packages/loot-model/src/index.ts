@@ -40,14 +40,14 @@ export {
   type TableMode,
   type ValidationCheck,
   type ValidationResult,
-} from './schema'
+} from './schema.js'
 
 export {
   conditionsHold,
   entryApplies,
   evaluateCondition,
   resolveSimContext,
-} from './conditions'
+} from './conditions.js'
 
 export {
   createFormulaRegistry,
@@ -58,9 +58,9 @@ export {
   UnknownFormulaError,
   type FormulaFn,
   type FormulaRegistry,
-} from './formulas'
+} from './formulas.js'
 
-export { mulberry32, type Rng } from './rng'
+export { mulberry32, type Rng } from './rng.js'
 
 export {
   CircularTableRefError,
@@ -72,7 +72,7 @@ export {
   type CompiledRolls,
   type CompiledTable,
   type CompileOptions,
-} from './compile'
+} from './compile.js'
 
 export {
   DEFAULT_LOG_LIMIT,
@@ -83,7 +83,7 @@ export {
   type PriceLookup,
   type SimOptions,
   type SimResult,
-} from './simulate'
+} from './simulate.js'
 
 export {
   expectedValue,
@@ -92,4 +92,4 @@ export {
   type ExpectedItem,
   type ExpectedValueOptions,
   type ExpectedValueResult,
-} from './expected-value'
+} from './expected-value.js'

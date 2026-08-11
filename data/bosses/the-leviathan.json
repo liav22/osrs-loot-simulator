@@ -1,0 +1,705 @@
+{
+  "slug": "the-leviathan",
+  "name": "The Leviathan",
+  "aliases": [],
+  "wikiPage": "The Leviathan",
+  "wikiRevId": 15292448,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "the-leviathan:0:uniques",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28283,
+            "itemKey": "venator-vestige",
+            "name": "Venator vestige",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 768
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28276,
+            "itemKey": "chromium-ingot",
+            "name": "Chromium ingot",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 768
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28325,
+            "itemKey": "leviathan-s-lure",
+            "name": "Leviathan's lure",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 768
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26241,
+            "itemKey": "virtus-mask",
+            "name": "Virtus mask",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2304
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26243,
+            "itemKey": "virtus-robe-top",
+            "name": "Virtus robe top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2304
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26245,
+            "itemKey": "virtus-robe-bottom",
+            "name": "Virtus robe bottom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2304
+          }
+        }
+      ],
+      "notes": "Uniques"
+    },
+    {
+      "id": "the-leviathan:1:secondary-uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28332,
+            "itemKey": "scarred-tablet",
+            "name": "Scarred tablet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 25.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28334,
+            "itemKey": "awakener-s-orb",
+            "name": "Awakener's orb",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 53.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28274,
+            "itemKey": "smoke-quartz",
+            "name": "Smoke quartz",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 206
+          }
+        }
+      ],
+      "notes": "Secondary uniques"
+    },
+    {
+      "id": "the-leviathan:2:supplies",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 5.4,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 139,
+            "itemKey": "prayer-potion-3",
+            "name": "Prayer potion(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 171,
+            "itemKey": "ranging-potion-2",
+            "name": "Ranging potion(2)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 397,
+            "itemKey": "sea-turtle",
+            "name": "Sea turtle",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Supplies"
+    },
+    {
+      "id": "the-leviathan:3:resources-runes-and-ammunition",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 100,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "exact",
+              "n": 15002250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 440,
+            "itemKey": "iron-ore",
+            "name": "Iron ore",
+            "qty": {
+              "kind": "exact",
+              "n": 5785
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 442,
+            "itemKey": "silver-ore",
+            "name": "Silver ore",
+            "qty": {
+              "kind": "exact",
+              "n": 5785
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "exact",
+              "n": 195292
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 67101
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 5785
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 2740
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1607,
+            "itemKey": "sapphire",
+            "name": "Sapphire",
+            "qty": {
+              "kind": "exact",
+              "n": 2538
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1605,
+            "itemKey": "emerald",
+            "name": "Emerald",
+            "qty": {
+              "kind": "exact",
+              "n": 2538
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1603,
+            "itemKey": "ruby",
+            "name": "Ruby",
+            "qty": {
+              "kind": "exact",
+              "n": 2538
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "exact",
+              "n": 3756
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1617,
+            "itemKey": "uncut-diamond",
+            "name": "Uncut diamond",
+            "qty": {
+              "kind": "exact",
+              "n": 3756
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19582,
+            "itemKey": "dragon-javelin-tips",
+            "name": "Dragon javelin tips",
+            "qty": {
+              "kind": "exact",
+              "n": 5481
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21930,
+            "itemKey": "dragon-bolts-unf",
+            "name": "Dragon bolts (unf)",
+            "qty": {
+              "kind": "exact",
+              "n": 150225
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9194,
+            "itemKey": "onyx-bolt-tips",
+            "name": "Onyx bolt tips",
+            "qty": {
+              "kind": "exact",
+              "n": 90135
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 389,
+            "itemKey": "raw-manta-ray",
+            "name": "Raw manta ray",
+            "qty": {
+              "kind": "exact",
+              "n": 180270
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13441,
+            "itemKey": "anglerfish",
+            "name": "Anglerfish",
+            "qty": {
+              "kind": "exact",
+              "n": 46
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 882,
+            "itemKey": "bronze-arrow",
+            "name": "Bronze arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 6394
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 888,
+            "itemKey": "mithril-arrow",
+            "name": "Mithril arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 6394
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 890,
+            "itemKey": "adamant-arrow",
+            "name": "Adamant arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 6394
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 5481
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 559,
+            "itemKey": "body-rune",
+            "name": "Body rune",
+            "qty": {
+              "kind": "exact",
+              "n": 180270
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "exact",
+              "n": 180270
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4697,
+            "itemKey": "smoke-rune",
+            "name": "Smoke rune",
+            "qty": {
+              "kind": "exact",
+              "n": 300450
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 566,
+            "itemKey": "soul-rune",
+            "name": "Soul rune",
+            "qty": {
+              "kind": "exact",
+              "n": 600900
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Resources / Runes and ammunition"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

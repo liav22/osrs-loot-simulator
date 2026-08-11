@@ -14,15 +14,15 @@ This is triage, not parsing. Nothing here produces a canonical `Table`, `Node` o
 
 A boss page and a loot source are different things. Six Barrows brothers share one chest; the Chambers of Xeric bosses share one raid reward. The mapping in `data/_inventory.json` is many-to-one, and everything below counts **loot sources**.
 
-**172 boss pages resolve to 145 loot sources, of which 101 are in scope.**
+**172 boss pages resolve to 142 loot sources, of which 102 are in scope.**
 
 | Classification | Pages | In scope | Meaning |
 |---|---:|:-:|---|
 | `own-table` | 64 | yes | the page carries its own main weighted table |
-| `reward-page` | 24 | yes | part of an encounter whose drops live on a separate reward page |
-| `trivial` | 30 | yes | its whole table is a handful of `Always` rows — complete as it stands |
-| `component` | 12 | — | part of an encounter with no drop rows anywhere; rewards are point-based |
-| `no-loot-data` | 42 | — | no drop rows, no encounter, no reward page — hub and meta pages |
+| `reward-page` | 40 | yes | part of an encounter whose drops live on a separate reward page |
+| `trivial` | 28 | yes | its whole table is a handful of `Always` rows — complete as it stands |
+| `component` | 6 | — | part of an encounter with no drop rows anywhere; rewards are point-based |
+| `no-loot-data` | 34 | — | no drop rows, no encounter, no reward page — hub and meta pages |
 
 A shared category only counts as an encounter when the page of the same name carries an `infobox_activity` row. That is what separates Chambers of Xeric from a category like "Content released in 2007" or a quest name — both of which are also shared by several boss pages, but whose members own their loot outright.
 
@@ -32,8 +32,9 @@ A shared category only counts as an encounter when the page of the same name car
 |---|---|---:|:-:|
 | Chest (Barrows) | Chest (Barrows) | 9 | yes |
 | Chambers of Xeric | Ancient chest | 7 | yes |
-| Theatre of Blood | Theatre of Blood | 6 | — |
-| Tombs of Amascut | Tombs of Amascut | 6 | — |
+| Tombs of Amascut | Chest (Tombs of Amascut) | 6 | yes |
+| Theatre of Blood | Monumental chest | 6 | yes |
+| Lunar Chest | Lunar Chest | 4 | yes |
 | Grotesque Guardians | Grotesque Guardians | 3 | yes |
 | The Gauntlet | Reward Chest (The Gauntlet) | 2 | yes |
 
@@ -41,12 +42,12 @@ A shared category only counts as an encounter when the page of the same name car
 
 | Tier | Sources | Share | Meaning | Lands in |
 |---|---:|---:|---|---|
-| **A** | 25 | 17.2% | clean — main table reconciles, no markers, no RDT | Phase 2 parser |
+| **A** | 26 | 18.3% | clean — main table reconciles, no markers, no RDT | Phase 2 parser |
 | **B** | 1 | 0.7% | variant split — reconciles only after (m)/(f) conditions | Phase 2 parser + conditions |
-| **C** | 26 | 17.9% | shared tables — reaches the rare drop table family | Phase 3 shared tables |
-| **D** | 18 | 12.4% | needs review — main table overflows its denominator, or rarities are not fractions | Phase 5 review/override |
-| **E** | 75 | 51.7% | no main table — zero rows, or only Always/one-off rows; the real table is elsewhere | Phase 5 override |
-| | **145** | | | |
+| **C** | 26 | 18.3% | shared tables — reaches the rare drop table family | Phase 3 shared tables |
+| **D** | 20 | 14.1% | needs review — main table overflows its denominator, or rarities are not fractions | Phase 5 review/override |
+| **E** | 69 | 48.6% | no main table — zero rows, or only Always/one-off rows; the real table is elsewhere | Phase 5 override |
+| | **142** | | | |
 
 ## How a tier is decided
 
@@ -63,7 +64,7 @@ Two rules do most of the work here, and both matter:
 - **The main table is the denominator group with the most rows**, and it must carry at least 3 rows to count as one. Smaller groups are pre-roll or tertiary drops, which never sum to their denominators and are not judged as if they should.
 - **Summing *under* the denominator is not a defect.** Section 4.3 makes the remainder of a weighted table an implicit `nothing`, so a shortfall is expected. Only *overflowing* the denominator is evidence of a problem — that is the Brutus case, where members and free-to-play rows are interleaved into one rendered table.
 
-## Tier A — clean — main table reconciles, no markers, no RDT (25)
+## Tier A — clean — main table reconciles, no markers, no RDT (26)
 
 | Loot source | Rows | Main den. | Markers | RDT | Notes |
 |---|---:|---:|:-:|:-:|---|
@@ -88,6 +89,7 @@ Two rules do most of the work here, and both matter:
 | The Mimic | 62 | 5750 |  |  | 23/5750, shortfall 5727 is implicit nothing |
 | The Nightmare | 38 | 100 |  |  | 100/100 sums exactly |
 | The Whisperer | 44 | 100 |  |  | 78/100, shortfall 22 is implicit nothing |
+| Theatre of Blood | 52 | 30 |  |  | 30/30 sums exactly; 29 rows declare rolls > 1 |
 | Vardorvis | 45 | 100 |  |  | 78/100, shortfall 22 is implicit nothing |
 | Venenatis | 54 | 126 |  |  | 126/126 sums exactly |
 | Vet'ion | 55 | 126 |  |  | 126/126 sums exactly |
@@ -130,7 +132,7 @@ Two rules do most of the work here, and both matter:
 | Vorkath | 90 | 150 |  | yes | reaches the rare drop table; main table 131/150; 79 rows declare rolls > 1 |
 | Zulrah | 75 | 249 |  | yes | reaches the rare drop table; main table 239/249; 70 rows declare rolls > 1 |
 
-## Tier D — needs review — main table overflows its denominator, or rarities are not fractions (18)
+## Tier D — needs review — main table overflows its denominator, or rarities are not fractions (20)
 
 | Loot source | Rows | Main den. | Markers | RDT | Notes |
 |---|---:|---:|:-:|:-:|---|
@@ -139,6 +141,7 @@ Two rules do most of the work here, and both matter:
 | Chaos Elemental | 70 | 128 |  | yes | main table overflows: 130/128, and a membership split does not fix it (members 130, F2P 130) — two tables probably share this denominator; has rare drop table rows |
 | Chaos Fanatic | 58 | 128 |  | yes | main table overflows: 130/128, and a membership split does not fix it (members 130, F2P 130) — two tables probably share this denominator; has rare drop table rows |
 | Commander Zilyana | 52 | 127 |  | yes | main table overflows: 133.2/127, and a membership split does not fix it (members 133.2, F2P 133.2) — two tables probably share this denominator; has rare drop table rows |
+| Fortis Colosseum | 170 | 114240 |  |  | rarity strings that are not fractions: Varies |
 | Grotesque Guardians | 45 | 142 |  |  | main table overflows: 154/142, and a membership split does not fix it (members 154, F2P 154) — two tables probably share this denominator; 40 rows declare rolls > 1 |
 | K'ril Tsutsaroth | 51 | 127 |  | yes | main table overflows: 135.7/127, and a membership split does not fix it (members 135.7, F2P 135.7) — two tables probably share this denominator; has rare drop table rows |
 | Kalphite Queen | 77 | 126 |  | yes | rarity strings that are not fractions: Once; has rare drop table rows |
@@ -151,9 +154,10 @@ Two rules do most of the work here, and both matter:
 | Reward pool | 52 | 6400 |  |  | main table overflows: 25200/6400, and a membership split does not fix it (members 25200, F2P 25200) — two tables probably share this denominator |
 | Skotizo | 34 | 100 |  |  | main table overflows: 199/100, and a membership split does not fix it (members 199, F2P 199) — two tables probably share this denominator |
 | The Gauntlet | 91 | 24 |  |  | main table overflows: 48/24, and a membership split does not fix it (members 48, F2P 48) — two tables probably share this denominator; 48 rows declare rolls > 1 |
+| Tombs of Amascut | 50 | 27 |  |  | rarity strings that are not fractions: Varies; 27 rows declare rolls > 1 |
 | Yama | 58 | 95.11 |  |  | main table overflows: 108/95.11, and a membership split does not fix it (members 108, F2P 108) — two tables probably share this denominator |
 
-## Tier E — no main table — zero rows, or only Always/one-off rows; the real table is elsewhere (75)
+## Tier E — no main table — zero rows, or only Always/one-off rows; the real table is elsewhere (69)
 
 | Loot source | Rows | Main den. | Markers | RDT | Notes |
 |---|---:|---:|:-:|:-:|---|
@@ -163,10 +167,9 @@ Two rules do most of the work here, and both matter:
 | Arzinian Avatar of Ranging | 0 | — |  |  | no dropsline rows on this page |
 | Arzinian Avatar of Strength | 0 | — |  |  | no dropsline rows on this page |
 | Arzinian Being of Bordanzan | 0 | — |  |  | no dropsline rows on this page |
+| Barbarian Assault | 0 | — |  |  | no dropsline rows on this page |
 | Barrelchest | 0 | — |  |  | no dropsline rows on this page |
 | Black golem | 0 | — |  |  | no dropsline rows on this page |
-| Blood Moon | 0 | — |  |  | no dropsline rows on this page |
-| Blue Moon | 0 | — |  |  | no dropsline rows on this page |
 | Boss kill count | 0 | — |  |  | no dropsline rows on this page |
 | Bouncer | 1 | — |  |  | 1 rows, all Always — no weighted table on this page |
 | Bouncer (ghost) | 0 | — |  |  | no dropsline rows on this page |
@@ -182,7 +185,6 @@ Two rules do most of the work here, and both matter:
 | Demonic Brutus | 2 | — |  |  | no denominator group reaches 3 rows; largest is 1 row(s) at /400 |
 | Dessourt | 1 | — |  |  | 1 rows, all Always — no weighted table on this page |
 | Dessous | 0 | — |  |  | no dropsline rows on this page |
-| Eclipse Moon | 0 | — |  |  | no dropsline rows on this page |
 | Elvarg | 0 | — |  |  | no dropsline rows on this page |
 | Evil spirit | 1 | — |  |  | 1 rows, all Always — no weighted table on this page |
 | Flambeed | 1 | — |  |  | 1 rows, all Always — no weighted table on this page |
@@ -195,7 +197,7 @@ Two rules do most of the work here, and both matter:
 | Glod | 7 | — |  |  | no denominator group reaches 3 rows; largest is 1 row(s) at /400 |
 | Glough | 0 | — |  |  | no dropsline rows on this page |
 | Grey golem | 0 | — |  |  | no dropsline rows on this page |
-| Ice Troll King | 0 | — |  |  | no dropsline rows on this page |
+| Inferno | 0 | — |  |  | no dropsline rows on this page |
 | Judge of Yama (A Kingdom Divided) | 0 | — |  |  | no dropsline rows on this page |
 | Jungle Demon | 1 | — |  |  | 1 rows, all Always — no weighted table on this page |
 | Kamil | 2 | — |  |  | 2 rows, all Always — no weighted table on this page |
@@ -205,7 +207,7 @@ Two rules do most of the work here, and both matter:
 | Melzar the Mad | 2 | — |  |  | 2 rows, all Always — no weighted table on this page |
 | Moss Guardian | 4 | — |  |  | no denominator group reaches 3 rows; largest is 1 row(s) at /400 |
 | Nezikchened | 0 | — |  |  | no dropsline rows on this page |
-| Penance Queen | 0 | — |  |  | no dropsline rows on this page |
+| Nightmare Zone | 0 | — |  |  | no dropsline rows on this page |
 | Royal Titans | 0 | — |  |  | no dropsline rows on this page |
 | Sea Troll Queen | 0 | — |  |  | no dropsline rows on this page |
 | Sigmund | 1 | — |  |  | 1 rows, all Always — no weighted table on this page |
@@ -214,20 +216,16 @@ Two rules do most of the work here, and both matter:
 | Slagilith | 3 | — |  |  | 3 rows, all Always — no weighted table on this page |
 | Slash Bash | 5 | — |  |  | no denominator group reaches 3 rows; largest is 1 row(s) at /4 |
 | Slug Prince | 0 | — |  |  | no dropsline rows on this page |
-| Sol Heredit | 0 | — |  |  | no dropsline rows on this page |
 | Tarn | 0 | — |  |  | no dropsline rows on this page |
 | The Draugen | 0 | — |  |  | no dropsline rows on this page |
 | The Everlasting | 0 | — |  |  | no dropsline rows on this page |
 | The Illusive | 0 | — |  |  | no dropsline rows on this page |
 | The Inadequacy | 0 | — |  |  | no dropsline rows on this page |
 | The Untouchable | 0 | — |  |  | no dropsline rows on this page |
-| Theatre of Blood | 0 | — |  |  | no dropsline rows on this page |
 | Tolna | 0 | — |  |  | no dropsline rows on this page |
-| Tombs of Amascut | 0 | — |  |  | no dropsline rows on this page |
 | Tree spirit (Lost City) | 0 | — |  |  | no dropsline rows on this page |
 | Treus Dayth | 1 | — |  |  | no denominator group reaches 3 rows; largest is 1 row(s) at /90 |
-| TzKal-Zuk | 1 | — |  |  | no denominator group reaches 3 rows; largest is 1 row(s) at /100 |
-| TzTok-Jad | 1 | — |  |  | no denominator group reaches 3 rows; largest is 1 row(s) at /200 |
+| TzHaar Fight Cave | 0 | — |  |  | no dropsline rows on this page |
 | Ulfric | 1 | — |  |  | 1 rows, all Always — no weighted table on this page |
 | White golem | 0 | — |  |  | no dropsline rows on this page |
 | Wrathmaw | 0 | — |  |  | no dropsline rows on this page |

@@ -6,7 +6,16 @@ import {
   RevisionsResponseSchema,
   type BucketResponse,
 } from './schemas.js'
-import { BOSS_CATEGORY, BUCKET_NAMESPACE, DROPS_BUCKET, DROPSLINE_FIELDS } from './fields.js'
+import {
+  BOSS_CATEGORY,
+  BUCKET_NAMESPACE,
+  DROPS_BUCKET,
+  DROPSLINE_FIELDS,
+  ITEM_ID_BUCKET,
+  ITEM_ID_PAGE_SIZE,
+  ITEM_NAME_BUCKET,
+  ITEM_NAME_PAGE_SIZE,
+} from './fields.js'
 
 export const API_ENDPOINT = 'https://oldschool.runescape.wiki/api.php'
 
@@ -22,6 +31,20 @@ export const USER_AGENT =
 export const DEFAULT_DELAY_MS = 1000
 const MAX_RETRIES = 3
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504])
+
+export interface ItemIdRow {
+  pageName: string
+  /** Usually one element; `["N/A"]` when the page has no single resolvable id. */
+  ids: string[]
+}
+
+export interface ItemNameRow {
+  pageName: string
+  /** The exact display name a `{{DropsLine|name=...}}` value would carry. */
+  itemName: string
+  /** Usually one element; several means the name genuinely covers multiple items. */
+  ids: string[]
+}
 
 export interface RequestRecord {
   endpoint: string
@@ -322,6 +345,84 @@ export class WikiClient {
       }
     })
     return { rows, record }
+  }
+
+  /**
+   * One page of `bucket('item_id')`, at the given offset. The bucket caps at
+   * 5,000 rows per query regardless of `limit`, so a full fetch needs
+   * `.offset()` paging — see `itemIdPages` below.
+   */
+  async itemIdPage(offset: number): Promise<{ rows: ItemIdRow[]; record: RequestRecord }> {
+    const record = await this.request({
+      action: 'bucket',
+      query:
+        `bucket('${ITEM_ID_BUCKET}').select('page_name','id')` +
+        `.limit(${ITEM_ID_PAGE_SIZE}).offset(${offset}).run()`,
+    })
+    const parsed = BucketResponseSchema.parse(record.body)
+    const rowSchema = z.object({
+      page_name: z.string(),
+      id: z.array(z.string()).optional(),
+    })
+    const rows = (parsed.bucket ?? []).map((raw) => {
+      const row = rowSchema.parse(raw)
+      return { pageName: row.page_name, ids: row.id ?? [] }
+    })
+    return { rows, record }
+  }
+
+  /**
+   * Every `item_id` row, paged with `.offset()` until a page returns fewer
+   * than the page size. Each page is a separate snapshot so a partial run can
+   * resume without re-fetching pages already on disk.
+   */
+  async itemIdPages(
+    onPage: (rows: ItemIdRow[], record: RequestRecord, offset: number) => Promise<void>
+  ): Promise<number> {
+    let offset = 0
+    for (;;) {
+      const { rows, record } = await this.itemIdPage(offset)
+      await onPage(rows, record, offset)
+      if (rows.length < ITEM_ID_PAGE_SIZE) return offset + rows.length
+      offset += ITEM_ID_PAGE_SIZE
+    }
+  }
+
+  /**
+   * One page of `bucket('infobox_item')`, at the given offset — one row per
+   * item VERSION, with the exact display name `{{DropsLine|name=...}}` uses.
+   */
+  async itemNamePage(offset: number): Promise<{ rows: ItemNameRow[]; record: RequestRecord }> {
+    const record = await this.request({
+      action: 'bucket',
+      query:
+        `bucket('${ITEM_NAME_BUCKET}').select('page_name','item_name','item_id')` +
+        `.limit(${ITEM_NAME_PAGE_SIZE}).offset(${offset}).run()`,
+    })
+    const parsed = BucketResponseSchema.parse(record.body)
+    const rowSchema = z.object({
+      page_name: z.string(),
+      item_name: z.string().nullable().optional(),
+      item_id: z.array(z.string()).optional(),
+    })
+    const rows = (parsed.bucket ?? []).map((raw) => {
+      const row = rowSchema.parse(raw)
+      return { pageName: row.page_name, itemName: row.item_name ?? row.page_name, ids: row.item_id ?? [] }
+    })
+    return { rows, record }
+  }
+
+  /** Every `infobox_item` row, paged the same way as `itemIdPages`. */
+  async itemNamePages(
+    onPage: (rows: ItemNameRow[], record: RequestRecord, offset: number) => Promise<void>
+  ): Promise<number> {
+    let offset = 0
+    for (;;) {
+      const { rows, record } = await this.itemNamePage(offset)
+      await onPage(rows, record, offset)
+      if (rows.length < ITEM_NAME_PAGE_SIZE) return offset + rows.length
+      offset += ITEM_NAME_PAGE_SIZE
+    }
   }
 
   /** Bucket names currently defined on the wiki. */

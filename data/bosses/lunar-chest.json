@@ -1,0 +1,477 @@
+{
+  "slug": "lunar-chest",
+  "name": "Lunar Chest",
+  "aliases": [],
+  "wikiPage": "Lunar Chest",
+  "wikiRevId": 15292459,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "lunar-chest:0:uniques",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 224,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29000,
+            "itemKey": "eclipse-atlatl",
+            "name": "Eclipse atlatl",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "eclipse-moon-helm",
+            "name": "Eclipse moon helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "eclipse-moon-chestplate",
+            "name": "Eclipse moon chestplate",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "eclipse-moon-tassets",
+            "name": "Eclipse moon tassets",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28997,
+            "itemKey": "dual-macuahuitl",
+            "name": "Dual macuahuitl",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "blood-moon-helm",
+            "name": "Blood moon helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "blood-moon-chestplate",
+            "name": "Blood moon chestplate",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "blood-moon-tassets",
+            "name": "Blood moon tassets",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28988,
+            "itemKey": "blue-moon-spear",
+            "name": "Blue moon spear",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "blue-moon-helm",
+            "name": "Blue moon helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "blue-moon-chestplate",
+            "name": "Blue moon chestplate",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "blue-moon-tassets",
+            "name": "Blue moon tassets",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Uniques"
+    },
+    {
+      "id": "lunar-chest:1:standard-loot",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 30,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28991,
+            "itemKey": "atlatl-dart",
+            "name": "Atlatl dart",
+            "qty": {
+              "kind": "range",
+              "min": 72,
+              "max": 120
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29381,
+            "itemKey": "blessed-bone-shards",
+            "name": "Blessed bone shards",
+            "qty": {
+              "kind": "range",
+              "min": 160,
+              "max": 179
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28899,
+            "itemKey": "wyrmling-bones",
+            "name": "Wyrmling bones",
+            "qty": {
+              "kind": "range",
+              "min": 42,
+              "max": 54
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 6,
+              "max": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1939,
+            "itemKey": "swamp-tar",
+            "name": "Swamp tar",
+            "qty": {
+              "kind": "range",
+              "min": 79,
+              "max": 119
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 571,
+            "itemKey": "water-orb",
+            "name": "Water orb",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 45
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6034,
+            "itemKey": "supercompost",
+            "name": "Supercompost",
+            "qty": {
+              "kind": "range",
+              "min": 6,
+              "max": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1761,
+            "itemKey": "soft-clay",
+            "name": "Soft clay",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 205,
+            "itemKey": "grimy-harralander",
+            "name": "Grimy harralander",
+            "qty": {
+              "kind": "range",
+              "min": 12,
+              "max": 18
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 209,
+            "itemKey": "grimy-irit-leaf",
+            "name": "Grimy irit leaf",
+            "qty": {
+              "kind": "range",
+              "min": 12,
+              "max": 18
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5314,
+            "itemKey": "maple-seed",
+            "name": "Maple seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5315,
+            "itemKey": "yew-seed",
+            "name": "Yew seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Standard loot"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": false,
+        "detail": "9 item(s) failed to resolve"
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": false,
+        "detail": "without_replacement: Uniques are drawn without replacement across the chest's rolls, so the same unique cannot come up twice in one chest. The drop rows carry per-item rarities only and cannot express that. Model as a weighted table with rolls > 1 and withoutReplacement: true."
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

@@ -127,7 +127,20 @@ export type Condition = z.infer<typeof ConditionSchema>
 const ItemNodeSchema = z
   .object({
     kind: z.literal('item'),
-    itemId: z.number().int().nonnegative(),
+    /**
+     * The resolved OSRS item id, or `null` when it cannot be resolved to a
+     * single id — e.g. a page covering many distinct in-game ids (clue scroll
+     * tiers) or a bucket lookup that returned no match. Never a sentinel like
+     * `0`; `null` is the only "unresolved" value so a real id 0 (if one ever
+     * existed) could never be confused with "not found".
+     */
+    itemId: z.number().int().nonnegative().nullable(),
+    /**
+     * A stable slug identifier for the item, derived from its wiki page name.
+     * Required even when `itemId` is null, since it is what the `items_known`
+     * check and the multi-id allowlist key off of.
+     */
+    itemKey: z.string().min(1),
     name: z.string().min(1),
     qty: QtySpecSchema,
     noted: z.boolean().optional(),

@@ -1,0 +1,659 @@
+{
+  "slug": "the-hueycoatl",
+  "name": "The Hueycoatl",
+  "aliases": [],
+  "wikiPage": "The Hueycoatl",
+  "wikiRevId": 15261562,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "the-hueycoatl:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 532,
+            "itemKey": "big-bones",
+            "name": "Big bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "the-hueycoatl:1:unique",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30070,
+            "itemKey": "dragon-hunter-wand",
+            "name": "Dragon hunter wand",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 105
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30085,
+            "itemKey": "hueycoatl-hide",
+            "name": "Hueycoatl hide",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 11,
+            "den": 315
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30066,
+            "itemKey": "tome-of-earth-empty",
+            "name": "Tome of earth (empty)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 90
+          }
+        }
+      ],
+      "notes": "Unique"
+    },
+    {
+      "id": "the-hueycoatl:2:weapons-and-armour-runes-and-ammunition-seeds-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 68,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1432,
+            "itemKey": "rune-mace",
+            "name": "Rune mace",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 26
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1333,
+            "itemKey": "rune-scimitar",
+            "name": "Rune scimitar",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 20
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1093,
+            "itemKey": "rune-plateskirt",
+            "name": "Rune plateskirt",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 20
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1123,
+            "itemKey": "adamant-platebody",
+            "name": "Adamant platebody",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 22,
+              "max": 450
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 150,
+              "max": 3000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5302,
+            "itemKey": "lantadyme-seed",
+            "name": "Lantadyme seed",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 60
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30088,
+            "itemKey": "huasca-seed",
+            "name": "Huasca seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 20
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5296,
+            "itemKey": "toadflax-seed",
+            "name": "Toadflax seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 40
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 20
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 20
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5298,
+            "itemKey": "avantoe-seed",
+            "name": "Avantoe seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 20
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5299,
+            "itemKey": "kwuarm-seed",
+            "name": "Kwuarm seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 20
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30068,
+            "itemKey": "soiled-page",
+            "name": "Soiled page",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9380,
+            "itemKey": "adamant-bolts-unf",
+            "name": "Adamant bolts(unf)",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 573,
+            "itemKey": "air-orb",
+            "name": "Air orb",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 80
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 9,
+              "max": 180
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "range",
+              "min": 17,
+              "max": 350
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 100
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 536,
+            "itemKey": "dragon-bones",
+            "name": "Dragon bones",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 40
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "range",
+              "min": 6,
+              "max": 120
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 60,
+              "max": 1200
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 824,
+            "itemKey": "rune-dart-tip",
+            "name": "Rune dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 6,
+              "max": 120
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 225,
+            "itemKey": "limpwurt-root",
+            "name": "Limpwurt root",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 200
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Seeds / Other"
+    },
+    {
+      "id": "the-hueycoatl:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 75
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30152,
+            "itemKey": "huberte",
+            "name": "Huberte",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-hard",
+            "name": "Clue scroll (hard)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

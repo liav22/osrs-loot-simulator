@@ -21,15 +21,15 @@ export function ctxWith(overrides: Partial<SimContext> = {}): SimContext {
 }
 
 export function dropCount(
-  drops: ReadonlyArray<{ itemId: number; drops: number }>,
-  itemId: number
+  drops: ReadonlyArray<{ itemId: number | null; drops: number }>,
+  itemId: number | null
 ): number {
   return drops.find((drop) => drop.itemId === itemId)?.drops ?? 0
 }
 
 export function dropQuantity(
-  drops: ReadonlyArray<{ itemId: number; quantity: number }>,
-  itemId: number
+  drops: ReadonlyArray<{ itemId: number | null; quantity: number }>,
+  itemId: number | null
 ): number {
   return drops.find((drop) => drop.itemId === itemId)?.quantity ?? 0
 }

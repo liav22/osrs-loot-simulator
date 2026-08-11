@@ -1,5 +1,5 @@
-import type { Boss, Condition, Entry, PartialSimContext, SimContext } from './schema'
-import { DEFAULT_SIM_CONTEXT } from './schema'
+import type { Boss, Condition, Entry, PartialSimContext, SimContext } from './schema.js'
+import { DEFAULT_SIM_CONTEXT } from './schema.js'
 
 /** Evaluate a single condition against the context supplied by the caller. */
 export function evaluateCondition(condition: Condition, ctx: SimContext): boolean {

@@ -25,6 +25,11 @@ import {
   type Classification,
   type Inventory,
 } from './inventory/schema.js'
+import { buildItemIndex, readItemIndex } from './items/index.js'
+import { loadItemAllowlist } from './items/allowlist.js'
+import { loadWatchlist } from './validate/watchlist.js'
+import { fetchGePrices } from './prices/ge-prices.js'
+import { parseBoss } from './parse/parse-boss.js'
 
 /**
  * Phase 2 scope: snapshots and triage. There is deliberately no `parse`
@@ -210,6 +215,65 @@ function reportDistribution(
   log(`  excluded                    ${inventory.lootSources.length - included.length}`)
 }
 
+/**
+ * Parses every included loot source at the requested tier(s) whose wikitext
+ * is already on disk. `--source <id>` narrows to one. Nothing produced here
+ * `verified` requires every deterministic check (weights_sum, refs_resolve,
+ * rates_valid, qty_sane, items_known, not_on_watchlist, and a confident —
+ * non-guessed — table shape). `ev_matches` is computed and reported but is
+ * advisory: it depends on live GE prices that move day to day and was found
+ * non-convergent on Brutus this session (313.70 vs 597.57, 47.5% off), so it
+ * cannot gate `verified` — see docs/DECISIONS.md.
+ */
+async function parseCommand(argv: readonly string[]): Promise<void> {
+  const tierFilter = new Set((flagValue(argv, '--tier') ?? 'A').split(','))
+  const sourceFilter = flagValue(argv, '--source')
+
+  const inventory = InventorySchema.parse(JSON.parse(await readFile(INVENTORY_PATH, 'utf8')))
+  const itemIndex = await readItemIndex()
+  const allowlist = await loadItemAllowlist()
+  const watchlist = await loadWatchlist()
+  const gePrices = await fetchGePrices(USER_AGENT)
+  log(`Loaded ${gePrices.size} live GE prices.\n`)
+
+  const sources = inventory.lootSources.filter(
+    (source) =>
+      source.include &&
+      tierFilter.has(source.tier) &&
+      (sourceFilter === undefined || source.id === sourceFilter)
+  )
+
+  log(`Parsing ${sources.length} loot source(s) at tier ${[...tierFilter].join(',')}\n`)
+
+  const outcomes: Awaited<ReturnType<typeof parseBoss>>[] = []
+  for (const source of sources) {
+    const revid =
+      inventory.bosses.find((boss) => boss.lootSourceId === source.id)?.revid ?? 0
+    const outcome = await parseBoss({
+      title: source.dropsPage,
+      slug: source.id,
+      wikiRevId: revid ?? 0,
+      parserVersion: 1,
+      itemIndex,
+      allowlist,
+      watchlist,
+      gePrices,
+    })
+    outcomes.push(outcome)
+    const mark = outcome.status === 'parse_failed' ? '  !! ' : '     '
+    log(`${mark}${outcome.title.padEnd(32)} ${outcome.status}`)
+    for (const reason of outcome.reasons) log(`        - ${reason}`)
+  }
+
+  const counts = { needs_review: 0, parse_failed: 0, verified: 0 }
+  for (const outcome of outcomes) counts[outcome.status] += 1
+  log(
+    `\n${outcomes.length} parsed: ${counts.needs_review} needs_review, ` +
+      `${counts.parse_failed} parse_failed, ${counts.verified} verified.`
+  )
+  log(`data/bosses/*.json written for everything that assembled.`)
+}
+
 async function main(): Promise<void> {
   const argv = process.argv.slice(2)
   const command = argv[0]
@@ -256,13 +320,27 @@ async function main(): Promise<void> {
       log(`\n${suspicious.length} of ${rows.length} exclusions carry a real combat level.`)
       return
     }
+    case 'item-index': {
+      const index = await buildItemIndex(client, log)
+      const unresolved = index.entries.filter((entry) => entry.itemId === null).length
+      log(
+        `\ndata/_item-index.json written: ${index.entries.length} pages, ` +
+          `${unresolved} unresolved (multi-id or unparseable).`
+      )
+      return
+    }
     case 'triage':
       await triage()
       return
+    case 'parse': {
+      await parseCommand(argv)
+      return
+    }
     default:
       log(
         'Usage: ingest <verify-schema | fetch --all | fetch --page <Title> | sources | ' +
-          'audit-exclusions | triage> [--delay ms]'
+          'audit-exclusions | item-index | triage | parse [--tier A[,B,C]] [--source <id>]> ' +
+          '[--delay ms]'
       )
       process.exitCode = 1
   }

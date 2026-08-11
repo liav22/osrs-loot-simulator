@@ -22,6 +22,41 @@
       "mechanic": "point_scaled",
       "detail": "Rolls scale with points earned during the activity rather than being a fixed count per kill. Needs the wintertodt_points formula.",
       "blockedBy": ["Wintertodt"]
+    },
+    {
+      "lootSourceId": "duke-sucellus",
+      "title": "Duke Sucellus",
+      "mechanic": "other",
+      "detail": "Loot is a sequential roll-until-success chain described only in page prose, not in any drop row: 1/90 tradeable unique table (1/30 awakened), else 1/48 awakener's orb, else 1/25 frozen tablet, else 1/200 ice quartz, else 1/5 supply drop table, else the standard table; separately 1/2500 Baron and 1/40 clue after that. A perfect kill also gives 50% more loot from the standard table. The page's dropsline rows reconcile to a valid denominator on their own, so this source parses cleanly and would otherwise look verified — the chain order and the perfect-kill bonus are the parts that are invisible to the parser.",
+      "blockedBy": []
+    },
+    {
+      "lootSourceId": "zalcano",
+      "title": "Zalcano",
+      "mechanic": "point_scaled",
+      "detail": "Both the main table and the tertiary table scale with points from damage dealt to Zalcano's hitpoints and shield (points formula and per-component caps are in page prose, not in any drop row), and the MVP gets an extra 10% of their non-unique loot. The page's dropsline rows reconcile on their own, so this source parses cleanly and would otherwise look verified.",
+      "blockedBy": []
+    },
+    {
+      "lootSourceId": "chest-tombs-of-amascut",
+      "title": "Chest (Tombs of Amascut)",
+      "mechanic": "point_scaled",
+      "detail": "Unique chance scales with raid invocation level and completion points, not with any fixed per-kill rarity — needs the toa_invocation formula. The chest's own dropsline rows are structural leftovers of the raid's point-purchase reward shop, not independent per-row rarities; parsing them as an ordinary weighted table would misrepresent the mechanic entirely regardless of whether the weights happen to reconcile.",
+      "blockedBy": ["Akkha", "Ba-Ba", "Elidinis' Warden", "Kephri", "Tumeken's Warden", "Zebak"]
+    },
+    {
+      "lootSourceId": "monumental-chest",
+      "title": "Monumental chest",
+      "mechanic": "point_scaled",
+      "detail": "Unique chance scales with Theatre of Blood points earned across the raid (raid tier, deaths, personal performance), not a fixed per-kill rarity — needs the tob_points formula. Same caveat as the Tombs of Amascut chest: the dropsline rows reflect the points-shop structure, not independent rarities.",
+      "blockedBy": ["Nylocas Vasilias", "Pestilent Bloat", "Sotetseg", "The Maiden of Sugadinti", "Verzik Vitur", "Xarpus"]
+    },
+    {
+      "lootSourceId": "rewards-chest-fortis-colosseum",
+      "title": "Rewards Chest (Fortis Colosseum)",
+      "mechanic": "other",
+      "detail": "Loot scales with how many of the Colosseum's 12 waves were completed before the chest was opened (partial completion is allowed and bankable between waves), not with a fixed per-kill rarity. No formula for this is in PROJECT_PLAN.md's section 4.6 registry yet — it needs a new one (wave count / invocation-style scaling), not one of the seven already listed.",
+      "blockedBy": ["Sol Heredit"]
     }
   ]
 }

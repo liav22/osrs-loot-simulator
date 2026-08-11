@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { expectedValue, resolveSimContext, simulate, type SimContext } from '../src/index'
-import { BRUTUS_AVERAGE_KILL_VALUE, BRUTUS_ITEM_IDS, brutus, brutusPrices } from './fixtures/brutus'
+import {
+  BRUTUS_AVERAGE_KILL_VALUE,
+  BRUTUS_ITEM_IDS,
+  CLUE_SCROLL_EASY_ITEM_ID,
+  brutus,
+  brutusPrices,
+} from './fixtures/brutus'
 import { dropCount } from './helpers'
 
 const members: SimContext = resolveSimContext(brutus, { members: true })
@@ -87,7 +93,7 @@ describe('Brutus members vs F2P', () => {
     for (const itemId of [
       BRUTUS_ITEM_IDS.potatoSeed,
       BRUTUS_ITEM_IDS.acorn,
-      BRUTUS_ITEM_IDS.clueScrollEasy,
+      CLUE_SCROLL_EASY_ITEM_ID,
       BRUTUS_ITEM_IDS.beef,
     ]) {
       expect(dropCount(membersRun.drops, itemId)).toBeGreaterThan(0)
@@ -131,33 +137,29 @@ describe('Brutus members vs F2P', () => {
 describe('Brutus preroll', () => {
   it('short-circuits the main table but never the tertiary or 100% tables', () => {
     const run = simulate(brutus, 200_000, members, SEED, { logLimit: 200_000 })
-    const prerollItems = new Set<number>([
-      BRUTUS_ITEM_IDS.mooleta,
-      BRUTUS_ITEM_IDS.bottomlessMilkBucket,
-      BRUTUS_ITEM_IDS.cowSlippers,
-    ])
+    const prerollItems = new Set<string>(['mooleta', 'bottomless-milk-bucket', 'cow-slippers'])
     const killsWithHorn = run.log.filter((kill) =>
-      kill.drops.some((drop) => prerollItems.has(drop.itemId))
+      kill.drops.some((drop) => prerollItems.has(drop.itemKey))
     )
     expect(killsWithHorn.length).toBeGreaterThan(0)
 
-    const mainItems = new Set<number>([
-      BRUTUS_ITEM_IDS.ironFullHelm,
-      BRUTUS_ITEM_IDS.ironPlatebody,
-      BRUTUS_ITEM_IDS.ironPlatelegs,
-      BRUTUS_ITEM_IDS.ironPlateskirt,
-      BRUTUS_ITEM_IDS.ironArrow,
-      BRUTUS_ITEM_IDS.airRune,
-      BRUTUS_ITEM_IDS.mindRune,
-      BRUTUS_ITEM_IDS.chaosRune,
-      BRUTUS_ITEM_IDS.potatoSeed,
-      BRUTUS_ITEM_IDS.acorn,
-      BRUTUS_ITEM_IDS.cowhide,
-      BRUTUS_ITEM_IDS.oakLogs,
-      BRUTUS_ITEM_IDS.logs,
+    const mainItems = new Set<string>([
+      'iron-full-helm',
+      'iron-platebody',
+      'iron-platelegs',
+      'iron-plateskirt',
+      'iron-arrow',
+      'air-rune',
+      'mind-rune',
+      'chaos-rune',
+      'potato-seed',
+      'acorn',
+      'cowhide',
+      'oak-logs',
+      'logs',
     ])
     for (const kill of killsWithHorn) {
-      expect(kill.drops.some((drop) => mainItems.has(drop.itemId))).toBe(false)
+      expect(kill.drops.some((drop) => mainItems.has(drop.itemKey))).toBe(false)
       // Bull bones are a 100% drop and survive the short-circuit.
       expect(kill.drops.some((drop) => drop.itemId === BRUTUS_ITEM_IDS.bullBones)).toBe(true)
     }

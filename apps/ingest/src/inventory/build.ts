@@ -38,15 +38,40 @@ export const INVENTORY_PATH = join(REPO_ROOT, 'data', '_inventory.json')
 /** Links worth testing as an encounter's reward page. */
 const REWARD_LINK = /chest|reward|loot|casket/i
 
-/** A category needs this many tier-E members before it is worth testing. */
+/**
+ * A category needs this many tier-E members before it is worth testing —
+ * EXCEPT a category whose name is also something a tier-E page links to
+ * directly (see `linkedCategoryNames` in `buildInventory`), which waives this
+ * entirely. Sol Heredit is the only tier-E page in "Fortis Colosseum", so the
+ * category alone never clears this bar — but he links the page
+ * `[[Fortis Colosseum]]` directly, which is what the waiver catches.
+ */
 const MIN_ENCOUNTER_MEMBERS = 2
 
-function extractLinks(wikitext: string): string[] {
+/**
+ * `{{Main|Target}}` / `{{Main|Target|...}}` is as strong a "this is the
+ * related page" signal as a wikilink for this pipeline's purposes, and it is
+ * how Fortis Colosseum itself points at its reward page:
+ * `{{Main|Rewards Chest (Fortis Colosseum)}}`. A plain `[[...]]` scan misses
+ * it entirely, since it is a template call, not a wikilink.
+ */
+export function extractMainTargets(wikitext: string): string[] {
+  const targets: string[] = []
+  for (const match of wikitext.matchAll(/\{\{\s*Main\s*\|([^{}]+?)\}\}/gi)) {
+    const params = (match[1] ?? '').split('|')
+    const first = params[0]?.trim()
+    if (first !== undefined && first !== '' && !first.includes('=')) targets.push(first)
+  }
+  return targets
+}
+
+export function extractLinks(wikitext: string): string[] {
   const links: string[] = []
   for (const match of wikitext.matchAll(/\[\[([^\]|#]+)/g)) {
     const target = match[1]?.trim()
     if (target !== undefined && target !== '') links.push(target)
   }
+  links.push(...extractMainTargets(wikitext))
   return [...new Set(links)]
 }
 
@@ -97,11 +122,60 @@ export async function buildInventory(
       byCategory.set(name, members)
     }
   }
+
+  // Fetched up front, not after encounter detection: deciding which
+  // categories are even worth testing (below) needs to know what each tier-E
+  // page links to, not just what category it sits in. This is also the
+  // wikitext the later reward-container scan reads, cached here so nothing
+  // is fetched twice.
+  log("Reading tier-E pages' own wikitext")
+  const wikitextCache = new Map<string, string>()
+  const onDiskWikitext = new Set(await listSnapshots('wikitext'))
+  for (const title of [...tierE].sort()) {
+    const slug = slugify(title)
+    if (onDiskWikitext.has(slug)) {
+      const snapshot = z
+        .object({ parse: z.object({ wikitext: z.string() }).passthrough() })
+        .parse((await readSnapshot('wikitext', slug)).body)
+      wikitextCache.set(title, snapshot.parse.wikitext)
+    } else {
+      const { wikitext, record } = await client.wikitext(title)
+      await writeSnapshot('wikitext', slug, record)
+      wikitextCache.set(title, wikitext)
+      onDiskWikitext.add(slug)
+    }
+  }
+  log(`  ${wikitextCache.size} pages read\n`)
+
+  const tierELinks = new Map<string, Set<string>>()
+  for (const [title, wikitext] of wikitextCache) tierELinks.set(title, new Set(extractLinks(wikitext)))
+
+  /**
+   * Category names that are ALSO something a tier-E page links to directly
+   * (a `[[...]]` wikilink or a `{{Main|...}}` target). Sol Heredit is the
+   * only tier-E page in category "Fortis Colosseum" — never enough to clear
+   * `MIN_ENCOUNTER_MEMBERS` on its own — but his own page links
+   * `[[Fortis Colosseum]]` directly, which puts it here and waives the
+   * member-count bar entirely; `isActivityCached` below still has the final
+   * say on whether it is actually an encounter.
+   */
+  const linkedCategoryNames = new Set<string>()
+  for (const links of tierELinks.values()) {
+    for (const link of links) if (byCategory.has(link)) linkedCategoryNames.add(link)
+  }
+
   const candidates = [...byCategory.entries()]
-    .filter(([, members]) => members.filter((m) => tierE.has(m)).length >= MIN_ENCOUNTER_MEMBERS)
+    .filter(
+      ([name, members]) =>
+        members.filter((m) => tierE.has(m)).length >= MIN_ENCOUNTER_MEMBERS ||
+        linkedCategoryNames.has(name)
+    )
     .map(([name]) => name)
     .sort()
-  log(`  ${byCategory.size} categories, ${candidates.length} worth testing as encounters\n`)
+  log(
+    `  ${byCategory.size} categories, ${candidates.length} worth testing as encounters ` +
+      `(${linkedCategoryNames.size} added by the MIN_ENCOUNTER_MEMBERS waiver)\n`
+  )
 
   /** Snapshot-first `infobox_activity` lookup, so re-runs cost no requests. */
   const activityCache = new Map<string, boolean>()
@@ -129,7 +203,7 @@ export async function buildInventory(
   for (const candidate of candidates) {
     if (await isActivityCached(candidate)) {
       encounters.add(candidate)
-      log(`  encounter: ${candidate}`)
+      log(`  encounter: ${candidate}${linkedCategoryNames.has(candidate) ? ' (waived)' : ''}`)
     }
   }
   log(`  ${encounters.size} encounters confirmed\n`)
@@ -137,13 +211,20 @@ export async function buildInventory(
   // Reward pages are discovered per page, not per encounter. The Moons of
   // Peril bosses are categorised under the dungeon they live in rather than
   // the activity, so an encounter-only search misses their Lunar Chest
-  // entirely; their own pages link it directly.
+  // entirely; their own pages link it directly. `{{Main|...}}` is included in
+  // `extractLinks` too — Fortis Colosseum points at its own reward page via
+  // `{{Main|Rewards Chest (Fortis Colosseum)}}`, not a wikilink.
   log('Reading tier-E pages for links to a reward container')
   const rewardCandidates = new Map<string, string[]>()
   const encounterTitles = [...encounters].sort()
   for (const title of [...tierE, ...encounterTitles].sort()) {
-    const { wikitext, record } = await client.wikitext(title)
-    await writeSnapshot('wikitext', slugify(title), record)
+    let wikitext = wikitextCache.get(title)
+    if (wikitext === undefined) {
+      const fetched = await client.wikitext(title)
+      wikitext = fetched.wikitext
+      await writeSnapshot('wikitext', slugify(title), fetched.record)
+      wikitextCache.set(title, wikitext)
+    }
     rewardCandidates.set(title, extractLinks(wikitext).filter((link) => REWARD_LINK.test(link)))
   }
   const distinct = new Set<string>()
@@ -212,22 +293,13 @@ export async function buildInventory(
   }
 
   /**
-   * Every link on each tier-E page, for the sibling pass below. The reward
-   * scan already fetched this wikitext, so this costs no extra requests.
+   * Every link on each tier-E page plus every confirmed encounter, for the
+   * sibling pass below. `wikitextCache` already holds all of it — tier-E
+   * pages from the up-front read, encounter titles from the reward scan —
+   * so this costs no extra requests.
    */
   const allLinks = new Map<string, Set<string>>()
-  for (const title of [...tierE, ...encounterTitles]) {
-    const slug = slugify(title)
-    try {
-      const snapshot = await readSnapshot('wikitext', slug)
-      const parsed = z
-        .object({ parse: z.object({ wikitext: z.string() }).passthrough() })
-        .safeParse(snapshot.body)
-      if (parsed.success) allLinks.set(title, new Set(extractLinks(parsed.data.parse.wikitext)))
-    } catch {
-      // No wikitext snapshot; the page simply contributes no links.
-    }
-  }
+  for (const [title, wikitext] of wikitextCache) allLinks.set(title, new Set(extractLinks(wikitext)))
 
   const bosses: BossEntry[] = []
   const sources = new Map<string, LootSource>()

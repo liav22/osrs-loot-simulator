@@ -1,0 +1,618 @@
+{
+  "slug": "doom-of-mokhaiotl",
+  "name": "Doom of Mokhaiotl",
+  "aliases": [],
+  "wikiPage": "Doom of Mokhaiotl",
+  "wikiRevId": 15276851,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "doom-of-mokhaiotl:0:uniques",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31088,
+            "itemKey": "avernic-treads",
+            "name": "Avernic treads",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1350
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31115,
+            "itemKey": "eye-of-ayak-uncharged",
+            "name": "Eye of ayak (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2500
+          }
+        }
+      ],
+      "notes": "Uniques"
+    },
+    {
+      "id": "doom-of-mokhaiotl:1:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Ores / Seeds"
+    },
+    {
+      "id": "doom-of-mokhaiotl:2:resources",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 104
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 104
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 10,
+            "den": 312
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 312
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 104
+          }
+        }
+      ],
+      "notes": "Resources"
+    },
+    {
+      "id": "doom-of-mokhaiotl:3:other",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 104
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 7,
+            "den": 104
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 7,
+            "den": 104
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 75
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31130,
+            "itemKey": "dom",
+            "name": "Dom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1000
+          }
+        }
+      ],
+      "notes": "Other"
+    },
+    {
+      "id": "doom-of-mokhaiotl:4:tertiary",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "exact",
+              "n": 50
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

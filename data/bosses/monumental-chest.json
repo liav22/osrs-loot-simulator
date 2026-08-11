@@ -1,0 +1,686 @@
+{
+  "slug": "monumental-chest",
+  "name": "Monumental chest",
+  "aliases": [],
+  "wikiPage": "Monumental chest",
+  "wikiRevId": 15218278,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "monumental-chest:0:untitled",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22446,
+            "itemKey": "vial-of-blood",
+            "name": "Vial of blood",
+            "qty": {
+              "kind": "range",
+              "min": 45,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1939,
+            "itemKey": "swamp-tar",
+            "name": "Swamp tar",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 600
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 300,
+              "max": 360
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1775,
+            "itemKey": "molten-glass",
+            "name": "Molten glass",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 240
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "range",
+              "min": 130,
+              "max": 156
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 60,
+              "max": 72
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 245,
+            "itemKey": "wine-of-zamorak",
+            "name": "Wine of zamorak",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3138,
+            "itemKey": "potato-cactus",
+            "name": "Potato cactus",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 48
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3049,
+            "itemKey": "grimy-toadflax",
+            "name": "Grimy toadflax",
+            "qty": {
+              "kind": "range",
+              "min": 37,
+              "max": 44
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "range",
+              "min": 36,
+              "max": 43
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 209,
+            "itemKey": "grimy-irit-leaf",
+            "name": "Grimy irit leaf",
+            "qty": {
+              "kind": "range",
+              "min": 34,
+              "max": 40
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 36
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3051,
+            "itemKey": "grimy-snapdragon",
+            "name": "Grimy snapdragon",
+            "qty": {
+              "kind": "range",
+              "min": 27,
+              "max": 32
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "range",
+              "min": 26,
+              "max": 31
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "range",
+              "min": 24,
+              "max": 28
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 219,
+            "itemKey": "grimy-torstol",
+            "name": "Grimy torstol",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 24
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 18
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1373,
+            "itemKey": "rune-battleaxe",
+            "name": "Rune battleaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5289,
+            "itemKey": "palm-tree-seed",
+            "name": "Palm tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5315,
+            "itemKey": "yew-seed",
+            "name": "Yew seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21488,
+            "itemKey": "mahogany-seed",
+            "name": "Mahogany seed",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 12
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25742,
+            "itemKey": "holy-ornament-kit",
+            "name": "Holy ornament kit",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25744,
+            "itemKey": "sanguine-ornament-kit",
+            "name": "Sanguine ornament kit",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 150
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25746,
+            "itemKey": "sanguine-dust",
+            "name": "Sanguine dust",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 275
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22473,
+            "itemKey": "lil-zik",
+            "name": "Lil' zik",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 650
+          }
+        }
+      ],
+      "notes": ""
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": false,
+        "detail": "point_scaled: Unique chance scales with Theatre of Blood points earned across the raid (raid tier, deaths, personal performance), not a fixed per-kill rarity — needs the tob_points formula. Same caveat as the Tombs of Amascut chest: the dropsline rows reflect the points-shop structure, not independent rarities."
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

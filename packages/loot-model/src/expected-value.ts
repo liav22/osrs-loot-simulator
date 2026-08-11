@@ -7,12 +7,13 @@ import {
   type CompiledRolls,
   type CompiledTable,
   type CompileOptions,
-} from './compile'
-import type { Boss, SimContext } from './schema'
-import type { PriceLookup } from './simulate'
+} from './compile.js'
+import type { Boss, SimContext } from './schema.js'
+import type { PriceLookup } from './simulate.js'
 
 export interface ExpectedItem {
-  itemId: number
+  itemId: number | null
+  itemKey: string
   name: string
   /** Expected number of drops of this item per kill. */
   expectedDrops: number
@@ -215,6 +216,7 @@ export function expectedValue(
     gpPerKill += gp
     items.push({
       itemId: item.itemId,
+      itemKey: item.itemKey,
       name: item.name,
       expectedDrops: drops[slot]!,
       expectedQuantity,

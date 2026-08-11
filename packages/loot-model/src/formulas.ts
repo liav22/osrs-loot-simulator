@@ -1,5 +1,5 @@
-import type { FormulaId, Rate, SimContext } from './schema'
-import { FORMULA_IDS } from './schema'
+import type { FormulaId, Rate, SimContext } from './schema.js'
+import { FORMULA_IDS } from './schema.js'
 
 /** Returns a probability in [0, 1]. */
 export type FormulaFn = (params: Record<string, unknown>, ctx: SimContext) => number

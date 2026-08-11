@@ -65,7 +65,13 @@ describe('resolveSimContext', () => {
         mode: 'always',
         entries: [
           {
-            node: { kind: 'item', itemId: 1, name: 'Thing', qty: { kind: 'exact', n: 1 } },
+            node: {
+              kind: 'item',
+              itemId: 1,
+              itemKey: 'thing',
+              name: 'Thing',
+              qty: { kind: 'exact', n: 1 },
+            },
             rate: { kind: 'always' },
           },
         ],

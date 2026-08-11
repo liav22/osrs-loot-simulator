@@ -27,6 +27,8 @@ export type SnapshotKind =
   | 'activity'
   | 'wikitext'
   | 'monster'
+  | 'item-id'
+  | 'ge-prices'
 
 /**
  * Page title to filename-safe key. The original title is always stored inside

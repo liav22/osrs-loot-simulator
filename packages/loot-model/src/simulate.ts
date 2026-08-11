@@ -7,12 +7,16 @@ import {
   type CompiledRolls,
   type CompiledTable,
   type CompileOptions,
-} from './compile'
-import { mulberry32, type Rng } from './rng'
-import type { Boss, QtySpec, SimContext } from './schema'
+} from './compile.js'
+import { mulberry32, type Rng } from './rng.js'
+import type { Boss, QtySpec, SimContext } from './schema.js'
 
-/** gp value of one of `itemId`. Prices live outside the loot model (6.1). */
-export type PriceLookup = (itemId: number) => number
+/**
+ * gp value of an item. `itemId` is null when the item could not be resolved
+ * to a single id; a lookup has no way to price that and should return 0.
+ * Prices live outside the loot model (6.1).
+ */
+export type PriceLookup = (itemId: number | null) => number
 
 export interface SimOptions extends CompileOptions {
   prices?: PriceLookup
@@ -21,7 +25,8 @@ export interface SimOptions extends CompileOptions {
 }
 
 export interface DropTally {
-  itemId: number
+  itemId: number | null
+  itemKey: string
   name: string
   /** Kills' worth of drops of this item — how many times it came up. */
   drops: number
@@ -31,7 +36,8 @@ export interface DropTally {
 }
 
 export interface KillLogDrop {
-  itemId: number
+  itemId: number | null
+  itemKey: string
   name: string
   qty: number
 }
@@ -71,10 +77,10 @@ class Tally {
     this.quantity = new Float64Array(slots)
   }
 
-  record(slot: number, qty: number, name: string, itemId: number): void {
+  record(slot: number, qty: number, name: string, itemId: number | null, itemKey: string): void {
     this.drops[slot]! += 1
     this.quantity[slot]! += qty
-    if (this.logDrops !== null) this.logDrops.push({ itemId, name, qty })
+    if (this.logDrops !== null) this.logDrops.push({ itemId, itemKey, name, qty })
   }
 
   get size(): number {
@@ -113,7 +119,7 @@ function emit(
     case 'item': {
       const item = compiled.items[node.slot]
       if (item === undefined) throw new Error(`item slot ${node.slot} is not in the index`)
-      tally.record(node.slot, rollQty(node.qty, rng), item.name, item.itemId)
+      tally.record(node.slot, rollQty(node.qty, rng), item.name, item.itemId, item.itemKey)
       return
     }
     case 'table':
@@ -252,6 +258,7 @@ export function simulate(
     gpTotal += gp
     drops.push({
       itemId: item.itemId,
+      itemKey: item.itemKey,
       name: item.name,
       drops: tally.drops[slot]!,
       quantity,

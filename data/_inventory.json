@@ -1,6 +1,6 @@
 {
   "inventoryVersion": 1,
-  "generatedAt": "2026-08-11T10:19:55.654Z",
+  "generatedAt": "2026-08-11T14:17:53.521Z",
   "category": "Category:Bosses",
   "bosses": [
     {
@@ -52,8 +52,8 @@
       "title": "Akkha",
       "pageid": 357995,
       "revid": 15200303,
-      "lootSourceId": "tombs-of-amascut",
-      "classification": "component",
+      "lootSourceId": "chest-tombs-of-amascut",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 2,
       "encounter": "Tombs of Amascut"
@@ -162,8 +162,8 @@
       "title": "Ba-Ba",
       "pageid": 357992,
       "revid": 15200300,
-      "lootSourceId": "tombs-of-amascut",
-      "classification": "component",
+      "lootSourceId": "chest-tombs-of-amascut",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 2,
       "encounter": "Tombs of Amascut"
@@ -493,10 +493,10 @@
       "pageid": 15452,
       "revid": 15289928,
       "lootSourceId": "dagannoth-kings",
-      "classification": "no-loot-data",
+      "classification": "component",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": "Dagannoth Kings"
     },
     {
       "slug": "dagannoth-mother",
@@ -690,8 +690,8 @@
       "title": "Elidinis' Warden",
       "pageid": 363848,
       "revid": 15272445,
-      "lootSourceId": "tombs-of-amascut",
-      "classification": "component",
+      "lootSourceId": "chest-tombs-of-amascut",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
       "encounter": "Tombs of Amascut"
@@ -943,11 +943,11 @@
       "title": "Ice Troll King",
       "pageid": 24461,
       "revid": 15239645,
-      "lootSourceId": "ice-troll-king",
-      "classification": "no-loot-data",
+      "lootSourceId": "nightmare-zone",
+      "classification": "component",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": "Nightmare Zone"
     },
     {
       "slug": "judge-of-yama-a-kingdom-divided",
@@ -1031,8 +1031,8 @@
       "title": "Kephri",
       "pageid": 357994,
       "revid": 15200302,
-      "lootSourceId": "tombs-of-amascut",
-      "classification": "component",
+      "lootSourceId": "chest-tombs-of-amascut",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 2,
       "encounter": "Tombs of Amascut"
@@ -1185,8 +1185,8 @@
       "title": "Nylocas Vasilias",
       "pageid": 117596,
       "revid": 15218278,
-      "lootSourceId": "theatre-of-blood",
-      "classification": "component",
+      "lootSourceId": "monumental-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
       "encounter": "Theatre of Blood"
@@ -1207,19 +1207,19 @@
       "title": "Penance Queen",
       "pageid": 17449,
       "revid": 15221137,
-      "lootSourceId": "penance-queen",
-      "classification": "no-loot-data",
+      "lootSourceId": "barbarian-assault",
+      "classification": "component",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": "Barbarian Assault"
     },
     {
       "slug": "pestilent-bloat",
       "title": "Pestilent Bloat",
       "pageid": 117595,
       "revid": 15273178,
-      "lootSourceId": "theatre-of-blood",
-      "classification": "component",
+      "lootSourceId": "monumental-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
       "encounter": "Theatre of Blood"
@@ -1263,10 +1263,10 @@
       "pageid": 553602,
       "revid": 15242190,
       "lootSourceId": "royal-titans",
-      "classification": "no-loot-data",
+      "classification": "component",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": "Royal Titans"
     },
     {
       "slug": "salarin-the-twisted",
@@ -1416,19 +1416,19 @@
       "title": "Sol Heredit",
       "pageid": 459148,
       "revid": 15211078,
-      "lootSourceId": "sol-heredit",
-      "classification": "no-loot-data",
+      "lootSourceId": "rewards-chest-fortis-colosseum",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": "Fortis Colosseum"
     },
     {
       "slug": "sotetseg",
       "title": "Sotetseg",
       "pageid": 117587,
       "revid": 15234530,
-      "lootSourceId": "theatre-of-blood",
-      "classification": "component",
+      "lootSourceId": "monumental-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 3,
       "encounter": "Theatre of Blood"
@@ -1548,8 +1548,8 @@
       "title": "The Maiden of Sugadinti",
       "pageid": 117593,
       "revid": 15292433,
-      "lootSourceId": "theatre-of-blood",
-      "classification": "component",
+      "lootSourceId": "monumental-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
       "encounter": "Theatre of Blood"
@@ -1658,8 +1658,8 @@
       "title": "Tumeken's Warden",
       "pageid": 363847,
       "revid": 15272444,
-      "lootSourceId": "tombs-of-amascut",
-      "classification": "component",
+      "lootSourceId": "chest-tombs-of-amascut",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
       "encounter": "Tombs of Amascut"
@@ -1669,22 +1669,22 @@
       "title": "TzKal-Zuk",
       "pageid": 99566,
       "revid": 15283652,
-      "lootSourceId": "tzkal-zuk",
-      "classification": "trivial",
+      "lootSourceId": "inferno",
+      "classification": "component",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": "Inferno"
     },
     {
       "slug": "tztok-jad",
       "title": "TzTok-Jad",
       "pageid": 12788,
       "revid": 15215960,
-      "lootSourceId": "tztok-jad",
-      "classification": "trivial",
+      "lootSourceId": "tzhaar-fight-cave",
+      "classification": "component",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": "TzHaar Fight Cave"
     },
     {
       "slug": "ulfric",
@@ -1757,8 +1757,8 @@
       "title": "Verzik Vitur",
       "pageid": 116973,
       "revid": 15279260,
-      "lootSourceId": "theatre-of-blood",
-      "classification": "component",
+      "lootSourceId": "monumental-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
       "encounter": "Theatre of Blood"
@@ -1845,8 +1845,8 @@
       "title": "Xarpus",
       "pageid": 117597,
       "revid": 15267723,
-      "lootSourceId": "theatre-of-blood",
-      "classification": "component",
+      "lootSourceId": "monumental-chest",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
       "encounter": "Theatre of Blood"
@@ -1878,8 +1878,8 @@
       "title": "Zebak",
       "pageid": 357993,
       "revid": 15255510,
-      "lootSourceId": "tombs-of-amascut",
-      "classification": "component",
+      "lootSourceId": "chest-tombs-of-amascut",
+      "classification": "reward-page",
       "tier": "E",
       "rowCount": 2,
       "encounter": "Tombs of Amascut"
@@ -2057,6 +2057,18 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "arzinian-being-of-bordanzan"
+      ]
+    },
+    {
+      "id": "barbarian-assault",
+      "title": "Barbarian Assault",
+      "dropsPage": "Barbarian Assault",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "component of Barbarian Assault, which has no drop rows on any page — point-based rewards belong in an override",
+      "bosses": [
+        "penance-queen"
       ]
     },
     {
@@ -2272,6 +2284,23 @@
       ]
     },
     {
+      "id": "chest-tombs-of-amascut",
+      "title": "Tombs of Amascut",
+      "dropsPage": "Chest (Tombs of Amascut)",
+      "tier": "D",
+      "rowCount": 50,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "akkha",
+        "ba-ba",
+        "elidinis-warden",
+        "kephri",
+        "tumeken-s-warden",
+        "zebak"
+      ]
+    },
+    {
       "id": "chronozon",
       "title": "Chronozon",
       "dropsPage": "Chronozon",
@@ -2362,7 +2391,7 @@
       "tier": "E",
       "rowCount": 0,
       "include": false,
-      "excludeReason": "no drop rows, no encounter, no reward page",
+      "excludeReason": "component of Dagannoth Kings, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "dagannoth-kings"
       ]
@@ -2742,15 +2771,15 @@
       ]
     },
     {
-      "id": "ice-troll-king",
-      "title": "Ice Troll King",
-      "dropsPage": "Ice Troll King",
+      "id": "inferno",
+      "title": "Inferno",
+      "dropsPage": "Inferno",
       "tier": "E",
       "rowCount": 0,
       "include": false,
-      "excludeReason": "no drop rows, no encounter, no reward page",
+      "excludeReason": "component of Inferno, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
-        "ice-troll-king"
+        "tzkal-zuk"
       ]
     },
     {
@@ -2937,6 +2966,23 @@
       ]
     },
     {
+      "id": "monumental-chest",
+      "title": "Theatre of Blood",
+      "dropsPage": "Monumental chest",
+      "tier": "A",
+      "rowCount": 52,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "nylocas-vasilias",
+        "pestilent-bloat",
+        "sotetseg",
+        "the-maiden-of-sugadinti",
+        "verzik-vitur",
+        "xarpus"
+      ]
+    },
+    {
       "id": "moss-guardian",
       "title": "Moss Guardian",
       "dropsPage": "Moss Guardian",
@@ -2973,6 +3019,18 @@
       ]
     },
     {
+      "id": "nightmare-zone",
+      "title": "Nightmare Zone",
+      "dropsPage": "Nightmare Zone",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "component of Nightmare Zone, which has no drop rows on any page — point-based rewards belong in an override",
+      "bosses": [
+        "ice-troll-king"
+      ]
+    },
+    {
       "id": "obor",
       "title": "Obor",
       "dropsPage": "Obor",
@@ -2982,18 +3040,6 @@
       "excludeReason": null,
       "bosses": [
         "obor"
-      ]
-    },
-    {
-      "id": "penance-queen",
-      "title": "Penance Queen",
-      "dropsPage": "Penance Queen",
-      "tier": "E",
-      "rowCount": 0,
-      "include": false,
-      "excludeReason": "no drop rows, no encounter, no reward page",
-      "bosses": [
-        "penance-queen"
       ]
     },
     {
@@ -3070,13 +3116,25 @@
       ]
     },
     {
+      "id": "rewards-chest-fortis-colosseum",
+      "title": "Fortis Colosseum",
+      "dropsPage": "Rewards Chest (Fortis Colosseum)",
+      "tier": "D",
+      "rowCount": 170,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "sol-heredit"
+      ]
+    },
+    {
       "id": "royal-titans",
       "title": "Royal Titans",
       "dropsPage": "Royal Titans",
       "tier": "E",
       "rowCount": 0,
       "include": false,
-      "excludeReason": "no drop rows, no encounter, no reward page",
+      "excludeReason": "component of Royal Titans, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "royal-titans"
       ]
@@ -3238,18 +3296,6 @@
       ]
     },
     {
-      "id": "sol-heredit",
-      "title": "Sol Heredit",
-      "dropsPage": "Sol Heredit",
-      "tier": "E",
-      "rowCount": 0,
-      "include": false,
-      "excludeReason": "no drop rows, no encounter, no reward page",
-      "bosses": [
-        "sol-heredit"
-      ]
-    },
-    {
       "id": "spindel",
       "title": "Spindel",
       "dropsPage": "Spindel",
@@ -3394,23 +3440,6 @@
       ]
     },
     {
-      "id": "theatre-of-blood",
-      "title": "Theatre of Blood",
-      "dropsPage": "Theatre of Blood",
-      "tier": "E",
-      "rowCount": 0,
-      "include": false,
-      "excludeReason": "component of Theatre of Blood, which has no drop rows on any page — point-based rewards belong in an override",
-      "bosses": [
-        "nylocas-vasilias",
-        "pestilent-bloat",
-        "sotetseg",
-        "the-maiden-of-sugadinti",
-        "verzik-vitur",
-        "xarpus"
-      ]
-    },
-    {
       "id": "thermonuclear-smoke-devil",
       "title": "Thermonuclear smoke devil",
       "dropsPage": "Thermonuclear smoke devil",
@@ -3432,23 +3461,6 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "tolna"
-      ]
-    },
-    {
-      "id": "tombs-of-amascut",
-      "title": "Tombs of Amascut",
-      "dropsPage": "Tombs of Amascut",
-      "tier": "E",
-      "rowCount": 0,
-      "include": false,
-      "excludeReason": "component of Tombs of Amascut, which has no drop rows on any page — point-based rewards belong in an override",
-      "bosses": [
-        "akkha",
-        "ba-ba",
-        "elidinis-warden",
-        "kephri",
-        "tumeken-s-warden",
-        "zebak"
       ]
     },
     {
@@ -3476,25 +3488,13 @@
       ]
     },
     {
-      "id": "tzkal-zuk",
-      "title": "TzKal-Zuk",
-      "dropsPage": "TzKal-Zuk",
+      "id": "tzhaar-fight-cave",
+      "title": "TzHaar Fight Cave",
+      "dropsPage": "TzHaar Fight Cave",
       "tier": "E",
-      "rowCount": 1,
-      "include": true,
-      "excludeReason": null,
-      "bosses": [
-        "tzkal-zuk"
-      ]
-    },
-    {
-      "id": "tztok-jad",
-      "title": "TzTok-Jad",
-      "dropsPage": "TzTok-Jad",
-      "tier": "E",
-      "rowCount": 1,
-      "include": true,
-      "excludeReason": null,
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "component of TzHaar Fight Cave, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "tztok-jad"
       ]

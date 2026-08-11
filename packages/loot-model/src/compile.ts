@@ -1,6 +1,6 @@
-import { entryApplies } from './conditions'
-import { defaultFormulaRegistry, rateToProbability, type FormulaRegistry } from './formulas'
-import type { Boss, Entry, LeafEntry, Node, QtySpec, SimContext, Table, TableMode } from './schema'
+import { entryApplies } from './conditions.js'
+import { defaultFormulaRegistry, rateToProbability, type FormulaRegistry } from './formulas.js'
+import type { Boss, Entry, LeafEntry, Node, QtySpec, SimContext, Table, TableMode } from './schema.js'
 
 /**
  * Both the simulator and the analytic EV walk this compiled form, so the two
@@ -9,7 +9,8 @@ import type { Boss, Entry, LeafEntry, Node, QtySpec, SimContext, Table, TableMod
  */
 
 export interface CompiledItem {
-  itemId: number
+  itemId: number | null
+  itemKey: string
   name: string
 }
 
@@ -82,19 +83,22 @@ export class WeightsExceedDenominatorError extends Error {
 }
 
 class ItemIndex {
-  private readonly slots = new Map<number, number>()
+  private readonly slots = new Map<string, number>()
   readonly items: CompiledItem[] = []
 
   /**
-   * Keyed by `itemId` alone, so a noted and an unnoted stack of the same item
-   * share a slot. They are the same tradeable item and the gp maths agrees.
+   * Keyed by `itemKey`, not `itemId` — `itemId` can be null for an item this
+   * pipeline could not resolve to a single id (a multi-id page, an
+   * unresolved lookup), and `itemKey` is the one identifier every item node
+   * is guaranteed to carry. A noted and an unnoted stack of the same item
+   * share an `itemKey` and therefore a slot; the gp maths agrees.
    */
-  slotFor(itemId: number, name: string): number {
-    const existing = this.slots.get(itemId)
+  slotFor(itemId: number | null, itemKey: string, name: string): number {
+    const existing = this.slots.get(itemKey)
     if (existing !== undefined) return existing
     const slot = this.items.length
-    this.slots.set(itemId, slot)
-    this.items.push({ itemId, name })
+    this.slots.set(itemKey, slot)
+    this.items.push({ itemId, itemKey, name })
     return slot
   }
 }
@@ -118,7 +122,11 @@ export function compileBoss(
   const compileNode = (node: Node, tableId: string, path: string[]): CompiledNode => {
     switch (node.kind) {
       case 'item':
-        return { kind: 'item', slot: items.slotFor(node.itemId, node.name), qty: node.qty }
+        return {
+          kind: 'item',
+          slot: items.slotFor(node.itemId, node.itemKey, node.name),
+          qty: node.qty,
+        }
       case 'nothing':
         return { kind: 'nothing' }
       case 'tableRef': {

@@ -25,6 +25,30 @@ export const DROPS_BUCKET = 'dropsline'
 /** Bucket namespace id, for enumerating available buckets. */
 export const BUCKET_NAMESPACE = 9592
 
+/**
+ * Item id lookup. Caps at 5,000 rows per query regardless of `limit`; paging
+ * needs `.offset(N)`, which the live wiki accepts (verified 2026-08-11).
+ * `id` is an array — usually one element, but a page whose id does not
+ * resolve to a single number (many clue scroll tiers share one page) returns
+ * `["N/A"]`, and some pages legitimately carry more than one id.
+ */
+export const ITEM_ID_BUCKET = 'item_id'
+export const ITEM_ID_PAGE_SIZE = 5000
+
+/**
+ * `infobox_item` has one row per ITEM VERSION, not one row per wiki page —
+ * `item_name` is the exact display name (e.g. "Prayer potion(3)"), distinct
+ * from `page_name` (e.g. "Prayer potion", the shared base page all four
+ * doses live on). `item_name` matches a `{{DropsLine|name=...}}` value
+ * one-to-one for versioned items, where `item_id`'s `page_name` collapses
+ * every version onto one page and cannot be resolved by name alone.
+ * `item_id` stays useful as a fallback for items with no `infobox_item` row.
+ * Same 5,000-row cap and `.offset()` paging as `item_id` (verified
+ * 2026-08-11, ~15,000-16,000 total rows).
+ */
+export const ITEM_NAME_BUCKET = 'infobox_item'
+export const ITEM_NAME_PAGE_SIZE = 5000
+
 /** Columns selectable on `dropsline`. */
 export const DROPSLINE_FIELDS = {
   pageName: 'page_name',

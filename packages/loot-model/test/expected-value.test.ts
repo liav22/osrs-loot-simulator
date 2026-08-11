@@ -10,7 +10,13 @@ import { ctxWith, makeBoss } from './helpers'
 const ctx = ctxWith()
 
 function item(itemId: number, name: string, qty = 1) {
-  return { kind: 'item', itemId, name, qty: { kind: 'exact', n: qty } } as const
+  return {
+    kind: 'item',
+    itemId,
+    itemKey: `item-${itemId}`,
+    name,
+    qty: { kind: 'exact', n: qty },
+  } as const
 }
 
 function expectedFor(result: ReturnType<typeof expectedValue>, itemId: number): number {
@@ -148,11 +154,23 @@ describe('expectedValue', () => {
         mode: 'always',
         entries: [
           {
-            node: { kind: 'item', itemId: 1, name: 'A', qty: { kind: 'range', min: 2, max: 4 } },
+            node: {
+              kind: 'item',
+              itemId: 1,
+              itemKey: 'item-1',
+              name: 'A',
+              qty: { kind: 'range', min: 2, max: 4 },
+            },
             rate: { kind: 'always' },
           },
           {
-            node: { kind: 'item', itemId: 2, name: 'B', qty: { kind: 'choice', values: [10, 20, 60] } },
+            node: {
+              kind: 'item',
+              itemId: 2,
+              itemKey: 'item-2',
+              name: 'B',
+              qty: { kind: 'choice', values: [10, 20, 60] },
+            },
             rate: { kind: 'always' },
           },
         ],

@@ -4,6 +4,7 @@ import { BossSchema, QtySpecSchema, RateSchema, TableSchema } from '../src/index
 const itemNode = {
   kind: 'item',
   itemId: 1,
+  itemKey: 'thing',
   name: 'Thing',
   qty: { kind: 'exact', n: 1 },
 } as const
@@ -201,6 +202,60 @@ describe('TableSchema', () => {
       }).success
     ).toBe(false)
     expect(parseTable({ id: 't', mode: 'always', entries: [] }).success).toBe(false)
+  })
+})
+
+describe('item node itemId / itemKey', () => {
+  it('accepts a null itemId alongside a required itemKey', () => {
+    const result = parseTable({
+      id: 't',
+      mode: 'always',
+      entries: [
+        {
+          node: {
+            kind: 'item',
+            itemId: null,
+            itemKey: 'clue-scroll-easy',
+            name: 'Clue scroll (easy)',
+            qty: { kind: 'exact', n: 1 },
+          },
+          rate: { kind: 'always' },
+        },
+      ],
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects an item node with no itemKey', () => {
+    const result = parseTable({
+      id: 't',
+      mode: 'always',
+      entries: [
+        {
+          node: { kind: 'item', itemId: 1, name: 'Thing', qty: { kind: 'exact', n: 1 } },
+          rate: { kind: 'always' },
+        },
+      ],
+    })
+    expect(result.success).toBe(false)
+  })
+
+  it('never treats 0 as a sentinel: a real itemId of 0 and a null itemId are distinct', () => {
+    const zero = parseTable({
+      id: 't',
+      mode: 'always',
+      entries: [
+        {
+          node: { kind: 'item', itemId: 0, itemKey: 'zero', name: 'Z', qty: { kind: 'exact', n: 1 } },
+          rate: { kind: 'always' },
+        },
+      ],
+    })
+    expect(zero.success).toBe(true)
+    if (zero.success) {
+      const node = zero.data.entries[0]?.node
+      expect(node && 'itemId' in node ? node.itemId : undefined).toBe(0)
+    }
   })
 })
 

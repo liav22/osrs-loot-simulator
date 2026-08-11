@@ -284,3 +284,375 @@ plan text, and the gate is reported as a measured number rather than as pass/fai
   is 9,000 gp at 4/150 and dominates the variance — one standard error across a million
   kills is about 1.5 gp, so the previous absolute `toBeCloseTo(…, 0)` (±0.5) would fail
   on sampling noise rather than on a defect. It now asserts agreement within 1%.
+
+## Suspicious-exclusion follow-up: Sol Heredit and the Inadequacy group
+
+- **Sol Heredit has real loot; the inventory pipeline missed it, and the reason is
+  identified.** His page has no `==Drops==` section and no `[[...]]` link to a reward
+  container — his loot is referenced from the *parent* "Fortis Colosseum" page via
+  `{{Main|Rewards Chest (Fortis Colosseum)}}`, a template call, not a wikilink.
+  `Rewards Chest (Fortis Colosseum)` itself has **170 `dropsline` rows** and was never
+  fetched, for a specific, traceable reason: `MIN_ENCOUNTER_MEMBERS = 2`
+  (`apps/ingest/src/inventory/build.ts`) only tests a category as a candidate encounter
+  when at least two tier-E pages share it, and Sol Heredit is Fortis Colosseum's only
+  boss page in the 172-page inventory. The category was therefore never tested for
+  `infobox_activity`, never confirmed as an encounter, and its wikitext — which does
+  link the reward chest — was never fetched. `extractLinks` also only matches `[[...]]`
+  wikilinks, so even fetching Fortis Colosseum's wikitext would need a second fix to
+  catch the `{{Main|...}}` form. Not fixed this session, since the task asked for
+  diagnosis before starting the parser; both fixes are mechanical (drop or parametrise
+  the member-count threshold for single-boss activities; extend the link scan to
+  `{{Main|...}}` targets) and belong in a follow-up `sources` pass alongside a
+  request-cost check, since lowering the threshold will trigger many more
+  `infobox_activity` lookups.
+- **The Inadequacy / The Untouchable / The Everlasting / The Illusive share one parent:
+  the quest `Dream Mentor`.** `Dream Mentor` is not an `infobox_activity` page and has
+  zero `dropsline` rows of its own. `The Inadequacy`'s wikitext has no `==Drops==`
+  heading and no `DropsLine` template at all — not merely empty, entirely absent. All
+  four are quest-only combat encounters (each representing a combat style, per Dream
+  Mentor's quest design) and are genuinely lootless. Their `no-loot-data` classification
+  is correct as-is; no further discovery work is needed for this group.
+
+## Phase 3 parser
+
+### Scope and what "verified" means this session
+
+- **Nothing reaches `status: 'verified'` in this session, by design.** `ev_matches`
+  cannot run — Phase 3's own investigation (below) found the wiki's stated average
+  kill value is not reliably derivable from data this pipeline can see. Every parsed
+  boss is `needs_review` even when every other check passes; `validation.ok` still
+  distinguishes structurally-clean parses from ones with real failures, so the report
+  isn't flattened to a single undifferentiated bucket.
+- **The parser reads wikitext, not the `dropsline` bucket.** Bucket rows lose three
+  things the parser needs: the heading text itself (mode inference, 6.5 heuristic 3),
+  quantity qualifiers like "(noted)" (the source of the Phase 2 Brutus bug), and
+  unambiguous template parameter names in place of a rendered `drop_json` blob.
+  `apps/ingest/src/parse/wikitext-drops.ts` extracts `{{DropsLine}}` /
+  `{{DropsLineClue}}` / `{{DropsLineReward}}` calls directly.
+
+### The ev_matches investigation (before any parser code was written)
+
+- **The wiki's `Drop Value` bucket field is the row's High Alch value, not its GE
+  price.** Cross-checked against the rendered page's own `Price` / `High Alch`
+  columns: e.g. Cow slippers shows `Price=1,852` / `High Alch=600`, and the bucket's
+  `Drop Value` is 600. Every earlier session's price computation that used `Drop
+  Value` as if it were a market price was reading the wrong column.
+- **Four independent, honestly-computed figures for Brutus (members) bracket 268 to
+  586 gp/kill; none reproduces 597.57.** Using live GE prices instead of `Drop Value`
+  gets close (586, flat sum) to very close (555, correctly modelled with preroll
+  suppression) — but excluding genuinely untradeable items (`gemw=no` in the
+  wikitext, "Not sold" on the rendered page: the milk bucket, Mooleta, Beef) moves
+  *away* from the target (331), not toward it. Template:Average drop value assigns
+  untradeable rares some value that is not exposed anywhere in bucket data or the
+  rendered Price/Alch columns. Full reasoning lives in
+  `packages/loot-model/test/fixtures/brutus.ts`'s header comment.
+- **Conclusion: `ev_matches` cannot be made a blocking structural check on data this
+  pipeline can see.** It is wired into the checks list but always reports
+  `ok: false, "not run"` this session, rather than being silently omitted or forced
+  to pass.
+
+### items_known and the item index
+
+- **`itemId` is `number | null`; a new required `itemKey` (page-name slug) is the
+  stable identifier.** `0` is never used as a sentinel — it is a valid item id
+  (confirmed by a dedicated schema test) and using it as "unresolved" would be
+  indistinguishable from a real id 0. `itemKey` is what `items_known`, the multi-id
+  allowlist (`data/item-multi-id-allowlist.json`), and the compiled item index
+  (`ItemIndex` in `compile.ts`) all key off.
+- **`itemKey` is a GLOBAL item slug, not boss-scoped.** The Brutus fixture originally
+  used `brutus:bull-bones`-style keys; corrected to `bull-bones`, because the same
+  real-world item (Coins, Iron platebody) drops from many bosses and `items_known`
+  needs one identity per item across the whole corpus, not one per boss's table.
+- **`bucket('item_id')` does not collapse a multi-id page into one row with a
+  multi-element `id` array — it emits one ROW PER ID, all sharing `page_name`.**
+  "Cow slippers" is four separate rows (ids 33093/33096/33097/33098), not one row
+  with `id: [4 values]`. A naive page-name-keyed map silently keeps only the last
+  row and is indistinguishable from a clean single-id resolution — this was caught
+  by the checks this session built, not by exercising them, and fixed by aggregating
+  every row per page before deciding whether it resolves
+  (`apps/ingest/src/items/index.ts`). 2,709 of 12,935 item pages are genuinely
+  multi-id or unresolvable after the fix (up from a wrongly-optimistic 1,230 before
+  it).
+- **Item id lookups page past the 5,000-row cap via `.offset()`**, confirmed to work
+  on the live API. The full index is 4 requests.
+
+### The Sol Heredit / Inadequacy follow-up (before the parser)
+
+- Findings recorded above under "Suspicious-exclusion follow-up".
+
+### The parser itself
+
+- **Heading text is checked before inferring mode from denominator shape, not
+  after.** Brutus' real pre-roll rows (5/150, 4/150, 1/150) all share denominator
+  150 — indistinguishable in shape from a weighted table. An earlier draft of the
+  parser inferred from denominators first and only used heading text as a
+  tie-breaker for ambiguous cases, which silently misclassified this pre-roll as
+  `weighted`. Fixed by checking `Pre-roll`/`Tertiary`/`Secondary` heading keywords
+  before ever looking at denominators, matching 6.5 heuristic 3's stated order.
+- **A "Drops"/"Rewards" section is found by heading SUBJECT, at any heading level,
+  and a page can have more than one.** Three real pages broke a naive
+  `==Drops==`-only, H2-only, single-section assumption: Gemstone Crab's is
+  `===Drops===` (H3, not H2); Barrows' chest page has no "Drops" heading at all, only
+  `==Rewards==`; Scurrius splits `==Drops (MVP/Solo)==` from `==Drops (non-MVP)==`.
+  Matching had to be tightened to require Drops/Rewards as the heading's actual
+  subject (`/^(the\s+)?(drops?|rewards?)\s*(\(.*\))?$/i`) after a looser
+  contains-the-word version wrongly also matched Barrows' unrelated "Reward
+  mechanics" section (rolls math and citations, no drop rows) and merged its content
+  in.
+- **Heading nesting deeper than a section's shallowest level collapses into its
+  nearest ancestor, rather than becoming its own group.** Barrows nests six
+  per-brother `====Ahrim's====`-style H4 groups inside one `===Pre-roll===` H3. Each
+  brother's four items sharing one denominator (1/2448) would otherwise become six
+  separate misleading "weighted" tables instead of one 24-entry preroll table. Fixed
+  by computing the section's minimum heading level and grouping only at that level.
+- **A boundary-slicing bug lost the leading newline a nested heading needs to match
+  at all**, when a "Drops"/"Rewards" section's first sub-heading immediately follows
+  the parent heading with no blank line between them (no prose or templates in
+  between). The parent heading's own regex match consumes its trailing `\n`; slicing
+  from `contentStart` drops that character, leaving the child heading with nothing
+  before it to match against. Fixed by keeping one character of overlap when
+  slicing. Caught by a hand-written test with no blank line, not by the real-page
+  cases, which all happen to have a blank line.
+- **`DropsLineReward`, not `DropsLine`, is the template Barrows' chest page uses** —
+  same parameter shape, different name. Recognizing only `DropsLine`/`DropsLineClue`
+  silently produced zero table entries for an otherwise well-formed page.
+- **`{{DropsLineClue}}`'s `f2p=yes` parameter is not trusted as a membership
+  marker.** Brutus' own easy-clue row sets it, yet the rendered page's `Name Notes`
+  (and the `dropsline` bucket) mark that exact row members-only. Whatever `f2p=`
+  controls is not reliably this drop's actual membership restriction; only the
+  rendered `(m)`/`(f)` marker text is trusted.
+- **Known, un-fixed gaps, left as `needs_review`/`parse_failed` rather than forced:**
+  Chambers of Xeric's "Ancient chest" reward has no `{{DropsLine}}`-shaped content at
+  all — it needs the `cox_points` formula and does not fit this parser's model.
+  Revenant maledictus and The Mimic also produced no matching template calls and are
+  parse-failed rather than guessed at. Duke Sucellus and Zalcano parse structurally
+  (their bucket-visible rows do reconcile) but their real access mechanics —
+  Duke Sucellus's sequential roll-until-success chain, Zalcano's full points scaling
+  — are described only in prose the parser does not read; a clean structural parse
+  for these two is not evidence of a correct model and both should be added to the
+  mechanics watchlist before Phase 5 rather than trusted.
+
+## Follow-up session: ev_matches retry, status logic, discovery waiver
+
+### ev_matches retried with live GE prices — still does not converge
+
+- **Built `apps/ingest/src/prices/ge-prices.ts`**: snapshot-first fetch of
+  `prices.runescape.wiki/api/v1/osrs/latest`, joined strictly by `itemId` from the
+  item index (never guessing among a multi-id item's several ids, even when one of
+  them has a live price). A missing entry prices at 0 — which naturally, correctly
+  handles `gemw=no` items, since genuinely untradeable items (Bull bones, Mooleta,
+  Beef) simply have no GE listing at all; confirmed directly against the live data.
+- **Result for the real parsed Brutus, members: 313.70 gp/kill vs the wiki's 597.57
+  — 47.5% off. Does not converge.** F2P: 247.83 vs 597.57, 58.5% off.
+- **The residual gap traces almost exactly to the Bottomless milk bucket's High
+  Alch value (~9,000), not zero.** `(597.57 − 313.70) / 0.0258 expected qty ≈
+  11,003`, the same order of magnitude as its High Alch of 9,000. This means
+  `Template:Average drop value` does NOT treat `gemw=no` as "worth 0" — it falls
+  back to something like High Alch for untradeable rares. The instruction's
+  hypothesis ("gemw=no at zero") is testably wrong for reproducing the wiki's
+  figure, even though it is the mechanically correct GE valuation.
+- **Per the accept condition, `ev_matches` stays non-blocking / advisory.** It is
+  computed for real now (not "not run") whenever a rendered-page snapshot exists,
+  and its result is reported, but it never gates `verified`. The Brutus fixture is
+  NOT rebuilt with "real" prices — the specified methodology (GE price, gemw=no at
+  zero) does not produce a validated figure to rebuild it against.
+- **`extractAverageKillValue` (in `apps/ingest/src/validate/ev-matches.ts`) needs a
+  rendered-page snapshot**, which most sources do not have (only `fetch --page` and
+  a handful of manually-investigated bosses fetched one this session). `ev_matches`
+  correctly reports "no rendered page snapshot available" rather than silently
+  passing for everything else.
+
+### Status logic: `verified` now depends only on deterministic checks
+
+- **`verified` requires `weights_sum`, `refs_resolve`, `rates_valid`, `qty_sane`,
+  `items_known`, `not_on_watchlist`, AND zero ambiguous-mode guesses — never
+  `ev_matches`.** `ev_matches` depends on live GE prices that move day to day and
+  was found non-convergent this session, so a pass today would be a moving target,
+  not a structural fact about the parse; it is computed and reported but excluded
+  from the gate. `validation.ok` still reflects every check including the advisory
+  one, so status and `validation.ok` can diverge on purpose — a `verified` boss with
+  a failing `ev_matches` still shows that failure in `validation.checks`.
+- **`AssembleResult` now separates `ambiguousGroups` from `warnings`.** A group
+  whose mode was a guess (heuristic 5's "heterogeneous denominators, no keyword"
+  case) is a distinct signal from an item-resolution gap, and it blocks `verified`
+  on its own — a guess staying right by luck is not the same thing as a check
+  confirming it.
+- **Result: 0 of 26 tier-A sources reach `verified`, even under the corrected
+  logic.** This is not a bug in the fix — every single source has a real,
+  legitimate blocker. The two dominant causes, checked directly against
+  `data/_item-index.json`:
+  - **Dose-suffixed consumables systematically fail to resolve** — "Prayer potion(3)",
+    "Super combat potion(2)", "Blighted super restore(4)" and similar are not in the
+    item index under that exact page-name slug. Needs investigation before Phase 5:
+    likely a page-name-format mismatch (the wiki's actual page might not carry the
+    dose suffix the same way), not a true multi-id case.
+  - **The "Unique(s)" heading is the single most common ambiguous-group trigger**
+    across wilderness-style bosses. Checked whether it is safe to hardcode as a
+    known preroll keyword (parallel to Pre-roll/Tertiary/Secondary) by searching for
+    "at most one item" confirming prose across ten bosses carrying the heading:
+    **only Vet'ion and Venenatis have it.** Spindel, The Nightmare, Duke Sucellus,
+    Vardorvis, The Whisperer, The Leviathan, Artio and Calvar'ion do not. The
+    heading is NOT a reliable signal on its own; leaving it as an ambiguous guess
+    (current behaviour) was the right call, not a gap to close by widening the
+    keyword list. This was a real check, not an assumption — worth knowing before
+    anyone is tempted to "fix" the ambiguous-group count by trusting the heading.
+
+### Discovery: {{Main|...}} edge and the MIN_ENCOUNTER_MEMBERS waiver
+
+- **`{{Main|Target}}` is now a discovery edge, same standing as a `[[...]]`
+  wikilink**, in `extractLinks`/`extractMainTargets`. This is how Fortis Colosseum
+  points at its own reward page — `{{Main|Rewards Chest (Fortis Colosseum)}}` — a
+  template call a wikilink-only scan cannot see.
+- **`MIN_ENCOUNTER_MEMBERS` is waived for a category that is also something a tier-E
+  page links to directly.** Sol Heredit is the only tier-E page in "Fortis
+  Colosseum" — never enough to clear the member-count bar alone — but his own page
+  links `[[Fortis Colosseum]]` in its infobox and prose. `isActivityCached` still
+  has the final say on whether a waived candidate is a real encounter; the waiver
+  only decides what gets tested, not what passes.
+- **Required reordering the discovery pipeline**: tier-E pages' own wikitext (and
+  therefore their outbound links) now has to be read BEFORE deciding which
+  categories are worth testing, not after encounter detection as before. The
+  fetch itself is unchanged in cost — it was already happening, just later — and is
+  now cached and reused for the reward-link scan rather than re-read.
+- **Recovered 8 new encounters**: Fortis Colosseum, Barbarian Assault, Dagannoth
+  Kings, Inferno, Nightmare Zone, Royal Titans, Treasure Trails, TzHaar Fight Cave.
+  **3 of the 8 resolved to a real reward-page source**: Fortis Colosseum → Rewards
+  Chest (Fortis Colosseum, 170 rows, recovers Sol Heredit), Tombs of Amascut →
+  Chest (Tombs of Amascut, 50 rows), Theatre of Blood → Monumental chest (52 rows,
+  recovers Verzik/Sotetseg/Xarpus/etc). **The other 5 (Barbarian Assault, Dagannoth
+  Kings, Inferno, Nightmare Zone, Royal Titans) correctly stayed `component`** —
+  confirmed as real activities, no reward-table page found linked from them, so
+  they were not force-matched to anything. This is the safety behaviour working as
+  intended, not a shortfall.
+- Treasure Trails and TzHaar Fight Cave surfaced real pages (the six clue reward
+  caskets: beginner through master, 77–279 rows each) but resolved no bosses in the
+  172-page inventory, since no boss page belongs to either category — the rows are
+  now snapshotted for whenever tertiary clue-scroll drops need parsing, but caused
+  no reclassification.
+- **Net: 172 pages → 142 loot sources (unchanged count, since the newly-recovered
+  pages folded into existing or newly-created sources), reward-page classification
+  27 → 40 pages, `no-loot-data`/`component` 51 → 40 pages combined.**
+
+### The Mimic: found and partially fixed a second heading-matching gap
+
+- **The Mimic's headings are "Elite drops" and "Master drops" — qualifier BEFORE
+  "drops", not after.** `DROPS_SECTION_TITLE` only allowed a trailing parenthetical
+  qualifier (`Drops (MVP/Solo)`), not a leading word. Broadened to
+  `/^(?:\S+\s+)?(drops?|rewards?)\s*(\(.*\))?$/i` — requires "drops"/"rewards" to be
+  the heading's last significant word either way, which is exactly what still
+  correctly rejects "Reward mechanics" and Revenant maledictus' "Drop mechanics"
+  (prose sections, no table, caught the same way in both cases).
+- **This surfaced a genuinely new, unsolved problem: The Mimic still fails to
+  parse, now for a specific and different reason.** Its "Elite drops" and "Master
+  drops" sections each have their own `===Tertiary===` sub-heading. Sub-heading
+  grouping is keyed by title text alone, so both `Tertiary` blocks — one from Elite,
+  one from Master — merge into a single group, mixing an `Always`-rate row from one
+  table into an `independent`-mode table built for the other's fixed rates, which
+  the schema correctly rejects. Not fixed this session: doing so needs sub-headings
+  qualified by their parent top-level section, which is a real (if contained)
+  restructuring of `groupByHeading`, not a one-line change.
+
+## Follow-up session 2: hybrid pricing, watchlist expansion, item-index rebuild
+
+### ev_matches, final attempt — hybrid GE+High-Alch pricing, still short, now closed
+
+- **Tested the specific hybrid the earlier diagnostic predicted: GE price for
+  tradeable items, High Alch (from `dropsline`'s own `Drop Value` field) for
+  `gemw=no` items, with pre-roll suppression modeled as usual.** Built
+  `apps/ingest/src/prices/hybrid-prices.ts` (`highAlchByItemName` +
+  `applyHighAlchOverride`) to compute this against the hand-verified Brutus
+  fixture (not the freshly-parsed boss — see below for why).
+- **Result: 570.58 vs 597.57 — 4.52% off.** Closer than the strict-zero GE
+  test (313.70, 47.5% off) and consistent with the earlier diagnostic
+  (the milk bucket's implied value was within the same order of magnitude as
+  its ~9,000 High Alch), but still outside the ~2% bar.
+- **Per explicit instruction, this closes the investigation: `ev_matches`
+  stays non-blocking, permanently, not just for this session.** No further
+  pricing theory should be tried without being asked. Three independent
+  methodologies (`dropsline`'s `Drop Value` field alone, strict live GE,
+  GE+High-Alch hybrid) have now been tried and none reproduces the wiki's
+  own stated figure within tolerance.
+- **The hybrid test used the fixture, not the freshly-parsed boss, because
+  `PriceLookup`'s signature (`itemId: number | null → number`) cannot
+  distinguish which unresolved item is being priced.** The Bottomless milk
+  bucket is `itemId: null` in the real parsed output (page-name mismatch:
+  the wiki page is "Bottomless milk bucket", not "…(empty)"), so a
+  itemId-keyed override map can never reach it through the real parse. The
+  fixture's hand-verified (if partly guessed) ids made the hybrid hypothesis
+  testable at all. This is a real architectural limit worth remembering: any
+  future price-dependent check that needs to treat specific unresolved items
+  specially cannot do it through `PriceLookup` alone.
+
+### Mechanics watchlist: three more sources added
+
+- **`chest-tombs-of-amascut`, `monumental-chest`, `rewards-chest-fortis-colosseum`
+  added**, all point-scaled or invocation/wave-scaled mechanics invisible in
+  their `dropsline` rows. `chest-tombs-of-amascut` and `monumental-chest`
+  confirmed firing `not_on_watchlist` once their wikitext was fetched.
+  `rewards-chest-fortis-colosseum` has never actually exercised the check —
+  it fails upstream, at schema assembly, because its page is structured by
+  wave number (`Wave 1`…`Wave 12`) and does not fit any of the four
+  canonical modes; the watchlist entry is correct and will engage once that
+  page can be assembled into a `Boss` doc at all, which needs either a new
+  mode or a Phase 5 override, not a parser fix.
+
+### Item resolution: two real bugs found and fixed, item index rebuilt on `infobox_item`
+
+- **`bucket('item_id')`'s `page_name` collapses every dose/charge of an item
+  onto one shared page.** "Prayer potion(3)" was never a page-name-format
+  mismatch — the wiki's `item_id` bucket only has "Prayer potion" (no dose
+  suffix, four ids, one per dose, with no way to tell from `item_id` alone
+  which id is which dose). Switched the item index's primary source to
+  `bucket('infobox_item')`, which has one row per item VERSION and an
+  `item_name` field that matches a `{{DropsLine|name=...}}` value exactly —
+  confirmed this resolves "Rune arrow", "Blighted super restore(4)" and the
+  four Prayer potion doses correctly. `bucket('item_id')` is kept as a
+  fallback for any name `infobox_item` has no row for.
+- **This immediately surfaced a second, real regression: `item_name` is not
+  globally unique.** Special-game-mode reskins render identical display text
+  to the standard item — "Coins" collided 4 ways (base item plus three
+  minigame currency reskins: Shilo Village, Mage Training Arena, My Arm's Big
+  Adventure), "Prayer potion(3)" collided with its Last Man
+  Standing-restricted counterpart. In every collision checked, the standard
+  item's `page_name` carries no parenthetical qualifier while every
+  special-mode variant's does — `default_version` (which looks like it
+  should disambiguate this) is empty/unpopulated for all of these and cannot
+  be used. Fixed with a general rule in `items/index.ts`
+  (`resolveWithUnqualifiedPagePreference`): when a name collides, resolve to
+  the one candidate with an unqualified `page_name`, but only if there is
+  exactly one such candidate. Verified against Cow slippers (four real
+  colour variants, all with the *same* unqualified page name "Cow slippers")
+  that this does not misfire into guessing a genuinely ambiguous item — four
+  unqualified candidates correctly stays unresolved.
+- **Clue scroll allowlist expanded from one tier (easy) to all six**
+  (beginner/easy/medium/hard/elite/master). All six have the identical
+  shape under `infobox_item` — 13 to 189 distinct ids each, one per live
+  clue instance — and the "easy"-only allowlist was an oversight from when
+  the allowlist was first seeded with a single example rather than the full
+  set sharing that property.
+- **Net effect on the item index**: schema bumped `itemIndexVersion` 1 → 2
+  (`pageName` → `itemName`, added `source: 'infobox_item' | 'item_id'`).
+  15,508 entries (up from 12,935), 2,997 unresolved after the collision fix
+  (down from 3,583 immediately after the naive `infobox_item` switch, which
+  had temporarily made things worse before the unqualified-page-name rule
+  was added).
+- **Net effect on tier A: 0 → 3 verified** (Branda the Fire Queen, Chest
+  (Barrows), Eldric the Ice King), all confirmed clean on every deterministic
+  check with only the (correctly non-blocking) `ev_matches` advisory note
+  attached. 20 sources remain `needs_review` — dominated by the "Uniques"
+  heading ambiguity (13 sources, but only 2 with no other co-occurring
+  blocker) and an unparsed `{{Brimstone rarity|N}}` template (at least 8
+  sources, not investigated this session).
+
+### Housekeeping
+
+- **`data/bosses/the-mimic.json` and a stale `data/bosses/brutus.json` were
+  found reflecting pre-item-index-v2 parser state** (written before this
+  session's item-resolution fixes) and were regenerated by a fresh
+  `ingest parse` run before this session ended, since `ingest parse` never
+  deletes a stale file for a source that stops producing one — see
+  `plan/HANDOFF.md` landmine #6.
+- **`plan/` created at repo root, gitignored, holding a local copy of
+  `PROJECT_PLAN.md` and `plan/HANDOFF.md`** — a session-handoff document for
+  a fresh Claude session with no prior context. Not a substitute for this
+  file; written to point back here for anything already logged.
