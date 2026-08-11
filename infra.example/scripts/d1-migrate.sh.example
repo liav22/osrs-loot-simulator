@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Copy to infra/scripts/d1-migrate.sh, chmod +x, and adapt paths as needed.
+set -euo pipefail
+
+cd "$(dirname "$0")/../cloudflare"
+wrangler d1 execute osrs-loot-sim --file=./d1-schema.sql

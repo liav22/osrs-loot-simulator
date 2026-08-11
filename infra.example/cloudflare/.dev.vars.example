@@ -1,0 +1,4 @@
+# Copy to infra/cloudflare/.dev.vars (gitignored) for `wrangler dev`.
+# Names only here; real values never get committed.
+
+CLOUDFLARE_API_TOKEN=REPLACE_ME

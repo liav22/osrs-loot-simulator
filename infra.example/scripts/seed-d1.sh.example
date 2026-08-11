@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Copy to infra/scripts/seed-d1.sh, chmod +x, and adapt paths as needed.
+# Seeds D1 from the committed data/ directory once Phase 6 defines the format.
+set -euo pipefail
+
+echo "Not yet implemented — see PROJECT_PLAN.md section 14 (Phase 6)."

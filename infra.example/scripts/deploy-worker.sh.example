@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Copy to infra/scripts/deploy-worker.sh, chmod +x, and adapt paths as needed.
+# Requires CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in the environment.
+set -euo pipefail
+
+cd "$(dirname "$0")/../cloudflare"
+wrangler deploy

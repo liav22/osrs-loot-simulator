@@ -1,0 +1,5 @@
+-- Phase 6 (optional). Schema for the D1-backed features described in
+-- PROJECT_PLAN.md section 14: saved runs, drop-log import, reverse item
+-- lookup. Not required for v1 and not yet implemented.
+--
+-- CREATE TABLE saved_runs (...);

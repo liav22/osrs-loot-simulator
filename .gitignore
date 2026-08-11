@@ -1,0 +1,60 @@
+# deps & build
+node_modules/
+dist/
+build/
+.vite/
+*.tsbuildinfo
+coverage/
+.turbo/
+
+# env & secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+secrets.json
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+.npmrc
+.netrc
+
+# infra (real values live here)
+infra/
+!infra.example/
+
+# cloudflare
+.wrangler/
+wrangler.toml
+!infra.example/cloudflare/wrangler.toml.example
+
+# regenerable wiki cache, large
+data/snapshots/
+
+# agent & editor local config
+.claude/settings.local.json
+CLAUDE.local.md
+.cursor/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# os
+.DS_Store
+Thumbs.db
+
+# misc
+*.log
+.pnpm-debug.log*
+tmp/
+scratch/
+
+# pnpm
+.pnpm-store/
+
+PROJECT_PLAN.md
