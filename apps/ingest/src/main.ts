@@ -1,4 +1,4 @@
-import { writeFile } from 'node:fs/promises'
+import { readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { BOSS_CATEGORY, DROPS_BUCKET, SCHEMA_PAGES } from './wiki/fields.js'
 import { USER_AGENT, WikiClient } from './wiki/client.js'
@@ -16,6 +16,14 @@ import {
 } from './snapshots/store.js'
 import { TIERS, TIER_LABELS, classify, type Tier, type TriageResult } from './triage/classify.js'
 import { renderTriageMarkdown } from './triage/report.js'
+import { INVENTORY_PATH, buildInventory } from './inventory/build.js'
+import {
+  CLASSIFICATIONS,
+  INCLUDED_CLASSIFICATIONS,
+  InventorySchema,
+  type Classification,
+  type Inventory,
+} from './inventory/schema.js'
 
 /**
  * Phase 2 scope: snapshots and triage. There is deliberately no `parse`
@@ -121,22 +129,25 @@ async function fetchPage(client: WikiClient, title: string): Promise<void> {
   log(`${title} page HTML snapshotted`)
 }
 
+/** Triage every distinct loot source, not every boss page. */
 async function triage(): Promise<void> {
   const manifest = await readManifest()
+  const inventory = InventorySchema.parse(JSON.parse(await readFile(INVENTORY_PATH, 'utf8')))
   const available = new Set(await listSnapshots('dropsline'))
   const results: TriageResult[] = []
 
-  for (const entry of manifest.entries) {
-    if (!available.has(entry.slug)) {
-      log(`  !! no snapshot on disk for ${entry.title}; skipping`)
+  for (const source of inventory.lootSources) {
+    const slug = slugify(source.dropsPage)
+    if (!available.has(slug)) {
+      log(`  !! no snapshot on disk for ${source.dropsPage}; skipping`)
       continue
     }
-    const snapshot = await readSnapshot('dropsline', entry.slug)
+    const snapshot = await readSnapshot('dropsline', slug)
     const response = BucketResponseSchema.parse(snapshot.body)
     results.push(
       classify({
-        title: entry.title,
-        slug: entry.slug,
+        title: source.title,
+        slug: source.id,
         rawRows: response.bucket ?? [],
         bucketError: response.error ?? null,
       })
@@ -149,9 +160,41 @@ async function triage(): Promise<void> {
   for (const result of results) counts.set(result.tier, (counts.get(result.tier) ?? 0) + 1)
 
   const path = join(REPO_ROOT, 'docs', 'TRIAGE.md')
-  await writeFile(path, renderTriageMarkdown(manifest, results, counts), 'utf8')
+  await writeFile(path, renderTriageMarkdown(manifest, inventory, results, counts), 'utf8')
 
-  log(`\nTier distribution across ${results.length} pages\n`)
+  reportDistribution(inventory, results, counts)
+  log(`\ndocs/TRIAGE.md written.`)
+}
+
+function reportDistribution(
+  inventory: Inventory,
+  results: readonly TriageResult[],
+  counts: ReadonlyMap<Tier, number>
+): void {
+  const byClassification = new Map<Classification, number>()
+  for (const boss of inventory.bosses) {
+    byClassification.set(
+      boss.classification,
+      (byClassification.get(boss.classification) ?? 0) + 1
+    )
+  }
+
+  log(`\nBoss pages: ${inventory.bosses.length}  ->  loot sources: ${inventory.lootSources.length}\n`)
+  log('Page classification')
+  for (const classification of CLASSIFICATIONS) {
+    const count = byClassification.get(classification) ?? 0
+    const kept = INCLUDED_CLASSIFICATIONS.includes(classification) ? 'keep   ' : 'exclude'
+    log(`  ${kept}  ${String(count).padStart(3)}  ${classification}`)
+  }
+
+  const included = inventory.lootSources.filter((source) => source.include)
+  const tierOf = new Map(results.map((result) => [result.title, result.tier]))
+  const gateEligible = included.filter((source) => {
+    const tier = tierOf.get(source.title)
+    return tier === 'A' || tier === 'B' || tier === 'C' || tier === 'E'
+  })
+
+  log(`\nTier distribution across ${results.length} loot sources\n`)
   for (const tier of TIERS) {
     const count = counts.get(tier) ?? 0
     const share = results.length === 0 ? 0 : (count / results.length) * 100
@@ -159,7 +202,11 @@ async function triage(): Promise<void> {
       `  ${tier}  ${String(count).padStart(3)}  ${share.toFixed(1).padStart(5)}%  ${TIER_LABELS[tier]}`
     )
   }
-  log(`\ndocs/TRIAGE.md written.`)
+
+  log(`\nGate, measured against loot sources rather than pages:`)
+  log(`  in scope                    ${included.length}`)
+  log(`  expected to parse cleanly   ${gateEligible.length}`)
+  log(`  excluded                    ${inventory.lootSources.length - included.length}`)
 }
 
 async function main(): Promise<void> {
@@ -186,11 +233,22 @@ async function main(): Promise<void> {
       await fetchAll(client, delayMs)
       return
     }
+    case 'sources': {
+      const inventory = await buildInventory(client, { log })
+      log(
+        `data/_inventory.json written: ${inventory.bosses.length} pages -> ` +
+          `${inventory.lootSources.length} loot sources.`
+      )
+      return
+    }
     case 'triage':
       await triage()
       return
     default:
-      log('Usage: ingest <verify-schema | fetch --all | fetch --page <Title> | triage> [--delay ms]')
+          log(
+        'Usage: ingest <verify-schema | fetch --all | fetch --page <Title> | sources | triage> ' +
+          '[--delay ms]'
+      )
       process.exitCode = 1
   }
 }

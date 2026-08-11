@@ -1,5 +1,11 @@
 import { BOSS_CATEGORY, DROPS_BUCKET } from '../wiki/fields.js'
 import type { FetchManifest } from '../snapshots/store.js'
+import {
+  CLASSIFICATIONS,
+  INCLUDED_CLASSIFICATIONS,
+  type Classification,
+  type Inventory,
+} from '../inventory/schema.js'
 import { MIN_MAIN_TABLE_ROWS, TIERS, TIER_LABELS, type Tier, type TriageResult } from './classify.js'
 
 function escapePipes(value: string): string {
@@ -8,10 +14,16 @@ function escapePipes(value: string): string {
 
 export function renderTriageMarkdown(
   manifest: FetchManifest,
+  inventory: Inventory,
   results: readonly TriageResult[],
   counts: ReadonlyMap<Tier, number>
 ): string {
   const total = results.length
+  const byClassification = new Map<Classification, number>()
+  for (const boss of inventory.bosses) {
+    byClassification.set(boss.classification, (byClassification.get(boss.classification) ?? 0) + 1)
+  }
+  const included = inventory.lootSources.filter((source) => source.include)
   const share = (count: number): string =>
     total === 0 ? '0.0%' : `${((count / total) * 100).toFixed(1)}%`
 
@@ -32,13 +44,66 @@ export function renderTriageMarkdown(
   lines.push('')
   lines.push(
     'This is triage, not parsing. Nothing here produces a canonical `Table`, `Node` or ' +
-      '`Rate`; it classifies each page by how much machinery it will need.'
+      '`Rate`; it classifies each loot source by how much machinery it will need.'
   )
   lines.push('')
 
-  lines.push('## Tier distribution')
+  lines.push('## Pages to loot sources')
   lines.push('')
-  lines.push('| Tier | Pages | Share | Meaning | Lands in |')
+  lines.push(
+    'A boss page and a loot source are different things. Six Barrows brothers share one ' +
+      'chest; the Chambers of Xeric bosses share one raid reward. The mapping in ' +
+      '`data/_inventory.json` is many-to-one, and everything below counts **loot sources**.'
+  )
+  lines.push('')
+  lines.push(
+    `**${inventory.bosses.length} boss pages resolve to ${inventory.lootSources.length} loot ` +
+      `sources, of which ${included.length} are in scope.**`
+  )
+  lines.push('')
+  lines.push('| Classification | Pages | In scope | Meaning |')
+  lines.push('|---|---:|:-:|---|')
+  const meanings: Record<Classification, string> = {
+    'own-table': 'the page carries its own main weighted table',
+    'reward-page': 'part of an encounter whose drops live on a separate reward page',
+    trivial: 'its whole table is a handful of `Always` rows — complete as it stands',
+    component: 'part of an encounter with no drop rows anywhere; rewards are point-based',
+    'no-loot-data': 'no drop rows, no encounter, no reward page — hub and meta pages',
+  }
+  for (const classification of CLASSIFICATIONS) {
+    const count = byClassification.get(classification) ?? 0
+    const kept = INCLUDED_CLASSIFICATIONS.includes(classification) ? 'yes' : '—'
+    lines.push(`| \`${classification}\` | ${count} | ${kept} | ${meanings[classification]} |`)
+  }
+  lines.push('')
+  lines.push(
+    'A shared category only counts as an encounter when the page of the same name carries ' +
+      'an `infobox_activity` row. That is what separates Chambers of Xeric from a category ' +
+      'like "Content released in 2007" or a quest name — both of which are also shared by ' +
+      'several boss pages, but whose members own their loot outright.'
+  )
+  lines.push('')
+
+  const manyToOne = inventory.lootSources
+    .filter((source) => source.bosses.length > 1)
+    .sort((a, b) => b.bosses.length - a.bosses.length)
+  if (manyToOne.length > 0) {
+    lines.push('### Many-to-one mappings')
+    lines.push('')
+    lines.push('| Loot source | Drops page | Pages | In scope |')
+    lines.push('|---|---|---:|:-:|')
+    for (const source of manyToOne) {
+      lines.push(
+        `| ${escapePipes(source.title)} | ${escapePipes(source.dropsPage)} | ` +
+          `${source.bosses.length} | ${source.include ? 'yes' : '—'} |`
+      )
+    }
+    lines.push('')
+  }
+
+  lines.push('## Tier distribution across loot sources')
+  lines.push('')
+  lines.push('| Tier | Sources | Share | Meaning | Lands in |')
   lines.push('|---|---:|---:|---|---|')
   const landing: Record<Tier, string> = {
     A: 'Phase 2 parser',
@@ -94,7 +159,7 @@ export function renderTriageMarkdown(
     if (inTier.length === 0) continue
     lines.push(`## Tier ${tier} — ${TIER_LABELS[tier]} (${inTier.length})`)
     lines.push('')
-    lines.push('| Page | Rows | Main den. | Markers | RDT | Notes |')
+    lines.push('| Loot source | Rows | Main den. | Markers | RDT | Notes |')
     lines.push('|---|---:|---:|:-:|:-:|---|')
     for (const result of inTier) {
       lines.push(

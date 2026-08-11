@@ -227,6 +227,69 @@ export class WikiClient {
     return { html: parsed.parse.text, record }
   }
 
+  /** Categories each page belongs to, batched with `clcontinue` followed. */
+  async categoriesFor(pageTitles: readonly string[]): Promise<{
+    categories: Map<string, string[]>
+    records: RequestRecord[]
+  }> {
+    const categories = new Map<string, string[]>()
+    const records: RequestRecord[] = []
+    const schema = z.object({
+      query: z.object({
+        pages: z.array(
+          z
+            .object({
+              title: z.string(),
+              categories: z.array(z.object({ title: z.string() }).passthrough()).optional(),
+            })
+            .passthrough()
+        ),
+      }),
+      continue: z.object({ clcontinue: z.string() }).passthrough().optional(),
+    })
+
+    for (let i = 0; i < pageTitles.length; i += 50) {
+      const batch = pageTitles.slice(i, i + 50)
+      let clcontinue: string | undefined
+      do {
+        const record = await this.request({
+          action: 'query',
+          prop: 'categories',
+          titles: batch.join('|'),
+          cllimit: '500',
+          ...(clcontinue === undefined ? {} : { clcontinue }),
+        })
+        records.push(record)
+        const parsed = schema.parse(record.body)
+        for (const page of parsed.query.pages) {
+          const existing = categories.get(page.title) ?? []
+          for (const category of page.categories ?? []) {
+            existing.push(category.title.replace(/^Category:/, ''))
+          }
+          categories.set(page.title, existing)
+        }
+        clcontinue = parsed.continue?.clcontinue
+      } while (clcontinue !== undefined)
+    }
+
+    return { categories, records }
+  }
+
+  /**
+   * Whether a page carries an `infobox_activity` row. This is what separates a
+   * real encounter (a raid, Barrows, the Gauntlet) from an incidental shared
+   * category like a quest name or a release year.
+   */
+  async isActivity(pageName: string): Promise<{ activity: boolean; record: RequestRecord }> {
+    const escaped = pageName.replace(/'/g, "\\'")
+    const record = await this.request({
+      action: 'bucket',
+      query: `bucket('infobox_activity').select('page_name').where('page_name','${escaped}').limit(1).run()`,
+    })
+    const parsed = BucketResponseSchema.parse(record.body)
+    return { activity: (parsed.bucket?.length ?? 0) > 0, record }
+  }
+
   /** Bucket names currently defined on the wiki. */
   async listBuckets(): Promise<{ names: string[]; record: RequestRecord }> {
     const record = await this.request({

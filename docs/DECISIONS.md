@@ -194,3 +194,50 @@ Running log of judgement calls the spec (`PROJECT_PLAN.md`) did not explicitly c
   588.65 in sections 6.4 and 7.** The figure is GE-price driven and moves. The
   `ev_matches` check must read this number from the snapshot at validation time
   rather than hard-coding it.
+
+## Loot-source reclassification (6.1)
+
+- **The unit of work is a loot source, not a boss page.** `data/_inventory.json` maps
+  boss pages to loot sources many-to-one: nine Barrows pages resolve to one
+  `Chest (Barrows)`, seven Chambers of Xeric pages to one `Ancient chest`. Counting
+  pages overstated the work and hid the fact that two of the largest tier-E clusters
+  are single clean tables.
+- **An encounter is detected by `infobox_activity`, never from memory.** A category
+  shared by two or more tier-E pages counts as an encounter only when the page of the
+  same name carries an `infobox_activity` row. That is what separates Chambers of Xeric
+  from "Content released in 2007", "Wights" or a quest name — all of which are also
+  shared by several boss pages, but whose members own their loot outright. Six
+  encounters were confirmed this way.
+- **Reward pages are discovered per page, not per encounter.** The first version
+  searched only the encounter page's links and missed the Moons of Peril entirely:
+  Blood, Blue and Eclipse Moon are categorised under `Neypotzli`, which is not an
+  activity, while their own pages link `Lunar Chest` (24 rows). Searching every
+  tier-E page's own wikitext for a `chest|reward|loot|casket` link, then testing each
+  distinct candidate for drop rows, recovered `Lunar Chest`, `Reward Cart` (75 rows)
+  and `Reward pool` (52 rows) as well.
+- **Canonical page names come from the data, not the link text.** MediaWiki link
+  targets are case-insensitive on the first letter, so `[[reward pool]]` is a valid
+  link to "Reward pool". Taking the title from the first row's `page_name` avoids
+  loot sources named in lower case.
+- **Candidate lookups are snapshot-first.** `ingest sources` re-reads
+  `data/snapshots/dropsline/` when a candidate is already cached, so re-running after
+  a bug fix costs no requests. This is section 6.3 applied to the command that
+  discovers pages rather than the one that fetches them.
+- **Tier E splits four ways, not three.** `component` (part of an encounter with no
+  drop rows anywhere — point-based rewards) and `no-loot-data` (no rows, no encounter,
+  no reward page — hub and meta pages like `Boss kill count` or `Dagannoth Kings`) are
+  both excluded, but conflating them would file `Boss kill count` as a raid component.
+  `reward-page` and `trivial` are kept.
+- **A `trivial` source is complete, not deficient.** Its whole drop table is a handful
+  of `Always` rows, which is a valid `always` table and needs no weighted machinery.
+  These triage as tier E because they have no main table, and they still count toward
+  the gate.
+
+### Note on the plan
+
+At the time of this work `PROJECT_PLAN.md` on disk was unchanged from its original
+version: section 6.1 still described a `drops` bucket with `item`/`quantity`/`rarity`
+columns, section 7 still hard-coded 588.65, and section 16's Phase 2 gate still read
+"at least 15 bosses at `status: 'verified'`" — pages, not loot sources. The
+reclassification above was carried out against direct instructions rather than against
+plan text, and the gate is reported as a measured number rather than as pass/fail.

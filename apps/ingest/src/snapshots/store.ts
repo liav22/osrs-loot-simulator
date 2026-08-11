@@ -17,7 +17,15 @@ const HERE = dirname(fileURLToPath(import.meta.url))
 export const REPO_ROOT = resolve(HERE, '../../../..')
 export const SNAPSHOT_ROOT = join(REPO_ROOT, 'data', 'snapshots')
 
-export type SnapshotKind = 'inventory' | 'dropsline' | 'revisions' | 'schema' | 'page'
+export type SnapshotKind =
+  | 'inventory'
+  | 'dropsline'
+  | 'revisions'
+  | 'schema'
+  | 'page'
+  | 'categories'
+  | 'activity'
+  | 'wikitext'
 
 /**
  * Page title to filename-safe key. The original title is always stored inside

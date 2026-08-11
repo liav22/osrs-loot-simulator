@@ -1,0 +1,3668 @@
+{
+  "inventoryVersion": 1,
+  "generatedAt": "2026-08-11T09:37:30.135Z",
+  "category": "Category:Bosses",
+  "bosses": [
+    {
+      "slug": "abyssal-sire",
+      "title": "Abyssal Sire",
+      "pageid": 65167,
+      "revid": 15283163,
+      "lootSourceId": "abyssal-sire",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 88,
+      "encounter": null
+    },
+    {
+      "slug": "agrith-na-na",
+      "title": "Agrith-Na-Na",
+      "pageid": 18096,
+      "revid": 15199368,
+      "lootSourceId": "agrith-na-na",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "agrith-naar",
+      "title": "Agrith Naar",
+      "pageid": 12940,
+      "revid": 15240025,
+      "lootSourceId": "agrith-naar",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "ahrim-the-blighted",
+      "title": "Ahrim the Blighted",
+      "pageid": 13850,
+      "revid": 15199256,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Barrows"
+    },
+    {
+      "slug": "akkha",
+      "title": "Akkha",
+      "pageid": 357995,
+      "revid": 15200303,
+      "lootSourceId": "tombs-of-amascut",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 2,
+      "encounter": "Tombs of Amascut"
+    },
+    {
+      "slug": "alchemical-hydra",
+      "title": "Alchemical Hydra",
+      "pageid": 199891,
+      "revid": 15285801,
+      "lootSourceId": "alchemical-hydra",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 90,
+      "encounter": null
+    },
+    {
+      "slug": "amoxliatl",
+      "title": "Amoxliatl",
+      "pageid": 537911,
+      "revid": 15266380,
+      "lootSourceId": "amoxliatl",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 39,
+      "encounter": null
+    },
+    {
+      "slug": "araxxor",
+      "title": "Araxxor",
+      "pageid": 443990,
+      "revid": 15290082,
+      "lootSourceId": "araxxor",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 88,
+      "encounter": null
+    },
+    {
+      "slug": "arrg",
+      "title": "Arrg",
+      "pageid": 26489,
+      "revid": 15215810,
+      "lootSourceId": "arrg",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 68,
+      "encounter": null
+    },
+    {
+      "slug": "artio",
+      "title": "Artio",
+      "pageid": 374838,
+      "revid": 15200339,
+      "lootSourceId": "artio",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 47,
+      "encounter": null
+    },
+    {
+      "slug": "arzinian-avatar-of-magic",
+      "title": "Arzinian Avatar of Magic",
+      "pageid": 100393,
+      "revid": 15200003,
+      "lootSourceId": "arzinian-avatar-of-magic",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "arzinian-avatar-of-ranging",
+      "title": "Arzinian Avatar of Ranging",
+      "pageid": 100394,
+      "revid": 15200004,
+      "lootSourceId": "arzinian-avatar-of-ranging",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "arzinian-avatar-of-strength",
+      "title": "Arzinian Avatar of Strength",
+      "pageid": 100395,
+      "revid": 15200005,
+      "lootSourceId": "arzinian-avatar-of-strength",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "arzinian-being-of-bordanzan",
+      "title": "Arzinian Being of Bordanzan",
+      "pageid": 27313,
+      "revid": 15167148,
+      "lootSourceId": "arzinian-being-of-bordanzan",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "ba-ba",
+      "title": "Ba-Ba",
+      "pageid": 357992,
+      "revid": 15200300,
+      "lootSourceId": "tombs-of-amascut",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 2,
+      "encounter": "Tombs of Amascut"
+    },
+    {
+      "slug": "barrelchest",
+      "title": "Barrelchest",
+      "pageid": 23740,
+      "revid": 15292475,
+      "lootSourceId": "barrelchest",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "barrows",
+      "title": "Barrows",
+      "pageid": 10064,
+      "revid": 15265178,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": "Barrows"
+    },
+    {
+      "slug": "barrows-brothers",
+      "title": "Barrows brothers",
+      "pageid": 15861,
+      "revid": 15259844,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": "Barrows"
+    },
+    {
+      "slug": "black-demon",
+      "title": "Black demon",
+      "pageid": 13614,
+      "revid": 15275657,
+      "lootSourceId": "black-demon",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 155,
+      "encounter": null
+    },
+    {
+      "slug": "black-golem",
+      "title": "Black golem",
+      "pageid": 42296,
+      "revid": 15199723,
+      "lootSourceId": "black-golem",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "black-knight-titan",
+      "title": "Black Knight Titan",
+      "pageid": 12337,
+      "revid": 15199191,
+      "lootSourceId": "black-knight-titan",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 94,
+      "encounter": null
+    },
+    {
+      "slug": "blood-moon",
+      "title": "Blood Moon",
+      "pageid": 459424,
+      "revid": 15292459,
+      "lootSourceId": "blood-moon",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "blue-moon",
+      "title": "Blue Moon",
+      "pageid": 459416,
+      "revid": 15292452,
+      "lootSourceId": "blue-moon",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "boss",
+      "title": "Boss",
+      "pageid": 29375,
+      "revid": 15292458,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "boss-kill-count",
+      "title": "Boss kill count",
+      "pageid": 386852,
+      "revid": 15153249,
+      "lootSourceId": "boss-kill-count",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "bouncer",
+      "title": "Bouncer",
+      "pageid": 21893,
+      "revid": 15199444,
+      "lootSourceId": "bouncer",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "bouncer-ghost",
+      "title": "Bouncer (ghost)",
+      "pageid": 35731,
+      "revid": 15215838,
+      "lootSourceId": "bouncer-ghost",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "branda-the-fire-queen",
+      "title": "Branda the Fire Queen",
+      "pageid": 565719,
+      "revid": 15200593,
+      "lootSourceId": "branda-the-fire-queen",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 36,
+      "encounter": null
+    },
+    {
+      "slug": "brutus",
+      "title": "Brutus",
+      "pageid": 646156,
+      "revid": 15289101,
+      "lootSourceId": "brutus",
+      "classification": "own-table",
+      "tier": "B",
+      "rowCount": 25,
+      "encounter": null
+    },
+    {
+      "slug": "bryophyta",
+      "title": "Bryophyta",
+      "pageid": 115742,
+      "revid": 15292491,
+      "lootSourceId": "bryophyta",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 108,
+      "encounter": null
+    },
+    {
+      "slug": "callisto",
+      "title": "Callisto",
+      "pageid": 31268,
+      "revid": 15285311,
+      "lootSourceId": "callisto",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 54,
+      "encounter": null
+    },
+    {
+      "slug": "calvar-ion",
+      "title": "Calvar'ion",
+      "pageid": 374839,
+      "revid": 15276762,
+      "lootSourceId": "calvar-ion",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 48,
+      "encounter": null
+    },
+    {
+      "slug": "cerberus",
+      "title": "Cerberus",
+      "pageid": 55174,
+      "revid": 15286707,
+      "lootSourceId": "cerberus",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 68,
+      "encounter": null
+    },
+    {
+      "slug": "chaos-elemental",
+      "title": "Chaos Elemental",
+      "pageid": 13099,
+      "revid": 15260583,
+      "lootSourceId": "chaos-elemental",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 70,
+      "encounter": null
+    },
+    {
+      "slug": "chaos-fanatic",
+      "title": "Chaos Fanatic",
+      "pageid": 31314,
+      "revid": 15292543,
+      "lootSourceId": "chaos-fanatic",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 58,
+      "encounter": null
+    },
+    {
+      "slug": "chronozon",
+      "title": "Chronozon",
+      "pageid": 14247,
+      "revid": 15215842,
+      "lootSourceId": "chronozon",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 3,
+      "encounter": null
+    },
+    {
+      "slug": "commander-zilyana",
+      "title": "Commander Zilyana",
+      "pageid": 23823,
+      "revid": 15247762,
+      "lootSourceId": "commander-zilyana",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 52,
+      "encounter": null
+    },
+    {
+      "slug": "corporeal-beast",
+      "title": "Corporeal Beast",
+      "pageid": 41957,
+      "revid": 15281958,
+      "lootSourceId": "corporeal-beast",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 49,
+      "encounter": null
+    },
+    {
+      "slug": "corrupted-hunllef",
+      "title": "Corrupted Hunllef",
+      "pageid": 231183,
+      "revid": 15274243,
+      "lootSourceId": "reward-chest-the-gauntlet",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": "The Gauntlet"
+    },
+    {
+      "slug": "count-draynor",
+      "title": "Count Draynor",
+      "pageid": 16347,
+      "revid": 15286206,
+      "lootSourceId": "count-draynor",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "crazy-archaeologist",
+      "title": "Crazy archaeologist",
+      "pageid": 31288,
+      "revid": 15267737,
+      "lootSourceId": "crazy-archaeologist",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 57,
+      "encounter": null
+    },
+    {
+      "slug": "crystalline-hunllef",
+      "title": "Crystalline Hunllef",
+      "pageid": 226708,
+      "revid": 15273480,
+      "lootSourceId": "reward-chest-the-gauntlet",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": "The Gauntlet"
+    },
+    {
+      "slug": "culinaromancer",
+      "title": "Culinaromancer",
+      "pageid": 15873,
+      "revid": 15199314,
+      "lootSourceId": "culinaromancer",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "dad",
+      "title": "Dad",
+      "pageid": 26488,
+      "revid": 15199512,
+      "lootSourceId": "dad",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 3,
+      "encounter": null
+    },
+    {
+      "slug": "dagannoth-kings",
+      "title": "Dagannoth Kings",
+      "pageid": 15452,
+      "revid": 15289928,
+      "lootSourceId": "dagannoth-kings",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "dagannoth-mother",
+      "title": "Dagannoth mother",
+      "pageid": 22789,
+      "revid": 15199457,
+      "lootSourceId": "dagannoth-mother",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 2,
+      "encounter": null
+    },
+    {
+      "slug": "dagannoth-prime",
+      "title": "Dagannoth Prime",
+      "pageid": 18216,
+      "revid": 15240567,
+      "lootSourceId": "dagannoth-prime",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 85,
+      "encounter": null
+    },
+    {
+      "slug": "dagannoth-rex",
+      "title": "Dagannoth Rex",
+      "pageid": 15743,
+      "revid": 15275562,
+      "lootSourceId": "dagannoth-rex",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 77,
+      "encounter": null
+    },
+    {
+      "slug": "dagannoth-supreme",
+      "title": "Dagannoth Supreme",
+      "pageid": 18215,
+      "revid": 15270155,
+      "lootSourceId": "dagannoth-supreme",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 84,
+      "encounter": null
+    },
+    {
+      "slug": "damis",
+      "title": "Damis",
+      "pageid": 21722,
+      "revid": 15210041,
+      "lootSourceId": "damis",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "dawn",
+      "title": "Dawn",
+      "pageid": 105431,
+      "revid": 15283149,
+      "lootSourceId": "grotesque-guardians",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": "Grotesque Guardians"
+    },
+    {
+      "slug": "delrith",
+      "title": "Delrith",
+      "pageid": 12937,
+      "revid": 15216579,
+      "lootSourceId": "delrith",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "demonic-brutus",
+      "title": "Demonic Brutus",
+      "pageid": 646193,
+      "revid": 15214877,
+      "lootSourceId": "demonic-brutus",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 2,
+      "encounter": null
+    },
+    {
+      "slug": "deranged-archaeologist",
+      "title": "Deranged archaeologist",
+      "pageid": 103094,
+      "revid": 15273150,
+      "lootSourceId": "deranged-archaeologist",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 72,
+      "encounter": null
+    },
+    {
+      "slug": "dessourt",
+      "title": "Dessourt",
+      "pageid": 23512,
+      "revid": 15199470,
+      "lootSourceId": "dessourt",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "dessous",
+      "title": "Dessous",
+      "pageid": 20394,
+      "revid": 15272137,
+      "lootSourceId": "dessous",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "dharok-the-wretched",
+      "title": "Dharok the Wretched",
+      "pageid": 13851,
+      "revid": 15232188,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Barrows"
+    },
+    {
+      "slug": "doom-of-mokhaiotl",
+      "title": "Doom of Mokhaiotl",
+      "pageid": 561466,
+      "revid": 15276851,
+      "lootSourceId": "doom-of-mokhaiotl",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 30,
+      "encounter": null
+    },
+    {
+      "slug": "duke-sucellus",
+      "title": "Duke Sucellus",
+      "pageid": 372984,
+      "revid": 15275314,
+      "lootSourceId": "duke-sucellus",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 44,
+      "encounter": null
+    },
+    {
+      "slug": "dusk",
+      "title": "Dusk",
+      "pageid": 105432,
+      "revid": 15283151,
+      "lootSourceId": "grotesque-guardians",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": "Grotesque Guardians"
+    },
+    {
+      "slug": "eclipse-moon",
+      "title": "Eclipse Moon",
+      "pageid": 459421,
+      "revid": 15292454,
+      "lootSourceId": "eclipse-moon",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "eldric-the-ice-king",
+      "title": "Eldric the Ice King",
+      "pageid": 565718,
+      "revid": 15271709,
+      "lootSourceId": "eldric-the-ice-king",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 37,
+      "encounter": null
+    },
+    {
+      "slug": "elidinis-warden",
+      "title": "Elidinis' Warden",
+      "pageid": 363848,
+      "revid": 15272445,
+      "lootSourceId": "tombs-of-amascut",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Tombs of Amascut"
+    },
+    {
+      "slug": "elvarg",
+      "title": "Elvarg",
+      "pageid": 11925,
+      "revid": 15233362,
+      "lootSourceId": "elvarg",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "evil-spirit",
+      "title": "Evil spirit",
+      "pageid": 32764,
+      "revid": 15199641,
+      "lootSourceId": "evil-spirit",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "fareed",
+      "title": "Fareed",
+      "pageid": 15915,
+      "revid": 15199315,
+      "lootSourceId": "burnt-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "flambeed",
+      "title": "Flambeed",
+      "pageid": 14001,
+      "revid": 15215854,
+      "lootSourceId": "flambeed",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "gadderanks",
+      "title": "Gadderanks",
+      "pageid": 22372,
+      "revid": 15199449,
+      "lootSourceId": "gadderanks",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "galvek",
+      "title": "Galvek",
+      "pageid": 108839,
+      "revid": 15272224,
+      "lootSourceId": "galvek",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "gelatinnoth-mother",
+      "title": "Gelatinnoth Mother",
+      "pageid": 26491,
+      "revid": 15199515,
+      "lootSourceId": "gelatinnoth-mother",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "gemstone-crab",
+      "title": "Gemstone Crab",
+      "pageid": 591814,
+      "revid": 15271566,
+      "lootSourceId": "gemstone-crab",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 8,
+      "encounter": null
+    },
+    {
+      "slug": "general-graardor",
+      "title": "General Graardor",
+      "pageid": 23913,
+      "revid": 15276905,
+      "lootSourceId": "general-graardor",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 52,
+      "encounter": null
+    },
+    {
+      "slug": "general-khazard",
+      "title": "General Khazard",
+      "pageid": 18142,
+      "revid": 15216084,
+      "lootSourceId": "general-khazard",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "giant-mole",
+      "title": "Giant Mole",
+      "pageid": 12426,
+      "revid": 15283594,
+      "lootSourceId": "giant-mole",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 53,
+      "encounter": null
+    },
+    {
+      "slug": "giant-roc",
+      "title": "Giant Roc",
+      "pageid": 26492,
+      "revid": 15218450,
+      "lootSourceId": "giant-roc",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 3,
+      "encounter": null
+    },
+    {
+      "slug": "giant-scarab",
+      "title": "Giant Scarab",
+      "pageid": 26494,
+      "revid": 15199518,
+      "lootSourceId": "giant-scarab",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "giant-sea-snake",
+      "title": "Giant Sea Snake",
+      "pageid": 29285,
+      "revid": 15199601,
+      "lootSourceId": "giant-sea-snake",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 70,
+      "encounter": null
+    },
+    {
+      "slug": "glod",
+      "title": "Glod",
+      "pageid": 26490,
+      "revid": 15221322,
+      "lootSourceId": "glod",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 7,
+      "encounter": null
+    },
+    {
+      "slug": "glough",
+      "title": "Glough",
+      "pageid": 15254,
+      "revid": 15238403,
+      "lootSourceId": "glough",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "great-olm",
+      "title": "Great Olm",
+      "pageid": 82466,
+      "revid": 15232075,
+      "lootSourceId": "ancient-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": "Chambers of Xeric"
+    },
+    {
+      "slug": "grey-golem",
+      "title": "Grey golem",
+      "pageid": 42297,
+      "revid": 15199724,
+      "lootSourceId": "grey-golem",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "grotesque-guardians",
+      "title": "Grotesque Guardians",
+      "pageid": 105430,
+      "revid": 15289930,
+      "lootSourceId": "grotesque-guardians",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 45,
+      "encounter": null
+    },
+    {
+      "slug": "guthan-the-infested",
+      "title": "Guthan the Infested",
+      "pageid": 13852,
+      "revid": 15199258,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Barrows"
+    },
+    {
+      "slug": "hespori",
+      "title": "Hespori",
+      "pageid": 199867,
+      "revid": 15287161,
+      "lootSourceId": "hespori",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 37,
+      "encounter": null
+    },
+    {
+      "slug": "ice-demon",
+      "title": "Ice demon",
+      "pageid": 82496,
+      "revid": 15277102,
+      "lootSourceId": "ancient-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 4,
+      "encounter": "Chambers of Xeric"
+    },
+    {
+      "slug": "ice-troll-king",
+      "title": "Ice Troll King",
+      "pageid": 24461,
+      "revid": 15239645,
+      "lootSourceId": "ice-troll-king",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "judge-of-yama-a-kingdom-divided",
+      "title": "Judge of Yama (A Kingdom Divided)",
+      "pageid": 316699,
+      "revid": 15200266,
+      "lootSourceId": "judge-of-yama-a-kingdom-divided",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "jungle-demon",
+      "title": "Jungle Demon",
+      "pageid": 15203,
+      "revid": 15199289,
+      "lootSourceId": "jungle-demon",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "k-ril-tsutsaroth",
+      "title": "K'ril Tsutsaroth",
+      "pageid": 22758,
+      "revid": 15235043,
+      "lootSourceId": "k-ril-tsutsaroth",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 51,
+      "encounter": null
+    },
+    {
+      "slug": "kalphite-queen",
+      "title": "Kalphite Queen",
+      "pageid": 12838,
+      "revid": 15240484,
+      "lootSourceId": "kalphite-queen",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 77,
+      "encounter": null
+    },
+    {
+      "slug": "kamil",
+      "title": "Kamil",
+      "pageid": 17884,
+      "revid": 15292399,
+      "lootSourceId": "kamil",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 2,
+      "encounter": null
+    },
+    {
+      "slug": "karamel",
+      "title": "Karamel",
+      "pageid": 17883,
+      "revid": 15215876,
+      "lootSourceId": "karamel",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "karil-the-tainted",
+      "title": "Karil the Tainted",
+      "pageid": 13853,
+      "revid": 15199259,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Barrows"
+    },
+    {
+      "slug": "kephri",
+      "title": "Kephri",
+      "pageid": 357994,
+      "revid": 15200302,
+      "lootSourceId": "tombs-of-amascut",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 2,
+      "encounter": "Tombs of Amascut"
+    },
+    {
+      "slug": "king-black-dragon",
+      "title": "King Black Dragon",
+      "pageid": 11870,
+      "revid": 15234126,
+      "lootSourceId": "king-black-dragon",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 55,
+      "encounter": null
+    },
+    {
+      "slug": "koschei-the-deathless",
+      "title": "Koschei the deathless",
+      "pageid": 16428,
+      "revid": 15290461,
+      "lootSourceId": "koschei-the-deathless",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "kraken",
+      "title": "Kraken",
+      "pageid": 29357,
+      "revid": 15275537,
+      "lootSourceId": "kraken",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 52,
+      "encounter": null
+    },
+    {
+      "slug": "kree-arra",
+      "title": "Kree'arra",
+      "pageid": 23911,
+      "revid": 15235236,
+      "lootSourceId": "kree-arra",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 54,
+      "encounter": null
+    },
+    {
+      "slug": "mad-angel",
+      "title": "Mad Angel",
+      "pageid": 668089,
+      "revid": 15292455,
+      "lootSourceId": "mad-angel",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 55,
+      "encounter": null
+    },
+    {
+      "slug": "maggot-king",
+      "title": "Maggot King",
+      "pageid": 647642,
+      "revid": 15292096,
+      "lootSourceId": "maggot-king",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 36,
+      "encounter": null
+    },
+    {
+      "slug": "me",
+      "title": "Me",
+      "pageid": 23860,
+      "revid": 15199475,
+      "lootSourceId": "me",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "melzar-the-mad",
+      "title": "Melzar the Mad",
+      "pageid": 17977,
+      "revid": 15199366,
+      "lootSourceId": "melzar-the-mad",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 2,
+      "encounter": null
+    },
+    {
+      "slug": "moons-of-peril",
+      "title": "Moons of Peril",
+      "pageid": 416941,
+      "revid": 15292456,
+      "lootSourceId": "lunar-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "moss-guardian",
+      "title": "Moss Guardian",
+      "pageid": 34767,
+      "revid": 15199663,
+      "lootSourceId": "moss-guardian",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 4,
+      "encounter": null
+    },
+    {
+      "slug": "muttadile",
+      "title": "Muttadile",
+      "pageid": 82498,
+      "revid": 15276396,
+      "lootSourceId": "ancient-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 9,
+      "encounter": "Chambers of Xeric"
+    },
+    {
+      "slug": "nex",
+      "title": "Nex",
+      "pageid": 36623,
+      "revid": 15264238,
+      "lootSourceId": "nex",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 34,
+      "encounter": null
+    },
+    {
+      "slug": "nezikchened",
+      "title": "Nezikchened",
+      "pageid": 26493,
+      "revid": 15242487,
+      "lootSourceId": "nezikchened",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "nylocas-vasilias",
+      "title": "Nylocas Vasilias",
+      "pageid": 117596,
+      "revid": 15218278,
+      "lootSourceId": "theatre-of-blood",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Theatre of Blood"
+    },
+    {
+      "slug": "obor",
+      "title": "Obor",
+      "pageid": 80432,
+      "revid": 15264295,
+      "lootSourceId": "obor",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 126,
+      "encounter": null
+    },
+    {
+      "slug": "penance-queen",
+      "title": "Penance Queen",
+      "pageid": 17449,
+      "revid": 15221137,
+      "lootSourceId": "penance-queen",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "pestilent-bloat",
+      "title": "Pestilent Bloat",
+      "pageid": 117595,
+      "revid": 15273178,
+      "lootSourceId": "theatre-of-blood",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Theatre of Blood"
+    },
+    {
+      "slug": "phantom-muspah",
+      "title": "Phantom Muspah",
+      "pageid": 373603,
+      "revid": 15290767,
+      "lootSourceId": "phantom-muspah",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 98,
+      "encounter": null
+    },
+    {
+      "slug": "phosani-s-nightmare",
+      "title": "Phosani's Nightmare",
+      "pageid": 255770,
+      "revid": 15273922,
+      "lootSourceId": "phosani-s-nightmare",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 39,
+      "encounter": null
+    },
+    {
+      "slug": "revenant-maledictus",
+      "title": "Revenant maledictus",
+      "pageid": 347157,
+      "revid": 15238938,
+      "lootSourceId": "revenant-maledictus",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 59,
+      "encounter": null
+    },
+    {
+      "slug": "royal-titans",
+      "title": "Royal Titans",
+      "pageid": 553602,
+      "revid": 15242190,
+      "lootSourceId": "royal-titans",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "salarin-the-twisted",
+      "title": "Salarin the twisted",
+      "pageid": 17816,
+      "revid": 15207785,
+      "lootSourceId": "salarin-the-twisted",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 37,
+      "encounter": null
+    },
+    {
+      "slug": "sarachnis",
+      "title": "Sarachnis",
+      "pageid": 222974,
+      "revid": 15291785,
+      "lootSourceId": "sarachnis",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 75,
+      "encounter": null
+    },
+    {
+      "slug": "scorpia",
+      "title": "Scorpia",
+      "pageid": 31286,
+      "revid": 15237232,
+      "lootSourceId": "scorpia",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 38,
+      "encounter": null
+    },
+    {
+      "slug": "scurrius",
+      "title": "Scurrius",
+      "pageid": 404457,
+      "revid": 15201009,
+      "lootSourceId": "scurrius",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 41,
+      "encounter": null
+    },
+    {
+      "slug": "sea-troll-queen",
+      "title": "Sea Troll Queen",
+      "pageid": 26576,
+      "revid": 15215925,
+      "lootSourceId": "sea-troll-queen",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "shellbane-gryphon",
+      "title": "Shellbane gryphon",
+      "pageid": 608715,
+      "revid": 15286806,
+      "lootSourceId": "shellbane-gryphon",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 52,
+      "encounter": null
+    },
+    {
+      "slug": "sigmund",
+      "title": "Sigmund",
+      "pageid": 17751,
+      "revid": 15285834,
+      "lootSourceId": "sigmund",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "sir-leye",
+      "title": "Sir Leye",
+      "pageid": 54946,
+      "revid": 15262507,
+      "lootSourceId": "sir-leye",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "sir-mordred",
+      "title": "Sir Mordred",
+      "pageid": 21497,
+      "revid": 15199426,
+      "lootSourceId": "sir-mordred",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "skotizo",
+      "title": "Skotizo",
+      "pageid": 74417,
+      "revid": 15272437,
+      "lootSourceId": "skotizo",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 34,
+      "encounter": null
+    },
+    {
+      "slug": "slagilith",
+      "title": "Slagilith",
+      "pageid": 20727,
+      "revid": 15258101,
+      "lootSourceId": "slagilith",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 3,
+      "encounter": null
+    },
+    {
+      "slug": "slash-bash",
+      "title": "Slash Bash",
+      "pageid": 25622,
+      "revid": 15274454,
+      "lootSourceId": "slash-bash",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 5,
+      "encounter": null
+    },
+    {
+      "slug": "slug-prince",
+      "title": "Slug Prince",
+      "pageid": 21538,
+      "revid": 15199429,
+      "lootSourceId": "slug-prince",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "sol-heredit",
+      "title": "Sol Heredit",
+      "pageid": 459148,
+      "revid": 15211078,
+      "lootSourceId": "sol-heredit",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "sotetseg",
+      "title": "Sotetseg",
+      "pageid": 117587,
+      "revid": 15234530,
+      "lootSourceId": "theatre-of-blood",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 3,
+      "encounter": "Theatre of Blood"
+    },
+    {
+      "slug": "spindel",
+      "title": "Spindel",
+      "pageid": 374849,
+      "revid": 15290389,
+      "lootSourceId": "spindel",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 45,
+      "encounter": null
+    },
+    {
+      "slug": "tarn",
+      "title": "Tarn",
+      "pageid": 23545,
+      "revid": 15207953,
+      "lootSourceId": "tarn",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "tekton",
+      "title": "Tekton",
+      "pageid": 82467,
+      "revid": 15265013,
+      "lootSourceId": "ancient-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 6,
+      "encounter": "Chambers of Xeric"
+    },
+    {
+      "slug": "tempoross",
+      "title": "Tempoross",
+      "pageid": 291284,
+      "revid": 15292689,
+      "lootSourceId": "reward-pool",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "the-draugen",
+      "title": "The Draugen",
+      "pageid": 21509,
+      "revid": 15215949,
+      "lootSourceId": "the-draugen",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "the-everlasting",
+      "title": "The Everlasting",
+      "pageid": 27579,
+      "revid": 15199540,
+      "lootSourceId": "the-everlasting",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "the-hueycoatl",
+      "title": "The Hueycoatl",
+      "pageid": 490704,
+      "revid": 15261562,
+      "lootSourceId": "the-hueycoatl",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 33,
+      "encounter": null
+    },
+    {
+      "slug": "the-illusive",
+      "title": "The Illusive",
+      "pageid": 27582,
+      "revid": 15199542,
+      "lootSourceId": "the-illusive",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "the-inadequacy",
+      "title": "The Inadequacy",
+      "pageid": 13051,
+      "revid": 15292423,
+      "lootSourceId": "the-inadequacy",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "the-leviathan",
+      "title": "The Leviathan",
+      "pageid": 372987,
+      "revid": 15292448,
+      "lootSourceId": "the-leviathan",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 44,
+      "encounter": null
+    },
+    {
+      "slug": "the-maiden-of-sugadinti",
+      "title": "The Maiden of Sugadinti",
+      "pageid": 117593,
+      "revid": 15292433,
+      "lootSourceId": "theatre-of-blood",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Theatre of Blood"
+    },
+    {
+      "slug": "the-mimic",
+      "title": "The Mimic",
+      "pageid": 214220,
+      "revid": 15276887,
+      "lootSourceId": "the-mimic",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 62,
+      "encounter": null
+    },
+    {
+      "slug": "the-nightmare",
+      "title": "The Nightmare",
+      "pageid": 236554,
+      "revid": 15264614,
+      "lootSourceId": "the-nightmare",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 38,
+      "encounter": null
+    },
+    {
+      "slug": "the-untouchable",
+      "title": "The Untouchable",
+      "pageid": 27580,
+      "revid": 15199541,
+      "lootSourceId": "the-untouchable",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "the-whisperer",
+      "title": "The Whisperer",
+      "pageid": 372985,
+      "revid": 15275320,
+      "lootSourceId": "the-whisperer",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 44,
+      "encounter": null
+    },
+    {
+      "slug": "thermonuclear-smoke-devil",
+      "title": "Thermonuclear smoke devil",
+      "pageid": 32662,
+      "revid": 15283172,
+      "lootSourceId": "thermonuclear-smoke-devil",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 58,
+      "encounter": null
+    },
+    {
+      "slug": "tolna",
+      "title": "Tolna",
+      "pageid": 17803,
+      "revid": 15199356,
+      "lootSourceId": "tolna",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "torag-the-corrupted",
+      "title": "Torag the Corrupted",
+      "pageid": 13854,
+      "revid": 15199260,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Barrows"
+    },
+    {
+      "slug": "tree-spirit-lost-city",
+      "title": "Tree spirit (Lost City)",
+      "pageid": 26487,
+      "revid": 15199511,
+      "lootSourceId": "tree-spirit-lost-city",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "treus-dayth",
+      "title": "Treus Dayth",
+      "pageid": 15782,
+      "revid": 15234627,
+      "lootSourceId": "treus-dayth",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "tumeken-s-warden",
+      "title": "Tumeken's Warden",
+      "pageid": 363847,
+      "revid": 15272444,
+      "lootSourceId": "tombs-of-amascut",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Tombs of Amascut"
+    },
+    {
+      "slug": "tzkal-zuk",
+      "title": "TzKal-Zuk",
+      "pageid": 99566,
+      "revid": 15283652,
+      "lootSourceId": "tzkal-zuk",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "tztok-jad",
+      "title": "TzTok-Jad",
+      "pageid": 12788,
+      "revid": 15215960,
+      "lootSourceId": "tztok-jad",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "ulfric",
+      "title": "Ulfric",
+      "pageid": 28800,
+      "revid": 15199583,
+      "lootSourceId": "ulfric",
+      "classification": "trivial",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": null
+    },
+    {
+      "slug": "vanguard",
+      "title": "Vanguard",
+      "pageid": 82542,
+      "revid": 15231223,
+      "lootSourceId": "ancient-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 8,
+      "encounter": "Chambers of Xeric"
+    },
+    {
+      "slug": "vardorvis",
+      "title": "Vardorvis",
+      "pageid": 308849,
+      "revid": 15275741,
+      "lootSourceId": "vardorvis",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 45,
+      "encounter": null
+    },
+    {
+      "slug": "vasa-nistirio",
+      "title": "Vasa Nistirio",
+      "pageid": 82477,
+      "revid": 15271563,
+      "lootSourceId": "ancient-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 5,
+      "encounter": "Chambers of Xeric"
+    },
+    {
+      "slug": "venenatis",
+      "title": "Venenatis",
+      "pageid": 31270,
+      "revid": 15285313,
+      "lootSourceId": "venenatis",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 54,
+      "encounter": null
+    },
+    {
+      "slug": "verac-the-defiled",
+      "title": "Verac the Defiled",
+      "pageid": 13855,
+      "revid": 15236898,
+      "lootSourceId": "chest-barrows",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Barrows"
+    },
+    {
+      "slug": "verzik-vitur",
+      "title": "Verzik Vitur",
+      "pageid": 116973,
+      "revid": 15279260,
+      "lootSourceId": "theatre-of-blood",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Theatre of Blood"
+    },
+    {
+      "slug": "vespula",
+      "title": "Vespula",
+      "pageid": 82479,
+      "revid": 15262586,
+      "lootSourceId": "ancient-chest",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 5,
+      "encounter": "Chambers of Xeric"
+    },
+    {
+      "slug": "vet-ion",
+      "title": "Vet'ion",
+      "pageid": 31269,
+      "revid": 15285312,
+      "lootSourceId": "vet-ion",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 55,
+      "encounter": null
+    },
+    {
+      "slug": "vorkath",
+      "title": "Vorkath",
+      "pageid": 108371,
+      "revid": 15283387,
+      "lootSourceId": "vorkath",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 90,
+      "encounter": null
+    },
+    {
+      "slug": "white-golem",
+      "title": "White golem",
+      "pageid": 42295,
+      "revid": 15199722,
+      "lootSourceId": "white-golem",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "wintertodt",
+      "title": "Wintertodt",
+      "pageid": 69573,
+      "revid": 15276053,
+      "lootSourceId": "reward-cart",
+      "classification": "reward-page",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "wrathmaw",
+      "title": "Wrathmaw",
+      "pageid": 535235,
+      "revid": 15210156,
+      "lootSourceId": "wrathmaw",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "xamphur",
+      "title": "Xamphur",
+      "pageid": 309763,
+      "revid": 15200255,
+      "lootSourceId": "xamphur",
+      "classification": "no-loot-data",
+      "tier": "E",
+      "rowCount": 0,
+      "encounter": null
+    },
+    {
+      "slug": "xarpus",
+      "title": "Xarpus",
+      "pageid": 117597,
+      "revid": 15267723,
+      "lootSourceId": "theatre-of-blood",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 1,
+      "encounter": "Theatre of Blood"
+    },
+    {
+      "slug": "yama",
+      "title": "Yama",
+      "pageid": 208188,
+      "revid": 15292450,
+      "lootSourceId": "yama",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 58,
+      "encounter": null
+    },
+    {
+      "slug": "zalcano",
+      "title": "Zalcano",
+      "pageid": 221996,
+      "revid": 15287396,
+      "lootSourceId": "zalcano",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 26,
+      "encounter": null
+    },
+    {
+      "slug": "zebak",
+      "title": "Zebak",
+      "pageid": 357993,
+      "revid": 15255510,
+      "lootSourceId": "tombs-of-amascut",
+      "classification": "component",
+      "tier": "E",
+      "rowCount": 2,
+      "encounter": "Tombs of Amascut"
+    },
+    {
+      "slug": "zulrah",
+      "title": "Zulrah",
+      "pageid": 44127,
+      "revid": 15285439,
+      "lootSourceId": "zulrah",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 75,
+      "encounter": null
+    }
+  ],
+  "lootSources": [
+    {
+      "id": "abyssal-sire",
+      "title": "Abyssal Sire",
+      "dropsPage": "Abyssal Sire",
+      "tier": "C",
+      "rowCount": 88,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "abyssal-sire"
+      ]
+    },
+    {
+      "id": "agrith-na-na",
+      "title": "Agrith-Na-Na",
+      "dropsPage": "Agrith-Na-Na",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "agrith-na-na"
+      ]
+    },
+    {
+      "id": "agrith-naar",
+      "title": "Agrith Naar",
+      "dropsPage": "Agrith Naar",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "agrith-naar"
+      ]
+    },
+    {
+      "id": "alchemical-hydra",
+      "title": "Alchemical Hydra",
+      "dropsPage": "Alchemical Hydra",
+      "tier": "D",
+      "rowCount": 90,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "alchemical-hydra"
+      ]
+    },
+    {
+      "id": "amoxliatl",
+      "title": "Amoxliatl",
+      "dropsPage": "Amoxliatl",
+      "tier": "C",
+      "rowCount": 39,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "amoxliatl"
+      ]
+    },
+    {
+      "id": "ancient-chest",
+      "title": "Chambers of Xeric",
+      "dropsPage": "Ancient chest",
+      "tier": "A",
+      "rowCount": 51,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "great-olm",
+        "ice-demon",
+        "muttadile",
+        "tekton",
+        "vanguard",
+        "vasa-nistirio",
+        "vespula"
+      ]
+    },
+    {
+      "id": "araxxor",
+      "title": "Araxxor",
+      "dropsPage": "Araxxor",
+      "tier": "C",
+      "rowCount": 88,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "araxxor"
+      ]
+    },
+    {
+      "id": "arrg",
+      "title": "Arrg",
+      "dropsPage": "Arrg",
+      "tier": "C",
+      "rowCount": 68,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "arrg"
+      ]
+    },
+    {
+      "id": "artio",
+      "title": "Artio",
+      "dropsPage": "Artio",
+      "tier": "A",
+      "rowCount": 47,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "artio"
+      ]
+    },
+    {
+      "id": "arzinian-avatar-of-magic",
+      "title": "Arzinian Avatar of Magic",
+      "dropsPage": "Arzinian Avatar of Magic",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "arzinian-avatar-of-magic"
+      ]
+    },
+    {
+      "id": "arzinian-avatar-of-ranging",
+      "title": "Arzinian Avatar of Ranging",
+      "dropsPage": "Arzinian Avatar of Ranging",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "arzinian-avatar-of-ranging"
+      ]
+    },
+    {
+      "id": "arzinian-avatar-of-strength",
+      "title": "Arzinian Avatar of Strength",
+      "dropsPage": "Arzinian Avatar of Strength",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "arzinian-avatar-of-strength"
+      ]
+    },
+    {
+      "id": "arzinian-being-of-bordanzan",
+      "title": "Arzinian Being of Bordanzan",
+      "dropsPage": "Arzinian Being of Bordanzan",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "arzinian-being-of-bordanzan"
+      ]
+    },
+    {
+      "id": "barrelchest",
+      "title": "Barrelchest",
+      "dropsPage": "Barrelchest",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "barrelchest"
+      ]
+    },
+    {
+      "id": "black-demon",
+      "title": "Black demon",
+      "dropsPage": "Black demon",
+      "tier": "C",
+      "rowCount": 155,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "black-demon"
+      ]
+    },
+    {
+      "id": "black-golem",
+      "title": "Black golem",
+      "dropsPage": "Black golem",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "black-golem"
+      ]
+    },
+    {
+      "id": "black-knight-titan",
+      "title": "Black Knight Titan",
+      "dropsPage": "Black Knight Titan",
+      "tier": "C",
+      "rowCount": 94,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "black-knight-titan"
+      ]
+    },
+    {
+      "id": "blood-moon",
+      "title": "Blood Moon",
+      "dropsPage": "Blood Moon",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "blood-moon"
+      ]
+    },
+    {
+      "id": "blue-moon",
+      "title": "Blue Moon",
+      "dropsPage": "Blue Moon",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "blue-moon"
+      ]
+    },
+    {
+      "id": "boss-kill-count",
+      "title": "Boss kill count",
+      "dropsPage": "Boss kill count",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "boss-kill-count"
+      ]
+    },
+    {
+      "id": "bouncer",
+      "title": "Bouncer",
+      "dropsPage": "Bouncer",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "bouncer"
+      ]
+    },
+    {
+      "id": "bouncer-ghost",
+      "title": "Bouncer (ghost)",
+      "dropsPage": "Bouncer (ghost)",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "bouncer-ghost"
+      ]
+    },
+    {
+      "id": "branda-the-fire-queen",
+      "title": "Branda the Fire Queen",
+      "dropsPage": "Branda the Fire Queen",
+      "tier": "A",
+      "rowCount": 36,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "branda-the-fire-queen"
+      ]
+    },
+    {
+      "id": "brutus",
+      "title": "Brutus",
+      "dropsPage": "Brutus",
+      "tier": "B",
+      "rowCount": 25,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "brutus"
+      ]
+    },
+    {
+      "id": "bryophyta",
+      "title": "Bryophyta",
+      "dropsPage": "Bryophyta",
+      "tier": "D",
+      "rowCount": 108,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "bryophyta"
+      ]
+    },
+    {
+      "id": "burnt-chest",
+      "title": "Burnt chest",
+      "dropsPage": "Burnt chest",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "fareed"
+      ]
+    },
+    {
+      "id": "callisto",
+      "title": "Callisto",
+      "dropsPage": "Callisto",
+      "tier": "A",
+      "rowCount": 54,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "callisto"
+      ]
+    },
+    {
+      "id": "calvar-ion",
+      "title": "Calvar'ion",
+      "dropsPage": "Calvar'ion",
+      "tier": "A",
+      "rowCount": 48,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "calvar-ion"
+      ]
+    },
+    {
+      "id": "cerberus",
+      "title": "Cerberus",
+      "dropsPage": "Cerberus",
+      "tier": "C",
+      "rowCount": 68,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "cerberus"
+      ]
+    },
+    {
+      "id": "chaos-elemental",
+      "title": "Chaos Elemental",
+      "dropsPage": "Chaos Elemental",
+      "tier": "D",
+      "rowCount": 70,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "chaos-elemental"
+      ]
+    },
+    {
+      "id": "chaos-fanatic",
+      "title": "Chaos Fanatic",
+      "dropsPage": "Chaos Fanatic",
+      "tier": "D",
+      "rowCount": 58,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "chaos-fanatic"
+      ]
+    },
+    {
+      "id": "chest-barrows",
+      "title": "Chest (Barrows)",
+      "dropsPage": "Chest (Barrows)",
+      "tier": "A",
+      "rowCount": 34,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "boss",
+        "ahrim-the-blighted",
+        "barrows",
+        "barrows-brothers",
+        "dharok-the-wretched",
+        "guthan-the-infested",
+        "karil-the-tainted",
+        "torag-the-corrupted",
+        "verac-the-defiled"
+      ]
+    },
+    {
+      "id": "chronozon",
+      "title": "Chronozon",
+      "dropsPage": "Chronozon",
+      "tier": "E",
+      "rowCount": 3,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "chronozon"
+      ]
+    },
+    {
+      "id": "commander-zilyana",
+      "title": "Commander Zilyana",
+      "dropsPage": "Commander Zilyana",
+      "tier": "D",
+      "rowCount": 52,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "commander-zilyana"
+      ]
+    },
+    {
+      "id": "corporeal-beast",
+      "title": "Corporeal Beast",
+      "dropsPage": "Corporeal Beast",
+      "tier": "C",
+      "rowCount": 49,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "corporeal-beast"
+      ]
+    },
+    {
+      "id": "count-draynor",
+      "title": "Count Draynor",
+      "dropsPage": "Count Draynor",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "count-draynor"
+      ]
+    },
+    {
+      "id": "crazy-archaeologist",
+      "title": "Crazy archaeologist",
+      "dropsPage": "Crazy archaeologist",
+      "tier": "C",
+      "rowCount": 57,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "crazy-archaeologist"
+      ]
+    },
+    {
+      "id": "culinaromancer",
+      "title": "Culinaromancer",
+      "dropsPage": "Culinaromancer",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "culinaromancer"
+      ]
+    },
+    {
+      "id": "dad",
+      "title": "Dad",
+      "dropsPage": "Dad",
+      "tier": "E",
+      "rowCount": 3,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "dad"
+      ]
+    },
+    {
+      "id": "dagannoth-kings",
+      "title": "Dagannoth Kings",
+      "dropsPage": "Dagannoth Kings",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "dagannoth-kings"
+      ]
+    },
+    {
+      "id": "dagannoth-mother",
+      "title": "Dagannoth mother",
+      "dropsPage": "Dagannoth mother",
+      "tier": "E",
+      "rowCount": 2,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "dagannoth-mother"
+      ]
+    },
+    {
+      "id": "dagannoth-prime",
+      "title": "Dagannoth Prime",
+      "dropsPage": "Dagannoth Prime",
+      "tier": "C",
+      "rowCount": 85,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "dagannoth-prime"
+      ]
+    },
+    {
+      "id": "dagannoth-rex",
+      "title": "Dagannoth Rex",
+      "dropsPage": "Dagannoth Rex",
+      "tier": "C",
+      "rowCount": 77,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "dagannoth-rex"
+      ]
+    },
+    {
+      "id": "dagannoth-supreme",
+      "title": "Dagannoth Supreme",
+      "dropsPage": "Dagannoth Supreme",
+      "tier": "C",
+      "rowCount": 84,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "dagannoth-supreme"
+      ]
+    },
+    {
+      "id": "damis",
+      "title": "Damis",
+      "dropsPage": "Damis",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "damis"
+      ]
+    },
+    {
+      "id": "delrith",
+      "title": "Delrith",
+      "dropsPage": "Delrith",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "delrith"
+      ]
+    },
+    {
+      "id": "demonic-brutus",
+      "title": "Demonic Brutus",
+      "dropsPage": "Demonic Brutus",
+      "tier": "E",
+      "rowCount": 2,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "demonic-brutus"
+      ]
+    },
+    {
+      "id": "deranged-archaeologist",
+      "title": "Deranged archaeologist",
+      "dropsPage": "Deranged archaeologist",
+      "tier": "C",
+      "rowCount": 72,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "deranged-archaeologist"
+      ]
+    },
+    {
+      "id": "dessourt",
+      "title": "Dessourt",
+      "dropsPage": "Dessourt",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "dessourt"
+      ]
+    },
+    {
+      "id": "dessous",
+      "title": "Dessous",
+      "dropsPage": "Dessous",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "dessous"
+      ]
+    },
+    {
+      "id": "doom-of-mokhaiotl",
+      "title": "Doom of Mokhaiotl",
+      "dropsPage": "Doom of Mokhaiotl",
+      "tier": "A",
+      "rowCount": 30,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "doom-of-mokhaiotl"
+      ]
+    },
+    {
+      "id": "duke-sucellus",
+      "title": "Duke Sucellus",
+      "dropsPage": "Duke Sucellus",
+      "tier": "A",
+      "rowCount": 44,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "duke-sucellus"
+      ]
+    },
+    {
+      "id": "eclipse-moon",
+      "title": "Eclipse Moon",
+      "dropsPage": "Eclipse Moon",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "eclipse-moon"
+      ]
+    },
+    {
+      "id": "eldric-the-ice-king",
+      "title": "Eldric the Ice King",
+      "dropsPage": "Eldric the Ice King",
+      "tier": "A",
+      "rowCount": 37,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "eldric-the-ice-king"
+      ]
+    },
+    {
+      "id": "elvarg",
+      "title": "Elvarg",
+      "dropsPage": "Elvarg",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "elvarg"
+      ]
+    },
+    {
+      "id": "evil-spirit",
+      "title": "Evil spirit",
+      "dropsPage": "Evil spirit",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "evil-spirit"
+      ]
+    },
+    {
+      "id": "flambeed",
+      "title": "Flambeed",
+      "dropsPage": "Flambeed",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "flambeed"
+      ]
+    },
+    {
+      "id": "gadderanks",
+      "title": "Gadderanks",
+      "dropsPage": "Gadderanks",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "gadderanks"
+      ]
+    },
+    {
+      "id": "galvek",
+      "title": "Galvek",
+      "dropsPage": "Galvek",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "galvek"
+      ]
+    },
+    {
+      "id": "gelatinnoth-mother",
+      "title": "Gelatinnoth Mother",
+      "dropsPage": "Gelatinnoth Mother",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "gelatinnoth-mother"
+      ]
+    },
+    {
+      "id": "gemstone-crab",
+      "title": "Gemstone Crab",
+      "dropsPage": "Gemstone Crab",
+      "tier": "A",
+      "rowCount": 8,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "gemstone-crab"
+      ]
+    },
+    {
+      "id": "general-graardor",
+      "title": "General Graardor",
+      "dropsPage": "General Graardor",
+      "tier": "C",
+      "rowCount": 52,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "general-graardor"
+      ]
+    },
+    {
+      "id": "general-khazard",
+      "title": "General Khazard",
+      "dropsPage": "General Khazard",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "general-khazard"
+      ]
+    },
+    {
+      "id": "giant-mole",
+      "title": "Giant Mole",
+      "dropsPage": "Giant Mole",
+      "tier": "C",
+      "rowCount": 53,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "giant-mole"
+      ]
+    },
+    {
+      "id": "giant-roc",
+      "title": "Giant Roc",
+      "dropsPage": "Giant Roc",
+      "tier": "E",
+      "rowCount": 3,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "giant-roc"
+      ]
+    },
+    {
+      "id": "giant-scarab",
+      "title": "Giant Scarab",
+      "dropsPage": "Giant Scarab",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "giant-scarab"
+      ]
+    },
+    {
+      "id": "giant-sea-snake",
+      "title": "Giant Sea Snake",
+      "dropsPage": "Giant Sea Snake",
+      "tier": "C",
+      "rowCount": 70,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "giant-sea-snake"
+      ]
+    },
+    {
+      "id": "glod",
+      "title": "Glod",
+      "dropsPage": "Glod",
+      "tier": "E",
+      "rowCount": 7,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "glod"
+      ]
+    },
+    {
+      "id": "glough",
+      "title": "Glough",
+      "dropsPage": "Glough",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "glough"
+      ]
+    },
+    {
+      "id": "grey-golem",
+      "title": "Grey golem",
+      "dropsPage": "Grey golem",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "grey-golem"
+      ]
+    },
+    {
+      "id": "grotesque-guardians",
+      "title": "Grotesque Guardians",
+      "dropsPage": "Grotesque Guardians",
+      "tier": "D",
+      "rowCount": 45,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "dawn",
+        "dusk",
+        "grotesque-guardians"
+      ]
+    },
+    {
+      "id": "hespori",
+      "title": "Hespori",
+      "dropsPage": "Hespori",
+      "tier": "A",
+      "rowCount": 37,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "hespori"
+      ]
+    },
+    {
+      "id": "ice-troll-king",
+      "title": "Ice Troll King",
+      "dropsPage": "Ice Troll King",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "ice-troll-king"
+      ]
+    },
+    {
+      "id": "judge-of-yama-a-kingdom-divided",
+      "title": "Judge of Yama (A Kingdom Divided)",
+      "dropsPage": "Judge of Yama (A Kingdom Divided)",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "judge-of-yama-a-kingdom-divided"
+      ]
+    },
+    {
+      "id": "jungle-demon",
+      "title": "Jungle Demon",
+      "dropsPage": "Jungle Demon",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "jungle-demon"
+      ]
+    },
+    {
+      "id": "k-ril-tsutsaroth",
+      "title": "K'ril Tsutsaroth",
+      "dropsPage": "K'ril Tsutsaroth",
+      "tier": "D",
+      "rowCount": 51,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "k-ril-tsutsaroth"
+      ]
+    },
+    {
+      "id": "kalphite-queen",
+      "title": "Kalphite Queen",
+      "dropsPage": "Kalphite Queen",
+      "tier": "D",
+      "rowCount": 77,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "kalphite-queen"
+      ]
+    },
+    {
+      "id": "kamil",
+      "title": "Kamil",
+      "dropsPage": "Kamil",
+      "tier": "E",
+      "rowCount": 2,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "kamil"
+      ]
+    },
+    {
+      "id": "karamel",
+      "title": "Karamel",
+      "dropsPage": "Karamel",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "karamel"
+      ]
+    },
+    {
+      "id": "king-black-dragon",
+      "title": "King Black Dragon",
+      "dropsPage": "King Black Dragon",
+      "tier": "C",
+      "rowCount": 55,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "king-black-dragon"
+      ]
+    },
+    {
+      "id": "koschei-the-deathless",
+      "title": "Koschei the deathless",
+      "dropsPage": "Koschei the deathless",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "koschei-the-deathless"
+      ]
+    },
+    {
+      "id": "kraken",
+      "title": "Kraken",
+      "dropsPage": "Kraken",
+      "tier": "C",
+      "rowCount": 52,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "kraken"
+      ]
+    },
+    {
+      "id": "kree-arra",
+      "title": "Kree'arra",
+      "dropsPage": "Kree'arra",
+      "tier": "C",
+      "rowCount": 54,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "kree-arra"
+      ]
+    },
+    {
+      "id": "lunar-chest",
+      "title": "Lunar Chest",
+      "dropsPage": "Lunar Chest",
+      "tier": "A",
+      "rowCount": 24,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "moons-of-peril"
+      ]
+    },
+    {
+      "id": "mad-angel",
+      "title": "Mad Angel",
+      "dropsPage": "Mad Angel",
+      "tier": "D",
+      "rowCount": 55,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "mad-angel"
+      ]
+    },
+    {
+      "id": "maggot-king",
+      "title": "Maggot King",
+      "dropsPage": "Maggot King",
+      "tier": "D",
+      "rowCount": 36,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "maggot-king"
+      ]
+    },
+    {
+      "id": "me",
+      "title": "Me",
+      "dropsPage": "Me",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "me"
+      ]
+    },
+    {
+      "id": "melzar-the-mad",
+      "title": "Melzar the Mad",
+      "dropsPage": "Melzar the Mad",
+      "tier": "E",
+      "rowCount": 2,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "melzar-the-mad"
+      ]
+    },
+    {
+      "id": "moss-guardian",
+      "title": "Moss Guardian",
+      "dropsPage": "Moss Guardian",
+      "tier": "E",
+      "rowCount": 4,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "moss-guardian"
+      ]
+    },
+    {
+      "id": "nex",
+      "title": "Nex",
+      "dropsPage": "Nex",
+      "tier": "D",
+      "rowCount": 34,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "nex"
+      ]
+    },
+    {
+      "id": "nezikchened",
+      "title": "Nezikchened",
+      "dropsPage": "Nezikchened",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "nezikchened"
+      ]
+    },
+    {
+      "id": "obor",
+      "title": "Obor",
+      "dropsPage": "Obor",
+      "tier": "D",
+      "rowCount": 126,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "obor"
+      ]
+    },
+    {
+      "id": "penance-queen",
+      "title": "Penance Queen",
+      "dropsPage": "Penance Queen",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "penance-queen"
+      ]
+    },
+    {
+      "id": "phantom-muspah",
+      "title": "Phantom Muspah",
+      "dropsPage": "Phantom Muspah",
+      "tier": "C",
+      "rowCount": 98,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "phantom-muspah"
+      ]
+    },
+    {
+      "id": "phosani-s-nightmare",
+      "title": "Phosani's Nightmare",
+      "dropsPage": "Phosani's Nightmare",
+      "tier": "D",
+      "rowCount": 39,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "phosani-s-nightmare"
+      ]
+    },
+    {
+      "id": "revenant-maledictus",
+      "title": "Revenant maledictus",
+      "dropsPage": "Revenant maledictus",
+      "tier": "A",
+      "rowCount": 59,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "revenant-maledictus"
+      ]
+    },
+    {
+      "id": "reward-cart",
+      "title": "Reward Cart",
+      "dropsPage": "Reward Cart",
+      "tier": "D",
+      "rowCount": 75,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "wintertodt"
+      ]
+    },
+    {
+      "id": "reward-chest-the-gauntlet",
+      "title": "The Gauntlet",
+      "dropsPage": "Reward Chest (The Gauntlet)",
+      "tier": "D",
+      "rowCount": 91,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "corrupted-hunllef",
+        "crystalline-hunllef"
+      ]
+    },
+    {
+      "id": "reward-pool",
+      "title": "Reward pool",
+      "dropsPage": "Reward pool",
+      "tier": "D",
+      "rowCount": 52,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "tempoross"
+      ]
+    },
+    {
+      "id": "royal-titans",
+      "title": "Royal Titans",
+      "dropsPage": "Royal Titans",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "royal-titans"
+      ]
+    },
+    {
+      "id": "salarin-the-twisted",
+      "title": "Salarin the twisted",
+      "dropsPage": "Salarin the twisted",
+      "tier": "C",
+      "rowCount": 37,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "salarin-the-twisted"
+      ]
+    },
+    {
+      "id": "sarachnis",
+      "title": "Sarachnis",
+      "dropsPage": "Sarachnis",
+      "tier": "C",
+      "rowCount": 75,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "sarachnis"
+      ]
+    },
+    {
+      "id": "scorpia",
+      "title": "Scorpia",
+      "dropsPage": "Scorpia",
+      "tier": "A",
+      "rowCount": 38,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "scorpia"
+      ]
+    },
+    {
+      "id": "scurrius",
+      "title": "Scurrius",
+      "dropsPage": "Scurrius",
+      "tier": "A",
+      "rowCount": 41,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "scurrius"
+      ]
+    },
+    {
+      "id": "sea-troll-queen",
+      "title": "Sea Troll Queen",
+      "dropsPage": "Sea Troll Queen",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "sea-troll-queen"
+      ]
+    },
+    {
+      "id": "shellbane-gryphon",
+      "title": "Shellbane gryphon",
+      "dropsPage": "Shellbane gryphon",
+      "tier": "C",
+      "rowCount": 52,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "shellbane-gryphon"
+      ]
+    },
+    {
+      "id": "sigmund",
+      "title": "Sigmund",
+      "dropsPage": "Sigmund",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "sigmund"
+      ]
+    },
+    {
+      "id": "sir-leye",
+      "title": "Sir Leye",
+      "dropsPage": "Sir Leye",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "sir-leye"
+      ]
+    },
+    {
+      "id": "sir-mordred",
+      "title": "Sir Mordred",
+      "dropsPage": "Sir Mordred",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "sir-mordred"
+      ]
+    },
+    {
+      "id": "skotizo",
+      "title": "Skotizo",
+      "dropsPage": "Skotizo",
+      "tier": "D",
+      "rowCount": 34,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "skotizo"
+      ]
+    },
+    {
+      "id": "slagilith",
+      "title": "Slagilith",
+      "dropsPage": "Slagilith",
+      "tier": "E",
+      "rowCount": 3,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "slagilith"
+      ]
+    },
+    {
+      "id": "slash-bash",
+      "title": "Slash Bash",
+      "dropsPage": "Slash Bash",
+      "tier": "E",
+      "rowCount": 5,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "slash-bash"
+      ]
+    },
+    {
+      "id": "slug-prince",
+      "title": "Slug Prince",
+      "dropsPage": "Slug Prince",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "slug-prince"
+      ]
+    },
+    {
+      "id": "sol-heredit",
+      "title": "Sol Heredit",
+      "dropsPage": "Sol Heredit",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "sol-heredit"
+      ]
+    },
+    {
+      "id": "spindel",
+      "title": "Spindel",
+      "dropsPage": "Spindel",
+      "tier": "A",
+      "rowCount": 45,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "spindel"
+      ]
+    },
+    {
+      "id": "tarn",
+      "title": "Tarn",
+      "dropsPage": "Tarn",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "tarn"
+      ]
+    },
+    {
+      "id": "the-draugen",
+      "title": "The Draugen",
+      "dropsPage": "The Draugen",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "the-draugen"
+      ]
+    },
+    {
+      "id": "the-everlasting",
+      "title": "The Everlasting",
+      "dropsPage": "The Everlasting",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "the-everlasting"
+      ]
+    },
+    {
+      "id": "the-hueycoatl",
+      "title": "The Hueycoatl",
+      "dropsPage": "The Hueycoatl",
+      "tier": "A",
+      "rowCount": 33,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "the-hueycoatl"
+      ]
+    },
+    {
+      "id": "the-illusive",
+      "title": "The Illusive",
+      "dropsPage": "The Illusive",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "the-illusive"
+      ]
+    },
+    {
+      "id": "the-inadequacy",
+      "title": "The Inadequacy",
+      "dropsPage": "The Inadequacy",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "the-inadequacy"
+      ]
+    },
+    {
+      "id": "the-leviathan",
+      "title": "The Leviathan",
+      "dropsPage": "The Leviathan",
+      "tier": "A",
+      "rowCount": 44,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "the-leviathan"
+      ]
+    },
+    {
+      "id": "the-mimic",
+      "title": "The Mimic",
+      "dropsPage": "The Mimic",
+      "tier": "A",
+      "rowCount": 62,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "the-mimic"
+      ]
+    },
+    {
+      "id": "the-nightmare",
+      "title": "The Nightmare",
+      "dropsPage": "The Nightmare",
+      "tier": "A",
+      "rowCount": 38,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "the-nightmare"
+      ]
+    },
+    {
+      "id": "the-untouchable",
+      "title": "The Untouchable",
+      "dropsPage": "The Untouchable",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "the-untouchable"
+      ]
+    },
+    {
+      "id": "the-whisperer",
+      "title": "The Whisperer",
+      "dropsPage": "The Whisperer",
+      "tier": "A",
+      "rowCount": 44,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "the-whisperer"
+      ]
+    },
+    {
+      "id": "theatre-of-blood",
+      "title": "Theatre of Blood",
+      "dropsPage": "Theatre of Blood",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "component of Theatre of Blood, which has no drop rows on any page — point-based rewards belong in an override",
+      "bosses": [
+        "nylocas-vasilias",
+        "pestilent-bloat",
+        "sotetseg",
+        "the-maiden-of-sugadinti",
+        "verzik-vitur",
+        "xarpus"
+      ]
+    },
+    {
+      "id": "thermonuclear-smoke-devil",
+      "title": "Thermonuclear smoke devil",
+      "dropsPage": "Thermonuclear smoke devil",
+      "tier": "C",
+      "rowCount": 58,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "thermonuclear-smoke-devil"
+      ]
+    },
+    {
+      "id": "tolna",
+      "title": "Tolna",
+      "dropsPage": "Tolna",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "tolna"
+      ]
+    },
+    {
+      "id": "tombs-of-amascut",
+      "title": "Tombs of Amascut",
+      "dropsPage": "Tombs of Amascut",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "component of Tombs of Amascut, which has no drop rows on any page — point-based rewards belong in an override",
+      "bosses": [
+        "akkha",
+        "ba-ba",
+        "elidinis-warden",
+        "kephri",
+        "tumeken-s-warden",
+        "zebak"
+      ]
+    },
+    {
+      "id": "tree-spirit-lost-city",
+      "title": "Tree spirit (Lost City)",
+      "dropsPage": "Tree spirit (Lost City)",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "tree-spirit-lost-city"
+      ]
+    },
+    {
+      "id": "treus-dayth",
+      "title": "Treus Dayth",
+      "dropsPage": "Treus Dayth",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "treus-dayth"
+      ]
+    },
+    {
+      "id": "tzkal-zuk",
+      "title": "TzKal-Zuk",
+      "dropsPage": "TzKal-Zuk",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "tzkal-zuk"
+      ]
+    },
+    {
+      "id": "tztok-jad",
+      "title": "TzTok-Jad",
+      "dropsPage": "TzTok-Jad",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "tztok-jad"
+      ]
+    },
+    {
+      "id": "ulfric",
+      "title": "Ulfric",
+      "dropsPage": "Ulfric",
+      "tier": "E",
+      "rowCount": 1,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "ulfric"
+      ]
+    },
+    {
+      "id": "vardorvis",
+      "title": "Vardorvis",
+      "dropsPage": "Vardorvis",
+      "tier": "A",
+      "rowCount": 45,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "vardorvis"
+      ]
+    },
+    {
+      "id": "venenatis",
+      "title": "Venenatis",
+      "dropsPage": "Venenatis",
+      "tier": "A",
+      "rowCount": 54,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "venenatis"
+      ]
+    },
+    {
+      "id": "vet-ion",
+      "title": "Vet'ion",
+      "dropsPage": "Vet'ion",
+      "tier": "A",
+      "rowCount": 55,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "vet-ion"
+      ]
+    },
+    {
+      "id": "vorkath",
+      "title": "Vorkath",
+      "dropsPage": "Vorkath",
+      "tier": "C",
+      "rowCount": 90,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "vorkath"
+      ]
+    },
+    {
+      "id": "white-golem",
+      "title": "White golem",
+      "dropsPage": "White golem",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "white-golem"
+      ]
+    },
+    {
+      "id": "wrathmaw",
+      "title": "Wrathmaw",
+      "dropsPage": "Wrathmaw",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "wrathmaw"
+      ]
+    },
+    {
+      "id": "xamphur",
+      "title": "Xamphur",
+      "dropsPage": "Xamphur",
+      "tier": "E",
+      "rowCount": 0,
+      "include": false,
+      "excludeReason": "no drop rows, no encounter, no reward page",
+      "bosses": [
+        "xamphur"
+      ]
+    },
+    {
+      "id": "yama",
+      "title": "Yama",
+      "dropsPage": "Yama",
+      "tier": "D",
+      "rowCount": 58,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "yama"
+      ]
+    },
+    {
+      "id": "zalcano",
+      "title": "Zalcano",
+      "dropsPage": "Zalcano",
+      "tier": "A",
+      "rowCount": 26,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "zalcano"
+      ]
+    },
+    {
+      "id": "zulrah",
+      "title": "Zulrah",
+      "dropsPage": "Zulrah",
+      "tier": "C",
+      "rowCount": 75,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "zulrah"
+      ]
+    }
+  ]
+}
