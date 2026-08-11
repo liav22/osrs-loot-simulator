@@ -5,6 +5,7 @@ import type { WikitextDropLine } from '../src/parse/wikitext-drops.js'
 function line(overrides: Partial<WikitextDropLine> & Pick<WikitextDropLine, 'name' | 'rarity'>): WikitextDropLine {
   return {
     heading: '',
+    section: '',
     quantity: '1',
     members: false,
     freeToPlay: false,
@@ -26,6 +27,17 @@ describe('groupByHeading', () => {
     const blocks = groupByHeading(lines)
     expect(blocks.map((b) => b.heading)).toEqual(['100%', 'Main'])
     expect(blocks[0]?.lines).toHaveLength(2)
+  })
+
+  it('keeps identically-named sub-headings from different sections as separate blocks (The Mimic shape)', () => {
+    const lines = [
+      line({ name: 'Elite clue', rarity: 'Always', heading: 'Tertiary', section: 'Elite drops' }),
+      line({ name: 'Master clue', rarity: '1/50', heading: 'Tertiary', section: 'Master drops' }),
+    ]
+    const blocks = groupByHeading(lines)
+    expect(blocks).toHaveLength(2)
+    expect(blocks[0]).toMatchObject({ heading: 'Tertiary', lines: [lines[0]] })
+    expect(blocks[1]).toMatchObject({ heading: 'Tertiary', lines: [lines[1]] })
   })
 })
 
@@ -122,12 +134,57 @@ describe('buildTableGroups', () => {
 
   it('flags an unparseable rarity instead of silently dropping the row', () => {
     const groups = buildTableGroups(
-      groupByHeading([
-        line({ name: 'Key', rarity: '{{Brimstone rarity|225}}', heading: 'Tertiary Extra' }),
-      ])
+      groupByHeading([line({ name: 'Key', rarity: '1/x', heading: 'Tertiary Extra' })])
     )
     expect(groups[0]?.ambiguous).toMatch(/unparseable rarity/)
     expect(groups[0]?.entries).toHaveLength(0)
+  })
+
+  it('flags an unregistered rarity template by name instead of silently guessing', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Key', rarity: '{{Some unknown template|225}}', heading: 'Tertiary Extra' }),
+      ])
+    )
+    expect(groups[0]?.ambiguous).toMatch(/unrecognised rarity template 'Some unknown template'/)
+    expect(groups[0]?.entries).toHaveLength(0)
+  })
+
+  it('resolves a registered rarity template and attaches its condition', () => {
+    // Scorpia: combat level 225 -> Brimstone key at 1/75, gated on a slayer task.
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Brimstone key', rarity: '{{Brimstone rarity|225}}', heading: 'Tertiary' }),
+      ])
+    )
+    expect(groups[0]?.mode).toBe('independent')
+    expect(groups[0]?.ambiguous).toBeNull()
+    expect(groups[0]?.entries[0]?.rarity).toEqual({ kind: 'fixed', num: 1, den: 75 })
+    expect(groups[0]?.entries[0]?.extraConditions).toEqual([{ kind: 'onSlayerTask', value: true }])
+  })
+
+  it('applies the bonus=yes multiplier (Grotesque Guardians: combat 328, bonus -> 1/44)', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Brimstone key', rarity: '{{Brimstone rarity|328|bonus=yes}}', heading: 'Tertiary' }),
+      ])
+    )
+    expect(groups[0]?.entries[0]?.rarity).toEqual({ kind: 'fixed', num: 1, den: 44 })
+  })
+
+  it('does not merge two sections\' identically-named Tertiary headings into one table (The Mimic shape)', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Elite clue', rarity: '1/15', heading: 'Tertiary', section: 'Elite drops' }),
+        line({ name: 'Master clue', rarity: '1/8', heading: 'Tertiary', section: 'Master drops' }),
+      ])
+    )
+    expect(groups).toHaveLength(2)
+    expect(groups.every((g) => g.mode === 'independent' && g.ambiguous === null)).toBe(true)
+    expect(groups[0]?.entries).toHaveLength(1)
+    expect(groups[0]?.entries[0]?.name).toBe('Elite clue')
+    expect(groups[1]?.entries).toHaveLength(1)
+    expect(groups[1]?.entries[0]?.name).toBe('Master clue')
   })
 
   it('carries members/freeToPlay flags and noted through to the parsed entry', () => {

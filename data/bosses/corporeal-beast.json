@@ -1,0 +1,669 @@
+{
+  "slug": "corporeal-beast",
+  "name": "Corporeal Beast",
+  "aliases": [],
+  "wikiPage": "Corporeal Beast",
+  "wikiRevId": 15281958,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "corporeal-beast:0:weapons-and-armour-runes-and-ammunition-resources-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 512,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4091,
+            "itemKey": "mystic-robe-top",
+            "name": "Mystic robe top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4093,
+            "itemKey": "mystic-robe-bottom",
+            "name": "Mystic robe bottom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1405,
+            "itemKey": "mystic-air-staff",
+            "name": "Mystic air staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1403,
+            "itemKey": "mystic-water-staff",
+            "name": "Mystic water staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1401,
+            "itemKey": "mystic-fire-staff",
+            "name": "Mystic fire staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12829,
+            "itemKey": "spirit-shield",
+            "name": "Spirit shield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 566,
+            "itemKey": "soul-rune",
+            "name": "Soul rune",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 32
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9144,
+            "itemKey": "runite-bolts",
+            "name": "Runite bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 24
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 22
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9245,
+            "itemKey": "onyx-bolts-e",
+            "name": "Onyx bolts (e)",
+            "qty": {
+              "kind": "exact",
+              "n": 175
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "exact",
+              "n": 2000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 17
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 890,
+            "itemKey": "adamant-arrow",
+            "name": "Adamant arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 750
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 17
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 17
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 17
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "exact",
+              "n": 70
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 21
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7936,
+            "itemKey": "pure-essence",
+            "name": "Pure essence",
+            "qty": {
+              "kind": "exact",
+              "n": 2500
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 21
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2361,
+            "itemKey": "adamantite-bar",
+            "name": "Adamantite bar",
+            "qty": {
+              "kind": "exact",
+              "n": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1753,
+            "itemKey": "green-dragonhide",
+            "name": "Green dragonhide",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 125
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 17
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 20
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8780,
+            "itemKey": "teak-plank",
+            "name": "Teak plank",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6332,
+            "itemKey": "mahogany-logs",
+            "name": "Mahogany logs",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1513,
+            "itemKey": "magic-logs",
+            "name": "Magic logs",
+            "qty": {
+              "kind": "exact",
+              "n": 75
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7060,
+            "itemKey": "tuna-potato",
+            "name": "Tuna potato",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 239,
+            "itemKey": "white-berries",
+            "name": "White berries",
+            "qty": {
+              "kind": "exact",
+              "n": 120
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 17
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9735,
+            "itemKey": "goat-horn",
+            "name": "Goat horn",
+            "qty": {
+              "kind": "exact",
+              "n": 120
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 17
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5321,
+            "itemKey": "watermelon-seed",
+            "name": "Watermelon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 24
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 20000,
+              "max": 50000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5952,
+            "itemKey": "antidote-4",
+            "name": "Antidote++(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 40
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12833,
+            "itemKey": "holy-elixir",
+            "name": "Holy elixir",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Resources / Other"
+    },
+    {
+      "id": "corporeal-beast:1:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25521,
+            "itemKey": "jar-of-spirits",
+            "name": "Jar of spirits",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12816,
+            "itemKey": "pet-dark-core",
+            "name": "Pet dark core",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "corporeal-beast:rdt-access:0",
+      "mode": "independent",
+      "rolls": 10,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 12,
+            "den": 512
+          }
+        }
+      ],
+      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "resolved against 3 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": false,
+        "detail": "other: The wiki's own {{GemDropTable|12/512|rolls=10|override=...}} call explicitly states in its override prose: \"a 12/512 chance of rolling the gem drop table, whereupon its contents are rolled 10 times\" — access checked ONCE, the gem table drawn 10 times after. The parser's default reading of `rolls` (used for every other RDT/gem access line on the wiki, matching Table.rolls' existing 'repeated access attempts' meaning elsewhere, e.g. Zulrah's main table) is the OPPOSITE: it currently models this as 10 independent 12/512 access attempts, not one access followed by 10 draws. Confirmed wrong specifically by this source's own text, not a guess — see docs/DECISIONS.md."
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

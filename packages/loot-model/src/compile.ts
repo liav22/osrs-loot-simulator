@@ -182,6 +182,7 @@ export function compileBoss(
 
     const weights = new Float64Array(applicable.length)
     const probs = new Float64Array(applicable.length)
+    let denominator = table.denominator ?? 0
 
     if (table.mode === 'weighted') {
       let total = 0
@@ -190,7 +191,20 @@ export function compileBoss(
         weights[i] = weight
         total += weight
       })
-      const denominator = table.denominator ?? 0
+      // An explicit `nothing` entry excluded by ITS OWN condition shrinks the
+      // effective denominator by its own weight, rather than leaving an
+      // equal-sized unaccounted-for gap that would just re-create an
+      // implicit `nothing` of the same size. This is how "ring of wealth
+      // removes the nothing slot" (PROJECT_PLAN.md 4.4) is expressed: the gem
+      // table's `Nothing` row is gated on `ringOfWealth: false`; wearing RoW
+      // excludes that row AND shrinks the pool so the remaining items now
+      // span the whole table, matching the wiki's own post-RoW fractions
+      // (e.g. uncut sapphire 32/128 -> 32/65, not 32/128 unchanged). A rule
+      // about the `nothing` node kind, not about a particular table.
+      for (const entry of table.entries) {
+        if (entry.node.kind !== 'nothing' || entryApplies(entry, ctx)) continue
+        denominator -= entry.rate.kind === 'weight' ? entry.rate.weight : 0
+      }
       if (total > denominator + 1e-9) {
         throw new WeightsExceedDenominatorError(table.id, total, denominator)
       }
@@ -208,7 +222,7 @@ export function compileBoss(
       nodes,
       weights,
       cum: table.mode === 'weighted' ? cumulative(weights) : new Float64Array(0),
-      denominator: table.denominator ?? 0,
+      denominator,
       probs,
     }
     memo.set(table.id, compiled)

@@ -548,6 +548,106 @@
         }
       ],
       "notes": "Weapons and armour / Runes / Herbs / Materials / Other"
+    },
+    {
+      "id": "scorpia:2:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "looting-bag",
+            "name": "Looting bag",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "ensouled-scorpion-head",
+            "name": "Ensouled scorpion head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 75
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-hard",
+            "name": "Clue scroll (hard)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13181,
+            "itemKey": "scorpia-s-offspring",
+            "name": "Scorpia's offspring",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2015.75
+          }
+        }
+      ],
+      "notes": "Tertiary"
     }
   ],
   "contextDefaults": {},
@@ -562,7 +662,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+        "detail": "no tableRef nodes"
       },
       {
         "check": "rates_valid",
@@ -581,7 +681,8 @@
       },
       {
         "check": "items_known",
-        "ok": true
+        "ok": false,
+        "detail": "2 item(s) failed to resolve"
       },
       {
         "check": "not_on_watchlist",

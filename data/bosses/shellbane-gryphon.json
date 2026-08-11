@@ -1,0 +1,487 @@
+{
+  "slug": "shellbane-gryphon",
+  "name": "Shellbane gryphon",
+  "aliases": [],
+  "wikiPage": "Shellbane gryphon",
+  "wikiRevId": 15286806,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "shellbane-gryphon:0:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31245,
+            "itemKey": "belle-s-folly-tarnished",
+            "name": "Belle's folly (tarnished)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 75
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "shellbane-gryphon:1:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 532,
+            "itemKey": "big-bones",
+            "name": "Big bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31235,
+            "itemKey": "gryphon-feather",
+            "name": "Gryphon feather",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 10
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "shellbane-gryphon:2:weapons-foods",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3101,
+            "itemKey": "rune-claws",
+            "name": "Rune claws",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1333,
+            "itemKey": "rune-scimitar",
+            "name": "Rune scimitar",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31912,
+            "itemKey": "adamant-cannonball",
+            "name": "Adamant cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 35,
+              "max": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31914,
+            "itemKey": "rune-cannonball",
+            "name": "Rune cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 371,
+            "itemKey": "raw-swordfish",
+            "name": "Raw swordfish",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5986,
+            "itemKey": "sweetcorn",
+            "name": "Sweetcorn",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5982,
+            "itemKey": "watermelon",
+            "name": "Watermelon",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 395,
+            "itemKey": "raw-sea-turtle",
+            "name": "Raw sea turtle",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        }
+      ],
+      "notes": "Weapons / Foods"
+    },
+    {
+      "id": "shellbane-gryphon:3:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31235,
+            "itemKey": "gryphon-feather",
+            "name": "Gryphon feather",
+            "qty": {
+              "kind": "range",
+              "min": 35,
+              "max": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 11
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5376,
+            "itemKey": "basket",
+            "name": "Basket",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        }
+      ],
+      "notes": "Other"
+    },
+    {
+      "id": "shellbane-gryphon:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20543,
+            "itemKey": "reward-casket-elite",
+            "name": "Reward casket (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 58
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10976,
+            "itemKey": "long-bone",
+            "name": "Long bone",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 32921,
+            "itemKey": "jar-of-feathers",
+            "name": "Jar of feathers",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "gull-pet",
+            "name": "Gull (pet)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10977,
+            "itemKey": "curved-bone",
+            "name": "Curved bone",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5012.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "shellbane-gryphon:rdt-access:0",
+      "mode": "independent",
+      "rolls": 2,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 128
+          }
+        }
+      ],
+      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "resolved against 3 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": false,
+        "detail": "1 item(s) failed to resolve"
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

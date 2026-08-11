@@ -656,3 +656,429 @@ plan text, and the gate is reported as a measured number rather than as pass/fai
   `PROJECT_PLAN.md` and `plan/HANDOFF.md`** — a session-handoff document for
   a fresh Claude session with no prior context. Not a substitute for this
   file; written to point back here for anything already logged.
+
+## Rarity-template registry, and `{{Brimstone rarity|N}}` as its first entry
+
+- **Built `apps/ingest/src/parse/rarity-templates.ts`: a `Map<templateName,
+  evaluator>` registry, not a Brimstone special case.** A `rarity=` value that
+  is itself a `{{Template|...}}` call (rather than a literal `Always`/`N/M`)
+  is looked up by lowercased template name in `build-tables.ts`'s
+  `parseRarity`. An unregistered name is reported as `unrecognised rarity
+  template '<name>'` through the same `ambiguous`/`unparseable rarity`
+  channel a malformed literal already uses, distinguishable in the message —
+  never silently dropped, never guessed at. Adding a second template later is
+  one registry entry, not a new branch anywhere in the parser.
+- **`{{Brimstone rarity|N}}`'s value is a parse-time constant, not a
+  `Rate.formula`.** Investigated against the 18 wikitext snapshots that carry
+  it (`grep -rl "Brimstone rarity" data/snapshots/wikitext/`): `N` is the
+  killed monster's combat level, a fixed number baked into the page's own
+  `{{DropsLine}}` call, not a `SimContext` value read at simulate time. Fit
+  the wiki's own pre-resolved `dropsline` bucket `Rarity` field (e.g.
+  Vardorvis 784 -> 1/50, Artio 320 -> 1/56, Ahrim 98 -> 1/100) and recovered
+  the exact formula: `base = max(50, 100 - floor(max(0, combatLevel-100)/5))`,
+  with `bonus=yes` (Grotesque Guardians only) applying `floor(base * 0.8)`.
+  Matches all 18 known `(combatLevel, resolved rarity)` pairs exactly, zero
+  remainder — confirmed as the real game formula, not a curve fit of
+  convenience. What IS runtime-dependent is whether the drop can happen at
+  all: every single one of the 18 `DropsLine` calls carries a `raritynotes`
+  footnote restricting it to a Wilderness-Slayer task from Konar quo Maten.
+  That is exactly the existing `{ kind: 'onSlayerTask', value: true }`
+  condition (PROJECT_PLAN.md 4.4) — no model or formula-registry change
+  needed, just attaching a condition the schema already supports.
+- **`parseTemplateCall` (`wikitext-drops.ts`) now assigns positional
+  params `"1"`, `"2"`, ... when a part has no `=`**, needed because
+  `{{Brimstone rarity|784}}`'s only argument is positional; every existing
+  caller (`{{DropsLine|...}}`) uses named params exclusively, so this is
+  additive and did not change any existing behaviour. Exported so
+  `rarity-templates.ts` can reuse it instead of re-parsing template calls.
+- **`ParsedEntry` gained `extraConditions?: Condition[]`**, threaded from
+  `parseRarity`'s resolution through every `toEntry(...)` call site in
+  `buildTableGroups`, and merged into the entry's final `Condition[]` in
+  `assembleBoss`'s `conditionsFor` (previously only `members`/`freeToPlay`).
+  This is the general mechanism a rarity template can use to add a condition;
+  Brimstone rarity's `onSlayerTask` is the only user of it so far.
+- **Re-ran `ingest parse --tier A` after the fix. Verified count is
+  unchanged at 3/26** — no tier-A source was blocked by Brimstone rarity
+  *alone*; the ones that carry it (Duke Sucellus, The Leviathan, The
+  Whisperer, Vardorvis, and four wilderness bosses already needs_review for
+  the "Uniques" ambiguity) all have at least one other, independent blocker.
+  `needs_review` dropped 20 -> 16 and `parse_failed` rose 3 -> 7 — a real
+  count regression, explained below, not a sign the fix is wrong.
+- **Follow-up discovered by this fix, not resolved: an "Always" entry sharing
+  a `Tertiary` heading with a fixed-rate entry now hits a genuine schema
+  wall.** Vardorvis' `Tertiary` section has `Temple key (Desert Treasure II)`
+  at `rarity=Always` (quest-variant-only) in the same heading block as
+  `Brimstone key`. `Tertiary` forces `mode: 'independent'`
+  (`INDEPENDENT_HEADINGS`), but the schema pins `independent` entries to
+  `fixed`/`formula` rates only (see the Phase 1 schema-refinements entry
+  above) — `always` is not among them. Previously this was invisible: the
+  whole block short-circuited earlier as `ambiguous: 'unparseable rarity'`
+  with `entries: []`, which `assembleBoss` filters out of `tableInputs`
+  before the schema ever sees it, so the boss still assembled (as
+  `needs_review`, not `parse_failed`). Now that Brimstone key resolves, the
+  block has real entries and the schema rejects the mix outright, turning
+  Duke Sucellus, The Leviathan, The Whisperer and Vardorvis from
+  `needs_review` into `parse_failed` — a net loss of assembled bosses even
+  though no data is being silently dropped anymore (the opposite problem).
+  **The Mimic's `parse_failed` is the same error signature but a pre-existing,
+  unrelated cause** — landmine #5's Elite/Master `Tertiary` sub-heading merge
+  — and is what the next task (`groupByHeading` restructuring) addresses;
+  fixing it will not touch the other four. Not fixed this session: it needs a
+  decision (allow `always` inside `independent` in the schema, since
+  "always" trivially satisfies "rolled separately, can stack"? or split a
+  mixed heading block by rate kind before mode inference?) that wasn't asked
+  for and belongs with whoever owns the schema refinement call.
+
+## Phase 6 research item: wave-structured mechanics — checked whether Inferno,
+   Fight Caves, Barbarian Assault, Nightmare Zone share Fortis Colosseum's shape
+
+No code this session; research only, against local wikitext snapshots
+(`data/snapshots/wikitext/{inferno,tzhaar-fight-cave,barbarian-assault,
+nightmare-zone}.json`).
+
+- **None of the four share Rewards Chest (Fortis Colosseum)'s wave-indexed
+  loot-chest shape.** That page is the outlier: explicit `Wave 1`
+  through `Wave 12` headings, each with real `{{DropsLine}}`-style rows,
+  loot bankable across partial completion (see landmine #3 in
+  `plan/HANDOFF.md`). Checked all four candidates directly rather than from
+  memory:
+  - **Inferno and TzHaar Fight Cave have zero `{{DropsLine}}` calls each**
+    (`grep -c` confirms). Both are single deterministic completion rewards
+    (infernal cape / fire cape) plus a currency amount that scales with the
+    wave reached (Tokkul, prose-described, not a drop row) plus one
+    independent, boss-page-style pet chance (Inferno: 1/100, or 1/75 on a
+    slayer task — itself another `onSlayerTask`-gated fixed rate, same
+    pattern as Brimstone key above). This is not a wave-scaled loot table at
+    all — closer to a single `Boss` doc with two `always`/`fixed` entries
+    than to Fortis Colosseum's per-wave chest. If ever modelled, it needs a
+    `killCountAtLeast`-style "on completion" condition and a currency-amount
+    formula, not wave machinery.
+  - **Barbarian Assault's `==Rewards==` has no `{{DropsLine}}` calls** and
+    is a points-gamble/armour-upgrade shop (`Level Upgrades`, `Armour`,
+    `Gambles` subheadings) — a spend mechanic, not a table indexed by wave.
+  - **Nightmare Zone's `==Rewards==` explicitly names itself a shop**
+    (`{{main|Dom Onion's Reward Shop}}`, "purchased using the reward points
+    obtained inside the minigame") — the same `point_scaled` shape already
+    on `data/mechanics-watchlist.json` for the CoX/ToB/ToA chests, not
+    wave-indexed at all.
+- **Conclusion: Fortis Colosseum's wave structure is currently a population
+  of one.** No shared abstraction is justified by this evidence — building
+  wave machinery generalized from a single real example risks guessing the
+  shape of a second case that doesn't exist yet. Revisit if a future source
+  turns up the same `Wave N` heading pattern; until then this stays a
+  Phase 5/override case for Fortis Colosseum alone (per landmine #3), not a
+  new first-class mode.
+
+## `groupByHeading` fix: sub-headings qualified by parent section (The Mimic)
+
+- **`findDropsSections` (`wikitext-drops.ts`) now returns each top-level
+  Drops/Rewards section SEPARATELY, `WikitextDropLine` gained a `section`
+  field, and `groupByHeading` (`build-tables.ts`) now keys on `(section,
+  heading)` instead of `heading` alone.** This is the fix landmine #5
+  described: The Mimic's `==Elite drops==` and `==Master drops==` each carry
+  their own `===Tertiary===` sub-heading; grouping by heading text alone
+  merged both into one table, mixing an `Always`-rate row from one tier into
+  an `independent`-mode table built for the other's fixed rates, which the
+  schema correctly rejected. `section` is `''` for the ~140 sources with
+  exactly one top-level Drops section (the overwhelming common case) —
+  `heading` alone still identifies a sub-table there, byte-identical to the
+  old behaviour, confirmed by re-parsing all of tier A. Only a genuinely
+  multi-section page pays for the qualification.
+- **This surfaced a second, more consequential bug in the same function,
+  caught by testing before it shipped: `findDropsSections` matched a
+  heading's title against `DROPS_SECTION_TITLE` at ANY nesting level, not
+  just top-level.** A first version of this fix (processing each matched
+  "section" independently) turned Branda the Fire Queen and Eldric the Ice
+  King from `verified` to `needs_review` — regressions caught by re-running
+  `ingest parse --tier A` after the change, not assumed safe. Root cause:
+  both pages have `===Tertiary drops===` NESTED inside `==Drops==` (level 3
+  under level 2), and "Tertiary drops" itself matches `DROPS_SECTION_TITLE`
+  (the qualifier-before-"drops" form). The old concatenation-based code ALSO
+  independently re-matched it, but silently: the nested section's re-sliced
+  content (its `{{DropsLine}}` rows again, with no heading marker of its
+  own) landed inside the SAME "Tertiary drops" boundary as the real
+  occurrence — `INDEPENDENT_HEADINGS` still matched, so the check that would
+  have caught it (`weights_sum`) doesn't apply to `independent` mode, and the
+  doubled rows passed unnoticed. Confirmed this is not just Branda/Eldric by
+  grepping every wikitext snapshot for a heading matching
+  `DROPS_SECTION_TITLE` at a level deeper than its page's shallowest match:
+  **12 more sources carry the same pattern** (Chambers of Xeric, Chest
+  (ToA), Gemstone Crab, Monumental chest, Tempoross, The Gauntlet, The Mimic
+  itself — `Main drops` nested in both Elite/Master — Treasure Trails,
+  TzKal-Zuk, TzTok-Jad), several already excluded from the inventory or not
+  yet tier A, but the bug class was real and latent across the corpus, not a
+  Branda-specific fluke.
+  - **Fixed by making section-matching non-overlapping**: once a heading
+    claims a section (start..end), any heading whose own `start` falls
+    inside that already-claimed range is skipped, even if its title also
+    matches `DROPS_SECTION_TITLE`. Re-verified Branda/Eldric back to
+    `verified` and confirmed The Mimic ALSO needed this half of the fix —
+    its nested `===Main drops===` was hitting the identical spurious-match
+    pattern independently of the Elite/Master merge bug, and without the
+    non-overlap guard it still showed a `heading ""` ambiguous group after
+    the section-qualification change alone.
+- **Net result, tier A re-parsed after both fixes: verified 3 -> 5**
+  (`Scurrius` and `The Mimic` newly verified; `Branda the Fire Queen` and
+  `Eldric the Ice King` unaffected in the end, having only regressed and
+  recovered within this same investigation). `needs_review` 20 -> 15,
+  `parse_failed` 3 -> 6 (Duke Sucellus, The Leviathan, The Whisperer,
+  Vardorvis — the pre-existing `always`-inside-`independent` schema conflict
+  documented above under the rarity-template-registry entry, unrelated to
+  this fix and still open).
+
+## Phase 3: shared tables — rare_drop_table, gem_drop_table, mega_rare_drop_table
+
+Note on numbering (corrected): the session that did this work was told to
+call it "Phase 4" and flagged the mismatch here rather than silently
+resolving it either way. `PROJECT_PLAN.md` section 16 is authoritative:
+shared tables + `tableRef` resolution + ring-of-wealth conditions are
+**Phase 3** (Phase 4 is the frontend, section 9). Retitled this entry to
+match; the work itself was already built to the Phase 3 spec (section 5)
+regardless of the label it was filed under.
+
+- **Fetched the real pages instead of reconstructing them from memory.**
+  `rare_drop_table`/`gem_drop_table`/`mega_rare_drop_table` had no local
+  snapshot (they're not `Category:Bosses` pages, so `ingest fetch --all`
+  never touched them). Real game-mechanic numbers are exactly the kind of
+  thing memory gets subtly wrong, and this repo has been rigorous about
+  wiki-verified accuracy everywhere else, so fetched them properly through
+  `WikiClient` (same User-Agent, same serial rate-limited queue as every
+  other fetch — not a raw/ad-hoc request) rather than guessing. 6 requests,
+  snapshotted to `data/snapshots/wikitext/` and `data/snapshots/dropsline/`
+  like any other page. `Mega-rare drop table` is a `#REDIRECT` to a section
+  of `Rare drop table` — all three tables' real content lives on that one
+  page, under `==Rare drop table==` / `==Gem drop table==` /
+  `==Mega-rare drop table==`.
+- **All three tables' weights sum EXACTLY to their stated 128 denominator**
+  (verified programmatically, not by eyeballing): RDT's four cosmetic
+  sub-headings (Runes and ammunition / Weapons and armour / Other /
+  Sub-tables) collapse into one 19-entry `weighted` table by the same
+  shared-denominator heuristic already used for Brutus; no `nothing` slot at
+  the RDT's own top level (it always drops something). Gem and mega-rare
+  each carry an explicit `Nothing` row with its own stated rarity (63/128 and
+  113/128) rather than an implicit shortfall, because the wiki needs
+  something to attach the ring-of-wealth footnote to.
+- **This is where the model's existing tooling ran out: representing
+  "ring of wealth removes the nothing slot" needed a real, general engine
+  fix, not just data.** The wiki's own post-RoW fractions (e.g. uncut
+  sapphire 32/128 -> 32/65) prove RoW does not merely zero out the Nothing
+  entry against the *same* 128 denominator — it shrinks the effective
+  denominator to exactly what's left (128 - 63 = 65), so the remaining items
+  fill the WHOLE table. The existing `weighted`-mode compiler
+  (`compile.ts`) had no notion of a denominator that changes with which
+  entries survive condition filtering — `denominator` was one static number
+  per `Table`. Modelling RoW as a plain conditional entry against the old
+  static denominator would have left a 63-unit *implicit* gap exactly the
+  size of the slot RoW was supposed to remove, silently reproducing the
+  original nothing-chance instead of eliminating it.
+  - **Fixed generally, in `compileTable`'s weighted branch**: an entry whose
+    node is `{ kind: 'nothing' }` and whose OWN conditions exclude it from
+    `applicable` now subtracts its weight from the effective denominator,
+    rather than leaving an unaccounted-for gap of the same size. This is a
+    rule about the `nothing` node kind, stated once, not about a particular
+    table or boss — satisfies the hard rule against per-boss branching the
+    same way `suppressedByPreroll` already does for preroll semantics.
+  - **Verified against the live-fetched numbers, not just internally
+    consistent:** with RoW on and (for the gem table) Legends' Quest
+    complete, `expectedValue`'s summed `expectedDrops` across the whole
+    `rare_drop_table -> {gem_drop_table, mega_rare_drop_table}` chain is
+    exactly `1.0` (zero nothing-chance anywhere in the chain) — and the
+    resulting mega-rare fractions (rune spear/shield left half/dragon spear)
+    reproduce the wiki's own stated 8/15, 4/15, 3/15 to full float precision.
+    Locked in as a regression test
+    (`apps/ingest/test/shared-tables.test.ts`), plus three focused
+    `compile.ts`-level tests in `packages/loot-model/test/simulate.test.ts`.
+- **Two judgement calls where the schema's existing primitives ran out,
+  both left as documented, flagged simplifications rather than schema
+  changes not asked for:**
+  - **Chaos talisman vs. nature talisman is modelled as an even-weighted
+    `oneOf`, not the real mechanic.** The wiki: which one drops depends on
+    the killed monster's map coordinates (over-/underground) — a dimension
+    `SimContext` has no field for (the six condition kinds in 4.4 don't
+    cover player/monster location). Splitting the combined 3/128 slot 50/50
+    between the two is the best available approximation without adding a
+    new condition kind, which wasn't asked for this session.
+  - **The "mega-rare drop table is replaced by a talisman if Legends' Quest
+    is incomplete" fallback is NOT modelled** — that 1/128 gem-table slot
+    (reached at (20/128)×(1/65) ≈ 0.24% overall probability once RoW is on)
+    falls through to the implicit nothing remainder instead. Two blockers:
+    the wiki doesn't say WHICH talisman substitutes, and `questComplete`
+    has no `value: boolean` field in the schema (unlike `members`/
+    `ringOfWealth`/`onSlayerTask`) — `PROJECT_PLAN.md` 4.4 defines it that
+    way itself (`{ kind: 'questComplete'; quest: string }`, "complete" only,
+    no negation), so expressing "quest NOT complete" isn't available without
+    changing the base spec's own condition shape, which weighs well past
+    what a 0.24%-probability edge case justifies. Flagged, not silently
+    dropped, same spirit as "Uniques stays a flagged guess."
+- **Explicitly did NOT touch tier-C wiring** (landmine #1: `wikitext-drops.ts`/
+  `build-tables.ts` still don't detect "Rare drop table"/"Gem drop table" rows
+  in a boss's own drop table, and `refs_resolve` in `parse-boss.ts` is still
+  hardcoded to `true`), per the explicit instruction to get these three
+  records right first. The records and the (now-fixed) resolution engine are
+  ready for that wiring whenever it's taken on.
+
+## Fixed: `independent` mode rejecting `always`-rate entries
+
+- **The schema constraint was wrong, not the parser's grouping.** Checked
+  both before touching anything: Vardorvis, Duke Sucellus, The Leviathan and
+  The Whisperer all have a live-wiki `Tertiary` heading that genuinely
+  interleaves a quest/encounter-gated guaranteed drop (`rarity=Always` —
+  e.g. Vardorvis' "Temple key (Desert Treasure II)", "only dropped by the
+  quest variant") with ordinary chance-based tertiary rows, in that order,
+  under one heading — the parser's grouping (one `independent`-mode table
+  per `Tertiary` heading, heuristic 3) is exactly right and wiki-faithful.
+  The rejection was `ALLOWED_ENTRY_RATES.independent = ['fixed', 'formula']`
+  (`schema.ts`), a Phase 1 judgement call ("Schema refinements reject
+  undefined combinations rather than guessing" — see that entry above) that
+  turned out to be narrower than the real data. Mechanically there was never
+  a reason to exclude it: `rateToProbability('always')` is `1`, and
+  `independent` mode already treats every entry as its own Bernoulli trial
+  via `table.probs[i]` in both `simulate.ts` and `expected-value.ts` — an
+  `always`-rate entry is just the degenerate `p=1` case of that, identical
+  in kind to a `fixed` rate of `1/1`. Fixed by adding `'always'` to
+  `independent`'s allowed rate list, with a comment explaining why `preroll`
+  still excludes it (a real, different concern: preroll's chain-order
+  semantics make an unconditional entry dominate everything after it).
+  Covered by a new schema case (`independent/always`) and a new
+  `simulate.test.ts` case reproducing the Vardorvis shape end to end.
+- **Result: Duke Sucellus, The Leviathan, The Whisperer and Vardorvis all
+  go from `parse_failed` back to `needs_review`** (re-ran `ingest parse
+  --tier A`) — each still has an unrelated, real blocker (the "Uniques"
+  heading ambiguity, mostly), so none newly reach `verified`, which is
+  correct: this fix removed a false rejection, not a real one. Tier A is now
+  19 needs_review / 2 parse_failed / 5 verified — the 2 remaining
+  parse_failed (Ancient chest, Revenant maledictus) are the unrelated "no
+  `{{DropsLine}}` calls found" case, untouched.
+
+## Wired `tableRef` into the parser; ran tier C (26 sources) against the shared tables
+
+### The real shape: a completely different template family, not a DropsLine row
+
+- **PROJECT_PLAN.md 6.5 heuristic 4 ("detect Rare drop table / Gem drop table
+  rows") undersold the problem.** A tier-C boss's RDT/gem access is never a
+  `{{DropsLine|name=Rare drop table|rarity=...}}` row — it's a dedicated
+  `{{RareDropTable|...}}` / `{{GemDropTable|...}}` / `{{GWDRDT}}` template
+  under its own `Rare drop table` / `Gem drop table` / `Rare and Gem drop
+  table` sub-heading (sibling to `Tertiary`/`Pre-roll`, still inside
+  `==Drops==`). Read the actual template DEFINITIONS
+  (`data/snapshots/wikitext/template-*.json`, fetched this session), the same
+  way Brimstone rarity's formula was derived, rather than guessing from call
+  sites: both templates invoke a Lua module
+  (`{{#invoke:RareDropLines|main}}` / `GemDropLines`) that expands into the
+  item rows at RENDER time — the raw wikitext never lists them. That's
+  exactly why per-boss item content doesn't need extracting: it's already in
+  `data/tables/rare_drop_table.json` etc. from Phase 3. The parser only needs
+  the ACCESS rate.
+- **New module `apps/ingest/src/parse/rdt-access.ts`** extracts these calls,
+  scoped to the page's Drops section(s) (reuses `findDropsSections`, now
+  exported). Confirmed parameter semantics against the template bodies, not
+  assumed:
+  - `{{RareDropTable|R|G?|...}}`: param 1 is the RDT rate; an OPTIONAL param 2
+    is a separate, independent DIRECT gem-table access rate — literally
+    `{{#if:{{{2|}}}|There is also a ... chance of rolling the gem drop
+    table.}}` in the template body, not the RDT's own internal 20/128
+    sub-chance. This is what "Rare AND Gem drop table" headings mean (Giant
+    Mole, King Black Dragon, the three Dagannoth Kings, Crazy archaeologist):
+    two independent rolls, not one roll with two effects.
+  - `{{GemDropTable|G|...}}`: gem-table-only access, no RDT at all.
+  - `{{GWDRDT}}` takes no parameters and transcludes to prose citing a
+    **distinct** "God Wars Dungeon-variant rare/gem drop table" — confirmed
+    by fetching `Template:GWDRDT` itself: different composition (rune sword
+    replaces runite bar, mega-rare items folded in directly), and explicitly
+    "unaffected by the ring of wealth" per two cited dev tweets. Not the same
+    table as `data/tables/rare_drop_table.json`/`gem_drop_table.json`, and
+    out of scope for the three tables built this session — flagged via
+    `ambiguousGroups`, never guessed at.
+  - `rolls=N`: modelled as N independent access attempts (`Table.rolls`),
+    the same meaning `rolls` already has everywhere else in this codebase
+    (Zulrah's main table, PROJECT_PLAN.md 4.6). **Corporeal Beast is a
+    confirmed exception, not a guess**: its own `override=` prose reads "a
+    12/512 chance of rolling the gem drop table, **whereupon its contents are
+    rolled 10 times**" — one access check, ten draws after, the opposite of
+    the default reading. Parsed with the (known-wrong-for-this-source)
+    default reading and added to `data/mechanics-watchlist.json` rather than
+    special-cased in code.
+  - `dropversion=X` maps to a `variant` condition (already in the model).
+  - `naturetalisman=`/`chaostalisman=` are pure wiki-categorisation flags —
+    neither template's rendering logic reads them for anything; confirmed
+    from the template body, not assumed. Not modelled.
+  - `multiplier=N` (RareDropTable only, Abyssal Sire's `multiplier=2`) scales
+    the QUANTITY the RDT yields, which a single shared, unscaled
+    `data/tables/rare_drop_table.json` record cannot express — watchlisted.
+  - `approx=Yes` marks the stated rate as an approximation; recorded in the
+    generated table's `notes`, not gated on (this pipeline already tolerates
+    approximate figures everywhere else).
+- **`refs_resolve` is now real** (`apps/ingest/src/validate/refs-resolve.ts`):
+  reuses `compileBoss` against the loaded `data/tables/*.json` map and
+  reports `UnresolvedTableRefError`/`CircularTableRefError` specifically,
+  rather than the old hardcoded `ok: true`. Added to `deterministicOk`'s
+  gate in `parse-boss.ts`, which the old hardcoded version never needed to be
+  in (it was always true).
+- **A resolved RDT access line becomes its own small `independent`-mode
+  table** — `{ mode: 'independent', rolls: N, entries: [{ node: {kind:
+  'tableRef', ref}, rate: {kind:'fixed', num, den}, conditions: [variant?] }]
+  }` — appended to the boss's `tables` array in `assembleBoss`. An
+  UNRESOLVED line (GWDRDT, or a rate that doesn't parse as `N/M`) is pushed
+  into the existing `ambiguousGroups` mechanism instead of a new validation
+  check, reusing the same "parser isn't confident" signal `verified` already
+  gates on.
+
+### Result: tier C is 5/26 verified, 20 needs_review, 1 parse_failed
+
+Verified: Amoxliatl, Deranged archaeologist, Giant Mole, Giant Sea Snake,
+King Black Dragon. The other 21 tier-C sources have real, individually
+diagnosed blockers — RDT access itself resolves cleanly for the large
+majority of them (visible in each boss's generated `*:rdt-access:*` table);
+what blocks `verified` is almost always an unrelated pre-existing gap:
+
+- **Sources where the RDT/gem-table rate genuinely could not be read from
+  the row** (this task's specific ask): **Kree'arra, General Graardor** —
+  both use `{{GWDRDT}}`, which names a distinct table this session didn't
+  build (see above). **Abyssal Sire, Corporeal Beast** parse their rate fine
+  but the wiki's own text describes an effect (`multiplier`/non-default
+  `rolls` semantics) nothing here can express — watchlisted, not
+  unresolved-flagged, since the rate itself IS readable.
+- **Black demon: `parse_failed`, unrelated to RDT.** Its Drops-equivalent
+  heading is `"Level 172, 178, and 184 drops"` — five words before "drops",
+  and `DROPS_SECTION_TITLE` only allows ONE qualifier word
+  (`/^(?:\S+\s+)?(drops?|rewards?).../i`), the same shape of gap The Mimic's
+  "Elite drops"/"Master drops" fix closed for a ONE-word qualifier. Not
+  fixed this session — flagging rather than widening the regex blind, since
+  a broader qualifier pattern needs checking against false positives (e.g.
+  "Reward mechanics"-style siblings) the same way the one-word version was.
+- **A new, distinct heuristic gap surfaced, out of scope for this task:
+  literal "Nothing" rows in a boss's own weighted table are not detected**
+  (PROJECT_PLAN.md 6.5 heuristic 5 — "detect `Nothing` rows and emit `{kind:
+  'nothing'}`" — never implemented). Tier A/B never exercised this (Brutus'
+  `nothing` is an implicit shortfall, never spelled out); several tier-C
+  bosses (Black Knight Titan, Salarin the twisted) DO write a literal
+  `{{DropsLine|name=Nothing|...}}` row, which the parser currently treats as
+  an ordinary unresolvable ITEM (`items_known` failure: "item 'Nothing' is
+  not in the item index"). Noted, not fixed — this wasn't part of wiring
+  `tableRef` and deserves its own pass.
+- **Everything else** is the already-known long tail: multi-id items not on
+  the allowlist (Troll bone, Dagannoth ribs, several ensouled heads, pets —
+  the large majority of the 21), the "Uniques"/heterogeneous-denominator
+  ambiguous-preroll guess (Araxxor, General Graardor, Kree'arra), and one
+  new parser-breaking discovery: **Shellbane gryphon's Seeds/Herbs rows use
+  `{{#expr:...}}`/`{{#var:...}}` parser-function arithmetic instead of a
+  literal fraction** (its yield literally depends on the player's Farming
+  patch state) — correctly falls through to `unparseable rarity` rather than
+  being silently misread, same as any other unparseable rarity.
+
+### Full A+B+C re-report (`ingest parse --tier A,B,C`, 53 sources)
+
+| Tier | Sources | Verified | Needs review | Parse failed |
+|---|---:|---:|---:|---:|
+| A | 26 | 5 | 19 | 2 |
+| B | 1 (Brutus) | 0 | 1 | 0 |
+| C | 26 | 5 | 20 | 1 |
+| **Total** | **53** | **10 (18.9%)** | **40 (75.5%)** | **3 (5.7%)** |
+
+Verified: Amoxliatl, Branda the Fire Queen, Chest (Barrows), Deranged
+archaeologist, Eldric the Ice King, Giant Mole, Giant Sea Snake, King Black
+Dragon, Scurrius, The Mimic. Up from 3/26 (tier A only, all `needs_review`/
+`parse_failed` on tier C since it had never been run) at the start of this
+session's four tasks. `parse_failed` (Ancient chest, Black demon, Revenant
+maledictus) and Brutus' own `needs_review` are all pre-existing and untouched
+this session — see their entries above for specifics.

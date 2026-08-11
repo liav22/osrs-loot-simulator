@@ -1,0 +1,303 @@
+{
+  "id": "rare_drop_table",
+  "mode": "weighted",
+  "rolls": 1,
+  "denominator": 128,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 561,
+        "itemKey": "nature-rune",
+        "name": "Nature rune",
+        "qty": {
+          "kind": "exact",
+          "n": 67
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 829,
+        "itemKey": "adamant-javelin",
+        "name": "Adamant javelin",
+        "qty": {
+          "kind": "exact",
+          "n": 20
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 560,
+        "itemKey": "death-rune",
+        "name": "Death rune",
+        "qty": {
+          "kind": "exact",
+          "n": 45
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 563,
+        "itemKey": "law-rune",
+        "name": "Law rune",
+        "qty": {
+          "kind": "exact",
+          "n": 45
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 892,
+        "itemKey": "rune-arrow",
+        "name": "Rune arrow",
+        "qty": {
+          "kind": "exact",
+          "n": 42
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 886,
+        "itemKey": "steel-arrow",
+        "name": "Steel arrow",
+        "qty": {
+          "kind": "exact",
+          "n": 150
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1319,
+        "itemKey": "rune-2h-sword",
+        "name": "Rune 2h sword",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1373,
+        "itemKey": "rune-battleaxe",
+        "name": "Rune battleaxe",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1185,
+        "itemKey": "rune-sq-shield",
+        "name": "Rune sq shield",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1149,
+        "itemKey": "dragon-med-helm",
+        "name": "Dragon med helm",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1201,
+        "itemKey": "rune-kiteshield",
+        "name": "Rune kiteshield",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 995,
+        "itemKey": "coins",
+        "name": "Coins",
+        "qty": {
+          "kind": "exact",
+          "n": 3000
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 21
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 987,
+        "itemKey": "loop-half-of-key",
+        "name": "Loop half of key",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 20
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 985,
+        "itemKey": "tooth-half-of-key",
+        "name": "Tooth half of key",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 20
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 2363,
+        "itemKey": "runite-bar",
+        "name": "Runite bar",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 5
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1615,
+        "itemKey": "dragonstone",
+        "name": "Dragonstone",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 442,
+        "itemKey": "silver-ore",
+        "name": "Silver ore",
+        "qty": {
+          "kind": "exact",
+          "n": 100
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "tableRef",
+        "ref": "gem_drop_table"
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 20
+      }
+    },
+    {
+      "node": {
+        "kind": "tableRef",
+        "ref": "mega_rare_drop_table"
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 15
+      }
+    }
+  ],
+  "notes": "Runes and ammunition / Weapons and armour / Other / Sub-tables (cosmetic wiki headings, one /128 table). Source: https://oldschool.runescape.wiki/w/Rare_drop_table"
+}

@@ -1,0 +1,196 @@
+{
+  "id": "gem_drop_table",
+  "mode": "weighted",
+  "rolls": 1,
+  "denominator": 128,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "nothing"
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 63
+      },
+      "conditions": [
+        {
+          "kind": "ringOfWealth",
+          "value": false
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1623,
+        "itemKey": "uncut-sapphire",
+        "name": "Uncut sapphire",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 32
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1621,
+        "itemKey": "uncut-emerald",
+        "name": "Uncut emerald",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 16
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1619,
+        "itemKey": "uncut-ruby",
+        "name": "Uncut ruby",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 8
+      }
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 1452,
+              "itemKey": "chaos-talisman",
+              "name": "Chaos talisman",
+              "qty": {
+                "kind": "exact",
+                "n": 1
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 1462,
+              "itemKey": "nature-talisman",
+              "name": "Nature talisman",
+              "qty": {
+                "kind": "exact",
+                "n": 1
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1617,
+        "itemKey": "uncut-diamond",
+        "name": "Uncut diamond",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 830,
+        "itemKey": "rune-javelin",
+        "name": "Rune javelin",
+        "qty": {
+          "kind": "exact",
+          "n": 5
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 987,
+        "itemKey": "loop-half-of-key",
+        "name": "Loop half of key",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 985,
+        "itemKey": "tooth-half-of-key",
+        "name": "Tooth half of key",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "tableRef",
+        "ref": "mega_rare_drop_table"
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "conditions": [
+        {
+          "kind": "questComplete",
+          "quest": "Legends' Quest"
+        }
+      ]
+    }
+  ],
+  "notes": "Nothing is removed while wearing a ring of wealth (the remaining weight then spans the whole table). Without Legends' Quest the mega-rare slot is replaced by a talisman on the live wiki; not modelled (which talisman is unspecified), so that 1/128 falls through to the implicit nothing remainder instead — see docs/DECISIONS.md. Source: https://oldschool.runescape.wiki/w/Rare_drop_table#Gem_drop_table"
+}

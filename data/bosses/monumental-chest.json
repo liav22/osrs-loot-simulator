@@ -10,8 +10,9 @@
   "tables": [
     {
       "id": "monumental-chest:0:untitled",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 30,
       "withoutReplacement": false,
       "entries": [
         {
@@ -28,9 +29,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 2,
-            "den": 30
+            "kind": "weight",
+            "weight": 2
           }
         },
         {
@@ -46,9 +46,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -64,9 +63,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -82,9 +80,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -101,9 +98,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -120,9 +116,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -139,9 +134,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -158,9 +152,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -177,9 +170,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -196,9 +188,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -215,9 +206,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -234,9 +224,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -253,9 +242,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -272,9 +260,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -291,9 +278,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -310,9 +296,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -329,9 +314,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -348,9 +332,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -367,9 +350,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -386,9 +368,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -405,9 +386,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -424,9 +404,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -442,9 +421,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -460,9 +438,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -478,9 +455,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -495,9 +471,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -512,9 +487,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -529,9 +503,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -547,11 +520,19 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
+            "kind": "weight",
+            "weight": 1
           }
-        },
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "monumental-chest:1:untitled",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -653,7 +634,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+        "detail": "no tableRef nodes"
       },
       {
         "check": "rates_valid",

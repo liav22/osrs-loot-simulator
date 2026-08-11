@@ -218,12 +218,28 @@ export const TABLE_MODES = ['always', 'preroll', 'weighted', 'independent'] as c
 export const TableModeSchema = z.enum(TABLE_MODES)
 export type TableMode = z.infer<typeof TableModeSchema>
 
-/** Rate kinds each mode's entries are allowed to use. */
+/**
+ * Rate kinds each mode's entries are allowed to use.
+ *
+ * `independent` allows `always` alongside `fixed`/`formula`: several real
+ * "Tertiary" sections (Vardorvis, Duke Sucellus, The Leviathan, The
+ * Whisperer) legitimately interleave a quest/encounter-gated guaranteed drop
+ * (`rarity=Always`) with ordinary chance-based tertiary rows under one
+ * heading — a genuine wiki shape, not a parser error. Mechanically this was
+ * always safe: `rateToProbability('always')` is 1, and `independent` already
+ * evaluates every entry as its own independent Bernoulli trial via
+ * `table.probs[i]`, so an always-rate entry is just the degenerate p=1 case,
+ * identical in kind to a `fixed` rate of 1/1. `preroll` still excludes
+ * `always` on purpose: preroll's chain-order semantics make an unconditional
+ * entry dominate everything checked after it, which is a real, different
+ * shape (and preroll is capped at `rolls: 1`, so it cannot be a harmless
+ * no-op the way it might be elsewhere).
+ */
 const ALLOWED_ENTRY_RATES: Record<TableMode, readonly Rate['kind'][]> = {
   always: ['always'],
   preroll: ['fixed', 'formula'],
   weighted: ['weight'],
-  independent: ['fixed', 'formula'],
+  independent: ['always', 'fixed', 'formula'],
 }
 
 export const TableSchema = z

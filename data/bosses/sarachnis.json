@@ -1,0 +1,990 @@
+{
+  "slug": "sarachnis",
+  "name": "Sarachnis",
+  "aliases": [],
+  "wikiPage": "Sarachnis",
+  "wikiRevId": 15291785,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "sarachnis:0:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 384
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23528,
+            "itemKey": "sarachnis-cudgel",
+            "name": "Sarachnis cudgel",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 384
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "sarachnis:1:weapons-and-armour-runes-and-ammunition-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 100,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1147,
+            "itemKey": "rune-med-helm",
+            "name": "Rune med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 175,
+              "max": 200
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "range",
+              "min": 125,
+              "max": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 566,
+            "itemKey": "soul-rune",
+            "name": "Soul rune",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 888,
+            "itemKey": "mithril-arrow",
+            "name": "Mithril arrow",
+            "qty": {
+              "kind": "range",
+              "min": 450,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9142,
+            "itemKey": "mithril-bolts",
+            "name": "Mithril bolts",
+            "qty": {
+              "kind": "range",
+              "min": 175,
+              "max": 225
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5314,
+            "itemKey": "maple-seed",
+            "name": "Maple seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5288,
+            "itemKey": "papaya-tree-seed",
+            "name": "Papaya tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5315,
+            "itemKey": "yew-seed",
+            "name": "Yew seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Seeds"
+    },
+    {
+      "id": "sarachnis:2:herbs",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 800,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3051,
+            "itemKey": "grimy-snapdragon",
+            "name": "Grimy snapdragon",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 219,
+            "itemKey": "grimy-torstol",
+            "name": "Grimy torstol",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        }
+      ],
+      "notes": "Herbs"
+    },
+    {
+      "id": "sarachnis:3:materials-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 100,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 447,
+            "itemKey": "mithril-ore",
+            "name": "Mithril ore",
+            "qty": {
+              "kind": "range",
+              "min": 60,
+              "max": 90
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1749,
+            "itemKey": "red-dragonhide",
+            "name": "Red dragonhide",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1623,
+            "itemKey": "uncut-sapphire",
+            "name": "Uncut sapphire",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 40
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1621,
+            "itemKey": "uncut-emerald",
+            "name": "Uncut emerald",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9194,
+            "itemKey": "onyx-bolt-tips",
+            "name": "Onyx bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 10
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1617,
+            "itemKey": "uncut-diamond",
+            "name": "Uncut diamond",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 17000,
+              "max": 25000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 536,
+            "itemKey": "dragon-bones",
+            "name": "Dragon bones",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7056,
+            "itemKey": "egg-potato",
+            "name": "Egg potato",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 8
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5937,
+            "itemKey": "weapon-poison",
+            "name": "Weapon poison(++)",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 989,
+            "itemKey": "crystal-key",
+            "name": "Crystal key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6291,
+            "itemKey": "spider-carcass",
+            "name": "Spider carcass",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Materials / Other"
+    },
+    {
+      "id": "sarachnis:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23510,
+            "itemKey": "tattered-moon-page",
+            "name": "Tattered moon page",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23512,
+            "itemKey": "tattered-sun-page",
+            "name": "Tattered sun page",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23514,
+            "itemKey": "tattered-temple-page",
+            "name": "Tattered temple page",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23517,
+            "itemKey": "giant-egg-sac-full",
+            "name": "Giant egg sac(full)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23499,
+            "itemKey": "grubby-key",
+            "name": "Grubby key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 15
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-hard",
+            "name": "Clue scroll (hard)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 40
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 57
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33133,
+            "itemKey": "pristine-spider-silk",
+            "name": "Pristine spider silk",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 60
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23525,
+            "itemKey": "jar-of-eyes",
+            "name": "Jar of eyes",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "sraracha",
+            "name": "Sraracha",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "sarachnis:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
+          }
+        }
+      ],
+      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "resolved against 3 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": false,
+        "detail": "1 item(s) failed to resolve"
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

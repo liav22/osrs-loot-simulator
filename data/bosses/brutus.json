@@ -520,7 +520,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+        "detail": "no tableRef nodes"
       },
       {
         "check": "rates_valid",

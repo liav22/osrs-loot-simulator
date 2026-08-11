@@ -1,0 +1,936 @@
+{
+  "slug": "zulrah",
+  "name": "Zulrah",
+  "aliases": [],
+  "wikiPage": "Zulrah",
+  "wikiRevId": 15285439,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "zulrah:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12934,
+            "itemKey": "zulrah-s-scales",
+            "name": "Zulrah's scales",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "zulrah:1:uniques",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 1024,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12922,
+            "itemKey": "tanzanite-fang",
+            "name": "Tanzanite fang",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12932,
+            "itemKey": "magic-fang",
+            "name": "Magic fang",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12927,
+            "itemKey": "serpentine-visage",
+            "name": "Serpentine visage",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6571,
+            "itemKey": "uncut-onyx",
+            "name": "Uncut onyx",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Uniques"
+    },
+    {
+      "id": "zulrah:2:mutagens",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1779,
+            "itemKey": "flax",
+            "name": "Flax",
+            "qty": {
+              "kind": "exact",
+              "n": 1000
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 10,
+            "den": 249
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13200,
+            "itemKey": "tanzanite-mutagen",
+            "name": "Tanzanite mutagen",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 13107
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13201,
+            "itemKey": "magma-mutagen",
+            "name": "Magma mutagen",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 13107
+          }
+        }
+      ],
+      "notes": "Mutagens"
+    },
+    {
+      "id": "zulrah:3:weapons-and-armour-runes-herbs-seeds-resources-shark-drop-table-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 249,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3204,
+            "itemKey": "dragon-halberd",
+            "name": "Dragon halberd",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "exact",
+              "n": 200
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3000,
+            "itemKey": "snapdragon",
+            "name": "Snapdragon",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 267,
+            "itemKey": "dwarf-weed",
+            "name": "Dwarf weed",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2998,
+            "itemKey": "toadflax",
+            "name": "Toadflax",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 269,
+            "itemKey": "torstol",
+            "name": "Torstol",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5289,
+            "itemKey": "palm-tree-seed",
+            "name": "Palm tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5288,
+            "itemKey": "papaya-tree-seed",
+            "name": "Papaya tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5290,
+            "itemKey": "calquat-tree-seed",
+            "name": "Calquat tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5296,
+            "itemKey": "toadflax-seed",
+            "name": "Toadflax seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5303,
+            "itemKey": "dwarf-weed-seed",
+            "name": "Dwarf weed seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6289,
+            "itemKey": "snakeskin",
+            "name": "Snakeskin",
+            "qty": {
+              "kind": "exact",
+              "n": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 11
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 11
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7936,
+            "itemKey": "pure-essence",
+            "name": "Pure essence",
+            "qty": {
+              "kind": "exact",
+              "n": 1500
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1515,
+            "itemKey": "yew-logs",
+            "name": "Yew logs",
+            "qty": {
+              "kind": "exact",
+              "n": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2361,
+            "itemKey": "adamantite-bar",
+            "name": "Adamantite bar",
+            "qty": {
+              "kind": "exact",
+              "n": 20
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "exact",
+              "n": 200
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 536,
+            "itemKey": "dragon-bones",
+            "name": "Dragon bones",
+            "qty": {
+              "kind": "exact",
+              "n": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6332,
+            "itemKey": "mahogany-logs",
+            "name": "Mahogany logs",
+            "qty": {
+              "kind": "exact",
+              "n": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "exact",
+              "n": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "exact",
+              "n": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 391,
+            "itemKey": "manta-ray",
+            "name": "Manta ray",
+            "qty": {
+              "kind": "exact",
+              "n": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12938,
+            "itemKey": "zul-andra-teleport",
+            "name": "Zul-andra teleport",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5952,
+            "itemKey": "antidote-4",
+            "name": "Antidote++(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9193,
+            "itemKey": "dragonstone-bolt-tips",
+            "name": "Dragonstone bolt tips",
+            "qty": {
+              "kind": "exact",
+              "n": 12
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1987,
+            "itemKey": "grapes",
+            "name": "Grapes",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5974,
+            "itemKey": "coconut",
+            "name": "Coconut",
+            "qty": {
+              "kind": "exact",
+              "n": 20
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1939,
+            "itemKey": "swamp-tar",
+            "name": "Swamp tar",
+            "qty": {
+              "kind": "exact",
+              "n": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12934,
+            "itemKey": "zulrah-s-scales",
+            "name": "Zulrah's scales",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes / Herbs / Seeds / Resources / Shark drop table / Other"
+    },
+    {
+      "id": "zulrah:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 75
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12936,
+            "itemKey": "jar-of-swamp",
+            "name": "Jar of swamp",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "pet-snakeling",
+            "name": "Pet snakeling",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 4000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "zulrah:rdt-access:0",
+      "mode": "independent",
+      "rolls": 2,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 10,
+            "den": 249
+          }
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "resolved against 3 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": false,
+        "detail": "1 item(s) failed to resolve"
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

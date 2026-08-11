@@ -29,6 +29,7 @@ import { buildItemIndex, readItemIndex } from './items/index.js'
 import { loadItemAllowlist } from './items/allowlist.js'
 import { loadWatchlist } from './validate/watchlist.js'
 import { fetchGePrices } from './prices/ge-prices.js'
+import { loadSharedTables } from './tables/shared-tables.js'
 import { parseBoss } from './parse/parse-boss.js'
 
 /**
@@ -235,6 +236,7 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
   const watchlist = await loadWatchlist()
   const gePrices = await fetchGePrices(USER_AGENT)
   log(`Loaded ${gePrices.size} live GE prices.\n`)
+  const sharedTables = await loadSharedTables()
 
   const sources = inventory.lootSources.filter(
     (source) =>
@@ -258,6 +260,7 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
       allowlist,
       watchlist,
       gePrices,
+      sharedTables,
     })
     outcomes.push(outcome)
     const mark = outcome.status === 'parse_failed' ? '  !! ' : '     '

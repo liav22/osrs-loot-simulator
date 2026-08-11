@@ -3,6 +3,9 @@ import { assembleBoss } from '../src/parse/assemble-boss.js'
 import type { ItemAllowlist } from '../src/items/allowlist.js'
 import type { ItemIndex } from '../src/items/index.js'
 import type { ParsedTableGroup } from '../src/parse/build-tables.js'
+import type { RdtAccessResult } from '../src/parse/rdt-access.js'
+
+const noRdtAccess: RdtAccessResult = { lines: [], unresolved: [] }
 
 const itemIndex: ItemIndex = {
   itemIndexVersion: 2,
@@ -46,7 +49,7 @@ describe('assembleBoss', () => {
         ],
       },
     ]
-    const result = assembleBoss(groups, options)
+    const result = assembleBoss(groups, noRdtAccess, options)
     expect(result.errors).toEqual([])
     expect(result.boss).not.toBeNull()
     expect(result.boss?.tables).toHaveLength(1)
@@ -75,7 +78,7 @@ describe('assembleBoss', () => {
         ],
       },
     ]
-    const result = assembleBoss(groups, options)
+    const result = assembleBoss(groups, noRdtAccess, options)
     expect(result.boss).not.toBeNull()
     const node = result.boss?.tables[0]?.entries[0]?.node
     expect(node && 'itemId' in node ? node.itemId : undefined).toBeNull()
@@ -106,7 +109,7 @@ describe('assembleBoss', () => {
         ],
       },
     ]
-    const result = assembleBoss(groups, { ...options, allowlist })
+    const result = assembleBoss(groups, noRdtAccess, { ...options, allowlist })
     expect(result.warnings).toEqual([])
   })
 
@@ -130,7 +133,7 @@ describe('assembleBoss', () => {
         ],
       },
     ]
-    const result = assembleBoss(groups, options)
+    const result = assembleBoss(groups, noRdtAccess, options)
     const entry = result.boss?.tables[0]?.entries[0]
     expect(entry?.conditions).toEqual([{ kind: 'members', value: true }])
     expect(entry?.node.kind === 'item' && entry.node.noted).toBe(true)
@@ -157,7 +160,7 @@ describe('assembleBoss', () => {
         ],
       },
     ]
-    const result = assembleBoss(groups, options)
+    const result = assembleBoss(groups, noRdtAccess, options)
     const entry = result.boss?.tables[0]?.entries[0]
     expect(entry?.node.kind === 'item' ? entry.node.qty : undefined).toEqual({
       kind: 'range',
@@ -187,7 +190,7 @@ describe('assembleBoss', () => {
         ],
       },
     ]
-    const result = assembleBoss(groups, options)
+    const result = assembleBoss(groups, noRdtAccess, options)
     expect(result.boss).not.toBeNull()
     expect(result.ambiguousGroups).toContain('heterogeneous denominators, guessed preroll')
     expect(result.warnings).toEqual([])
@@ -203,7 +206,42 @@ describe('assembleBoss', () => {
         entries: [],
       },
     ]
-    const result = assembleBoss(groups, options)
+    const result = assembleBoss(groups, noRdtAccess, options)
     expect(result.boss?.tables).toEqual([])
+  })
+
+  it('turns a resolved RDT access line into an independent tableRef table, with rolls and variant carried through', () => {
+    const result = assembleBoss([], { lines: [
+      { ref: 'rare_drop_table', rate: { num: 5, den: 150 }, rolls: 2, variant: 'Post-quest', approx: false, unmodelledMultiplier: null, raw: '{{RareDropTable|dropversion=Post-quest|5/150|rolls=2}}' },
+    ], unresolved: [] }, options)
+    expect(result.errors).toEqual([])
+    expect(result.boss?.tables).toEqual([
+      {
+        id: 'test-boss:rdt-access:0',
+        mode: 'independent',
+        rolls: 2,
+        withoutReplacement: false,
+        entries: [
+          {
+            node: { kind: 'tableRef', ref: 'rare_drop_table' },
+            rate: { kind: 'fixed', num: 5, den: 150 },
+            conditions: [{ kind: 'variant', name: 'Post-quest' }],
+          },
+        ],
+        notes: 'Access into rare_drop_table (from {{RareDropTable}})',
+      },
+    ])
+  })
+
+  it('surfaces an unresolved RDT access line as an ambiguous group and adds no table for it', () => {
+    const result = assembleBoss(
+      [],
+      { lines: [], unresolved: [{ reason: 'references the God Wars Dungeon-variant table', raw: '{{GWDRDT}}' }] },
+      options
+    )
+    expect(result.boss?.tables).toEqual([])
+    expect(result.ambiguousGroups).toEqual([
+      "RDT/gem-table access could not be modelled: references the God Wars Dungeon-variant table (raw: '{{GWDRDT}}')",
+    ])
   })
 })

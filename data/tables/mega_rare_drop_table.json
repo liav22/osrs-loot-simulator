@@ -1,0 +1,73 @@
+{
+  "id": "mega_rare_drop_table",
+  "mode": "weighted",
+  "rolls": 1,
+  "denominator": 128,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "nothing"
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 113
+      },
+      "conditions": [
+        {
+          "kind": "ringOfWealth",
+          "value": false
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1247,
+        "itemKey": "rune-spear",
+        "name": "Rune spear",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 8
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 2366,
+        "itemKey": "shield-left-half",
+        "name": "Shield left half",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 4
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1249,
+        "itemKey": "dragon-spear",
+        "name": "Dragon spear",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    }
+  ],
+  "notes": "Nothing is removed while wearing a ring of wealth. Reached from rare_drop_table directly (15/128, no quest requirement) and from gem_drop_table (1/128, requires Legends' Quest). Source: https://oldschool.runescape.wiki/w/Rare_drop_table#Mega-rare_drop_table"
+}

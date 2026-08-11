@@ -4,14 +4,16 @@ import { checkWeightsSum } from '../validate/weights-sum.js'
 import { checkNotOnWatchlist, type Watchlist } from '../validate/watchlist.js'
 import { checkItemsKnown, type ItemCheckInput } from '../validate/items-known.js'
 import { checkEvMatches, type EvMatchesResult } from '../validate/ev-matches.js'
+import { checkRefsResolve } from '../validate/refs-resolve.js'
 import type { ItemAllowlist } from '../items/allowlist.js'
 import type { ItemIndex } from '../items/index.js'
 import type { GePrices } from '../prices/ge-prices.js'
 import { gePriceLookup } from '../prices/ge-prices.js'
 import { REPO_ROOT, readSnapshot, slugify } from '../snapshots/store.js'
-import { resolveSimContext } from '@osrs-loot-simulator/loot-model'
+import { resolveSimContext, type Table } from '@osrs-loot-simulator/loot-model'
 import { extractDropLines } from './wikitext-drops.js'
 import { buildTableGroups, groupByHeading } from './build-tables.js'
+import { extractRdtAccessLines } from './rdt-access.js'
 import { assembleBoss } from './assemble-boss.js'
 
 export const BOSSES_DIR = join(REPO_ROOT, 'data', 'bosses')
@@ -25,6 +27,8 @@ export interface ParseOptions {
   allowlist: ItemAllowlist
   watchlist: Watchlist
   gePrices: GePrices
+  /** `data/tables/*.json`, keyed by id — Phase 3's shared RDT/gem/mega-rare records. */
+  sharedTables: ReadonlyMap<string, Table>
 }
 
 export interface ParseOutcome {
@@ -67,7 +71,8 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   }
 
   const lines = extractDropLines(wikitext)
-  if (lines.length === 0) {
+  const rdtAccess = extractRdtAccessLines(wikitext)
+  if (lines.length === 0 && rdtAccess.lines.length === 0 && rdtAccess.unresolved.length === 0) {
     return {
       slug: options.slug,
       title: options.title,
@@ -79,7 +84,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   const blocks = groupByHeading(lines)
   const groups = buildTableGroups(blocks)
 
-  const result = assembleBoss(groups, {
+  const result = assembleBoss(groups, rdtAccess, {
     slug: options.slug,
     title: options.title,
     wikiRevId: options.wikiRevId,
@@ -109,6 +114,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   const weightsSum = checkWeightsSum(result.boss.tables)
   const itemsKnown = checkItemsKnown(itemInputs, options.itemIndex, options.allowlist)
   const notOnWatchlist = checkNotOnWatchlist(options.watchlist, options.slug)
+  const refsResolve = checkRefsResolve(result.boss, options.sharedTables)
 
   // ev_matches: real GE prices, joined by itemId, gemw-untradeable items
   // priced at 0 automatically (they carry no GE listing at all). Confirmed
@@ -126,7 +132,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
 
   const checks = [
     { check: 'weights_sum' as const, ok: weightsSum.ok, detail: weightsSum.detail },
-    { check: 'refs_resolve' as const, ok: true, detail: 'no tableRef nodes (tier A/B have no RDT access)' },
+    { check: 'refs_resolve' as const, ok: refsResolve.ok, detail: refsResolve.detail },
     { check: 'rates_valid' as const, ok: true, detail: 'enforced by the loot-model schema' },
     { check: 'qty_sane' as const, ok: true, detail: 'enforced by the loot-model schema' },
     { check: 'ev_matches' as const, ok: evMatches.ok, detail: evMatches.detail },
@@ -147,6 +153,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     weightsSum.ok &&
     itemsKnown.ok &&
     notOnWatchlist.ok &&
+    refsResolve.ok &&
     result.ambiguousGroups.length === 0
   const status = deterministicOk ? ('verified' as const) : ('needs_review' as const)
 
@@ -162,6 +169,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     reasons.push(...itemsKnown.failures.map((f) => `items_known: ${f.reason}`))
   }
   if (!notOnWatchlist.ok) reasons.push(`not_on_watchlist: ${notOnWatchlist.detail}`)
+  if (!refsResolve.ok) reasons.push(`refs_resolve: ${refsResolve.detail}`)
   reasons.push(`ev_matches (advisory, not part of the verified gate): ${evMatches.detail}`)
 
   const boss = {

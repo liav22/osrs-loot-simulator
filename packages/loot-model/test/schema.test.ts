@@ -85,6 +85,7 @@ describe('TableSchema', () => {
       ['weighted/weight', { mode: 'weighted', rate: { kind: 'weight', weight: 1 } }, true],
       ['weighted/fixed', { mode: 'weighted', rate: { kind: 'fixed', num: 1, den: 2 } }, false],
       ['independent/fixed', { mode: 'independent', rate: { kind: 'fixed', num: 1, den: 2 } }, true],
+      ['independent/always', { mode: 'independent', rate: { kind: 'always' } }, true],
       ['independent/weight', { mode: 'independent', rate: { kind: 'weight', weight: 1 } }, false],
       ['preroll/formula', { mode: 'preroll', rate: { kind: 'formula', id: 'barrows_kc' } }, true],
       ['preroll/always', { mode: 'preroll', rate: { kind: 'always' } }, false],

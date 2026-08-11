@@ -43,27 +43,12 @@
           "rate": {
             "kind": "always"
           }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 532,
-            "itemKey": "big-bones",
-            "name": "Big bones",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "always"
-          }
         }
       ],
       "notes": "100%"
     },
     {
-      "id": "scurrius:1:weapons-and-armour",
+      "id": "scurrius:1:weapons-and-armour-runes-and-ammunition-consumables-other",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 100,
@@ -164,16 +149,7 @@
             "kind": "weight",
             "weight": 6
           }
-        }
-      ],
-      "notes": "Weapons and armour"
-    },
-    {
-      "id": "scurrius:2:runes-and-ammunition",
-      "mode": "preroll",
-      "rolls": 1,
-      "withoutReplacement": false,
-      "entries": [
+        },
         {
           "node": {
             "kind": "item",
@@ -187,9 +163,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 100
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -205,9 +180,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 100
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -223,9 +197,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 100
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -241,9 +214,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 100
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -259,110 +231,10 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 100
+            "kind": "weight",
+            "weight": 3
           }
         },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 890,
-            "itemKey": "adamant-arrow",
-            "name": "Adamant arrow",
-            "qty": {
-              "kind": "range",
-              "min": 20,
-              "max": 35
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 892,
-            "itemKey": "rune-arrow",
-            "name": "Rune arrow",
-            "qty": {
-              "kind": "range",
-              "min": 20,
-              "max": 35
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 562,
-            "itemKey": "chaos-rune",
-            "name": "Chaos rune",
-            "qty": {
-              "kind": "range",
-              "min": 40,
-              "max": 70
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 560,
-            "itemKey": "death-rune",
-            "name": "Death rune",
-            "qty": {
-              "kind": "range",
-              "min": 30,
-              "max": 50
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 563,
-            "itemKey": "law-rune",
-            "name": "Law rune",
-            "qty": {
-              "kind": "range",
-              "min": 5,
-              "max": 15
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        }
-      ],
-      "notes": "Runes and ammunition"
-    },
-    {
-      "id": "scurrius:3:consumables",
-      "mode": "preroll",
-      "rolls": 1,
-      "withoutReplacement": false,
-      "entries": [
         {
           "node": {
             "kind": "item",
@@ -376,9 +248,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 100
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -394,9 +265,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 100
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -411,9 +281,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 100
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -429,9 +298,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 100
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -446,9 +314,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 100
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -463,9 +330,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 100
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -480,9 +346,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 100
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -497,143 +362,10 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 100
+            "kind": "weight",
+            "weight": 6
           }
         },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 333,
-            "itemKey": "trout",
-            "name": "Trout",
-            "qty": {
-              "kind": "range",
-              "min": 1,
-              "max": 3
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 361,
-            "itemKey": "tuna",
-            "name": "Tuna",
-            "qty": {
-              "kind": "range",
-              "min": 1,
-              "max": 3
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 379,
-            "itemKey": "lobster",
-            "name": "Lobster",
-            "qty": {
-              "kind": "range",
-              "min": 1,
-              "max": 3
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 385,
-            "itemKey": "shark",
-            "name": "Shark",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 173,
-            "itemKey": "ranging-potion-1",
-            "name": "Ranging potion(1)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 161,
-            "itemKey": "super-strength-1",
-            "name": "Super strength(1)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 33
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1985,
-            "itemKey": "cheese",
-            "name": "Cheese",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 33
-          }
-        }
-      ],
-      "notes": "Consumables"
-    },
-    {
-      "id": "scurrius:4:other",
-      "mode": "weighted",
-      "rolls": 1,
-      "denominator": 100,
-      "withoutReplacement": false,
-      "entries": [
         {
           "node": {
             "kind": "item",
@@ -652,10 +384,10 @@
           }
         }
       ],
-      "notes": "Other"
+      "notes": "Weapons and armour / Runes and ammunition / Consumables / Other"
     },
     {
-      "id": "scurrius:5:tertiary",
+      "id": "scurrius:2:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -744,7 +476,250 @@
             "num": 1,
             "den": 3000
           }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "scurrius:3:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 532,
+            "itemKey": "big-bones",
+            "name": "Big bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "scurrius:4:runes-and-ammunition-consumables",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 33,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 890,
+            "itemKey": "adamant-arrow",
+            "name": "Adamant arrow",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
         },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 333,
+            "itemKey": "trout",
+            "name": "Trout",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 361,
+            "itemKey": "tuna",
+            "name": "Tuna",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 379,
+            "itemKey": "lobster",
+            "name": "Lobster",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 173,
+            "itemKey": "ranging-potion-1",
+            "name": "Ranging potion(1)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 161,
+            "itemKey": "super-strength-1",
+            "name": "Super strength(1)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1985,
+            "itemKey": "cheese",
+            "name": "Cheese",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Runes and ammunition / Consumables"
+    },
+    {
+      "id": "scurrius:5:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -767,7 +742,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -778,7 +753,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+        "detail": "no tableRef nodes"
       },
       {
         "check": "rates_valid",

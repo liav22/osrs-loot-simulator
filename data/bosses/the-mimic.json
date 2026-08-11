@@ -1,0 +1,1179 @@
+{
+  "slug": "the-mimic",
+  "name": "The Mimic",
+  "aliases": [],
+  "wikiPage": "The Mimic",
+  "wikiRevId": 15276887,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "the-mimic:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8782,
+            "itemKey": "mahogany-plank",
+            "name": "Mahogany plank",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "the-mimic:1:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23185,
+            "itemKey": "ring-of-3rd-age",
+            "name": "Ring of 3rd age",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 6,
+            "den": 250
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10350,
+            "itemKey": "3rd-age-full-helmet",
+            "name": "3rd age full helmet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10348,
+            "itemKey": "3rd-age-platebody",
+            "name": "3rd age platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10346,
+            "itemKey": "3rd-age-platelegs",
+            "name": "3rd age platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23242,
+            "itemKey": "3rd-age-plateskirt",
+            "name": "3rd age plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10352,
+            "itemKey": "3rd-age-kiteshield",
+            "name": "3rd age kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10334,
+            "itemKey": "3rd-age-range-coif",
+            "name": "3rd age range coif",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10330,
+            "itemKey": "3rd-age-range-top",
+            "name": "3rd age range top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10332,
+            "itemKey": "3rd-age-range-legs",
+            "name": "3rd age range legs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10336,
+            "itemKey": "3rd-age-vambraces",
+            "name": "3rd age vambraces",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10342,
+            "itemKey": "3rd-age-mage-hat",
+            "name": "3rd age mage hat",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10338,
+            "itemKey": "3rd-age-robe-top",
+            "name": "3rd age robe top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10340,
+            "itemKey": "3rd-age-robe",
+            "name": "3rd age robe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10344,
+            "itemKey": "3rd-age-amulet",
+            "name": "3rd age amulet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12426,
+            "itemKey": "3rd-age-longsword",
+            "name": "3rd age longsword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12424,
+            "itemKey": "3rd-age-bow",
+            "name": "3rd age bow",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12422,
+            "itemKey": "3rd-age-wand",
+            "name": "3rd age wand",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12437,
+            "itemKey": "3rd-age-cloak",
+            "name": "3rd age cloak",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23336,
+            "itemKey": "3rd-age-druidic-robe-top",
+            "name": "3rd age druidic robe top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23339,
+            "itemKey": "3rd-age-druidic-robe-bottoms",
+            "name": "3rd age druidic robe bottoms",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23345,
+            "itemKey": "3rd-age-druidic-cloak",
+            "name": "3rd age druidic cloak",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23342,
+            "itemKey": "3rd-age-druidic-staff",
+            "name": "3rd age druidic staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20014,
+            "itemKey": "3rd-age-pickaxe",
+            "name": "3rd age pickaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20011,
+            "itemKey": "3rd-age-axe",
+            "name": "3rd age axe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5750
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "the-mimic:2:main-drops",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 1250,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 120,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 243
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 243
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 243
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 245,
+            "itemKey": "wine-of-zamorak",
+            "name": "Wine of zamorak",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 243
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 389,
+            "itemKey": "raw-manta-ray",
+            "name": "Raw manta ray",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 243
+          }
+        }
+      ],
+      "notes": "Main drops"
+    },
+    {
+      "id": "the-mimic:3:tertiary",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30926,
+            "itemKey": "mimic-scroll-case",
+            "name": "Mimic scroll case",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "the-mimic:4:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8782,
+            "itemKey": "mahogany-plank",
+            "name": "Mahogany plank",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "the-mimic:5:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23185,
+            "itemKey": "ring-of-3rd-age",
+            "name": "Ring of 3rd age",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 6,
+            "den": 228
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10350,
+            "itemKey": "3rd-age-full-helmet",
+            "name": "3rd age full helmet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10348,
+            "itemKey": "3rd-age-platebody",
+            "name": "3rd age platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10346,
+            "itemKey": "3rd-age-platelegs",
+            "name": "3rd age platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23242,
+            "itemKey": "3rd-age-plateskirt",
+            "name": "3rd age plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10352,
+            "itemKey": "3rd-age-kiteshield",
+            "name": "3rd age kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10334,
+            "itemKey": "3rd-age-range-coif",
+            "name": "3rd age range coif",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10330,
+            "itemKey": "3rd-age-range-top",
+            "name": "3rd age range top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10332,
+            "itemKey": "3rd-age-range-legs",
+            "name": "3rd age range legs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10336,
+            "itemKey": "3rd-age-vambraces",
+            "name": "3rd age vambraces",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10342,
+            "itemKey": "3rd-age-mage-hat",
+            "name": "3rd age mage hat",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10338,
+            "itemKey": "3rd-age-robe-top",
+            "name": "3rd age robe top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10340,
+            "itemKey": "3rd-age-robe",
+            "name": "3rd age robe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10344,
+            "itemKey": "3rd-age-amulet",
+            "name": "3rd age amulet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12426,
+            "itemKey": "3rd-age-longsword",
+            "name": "3rd age longsword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12424,
+            "itemKey": "3rd-age-bow",
+            "name": "3rd age bow",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12422,
+            "itemKey": "3rd-age-wand",
+            "name": "3rd age wand",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12437,
+            "itemKey": "3rd-age-cloak",
+            "name": "3rd age cloak",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23336,
+            "itemKey": "3rd-age-druidic-robe-top",
+            "name": "3rd age druidic robe top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23339,
+            "itemKey": "3rd-age-druidic-robe-bottoms",
+            "name": "3rd age druidic robe bottoms",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23345,
+            "itemKey": "3rd-age-druidic-cloak",
+            "name": "3rd age druidic cloak",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23342,
+            "itemKey": "3rd-age-druidic-staff",
+            "name": "3rd age druidic staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20014,
+            "itemKey": "3rd-age-pickaxe",
+            "name": "3rd age pickaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20011,
+            "itemKey": "3rd-age-axe",
+            "name": "3rd age axe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5244
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "the-mimic:6:main-drops",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 1140,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 221
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 83,
+              "max": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 221
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 221
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 245,
+            "itemKey": "wine-of-zamorak",
+            "name": "Wine of zamorak",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 221
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 389,
+            "itemKey": "raw-manta-ray",
+            "name": "Raw manta ray",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 221
+          }
+        }
+      ],
+      "notes": "Main drops"
+    },
+    {
+      "id": "the-mimic:7:tertiary",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30926,
+            "itemKey": "mimic-scroll-case",
+            "name": "Mimic scroll case",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

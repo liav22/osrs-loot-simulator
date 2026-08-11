@@ -1,0 +1,902 @@
+{
+  "slug": "araxxor",
+  "name": "Araxxor",
+  "aliases": [],
+  "wikiPage": "Araxxor",
+  "wikiRevId": 15290082,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "araxxor:0:unique",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29794,
+            "itemKey": "noxious-pommel",
+            "name": "Noxious pommel",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29790,
+            "itemKey": "noxious-point",
+            "name": "Noxious point",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29792,
+            "itemKey": "noxious-blade",
+            "name": "Noxious blade",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29799,
+            "itemKey": "araxyte-fang",
+            "name": "Araxyte fang",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 600
+          }
+        }
+      ],
+      "notes": "Unique"
+    },
+    {
+      "id": "araxxor:1:supplies",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29784,
+            "itemKey": "araxyte-venom-sac",
+            "name": "Araxyte venom sac",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 16
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12701,
+            "itemKey": "super-combat-potion-1",
+            "name": "Super combat potion(1)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 16
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2434,
+            "itemKey": "prayer-potion-4",
+            "name": "Prayer potion(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 16
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7208,
+            "itemKey": "wild-pie",
+            "name": "Wild pie",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 16
+          }
+        }
+      ],
+      "notes": "Supplies"
+    },
+    {
+      "id": "araxxor:2:weapons-and-armour-runes-and-ammunition-seeds-resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 115,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1079,
+            "itemKey": "rune-platelegs",
+            "name": "Rune platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1434,
+            "itemKey": "dragon-mace",
+            "name": "Dragon mace",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4698,
+            "itemKey": "mud-rune",
+            "name": "Mud rune",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 180
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5315,
+            "itemKey": "yew-seed",
+            "name": "Yew seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5296,
+            "itemKey": "toadflax-seed",
+            "name": "Toadflax seed",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "exact",
+              "n": 120
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 85
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "exact",
+              "n": 21
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1515,
+            "itemKey": "yew-logs",
+            "name": "Yew logs",
+            "qty": {
+              "kind": "exact",
+              "n": 70
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7944,
+            "itemKey": "raw-monkfish",
+            "name": "Raw monkfish",
+            "qty": {
+              "kind": "exact",
+              "n": 120
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7936,
+            "itemKey": "pure-essence",
+            "name": "Pure essence",
+            "qty": {
+              "kind": "exact",
+              "n": 1200
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Seeds / Resources"
+    },
+    {
+      "id": "araxxor:3:other",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29782,
+            "itemKey": "spider-cave-teleport",
+            "name": "Spider cave teleport",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 575,
+            "itemKey": "earth-orb",
+            "name": "Earth orb",
+            "qty": {
+              "kind": "exact",
+              "n": 45
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 6,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29784,
+            "itemKey": "araxyte-venom-sac",
+            "name": "Araxyte venom sac",
+            "qty": {
+              "kind": "exact",
+              "n": 6
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2970,
+            "itemKey": "mort-myre-fungus",
+            "name": "Mort myre fungus",
+            "qty": {
+              "kind": "exact",
+              "n": 24
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5954,
+            "itemKey": "antidote-3",
+            "name": "Antidote++(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 245,
+            "itemKey": "wine-of-zamorak",
+            "name": "Wine of zamorak",
+            "qty": {
+              "kind": "exact",
+              "n": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 223,
+            "itemKey": "red-spiders-eggs",
+            "name": "Red spiders' eggs",
+            "qty": {
+              "kind": "exact",
+              "n": 40
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29784,
+            "itemKey": "araxyte-venom-sac",
+            "name": "Araxyte venom sac",
+            "qty": {
+              "kind": "exact",
+              "n": 12
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3239,
+            "itemKey": "bark",
+            "name": "Bark",
+            "qty": {
+              "kind": "exact",
+              "n": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 115
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29788,
+            "itemKey": "araxyte-head",
+            "name": "Araxyte head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 250
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29786,
+            "itemKey": "jar-of-venom",
+            "name": "Jar of venom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1500
+          }
+        }
+      ],
+      "notes": "Other"
+    },
+    {
+      "id": "araxxor:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29781,
+            "itemKey": "coagulated-venom",
+            "name": "Coagulated venom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 40
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29836,
+            "itemKey": "nid",
+            "name": "Nid",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "araxxor:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 115
+          }
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}}); approximate rate per the wiki"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "resolved against 3 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

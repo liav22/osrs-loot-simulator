@@ -99,7 +99,7 @@ describe('extractDropLines', () => {
     expect(lines.filter((line) => line.heading === 'Pre-roll')).toHaveLength(2)
   })
 
-  it('splits multiple Drops sections on one page (Scurrius shape) and concatenates them', () => {
+  it('splits multiple Drops sections on one page (Scurrius shape) into separately-tagged lines', () => {
     const wikitext =
       `intro\n==Drops (MVP/Solo)==\n===100%===\n{{DropsTableHead}}\n` +
       `{{DropsLine|name=Big bones|quantity=1|rarity=Always}}\n{{DropsTableBottom}}\n` +
@@ -108,6 +108,31 @@ describe('extractDropLines', () => {
       `{{DropsLine|name=Bones|quantity=1|rarity=Always}}\n{{DropsTableBottom}}`
     const lines = extractDropLines(wikitext)
     expect(lines.map((line) => line.name)).toEqual(['Big bones', 'Bones'])
+    // More than one top-level Drops section on the page -> lines are tagged
+    // with which one they came from, so a shared sub-heading name ("100%")
+    // does not collide across sections.
+    expect(lines.map((line) => line.section)).toEqual(['Drops (MVP/Solo)', 'Drops (non-MVP)'])
+  })
+
+  it('does not merge identically-named sub-headings from different top-level sections (The Mimic shape)', () => {
+    const wikitext =
+      `intro\n==Elite drops==\n===Tertiary===\n{{DropsTableHead}}\n` +
+      `{{DropsLine|name=Elite clue|quantity=1|rarity=Always}}\n{{DropsTableBottom}}\n` +
+      `==Master drops==\n===Tertiary===\n{{DropsTableHead}}\n` +
+      `{{DropsLine|name=Master clue|quantity=1|rarity=1/50}}\n{{DropsTableBottom}}`
+    const lines = extractDropLines(wikitext)
+    expect(lines).toHaveLength(2)
+    const elite = lines.find((line) => line.name === 'Elite clue')
+    const master = lines.find((line) => line.name === 'Master clue')
+    expect(elite?.heading).toBe('Tertiary')
+    expect(master?.heading).toBe('Tertiary')
+    expect(elite?.section).toBe('Elite drops')
+    expect(master?.section).toBe('Master drops')
+  })
+
+  it('leaves `section` empty for the common single-Drops-section page', () => {
+    const lines = extractDropLines(BRUTUS_LIKE)
+    expect(lines.every((line) => line.section === '')).toBe(true)
   })
 
   it('matches a qualifier-before-"drops" heading (The Mimic shape) but not "Drop mechanics"', () => {

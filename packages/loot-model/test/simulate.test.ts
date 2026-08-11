@@ -7,6 +7,7 @@ import {
   TableSchema,
   UnresolvedTableRefError,
   WeightsExceedDenominatorError,
+  type Boss,
   type Table,
 } from '../src/index'
 import { ctxWith, dropCount, dropQuantity, makeBoss } from './helpers'
@@ -110,6 +111,23 @@ describe('simulate', () => {
       expect(dropCount(result.drops, 1) / n).toBeCloseTo(0.5, 2)
       expect(dropCount(result.drops, 2) / n).toBeCloseTo(0.5, 2)
       expect(result.log.some((kill) => kill.drops.length === 2)).toBe(true)
+    })
+
+    it('independent accepts an always-rate entry alongside chance-based ones (Vardorvis Tertiary shape)', () => {
+      const boss = makeBoss([
+        {
+          id: 't',
+          mode: 'independent',
+          entries: [
+            { node: item(1, 'Guaranteed extra'), rate: { kind: 'always' } },
+            { node: item(2, 'Chance-based'), rate: { kind: 'fixed', num: 1, den: 2 } },
+          ],
+        },
+      ])
+      const n = 100_000
+      const result = simulate(boss, n, ctx, 11)
+      expect(dropCount(result.drops, 1) / n).toBe(1)
+      expect(dropCount(result.drops, 2) / n).toBeCloseTo(0.5, 2)
     })
 
     it('preroll checks entries in order and stops at the first hit', () => {
@@ -352,6 +370,65 @@ describe('simulate', () => {
       const result = simulate(boss, n, ctx, 41)
       expect(dropCount(result.drops, 1) / n).toBeCloseTo(0.75, 2)
       expect(dropCount(result.drops, 2) / n).toBeCloseTo(0.25, 2)
+    })
+  })
+
+  describe('conditional `nothing` shrinks the effective denominator', () => {
+    // The OSRS gem drop table: Nothing is 63/128 and is removed while
+    // wearing a ring of wealth, at which point the remaining 65 weight-units
+    // span the WHOLE table (32/65, not 32/128) rather than leaving an
+    // unaccounted-for 63-unit gap of the same size RoW was supposed to
+    // remove. PROJECT_PLAN.md 4.4: "RoW removes the nothing slots, which
+    // changes effective rates rather than just the item pool."
+    function gemLikeBoss(): Boss {
+      return makeBoss([
+        {
+          id: 'main',
+          mode: 'weighted',
+          denominator: 128,
+          entries: [
+            {
+              node: { kind: 'nothing' },
+              rate: { kind: 'weight', weight: 63 },
+              conditions: [{ kind: 'ringOfWealth', value: false }],
+            },
+            { node: item(1, 'Uncut sapphire'), rate: { kind: 'weight', weight: 65 } },
+          ],
+        },
+      ])
+    }
+
+    it('leaves the denominator unchanged when the nothing entry applies (no RoW)', () => {
+      const n = 100_000
+      const result = simulate(gemLikeBoss(), n, ctx, 11)
+      expect(dropCount(result.drops, 1) / n).toBeCloseTo(65 / 128, 2)
+    })
+
+    it('shrinks the denominator by the excluded nothing weight when RoW removes it', () => {
+      const n = 100_000
+      const result = simulate(gemLikeBoss(), n, ctxWith({ ringOfWealth: true }), 11)
+      // Not 65/128 (0.508) — with Nothing excluded, the item alone fills the
+      // whole (128 - 63 = 65) pool, i.e. 100% of the time.
+      expect(dropCount(result.drops, 1) / n).toBeCloseTo(1, 2)
+    })
+
+    it('a nothing entry that stays applicable does not affect the denominator', () => {
+      // Unconditional `nothing` (no RoW-style gating): ordinary implicit
+      // shortfall behaviour, unaffected by this mechanism.
+      const boss = makeBoss([
+        {
+          id: 'main',
+          mode: 'weighted',
+          denominator: 10,
+          entries: [
+            { node: { kind: 'nothing' }, rate: { kind: 'weight', weight: 4 } },
+            { node: item(1, 'A'), rate: { kind: 'weight', weight: 6 } },
+          ],
+        },
+      ])
+      const n = 50_000
+      const result = simulate(boss, n, ctx, 5)
+      expect(dropCount(result.drops, 1) / n).toBeCloseTo(0.6, 2)
     })
   })
 

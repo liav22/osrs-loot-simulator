@@ -659,57 +659,6 @@
             "num": 1,
             "den": 3000
           }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": null,
-            "itemKey": "clue-scroll-hard",
-            "name": "Clue scroll (hard)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 25
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": null,
-            "itemKey": "clue-scroll-elite",
-            "name": "Clue scroll (elite)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 100
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 30622,
-            "itemKey": "bran",
-            "name": "Bran",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 3000
-          }
         }
       ],
       "notes": "Tertiary drops"
@@ -727,7 +676,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+        "detail": "no tableRef nodes"
       },
       {
         "check": "rates_valid",

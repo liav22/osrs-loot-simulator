@@ -3,6 +3,7 @@ import { slugify } from '../snapshots/store.js'
 import { indexByItemKey, type ItemIndex } from '../items/index.js'
 import { isAllowlisted, type ItemAllowlist } from '../items/allowlist.js'
 import type { ParsedEntry, ParsedTableGroup } from './build-tables.js'
+import type { RdtAccessResult } from './rdt-access.js'
 
 /**
  * Turns parsed table groups into a canonical `Boss` document. This is the
@@ -49,9 +50,11 @@ function parseQuantity(raw: string): QtySpec {
 }
 
 function conditionsFor(entry: ParsedEntry): Condition[] | undefined {
-  if (entry.members) return [{ kind: 'members', value: true }]
-  if (entry.freeToPlay) return [{ kind: 'members', value: false }]
-  return undefined
+  const conditions: Condition[] = []
+  if (entry.members) conditions.push({ kind: 'members', value: true })
+  else if (entry.freeToPlay) conditions.push({ kind: 'members', value: false })
+  if (entry.extraConditions !== undefined) conditions.push(...entry.extraConditions)
+  return conditions.length > 0 ? conditions : undefined
 }
 
 /**
@@ -87,6 +90,7 @@ function resolveItem(
 
 export function assembleBoss(
   groups: readonly ParsedTableGroup[],
+  rdtAccess: RdtAccessResult,
   options: AssembleOptions
 ): AssembleResult {
   const errors: string[] = []
@@ -95,6 +99,9 @@ export function assembleBoss(
 
   for (const group of groups) {
     if (group.ambiguous !== null) ambiguousGroups.push(group.ambiguous)
+  }
+  for (const unresolved of rdtAccess.unresolved) {
+    ambiguousGroups.push(`RDT/gem-table access could not be modelled: ${unresolved.reason} (raw: '${unresolved.raw}')`)
   }
 
   const tableInputs: unknown[] = groups
@@ -139,6 +146,32 @@ export function assembleBoss(
           : {}),
       }
     })
+
+  rdtAccess.lines.forEach((line, index) => {
+    const notes = [
+      `Access into ${line.ref} (from {{${line.ref === 'rare_drop_table' ? 'RareDropTable' : 'GemDropTable'}}})`,
+      line.approx ? 'approximate rate per the wiki' : null,
+      line.unmodelledMultiplier !== null
+        ? `wiki states multiplier=${line.unmodelledMultiplier} (quantity scaling, NOT modelled)`
+        : null,
+    ]
+      .filter((note): note is string => note !== null)
+      .join('; ')
+
+    tableInputs.push({
+      id: `${options.slug}:rdt-access:${index}`,
+      mode: 'independent',
+      rolls: line.rolls,
+      entries: [
+        {
+          node: { kind: 'tableRef' as const, ref: line.ref },
+          rate: { kind: 'fixed' as const, num: line.rate.num, den: line.rate.den },
+          ...(line.variant !== null ? { conditions: [{ kind: 'variant' as const, name: line.variant }] } : {}),
+        },
+      ],
+      notes,
+    })
+  })
 
   const input = {
     slug: options.slug,

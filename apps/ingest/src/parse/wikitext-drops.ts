@@ -14,6 +14,16 @@ import { DROP_JSON_FIELDS, VARIANT_MARKERS } from '../wiki/fields.js'
 
 export interface WikitextDropLine {
   heading: string
+  /**
+   * The enclosing top-level Drops/Rewards heading's own title (e.g. "Elite
+   * drops"). Empty when the page has exactly one such section — the common
+   * case — so `heading` alone still identifies a sub-table exactly as before;
+   * only a page with more than one top-level section needs this to tell two
+   * identically-named sub-headings apart (The Mimic's two `===Tertiary===`
+   * blocks, one per tier; Scurrius' four sub-headings duplicated across
+   * MVP/non-MVP).
+   */
+  section: string
   name: string
   quantity: string
   rarity: string
@@ -26,15 +36,26 @@ export interface WikitextDropLine {
   isClue: boolean
 }
 
-/** Split a `{{Template|k=v|...}}` call into its name and key/value params. */
-function parseTemplateCall(call: string): { name: string; params: Map<string, string> } {
+/**
+ * Split a `{{Template|k=v|positional|...}}` call into its name and params.
+ * A param with no `=` is positional and keyed by its 1-based index as a
+ * string (`"1"`, `"2"`, ...), matching MediaWiki's own numbering — needed for
+ * templates like `{{Brimstone rarity|784}}`, whose only argument is
+ * positional.
+ */
+export function parseTemplateCall(call: string): { name: string; params: Map<string, string> } {
   const inner = call.slice(2, -2)
   const parts = splitTopLevelPipes(inner)
   const name = (parts[0] ?? '').trim()
   const params = new Map<string, string>()
+  let positional = 1
   for (const part of parts.slice(1)) {
     const eq = part.indexOf('=')
-    if (eq === -1) continue
+    if (eq === -1) {
+      params.set(String(positional), part.trim())
+      positional++
+      continue
+    }
     params.set(part.slice(0, eq).trim(), part.slice(eq + 1).trim())
   }
   return { name, params }
@@ -59,7 +80,7 @@ function splitTopLevelPipes(text: string): string[] {
 }
 
 /** Finds every balanced `{{...}}` template call starting at or after `from`. */
-function findTemplateCalls(text: string, templateNames: readonly string[]): string[] {
+export function findTemplateCalls(text: string, templateNames: readonly string[]): string[] {
   const calls: string[] = []
   const pattern = new RegExp(`\\{\\{(?:${templateNames.join('|')})\\s*[|}]`, 'gi')
   let match: RegExpExecArray | null
@@ -131,22 +152,46 @@ function findHeadings(text: string): Heading[] {
  */
 const DROPS_SECTION_TITLE = /^(?:\S+\s+)?(drops?|rewards?)\s*(\(.*\))?$/i
 
+export interface DropsSection {
+  /** The section's own top-level heading title, e.g. "Drops" or "Elite drops". */
+  title: string
+  content: string
+}
+
 /**
- * Every "Drops"/"Rewards" section, concatenated, at whatever heading level it
- * happens to use. A page can name it differently (Barrows' chest page uses
- * `==Rewards==`, not `==Drops==`) or use a heading level other than H2
- * (Gemstone Crab's is `===Drops===`), and can have more than one section
- * (Scurrius splits `==Drops (MVP/Solo)==` from `==Drops (non-MVP)==`).
- * A matched section runs until the next heading at its OWN level or shallower
- * — a deeper heading (its own subsections) stays inside it.
+ * Every "Drops"/"Rewards" section, kept SEPARATE (not concatenated). A page
+ * can name it differently (Barrows' chest page uses `==Rewards==`, not
+ * `==Drops==`) or use a heading level other than H2 (Gemstone Crab's is
+ * `===Drops===`), and can have more than one section (Scurrius splits
+ * `==Drops (MVP/Solo)==` from `==Drops (non-MVP)==`; The Mimic splits
+ * `==Elite drops==` from `==Master drops==`). A matched section runs until
+ * the next heading at its OWN level or shallower — a deeper heading (its own
+ * subsections) stays inside it. Keeping sections separate, rather than
+ * joining them into one string, is what lets `extractDropLines` tell two
+ * identically-named sub-headings in different sections apart instead of
+ * silently merging them (The Mimic's two `===Tertiary===` blocks).
+ *
+ * Only NON-NESTED matches count as a section boundary: a heading already
+ * inside a previously-matched section's range is skipped even if its own
+ * title also matches `DROPS_SECTION_TITLE`. Several real pages nest a
+ * sub-heading that happens to be named "...drops"/"...rewards" too — Branda
+ * the Fire Queen's `===Tertiary drops===` inside `==Drops==`, The Mimic's
+ * `===Main drops===` inside `==Elite drops==`/`==Master drops==`. Without
+ * this guard each of those gets independently re-matched as if it were its
+ * own top-level section, spuriously duplicating its rows into a second,
+ * heading-less section (surfaced as a `heading: ""` group with no keyword to
+ * classify by).
  */
-function findDropsSections(wikitext: string): string {
+export function findDropsSections(wikitext: string): DropsSection[] {
   const headings = findHeadings(wikitext)
-  const parts: string[] = []
+  const sections: DropsSection[] = []
+  let claimedUntil = -1
 
   for (let i = 0; i < headings.length; i++) {
     const heading = headings[i]
-    if (heading === undefined || !DROPS_SECTION_TITLE.test(heading.title)) continue
+    if (heading === undefined) continue
+    if (heading.start < claimedUntil) continue
+    if (!DROPS_SECTION_TITLE.test(heading.title)) continue
     let end = wikitext.length
     for (let j = i + 1; j < headings.length; j++) {
       const next = headings[j]
@@ -161,24 +206,26 @@ function findDropsSections(wikitext: string): string {
     // contentStart would strip that "\n" and leave the sub-heading with no
     // leading newline of its own to match against — so one character short
     // of contentStart is kept, re-supplying it.
-    parts.push(wikitext.slice(heading.contentStart - 1, end))
+    sections.push({ title: heading.title, content: wikitext.slice(heading.contentStart - 1, end) })
+    claimedUntil = end
   }
-  return parts.join('\n')
+  return sections
 }
 
 /**
- * Groups a drops section by its finest heading level. Nesting deeper than
+ * Groups one drops section by its finest heading level. Nesting deeper than
  * that (Barrows' per-brother `====` groups inside `===Pre-roll===`) collapses
  * into its nearest ancestor group rather than being tracked separately — the
  * cosmetic sub-grouping is lost the same way Brutus' five `/81` headings
  * already collapse into one table; only the shared-denominator/heading-text
  * mode inference in `build-tables.ts` matters structurally.
+ *
+ * `sectionTag` is stamped onto every line's `section` field, or left `''`
+ * when the caller determined this page has only one top-level Drops section
+ * (the common case) — see `extractDropLines`.
  */
-export function extractDropLines(wikitext: string): WikitextDropLine[] {
-  const section = findDropsSections(wikitext)
-  if (section === '') return []
-
-  const headings = findHeadings(section)
+function extractLinesFromSection(content: string, sectionTag: string): WikitextDropLine[] {
+  const headings = findHeadings(content)
   const minLevel = headings.reduce((min, h) => Math.min(min, h.level), Infinity)
 
   // Only group at the section's shallowest heading level. A deeper heading
@@ -195,8 +242,8 @@ export function extractDropLines(wikitext: string): WikitextDropLine[] {
   for (let i = 0; i < boundaries.length; i++) {
     const boundary = boundaries[i]
     if (boundary === undefined) continue
-    const end = boundaries[i + 1]?.start ?? section.length
-    const block = section.slice(boundary.start, end)
+    const end = boundaries[i + 1]?.start ?? content.length
+    const block = content.slice(boundary.start, end)
     // DropsLineReward is Barrows' reward-chest variant of DropsLine — same
     // param shape (name/quantity/rarity/rolls/raritynotes), different name.
     const calls = findTemplateCalls(block, ['DropsLine', 'DropsLineClue', 'DropsLineReward'])
@@ -215,6 +262,7 @@ export function extractDropLines(wikitext: string): WikitextDropLine[] {
 
       lines.push({
         heading: boundary.heading,
+        section: sectionTag,
         name: itemName,
         quantity: params.get('quantity') ?? '1',
         rarity: params.get('rarity') ?? '',
@@ -234,6 +282,26 @@ export function extractDropLines(wikitext: string): WikitextDropLine[] {
   }
 
   return lines
+}
+
+/**
+ * Extracts every `{{DropsLine}}`/`{{DropsLineClue}}`/`{{DropsLineReward}}`
+ * row from a page's Drops/Rewards section(s). A page with exactly one such
+ * section (the overwhelming common case) behaves exactly as before: lines
+ * carry `section: ''`, and `heading` alone identifies a sub-table. A page
+ * with MORE than one top-level section (The Mimic's Elite/Master split,
+ * Scurrius' MVP/non-MVP split) stamps each line's `section` with its own
+ * section's title, so `groupByHeading` in `build-tables.ts` can key on
+ * `(section, heading)` instead of `heading` alone — without this, two
+ * sections' identically-named sub-headings (both have `===Tertiary===`)
+ * would merge into one table, mixing rates that were never meant to share a
+ * denominator or mode.
+ */
+export function extractDropLines(wikitext: string): WikitextDropLine[] {
+  const sections = findDropsSections(wikitext)
+  if (sections.length === 0) return []
+  const qualify = sections.length > 1
+  return sections.flatMap((section) => extractLinesFromSection(section.content, qualify ? section.title : ''))
 }
 
 export { DROP_JSON_FIELDS }

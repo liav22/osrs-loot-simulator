@@ -1,0 +1,973 @@
+{
+  "slug": "vorkath",
+  "name": "Vorkath",
+  "aliases": [],
+  "wikiPage": "Vorkath",
+  "wikiRevId": 15283387,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "vorkath:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22124,
+            "itemKey": "superior-dragon-bones",
+            "name": "Superior dragon bones",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1751,
+            "itemKey": "blue-dragonhide",
+            "name": "Blue dragonhide",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "vorkath:1:weapons-and-armour-runes-dragonhide",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 150,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1303,
+            "itemKey": "rune-longsword",
+            "name": "Rune longsword",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1377,
+            "itemKey": "dragon-battleaxe",
+            "name": "Dragon battleaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1305,
+            "itemKey": "dragon-longsword",
+            "name": "Dragon longsword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4585,
+            "itemKey": "dragon-plateskirt",
+            "name": "Dragon plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 250,
+              "max": 350
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21880,
+            "itemKey": "wrath-rune",
+            "name": "Wrath rune",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 60
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1751,
+            "itemKey": "blue-dragonhide",
+            "name": "Blue dragonhide",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1753,
+            "itemKey": "green-dragonhide",
+            "name": "Green dragonhide",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1749,
+            "itemKey": "red-dragonhide",
+            "name": "Red dragonhide",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1747,
+            "itemKey": "black-dragonhide",
+            "name": "Black dragonhide",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes / Dragonhide"
+    },
+    {
+      "id": "vorkath:2:fletching-materials",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21930,
+            "itemKey": "dragon-bolts-unf",
+            "name": "Dragon bolts (unf)",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 100
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 150
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9193,
+            "itemKey": "dragonstone-bolt-tips",
+            "name": "Dragonstone bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 11,
+              "max": 25
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 150
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9194,
+            "itemKey": "onyx-bolt-tips",
+            "name": "Onyx bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 10
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 150
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 824,
+            "itemKey": "rune-dart-tip",
+            "name": "Rune dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 75,
+              "max": 100
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 150
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 50
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 6,
+            "den": 150
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11237,
+            "itemKey": "dragon-arrowtips",
+            "name": "Dragon arrowtips",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 50
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 150
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9192,
+            "itemKey": "diamond-bolt-tips",
+            "name": "Diamond bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 25,
+            "den": 2730
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9190,
+            "itemKey": "emerald-bolt-tips",
+            "name": "Emerald bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 20,
+            "den": 2730
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9191,
+            "itemKey": "ruby-bolt-tips",
+            "name": "Ruby bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 20,
+            "den": 2730
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9193,
+            "itemKey": "dragonstone-bolt-tips",
+            "name": "Dragonstone bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 14,
+            "den": 2730
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9194,
+            "itemKey": "onyx-bolt-tips",
+            "name": "Onyx bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 7,
+            "den": 2730
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9189,
+            "itemKey": "sapphire-bolt-tips",
+            "name": "Sapphire bolt tips",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 2730
+          }
+        }
+      ],
+      "notes": "Fletching materials"
+    },
+    {
+      "id": "vorkath:3:shark-drop-table",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 300,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 35,
+              "max": 55
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 70,
+              "max": 110
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 391,
+            "itemKey": "manta-ray",
+            "name": "Manta ray",
+            "qty": {
+              "kind": "range",
+              "min": 35,
+              "max": 55
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Shark drop table"
+    },
+    {
+      "id": "vorkath:4:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 150,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 20000,
+              "max": 80000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1987,
+            "itemKey": "grapes",
+            "name": "Grapes",
+            "qty": {
+              "kind": "range",
+              "min": 250,
+              "max": 300
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1513,
+            "itemKey": "magic-logs",
+            "name": "Magic logs",
+            "qty": {
+              "kind": "exact",
+              "n": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 536,
+            "itemKey": "dragon-bones",
+            "name": "Dragon bones",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 20
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1601,
+            "itemKey": "diamond",
+            "name": "Diamond",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 20
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1615,
+            "itemKey": "dragonstone",
+            "name": "Dragonstone",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22118,
+            "itemKey": "wrath-talisman",
+            "name": "Wrath talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        }
+      ],
+      "notes": "Other"
+    },
+    {
+      "id": "vorkath:5:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27897,
+            "itemKey": "scaly-blue-dragonhide",
+            "name": "Scaly blue dragonhide",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21907,
+            "itemKey": "vorkath-s-head",
+            "name": "Vorkath's head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 65
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22111,
+            "itemKey": "dragonbone-necklace",
+            "name": "Dragonbone necklace",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22106,
+            "itemKey": "jar-of-decay",
+            "name": "Jar of decay",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21992,
+            "itemKey": "vorki",
+            "name": "Vorki",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11286,
+            "itemKey": "draconic-visage",
+            "name": "Draconic visage",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22006,
+            "itemKey": "skeletal-visage",
+            "name": "Skeletal visage",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "vorkath:rdt-access:0",
+      "mode": "independent",
+      "rolls": 2,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 150
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "resolved against 3 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "enforced by the loot-model schema"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}
