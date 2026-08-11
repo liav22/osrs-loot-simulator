@@ -125,3 +125,72 @@ Running log of judgement calls the spec (`PROJECT_PLAN.md`) did not explicitly c
   −0.016%). Phase 2's gate — "the generated Brutus matches the Phase 1 hand-written fixture"
   — therefore applies to structure, weights, modes and conditions, not to ids or prices,
   which the real fetch will overwrite.
+
+## Phase 2 (snapshots and triage)
+
+### Scope
+
+- **Phase 2 was run as snapshots + triage only, with no parser.** Section 16 also
+  lists "parser for standard bosses, validation suite, report writer" and a done-when
+  of 15 verified bosses. Those were explicitly deferred by the task instructions for
+  this session, so there is no `ingest parse`, no `data/bosses/`, and no
+  `data/_report.json`. `apps/ingest` ships `verify-schema`, `fetch` and `triage`.
+
+### VERIFY outcomes against the live wiki (2026-08-11)
+
+- **There is no `drops` bucket.** Section 6.1's example query returns
+  `{"error":"Bucket drops does not exist."}`. The real bucket is **`dropsline`**.
+- **`dropsline` does not expose `item`, `quantity` or `rarity` as columns.** Its
+  entire declared schema is `item_name` (PAGE), `drop_json` (TEXT, unindexed) and
+  `rare_drop_table` (BOOLEAN), plus the implicit `page_name`. Quantity and rarity
+  live inside the `drop_json` string as `Quantity Low` / `Quantity High` / `Rarity`.
+  Section 6.1's premise — "Bucket gives you (item, quantity, rarity)" — is right in
+  substance but wrong in shape: it is one JSON blob per row, not three columns.
+- **`rare_drop_table` is a first-class boolean on every row**, which makes heuristic
+  4 in section 6.5 (detecting RDT rows) far cheaper than the plan assumed.
+- **Bucket schemas are discoverable** by enumerating namespace 9592 (`Bucket:`) and
+  reading each page's JSON body. `ingest verify-schema` does this and diffs against
+  `fields.ts`, so drift is a command away rather than a mystery.
+- **The wiki's average kill value is not in any bucket.** It is rendered into the
+  page by `Template:Average drop value` and must be parsed out of `action=parse`
+  HTML. This resolves open question 5 in section 17: parsing, not Bucket.
+- **`Rolls` is present per row** in `drop_json`, so multi-roll tables are declared
+  by the wiki rather than needing inference.
+
+### Judgement calls
+
+- **Triage tiers A–E classify by how much machinery a page needs, not by
+  correctness.** A is a clean single table, B needs `(m)`/`(f)` conditions, C reaches
+  the rare drop table, D has a main table that overflows its denominator or
+  unparseable rarities, E has no main table on the page at all.
+- **A main table that sums *under* its denominator is not a failure.** Section 4.3
+  says the remainder of a weighted table is an implicit `nothing`, so a shortfall is
+  expected and legal. 53 of 172 pages look like this. Only *overflowing* the
+  denominator is evidence of a defect — that is the Brutus case, and it is what the
+  membership split resolves. An earlier stricter rule demanding an exact sum put 58%
+  of the inventory in "needs review" and was wrong.
+- **A denominator group needs at least 3 rows to count as the main weighted table**
+  (`MIN_MAIN_TABLE_ROWS`). Otherwise a lone `1/100` tertiary drop reads as a table
+  that fails to reconcile. Groups below the threshold are pre-roll or tertiary
+  candidates and carry no obligation to sum.
+- **The boss inventory is exactly what `Category:Bosses` returns, unfiltered.** That
+  includes non-boss pages the category carries, such as `Boss` and `Boss kill count`.
+  They fall into tier E on their own merits. Filtering them would mean substituting
+  judgement for the wiki as the source of the inventory.
+- **Wiki-derived rows never leave `data/`.** Unit fixtures under `apps/ingest/test/`
+  are synthetic and mimic only the response shape; the assertions about real Brutus
+  weights read `data/snapshots/`, which is gitignored, and skip when it is absent.
+  Copying live drop rows into `apps/` would put CC BY-NC-SA content under MIT.
+- **Unknown `drop_json` keys are recorded as drift, not thrown.** Envelopes are
+  strict Zod and fail loudly; a new cosmetic key inside the blob should not abort a
+  172-page fetch. Drift is surfaced in `docs/TRIAGE.md`.
+- **Etiquette:** one serial request queue for the whole process, 1000ms apart,
+  `maxlag=5`, retry with backoff on 429/5xx and on MediaWiki lag errors. The full
+  run was 182 requests with zero errors.
+
+### Contradiction to resolve before Phase 5
+
+- **The wiki now states Brutus' average members kill is worth 597.57 gp, not the
+  588.65 in sections 6.4 and 7.** The figure is GE-price driven and moves. The
+  `ev_matches` check must read this number from the snapshot at validation time
+  rather than hard-coding it.
