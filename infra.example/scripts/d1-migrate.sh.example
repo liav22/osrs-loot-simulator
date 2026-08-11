@@ -3,4 +3,4 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/../cloudflare"
-wrangler d1 execute osrs-loot-sim --file=./d1-schema.sql
+wrangler d1 execute osrs-loot-simulator --file=./d1-schema.sql

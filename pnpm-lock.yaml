@@ -23,7 +23,7 @@ importers:
 
   apps/ingest:
     dependencies:
-      '@osrs-loot-sim/loot-model':
+      '@osrs-loot-simulator/loot-model':
         specifier: workspace:*
         version: link:../../packages/loot-model
       zod:
@@ -45,7 +45,7 @@ importers:
 
   apps/web:
     dependencies:
-      '@osrs-loot-sim/loot-model':
+      '@osrs-loot-simulator/loot-model':
         specifier: workspace:*
         version: link:../../packages/loot-model
       react:

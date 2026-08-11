@@ -1,5 +1,5 @@
 {
-  "name": "@osrs-loot-sim/loot-model",
+  "name": "@osrs-loot-simulator/loot-model",
   "version": "0.0.0",
   "private": true,
   "type": "module",

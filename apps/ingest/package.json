@@ -1,5 +1,5 @@
 {
-  "name": "@osrs-loot-sim/ingest",
+  "name": "@osrs-loot-simulator/ingest",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -8,7 +8,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@osrs-loot-sim/loot-model": "workspace:*",
+    "@osrs-loot-simulator/loot-model": "workspace:*",
     "zod": "^3.24.1"
   },
   "devDependencies": {

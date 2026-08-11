@@ -1,4 +1,4 @@
-name = "osrs-loot-sim-api"
+name = "osrs-loot-simulator-api"
 main = "src/index.ts"
 compatibility_date = "2026-01-01"
 
@@ -6,5 +6,5 @@ account_id = "REPLACE_ME"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "osrs-loot-sim"
+database_name = "osrs-loot-simulator"
 database_id = "REPLACE_ME"
