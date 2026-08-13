@@ -13,15 +13,15 @@
       "lootSourceId": "reward-cart",
       "title": "Reward Cart",
       "mechanic": "point_scaled",
-      "detail": "Rolls scale with points earned during the activity rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the tempoross_points formula.",
-      "blockedBy": ["Tempoross"]
+      "detail": "Rolls scale with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer) rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the wintertodt_points formula.",
+      "blockedBy": ["Wintertodt"]
     },
     {
       "lootSourceId": "reward-pool",
       "title": "Reward pool",
       "mechanic": "point_scaled",
-      "detail": "Rolls scale with points earned during the activity rather than being a fixed count per kill. Needs the wintertodt_points formula.",
-      "blockedBy": ["Wintertodt"]
+      "detail": "Rolls scale with reward permits earned subduing Tempoross (fishing/cooking/depositing harpoonfish, repairing totems, dousing fires) rather than being a fixed count per redemption. Needs the tempoross_points formula.",
+      "blockedBy": ["Tempoross"]
     },
     {
       "lootSourceId": "duke-sucellus",

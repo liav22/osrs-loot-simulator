@@ -1,6 +1,8 @@
 import {
   compileBoss,
+  effectiveWeightedPool,
   meanQty,
+  ownershipGateSatisfied,
   suppressedByPreroll,
   type CompiledBoss,
   type CompiledNode,
@@ -102,9 +104,36 @@ export function expectedDrawsWithoutReplacement(
   return expected
 }
 
+/**
+ * The static counterpart of `simulate.ts`'s `gateAllows`: `expectedValue`
+ * computes one kill's expectation given a FIXED `SimContext`, so ownership
+ * is checked once against the entering `ownedCounts` — never a live tracker,
+ * there's no "later kill in this run" for it to track. See
+ * `OwnershipGateSchema`'s comment for why `expectedValue` needs nothing more
+ * than this for correctness, unlike `simulate`.
+ */
+function gateAllows(
+  table: CompiledTable,
+  i: number,
+  ownedCounts: Readonly<Record<string, number>>
+): boolean {
+  if (table.ownershipGates === null) return true
+  const gate = table.ownershipGates[i] ?? null
+  return gate === null || ownershipGateSatisfied(gate, ownedCounts[gate.itemKey] ?? 0)
+}
+
+/**
+ * Two independent multipliers walk down together: `reach` is the expected
+ * number of times this node is hit (a probability/count product, unrelated
+ * to item size), `qtyMultiplier` is the accumulated `Table`/`TableRefNode`
+ * quantity scaling on the path so far. Conflating them would corrupt
+ * `drops[]` (how many times an item came up must not depend on how big each
+ * stack is) — see docs/mechanics-model-proposal.md's Extension A.
+ */
 function accumulateNode(
   node: CompiledNode,
-  multiplier: number,
+  reach: number,
+  qtyMultiplier: number,
   compiled: CompiledBoss,
   drops: Float64Array,
   quantity: Float64Array
@@ -113,65 +142,84 @@ function accumulateNode(
     case 'nothing':
       return
     case 'item':
-      drops[node.slot]! += multiplier
-      quantity[node.slot]! += multiplier * meanQty(node.qty)
+      drops[node.slot]! += reach
+      quantity[node.slot]! += reach * qtyMultiplier * meanQty(node.qty)
       return
     case 'table':
-      accumulateTable(node.table, multiplier, compiled, drops, quantity)
+      accumulateTable(
+        node.table,
+        reach,
+        qtyMultiplier * node.qtyMultiplier,
+        compiled,
+        drops,
+        quantity
+      )
       return
   }
 }
 
 function accumulateTable(
   table: CompiledTable,
-  multiplier: number,
+  reach: number,
+  qtyMultiplier: number,
   compiled: CompiledBoss,
   drops: Float64Array,
   quantity: Float64Array
 ): void {
   const rolls = expectedRolls(table.rolls)
-  if (rolls === 0 || multiplier === 0) return
+  if (rolls === 0 || reach === 0) return
+  const effectiveQty = qtyMultiplier * table.qtyMultiplier
+
+  const ownedCounts = compiled.ctx.ownedCounts
 
   switch (table.mode) {
     case 'always':
-      for (const node of table.nodes) {
-        accumulateNode(node, multiplier * rolls, compiled, drops, quantity)
-      }
+      table.nodes.forEach((node, i) => {
+        if (!gateAllows(table, i, ownedCounts)) return
+        accumulateNode(node, reach * rolls, effectiveQty, compiled, drops, quantity)
+      })
       return
 
     case 'independent':
       table.nodes.forEach((node, i) => {
-        accumulateNode(node, multiplier * rolls * table.probs[i]!, compiled, drops, quantity)
+        if (!gateAllows(table, i, ownedCounts)) return
+        accumulateNode(node, reach * rolls * table.probs[i]!, effectiveQty, compiled, drops, quantity)
       })
       return
 
     case 'preroll': {
       // Entries are checked in order; entry i is only reached if every earlier
-      // one missed. Schema pins preroll tables to a single roll.
-      let reach = 1
+      // one missed. Schema pins preroll tables to a single roll. A
+      // gate-excluded entry is skipped without affecting `survived` — it
+      // behaves as if it weren't in the chain at all, not as an automatic
+      // miss that still "uses up" its position.
+      let survived = 1
       table.nodes.forEach((node, i) => {
+        if (!gateAllows(table, i, ownedCounts)) return
         const p = table.probs[i]!
-        accumulateNode(node, multiplier * reach * p, compiled, drops, quantity)
-        reach *= 1 - p
+        accumulateNode(node, reach * survived * p, effectiveQty, compiled, drops, quantity)
+        survived *= 1 - p
       })
       return
     }
 
     case 'weighted': {
+      // No-op (returns table.weights/denominator unchanged) when this table
+      // has no ownership gates — see effectiveWeightedPool's comment.
+      const pool = effectiveWeightedPool(table, (itemKey) => ownedCounts[itemKey] ?? 0)
       if (table.withoutReplacement && table.rolls.kind === 'count' && table.rolls.n > 1) {
-        const expected = expectedDrawsWithoutReplacement(
-          table.weights,
-          table.denominator,
-          table.rolls.n
-        )
+        const expected = expectedDrawsWithoutReplacement(pool.weights, pool.denominator, table.rolls.n)
         table.nodes.forEach((node, i) => {
-          accumulateNode(node, multiplier * expected[i]!, compiled, drops, quantity)
+          accumulateNode(node, reach * expected[i]!, effectiveQty, compiled, drops, quantity)
         })
         return
       }
+      // Every entry ownership-excluded (e.g. a fully-owned Lunar Chest set)
+      // leaves nothing to draw from — contributes 0, not NaN from a 0/0.
+      if (pool.denominator <= 0) return
       table.nodes.forEach((node, i) => {
-        const p = table.weights[i]! / table.denominator
-        accumulateNode(node, multiplier * rolls * p, compiled, drops, quantity)
+        const p = pool.weights[i]! / pool.denominator
+        accumulateNode(node, reach * rolls * p, effectiveQty, compiled, drops, quantity)
       })
       return
     }
@@ -203,8 +251,8 @@ export function expectedValue(
 
   let chainAlive = 1
   for (const table of compiled.tables) {
-    const multiplier = suppressedByPreroll(table.mode) ? chainAlive : 1
-    accumulateTable(table, multiplier, compiled, drops, quantity)
+    const reach = suppressedByPreroll(table.mode) ? chainAlive : 1
+    accumulateTable(table, reach, 1, compiled, drops, quantity)
     if (table.mode === 'preroll') chainAlive *= 1 - prerollHitChance(table)
   }
 

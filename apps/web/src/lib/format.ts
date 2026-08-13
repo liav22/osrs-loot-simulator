@@ -39,6 +39,8 @@ export function formatQty(qty: QtySpec): string {
       return `${qty.min}-${qty.max}`
     case 'choice':
       return qty.values.join('/')
+    case 'formula':
+      return `formula: ${qty.id}`
   }
 }
 

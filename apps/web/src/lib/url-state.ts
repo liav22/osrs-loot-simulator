@@ -30,7 +30,13 @@ function parseIntParam(value: string | null, fallback: number): number {
 
 export function paramsFromSearch(search: URLSearchParams): SimRunParams {
   const questsRaw = search.get('quests')
+  // Spread the defaults rather than listing every field: the Extension A
+  // SimContext fields (points, raidLevel, delveLevel, ...) have no URL param
+  // or UI control yet (docs/mechanics-model-proposal.md's blast-radius table
+  // tracks that as separate follow-up work per source), so they fall back to
+  // DEFAULT_SIM_CONTEXT here, same as if this file had never been touched.
   const ctx: SimContext = {
+    ...DEFAULT_SIM_CONTEXT,
     members: parseBool(search.get('members'), DEFAULT_SIM_CONTEXT.members),
     ringOfWealth: parseBool(search.get('row'), DEFAULT_SIM_CONTEXT.ringOfWealth),
     onSlayerTask: parseBool(search.get('slayer'), DEFAULT_SIM_CONTEXT.onSlayerTask),

@@ -46,19 +46,78 @@ export function createFormulaRegistry(
 
 export const defaultFormulaRegistry: FormulaRegistry = createFormulaRegistry()
 
+function callFormula(
+  formulaId: FormulaId,
+  params: Record<string, unknown>,
+  ctx: SimContext,
+  registry: FormulaRegistry
+): number {
+  const fn = registry.get(formulaId)
+  if (fn === undefined) throw new UnknownFormulaError(formulaId)
+  return fn(params, ctx)
+}
+
+/**
+ * `[0, 1]`-probability contract — a formula used as a `Rate`. Kept under its
+ * original name since it's part of the tested public API (see
+ * `formulas.test.ts`); `evaluateQuantity`/`evaluateMultiplier` below are the
+ * other two contracts a formula id can fulfil, added for the `QtySpec`,
+ * `Table.rolls`, and `qtyMultiplier` formula variants. Which contract a given
+ * formula id fulfils is a property of where it's used, not of `FormulaFn`'s
+ * type — documented at each formula's registration site, not enforced by the
+ * type system.
+ */
 export function evaluateFormula(
   formulaId: FormulaId,
   params: Record<string, unknown>,
   ctx: SimContext,
   registry: FormulaRegistry = defaultFormulaRegistry
 ): number {
-  const fn = registry.get(formulaId)
-  if (fn === undefined) throw new UnknownFormulaError(formulaId)
-  const probability = fn(params, ctx)
+  const probability = callFormula(formulaId, params, ctx, registry)
   if (!Number.isFinite(probability) || probability < 0 || probability > 1) {
     throw new RangeError(`Formula '${formulaId}' returned ${probability}, expected [0, 1]`)
   }
   return probability
+}
+
+/**
+ * Non-negative-quantity contract — a formula used as a `QtySpec` or as
+ * `Table.rolls`' integer-count variant. Rounds to the nearest integer, since
+ * every other `QtySpec`/`rolls` shape is integer-valued; a formula that needs
+ * `trunc`-toward-zero behaviour (e.g. Doom of Mokhaiotl's per-level quantity
+ * multiplier) does that internally before returning, making this rounding a
+ * no-op for it.
+ */
+export function evaluateQuantity(
+  formulaId: FormulaId,
+  params: Record<string, unknown>,
+  ctx: SimContext,
+  registry: FormulaRegistry = defaultFormulaRegistry
+): number {
+  const value = callFormula(formulaId, params, ctx, registry)
+  if (!Number.isFinite(value) || value < 0) {
+    throw new RangeError(`Formula '${formulaId}' returned ${value}, expected a non-negative quantity`)
+  }
+  return Math.round(value)
+}
+
+/**
+ * Positive-multiplier contract — a formula used as `qtyMultiplier` on a
+ * `Table` or `TableRefNode`. No upper bound (Duke Sucellus' +50% is 1.5,
+ * Abyssal Sire's flat double is 2), and not rounded — a multiplier need not
+ * be integer-valued.
+ */
+export function evaluateMultiplier(
+  formulaId: FormulaId,
+  params: Record<string, unknown>,
+  ctx: SimContext,
+  registry: FormulaRegistry = defaultFormulaRegistry
+): number {
+  const value = callFormula(formulaId, params, ctx, registry)
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new RangeError(`Formula '${formulaId}' returned ${value}, expected a positive multiplier`)
+  }
+  return value
 }
 
 /**

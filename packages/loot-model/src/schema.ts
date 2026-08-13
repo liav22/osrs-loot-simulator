@@ -12,6 +12,17 @@ export const FORMULA_IDS = [
   'wintertodt_points',
   'tempoross_points',
   'wilderness_slayer',
+  // Added for docs/mechanics-model-proposal.md's Extension A. Each is a real,
+  // individually wiki-cited curve (see docs/bosses/*.md) with no existing id
+  // whose shape fits — PROJECT_PLAN.md 4.6's "do not add more without
+  // justification" is read as satisfied by that citation, not by convenience.
+  'zalcano_points',
+  'doom_of_mokhaiotl_uniques',
+  'doom_of_mokhaiotl_qty',
+  'fortis_colosseum_uniques',
+  'fortis_colosseum_qty',
+  'tzhaar_fight_cave_tokkul',
+  'duke_sucellus_ice_quartz',
 ] as const
 
 export const FormulaIdSchema = z.enum(FORMULA_IDS)
@@ -62,6 +73,30 @@ export const RateSchema = z
 
 export type Rate = z.infer<typeof RateSchema>
 
+/**
+ * `{ kind: 'formula', id, params }`, structurally identical to `Rate`'s
+ * `formula` variant but reused wherever a formula's *output* is not a
+ * `[0, 1]` probability: a `QtySpec`, `Table.qtyMultiplier`, or a
+ * `TableRefNode`'s multiplier. Which contract applies is decided by where
+ * this shape is used, not by the shape itself — `formulas.ts`'s
+ * `evaluateQuantity`/`evaluateMultiplier` (vs. `evaluateFormula`/
+ * `evaluateRate`) are the corresponding validators. See
+ * docs/mechanics-model-proposal.md's Extension A.
+ */
+export const FormulaRefSchema = z
+  .object({
+    kind: z.literal('formula'),
+    id: FormulaIdSchema,
+    params: z.record(z.unknown()).default({}),
+  })
+  .strict()
+
+export type FormulaRef = z.infer<typeof FormulaRefSchema>
+
+/** A positive scalar, or a formula that resolves to one at compile time. */
+export const MultiplierSchema = z.union([z.number().finite().positive(), FormulaRefSchema])
+export type Multiplier = z.infer<typeof MultiplierSchema>
+
 // ---------------------------------------------------------------------------
 // Quantities (4.2)
 // ---------------------------------------------------------------------------
@@ -85,8 +120,19 @@ const ChoiceQtySchema = z
   })
   .strict()
 
+/**
+ * Resolved once at compile time against the (static, per-run) `SimContext`,
+ * exactly like `Rate`'s existing `formula` variant — `compile.ts` collapses
+ * it to a plain resolved quantity before `simulate.ts`/`expected-value.ts`
+ * ever see it, so neither needs a per-roll formula re-evaluation. Covers a
+ * quantity computed from scratch (ToA's `Points / ItemDivisor`, Inferno's/
+ * TzHaar Fight Cave's Tokkul, Zalcano's role-keyed crystal-shard tiers — a
+ * formula can return a discrete stepped value as easily as a continuous
+ * one, so this is one variant, not a fourth `QtySpec` kind per role-keyed
+ * vs. continuous shapes).
+ */
 export const QtySpecSchema = z
-  .discriminatedUnion('kind', [ExactQtySchema, RangeQtySchema, ChoiceQtySchema])
+  .discriminatedUnion('kind', [ExactQtySchema, RangeQtySchema, ChoiceQtySchema, FormulaRefSchema])
   .superRefine((qty, ctx) => {
     if (qty.kind === 'range' && qty.min > qty.max) {
       ctx.addIssue({
@@ -110,9 +156,68 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('questComplete'), quest: z.string().min(1) }).strict(),
   z.object({ kind: z.literal('killCountAtLeast'), n: z.number().int().nonnegative() }).strict(),
   z.object({ kind: z.literal('variant'), name: z.string().min(1) }).strict(),
+  /**
+   * Gates an entry on one of the two confirmed level/wave-indexed `SimContext`
+   * fields reaching at least `n`. Kept to an enum of the two sources that
+   * actually need it (Doom of Mokhaiotl's `delveLevel`, Fortis Colosseum's
+   * `wavesReached`) rather than a free-text field name, matching this
+   * project's established practice of not generalizing past confirmed cases
+   * (see docs/DECISIONS.md's repeated "Uniques" heading refusals). Widen to a
+   * free-text `field: string` only if a third source needs it.
+   */
+  z
+    .object({
+      kind: z.literal('levelAtLeast'),
+      field: z.enum(['delveLevel', 'wavesReached']),
+      n: z.number().int().nonnegative(),
+    })
+    .strict(),
 ])
 
 export type Condition = z.infer<typeof ConditionSchema>
+
+/**
+ * Gates an `Entry` on how many of a specific item the player owns *entering
+ * this simulated run* (`SimContext.ownedCounts[itemKey]`) — Duke Sucellus'
+ * ice quartz/frozen tablet, ToA's thread/jewels, Lunar Chest's per-set
+ * duplicate protection, Reward Cart's 3rd+-owned substitution. All four are
+ * **lifetime-scoped**: the count only ever grows, persists for the whole
+ * simulated batch (and beyond it), and starts from the caller-supplied
+ * entering value — never resets mid-batch. None of them are *run-scoped* the
+ * way Fortis Colosseum's wave-to-wave armour dedup would be (state that
+ * resets at the start of each new attempt) — that's a materially different,
+ * still-unbuilt problem (see docs/mechanics-model-proposal.md's "Deferred"
+ * section), not a variant of this one.
+ *
+ * **Deliberately NOT a `Condition` kind**, even though it reads like one.
+ * Every existing `Condition` is resolved exactly once, against a `SimContext`
+ * fixed for the whole run (`compile.ts`'s header comment: "Conditions are
+ * resolved once here because `SimContext` is fixed for the duration of a
+ * run") — `expectedValue` relies on that being true (it computes one kill's
+ * expectation, so a static entering `ownedCounts` is all it ever needs), but
+ * `simulate` cannot honor it for `ownershipGate`: whether a Reward Cart
+ * search is past its 3rd warm gloves is itself an outcome of *earlier
+ * simulated kills in the same run*, so it has to be re-checked once per
+ * kill, against a live, mutating count `simulate.ts` tracks alongside the
+ * seeded RNG stream (never as a second source of randomness — the mutation
+ * is a deterministic function of what the same seed already produced, so
+ * "same seed + same input ⇒ same output" still holds). Folding this into
+ * `Condition` would either be a lie for the six existing kinds' shared
+ * contract, or force all of them to pay for per-kill re-evaluation they
+ * don't need. It's therefore its own field on `Entry`, checked by
+ * `compile.ts`/`simulate.ts`/`expected-value.ts` at the point each of them
+ * actually needs it, not folded into `entryApplies`'s static pass.
+ */
+export const OwnershipGateSchema = z
+  .object({
+    itemKey: z.string().min(1),
+    n: z.number().int().nonnegative(),
+    /** 'below' = applies while owned < n (not yet reached); 'atLeast' = applies once owned >= n. */
+    when: z.enum(['below', 'atLeast']),
+  })
+  .strict()
+
+export type OwnershipGate = z.infer<typeof OwnershipGateSchema>
 
 // ---------------------------------------------------------------------------
 // Nodes and entries (4.2, 4.3)
@@ -148,7 +253,18 @@ const ItemNodeSchema = z
   .strict()
 
 const TableRefNodeSchema = z
-  .object({ kind: z.literal('tableRef'), ref: z.string().min(1) })
+  .object({
+    kind: z.literal('tableRef'),
+    ref: z.string().min(1),
+    /**
+     * Scales whatever this specific access yields, without touching the
+     * shared, unscaled `data/tables/*.json` record other sources reference
+     * plainly (Abyssal Sire's flat ×2 on `rare_drop_table`). Composes with a
+     * parent `Table.qtyMultiplier` if both are present — `simulate.ts`/
+     * `expected-value.ts` multiply through nesting, not replace.
+     */
+    qtyMultiplier: MultiplierSchema.optional(),
+  })
   .strict()
 
 const NothingNodeSchema = z.object({ kind: z.literal('nothing') }).strict()
@@ -205,6 +321,8 @@ export const EntrySchema = z
     node: NodeSchema,
     rate: RateSchema,
     conditions: z.array(ConditionSchema).optional(),
+    /** See `OwnershipGateSchema`'s comment for why this isn't in `conditions`. */
+    ownershipGate: OwnershipGateSchema.optional(),
   })
   .strict()
 
@@ -246,11 +364,33 @@ export const TableSchema = z
   .object({
     id: z.string().min(1),
     mode: TableModeSchema,
+    /**
+     * `rolls` as a `Rate` normally means "roll this table once with
+     * probability p" (PROJECT_PLAN.md 4.3's decision log). A `formula`-kind
+     * `Rate` here is the one exception: `compile.ts` evaluates it via
+     * `evaluateQuantity` (a non-negative integer count) rather than
+     * `rateToProbability` (a `[0, 1]` chance), giving Lunar Chest's
+     * 1/3/6-roll count a home without a new schema arm — reusing `Rate`'s
+     * existing `formula` shape rather than adding a fourth `rolls` type that
+     * would be structurally indistinguishable from it. Confirmed safe: no
+     * currently-parsed source uses a `formula`-kind rate as `rolls` today, so
+     * this reinterpretation changes nothing already shipped.
+     */
     rolls: z.union([z.number().int().positive(), RateSchema]).default(1),
     denominator: z.number().finite().positive().optional(),
     withoutReplacement: z.boolean().default(false),
     entries: z.array(EntrySchema).min(1),
     notes: z.string().optional(),
+    /**
+     * Scales every quantity rolled from this table's own entries (Duke
+     * Sucellus's perfect-kill +50%, ToB's mode/death scaling, Zalcano's MVP
+     * +10% "of what this player already got" — mechanically identical to the
+     * other two once `qtyMultiplier` is understood as applying to the
+     * table's own realized draw, not as a separate roll). Composes with a
+     * `TableRefNode.qtyMultiplier` when this table is itself reached through
+     * one.
+     */
+    qtyMultiplier: MultiplierSchema.optional(),
   })
   .strict()
   .superRefine((table, ctx) => {
@@ -331,6 +471,42 @@ export const SimContextSchema = z
     questsComplete: z.array(z.string().min(1)),
     killCount: z.number().int().nonnegative(),
     variant: z.string().min(1),
+    // Added for docs/mechanics-model-proposal.md's Extension A. All static
+    // per-run scalars, resolved once at compile time exactly like the six
+    // fields above — none of the 36 currently-verified sources reference
+    // any of them, so their defaults below are inert for every boss doc
+    // that doesn't opt in.
+    /** ToA, CoX, Tempoross, Wintertodt — this run's activity-points total. */
+    points: z.number().int().nonnegative().default(0),
+    /** ToA's configured raid invocation level (0-500). */
+    raidLevel: z.number().int().nonnegative().default(0),
+    /** ToB's death count this raid (death-penalty magnitude is UNKNOWN — see docs/bosses/monumental-chest.md). */
+    deaths: z.number().int().nonnegative().default(0),
+    /** Duke Sucellus's no-avoidable-damage bonus. */
+    perfectKill: z.boolean().default(false),
+    /** Zalcano's MVP-of-the-kill bonus. */
+    isMVP: z.boolean().default(false),
+    /** Doom of Mokhaiotl's deepest delve level reached this run. */
+    delveLevel: z.number().int().nonnegative().default(0),
+    /** Fortis Colosseum's deepest wave reached this run. */
+    wavesReached: z.number().int().nonnegative().default(0),
+    /** Lunar Chest — which Moons were killed before this chest opening. */
+    moonsKilled: z.array(z.enum(['blood', 'blue', 'eclipse'])).default([]),
+    /** Reward pool — Fishing level at time of redemption. */
+    fishingLevel: z.number().int().min(1).max(99).default(1),
+    /** Zalcano's two damage inputs — kept raw rather than pre-derived into one `points`, since `zalcano_points` needs both `H` and `S` under different caps. */
+    hitpointsDamage: z.number().int().nonnegative().default(0),
+    shieldDamage: z.number().int().nonnegative().default(0),
+    /**
+     * How many of each item (keyed by `itemKey`) the player owns *entering*
+     * this run — Extension B's `OwnershipGateSchema` reads this as the
+     * starting point. `expectedValue` treats it as fixed, same as every
+     * other field here; `simulate` additionally tracks it live as kills
+     * happen, since it's the one field whose relevant fact ("have you
+     * gotten this yet") can become true partway through a simulated batch.
+     * See `OwnershipGateSchema`'s comment.
+     */
+    ownedCounts: z.record(z.string(), z.number().int().nonnegative()).default({}),
   })
   .strict()
 
@@ -346,6 +522,18 @@ export const DEFAULT_SIM_CONTEXT: SimContext = {
   questsComplete: [],
   killCount: 0,
   variant: 'normal',
+  points: 0,
+  raidLevel: 0,
+  deaths: 0,
+  perfectKill: false,
+  isMVP: false,
+  delveLevel: 0,
+  wavesReached: 0,
+  moonsKilled: [],
+  fishingLevel: 1,
+  hitpointsDamage: 0,
+  shieldDamage: 0,
+  ownedCounts: {},
 }
 
 // ---------------------------------------------------------------------------

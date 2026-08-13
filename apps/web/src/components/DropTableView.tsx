@@ -15,6 +15,10 @@ function conditionLabel(condition: Condition): string {
       return `KC ≥ ${condition.n}`
     case 'variant':
       return condition.name
+    case 'levelAtLeast': {
+      const label = condition.field === 'delveLevel' ? 'Delve level' : 'Wave'
+      return `${label} ≥ ${condition.n}`
+    }
   }
 }
 

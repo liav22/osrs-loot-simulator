@@ -1,6 +1,23 @@
 import { entryApplies } from './conditions.js'
-import { defaultFormulaRegistry, rateToProbability, type FormulaRegistry } from './formulas.js'
-import type { Boss, Entry, LeafEntry, Node, QtySpec, SimContext, Table, TableMode } from './schema.js'
+import {
+  defaultFormulaRegistry,
+  evaluateMultiplier,
+  evaluateQuantity,
+  rateToProbability,
+  type FormulaRegistry,
+} from './formulas.js'
+import type {
+  Boss,
+  Entry,
+  LeafEntry,
+  Multiplier,
+  Node,
+  OwnershipGate,
+  QtySpec,
+  SimContext,
+  Table,
+  TableMode,
+} from './schema.js'
 
 /**
  * Both the simulator and the analytic EV walk this compiled form, so the two
@@ -14,10 +31,25 @@ export interface CompiledItem {
   name: string
 }
 
+/**
+ * `QtySpec` minus its `formula` variant. `compileNode`'s `item` case always
+ * resolves a formula-driven quantity to a plain `exact` value at compile
+ * time (`SimContext` is fixed for the run, so there's nothing to
+ * re-evaluate per roll) — this type says so, so `rollQty`/`meanQty` don't
+ * need a `formula` case they'd never actually reach.
+ */
+export type ResolvedQtySpec = Exclude<QtySpec, { kind: 'formula' }>
+
 export type CompiledNode =
-  | { kind: 'item'; slot: number; qty: QtySpec }
+  | { kind: 'item'; slot: number; qty: ResolvedQtySpec }
   | { kind: 'nothing' }
-  | { kind: 'table'; table: CompiledTable }
+  /**
+   * `qtyMultiplier` is this specific `tableRef` access's own scaling
+   * (`TableRefNode.qtyMultiplier`, resolved once here), separate from the
+   * referenced `CompiledTable`'s own `qtyMultiplier` — the two compose at
+   * whichever point a quantity is finally recorded.
+   */
+  | { kind: 'table'; table: CompiledTable; qtyMultiplier: number }
 
 export type CompiledRolls =
   | { kind: 'count'; n: number }
@@ -39,6 +71,21 @@ export interface CompiledTable {
   denominator: number
   /** always/preroll/independent: per-entry absolute probability. */
   probs: Float64Array
+  /** Scales every quantity rolled from this table's own entries. 1 when absent. */
+  qtyMultiplier: number
+  /**
+   * Parallel to `nodes`/`weights`/`probs`; `null` for every entry that has no
+   * `ownershipGate`, and `null` for the WHOLE array when nothing in this
+   * table has one — the fast-path sentinel `simulate.ts`/`expected-value.ts`
+   * check once per table, not once per entry, to skip Extension B's
+   * machinery entirely for every table that doesn't use it (which is every
+   * table in every one of the 36 sources verified before Extension B).
+   * Deliberately NOT applied by the static `entryApplies` filter above —
+   * see `OwnershipGateSchema`'s comment for why an ownership-gated entry
+   * always survives compile-time filtering regardless of the entering
+   * `ownedCounts`, to be resolved dynamically instead.
+   */
+  ownershipGates: ReadonlyArray<OwnershipGate | null> | null
 }
 
 export interface CompiledBoss {
@@ -46,6 +93,8 @@ export interface CompiledBoss {
   ctx: SimContext
   items: CompiledItem[]
   tables: CompiledTable[]
+  /** Every `itemKey` any `ownershipGate` anywhere in `tables` references. Empty for a boss that uses none — the guard `simulate.ts` checks to skip tracking entirely. */
+  trackedItemKeys: ReadonlySet<string>
 }
 
 export interface CompileOptions {
@@ -112,10 +161,31 @@ export function compileBoss(
   const shared = options.tables ?? new Map<string, Table>()
   const items = new ItemIndex()
   const memo = new Map<string, CompiledTable>()
+  const trackedItemKeys = new Set<string>()
 
+  const compileMultiplier = (multiplier: Multiplier | undefined): number => {
+    if (multiplier === undefined) return 1
+    if (typeof multiplier === 'number') return multiplier
+    return evaluateMultiplier(multiplier.id, multiplier.params, ctx, formulas)
+  }
+
+  const compileQty = (qty: QtySpec): ResolvedQtySpec => {
+    if (qty.kind !== 'formula') return qty
+    return { kind: 'exact', n: evaluateQuantity(qty.id, qty.params, ctx, formulas) }
+  }
+
+  /**
+   * `rolls` as a `formula`-kind `Rate` is the one case that means "an integer
+   * count", not "a Bernoulli chance" — see `TableSchema`'s comment on
+   * `rolls`. Every other non-numeric `rolls` (fixed/always/the rejected
+   * weight kind) keeps its existing meaning.
+   */
   const compileRolls = (rolls: Table['rolls']): CompiledRolls => {
     if (typeof rolls === 'number') return { kind: 'count', n: rolls }
     if (rolls.kind === 'always') return { kind: 'count', n: 1 }
+    if (rolls.kind === 'formula') {
+      return { kind: 'count', n: evaluateQuantity(rolls.id, rolls.params, ctx, formulas) }
+    }
     return { kind: 'chance', p: rateToProbability(rolls, ctx, formulas) }
   }
 
@@ -125,14 +195,18 @@ export function compileBoss(
         return {
           kind: 'item',
           slot: items.slotFor(node.itemId, node.itemKey, node.name),
-          qty: node.qty,
+          qty: compileQty(node.qty),
         }
       case 'nothing':
         return { kind: 'nothing' }
       case 'tableRef': {
         const target = shared.get(node.ref)
         if (target === undefined) throw new UnresolvedTableRefError(node.ref)
-        return { kind: 'table', table: compileTable(target, path) }
+        return {
+          kind: 'table',
+          table: compileTable(target, path),
+          qtyMultiplier: compileMultiplier(node.qtyMultiplier),
+        }
       }
       case 'oneOf':
         return compileOneOf(node.entries, tableId, path)
@@ -157,16 +231,22 @@ export function compileBoss(
     const id = `${tableId}#oneOf`
     return {
       kind: 'table',
+      qtyMultiplier: 1,
       table: {
         id,
         mode: 'weighted',
         rolls: { kind: 'count', n: 1 },
         withoutReplacement: false,
+        // `LeafEntry` (oneOf's entry shape) carries no `ownershipGate` — none
+        // of the four Extension B sources need ownership *inside* a oneOf,
+        // so it's out of scope rather than added speculatively.
         nodes: applicable.map((entry) => compileNode(entry.node, id, path)),
         weights,
         cum: cumulative(weights),
         denominator: total,
         probs: new Float64Array(0),
+        qtyMultiplier: 1,
+        ownershipGates: null,
       },
     }
   }
@@ -177,8 +257,20 @@ export function compileBoss(
     if (path.includes(table.id)) throw new CircularTableRefError([...path, table.id])
 
     const nextPath = [...path, table.id]
+    // `entryApplies` only ever reads `entry.conditions` — `ownershipGate` is
+    // a separate field it doesn't know about, so an ownership-gated entry
+    // survives this static pass regardless of the entering `ownedCounts`,
+    // by construction. See `OwnershipGateSchema`'s comment.
     const applicable: Entry[] = table.entries.filter((entry) => entryApplies(entry, ctx))
     const nodes = applicable.map((entry) => compileNode(entry.node, table.id, nextPath))
+
+    const rawGates = applicable.map((entry) => entry.ownershipGate ?? null)
+    const ownershipGates = rawGates.some((gate) => gate !== null) ? rawGates : null
+    if (ownershipGates !== null) {
+      for (const gate of ownershipGates) {
+        if (gate !== null) trackedItemKeys.add(gate.itemKey)
+      }
+    }
 
     const weights = new Float64Array(applicable.length)
     const probs = new Float64Array(applicable.length)
@@ -224,13 +316,61 @@ export function compileBoss(
       cum: table.mode === 'weighted' ? cumulative(weights) : new Float64Array(0),
       denominator,
       probs,
+      qtyMultiplier: compileMultiplier(table.qtyMultiplier),
+      ownershipGates,
     }
     memo.set(table.id, compiled)
     return compiled
   }
 
   const tables = boss.tables.map((table) => compileTable(table, []))
-  return { boss, ctx, items: items.items, tables }
+  return { boss, ctx, items: items.items, tables, trackedItemKeys }
+}
+
+/** Whether a gate currently permits its entry, given a live or static owned count. */
+export function ownershipGateSatisfied(gate: OwnershipGate, owned: number): boolean {
+  return gate.when === 'below' ? owned < gate.n : owned >= gate.n
+}
+
+export interface EffectivePool {
+  weights: Float64Array
+  cum: Float64Array
+  denominator: number
+}
+
+/**
+ * Recomputes a `weighted`-mode table's pool with any currently-excluded
+ * ownership-gated entries removed (Lunar Chest's per-set duplicate
+ * protection: draw from unowned pieces only). Deliberately a SEPARATE
+ * mechanism from `compileTable`'s static `nothing`-kind denominator shrink
+ * above — that one is resolved once, scoped to condition-excluded `nothing`
+ * nodes; this one is re-evaluated by the caller (once per kill in
+ * `simulate.ts`, against a live tracker; once in `expected-value.ts`,
+ * against the static entering `ownedCounts`) and scoped to
+ * `ownershipGate`-carrying entries only. Returns the table's own arrays
+ * unchanged when it has no gates at all — cheap enough for a caller to call
+ * unconditionally, though both current callers guard on
+ * `table.ownershipGates !== null` first anyway to skip even that.
+ */
+export function effectiveWeightedPool(
+  table: CompiledTable,
+  ownedCountFor: (itemKey: string) => number
+): EffectivePool {
+  const gates = table.ownershipGates
+  if (gates === null) {
+    return { weights: table.weights, cum: table.cum, denominator: table.denominator }
+  }
+  const weights = table.weights.slice()
+  let denominator = table.denominator
+  for (let i = 0; i < gates.length; i++) {
+    const gate = gates[i] ?? null
+    if (gate === null) continue
+    if (!ownershipGateSatisfied(gate, ownedCountFor(gate.itemKey))) {
+      denominator -= weights[i]!
+      weights[i] = 0
+    }
+  }
+  return { weights, cum: cumulative(weights), denominator }
 }
 
 export function cumulative(weights: Float64Array): Float64Array {
@@ -268,7 +408,7 @@ export function suppressedByPreroll(mode: TableMode): boolean {
   return mode === 'preroll' || mode === 'weighted'
 }
 
-export function meanQty(qty: QtySpec): number {
+export function meanQty(qty: ResolvedQtySpec): number {
   switch (qty.kind) {
     case 'exact':
       return qty.n

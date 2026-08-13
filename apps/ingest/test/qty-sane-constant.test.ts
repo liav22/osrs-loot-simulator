@@ -17,28 +17,21 @@ function discriminatorKinds(schema: z.ZodTypeAny): string[] {
 }
 
 /**
- * `qty_sane` is the one VALIDATION_CHECKS entry that stays hardcoded
- * `{ ok: true }` in `apps/ingest/src/parse/parse-boss.ts` — audited and
- * left that way deliberately (see docs/DECISIONS.md), because every
- * `QtySpec` variant is fully bounded by `QtySpecSchema` at parse time with
- * no runtime-only case (unlike `rates_valid`'s `formula` rates, whose
- * numeric output the schema cannot see): `exact`/`range` require
- * non-negative integers with a `superRefine` enforcing `min <= max`, and
- * `choice` requires a non-empty array of non-negative integers.
- *
- * That claim is only true because the three-kind list below is the WHOLE
- * set. If a fourth `QtySpec` kind is ever added — a `formula`-driven
- * quantity, say — this test fails, which is the point: it's the trip wire
- * telling whoever adds it that `qty_sane`'s hardcoded `true` needs
- * re-auditing against the new kind, the same way `rates_valid` was audited
- * and found to need a real implementation for `formula` rates.
+ * This trip wire fired exactly as designed: docs/mechanics-model-proposal.md's
+ * Extension A added `QtySpec`'s fourth kind, `formula` — a quantity whose
+ * numeric value only exists once evaluated against a `SimContext`, the same
+ * shape of gap `rates_valid` already had a real implementation for. `qty_sane`
+ * is no longer hardcoded `true`; `apps/ingest/src/validate/qty-sane.ts` now
+ * evaluates `formula`-kind quantities (and `Table.rolls`/`qtyMultiplier`
+ * formulas, added by the same change) the way `checkRatesValid` evaluates
+ * `formula`-kind rates. See `qty-sane.test.ts` for that check's own coverage.
  */
-describe('qty_sane hardcoded-true precondition', () => {
-  it('QtySpec has exactly the three kinds qty_sane was audited against', () => {
-    expect(discriminatorKinds(QtySpecSchema)).toEqual(['choice', 'exact', 'range'])
+describe('QtySpec kind precondition', () => {
+  it('QtySpec has exactly the four kinds qty_sane is audited against', () => {
+    expect(discriminatorKinds(QtySpecSchema)).toEqual(['choice', 'exact', 'formula', 'range'])
   })
 
-  it('every kind rejects the shape of bad input that would make quantities insane', () => {
+  it('every schema-enforced kind still rejects the shape of bad input that would make quantities insane', () => {
     // exact/range: negative or non-integer values
     expect(QtySpecSchema.safeParse({ kind: 'exact', n: -1 }).success).toBe(false)
     expect(QtySpecSchema.safeParse({ kind: 'exact', n: 1.5 }).success).toBe(false)
@@ -47,5 +40,9 @@ describe('qty_sane hardcoded-true precondition', () => {
     // choice: empty array, or a negative value in it
     expect(QtySpecSchema.safeParse({ kind: 'choice', values: [] }).success).toBe(false)
     expect(QtySpecSchema.safeParse({ kind: 'choice', values: [1, -2] }).success).toBe(false)
+    // formula: the schema can only check its shape, not its eventual output —
+    // that's exactly why qty-sane.ts evaluates it at ingest time instead.
+    expect(QtySpecSchema.safeParse({ kind: 'formula', id: 'zalcano_points' }).success).toBe(true)
+    expect(QtySpecSchema.safeParse({ kind: 'formula', id: 'not-a-real-id' }).success).toBe(false)
   })
 })

@@ -2,6 +2,8 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { z } from 'zod'
 import { REPO_ROOT } from '../snapshots/store.js'
+import { InventorySchema, type Inventory } from '../inventory/schema.js'
+import { INVENTORY_PATH } from '../inventory/build.js'
 
 /**
  * The mechanics watchlist.
@@ -64,6 +66,12 @@ export async function loadWatchlist(path = WATCHLIST_PATH): Promise<Watchlist> {
   return WatchlistSchema.parse(JSON.parse(await readFile(path, 'utf8')))
 }
 
+export async function loadInventoryForWatchlistCheck(
+  path = INVENTORY_PATH
+): Promise<Inventory> {
+  return InventorySchema.parse(JSON.parse(await readFile(path, 'utf8')))
+}
+
 export function watchlistEntryFor(
   watchlist: Watchlist,
   lootSourceId: string
@@ -86,4 +94,71 @@ export function checkNotOnWatchlist(
     ok: false,
     detail: `${entry.mechanic}: ${entry.detail}`,
   }
+}
+
+export type WatchlistConsistencyIssue = {
+  lootSourceId: string
+  message: string
+}
+
+/**
+ * Cross-checks each watchlist entry's `blockedBy` against
+ * `data/_inventory.json`'s boss -> lootSourceId map, which is the
+ * authoritative record of which boss pages resolve to which loot source.
+ * `blockedBy` is hand-authored prose with nothing else keeping it honest —
+ * this is the check that would have caught the reward-cart/reward-pool swap
+ * (each entry named the other's boss).
+ *
+ * A loot source's own boss page (the inventory boss whose `title` equals the
+ * watchlist entry's `title`) is never expected in `blockedBy`: that boss
+ * carries the mechanic directly rather than being "blocked" by it, matching
+ * every existing entry's convention (e.g. `duke-sucellus`'s `blockedBy: []`,
+ * since Duke Sucellus is its own loot source with no other boss sharing it).
+ */
+export function checkWatchlistConsistency(
+  watchlist: Watchlist,
+  inventory: Inventory
+): WatchlistConsistencyIssue[] {
+  const issues: WatchlistConsistencyIssue[] = []
+  const knownLootSourceIds = new Set(inventory.lootSources.map((source) => source.id))
+
+  for (const entry of watchlist.entries) {
+    if (!knownLootSourceIds.has(entry.lootSourceId)) {
+      issues.push({
+        lootSourceId: entry.lootSourceId,
+        message: `lootSourceId '${entry.lootSourceId}' is not among data/_inventory.json's lootSources`,
+      })
+      continue
+    }
+
+    const expected = new Set(
+      inventory.bosses
+        .filter((boss) => boss.lootSourceId === entry.lootSourceId)
+        .map((boss) => boss.title)
+        .filter((title) => title !== entry.title)
+    )
+    const actual = new Set(entry.blockedBy)
+
+    const missing = [...expected].filter((title) => !actual.has(title))
+    const extra = [...actual].filter((title) => !expected.has(title))
+
+    if (missing.length > 0) {
+      issues.push({
+        lootSourceId: entry.lootSourceId,
+        message:
+          `blockedBy is missing ${missing.map((title) => `'${title}'`).join(', ')} ` +
+          `(data/_inventory.json maps ${missing.length === 1 ? 'it' : 'them'} to '${entry.lootSourceId}', but blockedBy does not list ${missing.length === 1 ? 'it' : 'them'})`,
+      })
+    }
+    if (extra.length > 0) {
+      issues.push({
+        lootSourceId: entry.lootSourceId,
+        message:
+          `blockedBy lists ${extra.map((title) => `'${title}'`).join(', ')}, which ` +
+          `data/_inventory.json does not map to '${entry.lootSourceId}'`,
+      })
+    }
+  }
+
+  return issues
 }

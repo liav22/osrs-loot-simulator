@@ -15,6 +15,7 @@ describe('paramsFromSearch', () => {
       new URLSearchParams('members=0&row=1&slayer=1&quests=Dragon+Slayer,Legends%27+Quest&kc=50&variant=hard&seed=7&n=5000')
     )
     expect(params.ctx).toEqual({
+      ...DEFAULT_SIM_CONTEXT,
       members: false,
       ringOfWealth: true,
       onSlayerTask: true,

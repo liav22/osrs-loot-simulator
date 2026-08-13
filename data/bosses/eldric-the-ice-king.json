@@ -686,7 +686,7 @@
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
       },
       {
         "check": "ev_matches",

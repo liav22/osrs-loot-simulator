@@ -6,6 +6,7 @@ import { checkItemsKnown, type ItemCheckInput } from '../validate/items-known.js
 import { checkEvMatches, type EvMatchesResult } from '../validate/ev-matches.js'
 import { checkRefsResolve } from '../validate/refs-resolve.js'
 import { checkRatesValid } from '../validate/rates-valid.js'
+import { checkQtySane } from '../validate/qty-sane.js'
 import type { ItemAllowlist } from '../items/allowlist.js'
 import type { ItemIndex } from '../items/index.js'
 import type { GePrices } from '../prices/ge-prices.js'
@@ -117,6 +118,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   const notOnWatchlist = checkNotOnWatchlist(options.watchlist, options.slug)
   const refsResolve = checkRefsResolve(result.boss, options.sharedTables)
   const ratesValid = checkRatesValid(result.boss)
+  const qtySane = checkQtySane(result.boss)
 
   // ev_matches: real GE prices, joined by itemId, gemw-untradeable items
   // priced at 0 automatically (they carry no GE listing at all). Confirmed
@@ -136,12 +138,12 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     { check: 'weights_sum' as const, ok: weightsSum.ok, detail: weightsSum.detail },
     { check: 'refs_resolve' as const, ok: refsResolve.ok, detail: refsResolve.detail },
     { check: 'rates_valid' as const, ok: ratesValid.ok, detail: ratesValid.detail },
-    // Unlike rates_valid, qty_sane genuinely has no runtime gap: QtySpecSchema
-    // enforces min<=max and non-negative integers for every QtySpec variant
-    // with no opaque/unvalidatable case (there is no formula-kind quantity) —
-    // confirmed against packages/loot-model/test/schema.test.ts's own
-    // range-rejection test, not just asserted. See docs/DECISIONS.md.
-    { check: 'qty_sane' as const, ok: true, detail: 'ranges/quantities are fully schema-enforced, no runtime-only case exists' },
+    // qty_sane used to be a hardcoded `true`, correctly, before Extension A
+    // (docs/mechanics-model-proposal.md) added QtySpec's `formula` variant
+    // and Table/TableRefNode's qtyMultiplier — the same shape of runtime-only
+    // gap rates_valid already handles for formula rates. See
+    // apps/ingest/src/validate/qty-sane.ts and its trip-wire test.
+    { check: 'qty_sane' as const, ok: qtySane.ok, detail: qtySane.detail },
     { check: 'ev_matches' as const, ok: evMatches.ok, detail: evMatches.detail },
     { check: 'items_known' as const, ok: itemsKnown.ok, detail: itemsKnown.detail },
     { check: 'not_on_watchlist' as const, ok: notOnWatchlist.ok, detail: notOnWatchlist.detail },
@@ -162,6 +164,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     notOnWatchlist.ok &&
     refsResolve.ok &&
     ratesValid.ok &&
+    qtySane.ok &&
     result.ambiguousGroups.length === 0
   const status = deterministicOk ? ('verified' as const) : ('needs_review' as const)
 
@@ -179,6 +182,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   if (!notOnWatchlist.ok) reasons.push(`not_on_watchlist: ${notOnWatchlist.detail}`)
   if (!refsResolve.ok) reasons.push(`refs_resolve: ${refsResolve.detail}`)
   if (!ratesValid.ok) reasons.push(`rates_valid: ${ratesValid.detail}`)
+  if (!qtySane.ok) reasons.push(`qty_sane: ${qtySane.detail}`)
   reasons.push(`ev_matches (advisory, not part of the verified gate): ${evMatches.detail}`)
 
   const boss = {

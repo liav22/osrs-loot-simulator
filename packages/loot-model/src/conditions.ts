@@ -16,6 +16,8 @@ export function evaluateCondition(condition: Condition, ctx: SimContext): boolea
       return ctx.killCount >= condition.n
     case 'variant':
       return ctx.variant === condition.name
+    case 'levelAtLeast':
+      return ctx[condition.field] >= condition.n
   }
 }
 
