@@ -456,7 +456,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 13475,
             "itemKey": "ensouled-giant-head",
             "name": "Ensouled giant head",
             "qty": {
@@ -473,7 +473,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 23182,
             "itemKey": "clue-scroll-beginner",
             "name": "Clue scroll (beginner)",
             "qty": {
@@ -545,12 +545,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",
@@ -560,7 +560,7 @@
       {
         "check": "items_known",
         "ok": false,
-        "detail": "3 item(s) failed to resolve"
+        "detail": "1 item(s) failed to resolve"
       },
       {
         "check": "not_on_watchlist",

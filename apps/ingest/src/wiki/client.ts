@@ -44,6 +44,15 @@ export interface ItemNameRow {
   itemName: string
   /** Usually one element; several means the name genuinely covers multiple items. */
   ids: string[]
+  /**
+   * `{{Infobox Item|versionN=...|default_version=yes}}` — the wiki's own
+   * flag for "this is the version to show/link by default" when one page
+   * declares several. Used to disambiguate a name that collides across
+   * several ROWS (dose/charge/legacy/colour variants) the same way
+   * `resolveWithUnqualifiedPagePreference` already disambiguates a name
+   * colliding across several PAGES — see `items/index.ts`.
+   */
+  defaultVersion: boolean
 }
 
 export interface RequestRecord {
@@ -396,7 +405,7 @@ export class WikiClient {
     const record = await this.request({
       action: 'bucket',
       query:
-        `bucket('${ITEM_NAME_BUCKET}').select('page_name','item_name','item_id')` +
+        `bucket('${ITEM_NAME_BUCKET}').select('page_name','item_name','item_id','default_version')` +
         `.limit(${ITEM_NAME_PAGE_SIZE}).offset(${offset}).run()`,
     })
     const parsed = BucketResponseSchema.parse(record.body)
@@ -404,10 +413,19 @@ export class WikiClient {
       page_name: z.string(),
       item_name: z.string().nullable().optional(),
       item_id: z.array(z.string()).optional(),
+      // Nullable, not just optional — the live bucket returns an explicit
+      // `null` for rows that never set the `{{Infobox Item|versionN=...}}`
+      // default flag, rather than omitting the key.
+      default_version: z.boolean().nullable().optional(),
     })
     const rows = (parsed.bucket ?? []).map((raw) => {
       const row = rowSchema.parse(raw)
-      return { pageName: row.page_name, itemName: row.item_name ?? row.page_name, ids: row.item_id ?? [] }
+      return {
+        pageName: row.page_name,
+        itemName: row.item_name ?? row.page_name,
+        ids: row.item_id ?? [],
+        defaultVersion: row.default_version === true,
+      }
     })
     return { rows, record }
   }

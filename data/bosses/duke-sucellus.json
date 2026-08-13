@@ -10,8 +10,9 @@
   "tables": [
     {
       "id": "duke-sucellus:0:uniques",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 2160,
       "withoutReplacement": false,
       "entries": [
         {
@@ -26,9 +27,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 720
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -43,9 +43,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 720
+            "kind": "weight",
+            "weight": 9
           }
         },
         {
@@ -60,9 +59,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 720
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -77,9 +75,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2160
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -94,9 +91,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2160
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -111,9 +107,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2160
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
@@ -813,12 +808,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",

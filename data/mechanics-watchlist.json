@@ -71,6 +71,13 @@
       "mechanic": "other",
       "detail": "The wiki's own {{GemDropTable|12/512|rolls=10|override=...}} call explicitly states in its override prose: \"a 12/512 chance of rolling the gem drop table, whereupon its contents are rolled 10 times\" — access checked ONCE, the gem table drawn 10 times after. The parser's default reading of `rolls` (used for every other RDT/gem access line on the wiki, matching Table.rolls' existing 'repeated access attempts' meaning elsewhere, e.g. Zulrah's main table) is the OPPOSITE: it currently models this as 10 independent 12/512 access attempts, not one access followed by 10 draws. Confirmed wrong specifically by this source's own text, not a guess — see docs/DECISIONS.md.",
       "blockedBy": []
+    },
+    {
+      "lootSourceId": "doom-of-mokhaiotl",
+      "title": "Doom of Mokhaiotl",
+      "mechanic": "other",
+      "detail": "Uniques are gated by delve level reached, not a fixed per-kill rarity: Avernic treads only drops 'upon completion of delve level 4 and deeper', Eye of ayak 'level 3 and deeper', Mokhaiotl cloth 'level 2 and deeper', and all three share one altrarity value (1/540) that the three raw rates (1/1350, 1/2000, 1/2500) converge toward at higher levels — the same shape as Fortis Colosseum's wave scaling, one level deeper. The heading correctly stays an unresolved ambiguous-preroll guess (no shared citation, no confirming phrase — this session's heuristic checked and correctly declined to guess) rather than being force-classified.",
+      "blockedBy": []
     }
   ]
 }

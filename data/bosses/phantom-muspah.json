@@ -451,8 +451,9 @@
     },
     {
       "id": "phantom-muspah:3:herbs",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 3760,
       "withoutReplacement": false,
       "entries": [
         {
@@ -468,9 +469,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 235
+            "kind": "weight",
+            "weight": 48
           }
         },
         {
@@ -486,9 +486,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 5,
-            "den": 752
+            "kind": "weight",
+            "weight": 25
           }
         },
         {
@@ -504,9 +503,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 4,
-            "den": 752
+            "kind": "weight",
+            "weight": 20
           }
         },
         {
@@ -522,9 +520,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 4,
-            "den": 752
+            "kind": "weight",
+            "weight": 20
           }
         },
         {
@@ -540,9 +537,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 752
+            "kind": "weight",
+            "weight": 15
           }
         }
       ],
@@ -987,7 +983,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 27590,
             "itemKey": "muphin",
             "name": "Muphin",
             "qty": {
@@ -1026,7 +1022,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -1042,12 +1038,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",
@@ -1056,8 +1052,7 @@
       },
       {
         "check": "items_known",
-        "ok": false,
-        "detail": "1 item(s) failed to resolve"
+        "ok": true
       },
       {
         "check": "not_on_watchlist",

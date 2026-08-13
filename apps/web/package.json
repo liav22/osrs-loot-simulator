@@ -4,21 +4,34 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "sync-data": "node scripts/sync-data.mjs",
+    "predev": "node scripts/sync-data.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/sync-data.mjs",
     "build": "vite build",
+    "postbuild": "node scripts/copy-404.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@osrs-loot-simulator/loot-model": "workspace:*",
+    "@tanstack/react-query": "^5.101.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.2",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^22.10.2",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^30.0.1",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.7.2",
     "vite": "^6.0.6",
     "vitest": "^2.1.8"

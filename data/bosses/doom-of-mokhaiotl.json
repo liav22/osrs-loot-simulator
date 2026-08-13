@@ -355,8 +355,9 @@
     },
     {
       "id": "doom-of-mokhaiotl:2:resources",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 312,
       "withoutReplacement": false,
       "entries": [
         {
@@ -372,9 +373,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 5,
-            "den": 104
+            "kind": "weight",
+            "weight": 15
           }
         },
         {
@@ -390,9 +390,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 5,
-            "den": 104
+            "kind": "weight",
+            "weight": 15
           }
         },
         {
@@ -409,9 +408,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 10,
-            "den": 312
+            "kind": "weight",
+            "weight": 10
           }
         },
         {
@@ -427,9 +425,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 5,
-            "den": 312
+            "kind": "weight",
+            "weight": 5
           }
         },
         {
@@ -445,9 +442,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 5,
-            "den": 104
+            "kind": "weight",
+            "weight": 15
           }
         }
       ],
@@ -455,8 +451,9 @@
     },
     {
       "id": "doom-of-mokhaiotl:3:other",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 104,
       "withoutReplacement": false,
       "entries": [
         {
@@ -471,9 +468,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 104
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -489,9 +485,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 7,
-            "den": 104
+            "kind": "weight",
+            "weight": 7
           }
         },
         {
@@ -507,11 +502,19 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 7,
-            "den": 104
+            "kind": "weight",
+            "weight": 7
           }
-        },
+        }
+      ],
+      "notes": "Other (confirmed weighted: 3 of 5 entries share denominator 104; 2 rarer outlier(s) split into their own independent table)"
+    },
+    {
+      "id": "doom-of-mokhaiotl:4:other-outliers",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -547,10 +550,10 @@
           }
         }
       ],
-      "notes": "Other"
+      "notes": "Other (outliers) (confirmed independent: rarer than the 3-entry /104 pool in \"Other\"; modelled as separate independent rolls)"
     },
     {
-      "id": "doom-of-mokhaiotl:4:tertiary",
+      "id": "doom-of-mokhaiotl:5:tertiary",
       "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
@@ -591,12 +594,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",
@@ -609,7 +612,8 @@
       },
       {
         "check": "not_on_watchlist",
-        "ok": true
+        "ok": false,
+        "detail": "other: Uniques are gated by delve level reached, not a fixed per-kill rarity: Avernic treads only drops 'upon completion of delve level 4 and deeper', Eye of ayak 'level 3 and deeper', Mokhaiotl cloth 'level 2 and deeper', and all three share one altrarity value (1/540) that the three raw rates (1/1350, 1/2000, 1/2500) converge toward at higher levels — the same shape as Fortis Colosseum's wave scaling, one level deeper. The heading correctly stays an unresolved ambiguous-preroll guess (no shared citation, no confirming phrase — this session's heuristic checked and correctly declined to guess) rather than being force-classified."
       }
     ]
   },

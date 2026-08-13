@@ -10,8 +10,9 @@
   "tables": [
     {
       "id": "kraken:0:weapons-and-armour",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 512,
       "withoutReplacement": false,
       "entries": [
         {
@@ -26,9 +27,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 128
+            "kind": "weight",
+            "weight": 12
           }
         },
         {
@@ -43,9 +43,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 2,
-            "den": 128
+            "kind": "weight",
+            "weight": 8
           }
         },
         {
@@ -60,9 +59,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 2,
-            "den": 128
+            "kind": "weight",
+            "weight": 8
           }
         },
         {
@@ -77,9 +75,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 128
+            "kind": "weight",
+            "weight": 4
           }
         },
         {
@@ -94,9 +91,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 128
+            "kind": "weight",
+            "weight": 4
           }
         },
         {
@@ -111,9 +107,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 512
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
@@ -427,8 +422,9 @@
     },
     {
       "id": "kraken:2:other",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 3200,
       "withoutReplacement": false,
       "entries": [
         {
@@ -444,9 +440,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 15,
-            "den": 128
+            "kind": "weight",
+            "weight": 375
           }
         },
         {
@@ -461,9 +456,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 7,
-            "den": 128
+            "kind": "weight",
+            "weight": 175
           }
         },
         {
@@ -478,9 +472,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 4,
-            "den": 128
+            "kind": "weight",
+            "weight": 100
           }
         },
         {
@@ -495,9 +488,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 4,
-            "den": 128
+            "kind": "weight",
+            "weight": 100
           }
         },
         {
@@ -512,9 +504,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 128
+            "kind": "weight",
+            "weight": 75
           }
         },
         {
@@ -529,9 +520,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 128
+            "kind": "weight",
+            "weight": 25
           }
         },
         {
@@ -546,9 +536,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 128
+            "kind": "weight",
+            "weight": 25
           }
         },
         {
@@ -563,9 +552,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 128
+            "kind": "weight",
+            "weight": 25
           }
         },
         {
@@ -580,9 +568,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1.75,
-            "den": 128
+            "kind": "weight",
+            "weight": 43.75
           }
         },
         {
@@ -598,9 +585,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 2,
-            "den": 128
+            "kind": "weight",
+            "weight": 50
           }
         },
         {
@@ -615,9 +601,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 128
+            "kind": "weight",
+            "weight": 25
           }
         },
         {
@@ -632,9 +617,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 400
+            "kind": "weight",
+            "weight": 8
           }
         }
       ],
@@ -745,7 +729,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -761,12 +745,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",

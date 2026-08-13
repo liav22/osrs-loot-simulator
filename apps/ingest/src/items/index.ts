@@ -58,30 +58,87 @@ function resolveId(ids: readonly string[]): number | null {
   return toId(ids[0])
 }
 
+interface CandidateRow {
+  pageName: string
+  id: string
+  /** `{{Infobox Item|...|default_version=yes}}` on this row's own version. */
+  defaultVersion: boolean
+}
+
 /**
- * `item_name` collides across unrelated pages more often than it is unique:
- * "Coins" is one row from the base game (`page_name` "Coins", id 995) plus
- * three from minigame reskins (`page_name`s like "Coins (Shilo Village)"),
- * and "Prayer potion(3)" collides with its Last Man Standing-restricted
- * counterpart. In every such case observed, the standard item's `page_name`
- * carries no parenthetical qualifier while every special-mode variant's does
- * — so when a name resolves to more than one id, the candidate whose
- * `page_name` has no "(" is preferred, PROVIDED it is the only one shaped
- * that way. A genuinely ambiguous item like "Cow slippers" (four real colour
- * variants, all with the plain, unqualified `page_name` "Cow slippers") has
- * more than one such candidate and is correctly left unresolved rather than
- * guessed at.
+ * `pageName` is a "qualified variant of" `basePageName` when it's exactly
+ * that name plus a trailing parenthetical — "Diamond bolts (e) (Last Man
+ * Standing)" relative to "Diamond bolts (e)". A plain `pageName.includes('(')`
+ * check is NOT the same thing and misfires on any item whose own base name
+ * already contains one (every "(e)"-enchanted bolt/dart, "(t)"-trimmed
+ * item, etc.) — confirmed the hard way: "Diamond bolts (e)" itself contains
+ * "(", so the naive check flagged the base item as "qualified" too and left
+ * it indistinguishable from its own Last Man Standing reskin.
  */
-function resolveWithUnqualifiedPagePreference(
-  rows: readonly { pageName: string; id: string }[]
-): number | null {
-  const ids = rows.map((row) => row.id)
-  const direct = resolveId(ids)
+function isQualifiedVariantOf(pageName: string, basePageName: string): boolean {
+  return pageName.startsWith(`${basePageName} (`) && pageName.endsWith(')')
+}
+
+/**
+ * A name can collide structurally different ways, and this resolves them —
+ * in order, each step narrowing the candidate set, never guessing:
+ *
+ *   1. Collision WITHIN one page's multi-version infobox — dose/charge/
+ *      legacy/colour variants of what is conceptually one item (Troll
+ *      bone's Unpolished/Polished, Callisto cub's Normal/Legacy, Cow
+ *      slippers' four colours). The wiki marks exactly one version
+ *      `default_version=yes` on pages that need this at all; when exactly
+ *      one candidate carries it, that settles it.
+ *   2. Collision ACROSS unrelated pages that happen to render the same
+ *      display text via a NAMED reskin — "Coins" (base game) vs "Coins
+ *      (Shilo Village)"; "Diamond bolts (e)" vs its Last Man Standing
+ *      counterpart. Every special-mode variant's `page_name` is the
+ *      standard item's own page name plus a trailing parenthetical
+ *      (`isQualifiedVariantOf`); when exactly one candidate is not a
+ *      qualified variant of any other, that's the one.
+ *   3. Collision ACROSS unrelated pages with UNRELATED names that merely
+ *      render the same display text — "Feather" (id 314, the common
+ *      Fletching/Slayer supply) and "Wimpy feather" (id 11525, a joke item
+ *      whose own `item_name` is ALSO plain "Feather") both exist as
+ *      candidates for the name "Feather", and neither is a `pageName`-
+ *      qualified variant of the other, so step 2 can't tell them apart. The
+ *      candidate whose OWN `page_name` exactly equals the name being
+ *      resolved is preferred when it's the only one shaped that way.
+ *
+ * Every signal applies in sequence, because some names need more than one:
+ * Eclipse moon helm has three candidates — "Used" (not default), "New"
+ * (default, plain page), and an LMS reskin (ALSO marked default, on its own
+ * qualified page). Step 1 alone leaves two candidates (New and the LMS
+ * reskin, both `default_version=yes`); step 2 then tells them apart. A step
+ * that matches nothing, or narrows to more than one, is skipped rather than
+ * treated as a resolution — `default_version` was found unpopulated for
+ * every candidate the first time this was checked (Coins), and step 2 alone
+ * still has to carry that case. Returns `null` when more than one candidate
+ * survives every step — "Key (medium)" collapses eleven interchangeable
+ * clue-key ids onto ONE row that is trivially its own single
+ * `default_version` candidate, so nothing here narrows an 11-element id
+ * list to one; it stays unresolved and belongs on the multi-id allowlist
+ * instead, the same way clue scroll tiers already are.
+ */
+function resolveWithDisambiguation(itemName: string, rows: readonly CandidateRow[]): number | null {
+  const direct = resolveId(rows.map((row) => row.id))
   if (direct !== null) return direct
 
-  const unqualified = rows.filter((row) => !row.pageName.includes('('))
-  if (unqualified.length !== 1) return null
-  return toId(unqualified[0]?.id)
+  let candidates = rows
+
+  const defaultOnly = candidates.filter((row) => row.defaultVersion)
+  if (defaultOnly.length > 0) candidates = defaultOnly
+
+  const unqualified = candidates.filter(
+    (row) => !candidates.some((other) => other.pageName !== row.pageName && isQualifiedVariantOf(row.pageName, other.pageName))
+  )
+  if (unqualified.length > 0) candidates = unqualified
+
+  const exactPageMatch = candidates.filter((row) => row.pageName === itemName)
+  if (exactPageMatch.length > 0) candidates = exactPageMatch
+
+  if (candidates.length !== 1) return null
+  return toId(candidates[0]?.id)
 }
 
 /**
@@ -95,14 +152,14 @@ export async function buildItemIndex(
   client: WikiClient,
   log: (message: string) => void
 ): Promise<ItemIndex> {
-  const rowsByName = new Map<string, { pageName: string; id: string }[]>()
+  const rowsByName = new Map<string, CandidateRow[]>()
 
   log("Reading bucket('infobox_item') — item_name is what DropsLine's name= matches")
   const nameTotal = await client.itemNamePages(async (rows: ItemNameRow[], record, offset) => {
     await writeSnapshot('item-id', `name-offset-${offset}`, record)
     for (const row of rows) {
       const existing = rowsByName.get(row.itemName) ?? []
-      for (const id of row.ids) existing.push({ pageName: row.pageName, id })
+      for (const id of row.ids) existing.push({ pageName: row.pageName, id, defaultVersion: row.defaultVersion })
       rowsByName.set(row.itemName, existing)
     }
     log(`  offset ${offset}: ${rows.length} rows`)
@@ -125,7 +182,7 @@ export async function buildItemIndex(
   const entries: ItemIndexEntry[] = [
     ...[...rowsByName.entries()].map(([itemName, rows]) => ({
       itemName,
-      itemId: resolveWithUnqualifiedPagePreference(rows),
+      itemId: resolveWithDisambiguation(itemName, rows),
       rawIds: rows.map((row) => row.id),
       source: 'infobox_item' as const,
     })),

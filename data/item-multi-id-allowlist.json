@@ -31,6 +31,16 @@
       "itemKey": "clue-scroll-master",
       "title": "Clue scroll (master)",
       "reason": "13 distinct item ids in infobox_item — one per active clue instance, not one shared id, same shape as every other clue tier."
+    },
+    {
+      "itemKey": "key-medium",
+      "title": "Key (medium)",
+      "reason": "Same shape as the clue scroll tiers: all 11 ids for 'Key (medium)' live on ONE infobox_item row (page 'Key (Treasure Trails)'), one per active reward-casket key instance, not competing versions of one item — default_version is trivially true for that single row and cannot narrow an 11-element id list to one."
+    },
+    {
+      "itemKey": "gull-pet",
+      "title": "Gull (pet)",
+      "reason": "Shellbane gryphon's DropsLine uses name='Gull (pet)', which matches neither of infobox_item's two rows for that page: item_name 'Gull' (id 31285, default_version=true) and item_name 'Gulliver' (id 31287, an easter-egg/nickname version, default_version=false) — a name-matching gap between the drop-table label and the item's own infobox name, not a genuine multi-version collision the default_version signal can resolve. The wiki's own default_version points at id 31285 ('Gull'); recorded here rather than taught to the general resolver for one known case."
     }
   ]
 }

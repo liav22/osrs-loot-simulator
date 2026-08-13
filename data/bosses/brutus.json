@@ -96,7 +96,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 33093,
             "itemKey": "cow-slippers",
             "name": "Cow slippers",
             "qty": {
@@ -450,7 +450,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 23182,
             "itemKey": "clue-scroll-beginner",
             "name": "Clue scroll (beginner)",
             "qty": {
@@ -509,7 +509,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -525,22 +525,21 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",
         "ok": false,
-        "detail": "323.39 gp/kill vs wiki's 597.57, 45.9% off"
+        "detail": "338.58 gp/kill vs wiki's 597.57, 43.3% off"
       },
       {
         "check": "items_known",
-        "ok": false,
-        "detail": "1 item(s) failed to resolve"
+        "ok": true
       },
       {
         "check": "not_on_watchlist",

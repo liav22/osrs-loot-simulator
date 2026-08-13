@@ -298,8 +298,9 @@
     },
     {
       "id": "vorkath:2:fletching-materials",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 13650,
       "withoutReplacement": false,
       "entries": [
         {
@@ -315,9 +316,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 8,
-            "den": 150
+            "kind": "weight",
+            "weight": 728
           }
         },
         {
@@ -333,9 +333,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 5,
-            "den": 150
+            "kind": "weight",
+            "weight": 455
           }
         },
         {
@@ -351,9 +350,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 4,
-            "den": 150
+            "kind": "weight",
+            "weight": 364
           }
         },
         {
@@ -369,9 +367,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 150
+            "kind": "weight",
+            "weight": 273
           }
         },
         {
@@ -387,9 +384,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 150
+            "kind": "weight",
+            "weight": 546
           }
         },
         {
@@ -405,9 +401,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 150
+            "kind": "weight",
+            "weight": 273
           }
         },
         {
@@ -423,9 +418,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 25,
-            "den": 2730
+            "kind": "weight",
+            "weight": 125
           }
         },
         {
@@ -441,9 +435,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 20,
-            "den": 2730
+            "kind": "weight",
+            "weight": 100
           }
         },
         {
@@ -459,9 +452,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 20,
-            "den": 2730
+            "kind": "weight",
+            "weight": 100
           }
         },
         {
@@ -477,9 +469,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 14,
-            "den": 2730
+            "kind": "weight",
+            "weight": 70
           }
         },
         {
@@ -495,9 +486,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 7,
-            "den": 2730
+            "kind": "weight",
+            "weight": 35
           }
         },
         {
@@ -513,9 +503,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 5,
-            "den": 2730
+            "kind": "weight",
+            "weight": 25
           }
         }
       ],
@@ -930,7 +919,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -946,12 +935,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",

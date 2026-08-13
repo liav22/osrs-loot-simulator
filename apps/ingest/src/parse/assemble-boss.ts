@@ -140,7 +140,10 @@ export function assembleBoss(
         id: tableId,
         mode: group.mode,
         entries,
-        notes: group.headings.join(' / '),
+        notes:
+          group.confirmedBy !== undefined
+            ? `${group.headings.join(' / ')} (confirmed ${group.mode}: ${group.confirmedBy})`
+            : group.headings.join(' / '),
         ...(group.mode === 'weighted' && group.denominator !== null
           ? { denominator: group.denominator }
           : {}),

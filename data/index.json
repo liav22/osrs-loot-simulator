@@ -1,0 +1,311 @@
+{
+  "generatedAt": "2026-08-12T21:10:30.060Z",
+  "entries": [
+    {
+      "slug": "abyssal-sire",
+      "name": "Abyssal Sire",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "amoxliatl",
+      "name": "Amoxliatl",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "araxxor",
+      "name": "Araxxor",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "arrg",
+      "name": "Arrg",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "artio",
+      "name": "Artio",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "black-knight-titan",
+      "name": "Black Knight Titan",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "branda-the-fire-queen",
+      "name": "Branda the Fire Queen",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "brutus",
+      "name": "Brutus",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "callisto",
+      "name": "Callisto",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "calvar-ion",
+      "name": "Calvar'ion",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "cerberus",
+      "name": "Cerberus",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "chest-barrows",
+      "name": "Chest (Barrows)",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "chest-tombs-of-amascut",
+      "name": "Chest (Tombs of Amascut)",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "corporeal-beast",
+      "name": "Corporeal Beast",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "crazy-archaeologist",
+      "name": "Crazy archaeologist",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "dagannoth-prime",
+      "name": "Dagannoth Prime",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "dagannoth-rex",
+      "name": "Dagannoth Rex",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "dagannoth-supreme",
+      "name": "Dagannoth Supreme",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "deranged-archaeologist",
+      "name": "Deranged archaeologist",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "doom-of-mokhaiotl",
+      "name": "Doom of Mokhaiotl",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "duke-sucellus",
+      "name": "Duke Sucellus",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "eldric-the-ice-king",
+      "name": "Eldric the Ice King",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "gemstone-crab",
+      "name": "Gemstone Crab",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "general-graardor",
+      "name": "General Graardor",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "giant-mole",
+      "name": "Giant Mole",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "giant-sea-snake",
+      "name": "Giant Sea Snake",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "hespori",
+      "name": "Hespori",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "king-black-dragon",
+      "name": "King Black Dragon",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "kraken",
+      "name": "Kraken",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "kree-arra",
+      "name": "Kree'arra",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "lunar-chest",
+      "name": "Lunar Chest",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "monumental-chest",
+      "name": "Monumental chest",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "phantom-muspah",
+      "name": "Phantom Muspah",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "salarin-the-twisted",
+      "name": "Salarin the twisted",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "sarachnis",
+      "name": "Sarachnis",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "scorpia",
+      "name": "Scorpia",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "scurrius",
+      "name": "Scurrius",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "shellbane-gryphon",
+      "name": "Shellbane gryphon",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "spindel",
+      "name": "Spindel",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "the-hueycoatl",
+      "name": "The Hueycoatl",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "the-leviathan",
+      "name": "The Leviathan",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "the-mimic",
+      "name": "The Mimic",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "the-nightmare",
+      "name": "The Nightmare",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "the-whisperer",
+      "name": "The Whisperer",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "thermonuclear-smoke-devil",
+      "name": "Thermonuclear smoke devil",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "vardorvis",
+      "name": "Vardorvis",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "venenatis",
+      "name": "Venenatis",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "vet-ion",
+      "name": "Vet'ion",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "vorkath",
+      "name": "Vorkath",
+      "aliases": [],
+      "status": "verified"
+    },
+    {
+      "slug": "zalcano",
+      "name": "Zalcano",
+      "aliases": [],
+      "status": "needs_review"
+    },
+    {
+      "slug": "zulrah",
+      "name": "Zulrah",
+      "aliases": [],
+      "status": "needs_review"
+    }
+  ]
+}

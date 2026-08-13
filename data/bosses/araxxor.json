@@ -10,8 +10,9 @@
   "tables": [
     {
       "id": "araxxor:0:unique",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 600,
       "withoutReplacement": false,
       "entries": [
         {
@@ -26,9 +27,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 200
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -43,9 +43,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 200
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -60,9 +59,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 200
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -77,9 +75,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 600
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
@@ -87,8 +84,9 @@
     },
     {
       "id": "araxxor:1:supplies",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 16,
       "withoutReplacement": false,
       "entries": [
         {
@@ -103,9 +101,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 16
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -120,9 +117,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 16
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -137,9 +133,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 8
+            "kind": "weight",
+            "weight": 2
           }
         },
         {
@@ -155,9 +150,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 16
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -173,9 +167,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 16
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
@@ -556,8 +549,9 @@
     },
     {
       "id": "araxxor:3:other",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 115,
       "withoutReplacement": false,
       "entries": [
         {
@@ -572,9 +566,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 8,
-            "den": 115
+            "kind": "weight",
+            "weight": 8
           }
         },
         {
@@ -590,9 +583,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 115
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -607,9 +599,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 5,
-            "den": 115
+            "kind": "weight",
+            "weight": 5
           }
         },
         {
@@ -625,9 +616,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 4,
-            "den": 115
+            "kind": "weight",
+            "weight": 4
           }
         },
         {
@@ -643,15 +633,14 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 4,
-            "den": 115
+            "kind": "weight",
+            "weight": 4
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 245,
+            "itemId": 23489,
             "itemKey": "wine-of-zamorak",
             "name": "Wine of zamorak",
             "qty": {
@@ -661,9 +650,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 115
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -679,9 +667,8 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 2,
-            "den": 115
+            "kind": "weight",
+            "weight": 2
           }
         },
         {
@@ -696,9 +683,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 2,
-            "den": 115
+            "kind": "weight",
+            "weight": 2
           }
         },
         {
@@ -714,11 +700,19 @@
             "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 115
+            "kind": "weight",
+            "weight": 1
           }
-        },
+        }
+      ],
+      "notes": "Other (confirmed weighted: 9 of 11 entries share denominator 115; 2 rarer outlier(s) split into their own independent table)"
+    },
+    {
+      "id": "araxxor:4:other-outliers",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -754,10 +748,10 @@
           }
         }
       ],
-      "notes": "Other"
+      "notes": "Other (outliers) (confirmed independent: rarer than the 9-entry /115 pool in \"Other\"; modelled as separate independent rolls)"
     },
     {
-      "id": "araxxor:4:tertiary",
+      "id": "araxxor:5:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -859,7 +853,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -875,12 +869,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",

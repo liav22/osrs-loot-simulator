@@ -139,7 +139,7 @@
           }
         }
       ],
-      "notes": "Unique"
+      "notes": "Unique (confirmed preroll: 4 entries cite the same footnote ('news'))"
     },
     {
       "id": "callisto:2:weapons-and-armour-runes-and-ammunition-materials-seeds-other",
@@ -829,7 +829,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 11941,
             "itemKey": "looting-bag",
             "name": "Looting bag",
             "qty": {
@@ -903,7 +903,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 13178,
             "itemKey": "callisto-cub",
             "name": "Callisto cub",
             "qty": {
@@ -939,7 +939,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -955,12 +955,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",
@@ -969,8 +969,7 @@
       },
       {
         "check": "items_known",
-        "ok": false,
-        "detail": "2 item(s) failed to resolve"
+        "ok": true
       },
       {
         "check": "not_on_watchlist",

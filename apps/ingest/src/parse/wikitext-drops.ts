@@ -31,8 +31,14 @@ export interface WikitextDropLine {
   freeToPlay: boolean
   noted: boolean
   gemwNo: boolean
-  /** Raw `namenotes`/`raritynotes` text, kept for anything the flags miss. */
+  /** Raw `namenotes` text, kept for anything the flags miss. */
   nameNotes: string
+  /**
+   * Raw `raritynotes` text (citations, footnotes, mechanic prose). Used to
+   * confirm an ambiguous heading's mode from wiki text rather than guessing
+   * — see `build-tables.ts`'s `findConfirmingSignal`.
+   */
+  rarityNotes: string
   isClue: boolean
 }
 
@@ -276,6 +282,7 @@ function extractLinesFromSection(content: string, sectionTag: string): WikitextD
         noted: /\(noted\)/i.test(params.get('quantity') ?? ''),
         gemwNo: isGemwNo(call),
         nameNotes,
+        rarityNotes,
         isClue,
       })
     }

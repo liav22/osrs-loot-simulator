@@ -31,6 +31,7 @@ import { loadWatchlist } from './validate/watchlist.js'
 import { fetchGePrices } from './prices/ge-prices.js'
 import { loadSharedTables } from './tables/shared-tables.js'
 import { parseBoss } from './parse/parse-boss.js'
+import { buildSiteIndex, writeSiteIndex } from './site-index.js'
 
 /**
  * Phase 2 scope: snapshots and triage. There is deliberately no `parse`
@@ -339,11 +340,22 @@ async function main(): Promise<void> {
       await parseCommand(argv)
       return
     }
+    case 'site-index': {
+      const index = await buildSiteIndex()
+      await writeSiteIndex(index)
+      const byStatus = { verified: 0, needs_review: 0, manual_override: 0 }
+      for (const entry of index.entries) byStatus[entry.status] += 1
+      log(
+        `data/index.json written: ${index.entries.length} sources ` +
+          `(${byStatus.verified} verified, ${byStatus.needs_review} needs_review, ${byStatus.manual_override} manual_override)`
+      )
+      return
+    }
     default:
       log(
         'Usage: ingest <verify-schema | fetch --all | fetch --page <Title> | sources | ' +
-          'audit-exclusions | item-index | triage | parse [--tier A[,B,C]] [--source <id>]> ' +
-          '[--delay ms]'
+          'audit-exclusions | item-index | triage | parse [--tier A[,B,C]] [--source <id>] | ' +
+          'site-index> [--delay ms]'
       )
       process.exitCode = 1
   }

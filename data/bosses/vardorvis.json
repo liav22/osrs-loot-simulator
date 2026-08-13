@@ -10,8 +10,9 @@
   "tables": [
     {
       "id": "vardorvis:0:uniques",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 3264,
       "withoutReplacement": false,
       "entries": [
         {
@@ -26,9 +27,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1088
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -43,9 +43,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 1088
+            "kind": "weight",
+            "weight": 9
           }
         },
         {
@@ -60,9 +59,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1088
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -77,9 +75,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 3264
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -94,9 +91,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 3264
+            "kind": "weight",
+            "weight": 1
           }
         },
         {
@@ -111,9 +107,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 3264
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
@@ -810,7 +805,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -826,12 +821,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",

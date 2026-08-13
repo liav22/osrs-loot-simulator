@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* PROJECT_PLAN.md 9: "dark, dense, functional... this is a tool for people
+   who read drop tables for fun." */
+html {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-neutral-950 text-neutral-100 antialiased;
+}
+
+::selection {
+  @apply bg-amber-500/30;
+}

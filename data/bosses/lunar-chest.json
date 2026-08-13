@@ -34,7 +34,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29010,
             "itemKey": "eclipse-moon-helm",
             "name": "Eclipse moon helm",
             "qty": {
@@ -50,7 +50,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29004,
             "itemKey": "eclipse-moon-chestplate",
             "name": "Eclipse moon chestplate",
             "qty": {
@@ -66,7 +66,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29007,
             "itemKey": "eclipse-moon-tassets",
             "name": "Eclipse moon tassets",
             "qty": {
@@ -98,7 +98,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29028,
             "itemKey": "blood-moon-helm",
             "name": "Blood moon helm",
             "qty": {
@@ -114,7 +114,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29022,
             "itemKey": "blood-moon-chestplate",
             "name": "Blood moon chestplate",
             "qty": {
@@ -130,7 +130,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29025,
             "itemKey": "blood-moon-tassets",
             "name": "Blood moon tassets",
             "qty": {
@@ -162,7 +162,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29019,
             "itemKey": "blue-moon-helm",
             "name": "Blue moon helm",
             "qty": {
@@ -178,7 +178,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29013,
             "itemKey": "blue-moon-chestplate",
             "name": "Blue moon chestplate",
             "qty": {
@@ -194,7 +194,7 @@
         {
           "node": {
             "kind": "item",
-            "itemId": null,
+            "itemId": 29016,
             "itemKey": "blue-moon-tassets",
             "name": "Blue moon tassets",
             "qty": {
@@ -448,12 +448,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",
@@ -462,8 +462,7 @@
       },
       {
         "check": "items_known",
-        "ok": false,
-        "detail": "9 item(s) failed to resolve"
+        "ok": true
       },
       {
         "check": "not_on_watchlist",

@@ -34,8 +34,9 @@
     },
     {
       "id": "the-hueycoatl:1:unique",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 630,
       "withoutReplacement": false,
       "entries": [
         {
@@ -50,9 +51,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 105
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -67,9 +67,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 11,
-            "den": 315
+            "kind": "weight",
+            "weight": 22
           }
         },
         {
@@ -84,9 +83,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 90
+            "kind": "weight",
+            "weight": 7
           }
         }
       ],
@@ -616,7 +614,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -632,12 +630,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",

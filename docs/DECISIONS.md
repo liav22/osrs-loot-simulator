@@ -1082,3 +1082,448 @@ Dragon, Scurrius, The Mimic. Up from 3/26 (tier A only, all `needs_review`/
 session's four tasks. `parse_failed` (Ancient chest, Black demon, Revenant
 maledictus) and Brutus' own `needs_review` are all pre-existing and untouched
 this session — see their entries above for specifics.
+
+## Audit: can every one of the 7 VALIDATION_CHECKS actually fail?
+
+Went through all seven named in `packages/loot-model/src/schema.ts`'s
+`VALIDATION_CHECKS`, checked whether each has a real failure mode AND a test
+that exercises it (not just a success-path test):
+
+| Check | Can it fail? | Test proving failure |
+|---|---|---|
+| `weights_sum` | Yes | `weights-sum.test.ts` (already existed) |
+| `refs_resolve` | Yes — was hardcoded `true` (last session's landmine #1), now real | `refs-resolve.test.ts` (already existed, added last session) |
+| `rates_valid` | **Was hardcoded `true` — the third case, see below** | `rates-valid.test.ts` (new) |
+| `qty_sane` | No real runtime case — legitimately, not lazily, always true | `schema.test.ts`'s existing range-rejection test backs the claim |
+| `ev_matches` | Yes (advisory, never gates `verified`) | `ev-matches.test.ts` (already existed) |
+| `items_known` | Yes | `items-known.test.ts` (already existed) |
+| `not_on_watchlist` | Yes, but **had zero test coverage** | `watchlist.test.ts` (new — the function itself was already correct) |
+
+- **`rates_valid` was the third case, and it was a real gap, not a cosmetic
+  one.** It hardcoded `{ ok: true, detail: 'enforced by the loot-model
+  schema' }` for every boss, unconditionally — exactly the same shape of bug
+  `refs_resolve` had. The claim is TRUE for `fixed`/`always`/`weight` rates
+  (`RateSchema`'s `superRefine` genuinely rejects `num > den`, requires
+  `weight > 0`) but FALSE for `formula` rates: a formula's `params` is an
+  opaque `Record<string, unknown>` to zod, and its actual numeric output only
+  exists once evaluated against a `SimContext` — something only
+  `evaluateFormula` does, and nothing at ingest time was ever calling it.
+  `evaluateFormula` itself already throws a `RangeError` on an out-of-[0,1]
+  or non-finite result (a Phase 1 decision), so a bad formula was never
+  going to silently corrupt a simulation — but it would have surfaced only
+  as an uncaught crash deep in `simulate`/`expectedValue` at USE time, not as
+  a graceful `rates_valid: false` at INGEST time, and the hardcoded `true`
+  would have kept claiming the boss was fine right up until that crash.
+- **Fixed generally**: `apps/ingest/src/validate/rates-valid.ts` now walks
+  every entry, evaluates any `formula`-kind rate against
+  `defaultFormulaRegistry`, and reports the specific table/formula/error on
+  failure. Currently inert on all 53 real sources (none use a formula rate
+  yet — Brimstone rarity resolved to a plain `fixed` rate, not a formula, by
+  the design choice logged earlier), same as `refs_resolve` was inert until
+  tier C. Re-ran `ingest parse --tier A,B,C` after wiring it in: **10/40/3,
+  unchanged** — confirms this was a latent gap, not a live one, exactly like
+  `refs_resolve`.
+- **`qty_sane` audited and left hardcoded, deliberately — not a fourth
+  case.** `QtySpecSchema` has no formula-equivalent escape hatch: `exact`,
+  `range` (with a `superRefine` for `min <= max`), and `choice` are all
+  plain, fully-validated-at-parse-time numeric shapes. There is no runtime
+  value a `QtySpec` could ever carry that the schema didn't already reject.
+  Left the hardcoded `true`, but reworded its `detail` to state the audit's
+  conclusion explicitly rather than just assert it, and confirmed
+  `packages/loot-model/test/schema.test.ts` already has a test backing the
+  claim (`'rejects an inverted range and an empty choice'`).
+- **`not_on_watchlist` had no dedicated test at all** — the only check of
+  the seven with zero direct coverage. The implementation itself was already
+  correct (a plain lookup against `data/mechanics-watchlist.json`); added
+  `watchlist.test.ts` covering both the pass and fail path plus the
+  schema's duplicate-`lootSourceId` rejection, so the claim "every check has
+  a test proving it can fail" is true of all seven now, not six.
+
+### Histogram: needs_review reasons across all 53 A+B+C sources, by frequency
+
+Generated programmatically from `ingest parse --tier A,B,C`'s own output
+(parsed and bucketed by a script, not hand-tallied — an earlier hand-drafted
+version of this table undercounted `ambiguous_heading_guess` and
+overcounted `watchlist_point_scaled`, caught by actually running the
+numbers before publishing them rather than after). 43 non-verified sources
+(40 `needs_review` + 3 `parse_failed`); a source can carry more than one
+category, counted once per category it hits, not once per reason line
+(a single multi-id item produces both a `warnings` line and an
+`items_known` failure line for the same root cause — collapsed to one hit):
+
+| # sources hit | Reason category |
+|---:|---|
+| 24 | Ambiguous group: heterogeneous-denominator heading guessed as `preroll` ("Uniques"/"Unique", plus "Supplies"/"Other"/"Resources"/"Herbs"/"Weapons and armour"/etc. on other bosses) |
+| 23 | `items_known`: item resolves to >1 real id, not on the multi-id allowlist (ensouled monster heads, pets, looting bag, dose/charge variants) |
+| 3 | `not_on_watchlist`: `other`, wiki-confirmed but unmodelled (Duke Sucellus' roll-chain, Corporeal Beast's rolls semantics, Abyssal Sire's quantity multiplier) |
+| 3 | `parse_failed`: no `{{DropsLine}}` calls found under a Drops heading (Ancient chest, Revenant maledictus, Black demon's qualifier-heading gap) |
+| 2 | `items_known`: item literally absent from the index (not the multi-id case) — both are a literal `Nothing` drop row (Black Knight Titan, Salarin the twisted); heuristic 5 gap, see above |
+| 2 | RDT/gem-table access references the distinct, unmodelled GWD-variant table (Kree'arra, General Graardor) |
+| 2 | `not_on_watchlist`: `point_scaled` (Monumental chest, Zalcano) |
+| 1 | `not_on_watchlist`: `without_replacement` (Lunar Chest) |
+| 1 | Unparseable rarity: `{{#expr:...}}`/`{{#var:...}}` parser-function arithmetic, not a literal fraction (Shellbane gryphon) |
+
+**17 of the 43 carry more than one blocker** (e.g. Kree'arra hits all of
+ambiguous-heading, GWD-RDT, and multi-id-item at once) — fixing just one
+category does not flip all of its sources to `verified`. Filtered to
+sources where the listed category is the ONLY blocker (fixing it alone
+would flip that source): **10** for ambiguous-heading-guess, **9** for
+multi-id-item, **3** for `no_dropsline_calls`, **2** for
+`watchlist_other`, **1** each for `item_not_in_index` and
+`watchlist_point_scaled`.
+
+The two biggest categories dominate regardless of framing (raw hit-count or
+single-blocker count) and are genuinely single fixes each, not per-source
+investigations: **ambiguous-heading-guess** was already investigated two
+sessions ago (only 2 of 10 "Uniques"-carrying bosses confirm the
+mutual-exclusivity prose in text; widening the keyword list was checked and
+rejected on purpose) and stays real and un-shrinkable without a different
+signal. **multi-id-item** is one shape repeated 23 times — a broader
+multi-id allowlist policy or resolution rule, not 23 individual lookups.
+
+## Phase 4: frontend
+
+Built search, boss view, `SimContext` controls, worker-based simulation,
+results view, and the admin page against the 10 verified sources, per
+PROJECT_PLAN.md section 9. Verified in a real headless browser (Playwright,
+installed this session — see below), not just typechecked: home search,
+boss view with drop tables and `tableRef` chains rendering, a live
+simulation through the Web Worker with observed-vs-theoretical rates, the
+kill log, the admin drill-down showing real `validation.checks`, and — most
+importantly — the production `vite build` served under the real
+`/osrs-loot-simulator/` subpath with a deep link loaded directly (not
+navigated to client-side), which is the actual failure mode the base-path
+and `404.html` requirements exist to prevent.
+
+- **`data/index.json` didn't exist and section 6.3's three ingest commands
+  (`fetch`/`parse`/`report`) don't produce it — a spec gap, not a decision
+  already made.** Added a fourth command, `ingest site-index`
+  (`apps/ingest/src/site-index.ts`), that scans whatever's currently in
+  `data/bosses/*.json` and writes the slug/name/aliases/status summary the
+  plan describes. Deliberately a separate command rather than folding into
+  `parse` (whose job is one source at a time, not a directory-wide
+  summary) or `report` (validation results, a different shape). Inherits
+  landmine #6 as-is: it reflects whatever's on disk, including the one
+  known stale leftover (`chest-tombs-of-amascut`, tier D) — not filtered
+  out, since doing so would mean the index quietly disagreeing with
+  `ingest parse`'s own output.
+- **`apps/web/public/` is gitignored and regenerated by
+  `scripts/sync-data.mjs`, run automatically via `predev`/`prebuild`.**
+  Copies only what the frontend needs (`index.json`, `bosses/`, `tables/`,
+  `LICENSE`) out of committed `data/`, not the whole directory — `data/
+  _item-index.json` (15k+ entries) and `_inventory.json` are pipeline-
+  internal and would only bloat the deployed site for no frontend benefit.
+  Every fetch path is built from `import.meta.env.BASE_URL`, the same
+  variable `vite.config.ts`'s existing `base` setting already resolves —
+  one mechanism drives both the page's own asset paths and its runtime data
+  fetches, in dev and in the GitHub Pages build alike, with no separate
+  hardcoded "/data/" prefix to keep in sync.
+- **`dist/404.html` is a byte-for-byte copy of `dist/index.html`**
+  (`scripts/copy-404.mjs`, run as `postbuild`) — confirmed with `diff`, not
+  assumed. This is what makes a direct link or hard refresh to
+  `/boss/vorkath` work on GitHub Pages: Pages serves this file (with a 404
+  HTTP status, but the app's own content) for any path it doesn't
+  recognise, and `BrowserRouter`'s `basename={import.meta.env.BASE_URL}`
+  then reads the real URL and renders the right route client-side.
+  Verified the actual mechanism this depends on (a boss page rendering
+  correctly when loaded FRESH at a deep URL, not navigated to from "/")
+  directly, under the real built `/osrs-loot-simulator/` subpath via
+  `vite preview`.
+- **Never imports boss JSON into the bundle.** Every fetch in
+  `src/lib/api.ts` is a runtime `fetch()` against the synced `public/`
+  copy, validated with the SAME zod schemas (`BossSchema`,
+  `SharedTableSchema`) the ingest pipeline already defines — re-imported
+  from `@osrs-loot-simulator/loot-model`, not duplicated, so a boss doc
+  that wouldn't parse server-side can't silently render client-side either.
+- **Simulation always runs in the Web Worker, not just above ~100k kills.**
+  One code path (`src/workers/simulate.worker.ts`) is simpler than two, and
+  `simulate()` is fast enough (section 8: "10M kills in a couple of
+  seconds") that routing small runs through it too costs nothing
+  perceptible. `expectedValue` (analytic, no sampling) stays on the main
+  thread — genuinely instant, no reason to hop a worker boundary for it.
+- **GE prices are fetched live, client-side, straight from the browser** —
+  not asked for explicitly, but the results view's `gpPerKill`/`gp` columns
+  are literally the reason someone runs a loot simulator, and shipping
+  them as a permanent "0 gp" would look broken, not like a deferred
+  feature. Confirmed the endpoint allows it before building anything
+  (`curl` with an `Origin` header: `access-control-allow-origin: *`) rather
+  than assuming — same public endpoint `apps/ingest/src/prices/ge-prices.ts`
+  already uses server-side. No `User-Agent` header (browsers refuse to let
+  script code set one; PROJECT_PLAN.md 6.2's etiquette rules are about the
+  ingest pipeline's bulk scrape, not one user-initiated request per page
+  load). Found and fixed a real UX bug this surfaced during browser
+  testing: clicking "Simulate" before the price fetch resolved ran with an
+  empty price map and showed 0 gp for everything, silently and
+  permanently — the button now shows "Loading prices…" and stays disabled
+  until that fetch settles.
+- **Fuzzy search is a small hand-written matcher (`src/lib/fuzzy.ts`), not
+  a dependency.** Exact/case-insensitive substring ranks above an in-order
+  subsequence match; the whole index is a few hundred entries, so this
+  runs on every keystroke with no debouncing or indexing needed. Matches
+  PROJECT_PLAN.md 9's "no search API needed" framing literally.
+- **Seed, kill count, and every `SimContext` field round-trip through URL
+  query params** (`src/lib/url-state.ts`), so a simulated run is a
+  shareable link, per PROJECT_PLAN.md 9. Only non-default values are
+  written, keeping a plain `/boss/vorkath` link clean. Quest-completion
+  controls are generated from whichever `questComplete` conditions the
+  boss's OWN tables actually reference, not a free-text field — there is
+  no reason to expose "Dragon Slayer II" as a toggle on a boss whose
+  conditions never mention it.
+- **A `needs_review`/`manual_override` boss still fully renders and
+  simulates** — it's a valid, schema-parseable `Boss` document either way,
+  just one the deterministic checks haven't all cleared yet. A banner links
+  to that source's own row on `/admin` rather than hiding or blocking the
+  page, matching section 7's framing of `needs_review` as "a queue you burn
+  down," not a wall between the data and the site.
+- **Testing**: `apps/web`'s `vitest.config.ts` now runs under `jsdom` with
+  `@testing-library/react`; `test/setup.ts` explicitly calls
+  `afterEach(cleanup)` rather than relying on `@testing-library/react`'s
+  automatic global-`afterEach` registration, which needs vitest's
+  `globals: true` — not enabled here, matching every existing test file's
+  explicit `import { describe, expect, it } from 'vitest'`. Caught for
+  real: the first version of `App.test.tsx` intermittently failed with
+  "multiple elements found" from a previous test's un-unmounted render
+  still in the DOM.
+- **Installed Playwright + a headless Chromium build this session**
+  (`~/Library/Caches/ms-playwright`, machine-local, not part of the repo)
+  specifically to drive the dev server and the production build in a real
+  browser before calling this done — this repo's own instructions require
+  it for UI work, and a passing typecheck does not verify a page actually
+  renders or that a Worker actually produces a result.
+- **`eslint.config.js` gained a `**/*.mjs` block declaring the Node
+  `process` global** and a stray `react-hooks/exhaustive-deps`
+  disable-comment was removed from `BossView.tsx` — that plugin isn't
+  configured in this repo, so referencing its rule in a disable-comment is
+  itself a lint error, caught by running `pnpm lint` before calling this
+  finished, not assumed clean.
+- **Deliberately did NOT add `.github/workflows/deploy.yml`.** PROJECT_PLAN.md
+  section 16 lists "Deploy to Pages" under Phase 4's done-criteria, and
+  Phase 0 explicitly deferred the workflow to "the phase that gives it
+  something to do" — which this now is. Left it out anyway: it wasn't
+  named in this session's instructions, and unlike everything else here
+  it's a CI file that changes what happens on every future push to `main`
+  once Pages is enabled, which reads as exactly the kind of action to
+  surface and let the user request rather than add silently.
+
+## `.github/workflows/deploy.yml` added, per explicit instruction
+
+The previous entry's "left it out, surface rather than add silently" was
+exactly that surfacing — this session's instruction is the explicit request
+it was waiting on. Added `deploy.yml` with PROJECT_PLAN.md section 13's
+content unchanged except the `pnpm --filter web build` line, which names a
+package literally called `web`; this repo's is `@osrs-loot-simulator/web`
+(`apps/web/package.json`), so the filter was adjusted to match — everything
+else is the plan's own text. Still needs a manual, one-time step this
+session can't do: **Settings → Pages → Source → "GitHub Actions"** (plan
+section 13's own callout) — the workflow won't deploy anything until that's
+set, by design (GitHub Pages defaults to "Deploy from branch").
+
+## Ambiguous-heading-guess: multi-signal resolution, not a wider keyword list
+
+24 sources were flagged `ambiguous: 'preroll guess'` for a
+heterogeneous-denominator heading with no mode-indicating keyword — the
+"Uniques" pattern the project has twice already declined to fix by trusting
+the heading text (only 2 of 10 carrying bosses confirm mutual exclusivity in
+prose; see the two entries above this one). Explicit instruction this
+session: don't widen that keyword list — find real signals instead, prose as
+one input among several, and leave what can't be determined flagged.
+
+Investigated all 24 by reading their actual wikitext (not guessing from
+memory), and built three independent structural/textual signals, tried in
+order, each only acting when it narrows unambiguously:
+
+- **`tryHomogenizeDenominators`**: some "heterogeneous" headings are really
+  one weighted table where the wiki printed one row against its own
+  un-reduced denominator (Kraken's Trident of the seas at `1/512` among five
+  `/128` entries — the SAME table, just not commonly denominated on the
+  page). Merges via LCM when the result is a clean small multiple
+  (`LCM_MERGE_RATIO_CAP = 10`) of the largest original denominator AND the
+  rescaled weights don't exceed it — the second check matters: an earlier
+  version let Gemstone Crab's seven gems (already summing to exactly 32/32,
+  no slack) merge with Uncut dragonstone's `1/500` anyway, silently
+  overflowing the denominator to 4008/4000. Caught by `weights_sum` before
+  it ever shipped, then fixed at the source so that check never has to catch
+  it again.
+- **`trySplitDominantAndOutliers`**: when the merge above fails but one
+  denominator still accounts for the large majority (≥3 entries) and at
+  most 2 outliers don't share it, splits into a `weighted` pool (the
+  majority) plus an `independent` group (the outliers) instead of forcing
+  one table or leaving the whole heading flagged. Needed for Hespori's
+  "Main table" (32 seeds at `/80`, plus Bottomless compost bucket at `1/35`
+  and Tangleroot at `1/5375`) and (after the weight-overflow fix above)
+  Gemstone Crab. First version wrongly required outliers to have a LARGER
+  denominator than the pool ("rarer") and missed Hespori entirely —
+  Bottomless compost bucket at `1/35` is actually MORE common than several
+  of the `/80` seeds; "outlier" means "doesn't share the pool's
+  denominator," not "rarer." Caught by running the real parser, not by the
+  unit tests (which had been written to match the same wrong assumption).
+- **`findConfirmingSignal`** (last resort, only after both denominator
+  signals fail): reads `raritynotes` — newly captured as its own
+  `WikitextDropLine` field, previously extracted only transiently for
+  members/f2p marker detection and then discarded — for two textual
+  signals. Two or more entries citing the SAME named footnote
+  (`<ref name="news"/>`, `{{NamedRef|Halberd}}`) resolved Artio/Callisto/
+  Calvar'ion/Spindel/Venenatis/Vet'ion's "Unique(s)" (all cite one shared
+  "Poll 78" news post). An explicit mutual-exclusivity phrase
+  (`/tradeable unique table/i`, `/any\s+\S+\s+piece/i`, etc.) resolved Duke
+  Sucellus/The Leviathan/The Whisperer/Vardorvis ("must roll ... on the
+  tradeable unique table") and General Graardor/Kree'arra ("1/381 for a
+  specific piece, or 1/127 for ANY piece"). Deliberately does NOT match on
+  heading text — that was the thing already rejected twice.
+  - **General Graardor/Kree'arra note**: LCM-merges before reaching this
+    signal at all (127 divides 381/508/762 cleanly), combining what the
+    prose actually describes as TWO separate rolls (armour: "any piece"
+    1/127; shards: "any piece" 1/254) into one shared weighted pool of 7.
+    Checked whether this is a real modelling error: at these probabilities
+    (~0.1–0.3% each), the only behavioural difference from two independent
+    rolls is the vanishingly small chance of both hitting in the same kill
+    (product of two small probabilities) — not worth a special case to
+    avoid, and flagged here rather than silently presented as a clean win.
+- **Result: 24 ambiguous sources → 4** (Doom of Mokhaiotl's "Uniques",
+  Monumental chest's untitled heading, The Nightmare's "Uniques", Zulrah's
+  "Mutagens" — each individually checked and confirmed to have no available
+  signal: The Nightmare's rates have neither a shared citation nor a clean
+  LCM relationship; Zulrah's own raritynotes describe a genuine two-stage
+  roll (`10/249 * 10/5264 per roll`) needing real `oneOf` nesting this
+  parser doesn't build; Doom of Mokhaiotl is delve-level-gated, watchlisted
+  below). Left flagged, per instruction, not forced.
+- **`data/mechanics-watchlist.json` gained `doom-of-mokhaiotl`**: its
+  "Uniques" heading is gated by delve level reached (Avernic treads only
+  past level 4, Eye of ayak past level 3, Mokhaiotl cloth past level 2, all
+  three converging to one shared `altrarity` of `1/540`) — the same wave/
+  level-scaling shape as Fortis Colosseum, one level deeper. Correctly stays
+  an unresolved ambiguous guess rather than being force-classified.
+- New tests in `build-tables.test.ts` reproduce each real shape (Kraken,
+  Gemstone Crab, Hespori — including the outlier-direction regression —
+  Artio's shared-citation case, a synthetic phrase-only case, and The
+  Nightmare's stays-flagged case) rather than only asserting the aggregate
+  counts.
+
+## Multi-id-item resolution: `default_version`, read for the first time
+
+23 sources were blocked on an item name resolving to more than one real
+game id, not on the multi-id allowlist. Explicit instruction: same terrain
+as the dose-suffix fix (`bucket('item_id')` → `bucket('infobox_item')`,
+logged earlier) — find the systematic pattern, not per-item entries.
+
+Checked `Bucket:Infobox item`'s full field list directly (fetched fresh —
+this bucket's schema was never snapshotted) rather than assuming the three
+columns already selected (`page_name`, `item_name`, `item_id`) were the
+whole story. Found `default_version: BOOLEAN`, `tradeable`, `release_date`,
+`removal_date`, `version_anchor` — none previously read. Probed a sample of
+the 23 items directly against the live bucket with these added: every
+multi-version collision (Troll bone's Unpolished/Polished, Callisto cub's
+Normal/Legacy, Cow slippers' four colours, Ensouled troll head's Item/Drop,
+...) has EXACTLY ONE candidate marked `default_version=true`.
+
+- **`ItemNameRow` gained `defaultVersion: boolean`**, the bucket query now
+  selects `default_version`, and `resolveWithDisambiguation` (renamed from
+  `resolveWithUnqualifiedPagePreference`) applies THREE signals in
+  sequence, each narrowing the candidate set only when it doesn't narrow to
+  zero:
+  1. **`default_version`** — collisions WITHIN one page's multi-version
+     infobox.
+  2. **Unqualified `page_name`** (already existed, for collisions ACROSS
+     pages — Coins vs its minigame reskins) — but reimplemented:
+     `pageName.includes('(')` is not "has a qualifier," it's "contains a
+     paren anywhere," and misfired on "Diamond bolts (e)" — the BASE item's
+     own name contains a paren ("(e)" = enchanted), so the naive check
+     flagged it as "qualified" too and left it indistinguishable from
+     "Diamond bolts (e) (Last Man Standing)" (which is ALSO marked
+     `default_version=true` independently — step 1 alone doesn't resolve
+     this one). Replaced with `isQualifiedVariantOf`: B is a qualified
+     variant of A only when B's page name IS A's page name plus a trailing
+     `" (...)"`. Same fix needed nowhere else observed, but it was silently
+     wrong for this shape the whole time step 1 wasn't available to mask it.
+  3. **Exact `page_name` == the name being resolved** (new) — for
+     collisions across pages with UNRELATED names that just render the same
+     display text: "Feather" (id 314) and "Wimpy feather" (id 11525, an
+     easter-egg item whose OWN `item_name` is plain "Feather") are neither a
+     multi-version collision (step 1: both trivially `default_version=true`
+     on their own single-version pages) nor a named-qualifier collision
+     (step 2: neither page name is the other's-plus-suffix) — only "which
+     page's name IS the string being resolved" tells them apart.
+  - Applied together because Eclipse moon helm needs both: "Used" (not
+    default) is eliminated by step 1, leaving "New" (plain page) and an LMS
+    reskin — BOTH marked default on their own pages — which step 2 then
+    tells apart.
+- **Rebuilt the real item index against the live wiki** (a genuine new
+  fetch — expanding a bucket query's own column selection, the same kind of
+  change that took the index from `item_id` to `infobox_item` in the first
+  place, not "re-hitting the wiki to fix a parser bug"). Unresolved entries:
+  2,997 → 2,395 (`default_version` alone) → 2,361 (after the qualified-
+  variant and exact-match fixes).
+- **Two shapes don't fit either signal and went on the multi-id allowlist
+  instead, matching the existing clue-scroll precedent**: `key-medium`
+  (all 11 Treasure Trails casket-key ids live on ONE `infobox_item` row —
+  trivially its own single `default_version` candidate, so nothing narrows
+  an 11-element id list to one; the ids are interchangeable, same shape as
+  the six already-allowlisted clue tiers) and `gull-pet` (Shellbane
+  gryphon's `{{DropsLine|name=Gull (pet)}}` matches NEITHER of
+  `infobox_item`'s two rows for that page — `item_name` "Gull" and "Gulliver"
+  — a drop-table-label-vs-infobox-name mismatch, not a version collision;
+  recorded for this one known case rather than taught to the general
+  resolver).
+- **Cow slippers is now resolved** (to its `default_version` candidate,
+  33093) — a deliberate, documented update to the Phase 3 conclusion "four
+  unqualified candidates correctly stays unresolved," which was correct
+  given the data available at the time (no `default_version` had been
+  fetched yet) and is superseded now that it has been.
+
+## Constant-returning validation checks: named preconditions, with trip wires
+
+Audited every check for a return that's a hardcoded/skipped constant rather
+than a live computation, per instruction — a comment alone doesn't stop the
+precondition from silently going stale, so each got a test that fails the
+moment it does:
+
+- **`qty_sane`** (`parse-boss.ts`, hardcoded `ok: true`): the claim
+  "`QtySpec` is fully schema-enforced, no runtime-only case" is only true
+  because `exact`/`range`/`choice` is the WHOLE set. New
+  `apps/ingest/test/qty-sane-constant.test.ts` asserts
+  `QtySpecSchema`'s discriminated-union kinds equal exactly those three
+  (reached via zod's own `._def.schema.optionsMap`, since the public schema
+  is a `.superRefine()`-wrapped `ZodEffects`) — a fourth kind breaks this
+  test, which is the intended trigger to re-audit the hardcoding, the same
+  way `rates_valid`'s equivalent hardcoding was audited and found wanting
+  this session.
+- **`rates_valid`**'s `checkRatesValid` (no longer itself a hardcoded
+  constant — see the earlier entry — but still SKIPS `fixed`/`always`/
+  `weight` rates outright, trusting them as schema-complete): same
+  treatment, a new test in `rates-valid.test.ts` asserts `Rate`'s kinds
+  equal exactly `always`/`fixed`/`formula`/`weight`.
+
+## Final re-report: A+B+C, all four fixes applied
+
+`ingest parse --tier A,B,C`, 53 sources, after the ambiguous-heading fix,
+the item-index rebuild, and the two new allowlist entries:
+
+| Tier | Verified | Needs review | Parse failed |
+|---|---:|---:|---:|
+| A | 18 | 6 | 2 |
+| B (Brutus) | 1 | 0 | 0 |
+| C | 17 | 8 | 1 |
+| **Total** | **36 (67.9%)** | **14** | **3** |
+
+Up from 10/53 (18.9%) at the start of the PREVIOUS session's four tasks —
+verified more than tripled this session alone (10 → 36). Fresh histogram
+across the 17 remaining non-verified sources (computed programmatically,
+same script as the earlier histogram — not re-eyeballed):
+
+| # sources | Category |
+|---:|---|
+| 4 | `not_on_watchlist: other` (Duke Sucellus, Corporeal Beast, Abyssal Sire, doom-of-mokhaiotl — wiki-confirmed, unmodelled mechanics) |
+| 4 | Ambiguous-heading guess (Doom of Mokhaiotl, Monumental chest, The Nightmare, Zulrah — see above) |
+| 3 | `parse_failed`: no `{{DropsLine}}` calls (Ancient chest, Revenant maledictus, Black demon) |
+| 2 | `items_known`: item literally absent from the index (`Nothing` as a literal drop row — heuristic 5 gap, unfixed, unrelated to this session) |
+| 2 | RDT/gem-table access references the unmodelled GWD-variant table (Kree'arra, General Graardor) |
+| 2 | `not_on_watchlist: point_scaled` (Monumental chest, Zalcano) |
+| 1 | `not_on_watchlist: without_replacement` (Lunar Chest) |
+| 1 | Unparseable rarity: `{{#expr:...}}` parser-function arithmetic (Shellbane gryphon) |
+
+The `multi_id_item` category from the previous histogram (23 sources) is
+gone entirely — every one of those either resolved outright or moved onto
+the multi-id allowlist. Only 2 of the 17 remaining sources carry more than
+one blocker (Doom of Mokhaiotl, Monumental chest), down from 17 of 43 last
+time — most of what's left now needs exactly one fix to reach `verified`,
+not a combination.

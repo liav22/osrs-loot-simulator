@@ -1,7 +1,7 @@
 {
   "itemIndexVersion": 2,
-  "generatedAt": "2026-08-11T14:52:41.900Z",
-  "rowCount": 34039,
+  "generatedAt": "2026-08-12T21:03:24.619Z",
+  "rowCount": 34043,
   "entries": [
     {
       "itemName": "Helm of neitiznot",
@@ -1287,7 +1287,7 @@
     },
     {
       "itemName": "Lit candle",
-      "itemId": 33,
+      "itemId": 34,
       "rawIds": [
         "33",
         "34"
@@ -1677,7 +1677,7 @@
     },
     {
       "itemName": "A stone bowl",
-      "itemId": null,
+      "itemId": 2888,
       "rawIds": [
         "2889",
         "2888",
@@ -1864,7 +1864,7 @@
     },
     {
       "itemName": "Ancient page",
-      "itemId": null,
+      "itemId": 11341,
       "rawIds": [
         "11366",
         "11365",
@@ -2025,7 +2025,7 @@
     },
     {
       "itemName": "Artefact",
-      "itemId": null,
+      "itemId": 11049,
       "rawIds": [
         "11049",
         "11051",
@@ -2951,7 +2951,7 @@
     },
     {
       "itemName": "Amulet of glory",
-      "itemId": 1704,
+      "itemId": 20586,
       "rawIds": [
         "1704",
         "20586"
@@ -4690,7 +4690,7 @@
     },
     {
       "itemName": "Barrelchest anchor",
-      "itemId": null,
+      "itemId": 10887,
       "rawIds": [
         "10888",
         "10887"
@@ -4731,7 +4731,7 @@
     },
     {
       "itemName": "Bedsheet",
-      "itemId": null,
+      "itemId": 4284,
       "rawIds": [
         "4285",
         "4284"
@@ -4965,7 +4965,7 @@
     },
     {
       "itemName": "Boots of lightness",
-      "itemId": null,
+      "itemId": 88,
       "rawIds": [
         "88",
         "89"
@@ -4999,7 +4999,7 @@
     },
     {
       "itemName": "Boxing gloves",
-      "itemId": null,
+      "itemId": 7671,
       "rawIds": [
         "7673",
         "7671"
@@ -5379,7 +5379,7 @@
     },
     {
       "itemName": "Crystal bow",
-      "itemId": null,
+      "itemId": 23983,
       "rawIds": [
         "24123",
         "23983"
@@ -5396,7 +5396,7 @@
     },
     {
       "itemName": "Crystal shield",
-      "itemId": null,
+      "itemId": 23991,
       "rawIds": [
         "24127",
         "23991"
@@ -5461,7 +5461,7 @@
     },
     {
       "itemName": "Desert camo top",
-      "itemId": null,
+      "itemId": 10061,
       "rawIds": [
         "10061",
         "28851"
@@ -5559,7 +5559,7 @@
     },
     {
       "itemName": "Diamond bolts (e)",
-      "itemId": null,
+      "itemId": 9243,
       "rawIds": [
         "9243",
         "23649"
@@ -5915,7 +5915,7 @@
     },
     {
       "itemName": "Falconer's glove",
-      "itemId": null,
+      "itemId": 10023,
       "rawIds": [
         "10023",
         "10024"
@@ -6313,7 +6313,7 @@
     },
     {
       "itemName": "Ghostspeak amulet",
-      "itemId": null,
+      "itemId": 552,
       "rawIds": [
         "552",
         "4250"
@@ -6490,7 +6490,7 @@
     },
     {
       "itemName": "Granite maul",
-      "itemId": null,
+      "itemId": 4153,
       "rawIds": [
         "4153",
         "12848",
@@ -6801,7 +6801,7 @@
     },
     {
       "itemName": "Iban's staff",
-      "itemId": null,
+      "itemId": 1409,
       "rawIds": [
         "1410",
         "1409"
@@ -6914,7 +6914,7 @@
     },
     {
       "itemName": "Jungle camo legs",
-      "itemId": null,
+      "itemId": 10059,
       "rawIds": [
         "10059",
         "28848"
@@ -6923,7 +6923,7 @@
     },
     {
       "itemName": "Jungle camo top",
-      "itemId": null,
+      "itemId": 10057,
       "rawIds": [
         "10057",
         "28845"
@@ -7551,7 +7551,7 @@
     },
     {
       "itemName": "Penance gloves",
-      "itemId": null,
+      "itemId": 10553,
       "rawIds": [
         "10553",
         "10554"
@@ -7618,7 +7618,7 @@
     },
     {
       "itemName": "Polar camo top",
-      "itemId": null,
+      "itemId": 10065,
       "rawIds": [
         "10065",
         "28857"
@@ -7707,7 +7707,7 @@
     },
     {
       "itemName": "Rat pole",
-      "itemId": null,
+      "itemId": 6773,
       "rawIds": [
         "6775",
         "6779",
@@ -8155,7 +8155,7 @@
     },
     {
       "itemName": "Silver necklace",
-      "itemId": null,
+      "itemId": 1796,
       "rawIds": [
         "1796",
         "1797"
@@ -8412,7 +8412,7 @@
     },
     {
       "itemName": "Spotted cape",
-      "itemId": null,
+      "itemId": 10069,
       "rawIds": [
         "10069",
         "10073"
@@ -8421,7 +8421,7 @@
     },
     {
       "itemName": "Spottier cape",
-      "itemId": null,
+      "itemId": 10071,
       "rawIds": [
         "10071",
         "10074"
@@ -9315,7 +9315,7 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Book of balance",
+      "itemName": "Book of Balance",
       "itemId": 3844,
       "rawIds": [
         "3844"
@@ -9389,7 +9389,7 @@
     },
     {
       "itemName": "Feather",
-      "itemId": null,
+      "itemId": 314,
       "rawIds": [
         "314",
         "11525"
@@ -9793,7 +9793,7 @@
     },
     {
       "itemName": "Dark bow",
-      "itemId": null,
+      "itemId": 11235,
       "rawIds": [
         "12766",
         "11235",
@@ -10107,7 +10107,7 @@
     },
     {
       "itemName": "Dragonfire shield",
-      "itemId": null,
+      "itemId": 11283,
       "rawIds": [
         "11283",
         "11284",
@@ -10448,7 +10448,7 @@
     },
     {
       "itemName": "Ectophial",
-      "itemId": null,
+      "itemId": 4251,
       "rawIds": [
         "4251",
         "4252"
@@ -11582,7 +11582,7 @@
     },
     {
       "itemName": "Silver cup",
-      "itemId": null,
+      "itemId": 1798,
       "rawIds": [
         "1798",
         "1799"
@@ -11744,7 +11744,7 @@
     },
     {
       "itemName": "Stone ball",
-      "itemId": null,
+      "itemId": 3109,
       "rawIds": [
         "3110",
         "3113",
@@ -11854,7 +11854,7 @@
     },
     {
       "itemName": "Egg",
-      "itemId": null,
+      "itemId": 1944,
       "rawIds": [
         "1944",
         "30970"
@@ -11872,7 +11872,7 @@
     },
     {
       "itemName": "Fishbowl",
-      "itemId": null,
+      "itemId": 6670,
       "rawIds": [
         "6668",
         "6669",
@@ -12014,7 +12014,7 @@
     },
     {
       "itemName": "Silverlight",
-      "itemId": null,
+      "itemId": 2402,
       "rawIds": [
         "2402",
         "6745"
@@ -12235,7 +12235,7 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Book on baxtorian",
+      "itemName": "Book on Baxtorian",
       "itemId": 292,
       "rawIds": [
         "292"
@@ -12700,7 +12700,7 @@
     },
     {
       "itemName": "Oil lantern",
-      "itemId": null,
+      "itemId": 4537,
       "rawIds": [
         "4537",
         "4539"
@@ -12807,7 +12807,7 @@
     },
     {
       "itemName": "Bird's egg",
-      "itemId": null,
+      "itemId": 5076,
       "rawIds": [
         "5078",
         "5077",
@@ -13264,7 +13264,7 @@
     },
     {
       "itemName": "Dwarven battleaxe",
-      "itemId": null,
+      "itemId": 5056,
       "rawIds": [
         "5058",
         "5056",
@@ -13694,7 +13694,7 @@
     },
     {
       "itemName": "Bullseye lantern",
-      "itemId": null,
+      "itemId": 4548,
       "rawIds": [
         "4548",
         "4550"
@@ -13735,7 +13735,7 @@
     },
     {
       "itemName": "Decapitated head",
-      "itemId": null,
+      "itemId": 4197,
       "rawIds": [
         "4197",
         "4198",
@@ -14332,7 +14332,7 @@
     },
     {
       "itemName": "Axe handle",
-      "itemId": null,
+      "itemId": 492,
       "rawIds": [
         "492",
         "7952"
@@ -14665,7 +14665,7 @@
     },
     {
       "itemName": "Sapphire lantern",
-      "itemId": null,
+      "itemId": 4700,
       "rawIds": [
         "4700",
         "4701",
@@ -14741,7 +14741,7 @@
     },
     {
       "itemName": "Silver bottle",
-      "itemId": null,
+      "itemId": 1800,
       "rawIds": [
         "1800",
         "1801"
@@ -14894,7 +14894,7 @@
     },
     {
       "itemName": "Broken vane part",
-      "itemId": null,
+      "itemId": 4431,
       "rawIds": [
         "4431",
         "4433",
@@ -15146,7 +15146,7 @@
     },
     {
       "itemName": "White tree shoot",
-      "itemId": null,
+      "itemId": 6461,
       "rawIds": [
         "6461",
         "6462"
@@ -16101,7 +16101,7 @@
     },
     {
       "itemName": "Panning tray",
-      "itemId": null,
+      "itemId": 677,
       "rawIds": [
         "679",
         "677",
@@ -16653,7 +16653,7 @@
     },
     {
       "itemName": "Crystal halberd",
-      "itemId": null,
+      "itemId": 23987,
       "rawIds": [
         "24125",
         "23987"
@@ -16670,7 +16670,7 @@
     },
     {
       "itemName": "Pasty jogre bones",
-      "itemId": null,
+      "itemId": 3128,
       "rawIds": [
         "3131",
         "3132",
@@ -16723,7 +16723,7 @@
     },
     {
       "itemName": "Mystic robe bottom (dark)",
-      "itemId": null,
+      "itemId": 4103,
       "rawIds": [
         "4103",
         "27159"
@@ -16900,7 +16900,7 @@
     },
     {
       "itemName": "Criminal's thread",
-      "itemId": null,
+      "itemId": 1808,
       "rawIds": [
         "1809",
         "1810",
@@ -16944,7 +16944,7 @@
     },
     {
       "itemName": "Karambwan paste",
-      "itemId": null,
+      "itemId": 3153,
       "rawIds": [
         "3152",
         "3153",
@@ -17558,7 +17558,7 @@
     },
     {
       "itemName": "Mining helmet",
-      "itemId": null,
+      "itemId": 5014,
       "rawIds": [
         "5014",
         "5013"
@@ -17583,7 +17583,7 @@
     },
     {
       "itemName": "Dwarven rock cake",
-      "itemId": null,
+      "itemId": 7509,
       "rawIds": [
         "7510",
         "7509"
@@ -17801,7 +17801,7 @@
     },
     {
       "itemName": "Druid pouch",
-      "itemId": null,
+      "itemId": 2957,
       "rawIds": [
         "2958",
         "2957"
@@ -17907,7 +17907,7 @@
     },
     {
       "itemName": "Jogre bone",
-      "itemId": null,
+      "itemId": 7845,
       "rawIds": [
         "7845",
         "7847"
@@ -18300,7 +18300,7 @@
     },
     {
       "itemName": "Hunters' talisman",
-      "itemId": null,
+      "itemId": 3696,
       "rawIds": [
         "3696",
         "3697"
@@ -18447,7 +18447,7 @@
     },
     {
       "itemName": "Beach boxing gloves",
-      "itemId": null,
+      "itemId": 11705,
       "rawIds": [
         "11706",
         "11705"
@@ -18474,11 +18474,10 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Wine of zamorak",
+      "itemName": "Wine of Zamorak",
       "itemId": 245,
       "rawIds": [
-        "245",
-        "23489"
+        "245"
       ],
       "source": "infobox_item"
     },
@@ -18961,7 +18960,7 @@
     },
     {
       "itemName": "Mystic robe bottom (light)",
-      "itemId": null,
+      "itemId": 4113,
       "rawIds": [
         "4113",
         "27161"
@@ -18978,7 +18977,7 @@
     },
     {
       "itemName": "Ram skull",
-      "itemId": null,
+      "itemId": 7818,
       "rawIds": [
         "7818",
         "7820"
@@ -20456,7 +20455,7 @@
     },
     {
       "itemName": "Berserker ring (i)",
-      "itemId": null,
+      "itemId": 11773,
       "rawIds": [
         "25264",
         "26770",
@@ -20483,7 +20482,7 @@
     },
     {
       "itemName": "Fishlike thing",
-      "itemId": null,
+      "itemId": 6202,
       "rawIds": [
         "6202",
         "6206"
@@ -20492,7 +20491,7 @@
     },
     {
       "itemName": "Raw fishlike thing",
-      "itemId": null,
+      "itemId": 6200,
       "rawIds": [
         "6200",
         "6204"
@@ -21005,7 +21004,7 @@
     },
     {
       "itemName": "Pigeon cage",
-      "itemId": null,
+      "itemId": 424,
       "rawIds": [
         "424",
         "425"
@@ -21330,7 +21329,7 @@
     },
     {
       "itemName": "Candle lantern",
-      "itemId": null,
+      "itemId": 4529,
       "rawIds": [
         "4532",
         "4534",
@@ -21365,7 +21364,7 @@
     },
     {
       "itemName": "Clockwork suit",
-      "itemId": null,
+      "itemId": 10595,
       "rawIds": [
         "10596",
         "10595"
@@ -21673,7 +21672,7 @@
     },
     {
       "itemName": "Stone head",
-      "itemId": null,
+      "itemId": 6989,
       "rawIds": [
         "7002",
         "6989",
@@ -22062,7 +22061,7 @@
     },
     {
       "itemName": "Barrel bomb",
-      "itemId": null,
+      "itemId": 3218,
       "rawIds": [
         "3218",
         "3219"
@@ -22104,7 +22103,7 @@
     },
     {
       "itemName": "Consecration seed",
-      "itemId": null,
+      "itemId": 4205,
       "rawIds": [
         "4205",
         "4206"
@@ -22137,7 +22136,7 @@
     },
     {
       "itemName": "Naphtha mix",
-      "itemId": null,
+      "itemId": 3222,
       "rawIds": [
         "3223",
         "3222"
@@ -22292,7 +22291,7 @@
     },
     {
       "itemName": "Ghost buster 500",
-      "itemId": null,
+      "itemId": 9906,
       "rawIds": [
         "9912",
         "9908",
@@ -22478,7 +22477,7 @@
     },
     {
       "itemName": "Warrior ring (i)",
-      "itemId": null,
+      "itemId": 11772,
       "rawIds": [
         "25262",
         "26769",
@@ -22488,7 +22487,7 @@
     },
     {
       "itemName": "Archers ring (i)",
-      "itemId": null,
+      "itemId": 11771,
       "rawIds": [
         "25260",
         "26768",
@@ -22498,7 +22497,7 @@
     },
     {
       "itemName": "Seers ring (i)",
-      "itemId": null,
+      "itemId": 11770,
       "rawIds": [
         "25258",
         "26767",
@@ -22508,11 +22507,10 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Staff of the dead",
+      "itemName": "Staff of the Dead",
       "itemId": 11791,
       "rawIds": [
-        "11791",
-        "23613"
+        "11791"
       ],
       "source": "infobox_item"
     },
@@ -22582,7 +22580,7 @@
     },
     {
       "itemName": "Zombie bone",
-      "itemId": null,
+      "itemId": 7863,
       "rawIds": [
         "7863",
         "7865"
@@ -22651,7 +22649,7 @@
     },
     {
       "itemName": "Scorpion cage",
-      "itemId": null,
+      "itemId": 456,
       "rawIds": [
         "461",
         "458",
@@ -22786,7 +22784,7 @@
     },
     {
       "itemName": "Pet kitten",
-      "itemId": null,
+      "itemId": 1555,
       "rawIds": [
         "1558",
         "1555",
@@ -22815,7 +22813,7 @@
     },
     {
       "itemName": "Medium pouch",
-      "itemId": null,
+      "itemId": 5510,
       "rawIds": [
         "5511",
         "5510"
@@ -23322,7 +23320,7 @@
     },
     {
       "itemName": "Queen's secateurs",
-      "itemId": null,
+      "itemId": 7410,
       "rawIds": [
         "9020",
         "7410"
@@ -23905,7 +23903,7 @@
     },
     {
       "itemName": "Sled",
-      "itemId": null,
+      "itemId": 4083,
       "rawIds": [
         "4084",
         "4083",
@@ -24198,7 +24196,7 @@
     },
     {
       "itemName": "Cooked giant crab meat",
-      "itemId": null,
+      "itemId": 7521,
       "rawIds": [
         "7525",
         "7524",
@@ -24370,7 +24368,7 @@
     },
     {
       "itemName": "Fuse",
-      "itemId": null,
+      "itemId": 10985,
       "rawIds": [
         "7109",
         "10985",
@@ -24810,7 +24808,7 @@
     },
     {
       "itemName": "Graceful legs",
-      "itemId": null,
+      "itemId": 11856,
       "rawIds": [
         "11856",
         "11857",
@@ -24841,7 +24839,7 @@
     },
     {
       "itemName": "Graceful boots",
-      "itemId": null,
+      "itemId": 11860,
       "rawIds": [
         "11860",
         "11861",
@@ -24872,7 +24870,7 @@
     },
     {
       "itemName": "Graceful top",
-      "itemId": null,
+      "itemId": 11854,
       "rawIds": [
         "11854",
         "11855",
@@ -24903,7 +24901,7 @@
     },
     {
       "itemName": "Graceful cape",
-      "itemId": null,
+      "itemId": 11852,
       "rawIds": [
         "11852",
         "11853",
@@ -24934,7 +24932,7 @@
     },
     {
       "itemName": "Graceful gloves",
-      "itemId": null,
+      "itemId": 11858,
       "rawIds": [
         "11858",
         "11859",
@@ -24965,7 +24963,7 @@
     },
     {
       "itemName": "Graceful hood",
-      "itemId": null,
+      "itemId": 11850,
       "rawIds": [
         "11850",
         "11851",
@@ -25085,7 +25083,7 @@
     },
     {
       "itemName": "Fresh monkfish",
-      "itemId": null,
+      "itemId": 7942,
       "rawIds": [
         "7942",
         "7943"
@@ -25206,7 +25204,7 @@
     },
     {
       "itemName": "Dagannoth ribs",
-      "itemId": null,
+      "itemId": 7857,
       "rawIds": [
         "7857",
         "7859"
@@ -25224,7 +25222,7 @@
     },
     {
       "itemName": "Balloon toad",
-      "itemId": null,
+      "itemId": 7564,
       "rawIds": [
         "7565",
         "7564"
@@ -25298,7 +25296,7 @@
     },
     {
       "itemName": "Heart crystal",
-      "itemId": null,
+      "itemId": 744,
       "rawIds": [
         "745",
         "744"
@@ -25364,7 +25362,7 @@
     },
     {
       "itemName": "Golden bowl",
-      "itemId": null,
+      "itemId": 723,
       "rawIds": [
         "723",
         "725",
@@ -25407,7 +25405,7 @@
     },
     {
       "itemName": "Radimus notes",
-      "itemId": null,
+      "itemId": 714,
       "rawIds": [
         "715",
         "714"
@@ -25902,7 +25900,7 @@
     },
     {
       "itemName": "Large pouch",
-      "itemId": null,
+      "itemId": 5512,
       "rawIds": [
         "6819",
         "5513",
@@ -26130,7 +26128,7 @@
     },
     {
       "itemName": "Teapot",
-      "itemId": null,
+      "itemId": 7702,
       "rawIds": [
         "7714",
         "7726",
@@ -26148,7 +26146,7 @@
     },
     {
       "itemName": "Teapot with leaves",
-      "itemId": null,
+      "itemId": 7700,
       "rawIds": [
         "7712",
         "7724",
@@ -26238,7 +26236,7 @@
     },
     {
       "itemName": "Yommi tree seeds",
-      "itemId": null,
+      "itemId": 735,
       "rawIds": [
         "736",
         "735"
@@ -26295,7 +26293,7 @@
     },
     {
       "itemName": "Newly made crystal",
-      "itemId": null,
+      "itemId": 6651,
       "rawIds": [
         "6652",
         "6651"
@@ -26629,7 +26627,7 @@
     },
     {
       "itemName": "Hand mirror",
-      "itemId": null,
+      "itemId": 6639,
       "rawIds": [
         "6639",
         "23775"
@@ -26977,7 +26975,7 @@
     },
     {
       "itemName": "Slayer helmet (i)",
-      "itemId": null,
+      "itemId": 11865,
       "rawIds": [
         "25177",
         "26674",
@@ -27357,7 +27355,7 @@
     },
     {
       "itemName": "Karambwanji paste",
-      "itemId": null,
+      "itemId": 3155,
       "rawIds": [
         "3155",
         "3156"
@@ -27366,7 +27364,7 @@
     },
     {
       "itemName": "Marinated j' bones",
-      "itemId": null,
+      "itemId": 3130,
       "rawIds": [
         "3133",
         "3130"
@@ -27383,7 +27381,7 @@
     },
     {
       "itemName": "Mystic robe top (dark)",
-      "itemId": null,
+      "itemId": 4101,
       "rawIds": [
         "4101",
         "27158"
@@ -27428,7 +27426,7 @@
     },
     {
       "itemName": "Emerald lantern",
-      "itemId": null,
+      "itemId": 20722,
       "rawIds": [
         "20722",
         "9064",
@@ -27462,7 +27460,7 @@
     },
     {
       "itemName": "Giant pouch",
-      "itemId": null,
+      "itemId": 5514,
       "rawIds": [
         "5515",
         "5514"
@@ -27653,7 +27651,7 @@
     },
     {
       "itemName": "Zamorak banner",
-      "itemId": null,
+      "itemId": 4039,
       "rawIds": [
         "11892",
         "4039"
@@ -27662,7 +27660,7 @@
     },
     {
       "itemName": "Saradomin banner",
-      "itemId": null,
+      "itemId": 4037,
       "rawIds": [
         "11891",
         "4037"
@@ -27968,7 +27966,7 @@
     },
     {
       "itemName": "Scrying orb",
-      "itemId": null,
+      "itemId": 5519,
       "rawIds": [
         "5518",
         "5519"
@@ -28041,7 +28039,7 @@
     },
     {
       "itemName": "Oil lamp",
-      "itemId": null,
+      "itemId": 4522,
       "rawIds": [
         "4522",
         "4524"
@@ -28206,7 +28204,7 @@
     },
     {
       "itemName": "Map scrap",
-      "itemId": null,
+      "itemId": 4274,
       "rawIds": [
         "4274",
         "4275",
@@ -28524,7 +28522,7 @@
     },
     {
       "itemName": "Box of chocolate strawberries",
-      "itemId": null,
+      "itemId": 11912,
       "rawIds": [
         "11912",
         "11914"
@@ -28557,7 +28555,7 @@
     },
     {
       "itemName": "Mystic robe top (light)",
-      "itemId": null,
+      "itemId": 4111,
       "rawIds": [
         "4111",
         "27160"
@@ -28689,7 +28687,7 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Book of 'h.a.m'",
+      "itemName": "Book of 'H.A.M'",
       "itemId": 4829,
       "rawIds": [
         "4829"
@@ -28747,7 +28745,7 @@
     },
     {
       "itemName": "Sithik portrait",
-      "itemId": null,
+      "itemId": 4814,
       "rawIds": [
         "4814",
         "4815"
@@ -28805,7 +28803,7 @@
     },
     {
       "itemName": "Canopic jar",
-      "itemId": null,
+      "itemId": 4678,
       "rawIds": [
         "4680",
         "4679",
@@ -28923,7 +28921,7 @@
     },
     {
       "itemName": "Slice of birthday cake",
-      "itemId": null,
+      "itemId": 11916,
       "rawIds": [
         "hist11916",
         "hist11916",
@@ -29236,7 +29234,7 @@
     },
     {
       "itemName": "Wood camo top",
-      "itemId": null,
+      "itemId": 10053,
       "rawIds": [
         "10053",
         "28839"
@@ -29245,7 +29243,7 @@
     },
     {
       "itemName": "Wood camo legs",
-      "itemId": null,
+      "itemId": 10055,
       "rawIds": [
         "10055",
         "28842"
@@ -29254,7 +29252,7 @@
     },
     {
       "itemName": "Desert camo legs",
-      "itemId": null,
+      "itemId": 10063,
       "rawIds": [
         "10063",
         "28854"
@@ -29263,7 +29261,7 @@
     },
     {
       "itemName": "Polar camo legs",
-      "itemId": null,
+      "itemId": 10067,
       "rawIds": [
         "10067",
         "28860"
@@ -29272,7 +29270,7 @@
     },
     {
       "itemName": "Reward token",
-      "itemId": null,
+      "itemId": 10934,
       "rawIds": [
         "10942",
         "10936",
@@ -29581,7 +29579,7 @@
     },
     {
       "itemName": "Bear ribs",
-      "itemId": null,
+      "itemId": 7815,
       "rawIds": [
         "7815",
         "7817"
@@ -29614,7 +29612,7 @@
     },
     {
       "itemName": "Coffin",
-      "itemId": null,
+      "itemId": 7587,
       "rawIds": [
         "7587",
         "7589",
@@ -29748,7 +29746,7 @@
     },
     {
       "itemName": "Looting bag",
-      "itemId": null,
+      "itemId": 11941,
       "rawIds": [
         "22586",
         "11941"
@@ -29781,7 +29779,7 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Staff of armadyl",
+      "itemName": "Staff of Armadyl",
       "itemId": 84,
       "rawIds": [
         "84"
@@ -29959,7 +29957,7 @@
     },
     {
       "itemName": "Wily cat",
-      "itemId": null,
+      "itemId": 6556,
       "rawIds": [
         "6558",
         "6556",
@@ -30389,7 +30387,7 @@
     },
     {
       "itemName": "Mixed chemicals",
-      "itemId": null,
+      "itemId": 705,
       "rawIds": [
         "705",
         "706"
@@ -30539,7 +30537,7 @@
     },
     {
       "itemName": "Snake spine",
-      "itemId": null,
+      "itemId": 7860,
       "rawIds": [
         "7860",
         "7862"
@@ -30779,7 +30777,7 @@
     },
     {
       "itemName": "Model ship",
-      "itemId": null,
+      "itemId": 4253,
       "rawIds": [
         "4254",
         "4253"
@@ -30975,7 +30973,7 @@
     },
     {
       "itemName": "Orb of light",
-      "itemId": null,
+      "itemId": 1481,
       "rawIds": [
         "1481",
         "1484",
@@ -31139,7 +31137,7 @@
     },
     {
       "itemName": "Twigs",
-      "itemId": null,
+      "itemId": 789,
       "rawIds": [
         "790",
         "789",
@@ -31287,7 +31285,7 @@
     },
     {
       "itemName": "Bucket of rubble",
-      "itemId": null,
+      "itemId": 7622,
       "rawIds": [
         "7626",
         "7622",
@@ -31313,7 +31311,7 @@
     },
     {
       "itemName": "Silvthrill rod",
-      "itemId": null,
+      "itemId": 7637,
       "rawIds": [
         "7637",
         "7638"
@@ -31490,7 +31488,7 @@
     },
     {
       "itemName": "Soft clay pack",
-      "itemId": null,
+      "itemId": 12009,
       "rawIds": [
         "12009",
         "25533",
@@ -31501,7 +31499,7 @@
     },
     {
       "itemName": "Prospector helmet",
-      "itemId": null,
+      "itemId": 12013,
       "rawIds": [
         "12013",
         "29472"
@@ -31510,7 +31508,7 @@
     },
     {
       "itemName": "Prospector jacket",
-      "itemId": null,
+      "itemId": 12014,
       "rawIds": [
         "12014",
         "29474"
@@ -31519,7 +31517,7 @@
     },
     {
       "itemName": "Prospector boots",
-      "itemId": null,
+      "itemId": 12016,
       "rawIds": [
         "12016",
         "29478"
@@ -31528,7 +31526,7 @@
     },
     {
       "itemName": "Prospector legs",
-      "itemId": null,
+      "itemId": 12015,
       "rawIds": [
         "12015",
         "29476"
@@ -31665,7 +31663,7 @@
     },
     {
       "itemName": "Square stone",
-      "itemId": null,
+      "itemId": 6119,
       "rawIds": [
         "6120",
         "6119"
@@ -32142,7 +32140,7 @@
     },
     {
       "itemName": "Sealed vase",
-      "itemId": null,
+      "itemId": 3738,
       "rawIds": [
         "3740",
         "3738",
@@ -32350,7 +32348,7 @@
     },
     {
       "itemName": "Salve amulet(i)",
-      "itemId": null,
+      "itemId": 12017,
       "rawIds": [
         "25250",
         "26763",
@@ -32360,7 +32358,7 @@
     },
     {
       "itemName": "Salve amulet(ei)",
-      "itemId": null,
+      "itemId": 12018,
       "rawIds": [
         "25278",
         "26782",
@@ -32545,7 +32543,7 @@
     },
     {
       "itemName": "Half certificate",
-      "itemId": null,
+      "itemId": 11173,
       "rawIds": [
         "11173",
         "11174"
@@ -32577,7 +32575,7 @@
     },
     {
       "itemName": "Herb tea mix",
-      "itemId": null,
+      "itemId": 4464,
       "rawIds": [
         "4482",
         "4464",
@@ -33170,7 +33168,7 @@
     },
     {
       "itemName": "Guthix balance (unf)",
-      "itemId": null,
+      "itemId": 7658,
       "rawIds": [
         "7654",
         "7656",
@@ -33447,7 +33445,7 @@
     },
     {
       "itemName": "Karambwan vessel",
-      "itemId": null,
+      "itemId": 3157,
       "rawIds": [
         "3159",
         "3157"
@@ -33949,7 +33947,7 @@
     },
     {
       "itemName": "Crest part",
-      "itemId": null,
+      "itemId": 780,
       "rawIds": [
         "780",
         "779",
@@ -34415,7 +34413,7 @@
     },
     {
       "itemName": "Minecart ticket",
-      "itemId": null,
+      "itemId": 5020,
       "rawIds": [
         "5023",
         "5022",
@@ -35715,7 +35713,7 @@
     },
     {
       "itemName": "Bailing bucket",
-      "itemId": null,
+      "itemId": 583,
       "rawIds": [
         "585",
         "583"
@@ -35874,7 +35872,7 @@
     },
     {
       "itemName": "Ghoul bone",
-      "itemId": null,
+      "itemId": 7881,
       "rawIds": [
         "7881",
         "7883"
@@ -36025,7 +36023,7 @@
     },
     {
       "itemName": "Blessed pot",
-      "itemId": null,
+      "itemId": 4659,
       "rawIds": [
         "4665",
         "4667",
@@ -36094,7 +36092,7 @@
     },
     {
       "itemName": "Goblin skull",
-      "itemId": null,
+      "itemId": 7812,
       "rawIds": [
         "7812",
         "7814"
@@ -36103,7 +36101,7 @@
     },
     {
       "itemName": "Big frog leg",
-      "itemId": null,
+      "itemId": 7908,
       "rawIds": [
         "7908",
         "7910"
@@ -36112,7 +36110,7 @@
     },
     {
       "itemName": "Unicorn bone",
-      "itemId": null,
+      "itemId": 7821,
       "rawIds": [
         "7821",
         "7823"
@@ -36121,7 +36119,7 @@
     },
     {
       "itemName": "Monkey paw",
-      "itemId": null,
+      "itemId": 7854,
       "rawIds": [
         "7854",
         "7856"
@@ -36130,7 +36128,7 @@
     },
     {
       "itemName": "Giant rat bone",
-      "itemId": null,
+      "itemId": 7824,
       "rawIds": [
         "7824",
         "7826"
@@ -36139,7 +36137,7 @@
     },
     {
       "itemName": "Giant bat wing",
-      "itemId": null,
+      "itemId": 7827,
       "rawIds": [
         "7827",
         "7829"
@@ -36148,7 +36146,7 @@
     },
     {
       "itemName": "Bone in vinegar",
-      "itemId": null,
+      "itemId": 7813,
       "rawIds": [
         "7852",
         "7846",
@@ -37168,7 +37166,7 @@
     },
     {
       "itemName": "Pet smoke devil",
-      "itemId": null,
+      "itemId": 12648,
       "rawIds": [
         "22663",
         "12648"
@@ -37305,7 +37303,7 @@
     },
     {
       "itemName": "Tyrannical ring (i)",
-      "itemId": null,
+      "itemId": 12691,
       "rawIds": [
         "25254",
         "26765",
@@ -37315,7 +37313,7 @@
     },
     {
       "itemName": "Treasonous ring (i)",
-      "itemId": null,
+      "itemId": 12692,
       "rawIds": [
         "25256",
         "26766",
@@ -37397,7 +37395,7 @@
     },
     {
       "itemName": "Kalphite princess",
-      "itemId": null,
+      "itemId": 12647,
       "rawIds": [
         "12654",
         "12647"
@@ -37422,7 +37420,7 @@
     },
     {
       "itemName": "Moss giant bone",
-      "itemId": null,
+      "itemId": 7869,
       "rawIds": [
         "7869",
         "7871"
@@ -37431,7 +37429,7 @@
     },
     {
       "itemName": "Jackal bone",
-      "itemId": null,
+      "itemId": 7914,
       "rawIds": [
         "7914",
         "7916"
@@ -37456,7 +37454,7 @@
     },
     {
       "itemName": "Undead cow ribs",
-      "itemId": null,
+      "itemId": 7890,
       "rawIds": [
         "7890",
         "7892"
@@ -37465,7 +37463,7 @@
     },
     {
       "itemName": "Baby dragon bone",
-      "itemId": null,
+      "itemId": 7839,
       "rawIds": [
         "7839",
         "7841"
@@ -37474,7 +37472,7 @@
     },
     {
       "itemName": "Basilisk bone",
-      "itemId": null,
+      "itemId": 7899,
       "rawIds": [
         "7899",
         "7901"
@@ -37483,7 +37481,7 @@
     },
     {
       "itemName": "Bat wing",
-      "itemId": null,
+      "itemId": 7833,
       "rawIds": [
         "7833",
         "7835"
@@ -37492,7 +37490,7 @@
     },
     {
       "itemName": "Cave goblin skull",
-      "itemId": null,
+      "itemId": 7905,
       "rawIds": [
         "7905",
         "7907"
@@ -37501,7 +37499,7 @@
     },
     {
       "itemName": "Desert lizard bone",
-      "itemId": null,
+      "itemId": 7902,
       "rawIds": [
         "7902",
         "7904"
@@ -37510,7 +37508,7 @@
     },
     {
       "itemName": "Experiment bone",
-      "itemId": null,
+      "itemId": 7893,
       "rawIds": [
         "7893",
         "7895"
@@ -37519,7 +37517,7 @@
     },
     {
       "itemName": "Fire giant bone",
-      "itemId": null,
+      "itemId": 7872,
       "rawIds": [
         "7872",
         "7874"
@@ -37528,7 +37526,7 @@
     },
     {
       "itemName": "Ice giant ribs",
-      "itemId": null,
+      "itemId": 7875,
       "rawIds": [
         "7875",
         "7877"
@@ -37537,7 +37535,7 @@
     },
     {
       "itemName": "Mogre bone",
-      "itemId": null,
+      "itemId": 7851,
       "rawIds": [
         "7851",
         "7853"
@@ -37546,7 +37544,7 @@
     },
     {
       "itemName": "Ogre ribs",
-      "itemId": null,
+      "itemId": 7842,
       "rawIds": [
         "7842",
         "7844"
@@ -37555,7 +37553,7 @@
     },
     {
       "itemName": "Rabbit bone",
-      "itemId": null,
+      "itemId": 7896,
       "rawIds": [
         "7896",
         "7898"
@@ -37564,7 +37562,7 @@
     },
     {
       "itemName": "Rat bone",
-      "itemId": null,
+      "itemId": 7836,
       "rawIds": [
         "7836",
         "7838"
@@ -37573,7 +37571,7 @@
     },
     {
       "itemName": "Seagull wing",
-      "itemId": null,
+      "itemId": 7887,
       "rawIds": [
         "7887",
         "7889"
@@ -37582,7 +37580,7 @@
     },
     {
       "itemName": "Terrorbird wing",
-      "itemId": null,
+      "itemId": 7878,
       "rawIds": [
         "7878",
         "7880"
@@ -37591,7 +37589,7 @@
     },
     {
       "itemName": "Troll bone",
-      "itemId": null,
+      "itemId": 7884,
       "rawIds": [
         "7884",
         "7886"
@@ -37600,7 +37598,7 @@
     },
     {
       "itemName": "Vulture wing",
-      "itemId": null,
+      "itemId": 7911,
       "rawIds": [
         "7911",
         "7913"
@@ -37609,7 +37607,7 @@
     },
     {
       "itemName": "Werewolf bone",
-      "itemId": null,
+      "itemId": 7866,
       "rawIds": [
         "7866",
         "7868"
@@ -37618,7 +37616,7 @@
     },
     {
       "itemName": "Wolf bone",
-      "itemId": null,
+      "itemId": 7830,
       "rawIds": [
         "7830",
         "7832"
@@ -37627,7 +37625,7 @@
     },
     {
       "itemName": "Zogre bone",
-      "itemId": null,
+      "itemId": 7848,
       "rawIds": [
         "7848",
         "7850"
@@ -37946,7 +37944,7 @@
     },
     {
       "itemName": "Incomplete stew",
-      "itemId": null,
+      "itemId": 1997,
       "rawIds": [
         "1997",
         "1999"
@@ -39044,7 +39042,7 @@
     },
     {
       "itemName": "Puppet box",
-      "itemId": null,
+      "itemId": 6852,
       "rawIds": [
         "6854",
         "6852"
@@ -39053,7 +39051,7 @@
     },
     {
       "itemName": "Bauble box",
-      "itemId": null,
+      "itemId": 6853,
       "rawIds": [
         "6855",
         "6853"
@@ -39062,7 +39060,7 @@
     },
     {
       "itemName": "Bell bauble",
-      "itemId": null,
+      "itemId": 6846,
       "rawIds": [
         "6849",
         "6850",
@@ -39075,7 +39073,7 @@
     },
     {
       "itemName": "Box bauble",
-      "itemId": null,
+      "itemId": 6828,
       "rawIds": [
         "6831",
         "6832",
@@ -39088,7 +39086,7 @@
     },
     {
       "itemName": "Diamond bauble",
-      "itemId": null,
+      "itemId": 6834,
       "rawIds": [
         "6837",
         "6838",
@@ -39101,7 +39099,7 @@
     },
     {
       "itemName": "Star bauble",
-      "itemId": null,
+      "itemId": 6822,
       "rawIds": [
         "6825",
         "6826",
@@ -39114,7 +39112,7 @@
     },
     {
       "itemName": "Tree bauble",
-      "itemId": null,
+      "itemId": 6840,
       "rawIds": [
         "6843",
         "6844",
@@ -39287,7 +39285,7 @@
     },
     {
       "itemName": "Hay sack",
-      "itemId": null,
+      "itemId": 6057,
       "rawIds": [
         "6058",
         "6057"
@@ -39360,7 +39358,7 @@
     },
     {
       "itemName": "Knight's notes",
-      "itemId": null,
+      "itemId": 11842,
       "rawIds": [
         "11843",
         "11842"
@@ -39417,7 +39415,7 @@
     },
     {
       "itemName": "Nest box (seeds)",
-      "itemId": 23062,
+      "itemId": null,
       "rawIds": [
         "23062",
         "12793",
@@ -39435,7 +39433,7 @@
     },
     {
       "itemName": "Toxic staff (uncharged)",
-      "itemId": 12902,
+      "itemId": null,
       "rawIds": [
         "12902",
         "33035"
@@ -39508,7 +39506,7 @@
     },
     {
       "itemName": "Pet snakeling",
-      "itemId": null,
+      "itemId": 12921,
       "rawIds": [
         "12921",
         "12939",
@@ -39710,7 +39708,7 @@
     },
     {
       "itemName": "Criminal's dagger",
-      "itemId": null,
+      "itemId": 1813,
       "rawIds": [
         "1813",
         "1814"
@@ -40947,7 +40945,7 @@
     },
     {
       "itemName": "Vet'ion jr.",
-      "itemId": null,
+      "itemId": 13179,
       "rawIds": [
         "13179",
         "27651",
@@ -40958,7 +40956,7 @@
     },
     {
       "itemName": "Callisto cub",
-      "itemId": null,
+      "itemId": 13178,
       "rawIds": [
         "13178",
         "27649"
@@ -40967,7 +40965,7 @@
     },
     {
       "itemName": "Venenatis spiderling",
-      "itemId": null,
+      "itemId": 13177,
       "rawIds": [
         "13177",
         "27648"
@@ -41560,7 +41558,7 @@
     },
     {
       "itemName": "Wig",
-      "itemId": null,
+      "itemId": 2421,
       "rawIds": [
         "2419",
         "2421"
@@ -41785,7 +41783,7 @@
     },
     {
       "itemName": "Silver needle",
-      "itemId": null,
+      "itemId": 1804,
       "rawIds": [
         "1804",
         "1805"
@@ -41976,7 +41974,7 @@
     },
     {
       "itemName": "Silver book",
-      "itemId": null,
+      "itemId": 1802,
       "rawIds": [
         "1802",
         "1803"
@@ -42089,7 +42087,7 @@
     },
     {
       "itemName": "Cog",
-      "itemId": null,
+      "itemId": 10983,
       "rawIds": [
         "10983",
         "10984"
@@ -42098,7 +42096,7 @@
     },
     {
       "itemName": "Powerbox",
-      "itemId": null,
+      "itemId": 10993,
       "rawIds": [
         "10994",
         "10993"
@@ -42107,7 +42105,7 @@
     },
     {
       "itemName": "Capacitor",
-      "itemId": null,
+      "itemId": 10989,
       "rawIds": [
         "10989",
         "10990"
@@ -42116,7 +42114,7 @@
     },
     {
       "itemName": "Meter",
-      "itemId": null,
+      "itemId": 10987,
       "rawIds": [
         "10987",
         "10988"
@@ -42254,7 +42252,7 @@
     },
     {
       "itemName": "Ring of the gods (i)",
-      "itemId": null,
+      "itemId": 13202,
       "rawIds": [
         "25252",
         "26764",
@@ -42387,7 +42385,7 @@
     },
     {
       "itemName": "Agility tome",
-      "itemId": null,
+      "itemId": 7782,
       "rawIds": [
         "7783",
         "7782",
@@ -42442,7 +42440,7 @@
     },
     {
       "itemName": "Burnt diary",
-      "itemId": null,
+      "itemId": 7961,
       "rawIds": [
         "7965",
         "7964",
@@ -42478,7 +42476,7 @@
     },
     {
       "itemName": "Tin",
-      "itemId": null,
+      "itemId": 5592,
       "rawIds": [
         "5595",
         "5594",
@@ -42494,7 +42492,7 @@
     },
     {
       "itemName": "Bank key",
-      "itemId": null,
+      "itemId": 13302,
       "rawIds": [
         "13304",
         "13305",
@@ -42522,7 +42520,7 @@
     },
     {
       "itemName": "Gnomish firelighter",
-      "itemId": null,
+      "itemId": 20275,
       "rawIds": [
         "20278",
         "20275"
@@ -42539,7 +42537,7 @@
     },
     {
       "itemName": "Progress hat",
-      "itemId": null,
+      "itemId": 6885,
       "rawIds": [
         "6885",
         "6887",
@@ -43017,7 +43015,7 @@
     },
     {
       "itemName": "Firemaking tome",
-      "itemId": null,
+      "itemId": 7794,
       "rawIds": [
         "7795",
         "7794",
@@ -43027,7 +43025,7 @@
     },
     {
       "itemName": "Fishing tome",
-      "itemId": null,
+      "itemId": 7779,
       "rawIds": [
         "7780",
         "7779",
@@ -43037,7 +43035,7 @@
     },
     {
       "itemName": "Mining tome",
-      "itemId": null,
+      "itemId": 7791,
       "rawIds": [
         "7792",
         "7791",
@@ -43047,7 +43045,7 @@
     },
     {
       "itemName": "Slayer tome",
-      "itemId": null,
+      "itemId": 7788,
       "rawIds": [
         "7789",
         "7788",
@@ -43057,7 +43055,7 @@
     },
     {
       "itemName": "Thieving tome",
-      "itemId": null,
+      "itemId": 7785,
       "rawIds": [
         "7786",
         "7785",
@@ -43067,7 +43065,7 @@
     },
     {
       "itemName": "Woodcutting tome",
-      "itemId": null,
+      "itemId": 7797,
       "rawIds": [
         "7798",
         "7797",
@@ -43349,7 +43347,7 @@
     },
     {
       "itemName": "Max cape",
-      "itemId": null,
+      "itemId": 13280,
       "rawIds": [
         "13280",
         "13342"
@@ -44040,7 +44038,7 @@
     },
     {
       "itemName": "Gravedigger boots",
-      "itemId": null,
+      "itemId": 13286,
       "rawIds": [
         "hist13292",
         "13286"
@@ -44049,7 +44047,7 @@
     },
     {
       "itemName": "Gravedigger gloves",
-      "itemId": null,
+      "itemId": 13287,
       "rawIds": [
         "hist13293",
         "13287"
@@ -44058,7 +44056,7 @@
     },
     {
       "itemName": "Gravedigger leggings",
-      "itemId": null,
+      "itemId": 13285,
       "rawIds": [
         "hist13291",
         "13285"
@@ -44067,7 +44065,7 @@
     },
     {
       "itemName": "Gravedigger top",
-      "itemId": null,
+      "itemId": 13284,
       "rawIds": [
         "hist13290",
         "13284"
@@ -44076,7 +44074,7 @@
     },
     {
       "itemName": "Gravedigger mask",
-      "itemId": null,
+      "itemId": 13283,
       "rawIds": [
         "hist13289",
         "13283"
@@ -44085,7 +44083,7 @@
     },
     {
       "itemName": "Anti-panties",
-      "itemId": null,
+      "itemId": 13288,
       "rawIds": [
         "hist13294",
         "13288"
@@ -44158,7 +44156,7 @@
     },
     {
       "itemName": "Deadman's chest",
-      "itemId": null,
+      "itemId": 24189,
       "rawIds": [
         "13317",
         "24189"
@@ -44167,7 +44165,7 @@
     },
     {
       "itemName": "Deadman's legs",
-      "itemId": null,
+      "itemId": 24190,
       "rawIds": [
         "13318",
         "24190"
@@ -44176,7 +44174,7 @@
     },
     {
       "itemName": "Deadman's cape",
-      "itemId": null,
+      "itemId": 24191,
       "rawIds": [
         "13319",
         "24191"
@@ -44253,7 +44251,7 @@
     },
     {
       "itemName": "Rock golem",
-      "itemId": null,
+      "itemId": 13321,
       "rawIds": [
         "13321",
         "21191",
@@ -44279,7 +44277,7 @@
     },
     {
       "itemName": "Beaver",
-      "itemId": null,
+      "itemId": 13322,
       "rawIds": [
         "28236",
         "31279",
@@ -44303,7 +44301,7 @@
     },
     {
       "itemName": "Baby chinchompa",
-      "itemId": null,
+      "itemId": 13324,
       "rawIds": [
         "13326",
         "13324",
@@ -44483,7 +44481,7 @@
     },
     {
       "itemName": "Broken shield",
-      "itemId": null,
+      "itemId": 763,
       "rawIds": [
         "763",
         "765"
@@ -44723,7 +44721,7 @@
     },
     {
       "itemName": "Cornflour",
-      "itemId": null,
+      "itemId": 7463,
       "rawIds": [
         "7463",
         "7466"
@@ -44916,7 +44914,7 @@
     },
     {
       "itemName": "Ensouled abyssal head",
-      "itemId": null,
+      "itemId": 13508,
       "rawIds": [
         "13508",
         "13507"
@@ -44941,7 +44939,7 @@
     },
     {
       "itemName": "Ensouled bloodveld head",
-      "itemId": null,
+      "itemId": 13496,
       "rawIds": [
         "13496",
         "13495"
@@ -44950,7 +44948,7 @@
     },
     {
       "itemName": "Ensouled dagannoth head",
-      "itemId": null,
+      "itemId": 13493,
       "rawIds": [
         "13493",
         "13492"
@@ -44999,7 +44997,7 @@
     },
     {
       "itemName": "Ensouled minotaur head",
-      "itemId": null,
+      "itemId": 13457,
       "rawIds": [
         "13457",
         "13456"
@@ -45056,7 +45054,7 @@
     },
     {
       "itemName": "Dark manuscript",
-      "itemId": null,
+      "itemId": 13514,
       "rawIds": [
         "13514",
         "13516",
@@ -45073,7 +45071,7 @@
     },
     {
       "itemName": "Ensouled demon head",
-      "itemId": null,
+      "itemId": 13502,
       "rawIds": [
         "13502",
         "13501"
@@ -45138,7 +45136,7 @@
     },
     {
       "itemName": "Ensouled imp head",
-      "itemId": null,
+      "itemId": 13454,
       "rawIds": [
         "13454",
         "13453"
@@ -45147,7 +45145,7 @@
     },
     {
       "itemName": "Ensouled tzhaar head",
-      "itemId": null,
+      "itemId": 13499,
       "rawIds": [
         "13499",
         "13498"
@@ -45180,7 +45178,7 @@
     },
     {
       "itemName": "Ensouled kalphite head",
-      "itemId": null,
+      "itemId": 13490,
       "rawIds": [
         "13490",
         "13489"
@@ -45189,7 +45187,7 @@
     },
     {
       "itemName": "Ensouled goblin head",
-      "itemId": null,
+      "itemId": 13448,
       "rawIds": [
         "13448",
         "13447"
@@ -45198,7 +45196,7 @@
     },
     {
       "itemName": "Ensouled monkey head",
-      "itemId": null,
+      "itemId": 13451,
       "rawIds": [
         "13451",
         "13450"
@@ -45207,7 +45205,7 @@
     },
     {
       "itemName": "Ensouled scorpion head",
-      "itemId": null,
+      "itemId": 13460,
       "rawIds": [
         "13460",
         "13459"
@@ -45216,7 +45214,7 @@
     },
     {
       "itemName": "Ensouled bear head",
-      "itemId": null,
+      "itemId": 13463,
       "rawIds": [
         "13463",
         "13462"
@@ -45225,7 +45223,7 @@
     },
     {
       "itemName": "Ensouled unicorn head",
-      "itemId": null,
+      "itemId": 13466,
       "rawIds": [
         "13466",
         "13465"
@@ -45234,7 +45232,7 @@
     },
     {
       "itemName": "Ensouled dog head",
-      "itemId": null,
+      "itemId": 13469,
       "rawIds": [
         "13469",
         "13468"
@@ -45243,7 +45241,7 @@
     },
     {
       "itemName": "Ensouled chaos druid head",
-      "itemId": null,
+      "itemId": 13472,
       "rawIds": [
         "13472",
         "13471"
@@ -45252,7 +45250,7 @@
     },
     {
       "itemName": "Ensouled giant head",
-      "itemId": null,
+      "itemId": 13475,
       "rawIds": [
         "13475",
         "13474"
@@ -45261,7 +45259,7 @@
     },
     {
       "itemName": "Ensouled ogre head",
-      "itemId": null,
+      "itemId": 13478,
       "rawIds": [
         "13478",
         "13477"
@@ -45270,7 +45268,7 @@
     },
     {
       "itemName": "Ensouled elf head",
-      "itemId": null,
+      "itemId": 13481,
       "rawIds": [
         "13481",
         "13480"
@@ -45279,7 +45277,7 @@
     },
     {
       "itemName": "Ensouled troll head",
-      "itemId": null,
+      "itemId": 13484,
       "rawIds": [
         "13484",
         "13483"
@@ -45288,7 +45286,7 @@
     },
     {
       "itemName": "Ensouled horror head",
-      "itemId": null,
+      "itemId": 13487,
       "rawIds": [
         "13487",
         "13486"
@@ -45297,7 +45295,7 @@
     },
     {
       "itemName": "Ensouled aviansie head",
-      "itemId": null,
+      "itemId": 13505,
       "rawIds": [
         "13505",
         "13504"
@@ -45306,7 +45304,7 @@
     },
     {
       "itemName": "Ensouled dragon head",
-      "itemId": null,
+      "itemId": 13511,
       "rawIds": [
         "13511",
         "13510"
@@ -45659,7 +45657,7 @@
     },
     {
       "itemName": "Servery incomplete stew",
-      "itemId": null,
+      "itemId": 13415,
       "rawIds": [
         "13415",
         "13416"
@@ -46638,7 +46636,7 @@
     },
     {
       "itemName": "Extended brush",
-      "itemId": null,
+      "itemId": 4191,
       "rawIds": [
         "4192",
         "4191",
@@ -46672,7 +46670,7 @@
     },
     {
       "itemName": "Farmer's strawhat",
-      "itemId": null,
+      "itemId": 13646,
       "rawIds": [
         "13647",
         "13646",
@@ -46699,7 +46697,7 @@
     },
     {
       "itemName": "Farmer's boro trousers",
-      "itemId": null,
+      "itemId": 13640,
       "rawIds": [
         "13641",
         "13640"
@@ -46708,7 +46706,7 @@
     },
     {
       "itemName": "Farmer's boots",
-      "itemId": null,
+      "itemId": 13644,
       "rawIds": [
         "13645",
         "13644"
@@ -46797,7 +46795,7 @@
     },
     {
       "itemName": "Attacker horn",
-      "itemId": null,
+      "itemId": 10516,
       "rawIds": [
         "10520",
         "10518",
@@ -46809,7 +46807,7 @@
     },
     {
       "itemName": "Healer horn",
-      "itemId": null,
+      "itemId": 10526,
       "rawIds": [
         "10530",
         "10528",
@@ -46926,7 +46924,7 @@
     },
     {
       "itemName": "Healer icon",
-      "itemId": null,
+      "itemId": 10559,
       "rawIds": [
         "20802",
         "23484",
@@ -46949,7 +46947,7 @@
     },
     {
       "itemName": "Defender icon",
-      "itemId": null,
+      "itemId": 10558,
       "rawIds": [
         "22341",
         "22727",
@@ -46972,7 +46970,7 @@
     },
     {
       "itemName": "Collector icon",
-      "itemId": null,
+      "itemId": 10557,
       "rawIds": [
         "23476",
         "22313",
@@ -46995,7 +46993,7 @@
     },
     {
       "itemName": "Attacker icon",
-      "itemId": null,
+      "itemId": 10556,
       "rawIds": [
         "22348",
         "22729",
@@ -47018,7 +47016,7 @@
     },
     {
       "itemName": "Collection bag",
-      "itemId": null,
+      "itemId": 10521,
       "rawIds": [
         "10525",
         "10523",
@@ -47197,7 +47195,7 @@
     },
     {
       "itemName": "Bag full of gems",
-      "itemId": null,
+      "itemId": 19473,
       "rawIds": [
         "19473",
         "25537",
@@ -47477,7 +47475,7 @@
     },
     {
       "itemName": "Mysterious note",
-      "itemId": null,
+      "itemId": 19505,
       "rawIds": [
         "19505",
         "19509",
@@ -47625,7 +47623,7 @@
     },
     {
       "itemName": "Lazy cat",
-      "itemId": null,
+      "itemId": 6550,
       "rawIds": [
         "6552",
         "6550",
@@ -47750,7 +47748,7 @@
     },
     {
       "itemName": "Phoenix",
-      "itemId": null,
+      "itemId": 20693,
       "rawIds": [
         "24484",
         "20693",
@@ -47890,7 +47888,7 @@
     },
     {
       "itemName": "Animals' bones",
-      "itemId": null,
+      "itemId": 6904,
       "rawIds": [
         "6904",
         "6907",
@@ -47989,7 +47987,7 @@
     },
     {
       "itemName": "Black slayer helmet (i)",
-      "itemId": null,
+      "itemId": 19641,
       "rawIds": [
         "25179",
         "26675",
@@ -47999,7 +47997,7 @@
     },
     {
       "itemName": "Green slayer helmet (i)",
-      "itemId": null,
+      "itemId": 19645,
       "rawIds": [
         "25181",
         "26676",
@@ -48009,7 +48007,7 @@
     },
     {
       "itemName": "Red slayer helmet (i)",
-      "itemId": null,
+      "itemId": 19649,
       "rawIds": [
         "25183",
         "26677",
@@ -48195,7 +48193,7 @@
     },
     {
       "itemName": "Clue scroll (master)",
-      "itemId": null,
+      "itemId": 19835,
       "rawIds": [
         "19835",
         "19835",
@@ -49448,7 +49446,7 @@
     },
     {
       "itemName": "Strange device",
-      "itemId": null,
+      "itemId": 23183,
       "rawIds": [
         "19939",
         "23183"
@@ -50073,7 +50071,7 @@
     },
     {
       "itemName": "Blue monkey",
-      "itemId": null,
+      "itemId": 8943,
       "rawIds": [
         "8943",
         "8944",
@@ -50083,7 +50081,7 @@
     },
     {
       "itemName": "Red monkey",
-      "itemId": null,
+      "itemId": 8946,
       "rawIds": [
         "8946",
         "8947",
@@ -51637,7 +51635,7 @@
     },
     {
       "itemName": "Tangleroot",
-      "itemId": null,
+      "itemId": 20661,
       "rawIds": [
         "20661",
         "24561",
@@ -51650,7 +51648,7 @@
     },
     {
       "itemName": "Rift guardian",
-      "itemId": null,
+      "itemId": 20665,
       "rawIds": [
         "20667",
         "20671",
@@ -51938,7 +51936,7 @@
     },
     {
       "itemName": "Manor key",
-      "itemId": null,
+      "itemId": 21052,
       "rawIds": [
         "21052",
         "20766"
@@ -51973,7 +51971,7 @@
     },
     {
       "itemName": "Emerald key",
-      "itemId": null,
+      "itemId": 21054,
       "rawIds": [
         "21054",
         "20768",
@@ -51983,7 +51981,7 @@
     },
     {
       "itemName": "Sapphire key",
-      "itemId": null,
+      "itemId": 21055,
       "rawIds": [
         "21055",
         "20769",
@@ -51993,7 +51991,7 @@
     },
     {
       "itemName": "Killer's knife",
-      "itemId": null,
+      "itemId": 21059,
       "rawIds": [
         "21059",
         "20781"
@@ -54909,7 +54907,7 @@
     },
     {
       "itemName": "Purple slayer helmet (i)",
-      "itemId": null,
+      "itemId": 21266,
       "rawIds": [
         "25185",
         "26678",
@@ -55436,7 +55434,7 @@
     },
     {
       "itemName": "Ancient wyvern shield",
-      "itemId": null,
+      "itemId": 21633,
       "rawIds": [
         "21633",
         "21634"
@@ -56416,7 +56414,7 @@
     },
     {
       "itemName": "Jonas mask",
-      "itemId": null,
+      "itemId": 21720,
       "rawIds": [
         "21719",
         "21720"
@@ -56577,7 +56575,7 @@
     },
     {
       "itemName": "Granite ring (i)",
-      "itemId": null,
+      "itemId": 21752,
       "rawIds": [
         "25193",
         "26685",
@@ -56637,7 +56635,7 @@
     },
     {
       "itemName": "Royal accord of twill",
-      "itemId": null,
+      "itemId": 21758,
       "rawIds": [
         "21758",
         "25817"
@@ -57076,7 +57074,7 @@
     },
     {
       "itemName": "Snow imp costume head",
-      "itemId": null,
+      "itemId": 21847,
       "rawIds": [
         "21841",
         "21847"
@@ -57085,7 +57083,7 @@
     },
     {
       "itemName": "Snow imp costume tail",
-      "itemId": null,
+      "itemId": 21853,
       "rawIds": [
         "21844",
         "21853"
@@ -57094,7 +57092,7 @@
     },
     {
       "itemName": "Snow imp costume body",
-      "itemId": null,
+      "itemId": 21849,
       "rawIds": [
         "21842",
         "21849"
@@ -57103,7 +57101,7 @@
     },
     {
       "itemName": "Snow imp costume legs",
-      "itemId": null,
+      "itemId": 21851,
       "rawIds": [
         "21843",
         "21851"
@@ -57112,7 +57110,7 @@
     },
     {
       "itemName": "Snow imp costume gloves",
-      "itemId": null,
+      "itemId": 21855,
       "rawIds": [
         "21845",
         "21855"
@@ -57121,7 +57119,7 @@
     },
     {
       "itemName": "Snow imp costume feet",
-      "itemId": null,
+      "itemId": 21857,
       "rawIds": [
         "21846",
         "21857"
@@ -57155,7 +57153,7 @@
     },
     {
       "itemName": "Map piece",
-      "itemId": null,
+      "itemId": 22009,
       "rawIds": [
         "22032",
         "22031",
@@ -57250,7 +57248,7 @@
     },
     {
       "itemName": "Opal dragon bolts (e)",
-      "itemId": null,
+      "itemId": 21932,
       "rawIds": [
         "21932",
         "27192"
@@ -57460,7 +57458,7 @@
     },
     {
       "itemName": "Turquoise slayer helmet (i)",
-      "itemId": null,
+      "itemId": 21890,
       "rawIds": [
         "25187",
         "26679",
@@ -57622,7 +57620,7 @@
     },
     {
       "itemName": "Dragonfire ward",
-      "itemId": null,
+      "itemId": 22002,
       "rawIds": [
         "22002",
         "22003"
@@ -57640,7 +57638,7 @@
     },
     {
       "itemName": "Dragon key piece",
-      "itemId": null,
+      "itemId": 22088,
       "rawIds": [
         "22091",
         "22090",
@@ -59110,7 +59108,7 @@
     },
     {
       "itemName": "Useless key",
-      "itemId": null,
+      "itemId": 9662,
       "rawIds": [
         "9662",
         "16684"
@@ -59571,7 +59569,7 @@
     },
     {
       "itemName": "Fish vial",
-      "itemId": null,
+      "itemId": 11427,
       "rawIds": [
         "11428",
         "11427"
@@ -59580,7 +59578,7 @@
     },
     {
       "itemName": "Junk",
-      "itemId": null,
+      "itemId": 12656,
       "rawIds": [
         "12657",
         "12656"
@@ -59684,7 +59682,7 @@
     },
     {
       "itemName": "Coin pouch",
-      "itemId": null,
+      "itemId": 22521,
       "rawIds": [
         "22537",
         "24703",
@@ -59753,7 +59751,7 @@
     },
     {
       "itemName": "Metal spade",
-      "itemId": null,
+      "itemId": 5586,
       "rawIds": [
         "5586",
         "5587"
@@ -59762,7 +59760,7 @@
     },
     {
       "itemName": "??? mixture",
-      "itemId": null,
+      "itemId": 5589,
       "rawIds": [
         "5590",
         "5591",
@@ -60220,7 +60218,7 @@
     },
     {
       "itemName": "Eek",
-      "itemId": null,
+      "itemId": 22684,
       "rawIds": [
         "hist22683",
         "22684"
@@ -60229,7 +60227,7 @@
     },
     {
       "itemName": "Clown mask",
-      "itemId": null,
+      "itemId": 22689,
       "rawIds": [
         "hist22688",
         "22689"
@@ -60238,7 +60236,7 @@
     },
     {
       "itemName": "Clown bow tie",
-      "itemId": null,
+      "itemId": 22692,
       "rawIds": [
         "hist22691",
         "22692"
@@ -60247,7 +60245,7 @@
     },
     {
       "itemName": "Clown gown",
-      "itemId": null,
+      "itemId": 22695,
       "rawIds": [
         "hist22694",
         "22695"
@@ -60256,7 +60254,7 @@
     },
     {
       "itemName": "Clown trousers",
-      "itemId": null,
+      "itemId": 22698,
       "rawIds": [
         "hist22697",
         "22698"
@@ -60265,7 +60263,7 @@
     },
     {
       "itemName": "Clown shoes",
-      "itemId": null,
+      "itemId": 22701,
       "rawIds": [
         "hist22700",
         "22701"
@@ -60539,7 +60537,7 @@
     },
     {
       "itemName": "Bottomless compost bucket",
-      "itemId": null,
+      "itemId": 22994,
       "rawIds": [
         "22997",
         "22994"
@@ -60992,7 +60990,7 @@
     },
     {
       "itemName": "Ikkle hydra",
-      "itemId": null,
+      "itemId": 22746,
       "rawIds": [
         "22746",
         "22748",
@@ -61268,7 +61266,7 @@
     },
     {
       "itemName": "Cormorant's glove",
-      "itemId": null,
+      "itemId": 22816,
       "rawIds": [
         "22817",
         "22816"
@@ -61471,7 +61469,7 @@
     },
     {
       "itemName": "Hydra slayer helmet (i)",
-      "itemId": null,
+      "itemId": 23075,
       "rawIds": [
         "25189",
         "26680",
@@ -61481,7 +61479,7 @@
     },
     {
       "itemName": "Treasure scroll",
-      "itemId": null,
+      "itemId": 23067,
       "rawIds": [
         "23068",
         "23067",
@@ -61659,7 +61657,7 @@
     },
     {
       "itemName": "Clue scroll (beginner)",
-      "itemId": null,
+      "itemId": 23182,
       "rawIds": [
         "23182",
         "23182",
@@ -62563,7 +62561,7 @@
     },
     {
       "itemName": "Board game piece",
-      "itemId": null,
+      "itemId": 3881,
       "rawIds": [
         "3869",
         "3883",
@@ -62607,7 +62605,7 @@
     },
     {
       "itemName": "Sraracha",
-      "itemId": null,
+      "itemId": 23495,
       "rawIds": [
         "25843",
         "25842",
@@ -63560,7 +63558,7 @@
     },
     {
       "itemName": "Crystal seed",
-      "itemId": null,
+      "itemId": 23808,
       "rawIds": [
         "23810",
         "23808"
@@ -63635,7 +63633,7 @@
     },
     {
       "itemName": "Clue scroll",
-      "itemId": 713,
+      "itemId": null,
       "rawIds": [
         "23814",
         "23817",
@@ -63999,7 +63997,7 @@
     },
     {
       "itemName": "Dragon pickaxe (or)",
-      "itemId": null,
+      "itemId": 23677,
       "rawIds": [
         "23677",
         "25376",
@@ -64538,7 +64536,7 @@
     },
     {
       "itemName": "Unsealed letter",
-      "itemId": null,
+      "itemId": 24256,
       "rawIds": [
         "24256",
         "24257"
@@ -64595,7 +64593,7 @@
     },
     {
       "itemName": "V's shield",
-      "itemId": null,
+      "itemId": 24266,
       "rawIds": [
         "24265",
         "24266"
@@ -64726,7 +64724,7 @@
     },
     {
       "itemName": "Spooky hood",
-      "itemId": null,
+      "itemId": 24305,
       "rawIds": [
         "24300",
         "24305"
@@ -64735,7 +64733,7 @@
     },
     {
       "itemName": "Spooky robe",
-      "itemId": null,
+      "itemId": 24307,
       "rawIds": [
         "24301",
         "24307"
@@ -64744,7 +64742,7 @@
     },
     {
       "itemName": "Spooky skirt",
-      "itemId": null,
+      "itemId": 24309,
       "rawIds": [
         "24302",
         "24309"
@@ -64753,7 +64751,7 @@
     },
     {
       "itemName": "Spooky gloves",
-      "itemId": null,
+      "itemId": 24311,
       "rawIds": [
         "24303",
         "24311"
@@ -64762,7 +64760,7 @@
     },
     {
       "itemName": "Spooky boots",
-      "itemId": null,
+      "itemId": 24313,
       "rawIds": [
         "24304",
         "24313"
@@ -65314,7 +65312,7 @@
     },
     {
       "itemName": "Iced gingerbread shield",
-      "itemId": null,
+      "itemId": 24438,
       "rawIds": [
         "24439",
         "24440",
@@ -65388,7 +65386,7 @@
     },
     {
       "itemName": "Twisted slayer helmet (i)",
-      "itemId": null,
+      "itemId": 24444,
       "rawIds": [
         "25191",
         "26681",
@@ -65558,7 +65556,7 @@
     },
     {
       "itemName": "Cat ears",
-      "itemId": null,
+      "itemId": 24525,
       "rawIds": [
         "hist24522",
         "24525"
@@ -65703,7 +65701,7 @@
     },
     {
       "itemName": "Odd cocktail",
-      "itemId": null,
+      "itemId": 2094,
       "rawIds": [
         "2098",
         "2100",
@@ -65810,7 +65808,7 @@
     },
     {
       "itemName": "Shoe",
-      "itemId": null,
+      "itemId": 3680,
       "rawIds": [
         "26662",
         "3681",
@@ -65848,7 +65846,7 @@
     },
     {
       "itemName": "Symbol",
-      "itemId": null,
+      "itemId": 3231,
       "rawIds": [
         "3233",
         "3237",
@@ -65875,7 +65873,7 @@
     },
     {
       "itemName": "Blade of saeldor (c)",
-      "itemId": null,
+      "itemId": 24551,
       "rawIds": [
         "24551",
         "25872",
@@ -66474,7 +66472,7 @@
     },
     {
       "itemName": "Mysterious page",
-      "itemId": null,
+      "itemId": 24763,
       "rawIds": [
         "24763",
         "24767",
@@ -66639,7 +66637,7 @@
     },
     {
       "itemName": "Hex edit detected",
-      "itemId": null,
+      "itemId": 6189,
       "rawIds": [
         "6191",
         "6198",
@@ -66688,7 +66686,7 @@
     },
     {
       "itemName": "Baby dragon bonemeal",
-      "itemId": null,
+      "itemId": 4260,
       "rawIds": [
         "4260",
         "28984"
@@ -67361,7 +67359,7 @@
     },
     {
       "itemName": "Extradimensional bag",
-      "itemId": null,
+      "itemId": 25106,
       "rawIds": [
         "25108",
         "25106"
@@ -67378,7 +67376,7 @@
     },
     {
       "itemName": "Infernal axe (or)",
-      "itemId": null,
+      "itemId": 25066,
       "rawIds": [
         "25066",
         "30347"
@@ -67387,7 +67385,7 @@
     },
     {
       "itemName": "Infernal pickaxe (or)",
-      "itemId": null,
+      "itemId": 25063,
       "rawIds": [
         "25063",
         "30345"
@@ -67396,7 +67394,7 @@
     },
     {
       "itemName": "Infernal harpoon (or)",
-      "itemId": null,
+      "itemId": 25059,
       "rawIds": [
         "25059",
         "30342"
@@ -67635,7 +67633,7 @@
     },
     {
       "itemName": "Soul fragment",
-      "itemId": null,
+      "itemId": 25201,
       "rawIds": [
         "25196",
         "25201"
@@ -67732,7 +67730,7 @@
     },
     {
       "itemName": "Red icon",
-      "itemId": null,
+      "itemId": 25228,
       "rawIds": [
         "25239",
         "25240",
@@ -67755,7 +67753,7 @@
     },
     {
       "itemName": "Blue icon",
-      "itemId": null,
+      "itemId": 25212,
       "rawIds": [
         "25223",
         "25224",
@@ -67842,7 +67840,7 @@
     },
     {
       "itemName": "Soul cape",
-      "itemId": null,
+      "itemId": 25344,
       "rawIds": [
         "25346",
         "25344"
@@ -67971,7 +67969,7 @@
     },
     {
       "itemName": "Dragon axe (or)",
-      "itemId": null,
+      "itemId": 25378,
       "rawIds": [
         "25378",
         "30352"
@@ -67980,7 +67978,7 @@
     },
     {
       "itemName": "Dragon harpoon (or)",
-      "itemId": null,
+      "itemId": 25373,
       "rawIds": [
         "25373",
         "30349"
@@ -69024,7 +69022,7 @@
     },
     {
       "itemName": "Essence pack",
-      "itemId": null,
+      "itemId": 25280,
       "rawIds": [
         "25535",
         "25280"
@@ -69624,7 +69622,7 @@
     },
     {
       "itemName": "Simple lockbox",
-      "itemId": null,
+      "itemId": 25646,
       "rawIds": [
         "25647",
         "25646"
@@ -69633,7 +69631,7 @@
     },
     {
       "itemName": "Elaborate lockbox",
-      "itemId": null,
+      "itemId": 25648,
       "rawIds": [
         "25649",
         "25648"
@@ -69642,7 +69640,7 @@
     },
     {
       "itemName": "Ornate lockbox",
-      "itemId": null,
+      "itemId": 25650,
       "rawIds": [
         "25651",
         "25650"
@@ -69699,7 +69697,7 @@
     },
     {
       "itemName": "Clan cloak",
-      "itemId": null,
+      "itemId": 25712,
       "rawIds": [
         "25720",
         "25712",
@@ -69714,7 +69712,7 @@
     },
     {
       "itemName": "Clan vexillum",
-      "itemId": null,
+      "itemId": 25721,
       "rawIds": [
         "25729",
         "25721",
@@ -70065,7 +70063,7 @@
     },
     {
       "itemName": "Rose's note",
-      "itemId": null,
+      "itemId": 25805,
       "rawIds": [
         "25808",
         "25806",
@@ -70083,7 +70081,7 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Bow of faerdhinen",
+      "itemName": "Bow of Faerdhinen",
       "itemId": 25865,
       "rawIds": [
         "25865"
@@ -70091,7 +70089,7 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Bow of faerdhinen (inactive)",
+      "itemName": "Bow of Faerdhinen (inactive)",
       "itemId": 25862,
       "rawIds": [
         "25862"
@@ -70139,19 +70137,13 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Bow of faerdhinen (c)",
-      "itemId": null,
+      "itemName": "Bow of Faerdhinen (c)",
+      "itemId": 25867,
       "rawIds": [
         "25867",
-        "25886",
         "25888",
-        "25890",
-        "25892",
         "25894",
-        "25896",
-        "25884",
-        "33021",
-        "27187"
+        "25884"
       ],
       "source": "infobox_item"
     },
@@ -70200,6 +70192,27 @@
       "itemId": 25837,
       "rawIds": [
         "25837"
+      ],
+      "source": "infobox_item"
+    },
+    {
+      "itemName": "Staff of the dead",
+      "itemId": 23613,
+      "rawIds": [
+        "23613"
+      ],
+      "source": "infobox_item"
+    },
+    {
+      "itemName": "Bow of faerdhinen (c)",
+      "itemId": null,
+      "rawIds": [
+        "25886",
+        "25890",
+        "25892",
+        "25896",
+        "33021",
+        "27187"
       ],
       "source": "infobox_item"
     },
@@ -70277,7 +70290,7 @@
     },
     {
       "itemName": "Tztok slayer helmet (i)",
-      "itemId": null,
+      "itemId": 25900,
       "rawIds": [
         "25902",
         "26682",
@@ -70287,7 +70300,7 @@
     },
     {
       "itemName": "Tzkal slayer helmet (i)",
-      "itemId": null,
+      "itemId": 25912,
       "rawIds": [
         "25914",
         "26684",
@@ -70297,7 +70310,7 @@
     },
     {
       "itemName": "Vampyric slayer helmet (i)",
-      "itemId": null,
+      "itemId": 25906,
       "rawIds": [
         "25908",
         "26683",
@@ -70569,7 +70582,7 @@
     },
     {
       "itemName": "Sliding piece (Zulrah)",
-      "itemId": null,
+      "itemId": 20283,
       "rawIds": [
         "20306",
         "20305",
@@ -70600,7 +70613,7 @@
     },
     {
       "itemName": "Sliding piece (Cerberus)",
-      "itemId": null,
+      "itemId": 20307,
       "rawIds": [
         "20330",
         "20329",
@@ -70631,7 +70644,7 @@
     },
     {
       "itemName": "Sliding piece (Gnome child)",
-      "itemId": null,
+      "itemId": 20331,
       "rawIds": [
         "20354",
         "20353",
@@ -70717,7 +70730,7 @@
     },
     {
       "itemName": "Cube part",
-      "itemId": null,
+      "itemId": 3063,
       "rawIds": [
         "3091",
         "3069",
@@ -70739,7 +70752,7 @@
     },
     {
       "itemName": "Spell",
-      "itemId": null,
+      "itemId": 3273,
       "rawIds": [
         "11147",
         "3323",
@@ -70879,7 +70892,7 @@
     },
     {
       "itemName": "Gear",
-      "itemId": null,
+      "itemId": 5562,
       "rawIds": [
         "5562",
         "5564",
@@ -71052,7 +71065,7 @@
     },
     {
       "itemName": "Skull staples",
-      "itemId": null,
+      "itemId": 10950,
       "rawIds": [
         "10950",
         "10951"
@@ -71076,8 +71089,16 @@
       "source": "infobox_item"
     },
     {
+      "itemName": "Wine of zamorak",
+      "itemId": 23489,
+      "rawIds": [
+        "23489"
+      ],
+      "source": "infobox_item"
+    },
+    {
       "itemName": "Gravestone",
-      "itemId": null,
+      "itemId": 24418,
       "rawIds": [
         "24524",
         "24418"
@@ -71199,7 +71220,7 @@
     },
     {
       "itemName": "null <sup><span style=\"cursor:help; border-bottom:1px dotted\" title=\"The name of this entity is not defined in the game.\">[?]</span></sup>[[Category:Pages with null name]]",
-      "itemId": 31337,
+      "itemId": null,
       "rawIds": [
         "796",
         "10860",
@@ -71421,7 +71442,7 @@
     },
     {
       "itemName": "Anim offhand",
-      "itemId": null,
+      "itemId": 25938,
       "rawIds": [
         "25938",
         "27548",
@@ -71514,7 +71535,7 @@
     },
     {
       "itemName": "Elidinis' ward (f)",
-      "itemId": null,
+      "itemId": 27251,
       "rawIds": [
         "27251",
         "33176"
@@ -71532,7 +71553,7 @@
     },
     {
       "itemName": "Sigil of the guardian angel",
-      "itemId": null,
+      "itemId": 26147,
       "rawIds": [
         "26146",
         "26147"
@@ -71541,7 +71562,7 @@
     },
     {
       "itemName": "Sigil of resilience",
-      "itemId": null,
+      "itemId": 25991,
       "rawIds": [
         "25990",
         "25991"
@@ -71550,7 +71571,7 @@
     },
     {
       "itemName": "Sigil of consistency",
-      "itemId": null,
+      "itemId": 25994,
       "rawIds": [
         "25993",
         "25994"
@@ -71559,7 +71580,7 @@
     },
     {
       "itemName": "Sigil of the formidable fighter",
-      "itemId": null,
+      "itemId": 25997,
       "rawIds": [
         "25996",
         "25997"
@@ -71568,7 +71589,7 @@
     },
     {
       "itemName": "Sigil of the rigorous ranger",
-      "itemId": null,
+      "itemId": 26000,
       "rawIds": [
         "25999",
         "26000"
@@ -71577,7 +71598,7 @@
     },
     {
       "itemName": "Sigil of the meticulous mage",
-      "itemId": null,
+      "itemId": 26003,
       "rawIds": [
         "26002",
         "26003"
@@ -71586,7 +71607,7 @@
     },
     {
       "itemName": "Sigil of fortification",
-      "itemId": null,
+      "itemId": 26006,
       "rawIds": [
         "26005",
         "26006"
@@ -71595,7 +71616,7 @@
     },
     {
       "itemName": "Sigil of barrows",
-      "itemId": null,
+      "itemId": 26009,
       "rawIds": [
         "26008",
         "26009"
@@ -71604,7 +71625,7 @@
     },
     {
       "itemName": "Sigil of deft strikes",
-      "itemId": null,
+      "itemId": 26012,
       "rawIds": [
         "26011",
         "26012"
@@ -71613,7 +71634,7 @@
     },
     {
       "itemName": "Sigil of freedom",
-      "itemId": null,
+      "itemId": 26015,
       "rawIds": [
         "26014",
         "26015"
@@ -71622,7 +71643,7 @@
     },
     {
       "itemName": "Sigil of enhanced harvest",
-      "itemId": null,
+      "itemId": 26018,
       "rawIds": [
         "26017",
         "26018"
@@ -71631,7 +71652,7 @@
     },
     {
       "itemName": "Sigil of storage",
-      "itemId": null,
+      "itemId": 26021,
       "rawIds": [
         "26020",
         "26021"
@@ -71640,7 +71661,7 @@
     },
     {
       "itemName": "Sigil of the smith",
-      "itemId": null,
+      "itemId": 26024,
       "rawIds": [
         "26023",
         "26024"
@@ -71649,7 +71670,7 @@
     },
     {
       "itemName": "Sigil of the alchemist",
-      "itemId": null,
+      "itemId": 26027,
       "rawIds": [
         "26026",
         "26027"
@@ -71658,7 +71679,7 @@
     },
     {
       "itemName": "Sigil of the fletcher",
-      "itemId": null,
+      "itemId": 26030,
       "rawIds": [
         "26029",
         "26030"
@@ -71667,7 +71688,7 @@
     },
     {
       "itemName": "Sigil of the chef",
-      "itemId": null,
+      "itemId": 26033,
       "rawIds": [
         "26032",
         "26033"
@@ -71676,7 +71697,7 @@
     },
     {
       "itemName": "Sigil of the craftsman",
-      "itemId": null,
+      "itemId": 26036,
       "rawIds": [
         "26035",
         "26036"
@@ -71685,7 +71706,7 @@
     },
     {
       "itemName": "Sigil of the abyss",
-      "itemId": null,
+      "itemId": 26039,
       "rawIds": [
         "26038",
         "26039"
@@ -71694,7 +71715,7 @@
     },
     {
       "itemName": "Sigil of stamina",
-      "itemId": null,
+      "itemId": 26042,
       "rawIds": [
         "26041",
         "26042"
@@ -71703,7 +71724,7 @@
     },
     {
       "itemName": "Sigil of the potion master",
-      "itemId": null,
+      "itemId": 26045,
       "rawIds": [
         "26044",
         "26045"
@@ -71712,7 +71733,7 @@
     },
     {
       "itemName": "Sigil of the eternal jeweller",
-      "itemId": null,
+      "itemId": 26048,
       "rawIds": [
         "26047",
         "26048"
@@ -71721,7 +71742,7 @@
     },
     {
       "itemName": "Sigil of the treasure hunter",
-      "itemId": null,
+      "itemId": 26051,
       "rawIds": [
         "26050",
         "26051"
@@ -71730,7 +71751,7 @@
     },
     {
       "itemName": "Sigil of mobility",
-      "itemId": null,
+      "itemId": 26054,
       "rawIds": [
         "26053",
         "26054"
@@ -71739,7 +71760,7 @@
     },
     {
       "itemName": "Sigil of exaggeration",
-      "itemId": null,
+      "itemId": 26057,
       "rawIds": [
         "26056",
         "26057"
@@ -71748,7 +71769,7 @@
     },
     {
       "itemName": "Sigil of specialised strikes",
-      "itemId": null,
+      "itemId": 26060,
       "rawIds": [
         "26059",
         "26060"
@@ -71757,7 +71778,7 @@
     },
     {
       "itemName": "Sigil of the porcupine",
-      "itemId": null,
+      "itemId": 26063,
       "rawIds": [
         "26062",
         "26063"
@@ -71766,7 +71787,7 @@
     },
     {
       "itemName": "Sigil of binding",
-      "itemId": null,
+      "itemId": 26066,
       "rawIds": [
         "26065",
         "26066"
@@ -71775,7 +71796,7 @@
     },
     {
       "itemName": "Sigil of escaping",
-      "itemId": null,
+      "itemId": 26069,
       "rawIds": [
         "26068",
         "26069"
@@ -71784,7 +71805,7 @@
     },
     {
       "itemName": "Sigil of the ruthless ranger",
-      "itemId": null,
+      "itemId": 26072,
       "rawIds": [
         "26071",
         "26072"
@@ -71793,7 +71814,7 @@
     },
     {
       "itemName": "Sigil of the feral fighter",
-      "itemId": null,
+      "itemId": 26075,
       "rawIds": [
         "26074",
         "26075"
@@ -71802,7 +71823,7 @@
     },
     {
       "itemName": "Sigil of the menacing mage",
-      "itemId": null,
+      "itemId": 26078,
       "rawIds": [
         "26077",
         "26078"
@@ -71811,7 +71832,7 @@
     },
     {
       "itemName": "Sigil of prosperity",
-      "itemId": null,
+      "itemId": 26081,
       "rawIds": [
         "26080",
         "26081"
@@ -71820,7 +71841,7 @@
     },
     {
       "itemName": "Sigil of the dwarves",
-      "itemId": null,
+      "itemId": 26084,
       "rawIds": [
         "26083",
         "26084"
@@ -71829,7 +71850,7 @@
     },
     {
       "itemName": "Sigil of the elves",
-      "itemId": null,
+      "itemId": 26087,
       "rawIds": [
         "26086",
         "26087"
@@ -71838,7 +71859,7 @@
     },
     {
       "itemName": "Sigil of the barbarians",
-      "itemId": null,
+      "itemId": 26090,
       "rawIds": [
         "26089",
         "26090"
@@ -71847,7 +71868,7 @@
     },
     {
       "itemName": "Sigil of the gnomes",
-      "itemId": null,
+      "itemId": 26093,
       "rawIds": [
         "26092",
         "26093"
@@ -71856,7 +71877,7 @@
     },
     {
       "itemName": "Sigil of nature",
-      "itemId": null,
+      "itemId": 26096,
       "rawIds": [
         "26095",
         "26096"
@@ -71865,7 +71886,7 @@
     },
     {
       "itemName": "Sigil of devotion",
-      "itemId": null,
+      "itemId": 26099,
       "rawIds": [
         "26098",
         "26099"
@@ -71874,7 +71895,7 @@
     },
     {
       "itemName": "Sigil of the forager",
-      "itemId": null,
+      "itemId": 26102,
       "rawIds": [
         "26101",
         "26102"
@@ -71883,7 +71904,7 @@
     },
     {
       "itemName": "Sigil of garments",
-      "itemId": null,
+      "itemId": 26105,
       "rawIds": [
         "26104",
         "26105"
@@ -71892,7 +71913,7 @@
     },
     {
       "itemName": "Sigil of slaughter",
-      "itemId": null,
+      "itemId": 26108,
       "rawIds": [
         "26107",
         "26108"
@@ -71901,7 +71922,7 @@
     },
     {
       "itemName": "Sigil of the fortune farmer",
-      "itemId": null,
+      "itemId": 26111,
       "rawIds": [
         "26110",
         "26111"
@@ -71910,7 +71931,7 @@
     },
     {
       "itemName": "Sigil of versatility",
-      "itemId": null,
+      "itemId": 26114,
       "rawIds": [
         "26113",
         "26114"
@@ -71919,7 +71940,7 @@
     },
     {
       "itemName": "Sigil of the serpent",
-      "itemId": null,
+      "itemId": 26117,
       "rawIds": [
         "26116",
         "26117"
@@ -71928,7 +71949,7 @@
     },
     {
       "itemName": "Sigil of supreme stamina",
-      "itemId": null,
+      "itemId": 26120,
       "rawIds": [
         "26119",
         "26120"
@@ -71937,7 +71958,7 @@
     },
     {
       "itemName": "Sigil of preservation",
-      "itemId": null,
+      "itemId": 26123,
       "rawIds": [
         "26122",
         "26123"
@@ -71946,7 +71967,7 @@
     },
     {
       "itemName": "Sigil of finality",
-      "itemId": null,
+      "itemId": 26126,
       "rawIds": [
         "26125",
         "26126"
@@ -71955,7 +71976,7 @@
     },
     {
       "itemName": "Sigil of pious protection",
-      "itemId": null,
+      "itemId": 26129,
       "rawIds": [
         "26128",
         "26129"
@@ -71964,7 +71985,7 @@
     },
     {
       "itemName": "Sigil of aggression",
-      "itemId": null,
+      "itemId": 26132,
       "rawIds": [
         "26131",
         "26132"
@@ -71973,7 +71994,7 @@
     },
     {
       "itemName": "Sigil of rampage",
-      "itemId": null,
+      "itemId": 26135,
       "rawIds": [
         "26134",
         "26135"
@@ -71982,7 +72003,7 @@
     },
     {
       "itemName": "Sigil of the skiller",
-      "itemId": null,
+      "itemId": 26138,
       "rawIds": [
         "26137",
         "26138"
@@ -71991,7 +72012,7 @@
     },
     {
       "itemName": "Sigil of remote storage",
-      "itemId": null,
+      "itemId": 26141,
       "rawIds": [
         "26140",
         "26141"
@@ -72000,7 +72021,7 @@
     },
     {
       "itemName": "Sigil of last recall",
-      "itemId": null,
+      "itemId": 26144,
       "rawIds": [
         "26143",
         "26144"
@@ -72025,7 +72046,7 @@
     },
     {
       "itemName": "Group ironman platebody",
-      "itemId": null,
+      "itemId": 26158,
       "rawIds": [
         "26158",
         "26162",
@@ -72060,7 +72081,7 @@
     },
     {
       "itemName": "Hardcore group ironman platebody",
-      "itemId": null,
+      "itemId": 26172,
       "rawIds": [
         "26172",
         "26176",
@@ -72097,7 +72118,7 @@
     },
     {
       "itemName": "Zaryte bow",
-      "itemId": null,
+      "itemId": 26239,
       "rawIds": [
         "26239",
         "26237"
@@ -72433,7 +72454,7 @@
     },
     {
       "itemName": "Chocolate chips",
-      "itemId": null,
+      "itemId": 26304,
       "rawIds": [
         "26304",
         "26306"
@@ -72458,7 +72479,7 @@
     },
     {
       "itemName": "Secret santa present",
-      "itemId": null,
+      "itemId": 26298,
       "rawIds": [
         "26302",
         "26300",
@@ -73109,7 +73130,7 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Book of balance (or)",
+      "itemName": "Book of Balance (or)",
       "itemId": 26488,
       "rawIds": [
         "26488"
@@ -73690,7 +73711,7 @@
     },
     {
       "itemName": "Colossal pouch",
-      "itemId": null,
+      "itemId": 26784,
       "rawIds": [
         "26786",
         "26784",
@@ -73820,7 +73841,7 @@
     },
     {
       "itemName": "Ring of the elements",
-      "itemId": null,
+      "itemId": 26815,
       "rawIds": [
         "26818",
         "26815"
@@ -74418,7 +74439,7 @@
     },
     {
       "itemName": "Dragon claws (or)",
-      "itemId": null,
+      "itemId": 26708,
       "rawIds": [
         "26708",
         "beta26708"
@@ -74427,7 +74448,7 @@
     },
     {
       "itemName": "Dragon warhammer (or)",
-      "itemId": null,
+      "itemId": 26710,
       "rawIds": [
         "26710",
         "beta26710"
@@ -74436,7 +74457,7 @@
     },
     {
       "itemName": "Heavy ballista (or)",
-      "itemId": null,
+      "itemId": 26712,
       "rawIds": [
         "26712",
         "beta26712"
@@ -74445,7 +74466,7 @@
     },
     {
       "itemName": "Armadyl helmet (or)",
-      "itemId": null,
+      "itemId": 26714,
       "rawIds": [
         "26714",
         "beta26714"
@@ -74454,7 +74475,7 @@
     },
     {
       "itemName": "Armadyl chestplate (or)",
-      "itemId": null,
+      "itemId": 26715,
       "rawIds": [
         "26715",
         "beta26715"
@@ -74463,7 +74484,7 @@
     },
     {
       "itemName": "Armadyl chainskirt (or)",
-      "itemId": null,
+      "itemId": 26716,
       "rawIds": [
         "26716",
         "beta26716"
@@ -74472,7 +74493,7 @@
     },
     {
       "itemName": "Bandos chestplate (or)",
-      "itemId": null,
+      "itemId": 26718,
       "rawIds": [
         "26718",
         "beta26718"
@@ -74481,7 +74502,7 @@
     },
     {
       "itemName": "Bandos tassets (or)",
-      "itemId": null,
+      "itemId": 26719,
       "rawIds": [
         "26719",
         "beta26719"
@@ -74490,7 +74511,7 @@
     },
     {
       "itemName": "Bandos boots (or)",
-      "itemId": null,
+      "itemId": 26720,
       "rawIds": [
         "26720",
         "beta26720"
@@ -74796,7 +74817,7 @@
     },
     {
       "itemName": "Lost bag",
-      "itemId": null,
+      "itemId": 26912,
       "rawIds": [
         "26984",
         "26986",
@@ -74807,7 +74828,7 @@
     },
     {
       "itemName": "Amulet of the eye",
-      "itemId": null,
+      "itemId": 26914,
       "rawIds": [
         "26990",
         "26992",
@@ -75162,7 +75183,7 @@
     },
     {
       "itemName": "Scarab emblem",
-      "itemId": null,
+      "itemId": 26956,
       "rawIds": [
         "26953",
         "26956"
@@ -75187,7 +75208,7 @@
     },
     {
       "itemName": "Ensouled hellhound head",
-      "itemId": null,
+      "itemId": 26997,
       "rawIds": [
         "26997",
         "26996"
@@ -75349,7 +75370,7 @@
     },
     {
       "itemName": "Flower crown",
-      "itemId": null,
+      "itemId": 27035,
       "rawIds": [
         "27145",
         "27141",
@@ -75397,7 +75418,7 @@
     },
     {
       "itemName": "Group ironman platebody (unranked)",
-      "itemId": null,
+      "itemId": 27048,
       "rawIds": [
         "27048",
         "27052",
@@ -75544,7 +75565,7 @@
     },
     {
       "itemName": "Masori body (f)",
-      "itemId": null,
+      "itemId": 27238,
       "rawIds": [
         "27238",
         "33190"
@@ -75553,7 +75574,7 @@
     },
     {
       "itemName": "Masori chaps (f)",
-      "itemId": null,
+      "itemId": 27241,
       "rawIds": [
         "27241",
         "33192"
@@ -76408,7 +76429,7 @@
     },
     {
       "itemName": "Accursed sceptre (u)",
-      "itemId": 27662,
+      "itemId": null,
       "rawIds": [
         "27662",
         "beta25488",
@@ -76530,7 +76551,7 @@
     },
     {
       "itemName": "Dynamite(p)",
-      "itemId": null,
+      "itemId": 27426,
       "rawIds": [
         "27426",
         "beta27426"
@@ -76588,7 +76609,7 @@
     },
     {
       "itemName": "Ursine chainmace (u)",
-      "itemId": 27657,
+      "itemId": null,
       "rawIds": [
         "27657",
         "beta25486"
@@ -76616,7 +76637,7 @@
     },
     {
       "itemName": "Webweaver bow (u)",
-      "itemId": 27652,
+      "itemId": null,
       "rawIds": [
         "27652",
         "beta25484"
@@ -76729,7 +76750,7 @@
     },
     {
       "itemName": "Halloween wig",
-      "itemId": null,
+      "itemId": 27497,
       "rawIds": [
         "27505",
         "27499",
@@ -76814,7 +76835,7 @@
     },
     {
       "itemName": "Treat cauldron",
-      "itemId": null,
+      "itemId": 27463,
       "rawIds": [
         "27471",
         "27465",
@@ -76842,7 +76863,7 @@
     },
     {
       "itemName": "Dirty note",
-      "itemId": null,
+      "itemId": 27515,
       "rawIds": [
         "27515",
         "27516",
@@ -76877,7 +76898,7 @@
     },
     {
       "itemName": "Wood carving",
-      "itemId": null,
+      "itemId": 27523,
       "rawIds": [
         "27529",
         "27537",
@@ -77082,7 +77103,7 @@
     },
     {
       "itemName": "Sack of coal",
-      "itemId": null,
+      "itemId": 27570,
       "rawIds": [
         "27558",
         "27570"
@@ -77292,7 +77313,7 @@
     },
     {
       "itemName": "Jewel shard",
-      "itemId": null,
+      "itemId": 27605,
       "rawIds": [
         "27605",
         "27606"
@@ -77309,7 +77330,7 @@
     },
     {
       "itemName": "Muphin",
-      "itemId": null,
+      "itemId": 27590,
       "rawIds": [
         "27590",
         "27593",
@@ -77796,7 +77817,7 @@
     },
     {
       "itemName": "Dark bow (bh)",
-      "itemId": null,
+      "itemId": 27853,
       "rawIds": [
         "27853",
         "beta27853"
@@ -77805,7 +77826,7 @@
     },
     {
       "itemName": "Barrelchest anchor (bh)",
-      "itemId": null,
+      "itemId": 27855,
       "rawIds": [
         "27855",
         "beta27855"
@@ -77814,7 +77835,7 @@
     },
     {
       "itemName": "Dragon longsword (bh)",
-      "itemId": null,
+      "itemId": 27859,
       "rawIds": [
         "27859",
         "beta27859"
@@ -77823,7 +77844,7 @@
     },
     {
       "itemName": "Dragon mace (bh)",
-      "itemId": null,
+      "itemId": 27857,
       "rawIds": [
         "27857",
         "beta27857"
@@ -77832,7 +77853,7 @@
     },
     {
       "itemName": "Abyssal dagger (bh)",
-      "itemId": null,
+      "itemId": 27861,
       "rawIds": [
         "27861",
         "beta27861"
@@ -77921,7 +77942,7 @@
     },
     {
       "itemName": "Nest hat",
-      "itemId": null,
+      "itemId": 27875,
       "rawIds": [
         "27875",
         "27877"
@@ -79770,7 +79791,7 @@
     },
     {
       "itemName": "Gooey note",
-      "itemId": null,
+      "itemId": 28468,
       "rawIds": [
         "28469",
         "28470",
@@ -79780,7 +79801,7 @@
     },
     {
       "itemName": "Slimy tablet",
-      "itemId": null,
+      "itemId": 28465,
       "rawIds": [
         "28466",
         "28467",
@@ -79966,7 +79987,7 @@
     },
     {
       "itemName": "Damp tablet",
-      "itemId": null,
+      "itemId": 28439,
       "rawIds": [
         "28439",
         "28440"
@@ -80192,7 +80213,7 @@
     },
     {
       "itemName": "Tatty page",
-      "itemId": null,
+      "itemId": 28394,
       "rawIds": [
         "28400",
         "28399",
@@ -80222,7 +80243,7 @@
     },
     {
       "itemName": "Unfinished serum",
-      "itemId": null,
+      "itemId": 28386,
       "rawIds": [
         "28386",
         "28387"
@@ -80304,7 +80325,7 @@
     },
     {
       "itemName": "Shadow key",
-      "itemId": null,
+      "itemId": 28370,
       "rawIds": [
         "28371",
         "28374",
@@ -80372,7 +80393,7 @@
     },
     {
       "itemName": "Icon segment",
-      "itemId": null,
+      "itemId": 28361,
       "rawIds": [
         "28361",
         "28362"
@@ -80381,7 +80402,7 @@
     },
     {
       "itemName": "Blackstone fragment",
-      "itemId": null,
+      "itemId": 28357,
       "rawIds": [
         "28357",
         "28356"
@@ -80617,7 +80638,7 @@
     },
     {
       "itemName": "Sigil of sustenance",
-      "itemId": null,
+      "itemId": 28478,
       "rawIds": [
         "28477",
         "28478"
@@ -80626,7 +80647,7 @@
     },
     {
       "itemName": "Sigil of hoarding",
-      "itemId": null,
+      "itemId": 28481,
       "rawIds": [
         "28480",
         "28481"
@@ -80635,7 +80656,7 @@
     },
     {
       "itemName": "Sigil of the alchemaniac",
-      "itemId": null,
+      "itemId": 28484,
       "rawIds": [
         "28483",
         "28484"
@@ -80644,7 +80665,7 @@
     },
     {
       "itemName": "Sigil of the hunter",
-      "itemId": null,
+      "itemId": 28487,
       "rawIds": [
         "28486",
         "28487"
@@ -80653,7 +80674,7 @@
     },
     {
       "itemName": "Sigil of resistance",
-      "itemId": null,
+      "itemId": 28490,
       "rawIds": [
         "28489",
         "28490"
@@ -80662,7 +80683,7 @@
     },
     {
       "itemName": "Sigil of agile fortune",
-      "itemId": null,
+      "itemId": 28493,
       "rawIds": [
         "28492",
         "28493"
@@ -80671,7 +80692,7 @@
     },
     {
       "itemName": "Sigil of the food master",
-      "itemId": null,
+      "itemId": 28496,
       "rawIds": [
         "28495",
         "28496"
@@ -80680,7 +80701,7 @@
     },
     {
       "itemName": "Sigil of the well fed",
-      "itemId": null,
+      "itemId": 28499,
       "rawIds": [
         "28498",
         "28499"
@@ -80689,7 +80710,7 @@
     },
     {
       "itemName": "Sigil of the infernal chef",
-      "itemId": null,
+      "itemId": 28502,
       "rawIds": [
         "28501",
         "28502"
@@ -80698,7 +80719,7 @@
     },
     {
       "itemName": "Sigil of the infernal smith",
-      "itemId": null,
+      "itemId": 28505,
       "rawIds": [
         "28504",
         "28505"
@@ -80707,7 +80728,7 @@
     },
     {
       "itemName": "Sigil of the lightbearer",
-      "itemId": null,
+      "itemId": 28508,
       "rawIds": [
         "28507",
         "28508"
@@ -80716,7 +80737,7 @@
     },
     {
       "itemName": "Sigil of the bloodhound",
-      "itemId": null,
+      "itemId": 28511,
       "rawIds": [
         "28510",
         "28511"
@@ -80725,7 +80746,7 @@
     },
     {
       "itemName": "Sigil of precision",
-      "itemId": null,
+      "itemId": 28514,
       "rawIds": [
         "28513",
         "28514"
@@ -80734,7 +80755,7 @@
     },
     {
       "itemName": "Sigil of the augmented thrall",
-      "itemId": null,
+      "itemId": 28517,
       "rawIds": [
         "28516",
         "28517"
@@ -80743,7 +80764,7 @@
     },
     {
       "itemName": "Sigil of faith",
-      "itemId": null,
+      "itemId": 28520,
       "rawIds": [
         "28519",
         "28520"
@@ -80752,7 +80773,7 @@
     },
     {
       "itemName": "Sigil of titanium",
-      "itemId": null,
+      "itemId": 28523,
       "rawIds": [
         "28522",
         "28523"
@@ -80761,7 +80782,7 @@
     },
     {
       "itemName": "Sigil of the ninja",
-      "itemId": null,
+      "itemId": 28526,
       "rawIds": [
         "28525",
         "28526"
@@ -80770,7 +80791,7 @@
     },
     {
       "itemName": "Sigil of woodcraft",
-      "itemId": null,
+      "itemId": 28529,
       "rawIds": [
         "28528",
         "28529"
@@ -80811,7 +80832,7 @@
     },
     {
       "itemName": "Trinket of vengeance",
-      "itemId": null,
+      "itemId": 28561,
       "rawIds": [
         "28561",
         "28561",
@@ -80952,7 +80973,7 @@
     },
     {
       "itemName": "Sliding piece (Theatre of Blood)",
-      "itemId": null,
+      "itemId": 23418,
       "rawIds": [
         "23441",
         "23440",
@@ -81031,7 +81052,7 @@
     },
     {
       "itemName": "Spider hat",
-      "itemId": null,
+      "itemId": 28603,
       "rawIds": [
         "28609",
         "28605",
@@ -81821,7 +81842,7 @@
     },
     {
       "itemName": "Blood moon helm",
-      "itemId": null,
+      "itemId": 29028,
       "rawIds": [
         "29047",
         "29028",
@@ -81839,7 +81860,7 @@
     },
     {
       "itemName": "Blood moon chestplate",
-      "itemId": null,
+      "itemId": 29022,
       "rawIds": [
         "29043",
         "29022",
@@ -81857,7 +81878,7 @@
     },
     {
       "itemName": "Blood moon tassets",
-      "itemId": null,
+      "itemId": 29025,
       "rawIds": [
         "29045",
         "29025",
@@ -81884,7 +81905,7 @@
     },
     {
       "itemName": "Blue moon helm",
-      "itemId": null,
+      "itemId": 29019,
       "rawIds": [
         "29041",
         "29019",
@@ -81902,7 +81923,7 @@
     },
     {
       "itemName": "Blue moon chestplate",
-      "itemId": null,
+      "itemId": 29013,
       "rawIds": [
         "29037",
         "29013",
@@ -81920,7 +81941,7 @@
     },
     {
       "itemName": "Blue moon tassets",
-      "itemId": null,
+      "itemId": 29016,
       "rawIds": [
         "29039",
         "29016",
@@ -81947,7 +81968,7 @@
     },
     {
       "itemName": "Eclipse moon helm",
-      "itemId": null,
+      "itemId": 29010,
       "rawIds": [
         "29035",
         "29010",
@@ -81965,7 +81986,7 @@
     },
     {
       "itemName": "Eclipse moon chestplate",
-      "itemId": null,
+      "itemId": 29004,
       "rawIds": [
         "29031",
         "29004",
@@ -81983,7 +82004,7 @@
     },
     {
       "itemName": "Eclipse moon tassets",
-      "itemId": null,
+      "itemId": 29007,
       "rawIds": [
         "29033",
         "29007",
@@ -83416,7 +83437,7 @@
     },
     {
       "itemName": "Blessed bone statuette",
-      "itemId": null,
+      "itemId": 29338,
       "rawIds": [
         "29342",
         "29338",
@@ -84372,7 +84393,7 @@
     },
     {
       "itemName": "Teleorb",
-      "itemId": null,
+      "itemId": 29536,
       "rawIds": [
         "29536",
         "29537"
@@ -84469,7 +84490,7 @@
     },
     {
       "itemName": "Sigil of deception",
-      "itemId": null,
+      "itemId": 29658,
       "rawIds": [
         "29657",
         "29658"
@@ -84478,7 +84499,7 @@
     },
     {
       "itemName": "Sigil of litheness",
-      "itemId": null,
+      "itemId": 29661,
       "rawIds": [
         "29660",
         "29661"
@@ -84487,7 +84508,7 @@
     },
     {
       "itemName": "Sigil of revoked limitation",
-      "itemId": null,
+      "itemId": 29652,
       "rawIds": [
         "29651",
         "29652"
@@ -84496,7 +84517,7 @@
     },
     {
       "itemName": "Sigil of the swashbuckler",
-      "itemId": null,
+      "itemId": 29673,
       "rawIds": [
         "29672",
         "29673"
@@ -84521,7 +84542,7 @@
     },
     {
       "itemName": "Sigil of restoration",
-      "itemId": null,
+      "itemId": 29670,
       "rawIds": [
         "29669",
         "29670"
@@ -84554,7 +84575,7 @@
     },
     {
       "itemName": "Sigil of the rampart",
-      "itemId": null,
+      "itemId": 29655,
       "rawIds": [
         "29654",
         "29655"
@@ -84571,7 +84592,7 @@
     },
     {
       "itemName": "Sigil of onslaught",
-      "itemId": null,
+      "itemId": 29667,
       "rawIds": [
         "29666",
         "29667"
@@ -84580,7 +84601,7 @@
     },
     {
       "itemName": "Sigil of meticulousness",
-      "itemId": null,
+      "itemId": 29649,
       "rawIds": [
         "29648",
         "29649"
@@ -84605,7 +84626,7 @@
     },
     {
       "itemName": "Sigil of the adroit",
-      "itemId": null,
+      "itemId": 29664,
       "rawIds": [
         "29663",
         "29664"
@@ -84622,7 +84643,7 @@
     },
     {
       "itemName": "Sigil of arcane swiftness",
-      "itemId": null,
+      "itemId": 29679,
       "rawIds": [
         "29678",
         "29679"
@@ -84631,7 +84652,7 @@
     },
     {
       "itemName": "Sigil of the gunslinger",
-      "itemId": null,
+      "itemId": 29676,
       "rawIds": [
         "29675",
         "29676"
@@ -84736,7 +84757,7 @@
     },
     {
       "itemName": "Araxyte slayer helmet (i)",
-      "itemId": null,
+      "itemId": 29818,
       "rawIds": [
         "29820",
         "29822",
@@ -84834,7 +84855,7 @@
     },
     {
       "itemName": "Dni23 torso darkbuttons",
-      "itemId": null,
+      "itemId": 29688,
       "rawIds": [
         "29690",
         "29688"
@@ -84843,7 +84864,7 @@
     },
     {
       "itemName": "Dni23 torso rippedweskit",
-      "itemId": null,
+      "itemId": 29700,
       "rawIds": [
         "29700",
         "29702"
@@ -85204,7 +85225,7 @@
     },
     {
       "itemName": "Alchemist's amulet",
-      "itemId": null,
+      "itemId": 29988,
       "rawIds": [
         "29990",
         "29988"
@@ -85245,7 +85266,7 @@
     },
     {
       "itemName": "Prescription goggles",
-      "itemId": null,
+      "itemId": 29974,
       "rawIds": [
         "29974",
         "29976"
@@ -85254,7 +85275,7 @@
     },
     {
       "itemName": "Alchemist labcoat",
-      "itemId": null,
+      "itemId": 29978,
       "rawIds": [
         "29978",
         "29980"
@@ -85263,7 +85284,7 @@
     },
     {
       "itemName": "Alchemist pants",
-      "itemId": null,
+      "itemId": 29982,
       "rawIds": [
         "29982",
         "29984"
@@ -85296,7 +85317,7 @@
     },
     {
       "itemName": "Alco-augmentator",
-      "itemId": null,
+      "itemId": 30014,
       "rawIds": [
         "30024",
         "30014"
@@ -85313,7 +85334,7 @@
     },
     {
       "itemName": "Anti-leech lotion",
-      "itemId": null,
+      "itemId": 30018,
       "rawIds": [
         "30028",
         "30018"
@@ -85330,7 +85351,7 @@
     },
     {
       "itemName": "Aqualux amalgam",
-      "itemId": null,
+      "itemId": 30015,
       "rawIds": [
         "30025",
         "30015"
@@ -85339,7 +85360,7 @@
     },
     {
       "itemName": "Azure aura mix",
-      "itemId": null,
+      "itemId": 30016,
       "rawIds": [
         "30026",
         "30016"
@@ -85672,7 +85693,7 @@
     },
     {
       "itemName": "Liplack liquor",
-      "itemId": null,
+      "itemId": 30017,
       "rawIds": [
         "30027",
         "30017"
@@ -85689,7 +85710,7 @@
     },
     {
       "itemName": "Mammoth-might mix",
-      "itemId": null,
+      "itemId": 30011,
       "rawIds": [
         "30021",
         "30011"
@@ -85698,7 +85719,7 @@
     },
     {
       "itemName": "Marley's moonlight",
-      "itemId": null,
+      "itemId": 30013,
       "rawIds": [
         "30023",
         "30013"
@@ -85707,7 +85728,7 @@
     },
     {
       "itemName": "Megalite liquid",
-      "itemId": null,
+      "itemId": 30019,
       "rawIds": [
         "30029",
         "30019"
@@ -85724,7 +85745,7 @@
     },
     {
       "itemName": "Mixalot",
-      "itemId": null,
+      "itemId": 30020,
       "rawIds": [
         "30030",
         "30020"
@@ -85765,7 +85786,7 @@
     },
     {
       "itemName": "Mystic mana amalgam",
-      "itemId": null,
+      "itemId": 30012,
       "rawIds": [
         "30022",
         "30012"
@@ -85863,7 +85884,7 @@
     },
     {
       "itemName": "Scrap of paper",
-      "itemId": null,
+      "itemId": 29880,
       "rawIds": [
         "29880",
         "29882",
@@ -85906,7 +85927,7 @@
     },
     {
       "itemName": "Test kebab",
-      "itemId": null,
+      "itemId": 29898,
       "rawIds": [
         "29898",
         "29899"
@@ -86770,7 +86791,7 @@
     },
     {
       "itemName": "Mastaba key",
-      "itemId": null,
+      "itemId": 30308,
       "rawIds": [
         "30309",
         "30308"
@@ -86973,7 +86994,7 @@
     },
     {
       "itemName": "Asgarnia echo orb",
-      "itemId": null,
+      "itemId": 30393,
       "rawIds": [
         "30393",
         "30393"
@@ -86982,7 +87003,7 @@
     },
     {
       "itemName": "Desert echo orb",
-      "itemId": null,
+      "itemId": 30394,
       "rawIds": [
         "30394",
         "30394"
@@ -86991,7 +87012,7 @@
     },
     {
       "itemName": "Varlamore echo orb",
-      "itemId": null,
+      "itemId": 30401,
       "rawIds": [
         "30401",
         "30401"
@@ -87000,7 +87021,7 @@
     },
     {
       "itemName": "Kourend echo orb",
-      "itemId": null,
+      "itemId": 30400,
       "rawIds": [
         "30400",
         "30400"
@@ -87009,7 +87030,7 @@
     },
     {
       "itemName": "Tirannwn echo orb",
-      "itemId": null,
+      "itemId": 30398,
       "rawIds": [
         "30398",
         "30398"
@@ -87018,7 +87039,7 @@
     },
     {
       "itemName": "Morytania echo orb",
-      "itemId": null,
+      "itemId": 30397,
       "rawIds": [
         "30397",
         "30397"
@@ -87027,7 +87048,7 @@
     },
     {
       "itemName": "Kandarin echo orb",
-      "itemId": null,
+      "itemId": 30396,
       "rawIds": [
         "30396",
         "30396"
@@ -87044,7 +87065,7 @@
     },
     {
       "itemName": "Fremennik echo orb",
-      "itemId": null,
+      "itemId": 30395,
       "rawIds": [
         "30395",
         "30395"
@@ -87053,7 +87074,7 @@
     },
     {
       "itemName": "Wilderness echo orb",
-      "itemId": null,
+      "itemId": 30399,
       "rawIds": [
         "30399",
         "30399"
@@ -87567,7 +87588,7 @@
     },
     {
       "itemName": "Present box hat",
-      "itemId": null,
+      "itemId": 30479,
       "rawIds": [
         "30481",
         "30485",
@@ -88300,7 +88321,7 @@
     },
     {
       "itemName": "Captain's log",
-      "itemId": null,
+      "itemId": 31985,
       "rawIds": [
         "31985",
         "31986"
@@ -88365,7 +88386,7 @@
     },
     {
       "itemName": "Crate of ship parts",
-      "itemId": null,
+      "itemId": 32514,
       "rawIds": [
         "32807",
         "32757",
@@ -93104,7 +93125,7 @@
     },
     {
       "itemName": "Form 7r4-5h",
-      "itemId": null,
+      "itemId": 31328,
       "rawIds": [
         "31329",
         "31328"
@@ -93137,7 +93158,7 @@
     },
     {
       "itemName": "Ink bottle",
-      "itemId": null,
+      "itemId": 31345,
       "rawIds": [
         "31345",
         "31349"
@@ -93355,7 +93376,7 @@
     },
     {
       "itemName": "Rainbow crab",
-      "itemId": null,
+      "itemId": 31677,
       "rawIds": [
         "31683",
         "31680",
@@ -94549,7 +94570,7 @@
     },
     {
       "itemName": "Accordion",
-      "itemId": null,
+      "itemId": 31365,
       "rawIds": [
         "31365",
         "31368",
@@ -94567,7 +94588,7 @@
     },
     {
       "itemName": "File",
-      "itemId": null,
+      "itemId": 31379,
       "rawIds": [
         "31381",
         "31379"
@@ -94769,7 +94790,7 @@
     },
     {
       "itemName": "Acatzin's axe",
-      "itemId": null,
+      "itemId": 30989,
       "rawIds": [
         "30989",
         "30990"
@@ -95010,7 +95031,7 @@
     },
     {
       "itemName": "Avernic treads (max)",
-      "itemId": null,
+      "itemId": 31097,
       "rawIds": [
         "31097",
         "33172"
@@ -95395,7 +95416,7 @@
     },
     {
       "itemName": "Fish crate (giant krill)",
-      "itemId": null,
+      "itemId": 32368,
       "rawIds": [
         "32368",
         "32370"
@@ -95404,7 +95425,7 @@
     },
     {
       "itemName": "Fish crate (haddock)",
-      "itemId": null,
+      "itemId": 32371,
       "rawIds": [
         "32371",
         "32373"
@@ -95413,7 +95434,7 @@
     },
     {
       "itemName": "Fish crate (yellowfin)",
-      "itemId": null,
+      "itemId": 32374,
       "rawIds": [
         "32374",
         "32376"
@@ -95422,7 +95443,7 @@
     },
     {
       "itemName": "Fish crate (halibut)",
-      "itemId": null,
+      "itemId": 32377,
       "rawIds": [
         "32377",
         "32379"
@@ -95431,7 +95452,7 @@
     },
     {
       "itemName": "Fish crate (bluefin)",
-      "itemId": null,
+      "itemId": 32380,
       "rawIds": [
         "32380",
         "32382"
@@ -95440,7 +95461,7 @@
     },
     {
       "itemName": "Fish crate (marlin)",
-      "itemId": null,
+      "itemId": 32383,
       "rawIds": [
         "32383",
         "32385"
@@ -95774,7 +95795,7 @@
     },
     {
       "itemName": "Medallion fragment",
-      "itemId": null,
+      "itemId": 32388,
       "rawIds": [
         "32388",
         "32395",
@@ -97405,7 +97426,7 @@
     },
     {
       "itemName": "Crate of xerician fabrics",
-      "itemId": null,
+      "itemId": 32563,
       "rawIds": [
         "32563",
         "32720"
@@ -97414,7 +97435,7 @@
     },
     {
       "itemName": "Crate of wine",
-      "itemId": null,
+      "itemId": 32479,
       "rawIds": [
         "32577",
         "32748",
@@ -97427,7 +97448,7 @@
     },
     {
       "itemName": "Crate of warhammers",
-      "itemId": null,
+      "itemId": 32546,
       "rawIds": [
         "32762",
         "32558",
@@ -97437,7 +97458,7 @@
     },
     {
       "itemName": "Crate of vodka",
-      "itemId": null,
+      "itemId": 32478,
       "rawIds": [
         "32478",
         "32631",
@@ -97447,7 +97468,7 @@
     },
     {
       "itemName": "Crate of vegetables",
-      "itemId": null,
+      "itemId": 32518,
       "rawIds": [
         "32518",
         "32576",
@@ -97457,7 +97478,7 @@
     },
     {
       "itemName": "Crate of teak logs",
-      "itemId": null,
+      "itemId": 32671,
       "rawIds": [
         "32671",
         "32747",
@@ -97467,7 +97488,7 @@
     },
     {
       "itemName": "Crate of swords",
-      "itemId": null,
+      "itemId": 32531,
       "rawIds": [
         "32531",
         "32557",
@@ -97492,7 +97513,7 @@
     },
     {
       "itemName": "Crate of staffs",
-      "itemId": null,
+      "itemId": 32516,
       "rawIds": [
         "32516",
         "32670"
@@ -97501,7 +97522,7 @@
     },
     {
       "itemName": "Crate of spices",
-      "itemId": null,
+      "itemId": 32463,
       "rawIds": [
         "32733",
         "32515",
@@ -97516,7 +97537,7 @@
     },
     {
       "itemName": "Crate of spears",
-      "itemId": null,
+      "itemId": 32447,
       "rawIds": [
         "32447",
         "32629",
@@ -97526,7 +97547,7 @@
     },
     {
       "itemName": "Crate of silver ore",
-      "itemId": null,
+      "itemId": 32476,
       "rawIds": [
         "32498",
         "32669",
@@ -97536,7 +97557,7 @@
     },
     {
       "itemName": "Crate of silk",
-      "itemId": null,
+      "itemId": 32462,
       "rawIds": [
         "32497",
         "32462",
@@ -97549,7 +97570,7 @@
     },
     {
       "itemName": "Crate of shields",
-      "itemId": null,
+      "itemId": 32705,
       "rawIds": [
         "32793",
         "32705"
@@ -97558,7 +97579,7 @@
     },
     {
       "itemName": "Crate of seeds",
-      "itemId": null,
+      "itemId": 32496,
       "rawIds": [
         "32496",
         "32513",
@@ -97573,7 +97594,7 @@
     },
     {
       "itemName": "Crate of secret stuff",
-      "itemId": null,
+      "itemId": 32481,
       "rawIds": [
         "32481",
         "32628",
@@ -97583,7 +97604,7 @@
     },
     {
       "itemName": "Crate of scimitars",
-      "itemId": null,
+      "itemId": 32529,
       "rawIds": [
         "32529",
         "32627"
@@ -97592,7 +97613,7 @@
     },
     {
       "itemName": "Crate of sandstone",
-      "itemId": null,
+      "itemId": 32475,
       "rawIds": [
         "32475",
         "32792"
@@ -97601,7 +97622,7 @@
     },
     {
       "itemName": "Crate of sand",
-      "itemId": null,
+      "itemId": 32461,
       "rawIds": [
         "32605",
         "32549",
@@ -97619,7 +97640,7 @@
     },
     {
       "itemName": "Crate of runes",
-      "itemId": null,
+      "itemId": 32459,
       "rawIds": [
         "32756",
         "32994",
@@ -97635,7 +97656,7 @@
     },
     {
       "itemName": "Crate of rum",
-      "itemId": null,
+      "itemId": 32474,
       "rawIds": [
         "32474",
         "32528",
@@ -97646,7 +97667,7 @@
     },
     {
       "itemName": "Crate of rope",
-      "itemId": null,
+      "itemId": 32562,
       "rawIds": [
         "32791",
         "32562",
@@ -97672,7 +97693,7 @@
     },
     {
       "itemName": "Crate of platebodies",
-      "itemId": null,
+      "itemId": 32446,
       "rawIds": [
         "32446",
         "32527",
@@ -97707,7 +97728,7 @@
     },
     {
       "itemName": "Crate of pineapples",
-      "itemId": null,
+      "itemId": 32494,
       "rawIds": [
         "32494",
         "32789",
@@ -97727,7 +97748,7 @@
     },
     {
       "itemName": "Crate of pest remains",
-      "itemId": null,
+      "itemId": 32445,
       "rawIds": [
         "32686",
         "32445",
@@ -97738,7 +97759,7 @@
     },
     {
       "itemName": "Crate of ores",
-      "itemId": null,
+      "itemId": 32509,
       "rawIds": [
         "32509",
         "32573",
@@ -97754,7 +97775,7 @@
     },
     {
       "itemName": "Crate of nickel ore",
-      "itemId": null,
+      "itemId": 32444,
       "rawIds": [
         "32663",
         "32444",
@@ -97765,7 +97786,7 @@
     },
     {
       "itemName": "Crate of monkfish",
-      "itemId": null,
+      "itemId": 32443,
       "rawIds": [
         "32443",
         "32741",
@@ -97775,7 +97796,7 @@
     },
     {
       "itemName": "Crate of meat",
-      "itemId": null,
+      "itemId": 32572,
       "rawIds": [
         "32572",
         "32662",
@@ -97787,7 +97808,7 @@
     },
     {
       "itemName": "Crate of mahogany logs",
-      "itemId": null,
+      "itemId": 32541,
       "rawIds": [
         "32644",
         "32604",
@@ -97798,7 +97819,7 @@
     },
     {
       "itemName": "Crate of machinery parts",
-      "itemId": null,
+      "itemId": 32473,
       "rawIds": [
         "32473",
         "32540"
@@ -97807,7 +97828,7 @@
     },
     {
       "itemName": "Crate of maces",
-      "itemId": null,
+      "itemId": 32761,
       "rawIds": [
         "32761",
         "32799"
@@ -97844,7 +97865,7 @@
     },
     {
       "itemName": "Crate of lead ore",
-      "itemId": null,
+      "itemId": 32442,
       "rawIds": [
         "32442",
         "32561",
@@ -97854,7 +97875,7 @@
     },
     {
       "itemName": "Crate of kebbit fur",
-      "itemId": null,
+      "itemId": 32571,
       "rawIds": [
         "32584",
         "32643",
@@ -97864,7 +97885,7 @@
     },
     {
       "itemName": "Crate of karambwans",
-      "itemId": null,
+      "itemId": 32493,
       "rawIds": [
         "32493",
         "32728"
@@ -97873,7 +97894,7 @@
     },
     {
       "itemName": "Crate of jewellery",
-      "itemId": null,
+      "itemId": 32441,
       "rawIds": [
         "32492",
         "32441",
@@ -97891,7 +97912,7 @@
     },
     {
       "itemName": "Crate of javelins",
-      "itemId": null,
+      "itemId": 32491,
       "rawIds": [
         "32491",
         "32754",
@@ -97951,7 +97972,7 @@
     },
     {
       "itemName": "Crate of honey",
-      "itemId": null,
+      "itemId": 32594,
       "rawIds": [
         "32659",
         "32641",
@@ -97962,7 +97983,7 @@
     },
     {
       "itemName": "Crate of herbs",
-      "itemId": null,
+      "itemId": 32621,
       "rawIds": [
         "32700",
         "32714",
@@ -97974,7 +97995,7 @@
     },
     {
       "itemName": "Crate of halberds",
-      "itemId": null,
+      "itemId": 32454,
       "rawIds": [
         "32739",
         "32713",
@@ -97984,7 +98005,7 @@
     },
     {
       "itemName": "Crate of granite",
-      "itemId": null,
+      "itemId": 32537,
       "rawIds": [
         "32796",
         "32726",
@@ -97995,7 +98016,7 @@
     },
     {
       "itemName": "Crate of gold ore",
-      "itemId": null,
+      "itemId": 32453,
       "rawIds": [
         "32489",
         "32453"
@@ -98004,7 +98025,7 @@
     },
     {
       "itemName": "Crate of gold bars",
-      "itemId": null,
+      "itemId": 32480,
       "rawIds": [
         "32769",
         "32480"
@@ -98013,7 +98034,7 @@
     },
     {
       "itemName": "Crate of gems",
-      "itemId": null,
+      "itemId": 32470,
       "rawIds": [
         "32570",
         "32960",
@@ -98049,7 +98070,7 @@
     },
     {
       "itemName": "Crate of fruit",
-      "itemId": null,
+      "itemId": 32504,
       "rawIds": [
         "32504",
         "32535",
@@ -98061,7 +98082,7 @@
     },
     {
       "itemName": "Crate of flax",
-      "itemId": null,
+      "itemId": 32565,
       "rawIds": [
         "32656",
         "32680",
@@ -98129,7 +98150,7 @@
     },
     {
       "itemName": "Crate of daggers",
-      "itemId": null,
+      "itemId": 32438,
       "rawIds": [
         "32522",
         "32438"
@@ -98138,7 +98159,7 @@
     },
     {
       "itemName": "Crate of crystal seeds",
-      "itemId": null,
+      "itemId": 32437,
       "rawIds": [
         "32581",
         "32437",
@@ -98148,7 +98169,7 @@
     },
     {
       "itemName": "Crate of crab paste",
-      "itemId": null,
+      "itemId": 32436,
       "rawIds": [
         "32618",
         "32436"
@@ -98157,7 +98178,7 @@
     },
     {
       "itemName": "Crate of coral",
-      "itemId": null,
+      "itemId": 32502,
       "rawIds": [
         "32751",
         "32502",
@@ -98179,7 +98200,7 @@
     },
     {
       "itemName": "Crate of cocktails",
-      "itemId": null,
+      "itemId": 32590,
       "rawIds": [
         "32750",
         "32995",
@@ -98189,7 +98210,7 @@
     },
     {
       "itemName": "Crate of coal",
-      "itemId": null,
+      "itemId": 32580,
       "rawIds": [
         "32723",
         "32695",
@@ -98202,7 +98223,7 @@
     },
     {
       "itemName": "Crate of camphor logs",
-      "itemId": null,
+      "itemId": 32467,
       "rawIds": [
         "32467",
         "32677",
@@ -98212,7 +98233,7 @@
     },
     {
       "itemName": "Crate of cacti",
-      "itemId": null,
+      "itemId": 32466,
       "rawIds": [
         "32466",
         "32676",
@@ -98223,7 +98244,7 @@
     },
     {
       "itemName": "Crate of bows",
-      "itemId": null,
+      "itemId": 32614,
       "rawIds": [
         "32614",
         "32652"
@@ -98232,7 +98253,7 @@
     },
     {
       "itemName": "Crate of books",
-      "itemId": null,
+      "itemId": 32501,
       "rawIds": [
         "32675",
         "32634",
@@ -98245,7 +98266,7 @@
     },
     {
       "itemName": "Crate of berries",
-      "itemId": null,
+      "itemId": 32579,
       "rawIds": [
         "32579",
         "32651"
@@ -98254,7 +98275,7 @@
     },
     {
       "itemName": "Crate of beer",
-      "itemId": null,
+      "itemId": 32465,
       "rawIds": [
         "32521",
         "32735",
@@ -98266,7 +98287,7 @@
     },
     {
       "itemName": "Crate of bear meat",
-      "itemId": null,
+      "itemId": 32464,
       "rawIds": [
         "32464",
         "32520",
@@ -98284,7 +98305,7 @@
     },
     {
       "itemName": "Crate of battleaxes",
-      "itemId": null,
+      "itemId": 32766,
       "rawIds": [
         "32722",
         "32766"
@@ -98293,7 +98314,7 @@
     },
     {
       "itemName": "Crate of bananas",
-      "itemId": null,
+      "itemId": 32449,
       "rawIds": [
         "32485",
         "32449",
@@ -98306,7 +98327,7 @@
     },
     {
       "itemName": "Crate of astral runes",
-      "itemId": null,
+      "itemId": 32500,
       "rawIds": [
         "32721",
         "32633",
@@ -98317,7 +98338,7 @@
     },
     {
       "itemName": "Crate of arrowtips",
-      "itemId": null,
+      "itemId": 32448,
       "rawIds": [
         "32482",
         "32947",
@@ -98332,7 +98353,7 @@
     },
     {
       "itemName": "Crate of antelope fur",
-      "itemId": null,
+      "itemId": 32578,
       "rawIds": [
         "32578",
         "32650"
@@ -98341,7 +98362,7 @@
     },
     {
       "itemName": "Crate of adamantite ore",
-      "itemId": null,
+      "itemId": 32435,
       "rawIds": [
         "32435",
         "32734",
@@ -98423,7 +98444,7 @@
     },
     {
       "itemName": "Crate of clothes",
-      "itemId": null,
+      "itemId": 32711,
       "rawIds": [
         "32925",
         "32711"
@@ -98945,7 +98966,7 @@
     },
     {
       "itemName": "Hooded slayer helmet (i)",
-      "itemId": null,
+      "itemId": 33068,
       "rawIds": [
         "33070",
         "33072",
@@ -99035,7 +99056,7 @@
     },
     {
       "itemName": "Sigil of the gods",
-      "itemId": null,
+      "itemId": 33054,
       "rawIds": [
         "33053",
         "33054"
@@ -99044,7 +99065,7 @@
     },
     {
       "itemName": "Sigil of conclusion",
-      "itemId": null,
+      "itemId": 33056,
       "rawIds": [
         "33055",
         "33056"
@@ -99053,7 +99074,7 @@
     },
     {
       "itemName": "Sigil of automation",
-      "itemId": null,
+      "itemId": 33058,
       "rawIds": [
         "33057",
         "33058"
@@ -99062,7 +99083,7 @@
     },
     {
       "itemName": "Sigil of eternal belief",
-      "itemId": null,
+      "itemId": 33060,
       "rawIds": [
         "33059",
         "33060"
@@ -99071,7 +99092,7 @@
     },
     {
       "itemName": "Sigil of efficiency",
-      "itemId": null,
+      "itemId": 33062,
       "rawIds": [
         "33061",
         "33062"
@@ -99160,7 +99181,7 @@
     },
     {
       "itemName": "Cowbell amulet",
-      "itemId": null,
+      "itemId": 33103,
       "rawIds": [
         "33104",
         "33103"
@@ -99169,7 +99190,7 @@
     },
     {
       "itemName": "Cow slippers",
-      "itemId": null,
+      "itemId": 33093,
       "rawIds": [
         "33093",
         "33098",
@@ -99300,7 +99321,7 @@
     },
     {
       "itemName": "Milk sample",
-      "itemId": null,
+      "itemId": 33128,
       "rawIds": [
         "33130",
         "33128"
@@ -99389,7 +99410,7 @@
     },
     {
       "itemName": "Knapsack",
-      "itemId": null,
+      "itemId": 33218,
       "rawIds": [
         "33218",
         "33220"
@@ -99406,7 +99427,7 @@
     },
     {
       "itemName": "Egg box",
-      "itemId": null,
+      "itemId": 33147,
       "rawIds": [
         "33147",
         "33148"
@@ -99415,7 +99436,7 @@
     },
     {
       "itemName": "Archibald",
-      "itemId": null,
+      "itemId": 33149,
       "rawIds": [
         "33163",
         "33157",
@@ -99462,7 +99483,7 @@
     },
     {
       "itemName": "Flask of fervour",
-      "itemId": null,
+      "itemId": 33239,
       "rawIds": [
         "33239",
         "33241"
@@ -99903,7 +99924,7 @@
     },
     {
       "itemName": "Iban's staff (o)",
-      "itemId": null,
+      "itemId": 33330,
       "rawIds": [
         "33333",
         "33330"
@@ -100056,7 +100077,7 @@
     },
     {
       "itemName": "Oathplate slayer helmet (i)",
-      "itemId": null,
+      "itemId": 33439,
       "rawIds": [
         "33441",
         "33443",
@@ -100066,7 +100087,7 @@
     },
     {
       "itemName": "Radiant slayer helmet (i)",
-      "itemId": null,
+      "itemId": 33445,
       "rawIds": [
         "33447",
         "33449",
@@ -100718,7 +100739,7 @@
     },
     {
       "itemName": "Maggot egg",
-      "itemId": null,
+      "itemId": 33665,
       "rawIds": [
         "33675",
         "33673",
@@ -100979,7 +101000,7 @@
     },
     {
       "itemName": "Fancy gem",
-      "itemId": null,
+      "itemId": 33765,
       "rawIds": [
         "33765",
         "33766"
@@ -101275,7 +101296,7 @@
       "source": "infobox_item"
     },
     {
-      "itemName": "Mr mcgroot",
+      "itemName": "Mr McGroot",
       "itemId": 34040,
       "rawIds": [
         "34040"
@@ -101372,7 +101393,7 @@
     },
     {
       "itemName": "Scorched note",
-      "itemId": null,
+      "itemId": 34048,
       "rawIds": [
         "34048",
         "34050",
@@ -101430,7 +101451,7 @@
     },
     {
       "itemName": "Noble robe top",
-      "itemId": null,
+      "itemId": 33836,
       "rawIds": [
         "33854",
         "33839",
@@ -101444,7 +101465,7 @@
     },
     {
       "itemName": "Wyrmscraig noble skirt",
-      "itemId": null,
+      "itemId": 33857,
       "rawIds": [
         "33875",
         "33860",
@@ -101466,7 +101487,7 @@
     },
     {
       "itemName": "Wyrmscraig villager skirt",
-      "itemId": null,
+      "itemId": 33971,
       "rawIds": [
         "33989",
         "33974",
@@ -101480,7 +101501,7 @@
     },
     {
       "itemName": "Wyrmscraig villager work skirt",
-      "itemId": null,
+      "itemId": 33992,
       "rawIds": [
         "34013",
         "34010",
@@ -101565,6 +101586,22 @@
       "itemId": 34059,
       "rawIds": [
         "34059"
+      ],
+      "source": "infobox_item"
+    },
+    {
+      "itemName": "Vampyre snail shell",
+      "itemId": 34061,
+      "rawIds": [
+        "34061"
+      ],
+      "source": "infobox_item"
+    },
+    {
+      "itemName": "Vampyre snelm",
+      "itemId": 34063,
+      "rawIds": [
+        "34063"
       ],
       "source": "infobox_item"
     },
@@ -103577,6 +103614,14 @@
       "itemId": 7164,
       "rawIds": [
         "7164"
+      ],
+      "source": "item_id"
+    },
+    {
+      "itemName": "Book of Haricanto",
+      "itemId": 4248,
+      "rawIds": [
+        "4248"
       ],
       "source": "item_id"
     },
@@ -114595,7 +114640,7 @@
       "source": "item_id"
     },
     {
-      "itemName": "Bow of faerdhinen (c) (Iorwerth)",
+      "itemName": "Bow of Faerdhinen (c) (Iorwerth)",
       "itemId": 25886,
       "rawIds": [
         "25886"
@@ -114603,7 +114648,7 @@
       "source": "item_id"
     },
     {
-      "itemName": "Bow of faerdhinen (c) (Trahaearn)",
+      "itemName": "Bow of Faerdhinen (c) (Trahaearn)",
       "itemId": 25888,
       "rawIds": [
         "25888"
@@ -114627,7 +114672,7 @@
       "source": "item_id"
     },
     {
-      "itemName": "Bow of faerdhinen (c) (Meilyr)",
+      "itemName": "Bow of Faerdhinen (c) (Meilyr)",
       "itemId": 25894,
       "rawIds": [
         "25894"
@@ -114643,7 +114688,7 @@
       "source": "item_id"
     },
     {
-      "itemName": "Bow of faerdhinen (c) (Ithell)",
+      "itemName": "Bow of Faerdhinen (c) (Ithell)",
       "itemId": 25884,
       "rawIds": [
         "25884"
@@ -130001,7 +130046,7 @@
       "source": "item_id"
     },
     {
-      "itemName": "Bow of faerdhinen (c) (deadman)",
+      "itemName": "Bow of Faerdhinen (c) (deadman)",
       "itemId": 33021,
       "rawIds": [
         "33021"

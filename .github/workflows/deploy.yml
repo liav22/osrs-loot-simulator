@@ -1,0 +1,32 @@
+name: deploy
+on:
+  push: { branches: [main] }
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency: { group: pages, cancel-in-progress: true }
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r test
+      # PROJECT_PLAN.md section 13 says `pnpm --filter web build` — this repo's
+      # web package is named `@osrs-loot-simulator/web` (see apps/web/package.json),
+      # not bare `web`, so the filter is adjusted to match; everything else here
+      # is the plan's own content unchanged.
+      - run: pnpm --filter @osrs-loot-simulator/web build
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: apps/web/dist }
+  deploy:
+    needs: build
+    environment: github-pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/deploy-pages@v4

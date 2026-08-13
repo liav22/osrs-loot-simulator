@@ -9,6 +9,14 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    // Node build/dev scripts (apps/web/scripts/*.mjs) — not part of the
+    // browser bundle, so they run under Node's global scope, not the DOM's.
+    files: ['**/*.mjs'],
+    languageOptions: {
+      globals: { process: 'readonly' },
+    },
+  },
+  {
     files: ['packages/loot-model/**/*.ts'],
     rules: {
       'no-restricted-imports': [

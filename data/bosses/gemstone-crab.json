@@ -10,8 +10,9 @@
   "tables": [
     {
       "id": "gemstone-crab:0:drops",
-      "mode": "preroll",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 32,
       "withoutReplacement": false,
       "entries": [
         {
@@ -26,9 +27,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 9,
-            "den": 32
+            "kind": "weight",
+            "weight": 9
           }
         },
         {
@@ -43,9 +43,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 9,
-            "den": 32
+            "kind": "weight",
+            "weight": 9
           }
         },
         {
@@ -60,9 +59,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 6,
-            "den": 32
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -77,9 +75,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 32
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -94,9 +91,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 2,
-            "den": 32
+            "kind": "weight",
+            "weight": 2
           }
         },
         {
@@ -111,9 +107,8 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 2,
-            "den": 32
+            "kind": "weight",
+            "weight": 2
           }
         },
         {
@@ -128,11 +123,19 @@
             }
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 32
+            "kind": "weight",
+            "weight": 1
           }
-        },
+        }
+      ],
+      "notes": "Drops (confirmed weighted: 7 of 8 entries share denominator 32; 1 rarer outlier(s) split into their own independent table)"
+    },
+    {
+      "id": "gemstone-crab:1:drops-outliers",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -151,11 +154,11 @@
           }
         }
       ],
-      "notes": "Drops"
+      "notes": "Drops (outliers) (confirmed independent: rarer than the 7-entry /32 pool in \"Drops\"; modelled as separate independent rolls)"
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -171,12 +174,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "ranges/quantities are fully schema-enforced, no runtime-only case exists"
       },
       {
         "check": "ev_matches",
