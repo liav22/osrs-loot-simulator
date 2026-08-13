@@ -52,8 +52,19 @@ at tier A+B+C). What IS done within its scope:
   implemented. See section 3, "Phase 7."
 
 ```
-53 parsed at tier A+B+C: 36 verified, 14 needs_review, 3 parse_failed — unchanged since Extension A/B landed
+53 parsed at tier A+B+C: 38 verified, 12 needs_review, 3 parse_failed
+  (36/14/3 before Phase 7's first two sources; Abyssal Sire and Corporeal
+   Beast were unblocked by qtyMultiplier and drawsPerHit respectively)
 ```
+
+**Step (c) is DONE** — `Table.suppressesFollowing` and
+`TableRefNode.drawsPerHit` both shipped, both `.optional()` so the generated
+corpus stayed byte-identical. **Phase 7 is underway**: 2 of the 14 researched
+sources shipped, the 3rd (Doom of Mokhaiotl) assessed and blocked on one
+rounding-semantics decision. See `docs/DECISIONS.md`'s last two entries for
+both, including the benchmark and the "are the research docs accurate enough"
+answer (short version: their mechanics and numbers are reliable, their "what
+doesn't exist" verdicts predate Extensions A/B and are not).
 
 `ev_matches` is **closed, permanently** — see "What NOT to redo," section 5.
 

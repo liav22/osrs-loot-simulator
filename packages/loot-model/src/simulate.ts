@@ -186,11 +186,19 @@ function emit(
       }
       return
     }
-    case 'table':
-      // A nested table's chain is its own; a preroll hit inside it does not
-      // suppress anything in the parent.
-      runTable(node.table, compiled, tally, rng, qtyMultiplier * node.qtyMultiplier, owned)
+    case 'table': {
+      // A nested table's chain is its own; a hit inside it — preroll or
+      // `suppressesFollowing` — does not suppress anything in the parent,
+      // which is why `runTable`'s return value is discarded here.
+      const nested = qtyMultiplier * node.qtyMultiplier
+      // `drawsPerHit` is 1 for every source but Corporeal Beast, so the
+      // common case is one pass through a loop whose bound is a plain
+      // property read — no branch to predict, nothing allocated.
+      for (let draw = 0; draw < node.drawsPerHit; draw++) {
+        runTable(node.table, compiled, tally, rng, nested, owned)
+      }
       return
+    }
   }
 }
 
@@ -201,7 +209,15 @@ function gateAllows(table: CompiledTable, i: number, owned: OwnershipTracker): b
   return gate === null || ownershipGateSatisfied(gate, owned.get(gate.itemKey))
 }
 
-/** Returns true when a preroll entry hit, which short-circuits the caller's chain. */
+/**
+ * Returns true when this table ended the main-drop chain for the rest of the
+ * document — either a `preroll` entry hit (4.3), or any entry of a
+ * `suppressesFollowing` table hit (CoX's unique table). The two are tracked
+ * separately below because they differ in what they do to THIS table's own
+ * remaining rolls: a preroll hit stops them, a `suppressesFollowing` hit
+ * doesn't (it only ends the chain downstream — CoX awards up to six uniques,
+ * so a hit must not stop its own table).
+ */
 function runTable(
   table: CompiledTable,
   compiled: CompiledBoss,
@@ -213,6 +229,7 @@ function runTable(
   const effectiveQty = qtyMultiplier * table.qtyMultiplier
   const rolls = rollCount(table.rolls, rng)
   let prerollHit = false
+  let suppressHit = false
 
   // Hoisted once per table-roll, not re-checked per entry: every table
   // without Extension B gates (still every table in the 36 sources verified
@@ -237,6 +254,13 @@ function runTable(
           if (gated && !gateAllows(table, i, owned)) continue
           if (rng.nextFloat() < table.probs[i]!) {
             emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, owned)
+            // Deliberately no `break`: every remaining entry still rolls.
+            // The flag is read here, on a hit, rather than hoisted per
+            // table-roll like `gated` below — an independent entry hitting is
+            // rare (tertiary rates are 1/15 and rarer), so this costs a
+            // property read on ~1 in 15 rolls instead of on every one.
+            // Measured: hoisting it cost ~3% on Brutus, which uses no flag.
+            if (table.suppressesFollowing) suppressHit = true
           }
         }
         break
@@ -305,7 +329,7 @@ function runTable(
     if (prerollHit) break
   }
 
-  return prerollHit
+  return prerollHit || suppressHit
 }
 
 /**

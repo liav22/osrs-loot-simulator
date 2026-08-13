@@ -606,13 +606,14 @@
     {
       "id": "corporeal-beast:rdt-access:0",
       "mode": "independent",
-      "rolls": 10,
+      "rolls": 1,
       "withoutReplacement": false,
       "entries": [
         {
           "node": {
             "kind": "tableRef",
-            "ref": "gem_drop_table"
+            "ref": "gem_drop_table",
+            "drawsPerHit": 10
           },
           "rate": {
             "kind": "fixed",
@@ -621,11 +622,11 @@
           }
         }
       ],
-      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+      "notes": "Access into gem_drop_table (from {{GemDropTable}}); one access check draws the table 10 times (per the wiki's own prose), not the usual N independent access attempts"
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -659,8 +660,7 @@
       },
       {
         "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "other: The wiki's own {{GemDropTable|12/512|rolls=10|override=...}} call explicitly states in its override prose: \"a 12/512 chance of rolling the gem drop table, whereupon its contents are rolled 10 times\" — access checked ONCE, the gem table drawn 10 times after. The parser's default reading of `rolls` (used for every other RDT/gem access line on the wiki, matching Table.rolls' existing 'repeated access attempts' meaning elsewhere, e.g. Zulrah's main table) is the OPPOSITE: it currently models this as 10 independent 12/512 access attempts, not one access followed by 10 draws. Confirmed wrong specifically by this source's own text, not a guess — see docs/DECISIONS.md."
+        "ok": true
       }
     ]
   },

@@ -264,6 +264,30 @@ const TableRefNodeSchema = z
      * `expected-value.ts` multiply through nesting, not replace.
      */
     qtyMultiplier: MultiplierSchema.optional(),
+    /**
+     * How many times the referenced table is evaluated when this entry's own
+     * `rate` hits. Absent (the default) means once, which is what every
+     * source but one wants.
+     *
+     * **The narrow, confirmed exception to `Table.rolls`' meaning**, and the
+     * whole reason this field exists. `rolls: N` on an access line means "N
+     * independent access attempts" everywhere else in this codebase — the
+     * reading verified across the whole tier-C RDT/gem wiring pass. Corporeal
+     * Beast is the one cited counter-example: its own `{{GemDropTable}}` call
+     * says "a 12/512 chance of rolling the gem drop table, **whereupon its
+     * contents are rolled 10 times**" — ONE access check gating a batch of 10
+     * guaranteed draws, not 10 checks each gating one draw. The two differ by
+     * an order of magnitude in yield-per-proc, so the default reading is
+     * actively wrong for this source rather than merely imprecise.
+     *
+     * Scoped to a `tableRef` node, not `Table.rolls`, deliberately:
+     * `Table.rolls`' existing meaning is correct in general and must not be
+     * "fixed" globally over this single source (docs/DECISIONS.md's tier-C
+     * wiring entry says so explicitly). Prior research confirmed this shape
+     * does not recur anywhere else in the corpus, so this stays an
+     * escape hatch for one access pattern rather than a new `TableMode`.
+     */
+    drawsPerHit: z.number().int().positive().optional(),
   })
   .strict()
 
@@ -391,9 +415,42 @@ export const TableSchema = z
      * one.
      */
     qtyMultiplier: MultiplierSchema.optional(),
+    /**
+     * A hit on ANY entry of this table suppresses the `preroll`/`weighted`
+     * tables later in the document — the same set a preroll hit suppresses
+     * (`suppressedByPreroll`), reached by a different trigger. Absent (the
+     * default) means this table suppresses nothing, which is every table in
+     * every source shipped so far.
+     *
+     * `independent`-mode only, and that restriction is the point. CoX's
+     * Ancient chest is the confirmed source: its unique table rolls up to six
+     * uniques *independently* (so multiple can hit in one raid), yet a hit
+     * anywhere in it replaces the player's entire chest, suppressing the
+     * common table. Neither existing mode expresses that — `preroll`'s
+     * "first hit short-circuits" would discard unique rolls 2–6, and plain
+     * `independent` suppresses nothing. This flag is the missing half:
+     * "every entry rolls separately, but any hit ends the main chain."
+     *
+     * Note what it does NOT do: a hit does not stop this table's own
+     * remaining `rolls`, only the later tables in the document. And a nested
+     * table's chain stays local (docs/DECISIONS.md, Phase 1) — setting this
+     * on a table reached through a `tableRef`/`oneOf` suppresses nothing in
+     * the parent, exactly as a nested preroll hit doesn't.
+     */
+    suppressesFollowing: z.boolean().optional(),
   })
   .strict()
   .superRefine((table, ctx) => {
+    if (table.suppressesFollowing === true && table.mode !== 'independent') {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          `'suppressesFollowing' only applies to independent tables, not '${table.mode}' ` +
+          `(a preroll already suppresses; 'always'/'weighted' hit every kill, which would ` +
+          `suppress the rest of the document unconditionally)`,
+        path: ['suppressesFollowing'],
+      })
+    }
     if (table.mode === 'weighted' && table.denominator === undefined) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,

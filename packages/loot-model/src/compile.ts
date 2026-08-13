@@ -48,8 +48,14 @@ export type CompiledNode =
    * (`TableRefNode.qtyMultiplier`, resolved once here), separate from the
    * referenced `CompiledTable`'s own `qtyMultiplier` — the two compose at
    * whichever point a quantity is finally recorded.
+   *
+   * `drawsPerHit` is how many times the referenced table is evaluated once
+   * this access hits (`TableRefNode.drawsPerHit`, normalised to 1 here so
+   * neither consumer needs an `undefined` case). Orthogonal to
+   * `qtyMultiplier`: that one scales the size of each yielded stack, this one
+   * scales how many separate yields happen.
    */
-  | { kind: 'table'; table: CompiledTable; qtyMultiplier: number }
+  | { kind: 'table'; table: CompiledTable; qtyMultiplier: number; drawsPerHit: number }
 
 export type CompiledRolls =
   | { kind: 'count'; n: number }
@@ -73,6 +79,12 @@ export interface CompiledTable {
   probs: Float64Array
   /** Scales every quantity rolled from this table's own entries. 1 when absent. */
   qtyMultiplier: number
+  /**
+   * `independent` only: a hit on any entry ends the main-drop chain for the
+   * rest of the document, the same chain a preroll hit ends. `false` for
+   * every table that doesn't opt in — see `Table.suppressesFollowing`.
+   */
+  suppressesFollowing: boolean
   /**
    * Parallel to `nodes`/`weights`/`probs`; `null` for every entry that has no
    * `ownershipGate`, and `null` for the WHOLE array when nothing in this
@@ -206,6 +218,7 @@ export function compileBoss(
           kind: 'table',
           table: compileTable(target, path),
           qtyMultiplier: compileMultiplier(node.qtyMultiplier),
+          drawsPerHit: node.drawsPerHit ?? 1,
         }
       }
       case 'oneOf':
@@ -232,6 +245,10 @@ export function compileBoss(
     return {
       kind: 'table',
       qtyMultiplier: 1,
+      // A `oneOf` is reached inline, not through a `tableRef` node, so there
+      // is no access line for `drawsPerHit` to attach to — it selects exactly
+      // one entry, exactly once.
+      drawsPerHit: 1,
       table: {
         id,
         mode: 'weighted',
@@ -246,6 +263,7 @@ export function compileBoss(
         denominator: total,
         probs: new Float64Array(0),
         qtyMultiplier: 1,
+        suppressesFollowing: false,
         ownershipGates: null,
       },
     }
@@ -317,6 +335,7 @@ export function compileBoss(
       denominator,
       probs,
       qtyMultiplier: compileMultiplier(table.qtyMultiplier),
+      suppressesFollowing: table.suppressesFollowing ?? false,
       ownershipGates,
     }
     memo.set(table.id, compiled)
@@ -399,10 +418,16 @@ export function pickIndex(cum: Float64Array, r: number): number {
 }
 
 /**
- * A preroll hit short-circuits the remaining main-drop chain. `always` entries
- * drop unconditionally and `independent` entries are rolled separately (4.3),
- * so neither is part of that chain. This is a rule about modes, stated once —
- * never about a particular boss.
+ * Which modes are part of the main-drop chain, and therefore suppressed once
+ * something upstream in the document hits. `always` entries drop
+ * unconditionally and `independent` entries are rolled separately (4.3), so
+ * neither is in the chain. This is a rule about modes, stated once — never
+ * about a particular boss.
+ *
+ * Two triggers now end that chain, and they share this one definition of what
+ * gets ended: a `preroll` hit (4.3) and a hit in a table flagged
+ * `suppressesFollowing` (CoX's unique table — see `Table.suppressesFollowing`).
+ * The name is kept for the original, still-dominant trigger.
  */
 export function suppressedByPreroll(mode: TableMode): boolean {
   return mode === 'preroll' || mode === 'weighted'

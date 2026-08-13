@@ -1527,3 +1527,228 @@ the multi-id allowlist. Only 2 of the 17 remaining sources carry more than
 one blocker (Doom of Mokhaiotl, Monumental chest), down from 17 of 43 last
 time — most of what's left now needs exactly one fix to reach `verified`,
 not a combination.
+
+## Step (c): CoX cross-table suppression and Corporeal Beast's access-once-draw-K
+
+Both shipped as narrow, additive schema fields per
+`docs/mechanics-model-proposal.md`'s verdict on framing claim #4 — deliberately
+NOT as general mechanisms. Prior research confirmed each is a single source
+(`docs/bosses/ancient-chest.md` gap #2, `docs/bosses/corporeal-beast.md` gap
+#1) and that neither shape recurs elsewhere in the corpus.
+
+### `Table.suppressesFollowing` (CoX)
+
+- **A flag on `independent` tables, not a new `TableMode`.** CoX's unique table
+  needs "every entry rolls separately (multiple can hit), but a hit anywhere
+  ends the main chain." `preroll` would discard unique rolls 2–6 (CoX awards up
+  to six); plain `independent` suppresses nothing. The flag supplies exactly
+  the missing half and reuses the existing `suppressedByPreroll(mode)`
+  predicate for *which* later tables get suppressed — one definition of the
+  chain, now reached by two triggers, rather than a second parallel rule.
+- **Schema-pinned to `independent`.** On `always`/`weighted` a hit happens
+  every kill, so the flag would unconditionally suppress the rest of the
+  document — a shape with no meaning worth guessing at; `preroll` already
+  suppresses. Rejected at the boundary, matching Phase 1's "reject undefined
+  combinations rather than guessing."
+- **A hit suppresses later tables, NOT this table's own remaining `rolls`.**
+  `simulate.ts` therefore tracks two separate flags (`prerollHit`,
+  `suppressHit`): the first breaks out of the rolls loop, the second only
+  changes the return value. Collapsing them into one would silently cap a
+  multi-roll suppressing table at one hit. Covered by a dedicated test.
+- **Nested chains stay local**, inheriting Phase 1's rule for preroll —
+  `emit` discards `runTable`'s return value, so a `suppressesFollowing` table
+  reached through a `tableRef` suppresses nothing in the referencing document.
+  Tested, because a shared table carrying the flag would otherwise gut every
+  boss that references it.
+- **`expected-value.ts` gained `independentHitChance`**, the analytic
+  counterpart of `simulate.ts`'s `suppressHit`: `1 - prod(1 - p_i)`, raised to
+  the roll count (or scaled by a chance-`rolls`), skipping ownership-gated
+  entries that don't currently apply. No source combines suppression with
+  ownership gates today; handling it correctly cost nothing and avoids a
+  silent wrong answer if one ever does.
+
+### `TableRefNode.drawsPerHit` (Corporeal Beast)
+
+- **Scoped to the `tableRef` node, never to `Table.rolls`.** `rolls: N` means
+  "N independent access attempts" everywhere else and that reading is correct
+  in general (see the tier-C wiring entry above, which already warned against
+  "fixing" it globally over this one source). Corporeal Beast's own template
+  call is the cited exception: "a 12/512 chance of rolling the gem drop table,
+  whereupon its contents are rolled 10 times."
+- **The two readings have IDENTICAL per-kill expectation** — expectation is
+  linear, so one access gating 10 draws and 10 accesses gating one draw both
+  come to `10p x E[draw]`. This is worth stating explicitly because it means
+  **no mean-based check could ever have caught the wrong reading**, `ev_matches`
+  included. What differs is the distribution: P(a kill yields any gem loot) is
+  `12/512 = 2.3%` under the correct reading versus `1-(1-12/512)^10 = 21.1%`
+  under the default one, and a yielding kill draws exactly 10 times rather than
+  ~1.1. `draws-per-hit.test.ts` asserts the distribution, and asserts the mean
+  equality on purpose, so a future reader doesn't "fix" the latter.
+- `expected-value.ts` multiplies `reach` (how many times the node is hit), not
+  `qtyMultiplier` (how big each yield is) — conflating them would corrupt
+  `drops[]` against `quantity`. The two compose and are tested together.
+
+### Both fields are `.optional()`, not `.default()`
+
+A `.default(false)`/`.default(1)` would be materialised by `BossSchema.parse`
+into **every table / every `tableRef` node of all 53 generated boss docs** on
+the next re-parse (this is observably how `withoutReplacement: false` already
+appears in files that never use it), producing a corpus-wide data diff for a
+feature two sources will ever use. Optional keeps the generated output
+byte-identical — confirmed by diffing all 51 files before and after, not
+assumed. Asserted directly in both new test files.
+
+### Verification
+
+- `pnpm -r typecheck && pnpm -r test && pnpm lint`: clean. **332 tests** (139
+  `packages/loot-model` — 119 pre-existing + 20 new across
+  `suppresses-following.test.ts` and `draws-per-hit.test.ts`; 172
+  `apps/ingest`; 21 `apps/web`), 0 lint errors.
+- **Brutus ran first after each of the three engine files changed**
+  (`compile.ts`, then `simulate.ts`, then `expected-value.ts`), never batched
+  to the end, per landmine #7. Green at every step.
+- `ingest parse --tier A,B,C` (53 sources): **36 verified / 14 needs_review /
+  3 parse_failed — unchanged**, and the regenerated `data/bosses/*.json` diff
+  against the pre-change state is **empty across all 51 files**.
+
+### Benchmark: the cost is ~1%, but the 2s bar is now at parity — pre-existing
+
+Measured as a controlled A/B on one machine minutes apart (the hot-path lines
+reverted in place, benchmarked, then restored), rather than against the
+figures recorded in a previous session on a differently-loaded machine:
+
+| Stage (this machine, this session) | 1M kills | 10M kills |
+|---|---:|---:|
+| Step (c) hot-path lines reverted (baseline) | ~198ms | ~1,981ms |
+| Step (c), first version (flag hoisted per table-roll) | ~205ms | ~2,038ms |
+| Step (c), current (flag read on a hit instead) | ~201ms | ~1,999ms |
+
+- **The first version's ~3% regression was real and was fixed, not accepted.**
+  Hoisting `const suppresses = table.suppressesFollowing` once per table-roll
+  cost more than reading it inside the already-rare hit branch, since an
+  independent entry hitting is uncommon (Brutus's tertiary rates are 1/15 and
+  rarer) while table-rolls are not. Same trade as Extension A's
+  `qtyMultiplier === 1` fast path, in the opposite direction.
+- **Step (c)'s residual cost is ~+1.5%/+0.9%, essentially noise.**
+  `gpPerKill` is byte-identical (597.2676 / 598.4495) across every variant
+  above, confirming all of this is behavior-preserving.
+- **The headroom problem is real but is NOT step (c)'s.** The baseline with
+  step (c)'s lines removed already measures ~1,981ms on this machine — the 10M
+  figure sits at the ~2.0s reading of PROJECT_PLAN.md 8's "couple of seconds"
+  *without* this change. That is Extension B's ~25% cost (documented in the
+  proposal), now visible at full size, plus a machine slower than the one the
+  proposal's ~1.87–1.94s figures came from.
+- **Deliberately did NOT pull the duplicated-`emit`/`runTable` lever** the
+  handoff nominated for exactly this trigger. It would mean maintaining two
+  copies of the simulator's core recursive walk indefinitely, and this
+  session's own measurement says it would buy back ~18ms of step (c)'s ~1%,
+  not the ~400ms of Extension B's overhead it was actually designed to target.
+  Building it to recover 1% would be chasing the wrong number. Flagging with
+  the measurement rather than acting on it: the lever is still available, and
+  it is now better characterised (it targets Extension B, not step (c)).
+
+## Phase 7, sources 1–3: Abyssal Sire, Corporeal Beast, Doom of Mokhaiotl (assessed)
+
+Worked cheapest-first through the 14 researched sources in `docs/bosses/`.
+The two cheapest both turned out to be consumers of engine work already done
+(Extension A's `qtyMultiplier`, step (c)'s `drawsPerHit`) and needed no new
+model capability at all — only parser wiring.
+
+### Abyssal Sire and Corporeal Beast — shipped, both now `verified`
+
+- **Both are one parser module** (`apps/ingest/src/parse/rdt-access.ts`),
+  which is why they were done together: each is a parameter on the same
+  `{{RareDropTable}}`/`{{GemDropTable}}` access-line family.
+  `unmodelledMultiplier` became a real `qtyMultiplier`, and `rolls=10` +
+  prose became `drawsPerHit`.
+- **`drawsPerHit` is detected from the wiki's own `override=` prose
+  (`/whereupon (?:its|their) contents are rolled (\d+) times/i`), never from
+  the boss's slug.** This matters: `rolls=10` is structurally identical to
+  the five `rolls=2` access lines elsewhere in the corpus that genuinely mean
+  repeated access attempts, so the prose is the *only* distinguishing signal.
+  Reading it is the same class of textual signal `build-tables.ts`'s
+  `findConfirmingSignal` already uses on `raritynotes`; keying off the slug
+  would be exactly the per-boss branch CLAUDE.md forbids. Verified by scanning
+  every wikitext snapshot: the phrase occurs on exactly one page, and the only
+  other "whereupon" in the corpus (Inferno) is unrelated combat prose outside
+  any access template.
+- **Prose and `rolls=` must agree or the line is flagged unresolved.** If a
+  page ever states one count in words and another in the parameter, that is a
+  real ambiguity about the wiki's intent — pushed through the existing
+  `unresolved` channel rather than picking one.
+- **`multiplier=` was re-checked across the whole corpus, not taken from the
+  one known case.** An earlier note called Abyssal Sire "the one source that
+  has it"; a page-wide grep also hits `phantom-muspah`, but its access call is
+  `{{RareDropTable|5/235|rolls=2|naturetalisman=yes}}` — the match is
+  elsewhere on the page, outside any access template. Abyssal Sire is
+  genuinely the only user; the original claim holds, now on evidence.
+- **Watchlist entries removed only after the policy's own gate was met.**
+  `data/mechanics-watchlist.json` requires "the mechanic is modelled AND the
+  simulation has been checked against the wiki's own figures."
+  `apps/ingest/test/rdt-access-mechanics.test.ts` is that check, run against
+  the REAL generated boss docs and REAL `data/tables/` records (not synthetic
+  fixtures), so it fails if a future re-parse stops emitting either field. It
+  asserts: Abyssal Sire's quantities exactly double while its drop *rates* are
+  untouched (conflating the two would silently double every rate the UI
+  reports); the shared `rare_drop_table` record is not mutated by that x2 (a
+  Giant Mole canary run against an already-used tables map); and Corporeal
+  Beast yields on 12/512 of kills drawing ten times each, rather than the
+  21.1% of kills the default reading gives.
+- **Result: `ingest parse --tier A,B,C` 36 -> 38 verified**, 14 -> 12
+  `needs_review`, `parse_failed` unchanged at 3. Diffed all 51 generated docs:
+  exactly two files changed, both intended.
+
+### On whether the research docs are accurate enough to implement from
+
+Mixed, and worth knowing before trusting the remaining eleven:
+
+- **Abyssal Sire and Corporeal Beast: fully accurate.** Both docs quoted the
+  exact template call, named the exact missing field, and their proposed
+  mappings were implementable verbatim. `corporeal-beast.md` even predicted
+  the right scope ("a `drawsPerHit` on the `tableRef` node... not a new
+  `TableMode`").
+- **`corporeal-beast.md` overstates one claim, harmlessly.** It says the
+  default reading "understates how much loot a successful proc yields by an
+  order of magnitude, and overstates how often any gem-table loot happens."
+  The second half is right (2.3% of kills vs 21.1%); the first half is
+  right per-proc but **the two readings have identical per-kill
+  expectation** — expectation is linear. No mean-based check could ever have
+  caught this, which is a sharper statement of why the fix mattered, not a
+  reason it didn't.
+- **`doom-of-mokhaiotl.md` is materially out of date and contradicts the
+  proposal — the proposal is right.** The boss doc concludes the mapping
+  "cannot be meaningfully proposed without wave/level machinery existing
+  first" and treats the source as evidence that wave structure is now a
+  recurring gap needing a shared abstraction.
+  `docs/mechanics-model-proposal.md`, written later and after reading all 14
+  docs, corrected this: gating each level's table on `levelAtLeast(delveLevel,
+  n)` makes every level up to the one reached fire its own roll, which IS
+  per-level bankable loot — confirmed against `conditions.ts`, where
+  `levelAtLeast` is a plain `ctx[field] >= n`. **No wave machinery is
+  needed**; it is N tables in the existing array. The boss docs were written
+  before Extensions A/B existed and their "what doesn't exist" sections have
+  not been revised since — read them for the *mechanic and its numbers*
+  (which have been reliable), not for their capability verdicts.
+
+### Doom of Mokhaiotl — assessed, not shipped: one real blocker needing a decision
+
+Implementable in shape (9 `levelAtLeast`-gated tables, each with its own
+`qtyMultiplier` and per-level unique rates, plus a per-level guaranteed
+demon-tear grant), but blocked on a genuine semantics mismatch that should not
+be guessed at:
+
+- **The wiki's quantity rule is `Qn = Q3 + trunc(Q3 * Mn)`** (`Mn` from -0.5
+  at level 1 to +0.2 at level 9+). Expressed as `qtyMultiplier = 1 + Mn` this
+  is always positive, so `MultiplierSchema`'s positive constraint is fine.
+- **But the rounding differs.** `simulate.ts`'s `emit` computes
+  `Math.round(rolled * qtyMultiplier)`; the wiki truncates the *scaled part*
+  toward zero and adds it to the baseline. These disagree on real values —
+  `Q3 = 5, M = -0.35`: wiki gives `5 + trunc(-1.75) = 4`, the engine gives
+  `round(5 * 0.65) = 3`. Not a rounding nicety at these quantities.
+- Three options, none obviously right and all with corpus-wide reach: change
+  `emit`'s rounding globally (touches every source using `qtyMultiplier`,
+  i.e. Abyssal Sire, just verified against the wiki); add a rounding-mode
+  field to the multiplier; or accept a documented off-by-one for this source.
+  **Left for whoever owns the schema call** rather than picked silently —
+  this is the same shape of decision as the `always`-inside-`independent`
+  schema question that was correctly escalated rather than guessed.

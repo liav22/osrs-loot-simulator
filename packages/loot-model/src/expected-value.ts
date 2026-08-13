@@ -146,9 +146,16 @@ function accumulateNode(
       quantity[node.slot]! += reach * qtyMultiplier * meanQty(node.qty)
       return
     case 'table':
+      // `drawsPerHit` evaluations of the referenced table, each independent
+      // of the others, so the expectation is simply linear in the count —
+      // one access hitting and drawing 10 times contributes exactly 10× what
+      // drawing once would (Corporeal Beast). Note this multiplies `reach`,
+      // not `qtyMultiplier`: it changes how many separate yields happen, not
+      // how big each one is, which is what keeps `drops[]` (times an item
+      // came up) correct rather than conflated with quantity.
       accumulateTable(
         node.table,
-        reach,
+        reach * node.drawsPerHit,
         qtyMultiplier * node.qtyMultiplier,
         compiled,
         drops,
@@ -235,6 +242,32 @@ function prerollHitChance(table: CompiledTable): number {
 }
 
 /**
+ * Probability that at least one entry of a `suppressesFollowing` table hits —
+ * the analytic counterpart of the `suppressHit` flag `simulate.ts` sets. Every
+ * entry is an independent Bernoulli trial (that's what `independent` means),
+ * so the table misses entirely only when all of them miss, and a `rolls` count
+ * of N repeats that whole independent pass N times.
+ *
+ * Gate-excluded entries are skipped rather than counted as guaranteed misses:
+ * an ownership-gated entry that currently doesn't apply isn't in the table at
+ * all this kill, matching how `accumulateTable`'s own `independent` case
+ * treats it. No source combines the two features today; getting it right here
+ * costs nothing and avoids a silent wrong answer if one ever does.
+ */
+function independentHitChance(
+  table: CompiledTable,
+  ownedCounts: Readonly<Record<string, number>>
+): number {
+  let miss = 1
+  for (let i = 0; i < table.probs.length; i++) {
+    if (!gateAllows(table, i, ownedCounts)) continue
+    miss *= 1 - table.probs[i]!
+  }
+  if (table.rolls.kind === 'chance') return table.rolls.p * (1 - miss)
+  return 1 - miss ** table.rolls.n
+}
+
+/**
  * Analytic expected value per kill — no sampling. This is what the `ev_matches`
  * validation check compares the wiki's stated average kill value against, and
  * what the UI shows next to observed rates.
@@ -249,11 +282,20 @@ export function expectedValue(
   const drops = new Float64Array(compiled.items.length)
   const quantity = new Float64Array(compiled.items.length)
 
+  // Two triggers shrink the surviving main-drop chain, both multiplicatively
+  // and both against the same `suppressedByPreroll` set of downstream modes:
+  // a preroll hit, and a hit in a `suppressesFollowing` table. A table can
+  // only be one or the other (the schema pins the flag to `independent`),
+  // so these branches are genuinely exclusive, not a precedence question.
   let chainAlive = 1
   for (const table of compiled.tables) {
     const reach = suppressedByPreroll(table.mode) ? chainAlive : 1
     accumulateTable(table, reach, 1, compiled, drops, quantity)
-    if (table.mode === 'preroll') chainAlive *= 1 - prerollHitChance(table)
+    if (table.mode === 'preroll') {
+      chainAlive *= 1 - prerollHitChance(table)
+    } else if (table.suppressesFollowing) {
+      chainAlive *= 1 - independentHitChance(table, compiled.ctx.ownedCounts)
+    }
   }
 
   const items: ExpectedItem[] = []

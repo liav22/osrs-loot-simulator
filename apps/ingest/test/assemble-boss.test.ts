@@ -212,7 +212,7 @@ describe('assembleBoss', () => {
 
   it('turns a resolved RDT access line into an independent tableRef table, with rolls and variant carried through', () => {
     const result = assembleBoss([], { lines: [
-      { ref: 'rare_drop_table', rate: { num: 5, den: 150 }, rolls: 2, variant: 'Post-quest', approx: false, unmodelledMultiplier: null, raw: '{{RareDropTable|dropversion=Post-quest|5/150|rolls=2}}' },
+      { ref: 'rare_drop_table', rate: { num: 5, den: 150 }, rolls: 2, variant: 'Post-quest', approx: false, qtyMultiplier: null, drawsPerHit: null, raw: '{{RareDropTable|dropversion=Post-quest|5/150|rolls=2}}' },
     ], unresolved: [] }, options)
     expect(result.errors).toEqual([])
     expect(result.boss?.tables).toEqual([

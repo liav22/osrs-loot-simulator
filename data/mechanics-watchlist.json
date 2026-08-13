@@ -7,21 +7,30 @@
       "title": "Lunar Chest",
       "mechanic": "without_replacement",
       "detail": "Uniques are drawn without replacement across the chest's rolls, so the same unique cannot come up twice in one chest. The drop rows carry per-item rarities only and cannot express that. Model as a weighted table with rolls > 1 and withoutReplacement: true.",
-      "blockedBy": ["Blood Moon", "Blue Moon", "Eclipse Moon", "Moons of Peril"]
+      "blockedBy": [
+        "Blood Moon",
+        "Blue Moon",
+        "Eclipse Moon",
+        "Moons of Peril"
+      ]
     },
     {
       "lootSourceId": "reward-cart",
       "title": "Reward Cart",
       "mechanic": "point_scaled",
       "detail": "Rolls scale with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer) rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the wintertodt_points formula.",
-      "blockedBy": ["Wintertodt"]
+      "blockedBy": [
+        "Wintertodt"
+      ]
     },
     {
       "lootSourceId": "reward-pool",
       "title": "Reward pool",
       "mechanic": "point_scaled",
       "detail": "Rolls scale with reward permits earned subduing Tempoross (fishing/cooking/depositing harpoonfish, repairing totems, dousing fires) rather than being a fixed count per redemption. Needs the tempoross_points formula.",
-      "blockedBy": ["Tempoross"]
+      "blockedBy": [
+        "Tempoross"
+      ]
     },
     {
       "lootSourceId": "duke-sucellus",
@@ -42,35 +51,37 @@
       "title": "Chest (Tombs of Amascut)",
       "mechanic": "point_scaled",
       "detail": "Unique chance scales with raid invocation level and completion points, not with any fixed per-kill rarity — needs the toa_invocation formula. The chest's own dropsline rows are structural leftovers of the raid's point-purchase reward shop, not independent per-row rarities; parsing them as an ordinary weighted table would misrepresent the mechanic entirely regardless of whether the weights happen to reconcile.",
-      "blockedBy": ["Akkha", "Ba-Ba", "Elidinis' Warden", "Kephri", "Tumeken's Warden", "Zebak"]
+      "blockedBy": [
+        "Akkha",
+        "Ba-Ba",
+        "Elidinis' Warden",
+        "Kephri",
+        "Tumeken's Warden",
+        "Zebak"
+      ]
     },
     {
       "lootSourceId": "monumental-chest",
       "title": "Monumental chest",
       "mechanic": "point_scaled",
       "detail": "Unique chance scales with Theatre of Blood points earned across the raid (raid tier, deaths, personal performance), not a fixed per-kill rarity — needs the tob_points formula. Same caveat as the Tombs of Amascut chest: the dropsline rows reflect the points-shop structure, not independent rarities.",
-      "blockedBy": ["Nylocas Vasilias", "Pestilent Bloat", "Sotetseg", "The Maiden of Sugadinti", "Verzik Vitur", "Xarpus"]
+      "blockedBy": [
+        "Nylocas Vasilias",
+        "Pestilent Bloat",
+        "Sotetseg",
+        "The Maiden of Sugadinti",
+        "Verzik Vitur",
+        "Xarpus"
+      ]
     },
     {
       "lootSourceId": "rewards-chest-fortis-colosseum",
       "title": "Rewards Chest (Fortis Colosseum)",
       "mechanic": "other",
       "detail": "Loot scales with how many of the Colosseum's 12 waves were completed before the chest was opened (partial completion is allowed and bankable between waves), not with a fixed per-kill rarity. No formula for this is in PROJECT_PLAN.md's section 4.6 registry yet — it needs a new one (wave count / invocation-style scaling), not one of the seven already listed.",
-      "blockedBy": ["Sol Heredit"]
-    },
-    {
-      "lootSourceId": "abyssal-sire",
-      "title": "Abyssal Sire",
-      "mechanic": "other",
-      "detail": "The wiki's own {{RareDropTable|3/139|...|multiplier=2}} call states this monster always drops DOUBLE the usual quantity from the rare drop table. The parser reads the 3/139 access rate correctly (tableRef to rare_drop_table resolves and parses cleanly) but the x2 quantity multiplier is not modelled — data/tables/rare_drop_table.json is one shared, unscaled record and nothing lets a per-boss tableRef access scale its yield.",
-      "blockedBy": []
-    },
-    {
-      "lootSourceId": "corporeal-beast",
-      "title": "Corporeal Beast",
-      "mechanic": "other",
-      "detail": "The wiki's own {{GemDropTable|12/512|rolls=10|override=...}} call explicitly states in its override prose: \"a 12/512 chance of rolling the gem drop table, whereupon its contents are rolled 10 times\" — access checked ONCE, the gem table drawn 10 times after. The parser's default reading of `rolls` (used for every other RDT/gem access line on the wiki, matching Table.rolls' existing 'repeated access attempts' meaning elsewhere, e.g. Zulrah's main table) is the OPPOSITE: it currently models this as 10 independent 12/512 access attempts, not one access followed by 10 draws. Confirmed wrong specifically by this source's own text, not a guess — see docs/DECISIONS.md.",
-      "blockedBy": []
+      "blockedBy": [
+        "Sol Heredit"
+      ]
     },
     {
       "lootSourceId": "doom-of-mokhaiotl",

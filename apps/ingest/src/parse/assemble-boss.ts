@@ -154,8 +154,12 @@ export function assembleBoss(
     const notes = [
       `Access into ${line.ref} (from {{${line.ref === 'rare_drop_table' ? 'RareDropTable' : 'GemDropTable'}}})`,
       line.approx ? 'approximate rate per the wiki' : null,
-      line.unmodelledMultiplier !== null
-        ? `wiki states multiplier=${line.unmodelledMultiplier} (quantity scaling, NOT modelled)`
+      line.qtyMultiplier !== null
+        ? `wiki states multiplier=${line.qtyMultiplier}: every quantity from this access is scaled by it`
+        : null,
+      line.drawsPerHit !== null
+        ? `one access check draws the table ${line.drawsPerHit} times (per the wiki's own prose), ` +
+          'not the usual N independent access attempts'
         : null,
     ]
       .filter((note): note is string => note !== null)
@@ -167,7 +171,12 @@ export function assembleBoss(
       rolls: line.rolls,
       entries: [
         {
-          node: { kind: 'tableRef' as const, ref: line.ref },
+          node: {
+            kind: 'tableRef' as const,
+            ref: line.ref,
+            ...(line.qtyMultiplier !== null ? { qtyMultiplier: line.qtyMultiplier } : {}),
+            ...(line.drawsPerHit !== null ? { drawsPerHit: line.drawsPerHit } : {}),
+          },
           rate: { kind: 'fixed' as const, num: line.rate.num, den: line.rate.den },
           ...(line.variant !== null ? { conditions: [{ kind: 'variant' as const, name: line.variant }] } : {}),
         },

@@ -704,7 +704,8 @@
         {
           "node": {
             "kind": "tableRef",
-            "ref": "rare_drop_table"
+            "ref": "rare_drop_table",
+            "qtyMultiplier": 2
           },
           "rate": {
             "kind": "fixed",
@@ -713,11 +714,11 @@
           }
         }
       ],
-      "notes": "Access into rare_drop_table (from {{RareDropTable}}); wiki states multiplier=2 (quantity scaling, NOT modelled)"
+      "notes": "Access into rare_drop_table (from {{RareDropTable}}); wiki states multiplier=2: every quantity from this access is scaled by it"
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -751,8 +752,7 @@
       },
       {
         "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "other: The wiki's own {{RareDropTable|3/139|...|multiplier=2}} call states this monster always drops DOUBLE the usual quantity from the rare drop table. The parser reads the 3/139 access rate correctly (tableRef to rare_drop_table resolves and parses cleanly) but the x2 quantity multiplier is not modelled — data/tables/rare_drop_table.json is one shared, unscaled record and nothing lets a per-boss tableRef access scale its yield."
+        "ok": true
       }
     ]
   },
