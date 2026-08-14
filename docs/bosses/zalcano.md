@@ -1,5 +1,40 @@
 # Zalcano
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (`SimContext` points) — **RESOLVED**, and in the two-value shape this
+>   doc argued for: `ctx.hitpointsDamage` + `ctx.shieldDamage` kept raw, with
+>   `zalcano_points` (registered, still a stub) doing the derivation.
+> - Gap 3 (MVP's self-referential +10%) — **RESOLVED**: `Table.qtyMultiplier`
+>   of 1.1 with `qtyRounding: 'ceilDelta'`. This doc's framing that the MVP
+>   bonus needs a mechanism *distinct* from Duke Sucellus's perfect-kill +50%
+>   is **wrong** — both are "scale this table's realized quantity by a scalar,
+>   gated on a per-run boolean," one mechanism. But this doc's "(rounded up)"
+>   detail was load-bearing and correct: it is why `ceilDelta` exists.
+> - Gap 2 (crystal shard as a discrete role-keyed tier) — **PARTIALLY
+>   RESOLVED**: `QtySpec.formula` can return a stepped value, so the tiering is
+>   expressible, but the *role* input has no `SimContext` field. Needs either a
+>   role field or modelling as a `variant` condition.
+> - Gap 4 (team point-allocation) — out of scope, same as CoX.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: zalcano`. Watchlisted (`point_scaled`). No blocked sources.
 
 Source: **Zalcano** — https://oldschool.runescape.wiki/w/Zalcano — pageid `221996`, revid

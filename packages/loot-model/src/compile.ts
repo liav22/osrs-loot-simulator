@@ -1,4 +1,4 @@
-import { entryApplies } from './conditions.js'
+import { entryApplies, withDerivedContext } from './conditions.js'
 import {
   defaultFormulaRegistry,
   evaluateMultiplier,
@@ -13,6 +13,7 @@ import type {
   Multiplier,
   Node,
   OwnershipGate,
+  QtyRounding,
   QtySpec,
   SimContext,
   Table,
@@ -55,7 +56,14 @@ export type CompiledNode =
    * `qtyMultiplier`: that one scales the size of each yielded stack, this one
    * scales how many separate yields happen.
    */
-  | { kind: 'table'; table: CompiledTable; qtyMultiplier: number; drawsPerHit: number }
+  | {
+      kind: 'table'
+      table: CompiledTable
+      qtyMultiplier: number
+      /** How this access's own multiplier rounds. `'round'` when absent. */
+      qtyRounding: QtyRounding
+      drawsPerHit: number
+    }
 
 export type CompiledRolls =
   | { kind: 'count'; n: number }
@@ -79,6 +87,8 @@ export interface CompiledTable {
   probs: Float64Array
   /** Scales every quantity rolled from this table's own entries. 1 when absent. */
   qtyMultiplier: number
+  /** How this table's own multiplier rounds. `'round'` when absent. */
+  qtyRounding: QtyRounding
   /**
    * `independent` only: a hit on any entry ends the main-drop chain for the
    * rest of the document, the same chain a preroll hit ends. `false` for
@@ -166,9 +176,16 @@ class ItemIndex {
 
 export function compileBoss(
   boss: Boss,
-  ctx: SimContext,
+  rawCtx: SimContext,
   options: CompileOptions = {}
 ): CompiledBoss {
+  // Derived fields are resolved here, once, before anything reads the context —
+  // this is the single point `simulate` and `expectedValue` both funnel
+  // through, so a hand-built context reaching either one directly is treated
+  // identically to one from `resolveSimContext`. Idempotent, and a no-op
+  // (returns the same object) for every context whose derived fields already
+  // agree, which is every source that doesn't use them.
+  const ctx = withDerivedContext(rawCtx)
   const formulas = options.formulas ?? defaultFormulaRegistry
   const shared = options.tables ?? new Map<string, Table>()
   const items = new ItemIndex()
@@ -218,6 +235,7 @@ export function compileBoss(
           kind: 'table',
           table: compileTable(target, path),
           qtyMultiplier: compileMultiplier(node.qtyMultiplier),
+          qtyRounding: node.qtyRounding ?? 'round',
           drawsPerHit: node.drawsPerHit ?? 1,
         }
       }
@@ -245,6 +263,7 @@ export function compileBoss(
     return {
       kind: 'table',
       qtyMultiplier: 1,
+      qtyRounding: 'round',
       // A `oneOf` is reached inline, not through a `tableRef` node, so there
       // is no access line for `drawsPerHit` to attach to — it selects exactly
       // one entry, exactly once.
@@ -263,6 +282,7 @@ export function compileBoss(
         denominator: total,
         probs: new Float64Array(0),
         qtyMultiplier: 1,
+        qtyRounding: 'round',
         suppressesFollowing: false,
         ownershipGates: null,
       },
@@ -335,6 +355,7 @@ export function compileBoss(
       denominator,
       probs,
       qtyMultiplier: compileMultiplier(table.qtyMultiplier),
+      qtyRounding: table.qtyRounding ?? 'round',
       suppressesFollowing: table.suppressesFollowing ?? false,
       ownershipGates,
     }
@@ -431,6 +452,86 @@ export function pickIndex(cum: Float64Array, r: number): number {
  */
 export function suppressedByPreroll(mode: TableMode): boolean {
   return mode === 'preroll' || mode === 'weighted'
+}
+
+/**
+ * Applies a composed `qtyMultiplier` to one rolled quantity. The single
+ * definition both `simulate.ts` and `expected-value.ts` use, so the sampled
+ * and analytic paths cannot disagree about what a multiplier means — the same
+ * reason `compile.ts` exists at all.
+ *
+ * Callers must check `multiplier === 1` first and skip this: that fast path is
+ * measured to matter (docs/mechanics-model-proposal.md's benchmark note) and
+ * is why this function does not check it itself.
+ */
+export function applyQtyMultiplier(
+  qty: number,
+  multiplier: number,
+  rounding: QtyRounding
+): number {
+  if (rounding === 'round') return Math.round(qty * multiplier)
+  // Both delta forms round the ADJUSTMENT and add it to the untouched
+  // baseline, which is not the same as rounding the product once the
+  // multiplier drops below 1 — see `QtyRoundingSchema`'s comment.
+  const delta = scaledDelta(qty, multiplier)
+  return qty + (rounding === 'truncDelta' ? Math.trunc(delta) : Math.ceil(delta))
+}
+
+/**
+ * `qty * multiplier - qty`, snapped to an integer when it lands within
+ * floating-point noise of one.
+ *
+ * Both corrections here are load-bearing, and each was caught by a test
+ * asserting a value the wiki states plainly:
+ *
+ * 1. **Computed as `qty*m - qty`, never `qty*(m-1)`.** The multipliers these
+ *    modes exist for are decimals (1.1, 1.2, 0.65), and `1.2 - 1` is
+ *    `0.19999999999999996`, so `5 * (1.2 - 1)` truncates to 0 instead of 1.
+ * 2. **Then snapped.** That alone is not enough: `10 * 1.1` is
+ *    `11.000000000000002`, so the delta is `1.0000000000000018` and `ceil`
+ *    gives 2 — Zalcano's "+10% of 10 items" would hand out 12, not 11.
+ *
+ * Without the snap, `trunc`/`ceil` amplify a 1e-15 representation error into a
+ * whole extra (or missing) item — precisely the off-by-one class of bug this
+ * whole field exists to get right, so approximating here would defeat it.
+ */
+function scaledDelta(qty: number, multiplier: number): number {
+  const delta = qty * multiplier - qty
+  const nearest = Math.round(delta)
+  return Math.abs(delta - nearest) < 1e-9 ? nearest : delta
+}
+
+/**
+ * Exact mean of `applyQtyMultiplier(rolledQty, multiplier, rounding)` over the
+ * quantity's own distribution, by enumeration.
+ *
+ * `expected-value.ts` previously used `multiplier * meanQty(qty)`, which is
+ * only correct when no rounding actually occurs — true for an integer
+ * multiplier on integer quantities (Abyssal Sire's x2) and false in general,
+ * since `E[round(X*m)] != E[X]*m`. Enumerating costs one pass over the range
+ * or choice list ONCE per compiled node at EV time, never per kill, so the
+ * analytic path can be exact here rather than approximate.
+ */
+export function meanScaledQty(
+  qty: ResolvedQtySpec,
+  multiplier: number,
+  rounding: QtyRounding
+): number {
+  if (multiplier === 1) return meanQty(qty)
+  switch (qty.kind) {
+    case 'exact':
+      return applyQtyMultiplier(qty.n, multiplier, rounding)
+    case 'range': {
+      let total = 0
+      for (let v = qty.min; v <= qty.max; v++) total += applyQtyMultiplier(v, multiplier, rounding)
+      return total / (qty.max - qty.min + 1)
+    }
+    case 'choice': {
+      let total = 0
+      for (const v of qty.values) total += applyQtyMultiplier(v, multiplier, rounding)
+      return total / qty.values.length
+    }
+  }
 }
 
 export function meanQty(qty: ResolvedQtySpec): number {

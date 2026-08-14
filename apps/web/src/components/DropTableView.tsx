@@ -16,8 +16,23 @@ function conditionLabel(condition: Condition): string {
     case 'variant':
       return condition.name
     case 'levelAtLeast': {
-      const label = condition.field === 'delveLevel' ? 'Delve level' : 'Wave'
-      return `${label} ≥ ${condition.n}`
+      // An exhaustive record, not a ternary. The ternary this replaced
+      // silently labelled every field except `delveLevel` as "Wave", so
+      // widening the enum for Zalcano would have rendered "Wave ≥ 31" for a
+      // damage threshold — a new field must fail the typecheck here, which is
+      // the whole point of this switch being a trip wire.
+      const labels: Record<typeof condition.field, string> = {
+        delveLevel: 'Delve level',
+        wavesReached: 'Wave',
+        shieldDamage: 'Shield damage',
+        totalDamage: 'Combined damage',
+      }
+      return `${labels[condition.field]} ≥ ${condition.n}`
+    }
+    case 'includes': {
+      // `values` is a disjunction (see ConditionSchema), so read it as "or".
+      const label = condition.field === 'moonsKilled' ? 'Killed' : 'Completed'
+      return `${label} ${condition.values.join(' or ')}`
     }
   }
 }

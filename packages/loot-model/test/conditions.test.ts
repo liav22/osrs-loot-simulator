@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  ConditionSchema,
   conditionsHold,
   DEFAULT_SIM_CONTEXT,
   entryApplies,
@@ -91,5 +92,50 @@ describe('resolveSimContext', () => {
       members: true,
       variant: 'demonic',
     })
+  })
+})
+
+describe("'includes': set membership over a set-valued context field", () => {
+  it('holds when ANY listed value is present, not only when all are', () => {
+    const ctx = ctxWith({ moonsKilled: ['blood', 'eclipse'] })
+    expect(evaluateCondition({ kind: 'includes', field: 'moonsKilled', values: ['blood'] }, ctx)).toBe(true)
+    expect(evaluateCondition({ kind: 'includes', field: 'moonsKilled', values: ['blue'] }, ctx)).toBe(false)
+    // Disjunction is the whole point: this is the one thing the conditions
+    // array cannot already express, since it ANDs its members.
+    expect(
+      evaluateCondition({ kind: 'includes', field: 'moonsKilled', values: ['blue', 'eclipse'] }, ctx)
+    ).toBe(true)
+  })
+
+  it('conjunction is still available by listing two conditions', () => {
+    const both = ctxWith({ moonsKilled: ['blood', 'blue'] })
+    const onlyOne = ctxWith({ moonsKilled: ['blood'] })
+    const conditions: Condition[] = [
+      { kind: 'includes', field: 'moonsKilled', values: ['blood'] },
+      { kind: 'includes', field: 'moonsKilled', values: ['blue'] },
+    ]
+    expect(conditionsHold(conditions, both)).toBe(true)
+    expect(conditionsHold(conditions, onlyOne)).toBe(false)
+  })
+
+  it('is empty-safe and works over questsComplete too', () => {
+    expect(
+      evaluateCondition({ kind: 'includes', field: 'moonsKilled', values: ['blood'] }, ctxWith({}))
+    ).toBe(false)
+    expect(
+      evaluateCondition(
+        { kind: 'includes', field: 'questsComplete', values: ["Legends' Quest"] },
+        ctxWith({ questsComplete: ["Legends' Quest"] })
+      )
+    ).toBe(true)
+  })
+
+  it('rejects an unknown field and an empty values list', () => {
+    expect(
+      ConditionSchema.safeParse({ kind: 'includes', field: 'killCount', values: ['x'] }).success
+    ).toBe(false)
+    expect(
+      ConditionSchema.safeParse({ kind: 'includes', field: 'moonsKilled', values: [] }).success
+    ).toBe(false)
   })
 })

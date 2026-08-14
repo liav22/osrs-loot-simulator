@@ -1,7 +1,7 @@
 import {
   compileBoss,
   effectiveWeightedPool,
-  meanQty,
+  meanScaledQty,
   ownershipGateSatisfied,
   suppressedByPreroll,
   type CompiledBoss,
@@ -10,7 +10,7 @@ import {
   type CompiledTable,
   type CompileOptions,
 } from './compile.js'
-import type { Boss, SimContext } from './schema.js'
+import type { Boss, QtyRounding, SimContext } from './schema.js'
 import type { PriceLookup } from './simulate.js'
 
 export interface ExpectedItem {
@@ -134,6 +134,7 @@ function accumulateNode(
   node: CompiledNode,
   reach: number,
   qtyMultiplier: number,
+  qtyRounding: QtyRounding,
   compiled: CompiledBoss,
   drops: Float64Array,
   quantity: Float64Array
@@ -143,7 +144,10 @@ function accumulateNode(
       return
     case 'item':
       drops[node.slot]! += reach
-      quantity[node.slot]! += reach * qtyMultiplier * meanQty(node.qty)
+      // Exact, not `qtyMultiplier * meanQty(...)`: rounding makes the scaled
+      // mean non-linear, so the analytic path enumerates the quantity's own
+      // distribution rather than scaling its mean. See `meanScaledQty`.
+      quantity[node.slot]! += reach * meanScaledQty(node.qty, qtyMultiplier, qtyRounding)
       return
     case 'table':
       // `drawsPerHit` evaluations of the referenced table, each independent
@@ -157,6 +161,8 @@ function accumulateNode(
         node.table,
         reach * node.drawsPerHit,
         qtyMultiplier * node.qtyMultiplier,
+        // Most-specific-wins, mirroring simulate.ts's `nestedRounding`.
+        node.qtyRounding === 'round' ? qtyRounding : node.qtyRounding,
         compiled,
         drops,
         quantity
@@ -169,6 +175,7 @@ function accumulateTable(
   table: CompiledTable,
   reach: number,
   qtyMultiplier: number,
+  qtyRounding: QtyRounding,
   compiled: CompiledBoss,
   drops: Float64Array,
   quantity: Float64Array
@@ -176,6 +183,7 @@ function accumulateTable(
   const rolls = expectedRolls(table.rolls)
   if (rolls === 0 || reach === 0) return
   const effectiveQty = qtyMultiplier * table.qtyMultiplier
+  const effectiveRounding = table.qtyRounding === 'round' ? qtyRounding : table.qtyRounding
 
   const ownedCounts = compiled.ctx.ownedCounts
 
@@ -183,14 +191,14 @@ function accumulateTable(
     case 'always':
       table.nodes.forEach((node, i) => {
         if (!gateAllows(table, i, ownedCounts)) return
-        accumulateNode(node, reach * rolls, effectiveQty, compiled, drops, quantity)
+        accumulateNode(node, reach * rolls, effectiveQty, effectiveRounding, compiled, drops, quantity)
       })
       return
 
     case 'independent':
       table.nodes.forEach((node, i) => {
         if (!gateAllows(table, i, ownedCounts)) return
-        accumulateNode(node, reach * rolls * table.probs[i]!, effectiveQty, compiled, drops, quantity)
+        accumulateNode(node, reach * rolls * table.probs[i]!, effectiveQty, effectiveRounding, compiled, drops, quantity)
       })
       return
 
@@ -204,7 +212,7 @@ function accumulateTable(
       table.nodes.forEach((node, i) => {
         if (!gateAllows(table, i, ownedCounts)) return
         const p = table.probs[i]!
-        accumulateNode(node, reach * survived * p, effectiveQty, compiled, drops, quantity)
+        accumulateNode(node, reach * survived * p, effectiveQty, effectiveRounding, compiled, drops, quantity)
         survived *= 1 - p
       })
       return
@@ -217,7 +225,7 @@ function accumulateTable(
       if (table.withoutReplacement && table.rolls.kind === 'count' && table.rolls.n > 1) {
         const expected = expectedDrawsWithoutReplacement(pool.weights, pool.denominator, table.rolls.n)
         table.nodes.forEach((node, i) => {
-          accumulateNode(node, reach * expected[i]!, effectiveQty, compiled, drops, quantity)
+          accumulateNode(node, reach * expected[i]!, effectiveQty, effectiveRounding, compiled, drops, quantity)
         })
         return
       }
@@ -226,7 +234,7 @@ function accumulateTable(
       if (pool.denominator <= 0) return
       table.nodes.forEach((node, i) => {
         const p = pool.weights[i]! / pool.denominator
-        accumulateNode(node, reach * rolls * p, effectiveQty, compiled, drops, quantity)
+        accumulateNode(node, reach * rolls * p, effectiveQty, effectiveRounding, compiled, drops, quantity)
       })
       return
     }
@@ -290,7 +298,7 @@ export function expectedValue(
   let chainAlive = 1
   for (const table of compiled.tables) {
     const reach = suppressedByPreroll(table.mode) ? chainAlive : 1
-    accumulateTable(table, reach, 1, compiled, drops, quantity)
+    accumulateTable(table, reach, 1, 'round', compiled, drops, quantity)
     if (table.mode === 'preroll') {
       chainAlive *= 1 - prerollHitChance(table)
     } else if (table.suppressesFollowing) {

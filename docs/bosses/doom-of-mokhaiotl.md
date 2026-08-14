@@ -1,5 +1,45 @@
 # Doom of Mokhaiotl
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - **The central verdict here is WRONG and should not be acted on.** This doc
+>   says the mapping "cannot be meaningfully proposed without wave/level
+>   machinery existing first," and treats the source as evidence that wave
+>   structure needs a shared abstraction. It does not. Gating each level's
+>   table on `levelAtLeast('delveLevel', n)` makes every level up to the one
+>   reached fire its own roll — which IS per-level bankable loot — so this is
+>   N tables in the existing `tables` array, not a new structural concept.
+>   `docs/mechanics-model-proposal.md` reached this conclusion after reading
+>   all 14 docs; it is confirmed against `conditions.ts`, where `levelAtLeast`
+>   is a plain `ctx[field] >= n`. **No wave machinery is needed.**
+> - Consequently the "population of one" question this doc reopens does not
+>   need re-deciding: neither this source nor Fortis Colosseum needs a wave
+>   engine. What Fortis Colosseum still needs is *run-scoped* state for its
+>   armour dedup, which is a different gap and remains deliberately deferred.
+> - Gap 2 (per-run scalar) — **RESOLVED**: `ctx.delveLevel`.
+> - The quantity rule `Qn = Q3 + trunc(Q3 * Mn)` is expressible as
+>   `qtyMultiplier: 1 + Mn` with `qtyRounding: 'truncDelta'` — added
+>   specifically for this rule, because rounding the *product* does not
+>   reproduce it once `Mn` is negative.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: doom-of-mokhaiotl`. Watchlisted (`other`) via the ambiguous-heading path, not
 `not_on_watchlist` directly — see below. No blocked sources.
 

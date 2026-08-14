@@ -3,18 +3,6 @@
   "note": "Loot sources whose real mechanic is not visible in their drop rows. A watchlisted source fails the not_on_watchlist validation check and is forced to needs_review however cleanly it parses, because parsing cleanly proves nothing about a mechanic the rows do not encode. Remove an entry only when the mechanic is modelled and the simulation has been checked against the wiki's own figures.",
   "entries": [
     {
-      "lootSourceId": "lunar-chest",
-      "title": "Lunar Chest",
-      "mechanic": "without_replacement",
-      "detail": "Uniques are drawn without replacement across the chest's rolls, so the same unique cannot come up twice in one chest. The drop rows carry per-item rarities only and cannot express that. Model as a weighted table with rolls > 1 and withoutReplacement: true.",
-      "blockedBy": [
-        "Blood Moon",
-        "Blue Moon",
-        "Eclipse Moon",
-        "Moons of Peril"
-      ]
-    },
-    {
       "lootSourceId": "reward-cart",
       "title": "Reward Cart",
       "mechanic": "point_scaled",
@@ -43,7 +31,7 @@
       "lootSourceId": "zalcano",
       "title": "Zalcano",
       "mechanic": "point_scaled",
-      "detail": "Both the main table and the tertiary table scale with points from damage dealt to Zalcano's hitpoints and shield (points formula and per-component caps are in page prose, not in any drop row), and the MVP gets an extra 10% of their non-unique loot. The page's dropsline rows reconcile on their own, so this source parses cleanly and would otherwise look verified.",
+      "detail": "Two curves the page never states. (1) Main- and tertiary-table drops \"scale with the player's points\" and the points themselves are defined exactly (P_M = H + 2S; P_T = min(H,400) + 2*min(S,300)), but the function turning points into loot is not on the page, so zalcano_points stays a stub and main-table quantities remain the crowd-sourced ranges. (2) The Zalcano shard is \"Between 1/750 and 1/1500 depending on contribution\" with no stated interpolation; the primary 1/750 is kept rather than a guessed curve. Everything else IS modelled and wiki-verified in data/overrides/zalcano.json and apps/ingest/test/zalcano.test.ts: both eligibility gates (>=5 shield damage, >=31 combined via the derived totalDamage field), the role-keyed crystal shard tier (1/2/3), MVP-only infernal ashes, the MVP's +10% rounded up (ceilDelta), and the tertiary 1/200 x 1/40 onyx split.",
       "blockedBy": []
     },
     {
@@ -82,13 +70,6 @@
       "blockedBy": [
         "Sol Heredit"
       ]
-    },
-    {
-      "lootSourceId": "doom-of-mokhaiotl",
-      "title": "Doom of Mokhaiotl",
-      "mechanic": "other",
-      "detail": "Uniques are gated by delve level reached, not a fixed per-kill rarity: Avernic treads only drops 'upon completion of delve level 4 and deeper', Eye of ayak 'level 3 and deeper', Mokhaiotl cloth 'level 2 and deeper', and all three share one altrarity value (1/540) that the three raw rates (1/1350, 1/2000, 1/2500) converge toward at higher levels — the same shape as Fortis Colosseum's wave scaling, one level deeper. The heading correctly stays an unresolved ambiguous-preroll guess (no shared citation, no confirming phrase — this session's heuristic checked and correctly declined to guess) rather than being force-classified.",
-      "blockedBy": []
     }
   ]
 }

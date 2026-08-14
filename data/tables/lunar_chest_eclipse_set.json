@@ -1,0 +1,94 @@
+{
+  "id": "lunar_chest_eclipse_set",
+  "mode": "weighted",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "denominator": 4,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 29000,
+        "itemKey": "eclipse-atlatl",
+        "name": "Eclipse atlatl",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "ownershipGate": {
+        "itemKey": "eclipse-atlatl",
+        "n": 1,
+        "when": "below"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 29010,
+        "itemKey": "eclipse-moon-helm",
+        "name": "Eclipse moon helm",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "ownershipGate": {
+        "itemKey": "eclipse-moon-helm",
+        "n": 1,
+        "when": "below"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 29004,
+        "itemKey": "eclipse-moon-chestplate",
+        "name": "Eclipse moon chestplate",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "ownershipGate": {
+        "itemKey": "eclipse-moon-chestplate",
+        "n": 1,
+        "when": "below"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 29007,
+        "itemKey": "eclipse-moon-tassets",
+        "name": "Eclipse moon tassets",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "ownershipGate": {
+        "itemKey": "eclipse-moon-tassets",
+        "n": 1,
+        "when": "below"
+      }
+    }
+  ],
+  "notes": "Eclipse Moon's 4-piece set. Reached only when that Moon's 1/56 trigger hits; the draw is uniform over the pieces NOT yet obtained, so each piece carries an ownershipGate and effectiveWeightedPool shrinks the denominator as pieces are collected (4 unowned -> 1/4 each; 1 unowned -> certain). Duplicate protection is scoped PER SET, not across all 12 uniques \u2014 Jagex's own correction post explicitly rules out the '1/56 for any item across all sets' reading. The drop table's flat 1/224 per item is the naive first-piece-only figure and is deliberately NOT used as a rate here. Source: Lunar Chest, ==Loot mechanics==, revid 15284737."
+}

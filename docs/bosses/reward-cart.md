@@ -1,19 +1,52 @@
 # Reward Cart — Wintertodt
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (`SimContext` points) — **RESOLVED**: `ctx.points`.
+> - Gap 3 (warm gloves / bruma torch substitution after 3 owned) —
+>   **RESOLVED**: `Entry.ownershipGate` with `n: 3`, `when: 'atLeast'` — the
+>   threshold case the gate's `n` was generalised for.
+> - Gap 2 (`preroll` is schema-pinned to `rolls: 1`) — **STILL OPEN, and it is
+>   now the only model-level blocker for this source.** The recommended fix is
+>   NOT to lift the pin (that reopens repeat-suppression semantics for every
+>   preroll table); it is a node kind wrapping a small local `Table[]`, rolled
+>   `rolls(points)` times by an outer `independent` wrapper — the `z.lazy`
+>   escape hatch Phase 1 anticipated. Not built.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: reward-cart`. Watchlisted (`point_scaled`).
 
-## ⚠️ Watchlist label is misattributed to the wrong activity
+## ✅ RESOLVED — the watchlist misattribution described below is fixed
 
-`data/mechanics-watchlist.json`'s `reward-cart` entry currently reads `"blockedBy": ["Tempoross"]`
-and `"detail": "...Needs the tempoross_points formula."` **This is wrong, the same swap as
-`reward-pool`'s, in the opposite direction.** The wiki page titled "Reward Cart"
+**Do not re-flag this.** See `docs/bosses/reward-pool.md`'s matching banner for why this kept
+resurfacing. `data/mechanics-watchlist.json`'s `reward-cart` entry reads
+`"blockedBy": ["Wintertodt"]` and names `wintertodt_points`, matching `data/_inventory.json`.
+
+**What the bug was:** the entry read `"blockedBy": ["Tempoross"]` and
+`"detail": "...Needs the tempoross_points formula."` — the same swap as `reward-pool`'s, in the
+opposite direction. The wiki page titled "Reward Cart"
 (https://oldschool.runescape.wiki/w/Reward_Cart, pageid `541484`) is unambiguously **Wintertodt's**
 reward mechanism — its unique items are the phoenix pet, dragon axe, tome of fire, warm gloves,
-bruma torch, and Pyromancer outfit, all Wintertodt-specific. `data/_inventory.json` already has
+bruma torch, and Pyromancer outfit, all Wintertodt-specific. `data/_inventory.json` always had
 this right (`{ "title": "Wintertodt", ..., "lootSourceId": "reward-cart" }`); only the
-hand-authored watchlist JSON swapped the two. **Fix both entries in
-`data/mechanics-watchlist.json` together** — see `docs/bosses/reward-pool.md` for the Tempoross
-side of the same correction.
+hand-authored watchlist swapped the two.
 
 Source: **Reward Cart** — https://oldschool.runescape.wiki/w/Reward_Cart — pageid `541484`, revid
 `15293480`. No local wikitext snapshot existed for this page before this session (only a

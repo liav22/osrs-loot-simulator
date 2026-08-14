@@ -1,5 +1,45 @@
 # Lunar Chest — Moons of Peril
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - **CORRECTION (2026-08-14): this banner previously claimed "fully unblocked
+>   at the model level". That was wrong** — checked against `conditions.ts`
+>   while implementing, not re-derived from the field list. `ctx.moonsKilled`
+>   exists, but **no `Condition` kind can read it**: the seven kinds are
+>   `members`/`ringOfWealth`/`onSlayerTask`/`questComplete`/`killCountAtLeast`/
+>   `variant`/`levelAtLeast`, and none does set membership. Having a
+>   `SimContext` field is not the same as being able to gate an entry on it.
+> - Gap 1 (per-run context, "which Moons were killed") — **PARTIALLY
+>   RESOLVED**: `ctx.moonsKilled` is the right shape and a `formula` can read
+>   it (so the 1x/3x/6x standard-loot roll count via `Table.rolls` is fine),
+>   but per-Moon *entry gating* needs a set-membership condition that does not
+>   exist. `variant` cannot substitute: it is single-valued and up to three
+>   Moons apply at once.
+> - Gap 2 (`Table.rolls` cannot read an integer from context) — **RESOLVED**:
+>   a `formula`-kind `Rate` used as `rolls` is evaluated as an integer count.
+> - Gap 3 (per-set duplicate protection needs "pieces not yet obtained") —
+>   **RESOLVED**: `Entry.ownershipGate` plus `effectiveWeightedPool`, which
+>   shrinks the drawn-from pool rather than leaving a chance-of-nothing.
+> - What remains is boss-document and formula work, not model work.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: lunar-chest`. Watchlisted (`without_replacement`). Blocks: Blood Moon, Blue Moon,
 Eclipse Moon, Moons of Peril.
 

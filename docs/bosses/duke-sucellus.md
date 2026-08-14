@@ -1,5 +1,34 @@
 # Duke Sucellus
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (perfect-kill +50% quantity scaling) — **RESOLVED**:
+>   `Table.qtyMultiplier` gated on `ctx.perfectKill`.
+> - Gap 2 (per-item "already received" state) — **RESOLVED**:
+>   `Entry.ownershipGate`, which this doc's shape (ice quartz reversion) was
+>   one of the four sources designed against.
+> - **Still blocking**: `duke_sucellus_ice_quartz` is an unimplemented stub,
+>   and the frozen-tablet curve remains **UNKNOWN per the wiki itself** — not
+>   implementable at any schema level, so do not guess it.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: duke-sucellus`. Watchlisted (`other`). No blocked sources (single-boss encounter).
 
 Source: **Duke Sucellus** — https://oldschool.runescape.wiki/w/Duke_Sucellus — pageid `372984`,

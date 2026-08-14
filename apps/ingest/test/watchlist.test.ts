@@ -75,13 +75,21 @@ function bossEntry(overrides: Partial<Inventory['bosses'][number]>): Inventory['
   }
 }
 
+/**
+ * `dropsPage` defaults to `title`, matching the real inventory: the two differ
+ * only for a reward page whose drops live somewhere other than the activity's
+ * own page (Fortis Colosseum -> Rewards Chest (Fortis Colosseum)). It is
+ * load-bearing here — `checkWatchlistConsistency` derives "this source's own
+ * boss page" from it.
+ */
 function lootSourceEntry(
   overrides: Partial<Inventory['lootSources'][number]>
 ): Inventory['lootSources'][number] {
+  const title = overrides.title ?? 'Placeholder'
   return {
     id: 'placeholder',
-    title: 'Placeholder',
-    dropsPage: 'Placeholder',
+    title,
+    dropsPage: title,
     tier: 'A',
     rowCount: 1,
     include: true,
@@ -180,6 +188,108 @@ describe('checkWatchlistConsistency', () => {
     })
 
     expect(checkWatchlistConsistency(watchlist, inventory)).toEqual([])
+  })
+
+  /**
+   * The reward-cart/reward-pool swap had two halves, and only `blockedBy` was
+   * ever guarded. These four cases cover the other half plus the way the check
+   * could be disarmed entirely — see `checkWatchlistConsistency`'s comment.
+   */
+  describe('the half `blockedBy` cannot see', () => {
+    const inventory: Inventory = InventorySchema.parse({
+      inventoryVersion: 1,
+      generatedAt: '2026-01-01T00:00:00.000Z',
+      category: 'Category:Bosses',
+      bosses: [
+        bossEntry({ slug: 'wintertodt', title: 'Wintertodt', lootSourceId: 'reward-cart' }),
+        bossEntry({ slug: 'tempoross', title: 'Tempoross', lootSourceId: 'reward-pool' }),
+      ],
+      lootSources: [
+        lootSourceEntry({
+          id: 'reward-cart',
+          title: 'Reward Cart',
+          dropsPage: 'Reward Cart',
+          bosses: ['wintertodt'],
+        }),
+        lootSourceEntry({
+          id: 'reward-pool',
+          title: 'Reward pool',
+          dropsPage: 'Reward pool',
+          bosses: ['tempoross'],
+        }),
+      ],
+    })
+
+    function poolEntry(overrides: Record<string, unknown>): Watchlist {
+      return WatchlistSchema.parse({
+        watchlistVersion: 1,
+        entries: [
+          {
+            lootSourceId: 'reward-pool',
+            title: 'Reward pool',
+            mechanic: 'point_scaled',
+            detail: 'Rolls scale with reward permits earned subduing Tempoross. Needs the tempoross_points formula.',
+            blockedBy: ['Tempoross'],
+            ...overrides,
+          },
+        ],
+      })
+    }
+
+    it('passes the corrected entry', () => {
+      expect(checkWatchlistConsistency(poolEntry({}), inventory)).toEqual([])
+    })
+
+    it('flags detail prose describing the OTHER source’s activity', () => {
+      const issues = checkWatchlistConsistency(
+        poolEntry({
+          detail: 'Rolls scale with points earned fighting the Wintertodt. Needs the tempoross_points formula.',
+        }),
+        inventory
+      )
+      expect(issues).toHaveLength(1)
+      expect(issues[0]?.message).toContain("detail names boss page 'Wintertodt'")
+    })
+
+    it('flags a swapped formula id even when every other field is correct', () => {
+      // The sharpest case: blockedBy, title and prose all name Tempoross, and
+      // only the formula is wrong — which is precisely what "fix before wiring
+      // either formula" is about.
+      const issues = checkWatchlistConsistency(
+        poolEntry({
+          detail: 'Rolls scale with reward permits earned subduing Tempoross. Needs the wintertodt_points formula.',
+        }),
+        inventory
+      )
+      expect(issues).toHaveLength(1)
+      expect(issues[0]?.message).toContain("formula 'wintertodt_points'")
+      expect(issues[0]?.message).toContain("maps to 'reward-cart'")
+    })
+
+    it('flags a title retitled to its own boss page, which used to disarm the check', () => {
+      // With the old title-derived exclusion, `title: 'Tempoross'` removed
+      // Tempoross from the expected set, so an emptied blockedBy passed clean.
+      const issues = checkWatchlistConsistency(
+        poolEntry({ title: 'Tempoross', blockedBy: [] }),
+        inventory
+      )
+      expect(issues.length).toBeGreaterThan(0)
+      expect(issues.map((issue) => issue.message).join(' ')).toContain(
+        "title 'Tempoross' matches neither"
+      )
+      expect(issues.map((issue) => issue.message).join(' ')).toContain("missing 'Tempoross'")
+    })
+
+    it('draws no conclusion from a formula with no boss page of its own', () => {
+      // `toa_invocation`/`tob_points`/`cox_points` have no matching boss slug,
+      // so rule 4b stays silent rather than guessing.
+      expect(
+        checkWatchlistConsistency(
+          poolEntry({ detail: 'Scales with raid level. Needs the toa_invocation formula.' }),
+          inventory
+        )
+      ).toEqual([])
+    })
   })
 
   it('flags a lootSourceId absent from data/_inventory.json entirely', () => {

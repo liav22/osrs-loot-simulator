@@ -1,5 +1,35 @@
 # TzHaar Fight Cave
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - **Fully unblocked at the model level** — both gaps RESOLVED:
+> - Gap 1 (formula-driven `QtySpec` for Tokkul) — **RESOLVED**:
+>   `QtySpec.formula`; `tzhaar_fight_cave_tokkul` is registered in
+>   `FORMULA_IDS` (still a stub implementation).
+> - Gap 2 (per-run scalar: waves completed) — **RESOLVED**:
+>   `ctx.wavesReached`.
+> - **Caveat before picking this up as "the cheapest":** TzHaar Fight Cave
+>   resolved no boss in the 172-page inventory, so it is not one of the
+>   non-verified tier A-C sources and shipping it moves no counter.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 Not in `data/mechanics-watchlist.json` (no `lootSourceId` — same standing as Inferno, a recovered
 `component` encounter with no reward-table page, correctly not force-matched). Covered per this
 session's brief to research the wave-structured sources as a group.

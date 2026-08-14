@@ -1033,7 +1033,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "resolved against 3 shared table(s)"
+        "detail": "resolved against 6 shared table(s)"
       },
       {
         "check": "rates_valid",

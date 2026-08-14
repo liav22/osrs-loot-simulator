@@ -1752,3 +1752,616 @@ be guessed at:
   **Left for whoever owns the schema call** rather than picked silently —
   this is the same shape of decision as the `always`-inside-`independent`
   schema question that was correctly escalated rather than guessed.
+
+## `qtyRounding`, the docs/bosses sweep, and the override mechanism
+
+### `qtyRounding` — a field on the multiplier, not a change to `emit`
+
+Per instruction: option 2, `.optional()`, defaulting to current behaviour, and
+`emit`'s global rounding left alone. The instruction also asked whether trunc
+and round diverge generally or only for negative multipliers, since that
+narrows what the field must express. **Measured first, and the answer changed
+the design twice:**
+
+- **Divergence is not negative-only — it is worse for POSITIVE multipliers.**
+  Over `Q3` 1..200 at Doom of Mokhaiotl's own per-level multipliers, `round`
+  and the wiki's rule disagree on 80–100 of 200 values at every positive level
+  (`M` = 0.05..0.2), and 91 of 200 at `M = -0.35`. `M = -0.5` and `M = 0` are
+  the only rows where every mode agrees — so a spot-check on level 1 alone
+  would have concluded, wrongly, that there was no problem.
+- **A mode naming a rounding function applied to the PRODUCT cannot express
+  the rule.** `Q + trunc(Q*M)` equals `trunc(Q*m)` for `m > 1` but not for
+  `m < 1` (191 of 200 disagree at `m = 0.65`), because `trunc` rounds toward
+  zero and the delta is then negative. **The mode has to say what the rounding
+  applies to**, hence `truncDelta`/`ceilDelta` rather than `trunc`/`floor`.
+- **A third mode was needed, from a second source.** `docs/bosses/zalcano.md`
+  specifies the MVP bonus as "+10% (**rounded up**)" — `ceilDelta`. So this is
+  three separately-cited wiki rules across two sources, not one source's quirk.
+  (`truncDelta` and `ceilDelta` provably coincide for `m < 1`, where the delta
+  is negative; they can only differ above 1.)
+
+**Two float-safety corrections, both caught by tests asserting wiki-stated
+values, both load-bearing.** Measured over the real multipliers in use for
+quantities 1..2000: the natural `qty*(m-1)` form is wrong in **1,072** cases
+(`1.2 - 1` is `0.19999999999999996`, so `5 * that` truncates to 0 instead of
+1), and reformulating to `qty*m - qty` still leaves **324** wrong (`50 * 1.1 -
+50` is `5.000000000000007`, so Zalcano's MVP would receive 56 items instead of
+55). `scaledDelta` does both: reformulate, then snap to an integer within
+1e-9. Truncation amplifies a 1e-15 representation error into a whole extra
+item, which is exactly the off-by-one class this field exists to fix, so
+approximating here would have defeated its purpose.
+
+**`expectedValue` is now exact rather than approximate for scaled quantities.**
+It previously computed `qtyMultiplier * meanQty(qty)`, which is only right when
+no rounding occurs (true for Abyssal Sire's integer x2, false in general, since
+`E[round(X*m)] != E[X]*m`). `meanScaledQty` enumerates the quantity's own
+distribution once per compiled node at EV time — never per kill — so the
+analytic and sampled paths agree exactly, which is the whole reason
+`compile.ts` exists. Both call `applyQtyMultiplier`, one definition.
+
+Nesting: most-specific-wins (an access declaring its own mode overrides the
+enclosing path's). No source nests two multipliers today, so this is a rule
+stated once rather than one under load. Benchmark: 1M ~204ms, 10M ~1,984ms —
+indistinguishable from the pre-field figures, since `qtyMultiplier === 1`
+short-circuits before the mode is ever consulted. `gpPerKill` byte-identical.
+
+### `docs/bosses/*.md` swept — all 14 annotated in-file
+
+Every capability verdict re-read against the current model. **All 14 files got
+a banner directly under their H1**, not just a DECISIONS.md note, since the
+docs are what a future session reads first. The banner states plainly that
+each doc's *mechanics and cited numbers remain accurate and are what to
+implement from*, while its "what doesn't exist" section predates Extensions
+A/B and is corrected inline, gap by gap.
+
+Headline corrections:
+
+- **`doom-of-mokhaiotl.md`'s central verdict is wrong.** It says the mapping
+  "cannot be meaningfully proposed without wave/level machinery existing
+  first." Gating each level on `levelAtLeast('delveLevel', n)` fires every
+  level up to the one reached — which IS per-level bankable loot — so it is N
+  tables in the existing array. Confirmed against `conditions.ts`. This also
+  retires the "population of one" question it reopened: neither this source
+  nor Fortis Colosseum needs a wave engine.
+- **`zalcano.md`'s claim that the MVP bonus needs a mechanism distinct from
+  Duke Sucellus's perfect-kill +50% is wrong** — both are "scale this table's
+  realized quantity by a scalar gated on a per-run boolean." Its "(rounded
+  up)" detail, however, was load-bearing and correct.
+- **`ancient-chest.md` gap 3 is resolved as UNNECESSARY** — do not build
+  cross-table outcome visibility; conditioned marginals are exact.
+- **Lunar Chest and TzHaar Fight Cave are fully unblocked at the model level**;
+  what remains for them is boss-document and formula work.
+- Genuinely still-open model gaps across all 14, after the sweep: Reward
+  Cart's repeated-preroll (needs the anticipated `z.lazy` local-table node),
+  Reward pool's `fishingLevel` gating (`levelAtLeast`'s field enum needs
+  widening — this is the third real user, the threshold its own comment set),
+  ToA's per-raid achievement conditions, Fortis Colosseum's run-scoped dedup
+  (deliberately deferred), and party/team context (CoX, Zalcano — out of scope).
+
+### `data/overrides/` built — Phase 7's step 1
+
+The sweep established the ordering constraint for the rest of Phase 7: every
+remaining watchlisted source needs hand-authored structure the parser cannot
+produce from `{{DropsLine}}` rows, so the override mechanism gates essentially
+all of them. Built it rather than continuing source-by-source.
+
+- **`apps/ingest/src/parse/overrides.ts`** — `BossOverrideSchema` (`.strict()`,
+  so a typo like `tabels` fails loudly instead of being silently ignored),
+  `loadOverride`, `applyOverride`, `overrideSummary`. `docs/OVERRIDES.md` is
+  the contract.
+- **`tables` replaces wholesale, never per-table-id.** These sources need a
+  different *shape*, not a patched row, and a per-table merge would quietly
+  leave a stale generated table behind whenever a hand-authored one renamed
+  it. All-or-nothing is auditable; partial is not.
+- **`source` finally means something**: `'merged'` when generated data
+  survives underneath, `'override'` when the parser could not reach the page
+  at all. Both enum members were defined in PROJECT_PLAN.md 4.5 and unused
+  until now.
+- **An override carrying `tables` rescues all three `parse_failed` exits** (no
+  wikitext snapshot, no `{{DropsLine}}` calls, assembly returned null), which
+  is what makes CoX's Ancient chest reachable.
+- **Validation runs on the MERGED document, never the generated one.** A
+  hand-authored table whose weights do not sum fails exactly as a bad parse
+  would. An override is not a rubber stamp.
+- **`manual_override` is a distinct terminal status from `verified`**, not a
+  synonym: `verified` asserts the pipeline derived the document from the wiki
+  unaided, which would be false for a hand-authored one. Both satisfy Phase
+  5's done-when. A failing override still lands in `needs_review`.
+- **An override supplying `tables` clears the parser's ambiguous-group
+  guesses** (they describe a structure it just replaced) and **nothing else** —
+  in particular it does NOT clear the mechanics watchlist. That stays a
+  separate human gate with its own verification requirement, per the
+  watchlist's own removal policy; `docs/OVERRIDES.md` spells out the
+  four-step sequence.
+- **A real wiring bug was caught by writing the tests**: with no generated
+  document there is nothing to inherit `parserVersion`/`status`/`validation`
+  from, so `BossSchema.parse` would have thrown on the very
+  `parse_failed`-rescue path the mechanism exists for. `applyOverride` now
+  takes `parserVersion` and supplies placeholders that `parseBoss` overwrites
+  once the merged document has actually been checked.
+- **Verified inert**: `data/overrides/` is empty, and `ingest parse --tier
+  A,B,C` reproduces 38/12/3 with a byte-identical diff across all 51 generated
+  documents.
+
+`data/overrides/` is deliberately still empty. Abyssal Sire and Corporeal
+Beast were fixed in the parser instead, which is the preferred outcome —
+reach for an override only after establishing the parser genuinely cannot get
+there.
+
+## Player-stat gating: assessed, and the answer is "neither, not yet"
+
+Asked whether `fishingLevel` should widen `levelAtLeast`'s field enum (its
+third user, the threshold the enum's own comment set) or whether player-stat
+gating wants to be one mechanism instead of N `SimContext` fields. Four
+findings, in the order they changed the answer:
+
+1. **`levelAtLeast` is ALREADY the one mechanism.** It is
+   `{ field, n }` over an enum, not a per-field condition kind. The question
+   was never "one mechanism vs N fields" — it is only "how wide is the enum",
+   which is a much smaller question than the framing suggested.
+2. **ToA would not be a fourth user.** `docs/bosses/chest-tombs-of-amascut.md`
+   says its challenge-reward conditions ("all Akkha invocations and level 4
+   Akkha, zero deaths raid-wide") are "structurally a raid-composition/skill
+   fact, not a scalar", that "no schema change is even a good fit here", and
+   recommends marking those 8 entries out of v1 scope. They are not numeric
+   threshold gating at all. The population is 3, not 4.
+3. **Only 4 of the 9 numeric `SimContext` fields are ever entry-gated.**
+   `delveLevel`, `wavesReached`, `fishingLevel`, `killCount`. The other five
+   (`points`, `raidLevel`, `deaths`, `hitpointsDamage`, `shieldDamage`) are
+   formula *inputs* in every one of the 14 researched sources — never
+   thresholds. An enum that refuses them is doing real work, so "open it to
+   any numeric field" is the wrong generalisation.
+4. **Decisive: widening the enum would not actually unblock Reward pool.**
+   Its gating is **7 mutually-exclusive Fishing-level brackets**, and
+   `levelAtLeast` is one-sided — a level-99 player matches all 7 gated entries
+   simultaneously. Its own doc says "gated on Fishing level bracket via a new
+   lookup". So the change it needs is a *two-sided range*, which is a
+   different change from adding a name to an enum.
+
+**Recommendation, and what was done: neither.** No enum widening (it doesn't
+unblock its only requester), and no unified player-stat mechanism (the
+population is 3, and the two remaining requesters need a different *shape*
+than the two existing ones). When Reward pool is actually built, the right
+change is an optional upper bound on the existing `levelAtLeast` — which
+degrades to today's behaviour for `delveLevel`/`wavesReached` (no upper bound)
+and expresses brackets for `fishingLevel`. Folding `killCount` in and retiring
+`killCountAtLeast` is a reasonable tidy-up at that same moment: the two have
+byte-identical evaluators and **both have zero users in real data** (measured
+across every `data/bosses/*.json` and `data/tables/*.json`; the only condition
+kinds actually in use are `onSlayerTask` 31, `members` 10, `variant` 2,
+`ringOfWealth` 2, `questComplete` 1), so there is no migration cost — but also
+no reason to do it before something needs it.
+
+**A fourth shape turned up while implementing Lunar Chest, which strengthens
+the "don't unify yet" conclusion**: set membership (`ctx.moonsKilled`). See
+below. Numeric threshold, numeric bracket, and set membership are three
+genuinely different condition shapes; a single `contextAtLeast` would have
+covered only the first.
+
+## Phase 7: Doom of Mokhaiotl shipped as the first real override
+
+`data/overrides/doom-of-mokhaiotl.json`, 42 tables, generated
+programmatically from the parsed document rather than hand-transcribed (216
+common-table entries across 9 delve levels — transcribing those by hand would
+have been a source of silent errors, and the generated doc already holds
+wiki-correct items, weights and delve-3 quantities).
+
+- **Verified the load-bearing claim against the wikitext snapshot before
+  building, not against the research doc.** The page states "Each delve level
+  rolls once on the regular loot table", confirming per-level bankable loot
+  and the `levelAtLeast`-gated-tables model rather than the wave machinery
+  `docs/bosses/doom-of-mokhaiotl.md` claimed was needed.
+- **The page defines `trunc` verbatim as "removes anything after a decimal
+  point, rounding up for negative numbers and down for positive ones"** —
+  which is exactly `qtyRounding: 'truncDelta'`, independently confirming that
+  field's design after the fact.
+- **The page supplies its own worked example, and it is now the test**: "a
+  player is equally likely to receive 2, 3, or 4 dragon platelegs at delve
+  level 3. Delve level 2 has a -0.35x quantity multiplier, which gives
+  possible quantities of 2, 2, and 3, respectively, meaning there is a 2/3
+  chance to receive two sets and a 1/3 chance to receive three sets." That is
+  a *distributional* claim, so `apps/ingest/test/doom-of-mokhaiotl.test.ts`
+  asserts it distributionally (only 2 and 3 reachable, ~2/3 twos), not on a
+  mean. The default `round` mode would produce a quantity of 1 here; the test
+  asserts 1 never appears, which is the signature of the wrong mode.
+- **One new formula, `doom_of_mokhaiotl_deep_rolls`** = `max(0, delveLevel-8)`.
+  My earlier "constants, no formula needed" was right for delves 1-9 and wrong
+  beyond: the level table's deepest row is ">8" while descent continues
+  indefinitely, so a delve-12 run rolls that row four times. A constant cannot
+  express that. Justified per PROJECT_PLAN.md 4.6 by the page's own text.
+- **The `formulas.test.ts` trip wire fired**, exactly as designed — it
+  asserted *every* `FORMULA_ID` throws, which stopped being true the moment a
+  real implementation landed. Updated to assert "every id that is NOT
+  implemented still throws" (the actual guard: a stub must never become a
+  silent zero) plus a second half pinning the implemented set, so the wire
+  re-fires next time. `IMPLEMENTED_FORMULA_IDS` is exported for it.
+- **Watchlist entry removed only after the wiki-figure check existed**, per
+  policy. 7 tests: the worked example at delves 2 and 3, strictly-increasing
+  loot with depth, per-unique minimum delve levels and accumulating per-level
+  rates (a delve-4 run rolled cloth at levels 2, 3 AND 4's rates), cumulative
+  demon tears, and the deep-delve repeat.
+- **Result: `manual_override`** — the first document to use that status, and
+  the first exercise of `data/overrides/` end to end. Tier A+B+C is now
+  **38 verified + 1 manual_override / 11 needs_review / 3 parse_failed**.
+
+## Lunar Chest: blocked, and my own sweep banner was wrong about it
+
+Started Lunar Chest second and found it is **not** implementable, correcting
+the banner this session had just written on `docs/bosses/lunar-chest.md`
+("fully unblocked at the model level"). That claim was derived from the
+`SimContext` field list; checking `conditions.ts` while actually building it
+showed the gap:
+
+- **`ctx.moonsKilled` exists, but no `Condition` kind can read it.** The seven
+  kinds are `members`/`ringOfWealth`/`onSlayerTask`/`questComplete`/
+  `killCountAtLeast`/`variant`/`levelAtLeast`; none does set membership.
+  **Having a `SimContext` field is not the same as being able to gate an entry
+  on it** — that is the mistake the banner made, and it is worth stating
+  plainly because the same reasoning error would recur for any future
+  non-scalar context field.
+- `variant` cannot substitute: it is single-valued, and up to three Moons
+  apply to one chest opening simultaneously.
+- What IS fine: the 1x/3x/6x standard-loot roll count (a `formula`-kind
+  `Table.rolls` can read `moonsKilled.length`), the per-set duplicate
+  protection (`ownershipGate` + `effectiveWeightedPool`), and "any unique
+  suppresses the standard table" (`suppressesFollowing`).
+
+So Lunar Chest needs exactly one new capability — a set-membership condition —
+which is squarely the condition-kind-proliferation question this session was
+asked to think hard about before adding to. **Not added unilaterally**; the
+banner is corrected and this is flagged for a decision.
+
+## `Condition.includes` — set membership, as a general mechanism
+
+Added `{ kind: 'includes', field, values }` over set-valued `SimContext`
+fields, per instruction and deliberately not `moonsKilled`-specific.
+
+- **`values` means ANY of them (disjunction), and that choice is the point.**
+  `conditionsHold` already ANDs the whole `conditions` array, so conjunction
+  ("blood AND blue") is two `includes` conditions and costs nothing.
+  Disjunction has no other expression anywhere in the model. Spending the
+  field on the meaning that isn't otherwise available is the only reading that
+  adds capability rather than duplicating it.
+- **`field` admits `questsComplete` as well as `moonsKilled`**, so this is a
+  real mechanism over set-valued fields rather than a special case wearing a
+  general name. The pre-existing `questComplete` kind stays: it is named in
+  PROJECT_PLAN.md 4.4 and is in live use in `data/`, so retiring it would be a
+  data migration for no behavioural gain.
+- **Three distinct gating shapes now exist and none subsumes the others**:
+  numeric threshold (`levelAtLeast`), numeric bracket (Reward pool's seven
+  mutually-exclusive Fishing tiers — still unbuilt, and provably not
+  expressible by widening `levelAtLeast`), and set membership (`includes`).
+  This is the concrete evidence behind the earlier "don't unify player-stat
+  gating yet" recommendation.
+- **`apps/web`'s exhaustive `conditionLabel` switch caught the gap** and was
+  updated to render the new kind ("Killed blood or blue"). That switch is a
+  real trip wire, not boilerplate — a new `Condition` kind fails the web
+  typecheck until the UI can display it.
+
+## Phase 7: Lunar Chest shipped (`manual_override`)
+
+`data/overrides/lunar-chest.json` plus three new
+`data/tables/lunar_chest_{blood,blue,eclipse}_set.json` records.
+
+- **Two levels are structurally necessary, which is why the sets are
+  `tableRef` targets.** The mechanic is "1/56 trigger, then uniform over that
+  set's not-yet-obtained pieces". Flattening it into one weighted table cannot
+  work: `effectiveWeightedPool` subtracts an excluded entry's weight from the
+  denominator, so a 224-denominator flat table with one piece owned would give
+  3/223 overall instead of the correct 1/56. With the sub-table, the trigger
+  stays 1/56 and only the *within-set* split changes (4 unowned → 1/4 each;
+  2 unowned → 1/2 each), which is what the page describes. `oneOf` could not
+  substitute — `LeafEntry` carries no `ownershipGate`.
+- **`data/tables/` now means "referenced by id", not "shared by many".** The
+  three Moon sets have exactly one referencing source each. Documented at the
+  loader.
+- **`loadSharedTables` is now directory-driven** rather than a hardcoded id
+  list, with a filename/`id` consistency check. The list version failed in the
+  worst direction: a new record was silently ignored until someone remembered
+  to register it, surfacing as an unresolvable `tableRef` whose real cause
+  (file present, unregistered) was invisible.
+- **The 1/224 figure in the drop rows is deliberately unused.** The page says
+  it is the naive first-piece-only rate that does *not* account for duplicate
+  protection. It appears in this model only as a derived consequence
+  (`1/56 × 1/4`) for a player owning none of a set, never as an input.
+- **A modelling assumption is flagged in the override's own `note` rather than
+  hidden**: a 1/56 trigger for an already-completed set still counts as a hit
+  for suppression purposes, since the engine decides suppression at the access
+  roll. The page says such a roll does "nothing useful" but does not say
+  whether it still blocks standard loot. Affects only players holding a full
+  set.
+- **One test was wrong in an instructive way and was rewritten.** It measured
+  "fraction of openings yielding a unique" over 400k openings and got ~1/1730
+  instead of ~1/19. That is the mechanic working: ownership is
+  **lifetime-scoped**, so one long run collects all 12 pieces early and every
+  later opening correctly yields nothing. A first-opening rate cannot be
+  measured as a long-run average. Replaced with three sharper checks: the
+  analytic per-set rate on a fresh account (exactly 1/56 per set, 3/56 total
+  by linearity), P(any unique in a *fresh* opening) measured across 20,000
+  independent single-opening runs (~1/19, distinguishing it from 3/56), and
+  the sharpest statement of the whole mechanic — **over 100k openings every
+  one of the 12 uniques drops exactly once, ever.**
+- 9 tests. Watchlist entry removed only after they existed.
+
+## Zalcano: NOT shipped — blocked on three capabilities, one unfixable by widening
+
+Assessed and stopped rather than inventing condition kinds at the end of a
+session that had just been asked to think hard before adding any. Zalcano
+needs, per `docs/bosses/zalcano.md` (revid 15287396):
+
+1. **A condition reading a boolean `SimContext` field (`isMVP`)** — infernal
+   ashes are MVP-only, "always/never based on a role, not a rate". The three
+   existing boolean conditions (`members`/`ringOfWealth`/`onSlayerTask`) each
+   hardcode their own field; none is general.
+2. **Numeric thresholds on `shieldDamage`** (≥5 for any drop eligibility) —
+   `levelAtLeast`'s field enum does not admit it. This is the enum-widening
+   question again, for a fourth set of fields.
+3. **A COMBINED threshold: `hitpointsDamage + shieldDamage >= 31`** for
+   unique/pet eligibility. **No field-based condition can express this at any
+   enum width** — it is a function of two fields. It needs either a derived
+   context field or a formula-valued condition, which is a genuinely new
+   condition *shape* (a fourth, after threshold / bracket / set membership).
+
+Also needs two real formulas (`zalcano_points`'s `P_M`/`P_T`, and the Zalcano
+shard's `1/750`–`1/1500` contribution interpolation), plus the crystal-shard
+quantity as a role-keyed tier. Those are ordinary Phase 7 work; (3) is the
+design decision.
+
+Worth carrying forward: `docs/bosses/zalcano.md` itself flags **an unresolved
+in-page contradiction** — a Mod Lenny tweet implying a points-scaled pet rate
+versus a 21 May 2020 news post stating a "static 1/2,250". The doc recommends
+treating the newer post as authoritative but explicitly declines to resolve
+it. Do not silently pick one.
+
+## The reward-pool/Wintertodt re-flag: stale, and the check that should have settled it had two holes
+
+Asked to determine whether the flagged "Reward pool is Tempoross's, not
+Wintertodt's" misattribution was a regression, a gap in
+`checkWatchlistConsistency`, or a stale re-flag. **It is a stale re-flag, and
+the check had two real gaps** — the gaps being the part that mattered.
+
+### The data is correct and has been for a while
+
+`data/mechanics-watchlist.json` maps `reward-cart` -> Wintertodt /
+`wintertodt_points` and `reward-pool` -> Tempoross / `tempoross_points`, which
+agrees with `data/_inventory.json`. `checkWatchlistConsistency` reports zero
+issues against both real committed files, and `watchlist.test.ts`'s real-data
+case passes. Nothing regressed.
+
+**Why it kept coming back, which is the actually useful finding:**
+`docs/bosses/reward-pool.md` and `docs/bosses/reward-cart.md` each carried a
+section saying the watchlist "**currently reads**" the swapped values. Those
+were written while the bug was live and were never updated when it was fixed,
+so every session that read the research docs re-derived a bug that no longer
+existed — `plan/HANDOFF.md`'s own "suggested next steps" item 6 is a
+transcription of that stale sentence, sitting in the same file as landmine #9.3
+which records the fix. Both banners are now rewritten to state the resolution
+first and describe the bug in the past tense. A doc that describes current
+state in the present tense becomes a lie the moment the state changes; these
+two now say what they are.
+
+### Gap 1: `entry.title` was unvalidated AND load-bearing inside the check
+
+The old exclusion rule was
+`.filter((title) => title !== entry.title)` — a hand-authored string deciding
+which bosses the check expects in `blockedBy`. So an entry whose `title` was
+set to its own boss page, with `blockedBy` emptied, **passed vacuously**:
+verified by mutation against the real data (`reward-pool` retitled to
+"Tempoross" with `blockedBy: []` -> zero issues). The check could be disarmed
+by the one field nothing checked.
+
+Fixed by deriving "this source's own boss page" from generated data instead:
+the boss whose `title` **is the loot source's `dropsPage`**. Confirmed to
+reproduce the current expected set for all 7 real entries before switching.
+`title` is now validated rather than believed — it must equal the inventory's
+`title` or its `dropsPage`. Both spellings occur legitimately (`reward-cart`
+uses the title; `rewards-chest-fortis-colosseum` uses the drops page, since the
+inventory's title for it is the activity "Fortis Colosseum"), which is why the
+rule admits either rather than picking one and "fixing" three entries.
+
+### Gap 2: the swap had two halves and only one was ever guarded
+
+The original bug was not just `blockedBy`. Each entry **also** described the
+other's activity in prose and named the other's formula. The check only ever
+looked at `blockedBy`, so re-swapping the two `detail` bodies passes clean —
+confirmed by mutation. And the prose is the half that matters most for what
+comes next: `plan/HANDOFF.md`'s own instruction was "fix before wiring either
+formula," and the formula id lives only in the prose.
+
+Two new rules, both derived from `data/_inventory.json` with no new
+hand-maintained mapping:
+
+- **`detail` must not name a boss page belonging to another loot source**
+  (whole-word matched — substring matching would fire on a boss named "Moon"
+  inside the word "Moons").
+- **A formula id named in `detail` whose subject resolves to a boss slug must
+  resolve to one of this source's bosses.** `wintertodt_points` -> `wintertodt`
+  -> `reward-cart`. This catches the sharpest case: `blockedBy`, `title` and
+  prose all correct, only the formula swapped.
+
+Rule 4b **stays silent when a formula's subject resolves to no boss slug**
+(`toa_invocation`, `tob_points`, `cox_points`), rather than guessing — the same
+"act only when the signal narrows unambiguously" discipline `build-tables.ts`'s
+three-signal pipeline already uses.
+
+All four rules were validated against the real corpus before being written:
+**zero false positives across all 7 entries**, and each fires on its own
+failure mode. Five new tests in `watchlist.test.ts` cover the newly-guarded
+halves.
+
+**`lootSourceEntry`'s test helper now defaults `dropsPage` to `title`**,
+matching the real inventory (they differ only for a reward page whose drops
+live off the activity's own page). Two existing fixtures had left it as
+`'Placeholder'`, which was harmless while nothing read it and wrong the moment
+something did.
+
+## Zalcano: shipped, via a derived context field rather than a fourth condition shape
+
+The blocker was `hitpointsDamage + shieldDamage >= 31` — a threshold over two
+fields, which no field-based condition expresses at any enum width. The
+previous session recorded this as needing "a derived context field or a
+formula-valued condition, ... a genuinely new condition *shape*".
+
+**It is the derived field, and this is not a close call.** A formula-valued
+condition would make conditions arbitrary code and break the resolved-once
+invariant that `compile.ts`'s header states and `expectedValue` structurally
+depends on — the same invariant that was deliberately protected twice already
+(Extension B's `ownershipGate` refusing to become a `Condition` kind, and the
+"don't unify player-stat gating" assessment). A derived field changes no
+contract: `totalDamage` is resolved once at run setup, at the same moment as
+every other field, and `levelAtLeast` reads it as a plain `ctx[field] >= n`.
+
+- **`withDerivedContext` is called from `compileBoss`, not only
+  `resolveSimContext`.** `compileBoss` is the single point both `simulate` and
+  `expectedValue` funnel through, so a hand-built context passed straight to
+  either — which `plan/HANDOFF.md` documents as a real usage — gets the same
+  treatment. Whatever a caller supplies for a derived field is **overwritten,
+  never merged**, so it cannot drift from its inputs; a test passes a context
+  claiming `totalDamage: 999` on inputs summing to 15 and asserts the gate
+  still refuses.
+- **`levelAtLeast`'s enum gained `shieldDamage` and `totalDamage`.** This is
+  not a reversal of the "Player-stat gating" entry: that assessment declined
+  widening **for `fishingLevel`**, on the specific ground that it would not
+  unblock its only requester (Reward pool needs two-sided brackets). Here
+  widening does unblock the requester, and `fishingLevel` is still absent.
+- **No boolean-field condition kind was added.** Zalcano's `isMVP` needs are
+  met without one: infernal ashes is a `formula`-kind `Rate` returning 1 or 0
+  (an `independent` entry with `p` of exactly 1 or 0 is the degenerate
+  Bernoulli case that mode already handles — the same reasoning that admitted
+  `always` rates into `independent`), and the MVP's +10% is a `formula`-kind
+  `qtyMultiplier`. Three new formula ids, each pinned to a quoted sentence.
+
+### What shipped, and what deliberately did not
+
+`data/overrides/zalcano.json` (generated programmatically from the parsed
+document, so items/ids/weights are not retyped) models: both eligibility gates,
+the role-keyed crystal shard tier (1/2/3), MVP-only infernal ashes, the MVP's
++10% with `qtyRounding: 'ceilDelta'`, and the tertiary table's stated splits.
+`apps/ingest/test/zalcano.test.ts` is the wiki-figure check, 12 tests against
+the real generated document.
+
+- **A test caught a real modelling error before it shipped.** The first version
+  gated the tertiary table on the combined threshold alone, which let a player
+  who dealt 1,000 hitpoint damage and 4 shield damage collect uniques. The
+  page's sentence is a chain, not an either/or, and the 23 May 2024 Changes
+  entry says so outright: "All players must now deal some 'armour' damage to
+  Zalcano to be eligible for drops." Uniques now require **both** gates.
+- **The Smolcano contradiction the research doc flagged is resolved by the
+  page, not by me picking a side.** `docs/bosses/zalcano.md` says a Mod Lenny
+  tweet implying a points-scaled pet rate contradicts a 21 May 2020 news post
+  stating a static 1/2,250, and declines to resolve it. Reading the actual
+  wikitext turns up a third statement the doc never quoted: the `===Tertiary===`
+  prose says outright "The chance of rolling Smolcano is unaffected by
+  performance." That agrees with the news post and dates the tweet's 1/2,175
+  example to before the change. Flat 1/2,250, on the page's own authority.
+- **Zalcano STAYS on the mechanics watchlist, so it is `needs_review`, not
+  `manual_override`.** Two curves the page states exist and never states:
+  (1) main- and tertiary-table drops "scale with the player's points", with
+  `P_M`/`P_T` defined exactly but no function turning points into loot; (2) the
+  Zalcano shard's "Between 1/750 and 1/1500 depending on contribution", with no
+  interpolation given. Removing the watchlist entry would be exactly the failure
+  the watchlist exists to prevent — marking something verified on the strength
+  of a signal that cannot see the problem. Same treatment as Duke Sucellus's
+  frozen-tablet curve. The entry's `detail` is narrowed to name precisely those
+  two curves and to record what IS now modelled and verified.
+- **`zalcano_points` stays a stub on purpose.** `P_M = H + 2S` and
+  `P_T = min(H,400) + 2*min(S,300)` are exact and quotable, but nothing can
+  consume them until the scaling curve is known. Implementing them would put an
+  entry in `IMPLEMENTED_FORMULA_IDS` with no consumer and create the impression
+  that point-scaling is modelled.
+- The `formulas.test.ts` implemented-set trip wire **fired for the third time**,
+  as designed. Pin updated, guard kept.
+
+Corpus after: `ingest parse --tier A,B,C` is **38 verified / 2 manual_override /
+10 needs_review / 3 parse_failed — unchanged**, which is the correct outcome:
+Zalcano was `needs_review` before for a bad reason (unmodelled mechanics) and is
+`needs_review` now for a good one (two wiki-unknown curves, everything else
+modelled and tested).
+
+## `SimContext` wired into the UI, by deriving each boss's control set
+
+Doom of Mokhaiotl was shipped and simulate-able with no `delveLevel` control,
+Lunar Chest with no `moonsKilled`. Fixed, but the interesting part is how the
+control set is decided.
+
+- **Controls are derived from the boss document, not a fixed list.** Rendering
+  all sixteen fields on every boss buries the two that matter; rendering none is
+  how this bug happened. `apps/web/src/lib/context-fields.ts`'s
+  `contextSurfaceOf` walks the document the same way the existing quest toggles
+  are built from the boss's own `questComplete` conditions.
+- **A condition-only scan is not enough, and Zalcano proves it.** `isMVP`
+  appears in no condition anywhere in Zalcano's document — it is read only
+  inside `zalcano_mvp_share`/`zalcano_mvp_only`. A document walk can never see
+  that, so `FORMULA_CONTEXT_FIELDS` (in `formulas.ts`, next to the
+  implementations that own the knowledge) declares which `SimContext` fields
+  each formula reads, and the walk unions them in from every place a formula can
+  be referenced — rates, quantities, roll counts, and both `qtyMultiplier`
+  sites. A test asserts this: Zalcano's document mentions `isMVP` in zero
+  conditions, and the control appears anyway.
+- **That declaration is verified behaviourally, not trusted.** A hand-maintained
+  "what this function reads" list rots silently, so `formulas.test.ts` varies
+  every *undeclared* field against every implemented formula and asserts the
+  output does not move, plus the converse (an implemented formula declaring
+  nothing is a bug). A declaration cannot drift from the code without failing.
+- **Derived fields expand to their inputs.** A `totalDamage` control would do
+  nothing, since `withDerivedContext` overwrites it. `DERIVED_CONTEXT_FIELDS`
+  states the relationship once, in the model, and both the UI and the URL
+  encoder read it — Zalcano shows "Damage to hitpoints" and "Damage to shield",
+  and no `totaldmg` param is ever written.
+- **The walk follows `tableRef` into shared tables, cycle-guarded.** Lunar
+  Chest's per-set duplicate protection lives entirely in the three
+  `lunar_chest_*_set` records, so a boss-document-only walk finds no ownership
+  controls for the one source that most needs them. `BossView` already loads
+  those tables; they are now passed through.
+- **Every newly-exposed field round-trips through the URL**, including
+  `moonsKilled` and `ownedCounts` (as `key:count` pairs), so a delve-8 run or an
+  MVP kill is as shareable as a ring-of-wealth run always was
+  (PROJECT_PLAN.md 9). Only non-default values are written, so a plain
+  `/boss/vorkath` link is unchanged — asserted by a test.
+- **`DropTableView`'s `conditionLabel` had a silent bug the trip wire missed.**
+  Its `levelAtLeast` case was a ternary (`field === 'delveLevel' ? 'Delve level'
+  : 'Wave'`), so widening the enum would have rendered "Wave ≥ 31" for a damage
+  threshold rather than failing the typecheck. That switch is documented as a
+  trip wire; a ternary inside it is a hole in the wire. Replaced with an
+  exhaustive `Record`, which a new field now genuinely fails.
+
+Verification: 4 render tests (`SimContextControls.test.tsx`) drive the real
+component against the real generated documents through the configured
+jsdom/testing-library path, asserting each boss gets its controls and that
+Brutus gets none of them. **Not verified in a live browser this session** —
+Playwright is not a dependency of this repo (only the browser binaries from a
+previous session's global install remain on this machine), and adding one was
+not in scope. A jsdom render is weaker than the real-browser check this repo
+used for Phase 4 and is reported as such rather than as equivalent.
+
+## Benchmark: A/B'd in the same sitting; the 10M figure is over 2s and it is not this change
+
+Per `plan/HANDOFF.md`'s warning against attributing a move without a controlled
+A/B, the `withDerivedContext` call in `compileBoss` was reverted in place,
+benchmarked, and restored, all within minutes on one machine:
+
+| Variant | 1M kills | 10M kills |
+|---|---:|---:|
+| A — with the derivation | ~227ms | ~2,234ms |
+| B — derivation reverted in place | ~220ms | ~2,108ms |
+| A' — restored, re-measured | ~225ms | ~2,202ms |
+
+- **The A-vs-B delta is inside this machine's documented same-code noise band.**
+  `plan/HANDOFF.md` records the *same* code measuring 1,973 / 1,981 / 1,852 /
+  1,926ms at 10M — a 129ms spread. The A-vs-B delta is 126ms, and A' lands
+  between A and B rather than tracking either. `gpPerKill` is byte-identical
+  (597.2676 / 598.4495) across all three, matching every previously recorded
+  variant.
+- **The mechanism agrees with reading it as noise.** `withDerivedContext` runs
+  once per `compileBoss` call — three times per benchmark line, not 10M times —
+  and for Brutus it returns the *same object* (both damage inputs are 0, so the
+  derived value already agrees), so it does not even allocate.
+- **The real signal is that variant B — the baseline WITHOUT this change — is
+  already ~2,108ms, over the ~2.0s reading of PROJECT_PLAN.md 8's "couple of
+  seconds."** This is the pre-existing condition the previous session flagged
+  (it measured ~1,981ms for a baseline with step (c)'s lines removed), now on a
+  slower-running machine. **Flagged with the measurement, not acted on**: the
+  duplicated-`emit`/`runTable` lever `plan/HANDOFF.md` nominates targets
+  Extension B's ~25% overhead, and the previous session's own measurement said
+  it buys back far less than the gap. Building it should follow a fresh
+  benchmark justifying it, not this observation.

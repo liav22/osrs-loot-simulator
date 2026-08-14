@@ -23,6 +23,45 @@ export const FORMULA_IDS = [
   'fortis_colosseum_qty',
   'tzhaar_fight_cave_tokkul',
   'duke_sucellus_ice_quartz',
+  /**
+   * Zalcano's three role-keyed rules, each stated outright on its page rather
+   * than inferred. They are separate ids because they fulfil three different
+   * formula contracts (quantity, multiplier, probability) and a single id
+   * cannot return 3, 1.1 and 0 at once:
+   *
+   * - `zalcano_crystal_shards` — quantity: "Players eligible for a drop will
+   *   receive one crystal shard, players eligible for unique drops or pet will
+   *   receive two shards and the MVP will receive three shards."
+   * - `zalcano_mvp_share` — multiplier: "The MVP ... will also receive an
+   *   additional 10% (rounded up) of their non-unique loot."
+   * - `zalcano_mvp_only` — probability: "Infernal ashes are only dropped for
+   *   the MVP", i.e. always-or-never on a role, not a rate.
+   *
+   * Note what is deliberately NOT here: a curve turning `zalcano_points` into
+   * loot. The page states that main- and tertiary-table drops "scale with the
+   * player's points" and defines the points themselves, but never states the
+   * scaling function — so `zalcano_points` stays a stub. See docs/DECISIONS.md.
+   */
+  'zalcano_crystal_shards',
+  'zalcano_mvp_share',
+  'zalcano_mvp_only',
+  /**
+   * How many times Doom of Mokhaiotl's ">8" loot row is rolled: one roll per
+   * deep-delve level, i.e. `max(0, delveLevel - 8)`. Justified per
+   * PROJECT_PLAN.md 4.6 by the page's own "Each delve level rolls once on the
+   * regular loot table" plus a level table that caps its rows at ">8" while
+   * descent does not cap — so levels 9..N all roll the same row, a count no
+   * constant can express.
+   */
+  'doom_of_mokhaiotl_deep_rolls',
+  /**
+   * Lunar Chest's standard-loot roll count: 1 / 3 / 6 for one / two / three
+   * Moons killed before opening. Justified per PROJECT_PLAN.md 4.6 by the
+   * page's own `==Loot mechanics==` (revid 15284737) stating the multiplier is
+   * 3x per additional Moon, not additive — a stepped lookup on
+   * `moonsKilled.length` that no constant and no existing id expresses.
+   */
+  'lunar_chest_standard_rolls',
 ] as const
 
 export const FormulaIdSchema = z.enum(FORMULA_IDS)
@@ -97,6 +136,39 @@ export type FormulaRef = z.infer<typeof FormulaRefSchema>
 export const MultiplierSchema = z.union([z.number().finite().positive(), FormulaRefSchema])
 export type Multiplier = z.infer<typeof MultiplierSchema>
 
+/**
+ * How a `qtyMultiplier` turns a rolled integer quantity into a final integer
+ * one. Only consulted when the composed multiplier is not exactly 1.
+ *
+ * The wiki does not state one rule — it states three, and they are not
+ * interchangeable. Measured across the real multiplier values in use
+ * (`Q3` from 1 to 200):
+ *
+ * - `round` (**default, current behaviour**): `round(qty * m)`.
+ * - `truncDelta`: `qty + trunc(qty * (m - 1))` — Doom of Mokhaiotl's stated
+ *   `Qn = Q3 + trunc(Q3 * Mn)`.
+ * - `ceilDelta`: `qty + ceil(qty * (m - 1))` — Zalcano's MVP bonus, which the
+ *   page specifies as "+10% (rounded up) of the MVP's own non-unique loot".
+ *
+ * **Why the delta and not the product**, which is the non-obvious part:
+ * `qty + trunc(qty * (m-1))` is NOT the same as `trunc(qty * m)` once `m < 1`,
+ * because `trunc` rounds toward zero and the delta is then negative. At
+ * `m = 0.65` the two disagree on 191 of 200 quantities (e.g. `qty = 5`: the
+ * wiki's rule gives `5 + trunc(-1.75) = 4`, product-trunc gives `3`). For
+ * `m > 1` they happen to coincide exactly. So a mode that merely names a
+ * rounding function applied to the product could not express the rule these
+ * sources actually use — the mode has to say what the rounding applies TO.
+ *
+ * Divergence from the `round` default is not a rare edge case either: at
+ * Doom of Mokhaiotl's own per-level multipliers, `round` and `truncDelta`
+ * disagree on roughly half of all quantities for every positive level
+ * (80–100 of 200), and on 91 of 200 at level 2's `m = 0.65`. `m = 0.5` and
+ * `m = 1` are the only values in that table where every mode agrees.
+ */
+export const QTY_ROUNDING_MODES = ['round', 'truncDelta', 'ceilDelta'] as const
+export const QtyRoundingSchema = z.enum(QTY_ROUNDING_MODES)
+export type QtyRounding = z.infer<typeof QtyRoundingSchema>
+
 // ---------------------------------------------------------------------------
 // Quantities (4.2)
 // ---------------------------------------------------------------------------
@@ -157,19 +229,68 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('killCountAtLeast'), n: z.number().int().nonnegative() }).strict(),
   z.object({ kind: z.literal('variant'), name: z.string().min(1) }).strict(),
   /**
-   * Gates an entry on one of the two confirmed level/wave-indexed `SimContext`
-   * fields reaching at least `n`. Kept to an enum of the two sources that
-   * actually need it (Doom of Mokhaiotl's `delveLevel`, Fortis Colosseum's
-   * `wavesReached`) rather than a free-text field name, matching this
-   * project's established practice of not generalizing past confirmed cases
-   * (see docs/DECISIONS.md's repeated "Uniques" heading refusals). Widen to a
-   * free-text `field: string` only if a third source needs it.
+   * Gates an entry on a numeric `SimContext` field reaching at least `n`. Kept
+   * to an enum of the fields a real source actually gates on rather than a
+   * free-text field name, matching this project's established practice of not
+   * generalizing past confirmed cases (see docs/DECISIONS.md's repeated
+   * "Uniques" heading refusals).
+   *
+   * `delveLevel` (Doom of Mokhaiotl) and `wavesReached` (Fortis Colosseum) were
+   * the original two. `shieldDamage` and `totalDamage` are Zalcano's two
+   * eligibility gates, both stated outright on its page: "Players must do at
+   * least 5 damage to Zalcano's shield to be eligible for drops, and 31
+   * combined damage to be eligible for uniques and pet."
+   *
+   * **`totalDamage` is why this stayed an enum widening instead of becoming a
+   * new condition shape.** A combined threshold over two fields
+   * (`hitpointsDamage + shieldDamage >= 31`) is not expressible by any
+   * field-based condition at any enum width, which previously read as needing a
+   * formula-valued condition — a fourth gating shape. It does not: the sum is
+   * a *derived context field*, computed once at run setup by
+   * `withDerivedContext` exactly like every other `SimContext` value, so
+   * `levelAtLeast` reads it as a plain `ctx[field] >= n`. Conditions stay
+   * resolved-once against a fixed context, which `expectedValue` depends on
+   * being literally true. See docs/DECISIONS.md's "Player-stat gating" entry;
+   * `fishingLevel` is still deliberately absent, since Reward pool needs
+   * two-sided brackets that a one-sided `>=` cannot express.
    */
   z
     .object({
       kind: z.literal('levelAtLeast'),
-      field: z.enum(['delveLevel', 'wavesReached']),
+      field: z.enum(['delveLevel', 'wavesReached', 'shieldDamage', 'totalDamage']),
       n: z.number().int().nonnegative(),
+    })
+    .strict(),
+  /**
+   * Set membership over a set-valued `SimContext` field — a genuinely
+   * different shape from `levelAtLeast`'s numeric threshold, not a variant of
+   * it, and the reason it is its own kind rather than another entry in that
+   * enum. The three gating shapes this project has now met are: numeric
+   * threshold (`levelAtLeast`), numeric *bracket* (Reward pool's seven
+   * mutually-exclusive Fishing tiers — still unbuilt, and provably not
+   * expressible by widening `levelAtLeast`, since a one-sided `>=` matches
+   * every bracket at once for a high-level player), and set membership
+   * (this). No one condition kind covers all three.
+   *
+   * **`values` means ANY of them (disjunction), deliberately.** Conjunction is
+   * already available for free — `conditionsHold` ANDs the whole
+   * `conditions` array, so "blood AND blue" is two `includes` conditions.
+   * Disjunction has no other expression in the model at all, so that is the
+   * meaning worth spending this field on. A single-element `values` is the
+   * common case (Lunar Chest gates each Moon's roll on that Moon being among
+   * the ones killed) and reads identically under either rule.
+   *
+   * `questsComplete` is admitted alongside `moonsKilled` so this is a real
+   * mechanism over set-valued fields rather than a `moonsKilled` special case
+   * wearing a general name. The pre-existing `questComplete` kind stays: it is
+   * named in PROJECT_PLAN.md 4.4 and is in live use in `data/`, so retiring it
+   * would be a data migration for no behavioural gain.
+   */
+  z
+    .object({
+      kind: z.literal('includes'),
+      field: z.enum(['moonsKilled', 'questsComplete']),
+      values: z.array(z.string().min(1)).min(1),
     })
     .strict(),
 ])
@@ -264,6 +385,8 @@ const TableRefNodeSchema = z
      * `expected-value.ts` multiply through nesting, not replace.
      */
     qtyMultiplier: MultiplierSchema.optional(),
+    /** How `qtyMultiplier` rounds. Defaults to `round`; see `QtyRoundingSchema`. */
+    qtyRounding: QtyRoundingSchema.optional(),
     /**
      * How many times the referenced table is evaluated when this entry's own
      * `rate` hits. Absent (the default) means once, which is what every
@@ -326,6 +449,13 @@ export const NodeSchema = z
     OneOfNodeSchema,
   ])
   .superRefine((node, ctx) => {
+    if (node.kind === 'tableRef' && node.qtyRounding !== undefined && node.qtyMultiplier === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "'qtyRounding' has no meaning without a 'qtyMultiplier'",
+        path: ['qtyRounding'],
+      })
+    }
     if (node.kind !== 'oneOf') return
     node.entries.forEach((entry, i) => {
       if (entry.rate.kind !== 'weight') {
@@ -415,6 +545,8 @@ export const TableSchema = z
      * one.
      */
     qtyMultiplier: MultiplierSchema.optional(),
+    /** How `qtyMultiplier` rounds. Defaults to `round`; see `QtyRoundingSchema`. */
+    qtyRounding: QtyRoundingSchema.optional(),
     /**
      * A hit on ANY entry of this table suppresses the `preroll`/`weighted`
      * tables later in the document — the same set a preroll hit suppresses
@@ -441,6 +573,15 @@ export const TableSchema = z
   })
   .strict()
   .superRefine((table, ctx) => {
+    // A rounding mode with nothing to round is a silently-inert field, which
+    // reads as "this table scales quantities" when it doesn't. Reject it.
+    if (table.qtyRounding !== undefined && table.qtyMultiplier === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "'qtyRounding' has no meaning without a 'qtyMultiplier'",
+        path: ['qtyRounding'],
+      })
+    }
     if (table.suppressesFollowing === true && table.mode !== 'independent') {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -555,6 +696,24 @@ export const SimContextSchema = z
     hitpointsDamage: z.number().int().nonnegative().default(0),
     shieldDamage: z.number().int().nonnegative().default(0),
     /**
+     * **Derived, not an input.** `hitpointsDamage + shieldDamage`, recomputed
+     * from those two by `withDerivedContext` at run setup — whatever a caller
+     * supplies here is overwritten, so it can never drift from its inputs.
+     *
+     * It exists as a real field, rather than being computed inside a condition,
+     * so that Zalcano's combined eligibility gate (`>= 31`) is an ordinary
+     * `levelAtLeast` read. That keeps the invariant this model has now
+     * protected twice: a `Condition` is resolved exactly once against a
+     * `SimContext` fixed for the whole run (`compile.ts`'s header comment), and
+     * `expectedValue` computes one kill's expectation from that static context
+     * with no notion of "later in the run". A formula-valued condition — the
+     * other way to express a two-field threshold — would have made conditions
+     * arbitrary code and broken that contract for every kind, to serve one
+     * source. A derived field costs nothing and changes no contract: it is
+     * resolved once, at the same moment as everything around it.
+     */
+    totalDamage: z.number().int().nonnegative().default(0),
+    /**
      * How many of each item (keyed by `itemKey`) the player owns *entering*
      * this run — Extension B's `OwnershipGateSchema` reads this as the
      * starting point. `expectedValue` treats it as fixed, same as every
@@ -568,6 +727,21 @@ export const SimContextSchema = z
   .strict()
 
 export type SimContext = z.infer<typeof SimContextSchema>
+
+export type SimContextField = keyof SimContext
+
+/**
+ * Fields `withDerivedContext` computes, mapped to the inputs they read.
+ *
+ * A UI must never offer a control for a derived field — setting it is a no-op,
+ * since the derivation overwrites whatever is supplied. It should offer the
+ * inputs instead, which is what `apps/web` expands these to. Keeping the
+ * relationship here rather than in the frontend means one declaration serves
+ * the derivation, the UI, and anything else that needs to know.
+ */
+export const DERIVED_CONTEXT_FIELDS = {
+  totalDamage: ['hitpointsDamage', 'shieldDamage'],
+} as const satisfies Partial<Record<SimContextField, readonly SimContextField[]>>
 
 export const PartialSimContextSchema = SimContextSchema.partial()
 export type PartialSimContext = z.infer<typeof PartialSimContextSchema>
@@ -590,6 +764,7 @@ export const DEFAULT_SIM_CONTEXT: SimContext = {
   fishingLevel: 1,
   hitpointsDamage: 0,
   shieldDamage: 0,
+  totalDamage: 0,
   ownedCounts: {},
 }
 

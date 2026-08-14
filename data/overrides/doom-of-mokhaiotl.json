@@ -1,0 +1,6423 @@
+{
+  "slug": "doom-of-mokhaiotl",
+  "note": "Doom of Mokhaiotl's loot is delve-level indexed and the wiki states the whole rule in ===Mechanics=== prose, not in any DropsLine row, so no parser improvement could reach it. Each delve level cleared rolls the common table once at that level's quantity multiplier (Qn = Q3 + trunc(Q3 * Mn) -- the page defines trunc as 'rounding up for negative numbers and down for positive ones', which is qtyRounding 'truncDelta'), grants that level's guaranteed demon tears, and rolls each unique that has reached its minimum delve level at that level's own rate. Quantities in the generated document are delve-3 values, which the page states explicitly, so they are the correct Q3 baseline. The '>8' row repeats once per deep-delve level via doom_of_mokhaiotl_deep_rolls. Replaces the parser's single ambiguous 'Uniques' preroll guess, which merged three differently-gated uniques into one mutually-exclusive table. Source: Doom of Mokhaiotl, revid 15276851.",
+  "contextDefaults": {
+    "delveLevel": 3
+  },
+  "tables": [
+    {
+      "id": "doom:L1:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 1 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * -0.5).",
+      "qtyMultiplier": 0.5,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L1:resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 1 roll of the resources table. Qn = Q3 + trunc(Q3 * -0.5).",
+      "qtyMultiplier": 0.5,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L1:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 1 roll of the other table. Qn = Q3 + trunc(Q3 * -0.5).",
+      "qtyMultiplier": 0.5,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L2:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 2 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * -0.35).",
+      "qtyMultiplier": 0.65,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L2:resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 2 roll of the resources table. Qn = Q3 + trunc(Q3 * -0.35).",
+      "qtyMultiplier": 0.65,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L2:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 2 roll of the other table. Qn = Q3 + trunc(Q3 * -0.35).",
+      "qtyMultiplier": 0.65,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L2:uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2500
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 2
+            }
+          ]
+        }
+      ],
+      "notes": "Uniques rolled at delve level 2. Each has a minimum delve level and its own per-level rate, both from the page's own table \u2014 NOT one shared 1/540 (that figure is DropsLine's smoothed altrarity)."
+    },
+    {
+      "id": "doom:L3:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 3 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * 0.0)."
+    },
+    {
+      "id": "doom:L3:resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 3 roll of the resources table. Qn = Q3 + trunc(Q3 * 0.0)."
+    },
+    {
+      "id": "doom:L3:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 3 roll of the other table. Qn = Q3 + trunc(Q3 * 0.0)."
+    },
+    {
+      "id": "doom:L3:guaranteed-tears",
+      "mode": "always",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "exact",
+              "n": 50
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        }
+      ],
+      "notes": "Guaranteed demon tears granted at delve level 3 (cumulative total 50); not scaled by the quantity multiplier."
+    },
+    {
+      "id": "doom:L3:uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31115,
+            "itemKey": "eye-of-ayak-uncharged",
+            "name": "Eye of ayak (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 3
+            }
+          ]
+        }
+      ],
+      "notes": "Uniques rolled at delve level 3. Each has a minimum delve level and its own per-level rate, both from the page's own table \u2014 NOT one shared 1/540 (that figure is DropsLine's smoothed altrarity)."
+    },
+    {
+      "id": "doom:L4:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 4 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * 0.05).",
+      "qtyMultiplier": 1.05,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L4:resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 4 roll of the resources table. Qn = Q3 + trunc(Q3 * 0.05).",
+      "qtyMultiplier": 1.05,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L4:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 4 roll of the other table. Qn = Q3 + trunc(Q3 * 0.05).",
+      "qtyMultiplier": 1.05,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L4:guaranteed-tears",
+      "mode": "always",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        }
+      ],
+      "notes": "Guaranteed demon tears granted at delve level 4 (cumulative total 60); not scaled by the quantity multiplier."
+    },
+    {
+      "id": "doom:L4:uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1350
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31115,
+            "itemKey": "eye-of-ayak-uncharged",
+            "name": "Eye of ayak (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1350
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31088,
+            "itemKey": "avernic-treads",
+            "name": "Avernic treads",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1350
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 4
+            }
+          ]
+        }
+      ],
+      "notes": "Uniques rolled at delve level 4. Each has a minimum delve level and its own per-level rate, both from the page's own table \u2014 NOT one shared 1/540 (that figure is DropsLine's smoothed altrarity)."
+    },
+    {
+      "id": "doom:L5:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 5 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * 0.1).",
+      "qtyMultiplier": 1.1,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L5:resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 5 roll of the resources table. Qn = Q3 + trunc(Q3 * 0.1).",
+      "qtyMultiplier": 1.1,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L5:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 5 roll of the other table. Qn = Q3 + trunc(Q3 * 0.1).",
+      "qtyMultiplier": 1.1,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L5:guaranteed-tears",
+      "mode": "always",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        }
+      ],
+      "notes": "Guaranteed demon tears granted at delve level 5 (cumulative total 70); not scaled by the quantity multiplier."
+    },
+    {
+      "id": "doom:L5:uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 810
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31115,
+            "itemKey": "eye-of-ayak-uncharged",
+            "name": "Eye of ayak (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 810
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31088,
+            "itemKey": "avernic-treads",
+            "name": "Avernic treads",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 810
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 5
+            }
+          ]
+        }
+      ],
+      "notes": "Uniques rolled at delve level 5. Each has a minimum delve level and its own per-level rate, both from the page's own table \u2014 NOT one shared 1/540 (that figure is DropsLine's smoothed altrarity)."
+    },
+    {
+      "id": "doom:L6:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 6 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * 0.12).",
+      "qtyMultiplier": 1.12,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L6:resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 6 roll of the resources table. Qn = Q3 + trunc(Q3 * 0.12).",
+      "qtyMultiplier": 1.12,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L6:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 6 roll of the other table. Qn = Q3 + trunc(Q3 * 0.12).",
+      "qtyMultiplier": 1.12,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L6:guaranteed-tears",
+      "mode": "always",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        }
+      ],
+      "notes": "Guaranteed demon tears granted at delve level 6 (cumulative total 80); not scaled by the quantity multiplier."
+    },
+    {
+      "id": "doom:L6:uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 765
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31115,
+            "itemKey": "eye-of-ayak-uncharged",
+            "name": "Eye of ayak (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 765
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31088,
+            "itemKey": "avernic-treads",
+            "name": "Avernic treads",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 765
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31130,
+            "itemKey": "dom",
+            "name": "Dom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1000
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 6
+            }
+          ]
+        }
+      ],
+      "notes": "Uniques rolled at delve level 6. Each has a minimum delve level and its own per-level rate, both from the page's own table \u2014 NOT one shared 1/540 (that figure is DropsLine's smoothed altrarity)."
+    },
+    {
+      "id": "doom:L7:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 7 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * 0.14).",
+      "qtyMultiplier": 1.14,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L7:resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 7 roll of the resources table. Qn = Q3 + trunc(Q3 * 0.14).",
+      "qtyMultiplier": 1.14,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L7:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 7 roll of the other table. Qn = Q3 + trunc(Q3 * 0.14).",
+      "qtyMultiplier": 1.14,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L7:guaranteed-tears",
+      "mode": "always",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        }
+      ],
+      "notes": "Guaranteed demon tears granted at delve level 7 (cumulative total 90); not scaled by the quantity multiplier."
+    },
+    {
+      "id": "doom:L7:uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 720
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31115,
+            "itemKey": "eye-of-ayak-uncharged",
+            "name": "Eye of ayak (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 720
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31088,
+            "itemKey": "avernic-treads",
+            "name": "Avernic treads",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 720
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31130,
+            "itemKey": "dom",
+            "name": "Dom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 750
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 7
+            }
+          ]
+        }
+      ],
+      "notes": "Uniques rolled at delve level 7. Each has a minimum delve level and its own per-level rate, both from the page's own table \u2014 NOT one shared 1/540 (that figure is DropsLine's smoothed altrarity)."
+    },
+    {
+      "id": "doom:L8:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 8 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * 0.17).",
+      "qtyMultiplier": 1.17,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L8:resources",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 8 roll of the resources table. Qn = Q3 + trunc(Q3 * 0.17).",
+      "qtyMultiplier": 1.17,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L8:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level 8 roll of the other table. Qn = Q3 + trunc(Q3 * 0.17).",
+      "qtyMultiplier": 1.17,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L8:guaranteed-tears",
+      "mode": "always",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        }
+      ],
+      "notes": "Guaranteed demon tears granted at delve level 8 (cumulative total 100); not scaled by the quantity multiplier."
+    },
+    {
+      "id": "doom:L8:uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 630
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31115,
+            "itemKey": "eye-of-ayak-uncharged",
+            "name": "Eye of ayak (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 630
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31088,
+            "itemKey": "avernic-treads",
+            "name": "Avernic treads",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 630
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31130,
+            "itemKey": "dom",
+            "name": "Dom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 500
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 8
+            }
+          ]
+        }
+      ],
+      "notes": "Uniques rolled at delve level 8. Each has a minimum delve level and its own per-level rate, both from the page's own table \u2014 NOT one shared 1/540 (that figure is DropsLine's smoothed altrarity)."
+    },
+    {
+      "id": "doom:L9:weapons-and-armour-runes-and-ammunition-ores-seeds",
+      "mode": "weighted",
+      "rolls": {
+        "kind": "formula",
+        "id": "doom_of_mokhaiotl_deep_rolls",
+        "params": {}
+      },
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level >8 roll of the weapons-and-armour-runes-and-ammunition-ores-seeds table. Qn = Q3 + trunc(Q3 * 0.2).",
+      "qtyMultiplier": 1.2,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L9:resources",
+      "mode": "weighted",
+      "rolls": {
+        "kind": "formula",
+        "id": "doom_of_mokhaiotl_deep_rolls",
+        "params": {}
+      },
+      "denominator": 312,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "range",
+              "min": 151,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 90
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 70
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level >8 roll of the resources table. Qn = Q3 + trunc(Q3 * 0.2).",
+      "qtyMultiplier": 1.2,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L9:other",
+      "mode": "weighted",
+      "rolls": {
+        "kind": "formula",
+        "id": "doom_of_mokhaiotl_deep_rolls",
+        "params": {}
+      },
+      "denominator": 104,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30105,
+            "itemKey": "tooth-half-of-key-moon-key",
+            "name": "Tooth half of key (moon key)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31111,
+            "itemKey": "demon-tear",
+            "name": "Demon tear",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31099,
+            "itemKey": "mokhaiotl-waystone",
+            "name": "Mokhaiotl waystone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        }
+      ],
+      "notes": "Delve level >8 roll of the other table. Qn = Q3 + trunc(Q3 * 0.2).",
+      "qtyMultiplier": 1.2,
+      "qtyRounding": "truncDelta"
+    },
+    {
+      "id": "doom:L9:uniques",
+      "mode": "independent",
+      "rolls": {
+        "kind": "formula",
+        "id": "doom_of_mokhaiotl_deep_rolls",
+        "params": {}
+      },
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31109,
+            "itemKey": "mokhaiotl-cloth",
+            "name": "Mokhaiotl cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 540
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31115,
+            "itemKey": "eye-of-ayak-uncharged",
+            "name": "Eye of ayak (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 540
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31088,
+            "itemKey": "avernic-treads",
+            "name": "Avernic treads",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 540
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 31130,
+            "itemKey": "dom",
+            "name": "Dom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 250
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "delveLevel",
+              "n": 9
+            }
+          ]
+        }
+      ],
+      "notes": "Uniques rolled at delve level >8. Each has a minimum delve level and its own per-level rate, both from the page's own table \u2014 NOT one shared 1/540 (that figure is DropsLine's smoothed altrarity)."
+    },
+    {
+      "id": "doom:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 75
+          }
+        }
+      ],
+      "notes": "Tertiary, not delve-level gated."
+    }
+  ]
+}

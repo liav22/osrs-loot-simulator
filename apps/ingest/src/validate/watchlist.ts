@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { z } from 'zod'
+import { FORMULA_IDS } from '@osrs-loot-simulator/loot-model'
 import { REPO_ROOT } from '../snapshots/store.js'
 import { InventorySchema, type Inventory } from '../inventory/schema.js'
 import { INVENTORY_PATH } from '../inventory/build.js'
@@ -101,29 +102,74 @@ export type WatchlistConsistencyIssue = {
   message: string
 }
 
+/** Escapes a literal for embedding in a `RegExp`. */
+function escapeRegExp(literal: string): string {
+  return literal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 /**
- * Cross-checks each watchlist entry's `blockedBy` against
- * `data/_inventory.json`'s boss -> lootSourceId map, which is the
- * authoritative record of which boss pages resolve to which loot source.
- * `blockedBy` is hand-authored prose with nothing else keeping it honest —
- * this is the check that would have caught the reward-cart/reward-pool swap
- * (each entry named the other's boss).
+ * Whether `text` names `term` as a whole word. Substring matching is not good
+ * enough here: a boss titled "Moon" would otherwise match the word "Moons" in
+ * unrelated prose, and this check has to be quiet enough that a real hit is
+ * always worth reading.
+ */
+function namesWholeWord(text: string, term: string): boolean {
+  return new RegExp(`(^|[^\\w'])${escapeRegExp(term)}([^\\w']|$)`, 'i').test(text)
+}
+
+/** Formula ids and boss slugs spell the same subject differently. */
+function normalizeSubject(value: string): string {
+  return value.replace(/-/g, '_').toLowerCase()
+}
+
+/**
+ * Cross-checks each watchlist entry against `data/_inventory.json`'s
+ * boss -> lootSourceId map, which is the authoritative record of which boss
+ * pages resolve to which loot source. Every field a watchlist entry carries is
+ * hand-authored, with nothing else keeping it honest.
  *
- * A loot source's own boss page (the inventory boss whose `title` equals the
- * watchlist entry's `title`) is never expected in `blockedBy`: that boss
- * carries the mechanic directly rather than being "blocked" by it, matching
- * every existing entry's convention (e.g. `duke-sucellus`'s `blockedBy: []`,
- * since Duke Sucellus is its own loot source with no other boss sharing it).
+ * This is the check that would have caught the reward-cart/reward-pool swap.
+ * That bug had **two halves** — each entry's `blockedBy` named the other's
+ * boss, AND each entry's `detail` described the other's activity and named the
+ * other's formula (`wintertodt_points` vs `tempoross_points`). The original
+ * version of this function only ever looked at `blockedBy`, so re-swapping the
+ * prose alone passed clean — and the prose is where the formula id lives,
+ * which is the half that actually misdirects the next person to wire one up.
+ * Hence four rules, not one:
+ *
+ * 1. `lootSourceId` resolves against the inventory at all.
+ * 2. `title` is pinned to the inventory's own `title`/`dropsPage` for that
+ *    source. This is not cosmetic: `title` used to be what excluded a source's
+ *    own boss page from the expected set, so an entry retitled to its boss
+ *    ("Tempoross") with an emptied `blockedBy` passed vacuously — the check
+ *    disarmed by the very field it trusted. The exclusion is now derived from
+ *    the generated `dropsPage` instead (rule 3), and `title` is validated
+ *    rather than believed.
+ * 3. `blockedBy` lists exactly the other boss pages the inventory maps to this
+ *    source. A loot source's own boss page is never expected: that boss carries
+ *    the mechanic directly rather than being "blocked" by it (e.g.
+ *    `duke-sucellus`'s `blockedBy: []`). "Its own boss page" means the boss
+ *    whose title IS the source's `dropsPage` — a structural fact from generated
+ *    data, not a hand-authored string.
+ * 4. `detail` never names a boss page, or a formula whose subject is a boss
+ *    page, belonging to a *different* loot source. Rule 4 only speaks when a
+ *    formula's subject resolves to a known boss slug, so ids with no boss of
+ *    their own (`toa_invocation`, `tob_points`, `cox_points`) draw no
+ *    conclusion at all — the same "act only when the signal narrows
+ *    unambiguously" discipline `build-tables.ts` uses for its own signals.
  */
 export function checkWatchlistConsistency(
   watchlist: Watchlist,
   inventory: Inventory
 ): WatchlistConsistencyIssue[] {
   const issues: WatchlistConsistencyIssue[] = []
-  const knownLootSourceIds = new Set(inventory.lootSources.map((source) => source.id))
+  const lootSourcesById = new Map(inventory.lootSources.map((source) => [source.id, source]))
+  const ownerOfBossTitle = new Map(inventory.bosses.map((boss) => [boss.title, boss.lootSourceId]))
+  const ownerOfBossSlug = new Map(inventory.bosses.map((boss) => [boss.slug, boss.lootSourceId]))
 
   for (const entry of watchlist.entries) {
-    if (!knownLootSourceIds.has(entry.lootSourceId)) {
+    const source = lootSourcesById.get(entry.lootSourceId)
+    if (source === undefined) {
       issues.push({
         lootSourceId: entry.lootSourceId,
         message: `lootSourceId '${entry.lootSourceId}' is not among data/_inventory.json's lootSources`,
@@ -131,11 +177,26 @@ export function checkWatchlistConsistency(
       continue
     }
 
+    // Rule 2 — `title` is pinned, so it can never silently shrink rule 3's
+    // expected set. Both spellings are legitimate and both occur in the real
+    // data: `reward-cart` uses the source title, `rewards-chest-fortis-
+    // colosseum` uses the drops page ("Fortis Colosseum" is the activity).
+    if (entry.title !== source.title && entry.title !== source.dropsPage) {
+      issues.push({
+        lootSourceId: entry.lootSourceId,
+        message:
+          `title '${entry.title}' matches neither data/_inventory.json's title ` +
+          `'${source.title}' nor its dropsPage '${source.dropsPage}'`,
+      })
+    }
+
+    // Rule 3 — `blockedBy` vs the inventory, excluding this source's own boss
+    // page, identified structurally by `dropsPage` rather than by `title`.
     const expected = new Set(
       inventory.bosses
         .filter((boss) => boss.lootSourceId === entry.lootSourceId)
         .map((boss) => boss.title)
-        .filter((title) => title !== entry.title)
+        .filter((title) => title !== source.dropsPage)
     )
     const actual = new Set(entry.blockedBy)
 
@@ -157,6 +218,43 @@ export function checkWatchlistConsistency(
           `blockedBy lists ${extra.map((title) => `'${title}'`).join(', ')}, which ` +
           `data/_inventory.json does not map to '${entry.lootSourceId}'`,
       })
+    }
+
+    // Rule 4a — `detail` naming another source's boss page.
+    for (const [title, owner] of ownerOfBossTitle) {
+      if (owner === entry.lootSourceId) continue
+      if (namesWholeWord(entry.detail, title)) {
+        issues.push({
+          lootSourceId: entry.lootSourceId,
+          message:
+            `detail names boss page '${title}', which data/_inventory.json maps to ` +
+            `'${owner}', not '${entry.lootSourceId}'`,
+        })
+      }
+    }
+
+    // Rule 4b — `detail` naming a formula whose subject is another source's
+    // boss. This is the half of the reward-cart/reward-pool swap that nothing
+    // checked, and the half the watchlist exists to get right: `blockedBy` can
+    // be perfect while the entry still points at the wrong formula.
+    for (const formulaId of FORMULA_IDS) {
+      if (!entry.detail.includes(formulaId)) continue
+      const normalizedFormula = normalizeSubject(formulaId)
+      for (const [slug, owner] of ownerOfBossSlug) {
+        if (owner === entry.lootSourceId) continue
+        const normalizedSlug = normalizeSubject(slug)
+        const isSubject =
+          normalizedFormula === normalizedSlug ||
+          normalizedFormula.startsWith(`${normalizedSlug}_`)
+        if (isSubject) {
+          issues.push({
+            lootSourceId: entry.lootSourceId,
+            message:
+              `detail names formula '${formulaId}', whose subject '${slug}' ` +
+              `data/_inventory.json maps to '${owner}', not '${entry.lootSourceId}'`,
+          })
+        }
+      }
     }
   }
 

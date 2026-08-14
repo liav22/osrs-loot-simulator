@@ -9,211 +9,103 @@
   ],
   "tables": [
     {
-      "id": "lunar-chest:0:uniques",
-      "mode": "weighted",
+      "id": "lunar-chest:blood-unique",
+      "mode": "independent",
       "rolls": 1,
-      "denominator": 224,
       "withoutReplacement": false,
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 29000,
-            "itemKey": "eclipse-atlatl",
-            "name": "Eclipse atlatl",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "tableRef",
+            "ref": "lunar_chest_blood_set"
           },
           "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29010,
-            "itemKey": "eclipse-moon-helm",
-            "name": "Eclipse moon helm",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "fixed",
+            "num": 1,
+            "den": 56
           },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29004,
-            "itemKey": "eclipse-moon-chestplate",
-            "name": "Eclipse moon chestplate",
-            "qty": {
-              "kind": "exact",
-              "n": 1
+          "conditions": [
+            {
+              "kind": "includes",
+              "field": "moonsKilled",
+              "values": [
+                "blood"
+              ]
             }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29007,
-            "itemKey": "eclipse-moon-tassets",
-            "name": "Eclipse moon tassets",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 28997,
-            "itemKey": "dual-macuahuitl",
-            "name": "Dual macuahuitl",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29028,
-            "itemKey": "blood-moon-helm",
-            "name": "Blood moon helm",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29022,
-            "itemKey": "blood-moon-chestplate",
-            "name": "Blood moon chestplate",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29025,
-            "itemKey": "blood-moon-tassets",
-            "name": "Blood moon tassets",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 28988,
-            "itemKey": "blue-moon-spear",
-            "name": "Blue moon spear",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29019,
-            "itemKey": "blue-moon-helm",
-            "name": "Blue moon helm",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29013,
-            "itemKey": "blue-moon-chestplate",
-            "name": "Blue moon chestplate",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 29016,
-            "itemKey": "blue-moon-tassets",
-            "name": "Blue moon tassets",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
+          ]
         }
       ],
-      "notes": "Uniques"
+      "notes": "Blood Moon's unique trigger: an independent 1/56 for each Moon actually killed before this opening. Three Moons therefore give 1-(55/56)^3 (about 1/19) overall, NOT 3/56 and NOT a bonus fourth roll — both wrong readings are explicitly disclaimed by a Jagex correction cited on the page. suppressesFollowing: a unique hit means the standard table is not rolled at all.",
+      "suppressesFollowing": true
     },
     {
-      "id": "lunar-chest:1:standard-loot",
-      "mode": "weighted",
+      "id": "lunar-chest:blue-unique",
+      "mode": "independent",
       "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "lunar_chest_blue_set"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 56
+          },
+          "conditions": [
+            {
+              "kind": "includes",
+              "field": "moonsKilled",
+              "values": [
+                "blue"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": "Blue Moon's unique trigger: an independent 1/56 for each Moon actually killed before this opening. Three Moons therefore give 1-(55/56)^3 (about 1/19) overall, NOT 3/56 and NOT a bonus fourth roll — both wrong readings are explicitly disclaimed by a Jagex correction cited on the page. suppressesFollowing: a unique hit means the standard table is not rolled at all.",
+      "suppressesFollowing": true
+    },
+    {
+      "id": "lunar-chest:eclipse-unique",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "lunar_chest_eclipse_set"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 56
+          },
+          "conditions": [
+            {
+              "kind": "includes",
+              "field": "moonsKilled",
+              "values": [
+                "eclipse"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": "Eclipse Moon's unique trigger: an independent 1/56 for each Moon actually killed before this opening. Three Moons therefore give 1-(55/56)^3 (about 1/19) overall, NOT 3/56 and NOT a bonus fourth roll — both wrong readings are explicitly disclaimed by a Jagex correction cited on the page. suppressesFollowing: a unique hit means the standard table is not rolled at all.",
+      "suppressesFollowing": true
+    },
+    {
+      "id": "lunar-chest:standard",
+      "mode": "weighted",
+      "rolls": {
+        "kind": "formula",
+        "id": "lunar_chest_standard_rolls",
+        "params": {}
+      },
       "denominator": 30,
       "withoutReplacement": false,
       "entries": [
@@ -428,11 +320,11 @@
           }
         }
       ],
-      "notes": "Standard loot"
+      "notes": "Standard loot, rolled 1x/3x/6x for one/two/three Moons killed (3x per additional Moon, not additive). Suppressed entirely when any Moon's unique trigger hits."
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "manual_override",
   "validation": {
     "ok": false,
     "checks": [
@@ -443,7 +335,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "resolved against 6 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -453,7 +345,7 @@
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+        "detail": "1 formula-driven quantity/rolls/multiplier value(s) evaluated successfully"
       },
       {
         "check": "ev_matches",
@@ -466,11 +358,10 @@
       },
       {
         "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "without_replacement: Uniques are drawn without replacement across the chest's rolls, so the same unique cannot come up twice in one chest. The drop rows carry per-item rarities only and cannot express that. Model as a weighted table with rolls > 1 and withoutReplacement: true."
+        "ok": true
       }
     ]
   },
-  "source": "generated",
+  "source": "merged",
   "parserVersion": 1
 }

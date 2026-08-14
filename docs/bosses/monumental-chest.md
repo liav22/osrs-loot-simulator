@@ -1,5 +1,33 @@
 # Monumental chest — Theatre of Blood (ToB)
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (`SimContext` deaths field) — **RESOLVED**: `ctx.deaths`.
+> - Gap 3 (conditional multiplier for mode/death quantity scaling) —
+>   **RESOLVED**: `Table.qtyMultiplier` (+ `qtyRounding` if the wiki states a
+>   rounding rule).
+> - Gap 2 (the magnitude of both scaling effects) — still **UNKNOWN**;
+>   research, not a model gap, and `tob_points` remains a stub. This source
+>   also still carries the separate ambiguous-heading blocker.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: monumental-chest`. Watchlisted (`point_scaled`). Blocks: Nylocas Vasilias,
 Pestilent Bloat, Sotetseg, The Maiden of Sugadinti, Verzik Vitur, Xarpus. Also carries an
 independent `ambiguous: heading guess` blocker (untitled heading) per `docs/HANDOFF.md` section 2

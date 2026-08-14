@@ -1,4 +1,5 @@
 import {
+  applyQtyMultiplier,
   compileBoss,
   effectiveWeightedPool,
   ownershipGateSatisfied,
@@ -12,7 +13,7 @@ import {
   type ResolvedQtySpec,
 } from './compile.js'
 import { mulberry32, type Rng } from './rng.js'
-import type { Boss, SimContext } from './schema.js'
+import type { Boss, QtyRounding, SimContext } from './schema.js'
 
 /**
  * gp value of an item. `itemId` is null when the item could not be resolved
@@ -163,6 +164,7 @@ function emit(
   tally: Tally,
   rng: Rng,
   qtyMultiplier: number,
+  qtyRounding: QtyRounding,
   owned: OwnershipTracker
 ): void {
   switch (node.kind) {
@@ -176,7 +178,8 @@ function emit(
       // emissions (every source that doesn't use qtyMultiplier) rather than
       // pay for a no-op `Math.round(x * 1)` on the hot path — measured to
       // matter: see docs/mechanics-model-proposal.md's benchmark note.
-      const qty = qtyMultiplier === 1 ? rolled : Math.round(rolled * qtyMultiplier)
+      const qty =
+        qtyMultiplier === 1 ? rolled : applyQtyMultiplier(rolled, qtyMultiplier, qtyRounding)
       tally.record(node.slot, qty, item.name, item.itemId, item.itemKey)
       // `.size` short-circuits the `.has()` lookup for every source that
       // doesn't use Extension B (an empty Set) without relying on V8 to
@@ -191,11 +194,15 @@ function emit(
       // `suppressesFollowing` — does not suppress anything in the parent,
       // which is why `runTable`'s return value is discarded here.
       const nested = qtyMultiplier * node.qtyMultiplier
+      // Most-specific-wins: an access that states its own rounding overrides
+      // whatever the enclosing path used. No source nests two multipliers
+      // today, so this is a rule stated once rather than one under load.
+      const nestedRounding = node.qtyRounding === 'round' ? qtyRounding : node.qtyRounding
       // `drawsPerHit` is 1 for every source but Corporeal Beast, so the
       // common case is one pass through a loop whose bound is a plain
       // property read — no branch to predict, nothing allocated.
       for (let draw = 0; draw < node.drawsPerHit; draw++) {
-        runTable(node.table, compiled, tally, rng, nested, owned)
+        runTable(node.table, compiled, tally, rng, nested, nestedRounding, owned)
       }
       return
     }
@@ -224,9 +231,11 @@ function runTable(
   tally: Tally,
   rng: Rng,
   qtyMultiplier: number,
+  qtyRounding: QtyRounding,
   owned: OwnershipTracker
 ): boolean {
   const effectiveQty = qtyMultiplier * table.qtyMultiplier
+  const effectiveRounding = table.qtyRounding === 'round' ? qtyRounding : table.qtyRounding
   const rolls = rollCount(table.rolls, rng)
   let prerollHit = false
   let suppressHit = false
@@ -245,7 +254,7 @@ function runTable(
       case 'always': {
         for (let i = 0; i < table.nodes.length; i++) {
           if (gated && !gateAllows(table, i, owned)) continue
-          emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, owned)
+          emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
         }
         break
       }
@@ -253,7 +262,7 @@ function runTable(
         for (let i = 0; i < table.nodes.length; i++) {
           if (gated && !gateAllows(table, i, owned)) continue
           if (rng.nextFloat() < table.probs[i]!) {
-            emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, owned)
+            emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
             // Deliberately no `break`: every remaining entry still rolls.
             // The flag is read here, on a hit, rather than hoisted per
             // table-roll like `gated` below — an independent entry hitting is
@@ -269,7 +278,7 @@ function runTable(
         for (let i = 0; i < table.nodes.length; i++) {
           if (gated && !gateAllows(table, i, owned)) continue
           if (rng.nextFloat() < table.probs[i]!) {
-            emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, owned)
+            emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
             prerollHit = true
             break
           }
@@ -310,6 +319,7 @@ function runTable(
             rng,
             rolls,
             effectiveQty,
+            effectiveRounding,
             owned
           )
           return false
@@ -321,7 +331,7 @@ function runTable(
           denominator <= 0 ? table.nodes.length : pickIndex(cum, rng.nextFloat() * denominator)
         // Past the last bucket means the implicit `nothing` remainder.
         if (picked < table.nodes.length) {
-          emit(table.nodes[picked]!, compiled, tally, rng, effectiveQty, owned)
+          emit(table.nodes[picked]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
         }
         break
       }
@@ -355,6 +365,7 @@ function runWeightedWithoutReplacement(
   rng: Rng,
   rolls: number,
   qtyMultiplier: number,
+  qtyRounding: QtyRounding,
   owned: OwnershipTracker
 ): void {
   const count = table.nodes.length
@@ -370,7 +381,7 @@ function runWeightedWithoutReplacement(
       if (removed[i] === 1) continue
       acc += weights[i]!
       if (r < acc) {
-        emit(table.nodes[i]!, compiled, tally, rng, qtyMultiplier, owned)
+        emit(table.nodes[i]!, compiled, tally, rng, qtyMultiplier, qtyRounding, owned)
         removed[i] = 1
         removedWeight += weights[i]!
         break
@@ -409,7 +420,7 @@ export function simulate(
     let chainBroken = false
     for (const table of compiled.tables) {
       if (chainBroken && suppressedByPreroll(table.mode)) continue
-      if (runTable(table, compiled, tally, rng, 1, owned)) chainBroken = true
+      if (runTable(table, compiled, tally, rng, 1, 'round', owned)) chainBroken = true
     }
 
     if (logging && tally.logDrops !== null) {

@@ -276,11 +276,12 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
     for (const reason of outcome.reasons) log(`        - ${reason}`)
   }
 
-  const counts = { needs_review: 0, parse_failed: 0, verified: 0 }
+  const counts = { needs_review: 0, parse_failed: 0, verified: 0, manual_override: 0 }
   for (const outcome of outcomes) counts[outcome.status] += 1
   log(
     `\n${outcomes.length} parsed: ${counts.needs_review} needs_review, ` +
-      `${counts.parse_failed} parse_failed, ${counts.verified} verified.`
+      `${counts.parse_failed} parse_failed, ${counts.verified} verified` +
+      `${counts.manual_override > 0 ? `, ${counts.manual_override} manual_override` : ''}.`
   )
   log(`data/bosses/*.json written for everything that assembled.`)
 }

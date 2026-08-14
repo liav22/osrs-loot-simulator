@@ -12,11 +12,12 @@ import type { ItemIndex } from '../items/index.js'
 import type { GePrices } from '../prices/ge-prices.js'
 import { gePriceLookup } from '../prices/ge-prices.js'
 import { REPO_ROOT, readSnapshot, slugify } from '../snapshots/store.js'
-import { resolveSimContext, type Table } from '@osrs-loot-simulator/loot-model'
+import { BossSchema, resolveSimContext, type Table } from '@osrs-loot-simulator/loot-model'
 import { extractDropLines } from './wikitext-drops.js'
 import { buildTableGroups, groupByHeading } from './build-tables.js'
 import { extractRdtAccessLines } from './rdt-access.js'
 import { assembleBoss } from './assemble-boss.js'
+import { applyOverride, loadOverride, overrideSummary } from './overrides.js'
 
 export const BOSSES_DIR = join(REPO_ROOT, 'data', 'bosses')
 
@@ -36,7 +37,7 @@ export interface ParseOptions {
 export interface ParseOutcome {
   slug: string
   title: string
-  status: 'verified' | 'needs_review' | 'parse_failed'
+  status: 'verified' | 'needs_review' | 'manual_override' | 'parse_failed'
   reasons: string[]
 }
 
@@ -57,6 +58,12 @@ async function readRenderedHtml(title: string): Promise<string | null> {
 }
 
 export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
+  // Loaded before anything else: an override carrying its own `tables` can
+  // rescue a source the parser cannot reach at all, so the three
+  // `parse_failed` exits below have to consult it rather than return first.
+  const override = await loadOverride(options.slug)
+  const overrideCarriesTables = override?.tables !== undefined
+
   const wikitextSlug = slugify(options.title)
   let wikitext: string
   try {
@@ -64,17 +71,25 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     const parsed = snapshot.body as { parse?: { wikitext?: string } }
     wikitext = parsed.parse?.wikitext ?? ''
   } catch {
-    return {
-      slug: options.slug,
-      title: options.title,
-      status: 'parse_failed',
-      reasons: [`no wikitext snapshot for '${options.title}' (slug '${wikitextSlug}')`],
+    if (!overrideCarriesTables) {
+      return {
+        slug: options.slug,
+        title: options.title,
+        status: 'parse_failed',
+        reasons: [`no wikitext snapshot for '${options.title}' (slug '${wikitextSlug}')`],
+      }
     }
+    wikitext = ''
   }
 
   const lines = extractDropLines(wikitext)
   const rdtAccess = extractRdtAccessLines(wikitext)
-  if (lines.length === 0 && rdtAccess.lines.length === 0 && rdtAccess.unresolved.length === 0) {
+  if (
+    !overrideCarriesTables &&
+    lines.length === 0 &&
+    rdtAccess.lines.length === 0 &&
+    rdtAccess.unresolved.length === 0
+  ) {
     return {
       slug: options.slug,
       title: options.title,
@@ -95,7 +110,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     allowlist: options.allowlist,
   })
 
-  if (result.boss === null) {
+  if (result.boss === null && !overrideCarriesTables) {
     return {
       slug: options.slug,
       title: options.title,
@@ -104,8 +119,16 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     }
   }
 
+  // Everything downstream validates the MERGED document, not the generated
+  // one — an override that introduces a broken table must fail the same
+  // checks a bad parse would, never be rubber-stamped for being hand-written.
+  const merged =
+    override === null
+      ? result.boss!
+      : BossSchema.parse(applyOverride(result.boss, override, options.parserVersion))
+
   const itemInputs: ItemCheckInput[] = []
-  for (const table of result.boss.tables) {
+  for (const table of merged.tables) {
     for (const entry of table.entries) {
       if (entry.node.kind === 'item') {
         itemInputs.push({ itemKey: entry.node.itemKey, itemId: entry.node.itemId })
@@ -113,12 +136,12 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     }
   }
 
-  const weightsSum = checkWeightsSum(result.boss.tables)
+  const weightsSum = checkWeightsSum(merged.tables)
   const itemsKnown = checkItemsKnown(itemInputs, options.itemIndex, options.allowlist)
   const notOnWatchlist = checkNotOnWatchlist(options.watchlist, options.slug)
-  const refsResolve = checkRefsResolve(result.boss, options.sharedTables)
-  const ratesValid = checkRatesValid(result.boss)
-  const qtySane = checkQtySane(result.boss)
+  const refsResolve = checkRefsResolve(merged, options.sharedTables)
+  const ratesValid = checkRatesValid(merged)
+  const qtySane = checkQtySane(merged)
 
   // ev_matches: real GE prices, joined by itemId, gemw-untradeable items
   // priced at 0 automatically (they carry no GE listing at all). Confirmed
@@ -126,9 +149,9 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   // docs/DECISIONS.md. It stays advisory: computed and reported whenever a
   // rendered-page snapshot is available, but never required for `verified`.
   const renderedHtml = await readRenderedHtml(options.title)
-  const ctx = resolveSimContext(result.boss, {})
+  const ctx = resolveSimContext(merged, {})
   const evMatches: EvMatchesResult = checkEvMatches(
-    result.boss,
+    merged,
     ctx,
     gePriceLookup(options.gePrices),
     renderedHtml
@@ -165,10 +188,27 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     refsResolve.ok &&
     ratesValid.ok &&
     qtySane.ok &&
-    result.ambiguousGroups.length === 0
-  const status = deterministicOk ? ('verified' as const) : ('needs_review' as const)
+    // An override supplying its own tables replaces exactly the structure the
+    // parser was unsure about, so its ambiguous-group guesses no longer
+    // describe the document being validated.
+    (overrideCarriesTables || result.ambiguousGroups.length === 0)
 
-  const reasons: string[] = [...result.warnings, ...result.ambiguousGroups]
+  // PROJECT_PLAN.md 16's Phase 5 done-when is "every boss verified or
+  // manual_override" — so a hand-authored document that passes every
+  // deterministic check is `manual_override`, a terminal success state, not
+  // `verified`. Keeping them distinct is the point: `verified` means the
+  // pipeline derived this from the wiki unaided, and that claim would be
+  // false here. A failing override still lands in `needs_review`.
+  const status = !deterministicOk
+    ? ('needs_review' as const)
+    : override !== null
+      ? ('manual_override' as const)
+      : ('verified' as const)
+
+  const reasons: string[] = overrideCarriesTables
+    ? []
+    : [...result.warnings, ...result.ambiguousGroups]
+  if (override !== null) reasons.push(overrideSummary(override, result.boss !== null))
   if (!weightsSum.ok) {
     reasons.push(
       ...weightsSum.failures.map(
@@ -186,7 +226,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   reasons.push(`ev_matches (advisory, not part of the verified gate): ${evMatches.detail}`)
 
   const boss = {
-    ...result.boss,
+    ...merged,
     status,
     // `validation.ok` reflects every check including the advisory ones, so a
     // verified boss with a failing ev_matches still shows that failure here —

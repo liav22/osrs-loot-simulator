@@ -1,5 +1,33 @@
 # Inferno
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (formula-driven `QtySpec` for Tokkul) — **RESOLVED**:
+>   `QtySpec.formula`.
+> - Gap 2 (per-run scalar: wave reached) — **RESOLVED**: `ctx.wavesReached`.
+> - Gap 3 (cape-exchange pet reroll) — still deliberately out of scope: an NPC
+>   transaction outside the kill event, not a model gap.
+> - **Still blocking**: the Tokkul-per-wave curve is **UNKNOWN** and
+>   `inferno_tokkul` was never added to `FORMULA_IDS`. Research, not schema.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 Not in `data/mechanics-watchlist.json` (no `lootSourceId` assigned — this source has never
 resolved to a loot source at all; `docs/DECISIONS.md`'s discovery-pipeline entry recorded it as a
 recovered `component` encounter with "no reward-table page found linked from it," correctly not

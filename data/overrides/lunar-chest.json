@@ -1,0 +1,317 @@
+{
+  "slug": "lunar-chest",
+  "note": "Lunar Chest's real mechanic lives in ==Loot mechanics== prose, not in its drop rows. Each Moon killed before opening gives an INDEPENDENT 1/56 at a piece of that Moon's own 4-item set; if it hits, the piece is drawn uniformly from that set's not-yet-obtained pieces (duplicate protection scoped per set, not across all 12 uniques). Any unique hit suppresses the standard table entirely; otherwise standard loot rolls 1x/3x/6x for 1/2/3 Moons. The parser saw only a flat 12-entry weighted table at denominator 224 \u2014 the page states that 1/224 figure is the naive first-piece-only rate that does NOT account for duplicate protection, so it is not used as a rate anywhere here. Known modelling assumption, flagged rather than hidden: a 1/56 trigger for a set the player has already completed still counts as a hit for suppression purposes, since the engine decides suppression at the access roll; the page says such a roll does 'nothing useful' but does not say whether it still blocks standard loot. Affects only players holding a full set. Source: Lunar Chest, revid 15284737.",
+  "tables": [
+    {
+      "id": "lunar-chest:blood-unique",
+      "mode": "independent",
+      "rolls": 1,
+      "suppressesFollowing": true,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "lunar_chest_blood_set"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 56
+          },
+          "conditions": [
+            {
+              "kind": "includes",
+              "field": "moonsKilled",
+              "values": [
+                "blood"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": "Blood Moon's unique trigger: an independent 1/56 for each Moon actually killed before this opening. Three Moons therefore give 1-(55/56)^3 (about 1/19) overall, NOT 3/56 and NOT a bonus fourth roll \u2014 both wrong readings are explicitly disclaimed by a Jagex correction cited on the page. suppressesFollowing: a unique hit means the standard table is not rolled at all."
+    },
+    {
+      "id": "lunar-chest:blue-unique",
+      "mode": "independent",
+      "rolls": 1,
+      "suppressesFollowing": true,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "lunar_chest_blue_set"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 56
+          },
+          "conditions": [
+            {
+              "kind": "includes",
+              "field": "moonsKilled",
+              "values": [
+                "blue"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": "Blue Moon's unique trigger: an independent 1/56 for each Moon actually killed before this opening. Three Moons therefore give 1-(55/56)^3 (about 1/19) overall, NOT 3/56 and NOT a bonus fourth roll \u2014 both wrong readings are explicitly disclaimed by a Jagex correction cited on the page. suppressesFollowing: a unique hit means the standard table is not rolled at all."
+    },
+    {
+      "id": "lunar-chest:eclipse-unique",
+      "mode": "independent",
+      "rolls": 1,
+      "suppressesFollowing": true,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "lunar_chest_eclipse_set"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 56
+          },
+          "conditions": [
+            {
+              "kind": "includes",
+              "field": "moonsKilled",
+              "values": [
+                "eclipse"
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": "Eclipse Moon's unique trigger: an independent 1/56 for each Moon actually killed before this opening. Three Moons therefore give 1-(55/56)^3 (about 1/19) overall, NOT 3/56 and NOT a bonus fourth roll \u2014 both wrong readings are explicitly disclaimed by a Jagex correction cited on the page. suppressesFollowing: a unique hit means the standard table is not rolled at all."
+    },
+    {
+      "id": "lunar-chest:standard",
+      "mode": "weighted",
+      "rolls": {
+        "kind": "formula",
+        "id": "lunar_chest_standard_rolls",
+        "params": {}
+      },
+      "denominator": 30,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28991,
+            "itemKey": "atlatl-dart",
+            "name": "Atlatl dart",
+            "qty": {
+              "kind": "range",
+              "min": 72,
+              "max": 120
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29381,
+            "itemKey": "blessed-bone-shards",
+            "name": "Blessed bone shards",
+            "qty": {
+              "kind": "range",
+              "min": 160,
+              "max": 179
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28899,
+            "itemKey": "wyrmling-bones",
+            "name": "Wyrmling bones",
+            "qty": {
+              "kind": "range",
+              "min": 42,
+              "max": 54
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29378,
+            "itemKey": "sun-kissed-bones",
+            "name": "Sun-kissed bones",
+            "qty": {
+              "kind": "range",
+              "min": 6,
+              "max": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1939,
+            "itemKey": "swamp-tar",
+            "name": "Swamp tar",
+            "qty": {
+              "kind": "range",
+              "min": 79,
+              "max": 119
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 571,
+            "itemKey": "water-orb",
+            "name": "Water orb",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 45
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6034,
+            "itemKey": "supercompost",
+            "name": "Supercompost",
+            "qty": {
+              "kind": "range",
+              "min": 6,
+              "max": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1761,
+            "itemKey": "soft-clay",
+            "name": "Soft clay",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 205,
+            "itemKey": "grimy-harralander",
+            "name": "Grimy harralander",
+            "qty": {
+              "kind": "range",
+              "min": 12,
+              "max": 18
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 209,
+            "itemKey": "grimy-irit-leaf",
+            "name": "Grimy irit leaf",
+            "qty": {
+              "kind": "range",
+              "min": 12,
+              "max": 18
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5314,
+            "itemKey": "maple-seed",
+            "name": "Maple seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5315,
+            "itemKey": "yew-seed",
+            "name": "Yew seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Standard loot, rolled 1x/3x/6x for one/two/three Moons killed (3x per additional Moon, not additive). Suppressed entirely when any Moon's unique trigger hits."
+    }
+  ]
+}

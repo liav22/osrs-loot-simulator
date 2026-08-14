@@ -1,5 +1,35 @@
 # Chest (Tombs of Amascut) — ToA
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (`SimContext` points) — **RESOLVED**: `ctx.points`, `ctx.raidLevel`.
+> - Gap 4 (`QtySpec` has no formula-driven kind) — **RESOLVED**:
+>   `QtySpec.formula`, resolved once at compile time.
+> - Gap 5 (thread of Elidinis / jewel reverting once received) — **RESOLVED**:
+>   `Entry.ownershipGate` (lifetime-scoped, which is the right scope here).
+> - Gap 2 (per-raid achievement conditions) — **STILL OPEN**: no `Condition`
+>   kind expresses "all Akkha invocations at level N this raid."
+> - Gap 3 (item-weight interpolation between the 6 raid-level breakpoints) —
+>   still **UNKNOWN**; research, not a model gap. `toa_invocation` is a stub.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: chest-tombs-of-amascut`. Watchlisted (`point_scaled`). Blocks: Akkha, Ba-Ba,
 Elidinis' Warden, Kephri, Tumeken's Warden, Zebak.
 

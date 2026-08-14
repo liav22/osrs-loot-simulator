@@ -1,5 +1,43 @@
 # Rewards Chest (Fortis Colosseum)
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (wave/level-indexed structure with per-level bankable loot) —
+>   **RESOLVED, no wave engine required**: `levelAtLeast('wavesReached', n)`-
+>   gated tables in the existing `tables` array, one per wave. The same
+>   correction applies to `docs/bosses/doom-of-mokhaiotl.md`; see its banner.
+> - Gap 2 (per-run scalar: which wave the run ended at) — **RESOLVED**:
+>   `ctx.wavesReached`.
+> - Gap 4 (quiver -> splinters/pet exchange) — out of scope, an NPC
+>   transaction, not a kill event.
+> - Gap 3 (wave-scoped armour-piece dedup) — **STILL OPEN, and deliberately
+>   so.** This is *run-scoped* state (it resets each attempt), materially
+>   different from `ownershipGate`'s lifetime-scoped counts, and it is the only
+>   remaining source needing within-kill dynamic state. Ship the flagged
+>   with-replacement approximation; do not build general within-kill state for
+>   one sub-mechanic of one source.
+> - Note this page still cannot be assembled into a `Boss` at all (its `Wave
+>   1`..`Wave 12` headings fit no canonical mode), so it needs `data/overrides/`
+>   — which does not exist yet — before any of the above matters.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: rewards-chest-fortis-colosseum`. Watchlisted (`other`). Blocks: Sol Heredit.
 
 Source: **Rewards Chest (Fortis Colosseum)** —

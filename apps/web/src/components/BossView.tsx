@@ -116,6 +116,10 @@ export function BossView({ slug }: { slug: string }) {
           {tablesQuery.data !== undefined && (
             <SimContextControls
               boss={boss}
+              // Needed to discover ownership-gated controls: Lunar Chest's
+              // per-set duplicate protection lives in its referenced shared
+              // tables, not in the boss document.
+              sharedTables={tablesQuery.data}
               params={params}
               onChange={updateParams}
               onSimulate={handleSimulate}

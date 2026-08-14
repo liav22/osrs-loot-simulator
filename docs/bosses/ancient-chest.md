@@ -1,5 +1,44 @@
 # Ancient chest — Chambers of Xeric (CoX)
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (`SimContext` points) — **RESOLVED**: `ctx.points`.
+> - Gap 2 (a hit in an `independent` table suppressing later tables) —
+>   **RESOLVED**: `Table.suppressesFollowing`, built generically as this doc
+>   argued it should be.
+> - Gap 3 (cross-table outcome visibility for elite clue / Olmlet) —
+>   **RESOLVED AS UNNECESSARY, do not build.** Because `ctx.points` is static
+>   per run, the conditioned marginals (`P(no unique) x 1/12`,
+>   `P(unique) x 1/53`) are *exact* on every aggregate the simulator reports —
+>   a plain formula `Rate`, no new condition kind. Using the raw subrates
+>   instead overstates Olmlet by 33x; that is the failure mode to avoid.
+>   Residual: elite clue and Olmlet can co-occur in the kill log (~4.6% chance
+>   across a 1,000-kill log), which needs an FE note, not an engine feature.
+> - Gap 4 (do common-table quantity ranges scale with points?) — still
+>   **UNKNOWN**; a research question, never a model gap.
+> - **Still blocking**: `cox_points` is an unimplemented stub, and the page's
+>   `==Loot table==` heading is not matched by `DROPS_SECTION_TITLE`, which is
+>   why this is `parse_failed`. Per-player allocation within a team stays out
+>   of scope.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId`: not yet assigned (currently `parse_failed`, not on the mechanics watchlist — see
 "Why this is `parse_failed`, not `needs_review`" below). Not gated by `not_on_watchlist` today
 because it never reaches watchlist evaluation; it fails earlier, at section detection.

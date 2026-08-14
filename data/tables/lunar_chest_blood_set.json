@@ -1,0 +1,94 @@
+{
+  "id": "lunar_chest_blood_set",
+  "mode": "weighted",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "denominator": 4,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 28997,
+        "itemKey": "dual-macuahuitl",
+        "name": "Dual macuahuitl",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "ownershipGate": {
+        "itemKey": "dual-macuahuitl",
+        "n": 1,
+        "when": "below"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 29028,
+        "itemKey": "blood-moon-helm",
+        "name": "Blood moon helm",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "ownershipGate": {
+        "itemKey": "blood-moon-helm",
+        "n": 1,
+        "when": "below"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 29022,
+        "itemKey": "blood-moon-chestplate",
+        "name": "Blood moon chestplate",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "ownershipGate": {
+        "itemKey": "blood-moon-chestplate",
+        "n": 1,
+        "when": "below"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 29025,
+        "itemKey": "blood-moon-tassets",
+        "name": "Blood moon tassets",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      },
+      "ownershipGate": {
+        "itemKey": "blood-moon-tassets",
+        "n": 1,
+        "when": "below"
+      }
+    }
+  ],
+  "notes": "Blood Moon's 4-piece set. Reached only when that Moon's 1/56 trigger hits; the draw is uniform over the pieces NOT yet obtained, so each piece carries an ownershipGate and effectiveWeightedPool shrinks the denominator as pieces are collected (4 unowned -> 1/4 each; 1 unowned -> certain). Duplicate protection is scoped PER SET, not across all 12 uniques \u2014 Jagex's own correction post explicitly rules out the '1/56 for any item across all sets' reading. The drop table's flat 1/224 per item is the naive first-piece-only figure and is deliberately NOT used as a rate here. Source: Lunar Chest, ==Loot mechanics==, revid 15284737."
+}

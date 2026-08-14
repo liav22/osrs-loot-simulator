@@ -1,5 +1,35 @@
 # Corporeal Beast
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - **SHIPPED — this source is `verified` as of 2026-08-13.** Its single gap
+>   is **RESOLVED** by `TableRefNode.drawsPerHit`, scoped exactly as this doc
+>   proposed (a field on the `tableRef` node, not a new `TableMode`, and
+>   `Table.rolls` untouched globally). Off the mechanics watchlist.
+> - **One claim here is overstated**: the default reading does *not* differ in
+>   per-kill expectation at all — expectation is linear, so both readings give
+>   `10p x E[draw]`. The real difference is distributional (2.3% of kills yield
+>   loot vs 21.1%), which is a sharper argument for the fix, not a weaker one:
+>   no mean-based check, `ev_matches` included, could ever have caught it.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: corporeal-beast`. Watchlisted (`other`). No blocked sources.
 
 Source: **Corporeal Beast** — https://oldschool.runescape.wiki/w/Corporeal_Beast — pageid `41957`,

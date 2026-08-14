@@ -1,5 +1,33 @@
 # Abyssal Sire
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - **SHIPPED — this source is `verified` as of 2026-08-13.** Its single gap
+>   ("`TableRefNodeSchema` has no `multiplier`") is **RESOLVED** by
+>   `TableRefNode.qtyMultiplier`; the parser emits it from `multiplier=2`, and
+>   the wiki's "double the usual quantity" is verified in
+>   `apps/ingest/test/rdt-access-mechanics.test.ts`. Off the mechanics
+>   watchlist. The doc's prediction that this is the simplest member of the
+>   quantity-scaling family, and the right one to build first, held exactly.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: abyssal-sire`. Watchlisted (`other`). No blocked sources.
 
 Source: **Abyssal Sire** — https://oldschool.runescape.wiki/w/Abyssal_Sire — pageid `65167`, revid

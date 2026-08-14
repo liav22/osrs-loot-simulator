@@ -22,10 +22,10 @@ simulator, analytic EV; the ingest pipeline; the frontend) — unchanged from
 prior sessions, not re-verified line-by-line this session but nothing in this
 session's work touched their done-when criteria.
 
-**"Phase 5" (PROJECT_PLAN.md section 16: overrides + hard bosses) is
+**"Phase 5"/Phase 7 (PROJECT_PLAN.md section 16: overrides + hard bosses) is
 substantively underway, not done** — its own done-when is "zero
-`needs_review`," and 17 non-verified sources remain (36 verified / 53 parsed
-at tier A+B+C). What IS done within its scope:
+`needs_review`," and 13 non-verified sources remain. What IS done within its
+scope:
 
 - **Phase 6 research, complete**: 14 non-verified/unmodelled sources each got
   a deep-dive research doc — `docs/bosses/{abyssal-sire,ancient-chest,chest-
@@ -42,29 +42,44 @@ at tier A+B+C). What IS done within its scope:
   expected-value}.ts`) — see sections 2–4 below for what they are and how
   they were verified. Neither builds an actual boss doc for any of the 14
   researched sources; they make the 14 *buildable*.
-- **Still missing, and still the prerequisite for actually shipping any of
-  the 14**: `data/overrides/` doesn't exist (no directory, no loader, no
-  merge semantics), `docs/OVERRIDES.md` doesn't exist, and all 14 of the
-  `FORMULA_IDS` this session added (`zalcano_points`,
-  `doom_of_mokhaiotl_uniques`/`_qty`, `fortis_colosseum_uniques`/`_qty`,
-  `tzhaar_fight_cave_tokkul`, `duke_sucellus_ice_quartz`) plus the original
-  seven are still `stubFormula(...)` in `formulas.ts` — registered, not
-  implemented. See section 3, "Phase 7."
+- **`data/overrides/` EXISTS and is in use** — loader, merge semantics,
+  `docs/OVERRIDES.md`, and two live overrides. See section 3.
+- **Five formulas are really implemented** (`doom_of_mokhaiotl_deep_rolls`,
+  `lunar_chest_standard_rolls`, and Zalcano's `zalcano_crystal_shards` /
+  `zalcano_mvp_share` / `zalcano_mvp_only`); every other `FORMULA_IDS` entry is still
+  `stubFormula(...)` — registered, not implemented.
+  `IMPLEMENTED_FORMULA_IDS` is exported from `formulas.ts` and is what
+  `formulas.test.ts`'s trip wire pins. **That wire has now fired three times** —
+  expect it to fire again and update the pinned list rather than deleting the
+  guard. `FORMULA_CONTEXT_FIELDS` (same file) must also gain an entry for any
+  new id: it declares which `SimContext` fields a formula reads, is what lets
+  the UI discover a control the boss document cannot reveal, and is verified
+  behaviourally by `formulas.test.ts`.
 
 ```
-53 parsed at tier A+B+C: 38 verified, 12 needs_review, 3 parse_failed
-  (36/14/3 before Phase 7's first two sources; Abyssal Sire and Corporeal
-   Beast were unblocked by qtyMultiplier and drawsPerHit respectively)
+53 parsed at tier A+B+C: 38 verified, 2 manual_override, 10 needs_review, 3 parse_failed
+  (was 36/14/3 before Phase 7 started. Abyssal Sire + Corporeal Beast reached
+   `verified` via parser fixes; Doom of Mokhaiotl + Lunar Chest reached
+   `manual_override` via data/overrides/.)
 ```
 
-**Step (c) is DONE** — `Table.suppressesFollowing` and
-`TableRefNode.drawsPerHit` both shipped, both `.optional()` so the generated
-corpus stayed byte-identical. **Phase 7 is underway**: 2 of the 14 researched
-sources shipped, the 3rd (Doom of Mokhaiotl) assessed and blocked on one
-rounding-semantics decision. See `docs/DECISIONS.md`'s last two entries for
-both, including the benchmark and the "are the research docs accurate enough"
-answer (short version: their mechanics and numbers are reliable, their "what
-doesn't exist" verdicts predate Extensions A/B and are not).
+**Read this before `docs/bosses/*.md`: all 14 carry an in-file banner
+correcting their stale capability verdicts.** Their *mechanics and cited
+numbers are accurate and are what to implement from*; their "what doesn't
+exist" sections predate Extensions A/B and are wrong in places (most sharply
+`doom-of-mokhaiotl.md`, whose central "needs wave machinery" verdict is
+false). One banner — `lunar-chest.md`'s — was itself written wrong this
+session and then corrected; the lesson is recorded there and worth absorbing:
+**having a `SimContext` field is not the same as being able to gate an entry
+on it.**
+
+**Step (c) is DONE** (`Table.suppressesFollowing`, `TableRefNode.drawsPerHit`),
+plus `qtyRounding`, `Condition.includes`, `data/overrides/`, and
+`SimContext.totalDamage` (derived). **Phase 7 has shipped 5 of the 14
+researched sources**: Abyssal Sire and Corporeal Beast (parser fixes,
+`verified`), Doom of Mokhaiotl and Lunar Chest (overrides, `manual_override`),
+and Zalcano (override, still `needs_review` — two curves the wiki never states
+keep it watchlisted; see section 3). See section 3 for what is next.
 
 `ev_matches` is **closed, permanently** — see "What NOT to redo," section 5.
 
@@ -86,11 +101,13 @@ someone who needs to *use* what's there, not re-derive it.
 compile time, same discipline as the original six. `QtySpec` and
 `Table.rolls` gained formula-driven variants (also compile-time-resolved,
 zero per-kill cost). `Table` and `TableRefNode` gained `qtyMultiplier`. One
-new `Condition` kind, `levelAtLeast` (delve/wave gating). None of this is
-wired into a UI control yet — the fields exist and are simulate-able via
-direct API calls (`simulate(boss, n, ctx, seed)` with a hand-built `ctx`),
-but `apps/web`'s `SimContextControls.tsx` doesn't expose them. That's real,
-separate, not-yet-started work.
+new `Condition` kind, `levelAtLeast` (delve/wave gating; its enum has since
+widened to `shieldDamage`/`totalDamage` for Zalcano). **All of this is now
+wired into the UI** — `apps/web/src/lib/context-fields.ts` derives each boss's
+control set from its own document plus `FORMULA_CONTEXT_FIELDS`, and every
+field round-trips through the URL. A hand-built `ctx` passed straight to
+`simulate`/`expectedValue` still works and now also gets derived fields
+resolved, since `compileBoss` applies `withDerivedContext`.
 
 ### Extension B — owned/received-before state
 
@@ -132,69 +149,68 @@ or is out of scope — see Fortis Colosseum/CoX-suppression in section 3).
 
 ## 3. What's left
 
-### (c) — next, not yet started
+### Step (c) — DONE
 
-Two narrow, already-designed additions from `docs/mechanics-model-
-proposal.md`'s "Deferred"/verdict sections:
+`Table.suppressesFollowing` and `TableRefNode.drawsPerHit` both shipped, both
+`.optional()` so the generated corpus stayed byte-identical. Details, including
+why the flag is read on a hit rather than hoisted, are in `docs/DECISIONS.md`.
 
-- **CoX suppression**: a `suppressesFollowing: boolean` flag on
-  `independent`-mode tables (a hit anywhere in the table suppresses later
-  `preroll`/`weighted` tables in the document, mechanically parallel to the
-  existing `suppressedByPreroll` rule). Generic, cheap, low risk.
-- **Corporeal Beast**: `TableRefNode.drawsPerHit?: number` (default 1) — one
-  access check gates K guaranteed draws, the confirmed exception to
-  `Table.rolls`' usual "N independent access attempts" meaning. Two-line
-  schema addition, a loop-count change in `simulate.ts`/`expected-value.ts`
-  scoped to `tableRef` nodes carrying it. Zero interaction with anything
-  else.
+### Phase 7 — 4 of 14 shipped, 10 to go
 
-Neither exists in code yet (`grep -rn "drawsPerHit\|suppressesFollowing"
-packages/loot-model/src` returns nothing as of this session). Same
-guardrails as Extension B apply: Brutus first, re-verify all 36, benchmark
-before assuming it's free.
+**Shipped**: Abyssal Sire, Corporeal Beast (parser fixes in
+`apps/ingest/src/parse/rdt-access.ts` — preferred over overrides, and the
+reason `docs/OVERRIDES.md` says to establish the parser genuinely cannot reach
+a source first); Doom of Mokhaiotl, Lunar Chest (`data/overrides/`).
 
-### Phase 7 — actually shipping the 14 researched sources
+Each shipped source has a wiki-figure verification test that runs against the
+**real generated documents**, not fixtures — `apps/ingest/test/{rdt-access-
+mechanics,doom-of-mokhaiotl,lunar-chest}.test.ts`. That is the mechanics-
+watchlist removal policy's step 3, and it is not optional: it is what stops a
+plausible-looking-but-wrong model from shipping. Two of them were only
+possible because the wiki states a worked example (Doom's dragon platelegs) or
+disclaims a wrong reading (Lunar Chest's "not 3/56") — look for those first.
 
-This is genuinely new work, not started:
+**Zalcano: SHIPPED** (`data/overrides/zalcano.json`, 12 tests in
+`apps/ingest/test/zalcano.test.ts`). All three capabilities it was blocked on
+were resolved without a new condition shape:
 
-1. Build the override mechanism: `data/overrides/` directory, a loader, merge
-   semantics against `source: 'override' | 'merged'` (already in the
-   `Boss` schema, unused), `docs/OVERRIDES.md`. Prerequisite for any source
-   the parser structurally can't reach at all (CoX's Ancient chest has zero
-   `{{DropsLine}}`-shaped content; Fortis Colosseum needs wave/level
-   machinery no mode expresses).
-2. Implement the real formulas, per-source, using each `docs/bosses/*.md`
-   doc's own "Formulas" section — most are fully cited; a few have
-   explicitly UNKNOWN constants (ToA's raid-level interpolation between
-   breakpoints, ToB's death-penalty magnitude, Duke Sucellus's frozen-tablet
-   curve, Inferno's Tokkul-per-wave curve) that need either more wiki
-   research or an explicit "not implementable yet" status, not a guess.
-3. **Wave/level-indexed content (Doom of Mokhaiotl, Fortis Colosseum)
-   collapses into Extension A** — this was the proposal's biggest correction
-   to the original brief: treating "how far the player got" as a fixed
-   per-run input (`ctx.delveLevel`/`ctx.wavesReached`, exactly how `ctx.
-   raidLevel` already works for ToA) rather than a simulated combat outcome
-   means no new "wave engine" is needed. Doom of Mokhaiotl needs nothing
-   beyond what's already built. Fortis Colosseum needs the same, plus a
-   flagged with-replacement approximation for its one run-scoped
-   sub-mechanic (armour-piece dedup across waves within one attempt — see
-   next item).
-4. **Fortis Colosseum's armour dedup stays a flagged approximation.** It's
-   the one remaining case of genuine within-kill dynamic state in this whole
-   batch (a fact — "which piece did this run already give out" — that
-   doesn't exist until wave 4's roll happens, read by wave 8's roll in the
-   *same* simulated attempt). Building real support for it means breaking
-   the "conditions/state resolved at most once per kill" invariant Extension
-   B was careful to preserve. Benefits exactly one sub-mechanic of one
-   source today — do not build general within-kill dynamic state for it
-   without a second real example turning up first (same reasoning that kept
-   wave machinery unbuilt for a whole session before Doom of Mokhaiotl
-   turned up as a second case).
-5. **CoX's tertiary gating (elite clue vs. Olmlet) is Extension A work, not
-   deferred** — see section 5, this is a correction worth reading before
-   assuming otherwise.
+1. `isMVP` needed no boolean-field condition — infernal ashes is a
+   `formula`-kind `Rate` returning 1 or 0, and the MVP's +10% is a
+   `formula`-kind `qtyMultiplier`.
+2. `shieldDamage >= 5` — `levelAtLeast`'s enum widened.
+3. The combined `hitpointsDamage + shieldDamage >= 31` threshold — resolved by
+   **`SimContext.totalDamage`, a derived field** computed by
+   `withDerivedContext` at run setup, so `levelAtLeast` reads it as a plain
+   `ctx[field] >= n`. The alternative (a formula-valued condition) would have
+   made conditions arbitrary code and broken the resolved-once invariant
+   `expectedValue` depends on — the same invariant protected twice before.
+   Derived fields are overwritten, never merged, so they cannot drift from
+   their inputs; `compileBoss` applies the derivation, so a hand-built `ctx`
+   passed straight to `simulate`/`expectedValue` is covered too.
 
----
+**It is still `needs_review`, and that is correct.** Two curves the page states
+exist and never states keep it watchlisted: the points→loot scaling function
+(`P_M`/`P_T` are defined exactly; what consumes them is not on the page, so
+`zalcano_points` stays a stub), and the Zalcano shard's "Between 1/750 and
+1/1500 depending on contribution" with no interpolation given. Same treatment as
+Duke Sucellus's frozen-tablet curve. **Do not remove the watchlist entry to move
+the counter.**
+
+The Smolcano pet contradiction this file previously said to carry forward is
+**resolved by the page itself**, not by picking a side: the `===Tertiary===`
+prose says "The chance of rolling Smolcano is unaffected by performance," which
+agrees with the 21 May 2020 news post and dates the Mod Lenny tweet's example to
+before the change. `docs/bosses/zalcano.md` never quoted that sentence.
+
+**Cheapest remaining**, on current evidence: TzHaar Fight Cave
+(fully unblocked at model level, but resolves no boss in the inventory, so it
+moves no counter), then Duke Sucellus (needs `duke_sucellus_ice_quartz`; its
+frozen-tablet curve is UNKNOWN per the wiki itself and is not implementable at
+any schema level — do not guess it), then Reward pool (needs the two-sided
+bracket described in the player-stat-gating entry), then Reward Cart (needs
+the `z.lazy` local-table node Phase 1 anticipated). CoX's Ancient chest and
+Fortis Colosseum both need `data/overrides/` — which now exists — plus real
+formulas.
 
 ## 4. Benchmark state
 
@@ -208,8 +224,22 @@ of seconds").
 | Pre-Extension-A baseline | ~143ms | ~1,446ms |
 | Extension A, optimized | ~148ms | ~1,496ms |
 | Extension B, current (after two rounds of measured optimization) | ~163–171ms | ~1,870–1,940ms |
+| Step (c) + `qtyRounding` + `includes`, measured fresh (see caveat) | ~193ms | ~1,926ms |
+| Zalcano session baseline, derivation reverted in place (A/B control) | ~220ms | ~2,108ms |
+| Zalcano session, `withDerivedContext` in `compileBoss` (current) | ~225–227ms | ~2,202–2,234ms |
 
-Current state is **comfortably under the "couple of seconds" bar**, but with
+**The 10M figure is now AT OR OVER the ~2.0s reading of the bar on this
+machine, and it is not the derived-context change.** A controlled A/B in the
+same sitting (the `withDerivedContext` line reverted in place, benchmarked, then
+restored) put the baseline WITHOUT it at ~2,108ms — already over. The A-vs-B
+delta of ~126ms sits inside this machine's own documented same-code spread (see
+below), A' landed between A and B rather than tracking either, and the mechanism
+agrees: `withDerivedContext` runs once per `compileBoss` call, not per kill, and
+returns the *same object* for Brutus. This is the trigger the duplicated-`emit`
+lever was nominated for — flagged with the measurement, not acted on, since the
+previous session measured that lever as buying back far less than the gap.
+
+Earlier state was **comfortably under the "couple of seconds" bar**, but with
 much less headroom than Extension A alone left — reading "a couple of
 seconds" as ~2.0s, Extension A's optimized baseline left ~500ms of headroom;
 the current figure leaves roughly 60–130ms. This was measured, not assumed:
@@ -223,6 +253,15 @@ section for the full trial-by-trial numbers and why the middle measurement's
 10M figure moved the "wrong" direction relative to its own 1M figure
 (measurement noise on a shared dev machine, not a real regression — flagged,
 not hidden).
+
+**Read the absolute numbers with care — this machine drifts.** Across one
+session the *same* code measured 1,973ms, 1,981ms, 1,852ms and 1,926ms at 10M.
+A controlled A/B (hot-path lines reverted in place, benchmarked, restored)
+put step (c)'s real cost at ~1%, and `qtyRounding` at nothing measurable
+(`qtyMultiplier === 1` short-circuits before the mode is read). `gpPerKill` is
+byte-identical (597.2676 / 598.4495) across every variant, which is the check
+that actually matters. **Do not attribute a 5% move to your change without an
+A/B in the same sitting.**
 
 **A lever exists and was deliberately not pulled**: a fully duplicated
 `emit`/`runTable`/`runWeightedWithoutReplacement` pair — one identical to
@@ -413,33 +452,55 @@ bug.
    future watchlist edit's `blockedBy` list stops matching
    `_inventory.json`'s real boss→lootSource map.
 
-All three are real regression tests, not documentation — they run in
+4. **`formulas.test.ts`'s implemented-set pin** — asserts the exact set of
+   `IMPLEMENTED_FORMULA_IDS`. **Fired twice this session**, once per real
+   formula added. Its other half ("every id that is NOT implemented still
+   throws") is the actual guard, protecting Phase 1's decision that a stub
+   must never become a silent zero. When it fires, update the pinned list;
+   never delete the guard.
+5. **`apps/web`'s `conditionLabel` exhaustive switch** (`DropTableView.tsx`) —
+   not a trip wire by design, but it functions as one: a new `Condition` kind
+   fails the web typecheck until the UI can render it. `includes` was caught
+   this way.
+
+All five are real regression tests, not documentation — they run in
 `pnpm -r test`/CI on every change, by design.
 
 ---
 
 ## 7. Suggested next steps, in order
 
-1. **Step (c)**: `suppressesFollowing` + `drawsPerHit`, per section 3.
-   Independent of each other, can land in either order or together. Brutus
-   first, re-verify all 36, benchmark.
-2. **Build the override mechanism** (`data/overrides/`, loader, merge
-   semantics, `docs/OVERRIDES.md`) — prerequisite for CoX and Fortis
-   Colosseum specifically (parser structurally can't reach either).
-3. **Implement one real formula** with no UNKNOWN constants blocking it —
-   `tzhaar_fight_cave_tokkul` is the cleanest (fully specified, no missing
-   data) though TzHaar Fight Cave itself was never a watchlisted/tier-A-C
-   source (it resolved no bosses in the 172-page inventory per earlier
-   research — check `docs/bosses/tzhaar-fight-cave.md` before assuming it
-   un-blocks anything counted in the 36/53). `zalcano_points` or
-   `doom_of_mokhaiotl_uniques`/`_qty` are the next-cleanest real sources
-   that DO count toward the 17 non-verified.
-4. **Un-watchlist sources as their mechanics land**, per
-   `data/mechanics-watchlist.json`'s own removal policy ("remove an entry
-   only when the mechanic is modelled and the simulation has been checked
-   against the wiki's own figures") — don't remove an entry just because a
-   formula got implemented; verify the simulated output against the wiki
-   first.
+1. ~~**Zalcano**~~ — **DONE.** Shipped via `data/overrides/zalcano.json` + 12
+   wiki-figure tests. The condition-shape decision resolved as a **derived
+   `SimContext` field** (`totalDamage`), not a formula-valued condition, so no
+   fourth gating shape was added and the resolved-once invariant is intact.
+   `levelAtLeast` gained `shieldDamage`/`totalDamage`; `fishingLevel` is still
+   deliberately out. **Zalcano stays on the mechanics watchlist and is therefore
+   `needs_review`, not `manual_override`** — two curves the page states exist and
+   never states (the points→loot scaling function, and the Zalcano shard's
+   1/750–1/1500 interpolation). Everything else is modelled and tested. Do not
+   remove the watchlist entry to make the counter move.
+2. ~~**Wire the new `SimContext` fields into the UI**~~ — **DONE.** Controls are
+   *derived per boss* by `apps/web/src/lib/context-fields.ts` rather than being a
+   fixed list, including fields only ever read inside formulas (Zalcano's
+   `isMVP` appears in no condition anywhere) via `FORMULA_CONTEXT_FIELDS`. All
+   fields round-trip through the URL. Verified by jsdom render tests against the
+   real generated documents — **not** in a live browser; Playwright is not a
+   dependency of this repo.
+3. **The remaining 10 sources**, cheapest-first order in section 3.
+4. **Un-watchlist as mechanics land**, following the four-step sequence in
+   `docs/OVERRIDES.md` — the wiki-figure test (step 3) is the part that is
+   easy to skip and must not be.
 5. Nex (tier D, `include: true`) has still never been investigated — check
    whether it's actually raid-shaped before assuming it needs any of this
-   session's machinery.
+   machinery.
+6. ~~`reward-pool`/`reward-cart` watchlist misattribution~~ — **RESOLVED, and do
+   not re-flag it.** The data was already correct; this item was a stale
+   transcription of a sentence in `docs/bosses/reward-{pool,cart}.md` that said
+   the watchlist "currently reads" the swapped values and was never updated
+   after the fix. Both banners now state the resolution and describe the bug in
+   the past tense. `checkWatchlistConsistency` also gained the two rules that
+   would have settled it without a human: it now validates `title` (previously
+   unchecked *and* load-bearing — an entry retitled to its own boss page with an
+   emptied `blockedBy` used to pass vacuously) and scans `detail` for another
+   source's boss page or formula id. See `docs/DECISIONS.md`.

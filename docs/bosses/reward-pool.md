@@ -1,22 +1,53 @@
 # Reward pool — Tempoross
 
+> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+>
+> The **mechanics, prose and cited numbers in this doc are accurate** and are
+> what to implement from. Its "What the mapping needs that doesn't exist"
+> section is **not** — it was written before Extensions A and B, step (c)
+> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
+> never been revised. Corrections for this source:
+>
+> - Gap 1 (`SimContext` points) — **RESOLVED**: `ctx.points`.
+> - Gap 2 (`Table.rolls` cannot consume an integer from context) —
+>   **RESOLVED**: a `formula`-kind `Rate` used as `rolls`.
+> - Gap 3 (Fishing-level-bracket gating) — **PARTIALLY RESOLVED, and the
+>   remaining half is narrow**: `ctx.fishingLevel` exists, but no condition can
+>   read it — `Condition.levelAtLeast` is pinned to an enum of
+>   `'delveLevel' | 'wavesReached'`. Widening that enum to include
+>   `fishingLevel` is a one-line change, and this source is the third real
+>   user, which is the threshold the enum's own comment set for widening it.
+>
+> Model capabilities now available: per-run `SimContext` scalars (`points`,
+> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
+> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
+> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
+> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
+> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
+> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
+> state, deeper inline table nesting, `data/overrides/`, party/team context,
+> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> See `docs/DECISIONS.md`.
+
+
 `lootSourceId: reward-pool`. Watchlisted (`point_scaled`).
 
-## ⚠️ Watchlist label is misattributed to the wrong activity
+## ✅ RESOLVED — the watchlist misattribution described below is fixed
 
-`data/mechanics-watchlist.json`'s `reward-pool` entry currently reads `"blockedBy": ["Wintertodt"]`
-and `"detail": "...Needs the wintertodt_points formula."` **This is wrong.** The wiki page titled
-"Reward pool" (https://oldschool.runescape.wiki/w/Reward_pool, pageid `306271`) is unambiguously
-**Tempoross's** reward mechanism — it's a literal fishing pool in the Ruins of Unkah, reached by
-subduing Tempoross, paid out in "reward permits." Confirmed two ways, not just by reading this
-page: `data/_inventory.json` (the ingest pipeline's own encounter→loot-source mapping, built
-separately and earlier) already has this right —
-`{ "title": "Tempoross", ..., "lootSourceId": "reward-pool" }` — so the pipeline's actual data is
-correct and only the hand-authored watchlist JSON has the two activities' names swapped. The
-matching swap on the other side is documented in `docs/bosses/reward-cart.md` (Wintertodt, not
-Tempoross). **This should be fixed in `data/mechanics-watchlist.json` before either formula is
-wired up** — as written today, implementing `wintertodt_points` against this entry's `blockedBy`
-would attach the wrong formula to the wrong loot source.
+**Do not re-flag this.** It has now been re-flagged twice after the fact, because this section
+was written while the bug was live and said "currently reads" — which stayed on the page after
+the data was corrected. `data/mechanics-watchlist.json`'s `reward-pool` entry reads
+`"blockedBy": ["Tempoross"]` and names `tempoross_points`, matching `data/_inventory.json`.
+Verified by `checkWatchlistConsistency` running against both real committed files in
+`apps/ingest/test/watchlist.test.ts`.
+
+**What the bug was:** the entry read `"blockedBy": ["Wintertodt"]` and
+`"detail": "...Needs the wintertodt_points formula."` The wiki page titled "Reward pool"
+(https://oldschool.runescape.wiki/w/Reward_pool, pageid `306271`) is unambiguously **Tempoross's**
+reward mechanism — a literal fishing pool in the Ruins of Unkah, reached by subduing Tempoross,
+paid out in "reward permits." `data/_inventory.json` always had this right
+(`{ "title": "Tempoross", ..., "lootSourceId": "reward-pool" }`); only the hand-authored watchlist
+had the two activities swapped, with `docs/bosses/reward-cart.md` carrying the inverse error.
 
 Source: **Reward pool** — https://oldschool.runescape.wiki/w/Reward_pool — pageid `306271`, revid
 `15208420`. No local wikitext snapshot existed for this page before this session (only a

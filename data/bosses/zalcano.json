@@ -9,8 +9,8 @@
   ],
   "tables": [
     {
-      "id": "zalcano:0:100",
-      "mode": "always",
+      "id": "zalcano:shards",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -21,14 +21,21 @@
             "itemKey": "crystal-shard",
             "name": "Crystal shard",
             "qty": {
-              "kind": "range",
-              "min": 1,
-              "max": 3
+              "kind": "formula",
+              "id": "zalcano_crystal_shards",
+              "params": {}
             }
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -42,14 +49,23 @@
             }
           },
           "rate": {
-            "kind": "always"
-          }
+            "kind": "formula",
+            "id": "zalcano_mvp_only",
+            "params": {}
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         }
       ],
-      "notes": "100%"
+      "notes": "Shard count is a role tier, not a range: 1 shard if drop-eligible, 2 if unique/pet-eligible, 3 if MVP (Mod Husky, 10 March 2020). Infernal ashes are MVP-only, which is a role rather than a rate."
     },
     {
-      "id": "zalcano:1:runes-materials",
+      "id": "zalcano:main",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 36,
@@ -70,7 +86,14 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -87,7 +110,14 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -104,7 +134,14 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -121,7 +158,14 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -138,7 +182,14 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -155,7 +206,14 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -173,7 +231,14 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -191,7 +256,14 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -209,7 +281,14 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -227,7 +306,14 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -245,7 +331,14 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -263,7 +356,14 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -281,7 +381,14 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -299,7 +406,14 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -317,7 +431,14 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -335,7 +456,14 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -353,7 +481,14 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -371,7 +506,14 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -388,7 +530,14 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         },
         {
           "node": {
@@ -406,13 +555,26 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            }
+          ]
         }
       ],
-      "notes": "Runes / Materials"
+      "notes": "MVP receives +10% (rounded up) of their non-unique loot. Quantities are the wiki's crowd-sourced ranges; the page states they scale with P_M but never states how, so no points curve is applied.",
+      "qtyMultiplier": {
+        "kind": "formula",
+        "id": "zalcano_mvp_share",
+        "params": {}
+      },
+      "qtyRounding": "ceilDelta"
     },
     {
-      "id": "zalcano:2:tertiary",
+      "id": "zalcano:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -432,7 +594,19 @@
             "kind": "fixed",
             "num": 39,
             "den": 8000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            },
+            {
+              "kind": "levelAtLeast",
+              "field": "totalDamage",
+              "n": 31
+            }
+          ]
         },
         {
           "node": {
@@ -449,7 +623,19 @@
             "kind": "fixed",
             "num": 1,
             "den": 750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            },
+            {
+              "kind": "levelAtLeast",
+              "field": "totalDamage",
+              "n": 31
+            }
+          ]
         },
         {
           "node": {
@@ -466,7 +652,19 @@
             "kind": "fixed",
             "num": 1,
             "den": 2250
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            },
+            {
+              "kind": "levelAtLeast",
+              "field": "totalDamage",
+              "n": 31
+            }
+          ]
         },
         {
           "node": {
@@ -483,13 +681,29 @@
             "kind": "fixed",
             "num": 1,
             "den": 8000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "shieldDamage",
+              "n": 5
+            },
+            {
+              "kind": "levelAtLeast",
+              "field": "totalDamage",
+              "n": 31
+            }
+          ]
         }
       ],
-      "notes": "Tertiary"
+      "notes": "All four require >= 5 shield damage AND >= 31 combined damage. Smolcano is a flat 1/2,250: the page's prose says the chance \"is unaffected by performance\", agreeing with the 21 May 2020 news post's \"static 1/2,250\" and superseding the older Mod Lenny tweet's points-scaled example. Zalcano shard keeps the page's primary 1/750; its 1/750-1/1500 contribution interpolation is UNKNOWN and is not modelled."
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "isMVP": false,
+    "hitpointsDamage": 400,
+    "shieldDamage": 300
+  },
   "status": "needs_review",
   "validation": {
     "ok": false,
@@ -506,12 +720,12 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
+        "detail": "1 formula rate(s) evaluated successfully, all in [0,1]"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+        "detail": "2 formula-driven quantity/rolls/multiplier value(s) evaluated successfully"
       },
       {
         "check": "ev_matches",
@@ -525,10 +739,10 @@
       {
         "check": "not_on_watchlist",
         "ok": false,
-        "detail": "point_scaled: Both the main table and the tertiary table scale with points from damage dealt to Zalcano's hitpoints and shield (points formula and per-component caps are in page prose, not in any drop row), and the MVP gets an extra 10% of their non-unique loot. The page's dropsline rows reconcile on their own, so this source parses cleanly and would otherwise look verified."
+        "detail": "point_scaled: Two curves the page never states. (1) Main- and tertiary-table drops \"scale with the player's points\" and the points themselves are defined exactly (P_M = H + 2S; P_T = min(H,400) + 2*min(S,300)), but the function turning points into loot is not on the page, so zalcano_points stays a stub and main-table quantities remain the crowd-sourced ranges. (2) The Zalcano shard is \"Between 1/750 and 1/1500 depending on contribution\" with no stated interpolation; the primary 1/750 is kept rather than a guessed curve. Everything else IS modelled and wiki-verified in data/overrides/zalcano.json and apps/ingest/test/zalcano.test.ts: both eligibility gates (>=5 shield damage, >=31 combined via the derived totalDamage field), the role-keyed crystal shard tier (1/2/3), MVP-only infernal ashes, the MVP's +10% rounded up (ceilDelta), and the tertiary 1/200 x 1/40 onyx split."
       }
     ]
   },
-  "source": "generated",
+  "source": "merged",
   "parserVersion": 1
 }

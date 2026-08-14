@@ -18,6 +18,12 @@ export function evaluateCondition(condition: Condition, ctx: SimContext): boolea
       return ctx.variant === condition.name
     case 'levelAtLeast':
       return ctx[condition.field] >= condition.n
+    case 'includes': {
+      // ANY, not ALL — see `ConditionSchema`'s comment: the conditions array
+      // already gives conjunction, so disjunction is what this buys.
+      const held: readonly string[] = ctx[condition.field]
+      return condition.values.some((value) => held.includes(value))
+    }
   }
 }
 
@@ -39,14 +45,38 @@ export function entryApplies(entry: Pick<Entry, 'conditions'>, ctx: SimContext):
 }
 
 /**
+ * Recomputes every derived `SimContext` field from its inputs.
+ *
+ * There is one today: `totalDamage = hitpointsDamage + shieldDamage`, Zalcano's
+ * combined unique/pet eligibility gate. It is *derived* rather than supplied so
+ * that a two-field threshold needs no new condition shape — `levelAtLeast`
+ * reads it as an ordinary field, and conditions stay resolved-once against a
+ * fixed context (see `SimContextSchema`'s comment on the field).
+ *
+ * Whatever a caller passes for a derived field is overwritten, never merged.
+ * That is the point: the field cannot drift from its inputs, and a hand-built
+ * context that simply omits it is still correct. The function is idempotent, so
+ * applying it at more than one layer costs nothing but consistency.
+ *
+ * Called from `compileBoss`, which both `simulate` and `expectedValue` funnel
+ * through — so a context built by hand and passed straight to either one gets
+ * the same treatment as one built by `resolveSimContext`.
+ */
+export function withDerivedContext(ctx: SimContext): SimContext {
+  const totalDamage = ctx.hitpointsDamage + ctx.shieldDamage
+  if (ctx.totalDamage === totalDamage) return ctx
+  return { ...ctx, totalDamage }
+}
+
+/**
  * Layer the caller's overrides over the boss's `contextDefaults`, over the
- * package defaults. The result is fixed for the whole simulation run, which is
- * what lets tables be compiled once up front.
+ * package defaults, then resolve derived fields. The result is fixed for the
+ * whole simulation run, which is what lets tables be compiled once up front.
  */
 export function resolveSimContext(boss: Boss, overrides: PartialSimContext = {}): SimContext {
-  return {
+  return withDerivedContext({
     ...DEFAULT_SIM_CONTEXT,
     ...boss.contextDefaults,
     ...overrides,
-  }
+  })
 }
