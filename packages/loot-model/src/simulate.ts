@@ -209,13 +209,6 @@ function emit(
   }
 }
 
-/** Whether entry `i`'s ownership gate (if any) currently permits it. `table.ownershipGates === null` is the fast path every non-Extension-B table takes — checked once per table, not once per entry. */
-function gateAllows(table: CompiledTable, i: number, owned: OwnershipTracker): boolean {
-  if (table.ownershipGates === null) return true
-  const gate = table.ownershipGates[i] ?? null
-  return gate === null || ownershipGateSatisfied(gate, owned.get(gate.itemKey))
-}
-
 /**
  * Returns true when this table ended the main-drop chain for the rest of the
  * document — either a `preroll` entry hit (4.3), or any entry of a
@@ -240,27 +233,52 @@ function runTable(
   let prerollHit = false
   let suppressHit = false
 
-  // Hoisted once per table-roll, not re-checked per entry: every table
-  // without Extension B gates (still every table in the 36 sources verified
-  // before it existed) takes the exact original loop body below, with zero
-  // added per-entry cost — not even a `gateAllows` call. Splitting the loop
-  // rather than branching inside it is the same trade as `qtyMultiplier`'s
-  // `=== 1` fast path in Extension A: duplicated code, but nothing extra on
-  // the hot path for sources that don't use the feature.
-  const gated = table.ownershipGates !== null
+  // Hoisted once per table-roll, and the gate check below is written INLINE
+  // rather than behind a `gateAllows(...)` helper. Both details were measured,
+  // not assumed — interleaved A/B runs alternating two builds in one sitting,
+  // recorded in docs/DECISIONS.md's "Extension B's real cost" entry:
+  //
+  //   - The previous version hoisted a `gated` BOOLEAN and wrote
+  //     `if (gated && !gateAllows(...)) continue` inside each loop, on the
+  //     reasoning that testing a false boolean costs nothing. Those three
+  //     guards were **8.8%** of total runtime on Brutus — a boss with no gates
+  //     anywhere, which therefore never took the guarded path even once.
+  //   - Hoisting the null test but keeping the helper call recovered only
+  //     about a third of that. Inlining the body recovered the rest: an
+  //     uninlinable call sitting in the innermost loop costs even on the runs
+  //     where it never executes.
+  //
+  // The rule this leaves behind: hoist the *test* out of the loop, not the
+  // value it tests, and don't put a call in the loop body to tidy it up again.
+  const gates = table.ownershipGates
 
   for (let roll = 0; roll < rolls; roll++) {
     switch (table.mode) {
       case 'always': {
-        for (let i = 0; i < table.nodes.length; i++) {
-          if (gated && !gateAllows(table, i, owned)) continue
-          emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
+        if (gates === null) {
+          for (let i = 0; i < table.nodes.length; i++) {
+            emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
+          }
+        } else {
+          for (let i = 0; i < table.nodes.length; i++) {
+            const gate = gates[i] ?? null
+            if (gate !== null && !ownershipGateSatisfied(gate, owned.get(gate.itemKey))) continue
+            emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
+          }
         }
         break
       }
       case 'independent': {
         for (let i = 0; i < table.nodes.length; i++) {
-          if (gated && !gateAllows(table, i, owned)) continue
+          // Not split into two loops like `always` above: this loop's body is
+          // dominated by an `rng.nextFloat()` call, so the guard is a much
+          // smaller share of it, and duplicating a body that also carries the
+          // `suppressesFollowing` handling would cost more in readability than
+          // it buys. `gates !== null` is a null check on a hoisted local.
+          if (gates !== null) {
+            const gate = gates[i] ?? null
+            if (gate !== null && !ownershipGateSatisfied(gate, owned.get(gate.itemKey))) continue
+          }
           if (rng.nextFloat() < table.probs[i]!) {
             emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
             // Deliberately no `break`: every remaining entry still rolls.
@@ -276,7 +294,10 @@ function runTable(
       }
       case 'preroll': {
         for (let i = 0; i < table.nodes.length; i++) {
-          if (gated && !gateAllows(table, i, owned)) continue
+          if (gates !== null) {
+            const gate = gates[i] ?? null
+            if (gate !== null && !ownershipGateSatisfied(gate, owned.get(gate.itemKey))) continue
+          }
           if (rng.nextFloat() < table.probs[i]!) {
             emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
             prerollHit = true
@@ -296,19 +317,17 @@ function runTable(
         // closure and a result object on every weighted-table roll) and
         // cost ~25% on Brutus, which uses none of this — see
         // docs/mechanics-model-proposal.md's benchmark note.
-        let weights: Float64Array
-        let cum: Float64Array
-        let denominator: number
-        if (table.ownershipGates === null) {
-          weights = table.weights
-          cum = table.cum
-          denominator = table.denominator
-        } else {
-          const pool = effectiveWeightedPool(table, (itemKey) => owned.get(itemKey))
-          weights = pool.weights
-          cum = pool.cum
-          denominator = pool.denominator
-        }
+        // `const` ternaries rather than `let`s assigned inside an if/else.
+        // Same branch, same call, same allocations — but the ablation put the
+        // `let` form at **6.0%** of total runtime on a boss with no gates,
+        // where the else-arm never executes. A binding written in two places
+        // is not the same thing to the JIT as one written once, even when only
+        // one of the two writes can ever happen.
+        const gatedPool =
+          gates === null ? null : effectiveWeightedPool(table, (itemKey) => owned.get(itemKey))
+        const weights = gatedPool === null ? table.weights : gatedPool.weights
+        const cum = gatedPool === null ? table.cum : gatedPool.cum
+        const denominator = gatedPool === null ? table.denominator : gatedPool.denominator
         if (table.withoutReplacement) {
           runWeightedWithoutReplacement(
             table,

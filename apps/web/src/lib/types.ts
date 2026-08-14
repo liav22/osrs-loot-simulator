@@ -9,4 +9,6 @@ export interface SiteIndexEntry {
 export interface SiteIndex {
   generatedAt: string
   entries: SiteIndexEntry[]
+  /** Every id in `data/tables/` — the manifest `fetchSharedTables` fetches by. */
+  tables: string[]
 }

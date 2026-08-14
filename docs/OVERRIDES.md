@@ -117,3 +117,35 @@ existed, so they were fixed in the parser instead. That is the preferred
 outcome and the reason `data/overrides/` is empty at the time of writing.
 Reach for an override only after establishing the parser genuinely cannot get
 there.
+
+
+## An override for a source the parser cannot reach at all
+
+`data/overrides/<slug>.json` may supply a document **from scratch**, with no
+generated parse underneath it. Reward pool is the worked example: its fish
+sub-tables are `{{Reward pool/Rewards levels 35-39}}` template transclusions
+rather than inline `{{DropsLine}}` calls, so `extractDropLines` finds nothing on
+the page at all.
+
+To do this the override must supply `name`, `wikiPage`, `wikiRevId` and
+`tables` — there is no generated document to inherit them from, and
+`applyOverride` refuses rather than guessing. The result is recorded as
+`source: 'override'` rather than `'merged'`.
+
+**The tier filter does not apply to a source with an authored override.**
+`ingest parse --tier A,B,C` will still build it, and the run log says so. This
+is deliberate and was a real bug before it was: Reward pool is tier D, every
+documented parse invocation names tiers A–C, and a correct override for it would
+otherwise have sat in `data/overrides/` doing nothing, silently, forever. An
+override file *is* the decision to build a source; the tier filter only decides
+what to attempt without one.
+
+A slug in `data/overrides/` matching no loot source in `data/_inventory.json` is
+reported as an orphan at the top of a parse run — otherwise a typo'd filename is
+invisible, since overrides are looked up by slug and a slug nobody enumerates is
+never opened.
+
+Everything else is unchanged: the merged document is validated by the same
+checks a generated one faces, and a source whose mechanic is still partly
+unknown keeps its watchlist entry and stays `needs_review` no matter how clean
+the override is.

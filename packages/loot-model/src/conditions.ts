@@ -12,12 +12,16 @@ export function evaluateCondition(condition: Condition, ctx: SimContext): boolea
       return ctx.onSlayerTask === condition.value
     case 'questComplete':
       return ctx.questsComplete.includes(condition.quest)
-    case 'killCountAtLeast':
-      return ctx.killCount >= condition.n
     case 'variant':
       return ctx.variant === condition.name
-    case 'levelAtLeast':
-      return ctx[condition.field] >= condition.n
+    case 'levelAtLeast': {
+      // Two-sided when `atMost` is present (Reward pool's seven Fishing
+      // brackets), the original one-sided threshold when it isn't. `atMost` is
+      // inclusive — see `ConditionSchema`.
+      const value = ctx[condition.field]
+      if (value < condition.n) return false
+      return condition.atMost === undefined || value <= condition.atMost
+    }
     case 'includes': {
       // ANY, not ALL — see `ConditionSchema`'s comment: the conditions array
       // already gives conjunction, so disjunction is what this buys.

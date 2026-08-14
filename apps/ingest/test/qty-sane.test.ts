@@ -155,4 +155,36 @@ describe('checkQtySane', () => {
       detail: '2 formula-driven quantity/rolls/multiplier value(s) evaluated successfully',
     })
   })
+
+  it('sees a formula-driven quantity nested inside a oneOf', () => {
+    // Mutates `node.kind`, the field that decided this check's scope. A flat
+    // loop over `entry.node.kind` reports the trivial pass for this document,
+    // because the item carrying the formula is one level down. `LeafNodeSchema`
+    // admits item nodes with a full `QtySpec`, so this is legal.
+    const result = checkQtySane(
+      boss([
+        {
+          id: 't',
+          mode: 'weighted',
+          denominator: 2,
+          entries: [
+            {
+              node: {
+                kind: 'oneOf',
+                entries: [
+                  {
+                    node: item('a', { kind: 'formula', id: 'zalcano_points', params: {} }),
+                    rate: { kind: 'weight', weight: 1 },
+                  },
+                ],
+              },
+              rate: { kind: 'weight', weight: 2 },
+            },
+          ],
+        },
+      ])
+    )
+    expect(result.ok).toBe(false)
+    expect(result.detail).toMatch(/not implemented/)
+  })
 })

@@ -20,8 +20,9 @@ import {
  *
  * Two sources, because one is not enough:
  *
- * 1. **Conditions** — `levelAtLeast`, `includes`, `killCountAtLeast`, etc.
- *    name their field directly.
+ * 1. **Conditions** — `levelAtLeast` (including its `killCount` field, which
+ *    absorbed the retired `killCountAtLeast` kind) and `includes` name their
+ *    field directly.
  * 2. **Formula references** — a formula's context reads are invisible in the
  *    document. Zalcano's `isMVP` appears in no condition anywhere; it is read
  *    only inside `zalcano_mvp_share`/`zalcano_mvp_only`. That is what
@@ -94,9 +95,6 @@ function walkEntry(entry: Entry, walk: Walk): void {
         break
       case 'questComplete':
         into.add('questsComplete')
-        break
-      case 'killCountAtLeast':
-        into.add('killCount')
         break
       case 'levelAtLeast':
         into.add(condition.field)

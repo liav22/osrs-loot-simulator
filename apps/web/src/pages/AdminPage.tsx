@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import type { BossStatus } from '@osrs-loot-simulator/loot-model'
 import { useSiteIndex } from '../hooks/useSiteIndex'
 import { useBoss } from '../hooks/useBoss'
@@ -112,9 +112,11 @@ function AdminRow({
               ))}
             </ul>
           )}
-          <a href={`/boss/${slug}`} className="mt-2 inline-block text-amber-400 hover:underline">
+          {/* `Link`, not a root-absolute href — see the note in BossView.tsx: on
+              GitHub Pages this app lives under /osrs-loot-simulator/. */}
+          <Link to={`/boss/${slug}`} className="mt-2 inline-block text-amber-400 hover:underline">
             View boss →
-          </a>
+          </Link>
         </div>
       )}
     </div>

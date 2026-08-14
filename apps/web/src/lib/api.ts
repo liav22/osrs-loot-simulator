@@ -21,7 +21,11 @@ const SiteIndexEntrySchema = z
   .strict()
 
 const SiteIndexResponseSchema = z
-  .object({ generatedAt: z.string(), entries: z.array(SiteIndexEntrySchema) })
+  .object({
+    generatedAt: z.string(),
+    entries: z.array(SiteIndexEntrySchema),
+    tables: z.array(z.string().min(1)),
+  })
   .strict()
 
 function assetUrl(path: string): string {
@@ -44,17 +48,29 @@ export async function fetchBoss(slug: string): Promise<Boss> {
   return BossSchema.parse(await fetchJson(`bosses/${slug}.json`))
 }
 
-/** Every `tableRef` a fetched Boss might use — small enough (3 records) to fetch eagerly, once. */
-const SHARED_TABLE_IDS = ['rare_drop_table', 'gem_drop_table', 'mega_rare_drop_table'] as const
-
-export async function fetchSharedTables(): Promise<Map<string, Table>> {
+/**
+ * Every `tableRef` a fetched Boss might use — small enough to fetch eagerly,
+ * once, for the whole session.
+ *
+ * `ids` comes from the site index's `tables` manifest, NOT from a literal here.
+ * A literal is what this was, and it was wrong: it named the three Phase 3 RDT
+ * records and never learned about Lunar Chest's three `lunar_chest_*_set`
+ * tables, so in the browser every Lunar Chest run with a Moon selected threw
+ * `UnresolvedTableRefError` out of the worker and the ownership controls never
+ * rendered. jsdom never saw it because `test/SimContextControls.test.tsx`
+ * builds its map by reading the directory, which is a path the browser cannot
+ * take. `apps/ingest/src/tables/shared-tables.ts` had already been fixed for
+ * the identical bug; this is the same fix on the other side of the wire.
+ */
+export async function fetchSharedTables(ids: readonly string[]): Promise<Map<string, Table>> {
   const entries = await Promise.all(
-    SHARED_TABLE_IDS.map(async (id): Promise<readonly [string, Table] | null> => {
+    ids.map(async (id): Promise<readonly [string, Table] | null> => {
       try {
         return [id, SharedTableSchema.parse(await fetchJson(`tables/${id}.json`))]
       } catch {
-        // Tier A/B/C sources with no tableRef never need these — absence
-        // isn't an error until something actually references one.
+        // A record listed in the manifest but unreadable is a deploy problem,
+        // not a per-boss one — sources that never reference it are unaffected,
+        // and one that does fails loudly at simulate time.
         return null
       }
     })

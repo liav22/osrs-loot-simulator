@@ -226,20 +226,27 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('ringOfWealth'), value: z.boolean() }).strict(),
   z.object({ kind: z.literal('onSlayerTask'), value: z.boolean() }).strict(),
   z.object({ kind: z.literal('questComplete'), quest: z.string().min(1) }).strict(),
-  z.object({ kind: z.literal('killCountAtLeast'), n: z.number().int().nonnegative() }).strict(),
   z.object({ kind: z.literal('variant'), name: z.string().min(1) }).strict(),
   /**
-   * Gates an entry on a numeric `SimContext` field reaching at least `n`. Kept
-   * to an enum of the fields a real source actually gates on rather than a
-   * free-text field name, matching this project's established practice of not
-   * generalizing past confirmed cases (see docs/DECISIONS.md's repeated
-   * "Uniques" heading refusals).
+   * Gates an entry on a numeric `SimContext` field lying in `[n, atMost]`.
+   * `atMost` is optional; without it this is the original one-sided "at least
+   * `n`" threshold, which is what all 554 existing uses in `data/` are and why
+   * the kind keeps its name rather than becoming `levelInRange` (that rename
+   * would be a corpus-wide data migration for no behavioural gain).
    *
-   * `delveLevel` (Doom of Mokhaiotl) and `wavesReached` (Fortis Colosseum) were
-   * the original two. `shieldDamage` and `totalDamage` are Zalcano's two
-   * eligibility gates, both stated outright on its page: "Players must do at
-   * least 5 damage to Zalcano's shield to be eligible for drops, and 31
-   * combined damage to be eligible for uniques and pet."
+   * The field list is an enum of what real sources actually gate on rather
+   * than a free-text field name, matching this project's practice of not
+   * generalizing past confirmed cases (see docs/DECISIONS.md's repeated
+   * "Uniques" heading refusals):
+   *
+   *  - `delveLevel` (Doom of Mokhaiotl), `wavesReached` (Fortis Colosseum) —
+   *    the original two.
+   *  - `shieldDamage`, `totalDamage` — Zalcano's two eligibility gates, both
+   *    stated outright on its page: "Players must do at least 5 damage to
+   *    Zalcano's shield to be eligible for drops, and 31 combined damage to be
+   *    eligible for uniques and pet."
+   *  - `fishingLevel` — Reward pool, and the reason `atMost` exists at all.
+   *  - `killCount` — see the retirement note below.
    *
    * **`totalDamage` is why this stayed an enum widening instead of becoming a
    * new condition shape.** A combined threshold over two fields
@@ -248,17 +255,49 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
    * formula-valued condition — a fourth gating shape. It does not: the sum is
    * a *derived context field*, computed once at run setup by
    * `withDerivedContext` exactly like every other `SimContext` value, so
-   * `levelAtLeast` reads it as a plain `ctx[field] >= n`. Conditions stay
+   * `levelAtLeast` reads it as a plain range test. Conditions stay
    * resolved-once against a fixed context, which `expectedValue` depends on
-   * being literally true. See docs/DECISIONS.md's "Player-stat gating" entry;
-   * `fishingLevel` is still deliberately absent, since Reward pool needs
-   * two-sided brackets that a one-sided `>=` cannot express.
+   * being literally true.
+   *
+   * **`atMost` is what makes a bracket expressible, and Reward pool is the
+   * source that forced it.** Its fish sub-table has seven mutually exclusive
+   * Fishing brackets — the page's own `dropversion` field lists them as
+   * "Levels 35-39, 40-45, 46-49, 50-75, 76-78, 79-80, 81+". A one-sided `>=`
+   * cannot express that: a level-99 player would match all seven at once and
+   * receive seven fish tables instead of one. docs/DECISIONS.md's
+   * "Player-stat gating" entry predicted exactly this ("the right change is an
+   * optional upper bound on the existing `levelAtLeast`") and declined to add
+   * `fishingLevel` to the enum until the bound existed, on the ground that
+   * widening alone would not have unblocked its only requester. Both halves
+   * land together here, which is what that entry asked for.
+   *
+   * `atMost` is INCLUSIVE, matching how the wiki writes the brackets
+   * ("Levels 35–39" means 39 is in it), and the open-ended top bracket
+   * ("81+") is expressed by simply omitting it.
+   *
+   * **`killCountAtLeast` is retired into this kind.** It was named separately
+   * in PROJECT_PLAN.md 4.4, but its evaluator was byte-identical to this one
+   * and it had **zero uses** across every `data/bosses/*.json`,
+   * `data/tables/*.json` and `data/overrides/*.json` — measured, not assumed,
+   * at the moment of removal. Two kinds doing one thing is the kind of
+   * proliferation the `includes`/`levelAtLeast` split was careful to avoid, and
+   * there was no migration to pay for. `{ kind: 'levelAtLeast', field:
+   * 'killCount', n }` is the replacement spelling.
    */
   z
     .object({
       kind: z.literal('levelAtLeast'),
-      field: z.enum(['delveLevel', 'wavesReached', 'shieldDamage', 'totalDamage']),
+      field: z.enum([
+        'delveLevel',
+        'wavesReached',
+        'shieldDamage',
+        'totalDamage',
+        'fishingLevel',
+        'killCount',
+      ]),
       n: z.number().int().nonnegative(),
+      /** Inclusive upper bound. Omit for an open-ended threshold. */
+      atMost: z.number().int().nonnegative().optional(),
     })
     .strict(),
   /**
@@ -294,6 +333,27 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
     })
     .strict(),
 ])
+  // Refined on the UNION rather than on the `levelAtLeast` member: zod's
+  // `discriminatedUnion` requires every option to be a plain `ZodObject`, and
+  // attaching a `.superRefine` to one turns it into a `ZodEffects` that the
+  // union will not accept. Wrapping the finished union is equivalent and keeps
+  // the discriminated dispatch (and its far better error messages) intact.
+  .superRefine((condition, ctx) => {
+    // An inverted bracket matches nothing at all, which is never what an
+    // author meant — it silently deletes the entry instead of gating it, and
+    // `compileTable` would drop it with no complaint anywhere.
+    if (
+      condition.kind === 'levelAtLeast' &&
+      condition.atMost !== undefined &&
+      condition.atMost < condition.n
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['atMost'],
+        message: `'atMost' (${condition.atMost}) is below 'n' (${condition.n}), so this condition can never hold`,
+      })
+    }
+  })
 
 export type Condition = z.infer<typeof ConditionSchema>
 

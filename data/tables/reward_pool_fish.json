@@ -1,0 +1,777 @@
+{
+  "id": "reward_pool_fish",
+  "mode": "independent",
+  "rolls": 1,
+  "notes": "The fish sub-table, reached at weight 3600/6400 ('about a 45/80 chance to roll the fish sub-table' — Reward pool, ===Fish===). `independent` with each bracket at a certainty rate is how seven MUTUALLY EXCLUSIVE brackets are expressed: exactly one bracket condition holds for any Fishing level, so exactly one fires, and the surviving entry's `oneOf` normalises the five fish over that bracket's own 3600. A weighted table cannot express this — all seven brackets would sum to 25,200 against a 3,600 denominator.",
+  "entries": [
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 345,
+              "itemKey": "raw-herring",
+              "name": "Raw herring",
+              "qty": {
+                "kind": "range",
+                "min": 30,
+                "max": 40
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 900
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 353,
+              "itemKey": "raw-mackerel",
+              "name": "Raw mackerel",
+              "qty": {
+                "kind": "range",
+                "min": 20,
+                "max": 30
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 810
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 349,
+              "itemKey": "raw-pike",
+              "name": "Raw pike",
+              "qty": {
+                "kind": "range",
+                "min": 10,
+                "max": 20
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 720
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 331,
+              "itemKey": "raw-salmon",
+              "name": "Raw salmon",
+              "qty": {
+                "kind": "range",
+                "min": 7,
+                "max": 12
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 630
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 359,
+              "itemKey": "raw-tuna",
+              "name": "Raw tuna",
+              "qty": {
+                "kind": "range",
+                "min": 5,
+                "max": 10
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 540
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "conditions": [
+        {
+          "kind": "levelAtLeast",
+          "field": "fishingLevel",
+          "n": 35,
+          "atMost": 39
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 353,
+              "itemKey": "raw-mackerel",
+              "name": "Raw mackerel",
+              "qty": {
+                "kind": "range",
+                "min": 30,
+                "max": 40
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 900
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 349,
+              "itemKey": "raw-pike",
+              "name": "Raw pike",
+              "qty": {
+                "kind": "range",
+                "min": 20,
+                "max": 30
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 810
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 331,
+              "itemKey": "raw-salmon",
+              "name": "Raw salmon",
+              "qty": {
+                "kind": "range",
+                "min": 10,
+                "max": 20
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 720
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 359,
+              "itemKey": "raw-tuna",
+              "name": "Raw tuna",
+              "qty": {
+                "kind": "range",
+                "min": 7,
+                "max": 12
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 630
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 377,
+              "itemKey": "raw-lobster",
+              "name": "Raw lobster",
+              "qty": {
+                "kind": "range",
+                "min": 5,
+                "max": 10
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 540
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "conditions": [
+        {
+          "kind": "levelAtLeast",
+          "field": "fishingLevel",
+          "n": 40,
+          "atMost": 45
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 349,
+              "itemKey": "raw-pike",
+              "name": "Raw pike",
+              "qty": {
+                "kind": "range",
+                "min": 30,
+                "max": 40
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 900
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 331,
+              "itemKey": "raw-salmon",
+              "name": "Raw salmon",
+              "qty": {
+                "kind": "range",
+                "min": 20,
+                "max": 30
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 810
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 359,
+              "itemKey": "raw-tuna",
+              "name": "Raw tuna",
+              "qty": {
+                "kind": "range",
+                "min": 10,
+                "max": 20
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 720
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 377,
+              "itemKey": "raw-lobster",
+              "name": "Raw lobster",
+              "qty": {
+                "kind": "range",
+                "min": 7,
+                "max": 12
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 630
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 363,
+              "itemKey": "raw-bass",
+              "name": "Raw bass",
+              "qty": {
+                "kind": "range",
+                "min": 5,
+                "max": 10
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 540
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "conditions": [
+        {
+          "kind": "levelAtLeast",
+          "field": "fishingLevel",
+          "n": 46,
+          "atMost": 49
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 331,
+              "itemKey": "raw-salmon",
+              "name": "Raw salmon",
+              "qty": {
+                "kind": "range",
+                "min": 30,
+                "max": 40
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 900
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 359,
+              "itemKey": "raw-tuna",
+              "name": "Raw tuna",
+              "qty": {
+                "kind": "range",
+                "min": 20,
+                "max": 30
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 810
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 377,
+              "itemKey": "raw-lobster",
+              "name": "Raw lobster",
+              "qty": {
+                "kind": "range",
+                "min": 10,
+                "max": 20
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 720
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 363,
+              "itemKey": "raw-bass",
+              "name": "Raw bass",
+              "qty": {
+                "kind": "range",
+                "min": 7,
+                "max": 12
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 630
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 371,
+              "itemKey": "raw-swordfish",
+              "name": "Raw swordfish",
+              "qty": {
+                "kind": "range",
+                "min": 5,
+                "max": 10
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 540
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "conditions": [
+        {
+          "kind": "levelAtLeast",
+          "field": "fishingLevel",
+          "n": 50,
+          "atMost": 75
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 359,
+              "itemKey": "raw-tuna",
+              "name": "Raw tuna",
+              "qty": {
+                "kind": "range",
+                "min": 30,
+                "max": 40
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 900
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 377,
+              "itemKey": "raw-lobster",
+              "name": "Raw lobster",
+              "qty": {
+                "kind": "range",
+                "min": 20,
+                "max": 30
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 810
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 363,
+              "itemKey": "raw-bass",
+              "name": "Raw bass",
+              "qty": {
+                "kind": "range",
+                "min": 10,
+                "max": 20
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 720
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 371,
+              "itemKey": "raw-swordfish",
+              "name": "Raw swordfish",
+              "qty": {
+                "kind": "range",
+                "min": 7,
+                "max": 12
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 630
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 383,
+              "itemKey": "raw-shark",
+              "name": "Raw shark",
+              "qty": {
+                "kind": "range",
+                "min": 5,
+                "max": 10
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 540
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "conditions": [
+        {
+          "kind": "levelAtLeast",
+          "field": "fishingLevel",
+          "n": 76,
+          "atMost": 78
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 377,
+              "itemKey": "raw-lobster",
+              "name": "Raw lobster",
+              "qty": {
+                "kind": "range",
+                "min": 30,
+                "max": 40
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 900
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 363,
+              "itemKey": "raw-bass",
+              "name": "Raw bass",
+              "qty": {
+                "kind": "range",
+                "min": 20,
+                "max": 30
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 810
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 371,
+              "itemKey": "raw-swordfish",
+              "name": "Raw swordfish",
+              "qty": {
+                "kind": "range",
+                "min": 10,
+                "max": 20
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 720
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 383,
+              "itemKey": "raw-shark",
+              "name": "Raw shark",
+              "qty": {
+                "kind": "range",
+                "min": 7,
+                "max": 12
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 630
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 395,
+              "itemKey": "raw-sea-turtle",
+              "name": "Raw sea turtle",
+              "qty": {
+                "kind": "range",
+                "min": 5,
+                "max": 10
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 540
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "conditions": [
+        {
+          "kind": "levelAtLeast",
+          "field": "fishingLevel",
+          "n": 79,
+          "atMost": 80
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 363,
+              "itemKey": "raw-bass",
+              "name": "Raw bass",
+              "qty": {
+                "kind": "range",
+                "min": 30,
+                "max": 40
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 900
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 371,
+              "itemKey": "raw-swordfish",
+              "name": "Raw swordfish",
+              "qty": {
+                "kind": "range",
+                "min": 20,
+                "max": 30
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 810
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 383,
+              "itemKey": "raw-shark",
+              "name": "Raw shark",
+              "qty": {
+                "kind": "range",
+                "min": 10,
+                "max": 20
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 720
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 395,
+              "itemKey": "raw-sea-turtle",
+              "name": "Raw sea turtle",
+              "qty": {
+                "kind": "range",
+                "min": 7,
+                "max": 12
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 630
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 389,
+              "itemKey": "raw-manta-ray",
+              "name": "Raw manta ray",
+              "qty": {
+                "kind": "range",
+                "min": 5,
+                "max": 10
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 540
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "conditions": [
+        {
+          "kind": "levelAtLeast",
+          "field": "fishingLevel",
+          "n": 81
+        }
+      ]
+    }
+  ]
+}

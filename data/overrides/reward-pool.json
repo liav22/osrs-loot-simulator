@@ -1,0 +1,338 @@
+{
+  "slug": "reward-pool",
+  "note": "Tempoross's Reward pool, modelled PER PERMIT rather than per encounter. That is the unit the page itself uses: permits accumulate in the pool (cap 8,000) and are redeemed one at a time, and \"the rewards are determined by the player's Fishing level at the time of collection from the reward pool, not at the time of adding permits\". Modelling per permit also sidesteps the one figure the page never states: permits are earned \"starting at 1 and adding 1 per 700 point threshold (with a chance at rounding up)\" and the rounding rule for the remainder is not given, so tempoross_points stays a stub and points->permits is left to the user (simulate N permits). Every rate below is per permit. MAIN TABLE reconciles exactly to 6,400: fish 3,600 + spirit flakes 1,600 (1/4) + casket 320 (1/20) + the six \"other\" rows 880 = 6,400, and the page independently confirms the fish share as \"about a 45/80 chance to roll the fish sub-table\" (45/80 = 3,600/6,400). FISHING BRACKETS are stated twice on the page and agree: the infobox's |dropversion = Levels 35-39,Levels 40-45,Levels 46-49,Levels 50-75,Levels 76-78,Levels 79-80,Levels 81+ and the seven ====Levels ...==== sub-headings under ===Fish===. They line up with the seven five-fish groups in the dropsline rows (weights 900/810/720/630/540, summing to 3,600 each). Base level only: \"The pool rewards are unaffected by skill boosts; e.g. it is not possible to catch manta rays if the player's base Fishing level is below 81.\" MODELLING ASSUMPTION, flagged rather than hidden: the nine rare uniques (soaked page, fish barrel, tackle box, big harpoonfish, tome of water, tiny tempor, dragon harpoon) carry denominators of 400/1,600/8,000 that cannot be integer weights out of 6,400 (1/8,000 is 0.8/6,400), and the 6,400 table already reconciles exactly without them. They are therefore modelled as an independent table rolled alongside the main one, not as members of it. The page does not state which it is. Reward pool STAYS on the mechanics watchlist and is therefore needs_review, not manual_override: the points->permits rounding rule is still unknown, so the per-encounter mechanic is not modelled, only the per-permit one.",
+  "name": "Reward pool",
+  "aliases": [
+    "Tempoross reward pool",
+    "Tempoross"
+  ],
+  "wikiPage": "Reward pool",
+  "wikiRevId": 15208420,
+  "variants": [
+    "normal"
+  ],
+  "contextDefaults": {
+    "fishingLevel": 81
+  },
+  "tables": [
+    {
+      "id": "reward-pool:main",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 6400,
+      "notes": "One roll per reward permit. Sums exactly to 6,400 — see the override note.",
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "reward_pool_fish"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25588,
+            "itemKey": "spirit-flakes",
+            "name": "Spirit flakes",
+            "qty": {
+              "kind": "range",
+              "min": 32,
+              "max": 64
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25590,
+            "itemKey": "casket-reward-pool",
+            "name": "Casket (Reward pool)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 320
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 960,
+            "itemKey": "plank",
+            "name": "Plank",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 280
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8778,
+            "itemKey": "oak-plank",
+            "name": "Oak plank",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 200
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 401,
+            "itemKey": "seaweed",
+            "name": "Seaweed",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 160
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1539,
+            "itemKey": "steel-nails",
+            "name": "Steel nails",
+            "qty": {
+              "kind": "range",
+              "min": 300,
+              "max": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 80
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 314,
+            "itemKey": "feather",
+            "name": "Feather",
+            "qty": {
+              "kind": "range",
+              "min": 800,
+              "max": 1600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 80
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 313,
+            "itemKey": "fishing-bait",
+            "name": "Fishing bait",
+            "qty": {
+              "kind": "range",
+              "min": 800,
+              "max": 1600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 80
+          }
+        }
+      ]
+    },
+    {
+      "id": "reward-pool:rare-uniques",
+      "mode": "independent",
+      "rolls": 1,
+      "notes": "Rolled alongside the main table — see the MODELLING ASSUMPTION in the override note.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25578,
+            "itemKey": "soaked-page",
+            "name": "Soaked page",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 9
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 149,
+            "den": 8000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25582,
+            "itemKey": "fish-barrel",
+            "name": "Fish barrel",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25578,
+            "itemKey": "soaked-page",
+            "name": "Soaked page",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25580,
+            "itemKey": "tackle-box",
+            "name": "Tackle box",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25578,
+            "itemKey": "soaked-page",
+            "name": "Soaked page",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25559,
+            "itemKey": "big-harpoonfish",
+            "name": "Big harpoonfish",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25576,
+            "itemKey": "tome-of-water-empty",
+            "name": "Tome of water (empty)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25602,
+            "itemKey": "tiny-tempor",
+            "name": "Tiny tempor",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 8000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21028,
+            "itemKey": "dragon-harpoon",
+            "name": "Dragon harpoon",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 8000
+          }
+        }
+      ]
+    }
+  ]
+}

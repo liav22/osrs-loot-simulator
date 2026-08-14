@@ -533,7 +533,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "resolved against 6 shared table(s)"
+        "detail": "5 tableRef node(s) resolved against 7 shared table(s)"
       },
       {
         "check": "rates_valid",

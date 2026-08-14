@@ -11,8 +11,6 @@ function conditionLabel(condition: Condition): string {
       return condition.value ? 'On slayer task' : 'Not on slayer task'
     case 'questComplete':
       return condition.quest
-    case 'killCountAtLeast':
-      return `KC ≥ ${condition.n}`
     case 'variant':
       return condition.name
     case 'levelAtLeast': {
@@ -20,14 +18,23 @@ function conditionLabel(condition: Condition): string {
       // silently labelled every field except `delveLevel` as "Wave", so
       // widening the enum for Zalcano would have rendered "Wave ≥ 31" for a
       // damage threshold — a new field must fail the typecheck here, which is
-      // the whole point of this switch being a trip wire.
+      // the whole point of this switch being a trip wire. It fired again when
+      // `fishingLevel`/`killCount` were added, which is it working.
       const labels: Record<typeof condition.field, string> = {
         delveLevel: 'Delve level',
         wavesReached: 'Wave',
         shieldDamage: 'Shield damage',
         totalDamage: 'Combined damage',
+        fishingLevel: 'Fishing level',
+        killCount: 'KC',
       }
-      return `${labels[condition.field]} ≥ ${condition.n}`
+      const label = labels[condition.field]
+      // A bracket reads as a range, not as two separate facts. `atMost` is
+      // inclusive, so "Fishing level 40–45" is literally what the wiki prints.
+      if (condition.atMost !== undefined) {
+        return `${label} ${condition.n}–${condition.atMost}`
+      }
+      return `${label} ≥ ${condition.n}`
     }
     case 'includes': {
       // `values` is a disjunction (see ConditionSchema), so read it as "or".

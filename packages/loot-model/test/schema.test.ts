@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { BossSchema, QtySpecSchema, RateSchema, TableSchema } from '../src/index'
+import { BossSchema, ConditionSchema, QtySpecSchema, RateSchema, TableSchema } from '../src/index'
 
 const itemNode = {
   kind: 'item',
@@ -303,5 +303,110 @@ describe('BossSchema', () => {
         validation: { ok: false, checks: [{ check: 'vibes', ok: false }] },
       }).success
     ).toBe(false)
+  })
+})
+
+describe('ConditionSchema levelAtLeast brackets', () => {
+  it('accepts a one-sided threshold, which is what all existing data uses', () => {
+    const parsed = ConditionSchema.safeParse({ kind: 'levelAtLeast', field: 'delveLevel', n: 3 })
+    expect(parsed.success).toBe(true)
+  })
+
+  it('accepts a two-sided bracket', () => {
+    // Reward pool's "Levels 40-45", verbatim from the page's own dropversion.
+    const parsed = ConditionSchema.safeParse({
+      kind: 'levelAtLeast',
+      field: 'fishingLevel',
+      n: 40,
+      atMost: 45,
+    })
+    expect(parsed.success).toBe(true)
+  })
+
+  it('accepts a single-level bracket where atMost equals n', () => {
+    const parsed = ConditionSchema.safeParse({
+      kind: 'levelAtLeast',
+      field: 'fishingLevel',
+      n: 50,
+      atMost: 50,
+    })
+    expect(parsed.success).toBe(true)
+  })
+
+  it('rejects an inverted bracket rather than silently matching nothing', () => {
+    // An entry gated on an impossible range is dropped by `compileTable` with
+    // no complaint anywhere downstream, so the schema is the only place this
+    // can be caught.
+    const parsed = ConditionSchema.safeParse({
+      kind: 'levelAtLeast',
+      field: 'fishingLevel',
+      n: 45,
+      atMost: 40,
+    })
+    expect(parsed.success).toBe(false)
+    if (!parsed.success) {
+      expect(parsed.error.issues[0]?.message).toMatch(/can never hold/)
+    }
+  })
+
+  it('rejects a field outside the enum', () => {
+    const parsed = ConditionSchema.safeParse({ kind: 'levelAtLeast', field: 'points', n: 1 })
+    expect(parsed.success).toBe(false)
+  })
+
+  it('no longer accepts the retired killCountAtLeast kind', () => {
+    // Retired into `levelAtLeast`'s `killCount` field. It had zero uses in
+    // `data/` at the moment of removal, so this is a spelling change with no
+    // migration behind it — but the old spelling must fail loudly rather than
+    // parse into something that silently never gates.
+    expect(ConditionSchema.safeParse({ kind: 'killCountAtLeast', n: 50 }).success).toBe(false)
+    expect(
+      ConditionSchema.safeParse({ kind: 'levelAtLeast', field: 'killCount', n: 50 }).success
+    ).toBe(true)
+  })
+
+  it('the seven Reward pool brackets partition every Fishing level from 35 up', () => {
+    // The real point of the feature, asserted as a property rather than as
+    // seven separate parse checks: exactly one bracket matches any given
+    // level. A one-sided `>=` would match all seven at level 99, which is the
+    // failure docs/DECISIONS.md predicted and the reason `atMost` exists.
+    const brackets = [
+      [35, 39],
+      [40, 45],
+      [46, 49],
+      [50, 75],
+      [76, 78],
+      [79, 80],
+      [81, undefined],
+    ] as const
+
+    const conditions = brackets.map(([n, atMost]) => {
+      const parsed = ConditionSchema.safeParse(
+        atMost === undefined
+          ? { kind: 'levelAtLeast', field: 'fishingLevel', n }
+          : { kind: 'levelAtLeast', field: 'fishingLevel', n, atMost }
+      )
+      expect(parsed.success).toBe(true)
+      return parsed.success ? parsed.data : null
+    })
+
+    for (let level = 35; level <= 99; level++) {
+      const matching = conditions.filter((condition) => {
+        if (condition === null || condition.kind !== 'levelAtLeast') return false
+        return level >= condition.n && (condition.atMost === undefined || level <= condition.atMost)
+      })
+      expect(matching).toHaveLength(1)
+    }
+
+    // Below 35 nothing matches, which is correct rather than a gap: Tempoross
+    // itself is not enterable below Fishing 35, and the page states no bracket
+    // for those levels.
+    for (let level = 1; level < 35; level++) {
+      const matching = conditions.filter((condition) => {
+        if (condition === null || condition.kind !== 'levelAtLeast') return false
+        return level >= condition.n && (condition.atMost === undefined || level <= condition.atMost)
+      })
+      expect(matching).toHaveLength(0)
+    }
   })
 })

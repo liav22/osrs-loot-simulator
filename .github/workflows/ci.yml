@@ -16,3 +16,23 @@ jobs:
       - run: pnpm -r typecheck
       - run: pnpm lint
       - run: pnpm -r test
+
+  # Separate job: this one downloads a browser and does a production build, so
+  # folding it into `test` would put ~a minute of setup in front of every unit
+  # failure. Deliberately NOT part of `pnpm -r test` for the same reason.
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter web exec playwright install --with-deps chromium
+      - run: pnpm --filter web run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report/
+          retention-days: 7

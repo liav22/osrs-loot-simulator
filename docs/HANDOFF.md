@@ -83,6 +83,41 @@ keep it watchlisted; see section 3). See section 3 for what is next.
 
 `ev_matches` is **closed, permanently** — see "What NOT to redo," section 5.
 
+**Changed this session (Playwright + checks audit + benchmark + `levelAtLeast`):**
+
+- **`apps/web` has a real-browser test suite now.** 17 Playwright tests in
+  `apps/web/e2e/`, run by `pnpm --filter web test:e2e`, against the
+  **production** build served under `/osrs-loot-simulator/` through a GitHub
+  Pages mimic. Deliberately not in `pnpm -r test` (needs a browser binary and a
+  build); `ci.yml` runs it as a separate `e2e` job. It found two real production
+  bugs on its first run — see section 6, landmine #10.
+- **`Condition.killCountAtLeast` no longer exists.** Retired into
+  `levelAtLeast`'s new `killCount` field; it had zero uses in `data/`.
+  `levelAtLeast` gained an optional inclusive `atMost` (two-sided brackets) and
+  the fields `fishingLevel` and `killCount`.
+- **`refs_resolve` was vacuous for Lunar Chest and is fixed** — section 6,
+  landmine #11.
+- **`SiteIndexSchema` gained `tables: string[]`**, the manifest the browser
+  fetches `data/tables/` by. `data/index.json` regenerated (it was stale).
+- **`simulate.ts`'s hot loops were restructured** on measured evidence; see
+  section 4, and do not "tidy" the inlined gate checks back into a helper.
+
+**Also changed (second round of the same session):**
+
+- **Reward pool is SHIPPED** (`data/overrides/reward-pool.json` +
+  `data/tables/reward_pool_fish.json`, 12 wiki-figure tests), modelled **per
+  reward permit** rather than per encounter. Still `needs_review` and still
+  watchlisted, correctly — see section 7.
+- **An authored override now forces its source to be parsed regardless of the
+  tier filter.** This is what had silently prevented Reward pool from ever
+  being built; see landmine #12.
+- **`items_known` was the fourth scope-permissive guard**, found and fixed, and
+  the mutation shape that found it is now a reusable harness — see landmine #11.
+- **The benchmark bar is 1M**, adopted; the duplicated-`emit` lever is closed.
+
+Corpus tally: **54 parsed — 38 verified / 2 manual_override / 11 needs_review /
+3 parse_failed** (up one source and one `needs_review`, both Reward pool).
+
 ---
 
 ## 2. Extensions A and B — what they are, why they're shaped this way
@@ -121,7 +156,7 @@ unbuilt and out of scope, see section 3.
 
 **Design: `Entry.ownershipGate`, not a `Condition` kind — this is the one
 thing worth understanding before touching it again.** Every `Condition`
-(`members`, `ringOfWealth`, `killCountAtLeast`, the new `levelAtLeast`, etc.)
+(`members`, `ringOfWealth`, `levelAtLeast`, `includes`, etc.)
 is resolved exactly once, against a `SimContext` fixed for the whole run —
 stated explicitly in `compile.ts`'s header comment, and `expectedValue`
 *depends* on that being literally true (it computes one kill's expectation
@@ -226,7 +261,10 @@ of seconds").
 | Extension B, current (after two rounds of measured optimization) | ~163–171ms | ~1,870–1,940ms |
 | Step (c) + `qtyRounding` + `includes`, measured fresh (see caveat) | ~193ms | ~1,926ms |
 | Zalcano session baseline, derivation reverted in place (A/B control) | ~220ms | ~2,108ms |
-| Zalcano session, `withDerivedContext` in `compileBoss` (current) | ~225–227ms | ~2,202–2,234ms |
+| Zalcano session, `withDerivedContext` in `compileBoss` | ~225–227ms | ~2,202–2,234ms |
+| **Playwright session, before the loop fix (A/B control)** | ~224ms | ~2,204ms |
+| **Playwright session, hoisted/inlined gate checks (current)** | **~208ms** | **~2,089ms** |
+| *(reference ceiling: ALL ownership code stripped — not shipped)* | *~197ms* | *~1,893ms* |
 
 **The 10M figure is now AT OR OVER the ~2.0s reading of the bar on this
 machine, and it is not the derived-context change.** A controlled A/B in the
@@ -263,17 +301,54 @@ byte-identical (597.2676 / 598.4495) across every variant, which is the check
 that actually matters. **Do not attribute a 5% move to your change without an
 A/B in the same sitting.**
 
-**A lever exists and was deliberately not pulled**: a fully duplicated
-`emit`/`runTable`/`runWeightedWithoutReplacement` pair — one identical to
-pre-Extension-B code (no `owned` parameter at all), selected once per
-`simulate()` call via `compiled.trackedItemKeys.size === 0` — would almost
-certainly recover Extension A's exact numbers for every source that doesn't
-use ownership gates (100% of sources today). Not built because it means
-maintaining two copies of the simulator's core recursive walk indefinitely,
-for a feature four sources will ever use, and the budget is still met
-without it. If step (c) or Phase 7 work pushes the 10M figure close to or
-over 2s, this is the next thing to try — build it then, with a fresh
-benchmark justifying it, not preemptively.
+**THE BAR IS 1M NOW.** `test/bench.tmp.ts` defaults to `--kills 1000000`;
+10M is a linearity spot-check you ask for explicitly. Scaling is dead linear
+(10M/1M = 9.6–10.0 across every variant ever measured here) and 10M is not the
+more precise measurement — relative round-to-round spread is comparable at both
+sizes, because the noise is this machine's drift, not per-run variance. Current
+figure at the bar: **~203ms**.
+
+**The duplicated-`emit` lever is CLOSED, not deferred — do not re-nominate it on
+performance grounds.** At 1M the current figure is ~203ms against a budget
+nothing approaches (the frontend's own default run is 10,000 kills, ~2ms), so
+its remaining ~9% buys a fraction of a number that does not matter, in exchange
+for two permanent copies of the simulator's core recursive walk. The measurement
+below is kept because it is what closed the question.
+
+**The reason it was never the right lever anyway —** A controlled single-factor ablation
+(interleaved across processes, three rounds) showed the framing behind it was
+wrong: the `OwnershipTracker` object and the `owned` parameter threading cost
+**≈ 0**. Removing every trace of ownership from the hot path buys ~15%, and
+essentially all of it is two things inside the innermost loops — three
+`if (gated && ...)` guards (8.8%) and three `let` bindings assigned in an
+if/else instead of `const` ternaries (6.0%). Both were fixed **without**
+duplicating the walk, recovering ~5–7%. The remaining ~9% to the ceiling is what
+duplicating `emit`/`runTable` would buy, for two permanent copies of the
+simulator's core recursion. Full table in `docs/DECISIONS.md`'s "Extension B's
+real cost" entry.
+
+Two rules that came out of that measurement and are easy to undo by accident:
+
+1. **Hoist the TEST out of the loop, not the value it tests.** A hoisted `false`
+   boolean tested inside the loop cost 8.8% on a boss that never took the
+   branch.
+2. **Do not tidy the inlined gate check back into a `gateAllows(...)` helper.**
+   An intermediate version that kept the helper recovered only a third of what
+   inlining did — an uninlinable call in the innermost loop costs even on runs
+   where it never executes. The condition is written out three times on purpose.
+
+**The 10M bar itself is now questioned, with data — see `docs/DECISIONS.md`'s
+"Is 10M the right benchmark bar?" entry.** Short version: `DEFAULT_KILLS` is
+10,000, scaling is dead linear (10M/1M = 9.6–10.0 across every variant), and 10M
+is *not* the more precise measurement — relative round-to-round spread is
+comparable at both sizes, so 10M costs 10× the wall-clock for no extra
+precision. Recommendation (flagged, not applied, since PROJECT_PLAN.md 8 is spec
+text): make 1M the routine regression bar, run 10M occasionally as a linearity
+check.
+
+`test/bench.tmp.ts` now takes `--label`/`--reps`/`--kills`, which is what lets an
+external script interleave two builds and tag each line. **Interleave any future
+A/B** — this machine's drift is larger than several of the effects above.
 
 ---
 
@@ -464,9 +539,101 @@ bug.
    this way.
 
 All five are real regression tests, not documentation — they run in
-`pnpm -r test`/CI on every change, by design.
+`pnpm -r test`/CI on every change, by design. A sixth now exists: the site
+index's `tables` manifest must cover every `tableRef` in the corpus
+(`apps/ingest/test/site-index.test.ts`) — see landmine #10.
+
+### 10. A jsdom test can pass on a code path the browser never takes
+
+`apps/web/src/lib/api.ts` hardcoded three shared-table ids and had never learned
+about Lunar Chest's three `lunar_chest_*_set` records. In the browser that meant
+`UnresolvedTableRefError` out of the worker for **every Lunar Chest run with a
+Moon selected** (with no Moon selected it works, because the refs sit behind an
+`includes` condition and are filtered out before resolution — which is exactly
+why it shipped), and the ownership controls never rendering at all.
+
+`test/SimContextControls.test.tsx` could not catch it: it builds its
+`sharedTables` map by `readdirSync`-ing `data/tables/`, which is correct and is
+also something a browser cannot do. **When a jsdom test constructs an input the
+real app fetches, it is testing a different program.** Fixed by making the
+browser's list directory-driven too, via the site index's new `tables` manifest,
+with a real-data coverage test. Same bug `loadSharedTables` was fixed for once
+already — check the other side of a wire before assuming a fix propagated.
+
+Two in-app links (`BossView`, `AdminPage`) were also root-absolute `<a href>`s
+that escape the base path on GitHub Pages; both are `<Link>` now, and the
+guarding test sweeps every `a[href^="/"]` rather than naming the two.
+
+### 11. Scope-permissive guards: FOUR found, and there is now a harness for the fifth
+
+`entry.title`, `refs_resolve`, `qty_sane` and `items_known` were all found more
+permissive than they looked, all in the same way, none of them by a test. Every
+test that existed shared one shape: **it mutates the data and never the field
+that decides the check's scope.**
+
+**`apps/ingest/test/helpers/scope-invariant.ts` is the default shape now.** The
+invariant it encodes: a document that genuinely FAILS a check must keep failing
+under any mutation that does not repair the defect — a scope hole is exactly the
+case where the check stops looking, so a real failure becomes a pass.
+`scope-invariants.test.ts` applies it to all five checks with a scope
+(`refs_resolve`, `qty_sane`, `items_known`, `rates_valid`, `weights_sum`).
+
+**When a fifth hole turns up, add the mutation to `SCOPE_MUTATIONS` once and
+every check gains the coverage at that moment.** That is the point of the file;
+adding a per-check test instead is the old shape that missed four in a row.
+
+The fourth, for the record, was `items_known`: `parseBoss` collected items with
+a flat `entry.node.kind === 'item'` loop, so an item inside a `oneOf` was never
+collected. Now `apps/ingest/src/parse/collect-items.ts`, recursive. It
+deliberately does NOT follow `tableRef` — a shared table's items are that
+record's own business, and following the ref would blame one bad shared record
+on all seventeen sources that reference it. That decision is stated in the file
+rather than left implicit in the loop, which is the whole lesson.
+
+### 11b. `refs_resolve` used to be scoped by `SimContext`, and passed on nothing
+
+`checkRefsResolve(lunarChest, new Map())` returned `ok: true, "resolved against
+0 shared table(s)"`. The check delegated entirely to `compileBoss`, and
+`compileTable` filters condition-excluded entries *before* resolving what they
+point at — so every one of Lunar Chest's refs was invisible to it under the
+default context. It now walks the document structurally (ignoring conditions,
+descending into `oneOf`, following refs transitively through `data/tables/`),
+with `compileBoss` kept behind it as a cross-check.
+
+**The generalisable lesson, and the thing to actually apply:** every
+pre-existing test in `refs-resolve.test.ts` used an *unconditional* `tableRef`.
+They mutated the data and never the field that decided the check's scope. A
+guard whose scope comes from a field is only as strong as the tests that move
+that field — the same lesson `checkWatchlistConsistency`'s `entry.title` gap
+taught. `refs-resolve.test.ts` now has a scope-mutation suite that holds the
+data fixed and moves the condition instead. `qty_sane` had the narrower
+node-kind version of the same blind spot (`oneOf`), now closed. The single-
+context evaluation in `rates_valid`/`qty_sane` is the remaining instance: real
+in principle, **zero flips** across 51 sources × 11 context mutations, so it is
+recorded and not built against.
 
 ---
+
+### 12. A tier filter used to be able to silently overrule an authored override
+
+Reward pool is tier D. Every documented parse invocation is `--tier A,B,C`. So a
+source could have a complete, correct, tested override sitting in
+`data/overrides/` and simply never be built — and nothing reported it, because
+`loadOverride` looks files up BY slug, so an override for a slug nobody
+enumerates is never opened by anything.
+
+Fixed: **an authored override now forces its source to be parsed whatever the
+tier filter says** (the filter decides what to *attempt*; it was never meant to
+overrule an explicit human decision), and override slugs matching no loot source
+are reported as orphans so a typo'd filename is visible. The run log names any
+source pulled in this way.
+
+Worth knowing because the from-scratch machinery itself was never the problem:
+`applyOverride` has always accepted a null generated document and emitted
+`source: 'override'`, and `parseBoss`'s `overrideCarriesTables` has always
+rescued its three `parse_failed` exits. Nothing was missing there. **Rewards
+Chest (Fortis Colosseum) is tier D too and is the next source this would have
+bitten.**
 
 ## 7. Suggested next steps, in order
 
@@ -485,16 +652,51 @@ All five are real regression tests, not documentation — they run in
    fixed list, including fields only ever read inside formulas (Zalcano's
    `isMVP` appears in no condition anywhere) via `FORMULA_CONTEXT_FIELDS`. All
    fields round-trip through the URL. Verified by jsdom render tests against the
-   real generated documents — **not** in a live browser; Playwright is not a
-   dependency of this repo.
-3. **The remaining 10 sources**, cheapest-first order in section 3.
-4. **Un-watchlist as mechanics land**, following the four-step sequence in
+   real generated documents **and, since the Playwright session, in a real
+   browser against the production build** — `pnpm --filter web test:e2e`, 18
+   tests. That suite is what found the two production bugs in landmine #10.
+3. ~~**Reward pool**~~ — **DONE.** Shipped as `data/overrides/reward-pool.json`
+   + `data/tables/reward_pool_fish.json`, 12 wiki-figure tests, modelled **per
+   reward permit**. Two things worth carrying forward from how it was built:
+
+   - **`independent` mode + certainty rates (`1/1`) is how mutually exclusive
+     condition-gated alternatives are modelled.** Reward pool's seven Fishing
+     brackets cannot be a weighted table — all seven would sum to 25,200 against
+     a 3,600 denominator and `weights_sum` would fail, correctly, because it is
+     a members-variant check and understands no other condition kind. Instead
+     the seven bracket entries are certainty rates gated on their bracket, each
+     carrying a `oneOf` of that bracket's five fish; exactly one survives
+     compile-time filtering and its `oneOf` normalises over the bracket's own
+     3,600. Reach for this shape the next time brackets appear.
+   - **Per-permit/per-redemption modelling can dissolve a missing formula.** The
+     points -> permits rounding rule is still unstated, but it only ever
+     mattered for `Table.rolls`; making the permit the simulated unit — which is
+     the page's own unit — makes the table exact and needs no formula. Ask
+     whether a source's real unit is the encounter before assuming it is.
+
+   It **stays watchlisted and `needs_review`**: the per-encounter mechanic is
+   genuinely unmodelled. Do not remove the entry to move the counter.
+
+4. ~~**Reward Cart**~~ — **BLOCKED, deliberately, do not attempt.** Its Logs
+   sub-table rows are all `rarity=Varies` with the Woodcutting-level rates never
+   stated (same class as Zalcano's two curves — do not guess), and the pyromancer
+   outfit rule ("the piece players have the least of", fixed tie-break order) is
+   a *relative* comparison across four item counts, a fourth gating shape
+   `ownershipGate` does not express. Wikitext is snapshotted if you want to
+   re-read it. What IS expressible: the warm gloves / bruma torch "already has
+   three" substitutions are ordinary `ownershipGate` threshold cases.
+
+5. **The remaining sources.** `rewards-chest-fortis-colosseum` is the natural
+   next one — it is tier D like Reward pool was, so landmine #12's fix is what
+   makes an override for it reachable at all.
+
+6. **Un-watchlist as mechanics land**, following the four-step sequence in
    `docs/OVERRIDES.md` — the wiki-figure test (step 3) is the part that is
    easy to skip and must not be.
-5. Nex (tier D, `include: true`) has still never been investigated — check
+7. Nex (tier D, `include: true`) has still never been investigated — check
    whether it's actually raid-shaped before assuming it needs any of this
    machinery.
-6. ~~`reward-pool`/`reward-cart` watchlist misattribution~~ — **RESOLVED, and do
+8. ~~`reward-pool`/`reward-cart` watchlist misattribution~~ — **RESOLVED, and do
    not re-flag it.** The data was already correct; this item was a stale
    transcription of a sentence in `docs/bosses/reward-{pool,cart}.md` that said
    the watchlist "currently reads" the swapped values and was never updated

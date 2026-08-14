@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-08-13T07:42:29.518Z",
+  "generatedAt": "2026-08-14T17:45:03.589Z",
   "entries": [
     {
       "slug": "abyssal-sire",
       "name": "Abyssal Sire",
       "aliases": [],
-      "status": "needs_review"
+      "status": "verified"
     },
     {
       "slug": "amoxliatl",
@@ -83,7 +83,7 @@
       "slug": "corporeal-beast",
       "name": "Corporeal Beast",
       "aliases": [],
-      "status": "needs_review"
+      "status": "verified"
     },
     {
       "slug": "crazy-archaeologist",
@@ -119,7 +119,7 @@
       "slug": "doom-of-mokhaiotl",
       "name": "Doom of Mokhaiotl",
       "aliases": [],
-      "status": "needs_review"
+      "status": "manual_override"
     },
     {
       "slug": "duke-sucellus",
@@ -185,7 +185,7 @@
       "slug": "lunar-chest",
       "name": "Lunar Chest",
       "aliases": [],
-      "status": "needs_review"
+      "status": "manual_override"
     },
     {
       "slug": "monumental-chest",
@@ -198,6 +198,15 @@
       "name": "Phantom Muspah",
       "aliases": [],
       "status": "verified"
+    },
+    {
+      "slug": "reward-pool",
+      "name": "Reward pool",
+      "aliases": [
+        "Tempoross reward pool",
+        "Tempoross"
+      ],
+      "status": "needs_review"
     },
     {
       "slug": "salarin-the-twisted",
@@ -307,5 +316,14 @@
       "aliases": [],
       "status": "needs_review"
     }
+  ],
+  "tables": [
+    "gem_drop_table",
+    "lunar_chest_blood_set",
+    "lunar_chest_blue_set",
+    "lunar_chest_eclipse_set",
+    "mega_rare_drop_table",
+    "rare_drop_table",
+    "reward_pool_fish"
   ]
 }

@@ -9,11 +9,14 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    // Node build/dev scripts (apps/web/scripts/*.mjs) — not part of the
-    // browser bundle, so they run under Node's global scope, not the DOM's.
+    // Node build/dev scripts (apps/web/scripts/*.mjs, apps/web/e2e/*.mjs) —
+    // not part of the browser bundle, so they run under Node's global scope,
+    // not the DOM's. `URL` is a Node global too (WHATWG URL, global since
+    // Node 10); it is listed because it is also a DOM name, so the shared
+    // browser-vs-node ambiguity has to be resolved explicitly here.
     files: ['**/*.mjs'],
     languageOptions: {
-      globals: { process: 'readonly' },
+      globals: { process: 'readonly', URL: 'readonly' },
     },
   },
   {

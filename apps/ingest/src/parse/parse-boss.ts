@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { checkWeightsSum } from '../validate/weights-sum.js'
 import { checkNotOnWatchlist, type Watchlist } from '../validate/watchlist.js'
-import { checkItemsKnown, type ItemCheckInput } from '../validate/items-known.js'
+import { checkItemsKnown } from '../validate/items-known.js'
 import { checkEvMatches, type EvMatchesResult } from '../validate/ev-matches.js'
 import { checkRefsResolve } from '../validate/refs-resolve.js'
 import { checkRatesValid } from '../validate/rates-valid.js'
@@ -17,6 +17,7 @@ import { extractDropLines } from './wikitext-drops.js'
 import { buildTableGroups, groupByHeading } from './build-tables.js'
 import { extractRdtAccessLines } from './rdt-access.js'
 import { assembleBoss } from './assemble-boss.js'
+import { collectItemInputs } from './collect-items.js'
 import { applyOverride, loadOverride, overrideSummary } from './overrides.js'
 
 export const BOSSES_DIR = join(REPO_ROOT, 'data', 'bosses')
@@ -127,14 +128,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
       ? result.boss!
       : BossSchema.parse(applyOverride(result.boss, override, options.parserVersion))
 
-  const itemInputs: ItemCheckInput[] = []
-  for (const table of merged.tables) {
-    for (const entry of table.entries) {
-      if (entry.node.kind === 'item') {
-        itemInputs.push({ itemKey: entry.node.itemKey, itemId: entry.node.itemId })
-      }
-    }
-  }
+  const itemInputs = collectItemInputs(merged.tables)
 
   const weightsSum = checkWeightsSum(merged.tables)
   const itemsKnown = checkItemsKnown(itemInputs, options.itemIndex, options.allowlist)

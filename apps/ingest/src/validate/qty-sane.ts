@@ -5,6 +5,7 @@ import {
   resolveSimContext,
   type Boss,
   type FormulaRegistry,
+  type Node,
 } from '@osrs-loot-simulator/loot-model'
 
 export interface QtySaneResult {
@@ -37,6 +38,38 @@ export function checkQtySane(
   const failures: string[] = []
   let evaluatedCount = 0
 
+  function visitNode(node: Node, tableId: string): void {
+    if (node.kind === 'oneOf') {
+      for (const entry of node.entries) visitNode(entry.node, tableId)
+      return
+    }
+
+    if (node.kind === 'item' && node.qty.kind === 'formula') {
+      evaluatedCount++
+      const qty = node.qty
+      try {
+        evaluateQuantity(qty.id, qty.params, ctx, formulas)
+      } catch (error) {
+        failures.push(
+          `table '${tableId}': item '${node.itemKey}' qty formula '${qty.id}' ${error instanceof Error ? error.message : String(error)}`
+        )
+      }
+      return
+    }
+
+    if (node.kind === 'tableRef' && node.qtyMultiplier !== undefined && typeof node.qtyMultiplier !== 'number') {
+      evaluatedCount++
+      const multiplier = node.qtyMultiplier
+      try {
+        evaluateMultiplier(multiplier.id, multiplier.params, ctx, formulas)
+      } catch (error) {
+        failures.push(
+          `table '${tableId}': tableRef '${node.ref}' qtyMultiplier formula '${multiplier.id}' ${error instanceof Error ? error.message : String(error)}`
+        )
+      }
+    }
+  }
+
   for (const table of boss.tables) {
     if (typeof table.rolls !== 'number' && table.rolls.kind === 'formula') {
       evaluatedCount++
@@ -60,35 +93,12 @@ export function checkQtySane(
       }
     }
 
-    for (const entry of table.entries) {
-      if (entry.node.kind === 'item' && entry.node.qty.kind === 'formula') {
-        evaluatedCount++
-        const qty = entry.node.qty
-        try {
-          evaluateQuantity(qty.id, qty.params, ctx, formulas)
-        } catch (error) {
-          failures.push(
-            `table '${table.id}': item '${entry.node.itemKey}' qty formula '${qty.id}' ${error instanceof Error ? error.message : String(error)}`
-          )
-        }
-      }
-
-      if (
-        entry.node.kind === 'tableRef' &&
-        entry.node.qtyMultiplier !== undefined &&
-        typeof entry.node.qtyMultiplier !== 'number'
-      ) {
-        evaluatedCount++
-        const multiplier = entry.node.qtyMultiplier
-        try {
-          evaluateMultiplier(multiplier.id, multiplier.params, ctx, formulas)
-        } catch (error) {
-          failures.push(
-            `table '${table.id}': tableRef '${entry.node.ref}' qtyMultiplier formula '${multiplier.id}' ${error instanceof Error ? error.message : String(error)}`
-          )
-        }
-      }
-    }
+    // Descends into `oneOf`. Its entries carry `LeafNode`s, and an item node
+    // there has a full `QtySpec` — including the `formula` variant this check
+    // exists for. A flat `for (const entry of table.entries)` loop over
+    // `entry.node.kind` could not see one, which is the same node-kind blind
+    // spot `refs_resolve` had for a nested `tableRef`.
+    for (const entry of table.entries) visitNode(entry.node, table.id)
   }
 
   if (failures.length > 0) {

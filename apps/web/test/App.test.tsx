@@ -10,6 +10,10 @@ const FAKE_INDEX = {
     { slug: 'giant-mole', name: 'Giant Mole', aliases: [], status: 'verified' },
     { slug: 'abyssal-sire', name: 'Abyssal Sire', aliases: [], status: 'needs_review' },
   ],
+  // The shared-table manifest the browser fetches `data/tables/` by. Required
+  // by the strict schema — the site index is a boundary, so a response missing
+  // it is rejected rather than defaulted, which is the point.
+  tables: ['rare_drop_table'],
 }
 
 function renderApp(path: string) {

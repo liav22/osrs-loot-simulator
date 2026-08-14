@@ -32,6 +32,7 @@ import { fetchGePrices } from './prices/ge-prices.js'
 import { loadSharedTables } from './tables/shared-tables.js'
 import { parseBoss } from './parse/parse-boss.js'
 import { buildSiteIndex, writeSiteIndex } from './site-index.js'
+import { listOverrideSlugs } from './parse/overrides.js'
 
 /**
  * Phase 2 scope: snapshots and triage. There is deliberately no `parse`
@@ -246,14 +247,51 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
     log('')
   }
 
+  // An authored override is a human saying "build this source", so it always
+  // gets parsed regardless of tier. Without this, a source could have a
+  // complete, correct, tested override sitting in `data/overrides/` and
+  // silently never be built — which is exactly what happened to Reward pool:
+  // it is tier D, every documented parse invocation is `--tier A,B,C`, and so
+  // `data/bosses/reward-pool.json` never existed no matter what anyone
+  // authored. The tier filter is a triage convenience for deciding what to
+  // *attempt*; it was never meant to overrule an explicit human decision.
+  //
+  // `parseBoss` already handles the from-scratch case end to end
+  // (`overrideCarriesTables` rescues all three of its `parse_failed` exits, and
+  // `applyOverride` accepts a null generated document and emits
+  // `source: 'override'`) — the capability existed, nothing ever reached it.
+  const overrideSlugs = new Set(await listOverrideSlugs())
+
+  const overrideOrphans = [...overrideSlugs].filter(
+    (slug) => !inventory.lootSources.some((source) => source.id === slug)
+  )
+  if (overrideOrphans.length > 0) {
+    // A typo'd filename is otherwise invisible: `loadOverride` looks the file
+    // up BY slug, so an override named for a source that does not exist is
+    // simply never opened by anything, forever.
+    log(`!! data/overrides/ names ${overrideOrphans.length} slug(s) with no loot source:`)
+    for (const slug of overrideOrphans) log(`     ${slug}.json`)
+    log('')
+  }
+
   const sources = inventory.lootSources.filter(
     (source) =>
       source.include &&
-      tierFilter.has(source.tier) &&
+      (tierFilter.has(source.tier) || overrideSlugs.has(source.id)) &&
       (sourceFilter === undefined || source.id === sourceFilter)
   )
 
-  log(`Parsing ${sources.length} loot source(s) at tier ${[...tierFilter].join(',')}\n`)
+  const forcedByOverride = sources.filter(
+    (source) => !tierFilter.has(source.tier) && overrideSlugs.has(source.id)
+  )
+  log(
+    `Parsing ${sources.length} loot source(s) at tier ${[...tierFilter].join(',')}` +
+      (forcedByOverride.length > 0
+        ? ` (+${forcedByOverride.length} outside that tier, pulled in by an authored override: ` +
+          `${forcedByOverride.map((s) => s.id).join(', ')})`
+        : '') +
+      '\n'
+  )
 
   const outcomes: Awaited<ReturnType<typeof parseBoss>>[] = []
   for (const source of sources) {

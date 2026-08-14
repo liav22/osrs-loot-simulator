@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { expectedValue, type ExpectedValueResult } from '@osrs-loot-simulator/loot-model'
 import { useBoss, useSharedTables } from '../hooks/useBoss'
 import { useSimulationWorker } from '../hooks/useSimulationWorker'
@@ -86,7 +86,11 @@ export function BossView({ slug }: { slug: string }) {
       {boss.status !== 'verified' && (
         <p className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-300">
           This source hasn't cleared every deterministic check yet — rates below may be incomplete or wrong. See
-          the <a href={`/admin?slug=${boss.slug}`} className="underline">admin page</a> for specifics.
+          {/* `Link`, not a raw <a href="/...">: on GitHub Pages the app is served from
+              /osrs-loot-simulator/, so a root-absolute href points at a path that belongs
+              to a different site entirely. `Link` applies the router's basename (set from
+              import.meta.env.BASE_URL in main.tsx), so one mechanism handles dev and prod. */}
+          the <Link to={`/admin?slug=${boss.slug}`} className="underline">admin page</Link> for specifics.
         </p>
       )}
 

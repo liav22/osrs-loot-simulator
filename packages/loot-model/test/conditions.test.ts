@@ -21,8 +21,16 @@ describe('evaluateCondition', () => {
     [{ kind: 'onSlayerTask', value: false }, { onSlayerTask: true }, false],
     [{ kind: 'questComplete', quest: "Legends' Quest" }, { questsComplete: ["Legends' Quest"] }, true],
     [{ kind: 'questComplete', quest: "Legends' Quest" }, { questsComplete: [] }, false],
-    [{ kind: 'killCountAtLeast', n: 50 }, { killCount: 50 }, true],
-    [{ kind: 'killCountAtLeast', n: 50 }, { killCount: 49 }, false],
+    // `killCountAtLeast` was retired into `levelAtLeast`; this is its replacement spelling.
+    [{ kind: 'levelAtLeast', field: 'killCount', n: 50 }, { killCount: 50 }, true],
+    [{ kind: 'levelAtLeast', field: 'killCount', n: 50 }, { killCount: 49 }, false],
+    // One-sided (no `atMost`) stays open-ended above `n`.
+    [{ kind: 'levelAtLeast', field: 'delveLevel', n: 3 }, { delveLevel: 99 }, true],
+    // Two-sided brackets: Reward pool's "Levels 40-45", inclusive at both ends.
+    [{ kind: 'levelAtLeast', field: 'fishingLevel', n: 40, atMost: 45 }, { fishingLevel: 39 }, false],
+    [{ kind: 'levelAtLeast', field: 'fishingLevel', n: 40, atMost: 45 }, { fishingLevel: 40 }, true],
+    [{ kind: 'levelAtLeast', field: 'fishingLevel', n: 40, atMost: 45 }, { fishingLevel: 45 }, true],
+    [{ kind: 'levelAtLeast', field: 'fishingLevel', n: 40, atMost: 45 }, { fishingLevel: 46 }, false],
     [{ kind: 'variant', name: 'demonic' }, { variant: 'demonic' }, true],
     [{ kind: 'variant', name: 'demonic' }, { variant: 'normal' }, false],
   ]
