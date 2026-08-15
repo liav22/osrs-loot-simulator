@@ -41,10 +41,8 @@ function renderFor(slug: string) {
     <SimContextControls
       boss={boss}
       sharedTables={shared}
-      params={{ ctx: { ...DEFAULT_SIM_CONTEXT }, seed: DEFAULT_SEED, kills: DEFAULT_KILLS }}
+      params={{ ctx: { ...DEFAULT_SIM_CONTEXT }, seed: DEFAULT_SEED, kills: DEFAULT_KILLS, run: false }}
       onChange={() => {}}
-      onSimulate={() => {}}
-      buttonState="idle"
     />
   )
 }

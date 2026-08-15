@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { App } from '../src/App'
@@ -41,11 +41,34 @@ describe('App', () => {
     )
   })
 
-  it('renders the search box and loads the boss index on "/"', async () => {
+  /**
+   * This used to assert that both index entries were on screen after load.
+   * They no longer are, and that is the change rather than a regression: the
+   * boss list is hidden until something is typed. An always-visible list of 52
+   * sources was most of the page's height and none of its purpose. What still
+   * has to hold is that the index really loaded and really drives the filter,
+   * so the assertion moved from "the list is rendered" to "typing finds an
+   * entry from the fetched index, and only the matching one."
+   */
+  it('renders the search box and shows nothing until a query is typed', async () => {
     renderApp('/')
-    expect(screen.getByPlaceholderText(/search a boss/i)).toBeInTheDocument()
+    const input = screen.getByPlaceholderText(/search a boss/i)
+    expect(input).toBeInTheDocument()
+
+    // The index request settles; the list stays empty regardless.
+    await waitFor(() => expect(fetch).toHaveBeenCalled())
+    expect(screen.queryByText('Giant Mole')).not.toBeInTheDocument()
+    expect(screen.queryByText('Abyssal Sire')).not.toBeInTheDocument()
+  })
+
+  it('filters the fetched index as you type, and lists only matches', async () => {
+    renderApp('/')
+    // `fireEvent.change` rather than user-event: this repo doesn't carry that
+    // dependency, and a single controlled-input change is all this asserts.
+    fireEvent.change(screen.getByPlaceholderText(/search a boss/i), { target: { value: 'mole' } })
+
     await waitFor(() => expect(screen.getByText('Giant Mole')).toBeInTheDocument())
-    expect(screen.getByText('Abyssal Sire')).toBeInTheDocument()
+    expect(screen.queryByText('Abyssal Sire')).not.toBeInTheDocument()
   })
 
   it('renders the attribution footer on every page', async () => {

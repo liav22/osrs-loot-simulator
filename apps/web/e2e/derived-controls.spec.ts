@@ -69,7 +69,11 @@ test('Reward pool gets a Fishing level control and simulates through its bracket
   const simulate = page.getByRole('button', { name: 'Simulate' })
   await expect(simulate).toBeEnabled()
   await simulate.click()
-  await expect(page.getByRole('heading', { name: 'Results' })).toBeVisible({ timeout: 30_000 })
+  // The results section is on screen from the start now (it renders an empty
+  // state so the two columns don't change height when a run lands), so waiting
+  // on the section would prove nothing. The summary line only exists once the
+  // worker has replied.
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
   await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
 })
 
@@ -108,6 +112,10 @@ test('Lunar Chest simulates with a Moon selected, rather than failing on an unre
   await expect(simulate).toBeEnabled()
   await simulate.click()
 
-  await expect(page.getByRole('heading', { name: 'Results' })).toBeVisible({ timeout: 30_000 })
+  // The results section is on screen from the start now (it renders an empty
+  // state so the two columns don't change height when a run lands), so waiting
+  // on the section would prove nothing. The summary line only exists once the
+  // worker has replied.
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
   await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
 })

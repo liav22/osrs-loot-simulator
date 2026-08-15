@@ -1,20 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { expectedValue, type ExpectedValueResult } from '@osrs-loot-simulator/loot-model'
 import { useBoss, useSharedTables } from '../hooks/useBoss'
 import { useSimulationWorker } from '../hooks/useSimulationWorker'
 import { useGePrices } from '../hooks/useGePrices'
+import { useSiteIndex } from '../hooks/useSiteIndex'
 import { gePriceLookup } from '../lib/prices'
-import { paramsFromSearch, searchFromParams, type SimRunParams } from '../lib/url-state'
-import { StatusBadge } from './StatusBadge'
-import { DropTableView } from './DropTableView'
-import { SimContextControls } from './SimContextControls'
+import { paramsFromSearch, RANDOM_SEED, rollSeed, searchFromParams, type SimRunParams } from '../lib/url-state'
+import { BossPanel } from './BossPanel'
 import { SimResultsView } from './SimResultsView'
 
 export function BossView({ slug }: { slug: string }) {
   const bossQuery = useBoss(slug)
   const tablesQuery = useSharedTables()
   const pricesQuery = useGePrices()
+  const indexQuery = useSiteIndex()
   const [searchParams, setSearchParams] = useSearchParams()
   const [params, setParams] = useState<SimRunParams>(() => paramsFromSearch(searchParams))
   const { state: simState, run } = useSimulationWorker()
@@ -49,93 +49,149 @@ export function BossView({ slug }: { slug: string }) {
     }
   }, [bossQuery.data, tablesQuery.data, pricesQuery.data, params.ctx])
 
+  /**
+   * Whether the run currently on screen was priced — a property of that run,
+   * not of the price query right now.
+   *
+   * These come apart, and it is not a corner case. Simulate is no longer
+   * disabled while the GE fetch is in flight, so an early click runs against
+   * an empty price map; if the fetch then lands a second later, asking the
+   * live query would label an all-zero grid "sorted by total value". Recording
+   * what the run actually used is what keeps the label honest.
+   */
+  const [ranWithPrices, setRanWithPrices] = useState(false)
+
+  const runWith = useCallback(
+    (next: SimRunParams) => {
+      if (bossQuery.data === undefined || tablesQuery.data === undefined) return
+      const prices = pricesQuery.data ?? new Map<number, number>()
+      setRanWithPrices(prices.size > 0)
+      run({
+        boss: bossQuery.data,
+        ctx: next.ctx,
+        seed: next.seed,
+        n: next.kills,
+        tables: tablesQuery.data,
+        prices,
+      })
+    },
+    [bossQuery.data, tablesQuery.data, pricesQuery.data, run]
+  )
+
+  /**
+   * Re-run a shared link on arrival, exactly once.
+   *
+   * The ref, not a piece of state: `runWith` changes identity whenever the
+   * price query settles, and without the latch that would re-fire the
+   * simulation underneath someone who had already changed the controls.
+   */
+  const autoRan = useRef(false)
+
   function handleSimulate() {
-    if (bossQuery.data === undefined || tablesQuery.data === undefined) return
-    run({
-      boss: bossQuery.data,
-      ctx: params.ctx,
-      seed: params.seed,
-      n: params.kills,
-      tables: tablesQuery.data,
-      prices: pricesQuery.data ?? new Map(),
-    })
+    // A seed of 0 means "roll one". The rolled value goes to the worker and
+    // into the URL, but NOT into `params` — the input keeps showing 0 so the
+    // next click rolls again instead of repeating this run.
+    //
+    // This is why the URL is written from a different object than the state:
+    // the link has to carry a real seed to replay, while the control has to
+    // keep carrying the sentinel.
+    const next = { ...params, run: true }
+    const effective = { ...next, seed: next.seed === RANDOM_SEED ? rollSeed() : next.seed }
+
+    // Claim the auto-run latch. Pressing Simulate is what first sets `run` on
+    // the params, and the auto-run effect watches exactly that — so without
+    // this the click dispatches a run and the effect immediately dispatches a
+    // second one. That was invisible while every run used the seed sitting in
+    // the input (two identical runs, the later one winning), and became
+    // visible the moment the seed was rolled per run: the URL carried the
+    // click's seed and the results carried the effect's.
+    autoRan.current = true
+
+    setParams(next)
+    setSearchParams(searchFromParams(effective), { replace: true })
+    runWith(effective)
   }
 
-  if (bossQuery.isLoading) return <p className="text-sm text-neutral-500">Loading {slug}…</p>
+  useEffect(() => {
+    if (autoRan.current || !params.run) return
+    if (bossQuery.data === undefined || tablesQuery.data === undefined) return
+    autoRan.current = true
+    // Every link this app produces carries a real seed, so the sentinel branch
+    // is only reachable on a hand-edited `?run=1&seed=0`. Rolling is the right
+    // reading of that link — "run one" — rather than seeding the RNG with 0.
+    runWith(params.seed === RANDOM_SEED ? { ...params, seed: rollSeed() } : params)
+  }, [params, bossQuery.data, tablesQuery.data, runWith])
+
+  if (bossQuery.isLoading) return <p className="p-4 text-sm text-neutral-500">Loading {slug}…</p>
   if (bossQuery.isError) {
-    return <p className="text-sm text-red-400">Could not load "{slug}": {(bossQuery.error as Error).message}</p>
+    return (
+      <p className="p-4 text-sm text-red-400">
+        Could not load "{slug}": {(bossQuery.error as Error).message}
+      </p>
+    )
   }
   if (bossQuery.data === undefined) return null
   const boss = bossQuery.data
 
+  const image = indexQuery.data?.entries.find((entry) => entry.slug === slug)?.image
+
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-neutral-100">{boss.name}</h1>
-        <StatusBadge status={boss.status} />
-        <a
-          href={`https://oldschool.runescape.wiki/w/${encodeURIComponent(boss.wikiPage.replace(/ /g, '_'))}`}
-          target="_blank"
-          rel="noreferrer"
-          className="text-xs text-neutral-500 hover:text-amber-400 hover:underline"
-        >
-          OSRS Wiki ↗
-        </a>
+    // Section 8's three breakpoints, spelled out rather than approximated with
+    // Tailwind's defaults (which land on 1024, not 900):
+    //   <900px    one column, page scrolls
+    //   900-1200  two columns, boss panel narrow
+    //   >=1200    two columns, boss panel at full width
+    <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 p-3 min-[900px]:grid-cols-[260px_minmax(0,1fr)] min-[900px]:overflow-hidden min-[900px]:p-4 min-[1200px]:grid-cols-[320px_minmax(0,1fr)]">
+      <div className="min-h-0 min-[900px]:overflow-hidden">
+        <BossPanel
+          boss={boss}
+          image={image}
+          sharedTables={tablesQuery.data}
+          params={params}
+          onChange={updateParams}
+          onSimulate={handleSimulate}
+          running={simState.status === 'running'}
+        />
       </div>
 
-      {boss.status !== 'verified' && (
-        <p className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-300">
-          This source hasn't cleared every deterministic check yet — rates below may be incomplete or wrong. See
-          {/* `Link`, not a raw <a href="/...">: on GitHub Pages the app is served from
-              /osrs-loot-simulator/, so a root-absolute href points at a path that belongs
-              to a different site entirely. `Link` applies the router's basename (set from
-              import.meta.env.BASE_URL in main.tsx), so one mechanism handles dev and prod. */}
-          the <Link to={`/admin?slug=${boss.slug}`} className="underline">admin page</Link> for specifics.
-        </p>
-      )}
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-6">
-          <section>
-            <h2 className="mb-2 text-sm font-semibold text-neutral-300">Drop tables</h2>
-            <DropTableView tables={boss.tables} />
-          </section>
-
-          {simState.status === 'error' && (
-            <p className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
-              Simulation failed: {simState.message}
+      <section
+        data-testid="results"
+        className="flex min-h-0 flex-col rounded-md border border-neutral-800 bg-neutral-950 p-3"
+      >
+        {/* Screen-reader only: the section needs a name, but a visible
+            "Results" title would spend a line of the region the whole rework
+            is trying to give more room to. */}
+        <h2 className="sr-only">Results</h2>
+        {simState.status === 'error' && (
+          <p className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+            Simulation failed: {simState.message}
+          </p>
+        )}
+        {/* An empty state, not a collapsed panel — the two columns are the same
+            height before and after a run, so nothing jumps when results land. */}
+        {simState.status === 'idle' && (
+          <div className="flex flex-1 items-center justify-center px-6 text-center">
+            <p className="text-sm text-neutral-600">
+              Set the kill count and press Simulate.
+              <br />
+              Results appear here.
             </p>
-          )}
-          {simState.status === 'running' && <p className="text-sm text-neutral-500">Simulating…</p>}
-          {simState.status === 'done' && (
-            <section>
-              <h2 className="mb-2 text-sm font-semibold text-neutral-300">Results</h2>
-              <SimResultsView result={simState.result} expected={expected} />
-            </section>
-          )}
-        </div>
-
-        <aside>
-          {tablesQuery.isLoading && <p className="text-sm text-neutral-500">Loading shared tables…</p>}
-          {tablesQuery.data !== undefined && (
-            <SimContextControls
-              boss={boss}
-              // Needed to discover ownership-gated controls: Lunar Chest's
-              // per-set duplicate protection lives in its referenced shared
-              // tables, not in the boss document.
-              sharedTables={tablesQuery.data}
-              params={params}
-              onChange={updateParams}
-              onSimulate={handleSimulate}
-              // Waiting on prices too, not just tables: clicking Simulate
-              // before the GE price fetch resolves would silently run with
-              // an empty price map and show 0 gp everywhere, which reads as
-              // a bug rather than "still loading."
-              buttonState={simState.status === 'running' ? 'running' : pricesQuery.isLoading ? 'loading-prices' : 'idle'}
-            />
-          )}
-        </aside>
-      </div>
+          </div>
+        )}
+        {simState.status === 'running' && (
+          <div className="flex flex-1 items-center justify-center">
+            <p className="text-sm text-neutral-500">Simulating…</p>
+          </div>
+        )}
+        {simState.status === 'done' && (
+          <SimResultsView
+            boss={boss}
+            result={simState.result}
+            expected={expected}
+            pricesAvailable={ranWithPrices}
+          />
+        )}
+      </section>
     </div>
   )
 }

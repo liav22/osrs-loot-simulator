@@ -12,7 +12,15 @@ import { expect, test } from './fixtures'
 test('the app root loads under the /osrs-loot-simulator/ subpath', async ({ page }) => {
   const response = await page.goto('./')
   expect(response?.status()).toBe(200)
-  await expect(page.getByRole('heading', { name: 'OSRS Loot Simulator' })).toBeVisible()
+
+  // "OSRS Loot Simulator" is no longer a heading: it moved into a persistent
+  // header as a home link, so that each page's own <h1> can name what the page
+  // is actually about (on /boss/:slug that is the boss). Asserting the link
+  // plus the search input keeps this test's real subject — did the app boot
+  // under the subpath at all — while not pinning markup the rework changed on
+  // purpose.
+  await expect(page.getByRole('link', { name: 'OSRS Loot Simulator' })).toBeVisible()
+  await expect(page.getByPlaceholder(/search a boss/i)).toBeVisible()
 })
 
 test('every asset the page requests resolves — no 404 under the subpath', async ({ page }) => {

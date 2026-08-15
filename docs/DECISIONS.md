@@ -2916,3 +2916,133 @@ stated (same class as Zalcano's two curves — do not guess), and the pyromancer
 outfit rule ("the piece players have the least of", fixed tie-break order) is a
 *relative* comparison across four item counts, which is a fourth gating shape
 `ownershipGate` does not express. Its watchlist entry stays.
+
+## The UI rework's two measurements, and what they changed
+
+Both were run before any layout code, both came back negative, and both changed
+the design rather than being worked around.
+
+### Item icon URLs are not derivable from the item name
+
+The plan was to build icon URLs from the item name and accept a placeholder for
+the misses. Every one of the **693 distinct items across the 54 parsed sources**
+was HEAD-requested at its derived `/images/{Name}.png`:
+
+| derivation | misses | rate |
+|---|---|---|
+| `/images/{Name}.png` | 94 / 693 | **13.6%** |
+| the same 94 retried via `Special:FilePath` | 17 / 693 | **2.5%** |
+
+13.6% would be tolerable if it were scattered. It is not — it is one structural
+class: **every stackable item's icon file carries a stack-size suffix the item
+name never mentions.** `Acorn` is `Acorn_5.png`, `Coins` is `Coins_100.png`,
+`Ancient essence` is `Ancient_essence_500.png`, `Brimstone key` is
+`Brimstone_key_1.png`, `Cow slippers` is `Cow_slippers_(1).png`. The suffix
+varies, so no rule over the item name produces it. It catches every seed, every
+arrow and bolt type, Coins, Zulrah's scales, Sunfire splinters and Crystal
+shard — the highest-count items in any results grid, so the share of *visible*
+cards affected is worse than 13.6%.
+
+`Special:FilePath` dissolves that whole class because MediaWiki resolves file
+redirects there (`File:Acorn.png` redirects to `File:Acorn 5.png`). It is wired
+as an **error fallback only**: it is a special page rather than a CDN path, and
+the audit was rate-limited (HTTP 429) requesting 94 of them at five-way
+concurrency. Sparse, for the ~14% that 404, it stays well inside that limit; as
+the `src` for every icon in a 24-card grid it would not.
+
+The residual 17 (2.5%) are all case-only mismatches on proper nouns — `Baby
+mole` is filed as `Baby Mole.png`, `Wine of zamorak` as `Wine of Zamorak.png`,
+`Vet'ion jr.` as `Vet'ion Jr..png` — and 14 of the 17 are pets. Which words a
+proper noun capitalises is not a function of the item name, so these render the
+placeholder.
+
+**Recommendation, not applied (out of scope, pipeline work): ingest should
+resolve icon URLs via the wiki's `imageinfo` API and store them.** 693 items is
+14 batched requests and it takes all three classes to zero at once. No
+hand-maintained alias map was added — it would cover today's corpus and rot on
+the next source.
+
+### No rarity threshold separates uniques from ordinary rares
+
+Checked with `expectedValue` against the real committed documents before any
+number was hardcoded, as the rework asked. **Raw rarity fails on five of six
+bosses**, and in both directions:
+
+| boss | rarest non-unique | commonest unique | separable? |
+|---|---|---|---|
+| Vorkath | Sapphire bolt tips 1/546 | Dragonbone necklace 1/1,000 | yes |
+| Zulrah | Rune javelin 1/10,199 | Serpentine visage 1/1,024 | no |
+| Corporeal Beast | Rune javelin 1/546 | Spirit shield 1/64 | no |
+| General Graardor | Curved bone 1/5,013 | Bandos boots 1/381 | no |
+| Sarachnis | Rune javelin 1/12,800 | Sarachnis cudgel 1/386 | no |
+| Kraken | Rune javelin 1/8,192 | Kraken tentacle 1/400 | no |
+
+The cause is one thing: **the shared rare/mega-rare/gem drop tables.** Every
+source with RDT access carries the same junk — rune javelin, key halves, chaos
+and nature talismans, uncut gems — at 1/4,000–1/13,000, rarer than almost every
+genuine unique in the game. Corporeal Beast fails the opposite way: its spirit
+shield is 1/64 and holy elixir 1/171, commoner than dozens of ordinary drops on
+the same boss.
+
+Two things followed.
+
+1. **Exclude items only reachable through a `tableRef`** (`ownItemKeys` in
+   `apps/web/src/lib/rarity.ts`). This is derivable at render time from the boss
+   document, needs no schema change, and removes the entire junk class. With it,
+   the best single cut is 1/300.
+2. **Rename the concept.** 1/300 is still not clean — it admits `Long bone`
+   (1/400) and `Curved bone` (1/5,013) on Graardor and `Uncut onyx` on Zulrah,
+   and it misses Corp's spirit shield entirely. Called "**rarest drops**" rather
+   than "uniques", those stop being errors: curved bone genuinely is one of
+   Graardor's rarest drops, and a spirit shield genuinely is not rare on Corp.
+   The spirit shield still leads Corp's grid, because the grid sorts by value.
+
+The threshold is used only for the strip and the card highlight, never for
+ordering — value sorting surfaces most uniques incidentally, which is why
+getting the threshold imperfect is survivable. `apps/web/test/rarity.test.ts`
+pins the measurement against the real corpus, including the two cases that look
+like bugs and are not: **Barrows returns 27 rarest items and The Mimic 23**, and
+both are correct (24 Barrows set pieces at ~1/2,460, 23 3rd age pieces at
+~1/2,860). An earlier "the set stays small" assertion would have called those a
+defect; the test asserts the invariant instead — nothing commoner than the
+threshold ever gets in.
+
+### Boss images: the only pipeline change
+
+Not derivable from the page title (`Kraken` illustrates its page with
+`Whirlpool.png`, Zulrah with `Zulrah (serpentine).png`), so
+`SiteIndexEntrySchema` gained an optional `image`, extracted from the **local
+wikitext snapshots** — never a live fetch, per CLAUDE.md's hard rule. 52/52
+sources resolve, and all 52 URLs were verified to return 200 at both full size
+and the 300px thumbnail the frontend actually requests.
+
+The field stores the **file name, not a URL**, so the frontend picks the
+thumbnail width without an ingest run. `buildSiteIndex` **merges rather than
+overwrites**: `data/snapshots/` is gitignored, so a regeneration on a machine
+without it would otherwise silently strip every portrait out of the committed
+index — a data loss no check would catch, since the field is legitimately
+optional. Two tests in `apps/ingest/test/site-index.test.ts` pin that merge.
+
+## Seed 0 means "roll one", and the double-run it exposed
+
+`DEFAULT_SEED` was a literal `1`, so every visitor's first simulation of a boss
+produced byte-identical drops — the same three visages, for everyone, forever.
+That reads as a fixed answer rather than a sample. `0` is now the default and a
+sentinel meaning "roll a fresh seed for this run".
+
+The shape that keeps both properties true at once: **the rolled seed goes to the
+worker and into the URL, but never into component state.** The control keeps
+showing `0`, so the next click rolls again rather than repeating the last run;
+the link carries a real seed, so it still replays exactly. `rollSeed()` never
+returns `0` — a run stamped with the sentinel would re-roll on reload instead of
+reproducing, which would quietly break every shared link.
+
+**This exposed a pre-existing double-run.** `handleSimulate` sets `run: true` on
+the params, and the auto-run effect (section 9's shared-link replay) watches
+exactly that field — so a click dispatched a run and the effect immediately
+dispatched a second one. It was invisible while both runs used the seed sitting
+in the input: two identical simulations, the later one winning, costing only
+wasted work. Rolling per run made it visible immediately, because the URL
+carried the click's seed and the results carried the effect's. Fixed by claiming
+the `autoRan` latch inside `handleSimulate`: the latch means "the auto-run is
+resolved for this mount", not "the effect has fired".

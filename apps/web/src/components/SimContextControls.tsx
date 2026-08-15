@@ -41,14 +41,18 @@ function questsReferencedBy(boss: Boss): string[] {
   return [...quests].sort()
 }
 
+/**
+ * Only the per-boss context surface. The kill count, seed and Simulate button
+ * used to live here too; they moved into `BossPanel`, which pins them to the
+ * bottom of the boss panel so the primary action stays put no matter how many
+ * controls a source derives above it.
+ */
 interface Props {
   boss: Boss
   /** `data/tables/` — followed when discovering which controls this boss needs. */
   sharedTables?: ReadonlyMap<string, Table>
   params: SimRunParams
   onChange: (params: SimRunParams) => void
-  onSimulate: () => void
-  buttonState: 'idle' | 'running' | 'loading-prices'
 }
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
@@ -97,14 +101,7 @@ function NumberField({
   )
 }
 
-export function SimContextControls({
-  boss,
-  sharedTables,
-  params,
-  onChange,
-  onSimulate,
-  buttonState,
-}: Props) {
+export function SimContextControls({ boss, sharedTables, params, onChange }: Props) {
   const quests = useMemo(() => questsReferencedBy(boss), [boss])
   const surface = useMemo(() => contextSurfaceOf(boss, sharedTables), [boss, sharedTables])
   const uses = (field: SimContextField) => surface.fields.has(field)
@@ -135,10 +132,8 @@ export function SimContextControls({
   const booleanShown = (Object.keys(BOOLEAN_FIELDS) as SimContextField[]).filter(uses)
 
   return (
-    <div className="space-y-3 rounded-md border border-neutral-800 bg-neutral-950 p-4">
-      <h2 className="text-sm font-semibold text-neutral-300">Simulation context</h2>
-
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <div className="space-y-2">
+      <div className="grid grid-cols-1 gap-2">
         <Toggle label="Members" checked={params.ctx.members} onChange={(v) => setCtx({ members: v })} />
         <Toggle label="Ring of wealth" checked={params.ctx.ringOfWealth} onChange={(v) => setCtx({ ringOfWealth: v })} />
         <Toggle label="On slayer task" checked={params.ctx.onSlayerTask} onChange={(v) => setCtx({ onSlayerTask: v })} />
@@ -203,7 +198,7 @@ export function SimContextControls({
       )}
 
       {numericShown.length > 0 && (
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2">
           {numericShown.map((field) => {
             const spec = NUMERIC_FIELDS[field]
             if (spec === undefined) return null
@@ -226,7 +221,7 @@ export function SimContextControls({
           <span className="block text-sm text-neutral-400">
             Already owned entering the run (duplicate protection)
           </span>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2">
             {surface.ownershipItemKeys.map((itemKey) => (
               <NumberField
                 key={itemKey}
@@ -248,38 +243,6 @@ export function SimContextControls({
           onChange={(v) => setCtx({ killCount: v })}
         />
       )}
-
-      <div className="grid grid-cols-2 gap-2">
-        <label className="block text-sm">
-          <span className="mb-1 block text-neutral-400">Kills to simulate</span>
-          <input
-            type="number"
-            min={1}
-            max={10_000_000}
-            value={params.kills}
-            onChange={(e) => onChange({ ...params, kills: Math.max(1, Number(e.target.value) || 1) })}
-            className="w-full rounded-md border border-neutral-800 bg-neutral-900 px-3 py-2 text-sm"
-          />
-        </label>
-        <label className="block text-sm">
-          <span className="mb-1 block text-neutral-400">Seed</span>
-          <input
-            type="number"
-            value={params.seed}
-            onChange={(e) => onChange({ ...params, seed: Number(e.target.value) || 0 })}
-            className="w-full rounded-md border border-neutral-800 bg-neutral-900 px-3 py-2 text-sm"
-          />
-        </label>
-      </div>
-
-      <button
-        type="button"
-        onClick={onSimulate}
-        disabled={buttonState !== 'idle'}
-        className="w-full rounded-md bg-amber-500 px-4 py-2.5 text-sm font-semibold text-neutral-950 transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {buttonState === 'running' ? 'Simulating…' : buttonState === 'loading-prices' ? 'Loading prices…' : 'Simulate'}
-      </button>
     </div>
   )
 }

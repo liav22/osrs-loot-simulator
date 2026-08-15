@@ -40,15 +40,18 @@ function bossJson(overrides: Record<string, unknown> = {}) {
 describe('buildSiteIndex', () => {
   let dir: string
   let tablesDir: string
+  let scratch: string
 
   beforeEach(async () => {
     dir = await mkdtemp(join(tmpdir(), 'site-index-test-'))
     tablesDir = await mkdtemp(join(tmpdir(), 'site-index-tables-'))
+    scratch = await mkdtemp(join(tmpdir(), 'site-index-scratch-'))
   })
 
   afterEach(async () => {
     await rm(dir, { recursive: true, force: true })
     await rm(tablesDir, { recursive: true, force: true })
+    await rm(scratch, { recursive: true, force: true })
   })
 
   it('summarises every boss file into slug/name/aliases/status', async () => {
@@ -74,6 +77,41 @@ describe('buildSiteIndex', () => {
   it('throws on a file that is not a valid Boss document', async () => {
     await writeFile(join(dir, 'broken.json'), JSON.stringify({ not: 'a boss' }))
     await expect(buildSiteIndex(dir, tablesDir)).rejects.toThrow()
+  })
+
+  /**
+   * `data/snapshots/` is gitignored, so a checkout without it regenerates the
+   * index from boss documents that carry no image at all. `image` is optional,
+   * so nothing would reject the result — the portraits would just vanish from
+   * the committed file. These two tests pin the merge that prevents that.
+   */
+  it('carries a committed image forward when no snapshot is available', async () => {
+    await writeFile(join(dir, 'test-boss.json'), bossJson())
+    // Deliberately outside `dir`: that directory is scanned for `*.json` boss
+    // documents, so an index file living in it would be parsed as one.
+    const indexPath = join(scratch, 'previous-index.json')
+    await writeFile(
+      indexPath,
+      JSON.stringify({
+        generatedAt: '2026-01-01T00:00:00.000Z',
+        entries: [
+          { slug: 'test-boss', name: 'Test Boss', aliases: ['tb'], status: 'verified', image: 'Test Boss.png' },
+        ],
+        tables: [],
+      })
+    )
+
+    // 'Test Boss' has no wikitext snapshot, so the only possible source for
+    // this value is the file being regenerated.
+    const index = await buildSiteIndex(dir, tablesDir, indexPath)
+    expect(index.entries[0]?.image).toBe('Test Boss.png')
+  })
+
+  it('omits the image when there is neither a snapshot nor a committed value', async () => {
+    await writeFile(join(dir, 'test-boss.json'), bossJson())
+    const index = await buildSiteIndex(dir, tablesDir, join(scratch, 'does-not-exist.json'))
+    expect(index.entries[0]).not.toHaveProperty('image')
+    expect(SiteIndexSchema.safeParse(index).success).toBe(true)
   })
 
   it('lists every shared-table id from the directory, sorted', async () => {

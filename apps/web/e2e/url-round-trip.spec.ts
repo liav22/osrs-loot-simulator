@@ -98,13 +98,15 @@ test('a shared link reproduces the same simulation result', async ({ page }) => 
     const simulate = page.getByRole('button', { name: 'Simulate' })
     await expect(simulate).toBeEnabled()
     await simulate.click()
-    // Scoped to the Results section: the page also renders the static drop
-    // tables, whose contents are identical across seeds by construction and
-    // would make this assertion pass without proving anything.
-    const results = page.locator('section', {
-      has: page.getByRole('heading', { name: 'Results' }),
-    })
-    await expect(results).toBeVisible({ timeout: 30_000 })
+    // Scoped to the results section: the loot table is one modal away now, but
+    // scoping still matters — the summary and grid are what vary by seed.
+    //
+    // Waiting on the SUMMARY rather than the section is the load-bearing part.
+    // The section is visible before the click too (it renders an empty state so
+    // the layout doesn't jump), so waiting on it would read the empty state
+    // back and make "same seed matches" pass for the wrong reason.
+    const results = page.getByTestId('results')
+    await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
     return (await results.innerText()).trim()
   }
 

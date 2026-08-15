@@ -12,10 +12,49 @@ export interface SimRunParams {
   ctx: SimContext
   seed: number
   kills: number
+  /**
+   * Whether this link describes a run that has already been simulated, as
+   * opposed to a boss someone is about to configure.
+   *
+   * The seed and kill count were always in the URL, but a pasted link still
+   * landed on an empty results panel until the recipient clicked Simulate —
+   * so "simulate 5,000 Vorkath kills, get three visages, share the link" did
+   * not actually reproduce anything. Set when Simulate is pressed; on load, it
+   * is what tells `BossView` to re-run immediately. Kept out of the URL when
+   * false so a plain /boss/vorkath link stays clean and does not kick off a
+   * simulation nobody asked for.
+   */
+  run: boolean
 }
 
 export const DEFAULT_KILLS = 10_000
-export const DEFAULT_SEED = 1
+
+/**
+ * `0` is a sentinel meaning "pick a fresh seed for this run", and it is the
+ * default.
+ *
+ * The old default was a literal `1`, which meant every visitor's first
+ * simulation of a boss produced byte-identical drops — the same three visages,
+ * for everyone, forever. That reads as a fixed answer rather than a sample, and
+ * it is the opposite of what someone pressing Simulate repeatedly is trying to
+ * see.
+ *
+ * The seed the run actually used is written to the URL and shown in the results
+ * summary, so reproducibility is untouched: a shared link carries a real seed
+ * and replays exactly. The input keeps showing `0`, so the next click rolls
+ * again rather than repeating the last run.
+ */
+export const RANDOM_SEED = 0
+export const DEFAULT_SEED = RANDOM_SEED
+
+/**
+ * A seed for a run whose input said `0`. Never returns `0` itself — that value
+ * means "roll one", so a run stamped with it would re-roll on reload instead of
+ * reproducing.
+ */
+export function rollSeed(): number {
+  return 1 + Math.floor(Math.random() * 0xffffffff)
+}
 
 function parseBool(value: string | null, fallback: boolean): boolean {
   if (value === null) return fallback
@@ -100,6 +139,7 @@ export function paramsFromSearch(search: URLSearchParams): SimRunParams {
     ctx,
     seed: parseIntParam(search.get('seed'), DEFAULT_SEED),
     kills: parseIntParam(search.get('n'), DEFAULT_KILLS),
+    run: parseBool(search.get('run'), false),
   }
 }
 
@@ -131,5 +171,6 @@ export function searchFromParams(params: SimRunParams): URLSearchParams {
 
   search.set('seed', String(params.seed))
   search.set('n', String(params.kills))
+  if (params.run) search.set('run', '1')
   return search
 }

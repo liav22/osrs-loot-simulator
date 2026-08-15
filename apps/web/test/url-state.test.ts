@@ -3,6 +3,8 @@ import {
   DEFAULT_KILLS,
   DEFAULT_SEED,
   paramsFromSearch,
+  RANDOM_SEED,
+  rollSeed,
   searchFromParams,
   type SimRunParams,
 } from '../src/lib/url-state'
@@ -34,9 +36,42 @@ describe('paramsFromSearch', () => {
   })
 })
 
+describe('the random-seed sentinel', () => {
+  it('defaults to 0, which means "roll one per run"', () => {
+    expect(DEFAULT_SEED).toBe(RANDOM_SEED)
+    expect(RANDOM_SEED).toBe(0)
+    expect(paramsFromSearch(new URLSearchParams()).seed).toBe(RANDOM_SEED)
+  })
+
+  it('never rolls the sentinel itself', () => {
+    // A run stamped with 0 would re-roll on reload instead of reproducing,
+    // which would quietly break every shared link.
+    for (let i = 0; i < 500; i++) {
+      const seed = rollSeed()
+      expect(seed).toBeGreaterThan(0)
+      expect(Number.isInteger(seed)).toBe(true)
+    }
+  })
+
+  it('rolls something different across calls', () => {
+    // Not a distribution test — just that it is not a constant, which is the
+    // failure the old hardcoded `1` actually was.
+    expect(new Set(Array.from({ length: 50 }, rollSeed)).size).toBeGreaterThan(1)
+  })
+
+  it('survives the URL round trip, so a rolled seed replays', () => {
+    const rolled = rollSeed()
+    const round = paramsFromSearch(
+      searchFromParams({ ctx: DEFAULT_SIM_CONTEXT, seed: rolled, kills: 500, run: true })
+    )
+    expect(round.seed).toBe(rolled)
+    expect(round.run).toBe(true)
+  })
+})
+
 describe('searchFromParams', () => {
   it('omits fields that equal the default (keeps shareable URLs short)', () => {
-    const search = searchFromParams({ ctx: DEFAULT_SIM_CONTEXT, seed: DEFAULT_SEED, kills: DEFAULT_KILLS })
+    const search = searchFromParams({ ctx: DEFAULT_SIM_CONTEXT, seed: DEFAULT_SEED, kills: DEFAULT_KILLS, run: false })
     expect(search.has('members')).toBe(false)
     expect(search.has('row')).toBe(false)
     expect(search.get('seed')).toBe(String(DEFAULT_SEED))
@@ -48,6 +83,7 @@ describe('searchFromParams', () => {
       ctx: { ...DEFAULT_SIM_CONTEXT, ringOfWealth: true, onSlayerTask: true, questsComplete: ['Dragon Slayer'], killCount: 12, variant: 'hard' },
       seed: 42,
       kills: 250_000,
+      run: true,
     }
     const roundTripped = paramsFromSearch(searchFromParams(original))
     expect(roundTripped).toEqual(original)
@@ -79,6 +115,7 @@ describe('SimContext fields beyond the original six', () => {
       },
       seed: 7,
       kills: 5000,
+      run: false,
     }
 
     const round = paramsFromSearch(searchFromParams(params))
@@ -92,6 +129,7 @@ describe('SimContext fields beyond the original six', () => {
       ctx: { ...DEFAULT_SIM_CONTEXT },
       seed: 1,
       kills: 10_000,
+      run: false,
     })
     // Only seed and n, exactly as before these fields were wired.
     expect([...search.keys()].sort()).toEqual(['n', 'seed'])
@@ -104,6 +142,7 @@ describe('SimContext fields beyond the original six', () => {
       ctx: { ...DEFAULT_SIM_CONTEXT, hitpointsDamage: 400, shieldDamage: 300, totalDamage: 700 },
       seed: 1,
       kills: 10,
+      run: false,
     })
     expect(search.has('totaldmg')).toBe(false)
     expect([...search.keys()]).toContain('hpdmg')
