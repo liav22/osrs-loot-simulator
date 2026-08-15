@@ -3297,3 +3297,196 @@ while an auto-run has nobody waiting on it and no reason to race. `isLoading`
 rather than `data !== undefined`, so a failed fetch settles and falls back to
 rarity instead of hanging forever. Both halves are pinned in
 `e2e/shareable-result.spec.ts` against a deliberately slow price stub.
+
+## Transclusions are expanded locally during parse, not through the wiki's API
+
+The 427-row gap landmine #11c recorded is closed. `drops_covered` failures went
+**26 -> 5**, the corpus went **18 verified -> 28**, and the five that remain are
+not transclusion-inlining cases (below).
+
+### `action=expandtemplates` is the obvious tool and is the wrong one
+
+Checked before writing anything, as instructed. It expands **recursively, all
+the way down**, so `{{DropsLine|name=Air talisman|rarity=1/700}}` comes back as
+the rendered wikitable row it produces — throwing away the three things Phase 3
+chose wikitext for in the first place (unambiguous parameter names, `(noted)`
+qualifiers, heading structure) to solve a problem that needs exactly ONE level
+of expansion. It would also cost a request per source, forever.
+
+Expanding locally keeps the `{{DropsLine}}` calls intact and costs **nothing
+per source**. What it costs is one fetch per TEMPLATE — 9 requests total,
+snapshotted to `data/snapshots/wikitext/template-*.json` and re-read offline
+after. That is the same thing the Phase 3 session did to confirm
+`{{RareDropTable}}`'s parameter semantics, and it is not "re-hitting the wiki to
+fix a parser bug" (CLAUDE.md's hard rule): the page snapshots were never
+re-fetched, and a template definition is a new source document, not a re-read of
+an old one.
+
+**Verified offline first**, and this is what made the decision:
+
+- The `dropsline` bucket cannot be the data source, only the oracle. Its
+  rarities are ROUNDED EFFECTIVE rates (Vorkath's Ranarr seed is `1/416.7`,
+  already folding in the 3/150 access), so the sub-table's own weights are not
+  recoverable from it.
+- No definition for any of the 13 row-bearing templates was on disk, so no
+  offline expansion was possible without fetching something.
+- The one comparable definition that WAS on disk (`Template:RareDropTable`)
+  delegates to Lua (`{{#invoke:RareDropLines|main}}`), so whether a local
+  expander could work at all was genuinely unknown until the definitions were
+  read. Eight of the nine turned out to be plain wikitext.
+
+### The set of definitions on disk IS the scope
+
+`expand-transclusions.ts` expands only templates it has a snapshot for and
+leaves everything else exactly as found. **Teaching the parser a new drop-table
+template is one fetch and no code.** That is the whole reason this is not a
+registry of per-template handlers, and it is not theoretical: `WildernessSlayer-
+DropTable` and `Uniques/Corporeal Beast` were fetched only to ASSESS whether the
+approach generalised, and both groups fixed themselves on the next parse with no
+code written for either.
+
+Two carve-outs, both structural rather than name lists:
+
+- **`TERMINAL_TEMPLATES`** (the `DropsLine` family) keep their CALL and have
+  only their arguments expanded. That is what lets the extractor read parameter
+  names off an expanded page exactly as off a hand-written one.
+- **`TABLEREF_TEMPLATES`** (`RareDropTable`, `GemDropTable`, `GWDRDT`) are never
+  inlined, because `rdt-access.ts` already models them as a `tableRef` into a
+  shared `data/tables/*.json` record. Their definitions are on disk, so without
+  this they would be inlined on sight — undoing Phase 3 and breaking the access
+  extractor, which reads the same wikitext and looks for these calls by name.
+
+### The sharpest lesson: a failed expansion can produce a WRONG number, not a missing one
+
+This shipped, briefly, and is the thing to carry forward.
+
+`WildernessSlayerDropTable` selects its key denominator with
+`{{#switch: 1 | {{#expr: {{{combat}}} < 81 }} = ... | 1 = 50 }}`. The first
+evaluator did not implement comparison operators or `^`, so the `#expr` threw,
+the construct was left as raw text, the `#switch` matched none of its computed
+cases — and **fell through to its literal `| 1 = 50` case**. Five sources went
+`verified` publishing Larran's key at a flat 1/50 whose real, published rates
+are 1/55, 1/58, 1/65, 1/72 and 1/76. Three others (Callisto, Vet'ion, Venenatis)
+are legitimately 1/50, which is exactly what made it look healthy.
+
+**`drops_covered` cannot see this**: coverage is by item NAME, so a recovered
+row with a wrong rate is indistinguishable from a correct one, and all five
+passed. A wrong number is worse than a missing row. Three responses, all kept:
+
+1. `evaluateExpr` implements ParserFunctions' real precedence ladder —
+   `or < and < comparison < round < +- < */ < ^ < unary`.
+2. **`expansion.unexpandable` is part of the `verified` gate.** A document
+   whose rows came from an expansion that failed has not been "derived from the
+   wiki unaided."
+3. `transclusion-coverage.test.ts` compares every recovered row against the
+   `dropsline` bucket's own published RARITY, not just its presence. Coverage
+   was never going to be enough. One of its assertions is deliberately about the
+   whole set rather than any row — the wilderness bosses must NOT all land on
+   the same denominator — because a `#switch` falling through to a default looks
+   completely healthy row by row.
+
+### An unevaluable `#expr` is only reported when it can affect a row
+
+Two suppressions, both narrow and both load-bearing, because the gate above
+turns any false positive into a blocked source:
+
+- **Page level (`depth === 0`)**: almost always the page's own average-kill-value
+  arithmetic over live GE prices (`{{#expr:26 * {{GEP|Abyssal whip}} + ...}}`),
+  which this pipeline neither needs nor can evaluate, and which `ev_matches`
+  owns.
+- **An expression referencing an argument the page never supplied**
+  (tracked by `Context.missingArgs`): a template branch this call does not use.
+  `WildernessSlayerDropTable` computes a `combatmax` bound for pages stating a
+  combat-level RANGE; for the eight that do not, **MediaWiki itself renders an
+  expression error there** and never reads the result. Without this, the new
+  gate blocks eight sources on the wiki's own dead code. The corpus test is what
+  keeps the judgement honest — a branch that DID matter would surface as a wrong
+  number there.
+
+### What remains, and why none of it is this mechanism
+
+`drops_covered` still fails on five sources, none of them a template that could
+be inlined:
+
+| source | cause | is it new work? |
+|---|---|---|
+| `black-knight-titan` | `GeneralSeedDropLines` is `{{#invoke:}}` — a Lua module, not wikitext | genuine residual, reported by name |
+| `kree-arra`, `general-graardor` | `GWDRDT` | **already flagged** — HANDOFF landmine #3, needs a `data/tables/gwd_rare_drop_table.json` record, not expansion |
+| `chest-tombs-of-amascut`, `monumental-chest` | point-scaled chests | pre-existing, unrelated to transclusions |
+
+Black demon also transcludes `{{HerbDropLines}}` and is not among the recovered:
+its sections are `==Level 172, 178, and 184 drops==` and `==Wilderness Slayer
+Cave drops==`, which `DROPS_SECTION_TITLE` does not match (it allows one
+qualifying word before "drops", not five). That is a pre-existing
+heading-matching gap, pinned as such in the test file so its absence is not read
+as an oversight later.
+
+### `findRowlessTemplateBlocks` — the silent-vanish signature itself
+
+A drop sub-section whose body is a template yet yields no rows. Run against
+EXPANDED wikitext it reports only what expansion could not reach, which is how
+`{{GeneralSeedDropLines}}` names itself on Black Knight Titan.
+
+Surfaced only when there is a shortfall to explain (`drops_covered` failed or a
+transclusion did not expand), and only for NAMED sub-headings — the section
+preamble is by construction where page furniture lives (`{{DropLogProject}}`,
+`{{Average drop value}}`), and it appears on nearly every page. A first version
+reported unconditionally and produced two or three lines of noise per source,
+which is how a report gets ignored. This is an explanation, never a gate:
+`drops_covered` decides completeness, against the wiki's own rows rather than
+against the shape of the wikitext.
+
+### Consequences elsewhere
+
+- **Two tests that pinned the bug now pin the fix**, inverted rather than
+  deleted, each keeping its history. `drops-covered.test.ts`'s Corporeal Beast
+  case asserted all three sigils missing and now asserts they are reachable;
+  `rdt-access-mechanics.test.ts`'s assertion has now been through a full cycle
+  (verified -> "coverage the only thing outstanding" -> every deterministic
+  check passing) and the comment records all three states.
+- **`data/item-icons.json` regenerated** — the corpus gained 42 distinct items
+  (694 -> 736). 733 resolve; `Belladonna seed` is a new third unresolved case
+  and was diagnosed rather than pinned blind: its icon is `File:Belladonna seed
+  5.png`, a stack-size suffix the item name never mentions. Stage 1 normally
+  rescues that class through MediaWiki's file redirects, and this item has none;
+  stage 2 found the file and correctly REFUSED it, since it accepts only a
+  case-insensitive exact title match and loosening that is what would ship
+  `Baby Mole (NPC).png` for `Baby mole`. **Accepting a strictly numeric stack
+  suffix would be a narrow, well-defined widening of stage 2** — not done here,
+  since this change is about transclusions.
+- `extractLinesFromSection`'s block-splitting was extracted as `splitIntoBlocks`
+  so the detector groups a section exactly as the extractor does, rather than
+  re-deriving boundaries and drifting from it.
+
+### The open question this does NOT answer: what MODE a recovered sub-table is
+
+Several sources now pass every check and stay `needs_review` on the
+ambiguous-mode guess alone, which is heuristic 6 working as designed, not a
+leftover bug. An expanded seed or talisman block has heterogeneous denominators
+(`1/416.7`, `1/112.3`, ...) under a heading with no mode keyword, so
+`buildTableGroups` assumes `preroll` and flags it.
+
+It is worth knowing why this was NOT resolved by treating "these rows came from
+one transclusion" as a confirming signal, which was the obvious move and is
+wrong:
+
+- For seed/herb/talisman it would be right — every rarity derives from one
+  `{{#vardefine:base|access/N}}`, so the rows are one roll picking one item, and
+  their weights sum to the sub-table's own denominator.
+- For `WildernessSlayerDropTable` it would be **wrong**: Larran's key (1/50) and
+  Slayer's enchantment (1/30) are two INDEPENDENT tertiary rolls with no shared
+  access rate at all.
+
+So transclusion provenance proves "the wiki packages these as one unit", not
+"these are mutually exclusive". The distinguishing signal is real and structural
+— whether every row's rate derives from one shared base variable, readable from
+the template definition at expansion time — but it is a separate change with its
+own correctness argument, and `preroll`'s suppression semantics interact with
+the pre-existing approximation that a page's several same-denominator headings
+are already modelled as separate tables. Left flagged, deliberately, rather than
+guessed into `verified`.
+
+Corporeal Beast is the case that needed none of this and shows what "right"
+looks like: its three sigils (`1/1365`, `1/1365`, `1/4095`) homogenise onto one
+denominator of 4095 = 585 x 7, recovering the page's stated "1/585 onto the
+sigil table, then 3/7, 3/7, 1/7" exactly, through machinery that already existed.

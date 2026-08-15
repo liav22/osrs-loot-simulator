@@ -48,7 +48,7 @@
       "notes": "100%"
     },
     {
-      "id": "dagannoth-prime:1:weapons-and-armour-runes-talismans-noted-other",
+      "id": "dagannoth-prime:1:weapons-and-armour-runes",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 128,
@@ -382,7 +382,426 @@
             "kind": "weight",
             "weight": 2
           }
+        }
+      ],
+      "notes": "Weapons and armour / Runes"
+    },
+    {
+      "id": "dagannoth-prime:2:seeds",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5296,
+            "itemKey": "toadflax-seed",
+            "name": "Toadflax seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 92.3
+          }
         },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5297,
+            "itemKey": "irit-seed",
+            "name": "Irit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 134.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5281,
+            "itemKey": "belladonna-seed",
+            "name": "Belladonna seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 139.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5106,
+            "itemKey": "poison-ivy-seed",
+            "name": "Poison ivy seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 193.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5298,
+            "itemKey": "avantoe-seed",
+            "name": "Avantoe seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 197.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5280,
+            "itemKey": "cactus-seed",
+            "name": "Cactus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 207.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22873,
+            "itemKey": "potato-cactus-seed",
+            "name": "Potato cactus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 284.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5299,
+            "itemKey": "kwuarm-seed",
+            "name": "Kwuarm seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 288.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 433.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5301,
+            "itemKey": "cadantine-seed",
+            "name": "Cadantine seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 622.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5302,
+            "itemKey": "lantadyme-seed",
+            "name": "Lantadyme seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 866.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22879,
+            "itemKey": "snape-grass-seed",
+            "name": "Snape grass seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 996.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5303,
+            "itemKey": "dwarf-weed-seed",
+            "name": "Dwarf weed seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1423.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2214.6
+          }
+        }
+      ],
+      "notes": "Seeds"
+    },
+    {
+      "id": "dagannoth-prime:3:talismans",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1438,
+            "itemKey": "air-talisman",
+            "name": "Air talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1446,
+            "itemKey": "body-talisman",
+            "name": "Body talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1440,
+            "itemKey": "earth-talisman",
+            "name": "Earth talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1442,
+            "itemKey": "fire-talisman",
+            "name": "Fire talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1448,
+            "itemKey": "mind-talisman",
+            "name": "Mind talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1444,
+            "itemKey": "water-talisman",
+            "name": "Water talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1454,
+            "itemKey": "cosmic-talisman",
+            "name": "Cosmic talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2240
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1452,
+            "itemKey": "chaos-talisman",
+            "name": "Chaos talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2986.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1462,
+            "itemKey": "nature-talisman",
+            "name": "Nature talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2986.7
+          }
+        }
+      ],
+      "notes": "Talismans"
+    },
+    {
+      "id": "dagannoth-prime:4:talismans-noted-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -520,10 +939,10 @@
           }
         }
       ],
-      "notes": "Weapons and armour / Runes / Talismans (noted) / Other"
+      "notes": "Talismans (noted) / Other"
     },
     {
-      "id": "dagannoth-prime:2:tertiary",
+      "id": "dagannoth-prime:5:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -719,8 +1138,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "18 of 77 wiki drop row(s) missing from the document: Avantoe seed, Belladonna seed, Body talisman, Cactus seed, Cadantine seed, Cosmic talisman, Dwarf weed seed, Fire talisman (+10 more)"
+        "ok": true,
+        "detail": "all 77 wiki drop row(s) reachable in the document"
       }
     ]
   },

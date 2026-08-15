@@ -58,17 +58,21 @@ scope:
 
 ```
 54 parsed at tier A+B+C(+D for chest-tombs-of-amascut):
-  18 verified, 2 manual_override, 32 needs_review, 3 parse_failed
+  28 verified, 2 manual_override, 21 needs_review, 3 parse_failed
 ```
 
-**Read that 18 against the previous 38 before assuming a regression.** The
-`drops_covered` check was turned on deliberately (see docs/DECISIONS.md), and it
-moved 20 sources out of `verified` because they are genuinely incomplete — a
-transcluded drop sub-table produces no `{{DropsLine}}` rows and vanishes, so
-those documents are smaller than their pages. `verified` has always meant "the
-pipeline derived this from the wiki unaided"; the badge is now true again.
-26 sources fail the check. **Fixing the transclusions is the open work** — see
-landmine #11c.
+**Read that 28 against the earlier 18 and the earlier-still 38.** The 38 was
+inflated: `drops_covered` was turned on deliberately (see docs/DECISIONS.md) and
+moved 20 sources out of `verified` because they were genuinely incomplete — a
+transcluded drop sub-table produced no `{{DropsLine}}` rows and vanished, so
+those documents were smaller than their pages.
+
+**The transclusions are now expanded during parse and that gap is closed** —
+`drops_covered` failures went 26 -> 5, and the 427 missing rows are in the
+corpus with the wiki's own published rarities (700 of 721 fixed-rate item rows
+agree exactly with the `dropsline` bucket; the 21 that differ are all Doom of
+Mokhaiotl's delve-scaled override, which its own wiki-figure test pins). See
+landmine #11c, now a record of the fix and its residuals.
 
 **Read this before `docs/bosses/*.md`: all 14 carry an in-file banner
 correcting their stale capability verdicts.** Their *mechanics and cited
@@ -122,8 +126,27 @@ keep it watchlisted; see section 3). See section 3 for what is next.
   the mutation shape that found it is now a reusable harness — see landmine #11.
 - **The benchmark bar is 1M**, adopted; the duplicated-`emit` lever is closed.
 
-Corpus tally: **54 parsed — 38 verified / 2 manual_override / 11 needs_review /
-3 parse_failed** (up one source and one `needs_review`, both Reward pool).
+**Changed in the transclusion session (this one):**
+
+- **`apps/ingest/src/parse/expand-transclusions.ts` is new** — transcluded drop
+  sub-tables are expanded during parse, recovering 427 rows. `drops_covered`
+  failures 26 -> 5, corpus 18 -> 28 `verified`. **Read landmine #11c before
+  touching it**, especially point 3: a failed expansion produced a plausible
+  WRONG rate on five sources, not a missing row, and `drops_covered` could not
+  see it.
+- **`expansion.unexpandable` joined the `verified` gate** for that reason.
+- **`findRowlessTemplateBlocks`** (`wikitext-drops.ts`) reports a drop
+  sub-section that still has a template for a body and no rows to show for it —
+  the silent-vanish signature, surfaced only when there is a shortfall to
+  explain.
+- **`data/item-icons.json` regenerated** (694 -> 736 items) and
+  `data/index.json` rebuilt.
+- Two tests that pinned the bug now pin the fix (`drops-covered.test.ts`'s
+  Corporeal Beast sigils, `rdt-access-mechanics.test.ts`'s check set), inverted
+  rather than deleted.
+
+Note: the tally in this section supersedes any earlier "38 verified" reading —
+that number predates `drops_covered` and was inflated by exactly this gap.
 
 ---
 
@@ -626,40 +649,66 @@ recorded and not built against.
 
 ---
 
-### 11c. A drop sub-table written as a TRANSCLUSION is silently dropped
+### 11c. Transclusions: FIXED, and the failure mode to remember
 
 `extractDropLines` reads `{{DropsLine}}` calls out of page wikitext. A section
-whose body is a transclusion has none, so it yields zero rows and vanishes —
+whose body is a transclusion had none, so it yielded zero rows and vanished —
 and an empty section is indistinguishable from an absent one to everything
-downstream.
+downstream. That cost **427 item rows across 28 sources**: seed/herb/talisman
+sub-tables (every seed on Vorkath, Araxxor, the Dagannoths),
+`WildernessSlayerDropTable` (Larran's key, Slayer's enchantment), and Corporeal
+Beast's three sigils.
 
-**26 transcluded drop sub-tables across 21 sources are missing from the parsed
-documents; 18 of those sources are `verified`.** Cross-checking the
-`dropsline` snapshot bucket against the parsed docs puts the loss at **427 item
-rows across 28 sources**: seed/herb/talisman sub-tables (17 sources — every
-seed on Vorkath, Araxxor, the Dagannoths), `WildernessSlayerDropTable`
-(8 sources — Larran's key, Slayer's enchantment), and Corporeal Beast's three
-sigils. GWDRDT (Kree'arra, General Graardor) is the same shape but was already
-flagged — see landmine #3.
+**`apps/ingest/src/parse/expand-transclusions.ts` expands them during parse.**
+`drops_covered` failures 26 -> 5, corpus 18 -> 28 `verified`. Full reasoning in
+docs/DECISIONS.md; the three things worth knowing before touching it:
 
-**No existing check can see this.** Every check is closed-world over the
-extracted document; none compares the extraction against its source. Corp's 512
-table sums flush without the sigils, so `weights_sum` passes; `items_known`/
-`qty_sane`/`rates_valid` validate only what IS there; `refs_resolve` sees no
-ref. Same class as the four scope-permissive guards, one level up — those were
-permissive about which parts of the DOCUMENT they read, this is the document
-being permissive about which parts of the PAGE it came from, which
-`scope-invariant.ts` structurally cannot reach.
+1. **The set of template definitions on disk IS the scope.**
+   `data/snapshots/wikitext/template-*.json`, 9 of them, fetched once and
+   re-read offline. A template with no snapshot is left exactly as found.
+   **Teaching the parser a new drop-table template is one fetch and no code** —
+   `WildernessSlayerDropTable` and `Uniques/Corporeal Beast` were fetched only
+   to assess whether the approach generalised and both groups fixed themselves
+   on the next parse. Do not add per-template handlers.
 
-**`drops_covered` now catches it** (`src/validate/drops-covered.ts`), comparing
-`data/snapshots/dropsline/{slug}.json`'s item names against the document's own
-items, offline, with no new fetch. It is part of the `verified` gate, and
-turning it on moved 20 sources out of `verified` — deliberately, because they
-are incomplete. **The transclusions themselves are still unfixed and are the
-open work.** The parser needs to reach a section whose body is a transclusion;
-until then those 26 sources stay `needs_review` and their seed/herb/talisman/
-sigil/Wilderness-Slayer rows are absent from the shipped data. Full analysis in
-`docs/DECISIONS.md`.
+2. **`action=expandtemplates` is the wrong tool** and was rejected on evidence,
+   not taste: it expands recursively all the way down, returning the RENDERED
+   wikitable row instead of the `{{DropsLine}}` call, which throws away the
+   parameter names Phase 3 chose wikitext for. Do not re-nominate it.
+
+3. **A failed expansion can produce a WRONG number, not a missing row.** This
+   is the one that bit. `WildernessSlayerDropTable` picks its key denominator
+   with `{{#switch: 1 | {{#expr: {{{combat}}} < 81 }} = ... | 1 = 50 }}`; an
+   evaluator missing `<` and `^` threw, the switch matched none of its computed
+   cases and **fell through to its literal `| 1 = 50`**, and five sources went
+   `verified` publishing 1/50 where the wiki publishes 1/55 to 1/76. Three
+   others are legitimately 1/50, which is what made it look healthy.
+   **`drops_covered` could not catch it — coverage is by item NAME.** Hence
+   `expansion.unexpandable` is now part of the `verified` gate, and
+   `apps/ingest/test/transclusion-coverage.test.ts` compares recovered rows
+   against the bucket's published RARITY, including one assertion about the
+   whole set (the wilderness bosses must not all share a denominator), because
+   a `#switch` falling through looks fine row by row.
+
+**Residuals, none of which this mechanism can close:** `black-knight-titan`
+(`GeneralSeedDropLines` is a Lua `{{#invoke:}}`, reported by name);
+`kree-arra`/`general-graardor` (GWDRDT — landmine #3, needs a shared-table
+record, not expansion); `chest-tombs-of-amascut`/`monumental-chest`
+(point-scaled, pre-existing). Black demon transcludes `{{HerbDropLines}}` too
+but never reaches the expander: its headings are `==Level 172, 178, and 184
+drops==`, which `DROPS_SECTION_TITLE` does not match — a pre-existing
+heading-matching gap, pinned as such in the test.
+
+**Open, and deliberately not guessed:** several sources now pass every check and
+stay `needs_review` on the ambiguous-mode guess alone. An expanded seed or
+talisman block has heterogeneous denominators under a heading with no mode
+keyword, so heuristic 6 flags it. Treating "these rows came from one
+transclusion" as a confirming signal is the obvious fix and is **wrong** —
+right for the seed tables (one roll, one item, weights summing to the
+sub-table's denominator), wrong for `WildernessSlayerDropTable`, whose two rows
+are independent tertiary rolls with no shared access rate. Provenance proves
+"one unit", not "mutually exclusive". See docs/DECISIONS.md for the signal that
+would actually separate them.
 
 ### 12. A tier filter used to be able to silently overrule an authored override
 

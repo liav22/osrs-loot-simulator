@@ -31,6 +31,7 @@ import { loadWatchlist, checkWatchlistConsistency } from './validate/watchlist.j
 import { fetchGePrices } from './prices/ge-prices.js'
 import { loadSharedTables } from './tables/shared-tables.js'
 import { parseBoss } from './parse/parse-boss.js'
+import { loadTemplateDefinitions } from './parse/expand-transclusions.js'
 import { buildSiteIndex, writeSiteIndex } from './site-index.js'
 import { collectCorpusItemNames, resolveItemIcons, writeItemIcons } from './items/icons.js'
 import { listOverrideSlugs } from './parse/overrides.js'
@@ -240,6 +241,8 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
   const gePrices = await fetchGePrices(USER_AGENT)
   log(`Loaded ${gePrices.size} live GE prices.\n`)
   const sharedTables = await loadSharedTables()
+  const templates = await loadTemplateDefinitions()
+  log(`Loaded ${templates.size} template definition(s) for transclusion expansion.\n`)
 
   const watchlistIssues = checkWatchlistConsistency(watchlist, inventory)
   if (watchlistIssues.length > 0) {
@@ -308,6 +311,7 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
       watchlist,
       gePrices,
       sharedTables,
+      templates,
     })
     outcomes.push(outcome)
     const mark = outcome.status === 'parse_failed' ? '  !! ' : '     '

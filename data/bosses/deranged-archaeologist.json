@@ -33,7 +33,7 @@
       "notes": "100%"
     },
     {
-      "id": "deranged-archaeologist:1:unique-weapons-and-armour-runes-and-ammunition-materials-consumables-other",
+      "id": "deranged-archaeologist:1:unique-weapons-and-armour-runes-and-ammunition",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 131,
@@ -182,7 +182,298 @@
             "kind": "weight",
             "weight": 4
           }
+        }
+      ],
+      "notes": "Unique / Weapons and armour / Runes and ammunition"
+    },
+    {
+      "id": "deranged-archaeologist:2:seeds",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1091.7
+          }
         },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1169.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1488.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5321,
+            "itemKey": "watermelon-seed",
+            "name": "Watermelon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 15
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1559.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5313,
+            "itemKey": "willow-seed",
+            "name": "Willow seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1637.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21488,
+            "itemKey": "mahogany-seed",
+            "name": "Mahogany seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1819.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5314,
+            "itemKey": "maple-seed",
+            "name": "Maple seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1819.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21486,
+            "itemKey": "teak-seed",
+            "name": "Teak seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1819.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5315,
+            "itemKey": "yew-seed",
+            "name": "Yew seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1819.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5288,
+            "itemKey": "papaya-tree-seed",
+            "name": "Papaya tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2339.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2977.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5289,
+            "itemKey": "palm-tree-seed",
+            "name": "Palm tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3275
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 4093.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22877,
+            "itemKey": "dragonfruit-tree-seed",
+            "name": "Dragonfruit tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5458.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 8187.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22871,
+            "itemKey": "redwood-tree-seed",
+            "name": "Redwood tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 8187.5
+          }
+        }
+      ],
+      "notes": "Seeds"
+    },
+    {
+      "id": "deranged-archaeologist:3:materials-consumables-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 131,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -397,14 +688,100 @@
           }
         }
       ],
-      "notes": "Unique / Weapons and armour / Runes and ammunition / Materials / Consumables / Other"
+      "notes": "Materials / Consumables / Other"
     },
     {
-      "id": "deranged-archaeologist:2:tertiary",
+      "id": "deranged-archaeologist:4:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21555,
+            "itemKey": "numulite",
+            "name": "Numulite",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 32
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 108,
+            "den": 175
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21562,
+            "itemKey": "unidentified-small-fossil",
+            "name": "Unidentified small fossil",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 12,
+            "den": 350
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21564,
+            "itemKey": "unidentified-medium-fossil",
+            "name": "Unidentified medium fossil",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 12,
+            "den": 700
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21566,
+            "itemKey": "unidentified-large-fossil",
+            "name": "Unidentified large fossil",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 12,
+            "den": 875
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21568,
+            "itemKey": "unidentified-rare-fossil",
+            "name": "Unidentified rare fossil",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 12,
+            "den": 3500
+          }
+        },
         {
           "node": {
             "kind": "item",
@@ -528,8 +905,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "21 of 70 wiki drop row(s) missing from the document: Celastrus seed, Dragonfruit tree seed, Magic seed, Mahogany seed, Maple seed, Numulite, Palm tree seed, Papaya tree seed (+13 more)"
+        "ok": true,
+        "detail": "all 70 wiki drop row(s) reachable in the document"
       }
     ]
   },

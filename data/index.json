@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T10:08:09.006Z",
+  "generatedAt": "2026-08-15T12:38:50.134Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -33,7 +33,7 @@
       "slug": "artio",
       "name": "Artio",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Artio.png"
     },
     {
@@ -61,14 +61,14 @@
       "slug": "callisto",
       "name": "Callisto",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Callisto.png"
     },
     {
       "slug": "calvar-ion",
       "name": "Calvar'ion",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Calvar'ion.png"
     },
     {
@@ -96,14 +96,14 @@
       "slug": "corporeal-beast",
       "name": "Corporeal Beast",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Corporeal Beast.png"
     },
     {
       "slug": "crazy-archaeologist",
       "name": "Crazy archaeologist",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Crazy archaeologist.png"
     },
     {
@@ -260,7 +260,7 @@
       "slug": "scorpia",
       "name": "Scorpia",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Scorpia.png"
     },
     {
@@ -281,7 +281,7 @@
       "slug": "spindel",
       "name": "Spindel",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Spindel.png"
     },
     {
@@ -337,21 +337,21 @@
       "slug": "venenatis",
       "name": "Venenatis",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Venenatis.png"
     },
     {
       "slug": "vet-ion",
       "name": "Vet'ion",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Vet'ion.png"
     },
     {
       "slug": "vorkath",
       "name": "Vorkath",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Vorkath.png"
     },
     {

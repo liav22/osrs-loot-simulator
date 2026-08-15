@@ -14,7 +14,8 @@ import type { GePrices } from '../prices/ge-prices.js'
 import { gePriceLookup } from '../prices/ge-prices.js'
 import { REPO_ROOT, readSnapshot, slugify } from '../snapshots/store.js'
 import { BossSchema, resolveSimContext, type Table } from '@osrs-loot-simulator/loot-model'
-import { extractDropLines } from './wikitext-drops.js'
+import { extractDropLines, findRowlessTemplateBlocks } from './wikitext-drops.js'
+import { expandTransclusions, type TemplateDefinitions } from './expand-transclusions.js'
 import { buildTableGroups, groupByHeading } from './build-tables.js'
 import { extractRdtAccessLines } from './rdt-access.js'
 import { assembleBoss } from './assemble-boss.js'
@@ -34,6 +35,12 @@ export interface ParseOptions {
   gePrices: GePrices
   /** `data/tables/*.json`, keyed by id — Phase 3's shared RDT/gem/mega-rare records. */
   sharedTables: ReadonlyMap<string, Table>
+  /**
+   * `Template:` wikitext snapshots, keyed by normalised name — what lets a
+   * drop sub-table written as a transclusion be read at all. See
+   * `expand-transclusions.ts`.
+   */
+  templates: TemplateDefinitions
 }
 
 export interface ParseOutcome {
@@ -84,8 +91,18 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     wikitext = ''
   }
 
-  const lines = extractDropLines(wikitext)
-  const rdtAccess = extractRdtAccessLines(wikitext)
+  // Transclusions are expanded BEFORE anything reads the page, so a drop
+  // sub-table written as `{{TalismanDropLines|1/128}}` becomes the
+  // `{{DropsLine}}` rows the extractor understands instead of vanishing. The
+  // shared-table access calls (`{{RareDropTable|...}}`) deliberately survive
+  // expansion untouched — `rdt-access.ts` models those as a `tableRef` and
+  // reads them off this same text.
+  const expansion = expandTransclusions(wikitext, options.templates)
+  const lines = extractDropLines(expansion.wikitext)
+  const rdtAccess = extractRdtAccessLines(expansion.wikitext)
+  // What expansion could NOT reach: a sub-section that still has a template
+  // for a body and no rows to show for it. Reported, never swallowed.
+  const rowlessBlocks = findRowlessTemplateBlocks(expansion.wikitext)
   if (
     !overrideCarriesTables &&
     lines.length === 0 &&
@@ -195,6 +212,16 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     // right. Turning this on moved 21 sources to `needs_review`; that is the
     // check working, not a regression.
     dropsCovered.ok &&
+    // Part of the gate for a reason paid for once already. A transclusion that
+    // fails to expand does not necessarily produce NO row — it can produce a
+    // plausible wrong one, because the template's own `{{#switch:}}` falls
+    // through to a literal default when the `{{#expr:}}` selecting between its
+    // cases cannot be evaluated. That shipped `WildernessSlayerDropTable`'s
+    // Larran's key at a flat 1/50 on five sources whose real, published rates
+    // are 1/55 to 1/76, and `drops_covered` passed all five: coverage is by
+    // item NAME, so a recovered row with a wrong rate looks exactly like a
+    // correct one. A wrong number is worse than a missing row, so this blocks.
+    expansion.unexpandable.length === 0 &&
     // An override supplying its own tables replaces exactly the structure the
     // parser was unsure about, so its ambiguous-group guesses no longer
     // describe the document being validated.
@@ -215,6 +242,24 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   const reasons: string[] = overrideCarriesTables
     ? []
     : [...result.warnings, ...result.ambiguousGroups]
+  // Advisory, not part of the gate: `drops_covered` decides completeness
+  // against the wiki's own drop rows. These two say WHY a document is short,
+  // which is what a vanished section could never say for itself — so they are
+  // surfaced only when there is a shortfall to explain, and a named
+  // sub-heading is what separates a real sub-table from the section preamble
+  // where page furniture (drop logs, average-value boxes) legitimately lives.
+  if (!dropsCovered.ok || expansion.unexpandable.length > 0) {
+    for (const { template, reason } of expansion.unexpandable) {
+      reasons.push(`transclusion not expanded: '${template}' — ${reason}`)
+    }
+    for (const block of rowlessBlocks.filter((b) => b.heading !== '')) {
+      const where =
+        block.section === '' ? `"${block.heading}"` : `"${block.section}" / "${block.heading}"`
+      reasons.push(
+        `sub-section ${where} has a template body but produced no drop rows: ${block.templates.join(', ')}`
+      )
+    }
+  }
   if (override !== null) reasons.push(overrideSummary(override, result.boss !== null))
   if (!weightsSum.ok) {
     reasons.push(

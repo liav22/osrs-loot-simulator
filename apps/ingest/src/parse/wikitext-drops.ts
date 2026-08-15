@@ -230,7 +230,7 @@ export function findDropsSections(wikitext: string): DropsSection[] {
  * when the caller determined this page has only one top-level Drops section
  * (the common case) — see `extractDropLines`.
  */
-function extractLinesFromSection(content: string, sectionTag: string): WikitextDropLine[] {
+function splitIntoBlocks(content: string): { heading: string; block: string }[] {
   const headings = findHeadings(content)
   const minLevel = headings.reduce((min, h) => Math.min(min, h.level), Infinity)
 
@@ -244,15 +244,21 @@ function extractLinesFromSection(content: string, sectionTag: string): WikitextD
   // e.g. a lone "100%" block with no sub-heading at all.
   boundaries.unshift({ heading: '', start: 0 })
 
+  return boundaries.map((boundary, i) => ({
+    heading: boundary.heading,
+    block: content.slice(boundary.start, boundaries[i + 1]?.start ?? content.length),
+  }))
+}
+
+/** The row templates, which carry one drop each. */
+const ROW_TEMPLATES = ['DropsLine', 'DropsLineClue', 'DropsLineReward'] as const
+
+function extractLinesFromSection(content: string, sectionTag: string): WikitextDropLine[] {
   const lines: WikitextDropLine[] = []
-  for (let i = 0; i < boundaries.length; i++) {
-    const boundary = boundaries[i]
-    if (boundary === undefined) continue
-    const end = boundaries[i + 1]?.start ?? content.length
-    const block = content.slice(boundary.start, end)
+  for (const { heading, block } of splitIntoBlocks(content)) {
     // DropsLineReward is Barrows' reward-chest variant of DropsLine — same
     // param shape (name/quantity/rarity/rolls/raritynotes), different name.
-    const calls = findTemplateCalls(block, ['DropsLine', 'DropsLineClue', 'DropsLineReward'])
+    const calls = findTemplateCalls(block, [...ROW_TEMPLATES])
 
     for (const call of calls) {
       const { name: templateName, params } = parseTemplateCall(call)
@@ -267,7 +273,7 @@ function extractLinesFromSection(content: string, sectionTag: string): WikitextD
       if (itemName === '') continue
 
       lines.push({
-        heading: boundary.heading,
+        heading,
         section: sectionTag,
         name: itemName,
         quantity: params.get('quantity') ?? '1',
@@ -309,6 +315,64 @@ export function extractDropLines(wikitext: string): WikitextDropLine[] {
   if (sections.length === 0) return []
   const qualify = sections.length > 1
   return sections.flatMap((section) => extractLinesFromSection(section.content, qualify ? section.title : ''))
+}
+
+/**
+ * Templates that legitimately appear in a drop sub-table that has no rows of
+ * its own, and so must not be reported as a lost sub-table.
+ *
+ * Deliberately three names, all structural: the wikitable scaffolding a
+ * transcluded sub-table leaves behind, and the shared-table access calls
+ * `rdt-access.ts` turns into a `tableRef` (it reports its OWN unresolved
+ * cases, `{{GWDRDT}}` among them — see HANDOFF landmine #3). Every other
+ * template in a rowless block is a candidate for the silent-vanish bug, and
+ * this list must not grow to quiet a report: a check that stops looking is
+ * the exact failure mode `drops_covered` exists to end.
+ */
+const NON_ROW_TEMPLATES = /^(DropsTableHead|DropsTableBottom|RareDropTable|GemDropTable|GWDRDT)\b/i
+
+/** Any `{{Name` at the start of a line — a transcluded body, not inline prose markup. */
+const BLOCK_TEMPLATE = /^\{\{([^|}\n]+)/gm
+
+export interface RowlessTemplateBlock {
+  section: string
+  heading: string
+  /** The template names left standing in a block that produced no drop rows. */
+  templates: string[]
+}
+
+/**
+ * Drop sub-sections whose body is a template call yet yield no rows.
+ *
+ * This is the silent-vanish signature itself: `extractDropLines` reads
+ * `{{DropsLine}}` calls, so `===Sigils===\n{{Uniques/Corporeal Beast}}`
+ * produces an empty section, and an empty section is indistinguishable from an
+ * absent one to everything downstream. Corporeal Beast shipped `verified` with
+ * all three sigils missing this way.
+ *
+ * Run against EXPANDED wikitext (see `expand-transclusions.ts`), this reports
+ * only what expansion could not reach — a template with no definition on disk,
+ * or one whose body is a Lua module. It is a warning rather than a gate:
+ * `drops_covered` is the check that decides whether the document is complete,
+ * and it answers the same question against the wiki's own drop rows instead of
+ * against the shape of the wikitext.
+ */
+export function findRowlessTemplateBlocks(wikitext: string): RowlessTemplateBlock[] {
+  const sections = findDropsSections(wikitext)
+  const qualify = sections.length > 1
+  const rowless: RowlessTemplateBlock[] = []
+
+  for (const section of sections) {
+    for (const { heading, block } of splitIntoBlocks(section.content)) {
+      if (findTemplateCalls(block, [...ROW_TEMPLATES]).length > 0) continue
+      const templates = [...block.matchAll(BLOCK_TEMPLATE)]
+        .map((match) => (match[1] ?? '').trim())
+        .filter((name) => name !== '' && !NON_ROW_TEMPLATES.test(name))
+      if (templates.length === 0) continue
+      rowless.push({ section: qualify ? section.title : '', heading, templates })
+    }
+  }
+  return rowless
 }
 
 export { DROP_JSON_FIELDS }

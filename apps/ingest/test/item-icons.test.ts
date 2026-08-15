@@ -44,7 +44,7 @@ describe('the committed data/item-icons.json', () => {
     expect(uncovered).toEqual([])
   })
 
-  it('resolves all but the two the wiki genuinely has no plain icon for', async () => {
+  it('resolves all but the three the two-stage lookup genuinely cannot reach', async () => {
     const icons = await readItemIcons()
     // Pinned rather than counted loosely, because "unresolved" is where a
     // regression would hide: a resolution bug would quietly grow this list and
@@ -54,7 +54,19 @@ describe('the committed data/item-icons.json', () => {
     // with no plain file. `Nothing` is not an item at all — it is a drop row
     // literally named that, with itemId null, on Black Knight Titan and
     // Salarin the Twisted.
-    expect(icons.unresolved).toEqual(['Muphin', 'Nothing'])
+    //
+    // `Belladonna seed` entered the corpus with the transcluded herb/seed
+    // sub-tables and is a THIRD, distinct case, diagnosed rather than pinned
+    // blind: its icon is `File:Belladonna seed 5.png`, a stack-size suffix the
+    // item name never mentions. Stage 1 normally rescues exactly that class,
+    // because MediaWiki resolves a file redirect from the unsuffixed name —
+    // this item simply has no such redirect. Stage 2 then found the file and
+    // correctly REFUSED it, since it accepts only a case-insensitive exact
+    // title match, and loosening that is what would ship `Baby Mole (NPC).png`
+    // for `Baby mole`. Accepting a strictly numeric stack suffix would be a
+    // narrow, well-defined widening; it is deliberately not done here, since
+    // this change is about transclusions.
+    expect(icons.unresolved).toEqual(['Belladonna seed', 'Muphin', 'Nothing'])
   })
 
   it('stores file names rather than URLs, so the frontend owns the encoding', async () => {

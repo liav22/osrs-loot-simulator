@@ -33,7 +33,7 @@
       "notes": "100%"
     },
     {
-      "id": "salarin-the-twisted:1:weapons-runes-materials-coins-other",
+      "id": "salarin-the-twisted:1:weapons-runes",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 128,
@@ -118,7 +118,213 @@
             "kind": "weight",
             "weight": 1
           }
+        }
+      ],
+      "notes": "Weapons / Runes"
+    },
+    {
+      "id": "salarin-the-twisted:2:herbs",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 199,
+            "itemKey": "grimy-guam-leaf",
+            "name": "Grimy guam leaf",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 13.1
+          }
         },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 201,
+            "itemKey": "grimy-marrentill",
+            "name": "Grimy marrentill",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 17.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 203,
+            "itemKey": "grimy-tarromin",
+            "name": "Grimy tarromin",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 23.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 205,
+            "itemKey": "grimy-harralander",
+            "name": "Grimy harralander",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 38.2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 209,
+            "itemKey": "grimy-irit-leaf",
+            "name": "Grimy irit leaf",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 52.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 70
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 84
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 105
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 140
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 140
+          }
+        }
+      ],
+      "notes": "Herbs"
+    },
+    {
+      "id": "salarin-the-twisted:3:materials-coins-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -264,10 +470,10 @@
           }
         }
       ],
-      "notes": "Weapons / Runes / Materials / Coins / Other"
+      "notes": "Materials / Coins / Other"
     },
     {
-      "id": "salarin-the-twisted:2:tertiary",
+      "id": "salarin-the-twisted:4:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -353,8 +559,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "11 of 35 wiki drop row(s) missing from the document: Grimy avantoe, Grimy cadantine, Grimy dwarf weed, Grimy guam leaf, Grimy harralander, Grimy irit leaf, Grimy kwuarm, Grimy lantadyme (+3 more)"
+        "ok": true,
+        "detail": "all 35 wiki drop row(s) reachable in the document"
       }
     ]
   },

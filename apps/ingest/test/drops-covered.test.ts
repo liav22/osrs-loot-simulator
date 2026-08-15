@@ -205,19 +205,32 @@ describe('checkDropsCoveredAgainst', () => {
  * those rows.
  */
 describe.skipIf(!SNAPSHOTS_PRESENT)('the real corpus', () => {
-  it("catches Corporeal Beast's transcluded sigils", async () => {
+  it("reaches Corporeal Beast's sigils, which were this check's founding case", async () => {
     const shared = await loadSharedTables()
     const corp = BossSchema.parse(
       JSON.parse(await readFile(join(BOSSES_DIR, 'corporeal-beast.json'), 'utf8'))
     )
     const result = await checkDropsCovered('Corporeal Beast', corp.tables, shared)
 
-    // `===Sigils=== {{Uniques/Corporeal Beast}}` — a transclusion, so
-    // `extractDropLines` finds no {{DropsLine}} rows and the section vanishes.
-    // Corp's 512 table sums flush without them (they are a separate 1/585
-    // roll), which is why `weights_sum` never could have noticed.
-    expect(result.ok).toBe(false)
-    expect(result.missing).toEqual(['Arcane sigil', 'Elysian sigil', 'Spectral sigil'])
+    // This asserted `ok: false` and named all three sigils as missing, which
+    // is what the check was built to prove: `===Sigils===
+    // {{Uniques/Corporeal Beast}}` is a transclusion, so `extractDropLines`
+    // found no {{DropsLine}} rows and the section vanished, while Corp's 512
+    // table summed flush without them (a separate 1/585 roll) so `weights_sum`
+    // could never have noticed.
+    //
+    // `expand-transclusions.ts` now expands that transclusion during parse, so
+    // the sigils are really in the document. The assertion is inverted rather
+    // than deleted: it is the end-to-end proof that the gap this check
+    // measured is closed, and it fails again the moment expansion stops
+    // reaching this page.
+    expect(result.missing).toEqual([])
+    expect(result.ok).toBe(true)
+
+    const sigils = reachableItemNames(corp.tables, shared)
+    expect(sigils.has('Spectral sigil')).toBe(true)
+    expect(sigils.has('Arcane sigil')).toBe(true)
+    expect(sigils.has('Elysian sigil')).toBe(true)
   })
 
   it('agrees with every committed document, so the corpus is self-consistent', async () => {

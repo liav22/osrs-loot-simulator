@@ -935,10 +935,53 @@
         }
       ],
       "notes": "Tertiary"
+    },
+    {
+      "id": "venenatis:5:wilderness-slayer-tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23490,
+            "itemKey": "larran-s-key",
+            "name": "Larran's key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21257,
+            "itemKey": "slayer-s-enchantment",
+            "name": "Slayer's enchantment",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        }
+      ],
+      "notes": "Wilderness Slayer tertiary"
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -976,8 +1019,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "2 of 53 wiki drop row(s) missing from the document: Larran's key, Slayer's enchantment"
+        "ok": true,
+        "detail": "all 53 wiki drop row(s) reachable in the document"
       }
     ]
   },

@@ -48,7 +48,7 @@
       "notes": "100%"
     },
     {
-      "id": "dagannoth-rex:1:weapons-and-armour-potions-ores-and-bars-other",
+      "id": "dagannoth-rex:1:weapons-and-armour-potions-ores-and-bars",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 128,
@@ -522,7 +522,179 @@
             "kind": "weight",
             "weight": 1
           }
+        }
+      ],
+      "notes": "Weapons and armour / Potions / Ores and bars"
+    },
+    {
+      "id": "dagannoth-rex:2:talismans",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1438,
+            "itemKey": "air-talisman",
+            "name": "Air talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
         },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1446,
+            "itemKey": "body-talisman",
+            "name": "Body talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1440,
+            "itemKey": "earth-talisman",
+            "name": "Earth talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1442,
+            "itemKey": "fire-talisman",
+            "name": "Fire talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1448,
+            "itemKey": "mind-talisman",
+            "name": "Mind talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1444,
+            "itemKey": "water-talisman",
+            "name": "Water talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 896
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1454,
+            "itemKey": "cosmic-talisman",
+            "name": "Cosmic talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2240
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1452,
+            "itemKey": "chaos-talisman",
+            "name": "Chaos talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2986.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1462,
+            "itemKey": "nature-talisman",
+            "name": "Nature talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2986.7
+          }
+        }
+      ],
+      "notes": "Talismans"
+    },
+    {
+      "id": "dagannoth-rex:3:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -605,10 +777,10 @@
           }
         }
       ],
-      "notes": "Weapons and armour / Potions / Ores and bars / Other"
+      "notes": "Other"
     },
     {
-      "id": "dagannoth-rex:2:tertiary",
+      "id": "dagannoth-rex:4:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -804,8 +976,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "7 of 75 wiki drop row(s) missing from the document: Air talisman, Body talisman, Cosmic talisman, Earth talisman, Fire talisman, Mind talisman, Water talisman"
+        "ok": true,
+        "detail": "all 75 wiki drop row(s) reachable in the document"
       }
     ]
   },

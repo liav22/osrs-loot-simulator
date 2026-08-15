@@ -52,7 +52,7 @@
       "notes": "Pre-roll"
     },
     {
-      "id": "sarachnis:1:weapons-and-armour-runes-and-ammunition-seeds",
+      "id": "sarachnis:1:weapons-and-armour-runes-and-ammunition",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 100,
@@ -242,7 +242,16 @@
             "kind": "weight",
             "weight": 2
           }
-        },
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition"
+    },
+    {
+      "id": "sarachnis:2:seeds",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -255,8 +264,9 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 1
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
           }
         },
         {
@@ -271,8 +281,9 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 1
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
           }
         },
         {
@@ -287,15 +298,254 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 1
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5296,
+            "itemKey": "toadflax-seed",
+            "name": "Toadflax seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 252.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5297,
+            "itemKey": "irit-seed",
+            "name": "Irit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 368.2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5281,
+            "itemKey": "belladonna-seed",
+            "name": "Belladonna seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 381.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5106,
+            "itemKey": "poison-ivy-seed",
+            "name": "Poison ivy seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 529.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5298,
+            "itemKey": "avantoe-seed",
+            "name": "Avantoe seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 539.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5280,
+            "itemKey": "cactus-seed",
+            "name": "Cactus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 567.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22873,
+            "itemKey": "potato-cactus-seed",
+            "name": "Potato cactus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 778.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5299,
+            "itemKey": "kwuarm-seed",
+            "name": "Kwuarm seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 789.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1184.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5301,
+            "itemKey": "cadantine-seed",
+            "name": "Cadantine seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1703.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5302,
+            "itemKey": "lantadyme-seed",
+            "name": "Lantadyme seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2369.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22879,
+            "itemKey": "snape-grass-seed",
+            "name": "Snape grass seed",
+            "qty": {
+              "kind": "exact",
+              "n": 9
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2725
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5303,
+            "itemKey": "dwarf-weed-seed",
+            "name": "Dwarf weed seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3892.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 6055.6
           }
         }
       ],
-      "notes": "Weapons and armour / Runes and ammunition / Seeds"
+      "notes": "Seeds"
     },
     {
-      "id": "sarachnis:2:herbs",
+      "id": "sarachnis:3:herbs",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 800,
@@ -449,7 +699,7 @@
       "notes": "Herbs"
     },
     {
-      "id": "sarachnis:3:materials-other",
+      "id": "sarachnis:4:materials-other",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 100,
@@ -723,7 +973,7 @@
       "notes": "Materials / Other"
     },
     {
-      "id": "sarachnis:4:tertiary",
+      "id": "sarachnis:5:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -984,8 +1234,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "14 of 71 wiki drop row(s) missing from the document: Avantoe seed, Belladonna seed, Cactus seed, Cadantine seed, Dwarf weed seed, Irit seed, Kwuarm seed, Lantadyme seed (+6 more)"
+        "ok": true,
+        "detail": "all 71 wiki drop row(s) reachable in the document"
       }
     ]
   },

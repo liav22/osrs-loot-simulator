@@ -9,7 +9,65 @@
   ],
   "tables": [
     {
-      "id": "corporeal-beast:0:weapons-and-armour-runes-and-ammunition-resources-other",
+      "id": "corporeal-beast:0:sigils",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 4095,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12823,
+            "itemKey": "spectral-sigil",
+            "name": "Spectral sigil",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12827,
+            "itemKey": "arcane-sigil",
+            "name": "Arcane sigil",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12819,
+            "itemKey": "elysian-sigil",
+            "name": "Elysian sigil",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Sigils"
+    },
+    {
+      "id": "corporeal-beast:1:weapons-and-armour-runes-and-ammunition-resources-other",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 512,
@@ -544,7 +602,7 @@
       "notes": "Weapons and armour / Runes and ammunition / Resources / Other"
     },
     {
-      "id": "corporeal-beast:1:tertiary",
+      "id": "corporeal-beast:2:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -626,7 +684,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -664,8 +722,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "3 of 49 wiki drop row(s) missing from the document: Arcane sigil, Elysian sigil, Spectral sigil"
+        "ok": true,
+        "detail": "all 49 wiki drop row(s) reachable in the document"
       }
     ]
   },
