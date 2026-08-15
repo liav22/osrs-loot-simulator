@@ -17,7 +17,7 @@
 export function Footer({ reserveActionBar = false }: { reserveActionBar?: boolean }) {
   return (
     <footer
-      className={`shrink-0 border-t border-neutral-800 px-4 pt-1.5 text-[11px] leading-snug text-neutral-600 min-[600px]:py-1.5 ${
+      className={`shrink-0 border-t border-neutral-800 bg-neutral-900 px-4 pt-1.5 text-[11px] leading-snug text-muted min-[600px]:py-1.5 ${
         reserveActionBar ? 'pb-28' : 'pb-1.5'
       }`}
     >
@@ -27,7 +27,7 @@ export function Footer({ reserveActionBar = false }: { reserveActionBar?: boolea
           href="https://oldschool.runescape.wiki/"
           target="_blank"
           rel="noreferrer"
-          className="underline hover:text-neutral-400"
+          className="underline hover:text-neutral-100"
         >
           Old School RuneScape Wiki
         </a>
@@ -36,7 +36,7 @@ export function Footer({ reserveActionBar = false }: { reserveActionBar?: boolea
           href="https://creativecommons.org/licenses/by-nc-sa/3.0/"
           target="_blank"
           rel="noreferrer"
-          className="underline hover:text-neutral-400"
+          className="underline hover:text-neutral-100"
         >
           CC BY-NC-SA 3.0
         </a>

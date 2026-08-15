@@ -79,10 +79,10 @@ export function SearchBox({ autoFocus = true }: { autoFocus?: boolean }) {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={onKeyDown}
-        className="w-full rounded-md border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm text-neutral-100 placeholder:text-neutral-500 focus:border-amber-500/60 focus:outline-none focus:ring-1 focus:ring-amber-500/60"
+        className="w-full rounded-md border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm text-neutral-100 placeholder:text-muted focus:border-amber-500/60 focus:outline-none focus:ring-1 focus:ring-amber-500/60"
       />
 
-      {isLoading && <p className="mt-2 text-sm text-neutral-500">Loading boss index…</p>}
+      {isLoading && <p className="mt-2 text-sm text-muted">Loading boss index…</p>}
       {isError && <p className="mt-2 text-sm text-red-400">Failed to load the boss index.</p>}
 
       {results.length > 0 && (
@@ -110,7 +110,7 @@ export function SearchBox({ autoFocus = true }: { autoFocus?: boolean }) {
       )}
 
       {data !== undefined && query.trim() !== '' && results.length === 0 && (
-        <p className="mt-2 text-sm text-neutral-500">No bosses match "{query}".</p>
+        <p className="mt-2 text-sm text-muted">No bosses match "{query}".</p>
       )}
     </div>
   )

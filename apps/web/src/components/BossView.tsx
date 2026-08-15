@@ -133,7 +133,7 @@ export function BossView({ slug }: { slug: string }) {
     runWith(params.seed === RANDOM_SEED ? { ...params, seed: rollSeed() } : params)
   }, [params, bossQuery.data, tablesQuery.data, pricesQuery.isLoading, runWith])
 
-  if (bossQuery.isLoading) return <p className="p-4 text-sm text-neutral-500">Loading {slug}…</p>
+  if (bossQuery.isLoading) return <p className="p-4 text-sm text-muted">Loading {slug}…</p>
   if (bossQuery.isError) {
     return (
       <p className="p-4 text-sm text-red-400">
@@ -182,7 +182,7 @@ export function BossView({ slug }: { slug: string }) {
             height before and after a run, so nothing jumps when results land. */}
         {simState.status === 'idle' && (
           <div className="flex flex-1 items-center justify-center px-6 text-center">
-            <p className="text-sm text-neutral-600">
+            <p className="text-sm text-muted">
               Set the kill count and press Simulate.
               <br />
               Results appear here.
@@ -191,7 +191,7 @@ export function BossView({ slug }: { slug: string }) {
         )}
         {simState.status === 'running' && (
           <div className="flex flex-1 items-center justify-center">
-            <p className="text-sm text-neutral-500">Simulating…</p>
+            <p className="text-sm text-muted">Simulating…</p>
           </div>
         )}
         {simState.status === 'done' && (

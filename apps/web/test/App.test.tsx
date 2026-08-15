@@ -77,6 +77,24 @@ describe('App', () => {
     expect(screen.getByText(/CC BY-NC-SA 3.0/)).toBeInTheDocument()
   })
 
+  it('links to the source repository from the header, safely and accessibly', async () => {
+    renderApp('/')
+    // Found by its accessible name, which is the assertion that matters: an
+    // icon-only link with no name is invisible to a screen reader, and a
+    // class-based query would pass just as happily without one.
+    const link = screen.getByRole('link', { name: /source code on github/i })
+    expect(link).toHaveAttribute('href', 'https://github.com/liav22/osrs-loot-simulator')
+    expect(link).toHaveAttribute('target', '_blank')
+    // `noopener` denies the opened tab a handle on this window; `noreferrer`
+    // withholds the referrer. Asserted as separate tokens so re-ordering them
+    // does not fail, and dropping one does.
+    const rel = link.getAttribute('rel')?.split(/\s+/) ?? []
+    expect(rel).toContain('noopener')
+    expect(rel).toContain('noreferrer')
+    // The glyph must not be announced — the anchor already carries the name.
+    expect(link.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
+  })
+
   /**
    * The admin page is dev-only now (`import.meta.env.DEV`), and Vitest runs in
    * dev mode, so it still renders here — which is the right coverage: this is

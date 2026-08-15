@@ -76,14 +76,14 @@ export function BossPanel({
             <StatusBadge status={boss.status} />
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-3 text-xs">
-            <Link to="/" className="text-neutral-500 hover:text-amber-400 hover:underline">
+            <Link to="/" className="text-muted hover:text-amber-400 hover:underline">
               ← change boss
             </Link>
             <a
               href={`https://oldschool.runescape.wiki/w/${encodeURIComponent(boss.wikiPage.replace(/ /g, '_'))}`}
               target="_blank"
               rel="noreferrer"
-              className="text-neutral-500 hover:text-amber-400 hover:underline"
+              className="text-muted hover:text-amber-400 hover:underline"
             >
               OSRS Wiki ↗
             </a>
@@ -124,7 +124,7 @@ export function BossPanel({
 
       <div className="min-h-0 flex-1 overflow-y-auto min-[900px]:pr-1">
         {sharedTables === undefined ? (
-          <p className="text-sm text-neutral-500">Loading shared tables…</p>
+          <p className="text-sm text-muted">Loading shared tables…</p>
         ) : (
           <SimContextControls
             boss={boss}
@@ -171,7 +171,7 @@ export function BossPanel({
                 that it is a mode. The run's real seed shows in the results
                 summary. */}
             <span className="mb-1 block truncate text-xs text-neutral-400">
-              Seed <span className="text-neutral-600">(0 = random)</span>
+              Seed <span className="text-muted">(0 = random)</span>
             </span>
             <input
               type="number"

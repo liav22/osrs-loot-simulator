@@ -51,14 +51,14 @@ function NodeLabel({ node }: { node: Node }) {
         <span>
           {node.name}
           {node.qty.kind !== 'exact' || node.qty.n !== 1 ? (
-            <span className="text-neutral-500"> ×{formatQty(node.qty)}</span>
+            <span className="text-muted"> ×{formatQty(node.qty)}</span>
           ) : null}
-          {node.noted === true && <span className="text-neutral-500"> (noted)</span>}
+          {node.noted === true && <span className="text-muted"> (noted)</span>}
           {node.itemId === null && <span className="ml-1 text-amber-500" title="Item id unresolved">⚠</span>}
         </span>
       )
     case 'nothing':
-      return <span className="italic text-neutral-500">Nothing</span>
+      return <span className="italic text-muted">Nothing</span>
     case 'tableRef':
       return <span className="text-sky-400">→ {node.ref}</span>
     case 'oneOf':
@@ -86,7 +86,7 @@ function TableCard({ table }: { table: Table }) {
     <div className="overflow-hidden rounded-md border border-neutral-800">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-800 bg-neutral-900 px-3 py-2">
         <div className="text-sm font-medium text-neutral-200">{table.notes ?? table.id}</div>
-        <div className="flex items-center gap-2 text-xs text-neutral-500">
+        <div className="flex items-center gap-2 text-xs text-muted">
           <span className="rounded bg-neutral-800 px-1.5 py-0.5 uppercase tracking-wide">{table.mode}</span>
           {table.denominator !== undefined && <span>denominator {table.denominator}</span>}
           {typeof table.rolls === 'number' && table.rolls !== 1 && <span>rolls ×{table.rolls}</span>}
@@ -103,7 +103,7 @@ function TableCard({ table }: { table: Table }) {
               <td className="px-3 py-1.5 text-right font-mono text-xs text-neutral-400">
                 {entryRateDisplay(entry, table)}
               </td>
-              <td className="px-3 py-1.5 text-right text-xs text-neutral-500">
+              <td className="px-3 py-1.5 text-right text-xs text-muted">
                 {entry.conditions?.map(conditionLabel).join(', ')}
               </td>
             </tr>

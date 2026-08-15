@@ -19,7 +19,7 @@ export function HomePage() {
     <div className="flex flex-1 items-start justify-center px-4 pt-[12vh]">
       <div className="w-full max-w-xl">
         <h1 className="mb-1 text-2xl font-semibold text-neutral-100">Simulate a boss's drops</h1>
-        <p className="mb-4 text-sm text-neutral-500">
+        <p className="mb-4 text-sm text-muted">
           Search a boss, pick a kill count, and see what the table actually gives you.
         </p>
         <SearchBox />

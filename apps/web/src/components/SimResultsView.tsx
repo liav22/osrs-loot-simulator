@@ -93,7 +93,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
         <span className="text-neutral-300">
           <span className="font-mono text-neutral-100">{formatGp(result.gpPerKill)}</span> / kill
         </span>
-        <span className="text-xs text-neutral-500">seed {result.seed}</span>
+        <span className="text-xs text-muted">seed {result.seed}</span>
       </div>
 
       {/* Absent entirely when nothing qualified — an empty "no rare drops"
@@ -118,7 +118,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
         </div>
       )}
 
-      <div className="flex shrink-0 items-center justify-between gap-3 text-xs text-neutral-500">
+      <div className="flex shrink-0 items-center justify-between gap-3 text-xs text-muted">
         <span>
           {rows.length} distinct {rows.length === 1 ? 'item' : 'items'} · sorted by{' '}
           {pricesAvailable ? 'total value' : 'rarity (prices unavailable)'}
@@ -136,7 +136,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
 
       <div className="min-h-0 flex-1 overflow-y-auto">
         {rows.length === 0 ? (
-          <p className="rounded-md border border-neutral-800 px-3 py-6 text-center text-sm text-neutral-500">
+          <p className="rounded-md border border-neutral-800 px-3 py-6 text-center text-sm text-muted">
             No drops in this run.
           </p>
         ) : (
@@ -160,10 +160,20 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                     <div className="truncate text-sm text-neutral-100" title={row.name}>
                       {row.name}
                     </div>
-                    <div className="flex items-baseline gap-2 font-mono text-xs">
-                      <span className="text-neutral-400">×{formatNumber(row.drops)}</span>
+                    {/* The rarest card's amber tint LIFTS its background, so
+                        the muted colour that clears AA everywhere else does
+                        not clear it here (4.19:1). One step lighter restores
+                        it (7.33:1). This is the one place the muted token has
+                        to be overridden, and it is because the surface moved,
+                        not because the token is wrong. */}
+                    <div
+                      className={`flex items-baseline gap-2 font-mono text-xs ${
+                        isRarest ? 'text-neutral-300' : 'text-muted'
+                      }`}
+                    >
+                      <span>×{formatNumber(row.drops)}</span>
                       {pricesAvailable && row.gp > 0 && (
-                        <span className="truncate text-neutral-500">{formatGp(row.gp)}</span>
+                        <span className="truncate">{formatGp(row.gp)}</span>
                       )}
                     </div>
                   </div>
@@ -179,7 +189,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
           <button
             type="button"
             onClick={() => setShowLog((v) => !v)}
-            className="text-xs text-neutral-500 hover:text-amber-400 hover:underline"
+            className="text-xs text-muted hover:text-amber-400 hover:underline"
           >
             {showLog ? 'Hide' : 'Show'} per-kill log (first {formatNumber(result.log.length)} kills)
           </button>
@@ -189,10 +199,10 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                 <tbody className="divide-y divide-neutral-900">
                   {result.log.map((entry) => (
                     <tr key={entry.kill}>
-                      <td className="w-16 px-3 py-1 text-neutral-500">#{entry.kill}</td>
+                      <td className="w-16 px-3 py-1 text-muted">#{entry.kill}</td>
                       <td className="px-3 py-1">
                         {entry.drops.length === 0 ? (
-                          <span className="text-neutral-600">nothing</span>
+                          <span className="text-muted">nothing</span>
                         ) : (
                           entry.drops.map((d) => `${d.name}${d.qty !== 1 ? ` ×${d.qty}` : ''}`).join(', ')
                         )}

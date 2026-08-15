@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+/* The muted-foreground role: de-emphasised body text that must still be
+   READ — seed values, gp figures, rarity columns, placeholders, empty and
+   loading states, the header and footer chrome.
+
+   It is a named token rather than a raw palette step because it is a role,
+   not a shade. `text-neutral-400` still appears on its own for form labels,
+   which happen to share this value today; keeping the two names distinct is
+   what lets the muted role move without dragging labels along.
+
+   The value is pinned by contrast, not taste. Tailwind's neutral scale is
+   achromatic OKLCH, so relative luminance is exactly L^3 and the ratio
+   against a background is computable rather than eyeballed:
+
+     neutral-500 on neutral-950   4.18:1   below AA for body text
+     neutral-500 on neutral-900   3.79:1   below AA
+     neutral-400 on neutral-950   7.63:1   AA
+     neutral-400 on neutral-900   6.91:1   AA
+     neutral-400 on neutral-800   5.83:1   AA
+
+   neutral-500 cannot reach 4.5:1 against ANY background in this UI, so 400 is
+   the lightest step that is also the only compliant one. `apps/web/test/
+   contrast.test.ts` recomputes all of this and fails if a pair regresses. */
+@theme {
+  --color-muted: oklch(70.8% 0 none); /* = neutral-400 */
+}
+
 /* PROJECT_PLAN.md 9: "dark, dense, functional... this is a tool for people
    who read drop tables for fun." */
 html {

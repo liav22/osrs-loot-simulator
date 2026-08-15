@@ -27,13 +27,13 @@ export function AdminPage() {
     return c
   }, [data])
 
-  if (isLoading) return <p className="p-8 text-sm text-neutral-500">Loading…</p>
+  if (isLoading) return <p className="p-8 text-sm text-muted">Loading…</p>
   if (isError || data === undefined) return <p className="p-8 text-sm text-red-400">Failed to load the boss index.</p>
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <h1 className="mb-1 text-lg font-semibold text-neutral-100">Validation report</h1>
-      <p className="mb-4 text-sm text-neutral-500">
+      <p className="mb-4 text-sm text-muted">
         Generated {new Date(data.generatedAt).toLocaleString()} · {data.entries.length} sources ·{' '}
         {counts.verified} verified, {counts.needs_review} needs review, {counts.manual_override} manual override
       </p>
@@ -64,7 +64,7 @@ export function AdminPage() {
             onToggle={() => setExpanded((current) => (current === entry.slug ? null : entry.slug))}
           />
         ))}
-        {entries.length === 0 && <p className="px-4 py-6 text-center text-sm text-neutral-500">No sources match this filter.</p>}
+        {entries.length === 0 && <p className="px-4 py-6 text-center text-sm text-muted">No sources match this filter.</p>}
       </div>
     </div>
   )
@@ -93,21 +93,21 @@ function AdminRow({
         className="flex w-full items-center justify-between gap-3 bg-neutral-950 px-4 py-2.5 text-left text-sm hover:bg-neutral-900"
       >
         <span className="flex items-center gap-2">
-          <span className="text-neutral-500">{open ? '▾' : '▸'}</span>
+          <span className="text-muted">{open ? '▾' : '▸'}</span>
           {name}
         </span>
         <StatusBadge status={status} />
       </button>
       {open && (
         <div className="border-t border-neutral-900 bg-neutral-900/40 px-4 py-3 text-xs">
-          {bossQuery.isLoading && <p className="text-neutral-500">Loading checks…</p>}
+          {bossQuery.isLoading && <p className="text-muted">Loading checks…</p>}
           {bossQuery.data !== undefined && (
             <ul className="space-y-1">
               {bossQuery.data.validation.checks.map((check) => (
                 <li key={check.check} className="flex gap-2">
                   <span className={check.ok ? 'text-emerald-400' : 'text-red-400'}>{check.ok ? '✓' : '✗'}</span>
                   <span className="text-neutral-400">{check.check}</span>
-                  {check.detail !== undefined && <span className="text-neutral-600">— {check.detail}</span>}
+                  {check.detail !== undefined && <span className="text-muted">— {check.detail}</span>}
                 </li>
               ))}
             </ul>

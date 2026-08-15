@@ -39,7 +39,7 @@ export function ItemIcon({
       <span
         aria-hidden="true"
         style={{ width: size, height: size }}
-        className="flex shrink-0 items-center justify-center rounded bg-neutral-800 font-mono text-xs text-neutral-500"
+        className="flex shrink-0 items-center justify-center rounded bg-neutral-800 font-mono text-xs text-muted"
       >
         {name.slice(0, 1).toUpperCase()}
       </span>
