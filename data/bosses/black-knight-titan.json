@@ -565,6 +565,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "55 of 90 wiki drop row(s) missing from the document: Asgarnian seed, Avantoe seed, Barley seed, Belladonna seed, Cabbage seed, Cactus seed, Cadantine seed, Cadavaberry seed (+47 more)"
       }
     ]
   },

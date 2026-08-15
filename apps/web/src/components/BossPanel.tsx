@@ -93,14 +93,24 @@ export function BossPanel({
 
       {boss.status !== 'verified' && (
         <p className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2.5 py-1.5 text-xs text-amber-300">
-          Hasn't cleared every check — rates may be wrong. See the{' '}
-          {/* `Link`, not a raw <a href="/...">: on GitHub Pages the app is served
-              from /osrs-loot-simulator/, so a root-absolute href points at a path
-              belonging to a different site. `Link` applies the router's basename. */}
-          <Link to={`/admin?slug=${boss.slug}`} className="underline">
-            admin page
-          </Link>
-          .
+          Hasn't cleared every check — rates may be wrong.
+          {/* The admin page is dev-only, so the link is too. Without this guard
+              production would render a link to a route that no longer exists,
+              which lands on the search page and reads as a broken app.
+
+              `Link`, not a raw <a href="/...">: on GitHub Pages the app is
+              served from /osrs-loot-simulator/, so a root-absolute href points
+              at a path belonging to a different site. */}
+          {import.meta.env.DEV && (
+            <>
+              {' '}
+              See the{' '}
+              <Link to={`/admin?slug=${boss.slug}`} className="underline">
+                admin page
+              </Link>
+              .
+            </>
+          )}
         </p>
       )}
 

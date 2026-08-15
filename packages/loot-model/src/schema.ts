@@ -847,6 +847,18 @@ export const VALIDATION_CHECKS = [
    * result from being marked `verified`.
    */
   'not_on_watchlist',
+  /**
+   * Fails when the wiki lists a drop the parsed document does not reach.
+   *
+   * Every other check here is closed-world over the extracted document — they
+   * validate what IS present. None of them can see a drop table that produced
+   * zero rows, because an empty section and an absent section are the same
+   * thing downstream. `drops_covered` compares the document against the
+   * `dropsline` bucket snapshot, which the wiki generates from the RENDERED
+   * page and so sees through the transclusions raw wikitext hides
+   * (`===Sigils=== {{Uniques/Corporeal Beast}}`).
+   */
+  'drops_covered',
 ] as const
 
 export const ValidationCheckSchema = z.enum(VALIDATION_CHECKS)

@@ -766,7 +766,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -801,6 +801,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "7 of 75 wiki drop row(s) missing from the document: Air talisman, Body talisman, Cosmic talisman, Earth talisman, Fire talisman, Mind talisman, Water talisman"
       }
     ]
   },

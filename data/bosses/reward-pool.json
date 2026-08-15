@@ -372,6 +372,11 @@
         "check": "not_on_watchlist",
         "ok": false,
         "detail": "point_scaled: Rolls scale with reward permits earned subduing Tempoross (fishing/cooking/depositing harpoonfish, repairing totems, dousing fires) rather than being a fixed count per redemption. Needs the tempoross_points formula."
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 26 wiki drop row(s) reachable in the document"
       }
     ]
   },

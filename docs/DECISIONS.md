@@ -3188,3 +3188,112 @@ rarity sort a price-less run uses, the commonest drop lands past the 24-card
 collapse and never renders, so the assertion is now "every requested icon path
 is a value the committed map contains" plus "at least one carries a stack
 suffix".
+
+## `drops_covered` is on, and 20 sources left `verified`
+
+Turning the check on moved the corpus from **38 verified / 2 manual_override /
+11 needs_review** to **18 / 2 / 32**. That is the intended outcome, not a
+regression: `verified` has meant "the pipeline derived this from the wiki
+unaided" since Phase 1, and a document missing drops the wiki lists has not met
+that claim whatever else it got right. Shipping a badge that is no longer true
+is worse than shipping an honest one.
+
+26 sources fail the check. The groups are unchanged from the earlier analysis —
+seed/herb/talisman transclusions (17), `WildernessSlayerDropTable` (8),
+Corporeal Beast's sigils, and the already-flagged GWDRDT hole on Kree'arra and
+General Graardor. Fixing the transclusions is separate work; the check makes
+the gap visible rather than fixing it.
+
+Design points worth keeping:
+
+- **Coverage in ONE direction only.** Every bucket item must be reachable in the
+  document; the reverse is not required and must not be. Override-authored
+  sources (Lunar Chest, Reward pool) build tables from prose the bucket never
+  saw, and a set-equality check would fail them for being more complete than
+  the oracle.
+- **`tableRef` contents count as covered.** A boss reaching the rare drop table
+  really does drop everything in it, and the shared record is validated as
+  itself — the same reasoning `collectItemInputs` documents for the opposite
+  decision, applied to a check with no blame to misattribute.
+- **The verdict is split from the snapshot read** (`checkDropsCoveredAgainst`),
+  which is what lets the scope-invariant harness cover it like the other five.
+  Worth stating plainly: **the harness could never have found this hole.** Its
+  invariant is that a failing document keeps failing under mutation; it has no
+  notion of a document that should have been larger. Being scope-invariant was
+  always necessary and never sufficient.
+- **One normalisation, narrowly scoped.** The bucket names a versioned item by
+  page anchor (`Pendant of ates#Inert`) where the document uses the
+  parenthesised form. Exactly one row in the corpus takes that path; it is
+  translated, not fuzzy-matched, and an unrelated anchor still fails.
+- **A missing oracle passes, and says so.** With no dropsline snapshot there is
+  no claim to make — but the detail string announces it, because `refs_resolve`
+  once reported "resolved against 0 shared table(s)" as a clean pass and nobody
+  noticed for months.
+
+Side effect: `chest-tombs-of-amascut` was re-parsed with `--tier A,B,C,D`, so
+**HANDOFF landmine #1's live instance is gone** — no committed document now
+predates the current check set.
+
+## CI: a gitignored read at module scope, and a deploy that could outrun its gate
+
+Two workflow problems, both of which would have surfaced as a red first run.
+
+**`brutus-snapshot.test.ts` read a gitignored snapshot at module scope.**
+`describe.skipIf(...)` marks a suite skipped but still INVOKES its callback to
+collect the tests inside it, so the `readFileSync` threw during collection on
+every clean checkout — which is every CI run, since `data/snapshots/` is
+gitignored. Moved into `beforeAll`, whose hooks a skipped suite never runs.
+Verified by parking `data/snapshots/` and running the suite: 7 skipped, green.
+
+**That same parking run then caught three of my own new tests doing it** —
+`drops-covered.test.ts`'s real-corpus suites compare committed documents against
+the bucket snapshot, and with no bucket the check correctly returns a vacuous
+pass, so "agrees with the committed document" failed for the 26 sources recorded
+as failing. Same guard applied. The lesson generalises past this one file:
+**a snapshot-dependent assertion that does not declare its dependency is a red
+CI run waiting to happen**, and the way to find them is to park the directory
+and run everything, not to reason about it.
+
+**`deploy.yml` ran only `pnpm -r test`.** Both workflows trigger on push to
+main, so they run in parallel and a red `ci` does not block a deploy — the only
+thing between a broken commit and production was the one check that cannot see
+a type error, a lint failure, or any production-only bug. `deploy` now runs the
+same gate as `ci`, e2e included, before it builds.
+
+Actions were well behind (`checkout@v4`, `setup-node@v4`,
+`upload-pages-artifact@v3`, `pnpm/action-setup@v4`), which is what produces the
+runtime deprecation warnings; all bumped to current majors, and `node-version`
+to 24.
+
+## The admin page does not ship, and the first attempt did not stop it
+
+Gated behind `import.meta.env.DEV`: the route, the header link, and the
+non-verified boss's "see the admin page" link.
+
+**The first attempt failed, and the interesting part is why.** Putting
+`lazy(async () => import('./pages/AdminPage'))` at module scope and guarding
+only the `<Route>` kills the route but not the `lazy()` call — the dynamic
+import stays reachable, so Rollup emits the chunk and the entire admin page
+ships. The condition has to wrap the `lazy()` call itself
+(`import.meta.env.DEV ? lazy(...) : null`), so the `import()` sits inside the
+dead arm.
+
+It was caught because the e2e assertion greps the built assets **off disk**
+rather than through the page. A lazily-imported chunk that survived elimination
+is referenced by no `<script>` tag, so checking what the browser loaded would
+have reported a clean pass for exactly this failure. Confirmed: `dist/assets/`
+contains three files and no `AdminPage-*.js`.
+
+## A shared link used to always report 0 gp
+
+The auto-run fired before the GE price fetch settled, so every shared result
+rendered "0 gp total" with the grid sorted by rarity. The label was honest, but
+it was the wrong answer for the feature whose entire purpose is showing someone
+else your result.
+
+The auto-run now waits for the price query to settle; a click still does not.
+The asymmetry is the point: a click is user-initiated and must feel instant,
+while an auto-run has nobody waiting on it and no reason to race. `isLoading`
+rather than `data !== undefined`, so a failed fetch settles and falls back to
+rarity instead of hanging forever. Both halves are pinned in
+`e2e/shareable-result.spec.ts` against a deliberately slow price stub.

@@ -478,6 +478,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "21 of 51 wiki drop row(s) missing from the document: Cabbage seed, Elkhorn frag, Grimy avantoe, Grimy cadantine, Grimy dwarf weed, Grimy guam leaf, Grimy harralander, Grimy irit leaf (+13 more)"
       }
     ]
   },

@@ -6,6 +6,7 @@ import { checkQtySane } from '../src/validate/qty-sane.js'
 import { checkRatesValid } from '../src/validate/rates-valid.js'
 import { checkWeightsSum } from '../src/validate/weights-sum.js'
 import { checkItemsKnown } from '../src/validate/items-known.js'
+import { checkDropsCoveredAgainst } from '../src/validate/drops-covered.js'
 import { collectItemInputs } from '../src/parse/collect-items.js'
 import type { ItemIndex } from '../src/items/index.js'
 import type { ItemAllowlist } from '../src/items/allowlist.js'
@@ -163,5 +164,37 @@ describe('weights_sum is scope-invariant', () => {
         'wrapping changes the weight arithmetic itself (the wrapper carries its own weight), ' +
         'so this mutation is not verdict-preserving for a check about weights',
     },
+  })
+})
+
+describe('drops_covered is scope-invariant', () => {
+  // Defect: the wiki lists a drop the document does not carry.
+  //
+  // Covered by the harness like the other five, which is only possible because
+  // the verdict was split out of the snapshot read
+  // (`checkDropsCoveredAgainst`). Worth stating plainly: this check exists
+  // BECAUSE the harness structurally could not have found the transclusion hole
+  // — its invariant is about a failing document continuing to fail, and it has
+  // no notion of a document that should have been larger. Being scope-invariant
+  // is still necessary; it was never sufficient.
+  expectScopeInvariant({
+    failing: boss([
+      weightedTable([
+        {
+          node: {
+            kind: 'item',
+            itemId: 1,
+            itemKey: 'known-thing',
+            name: 'Known Thing',
+            qty: { kind: 'exact', n: 1 },
+          },
+          rate: { kind: 'weight', weight: 4 },
+        },
+      ]),
+    ]),
+    // 'Missing Thing' is in the wiki's rows and in no mutation of the document,
+    // so every mutation must keep failing.
+    verdict: (b) =>
+      checkDropsCoveredAgainst(['Known Thing', 'Missing Thing'], b.tables, new Map()).ok,
   })
 })

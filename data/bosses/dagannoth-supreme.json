@@ -663,7 +663,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -698,6 +698,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "21 of 81 wiki drop row(s) missing from the document: Air talisman, Avantoe seed, Belladonna seed, Body talisman, Cactus seed, Cadantine seed, Cosmic talisman, Dwarf weed seed (+13 more)"
       }
     ]
   },

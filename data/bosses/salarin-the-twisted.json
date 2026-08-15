@@ -350,6 +350,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "11 of 35 wiki drop row(s) missing from the document: Grimy avantoe, Grimy cadantine, Grimy dwarf weed, Grimy guam leaf, Grimy harralander, Grimy irit leaf, Grimy kwuarm, Grimy lantadyme (+3 more)"
       }
     ]
   },

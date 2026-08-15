@@ -939,7 +939,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -974,6 +974,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "2 of 53 wiki drop row(s) missing from the document: Larran's key, Slayer's enchantment"
       }
     ]
   },

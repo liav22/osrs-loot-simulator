@@ -718,7 +718,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -753,6 +753,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "23 of 81 wiki drop row(s) missing from the document: Air talisman, Body talisman, Celastrus seed, Cosmic talisman, Dragonfruit tree seed, Earth talisman, Fire talisman, Magic seed (+15 more)"
       }
     ]
   },

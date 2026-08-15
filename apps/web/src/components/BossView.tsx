@@ -115,12 +115,23 @@ export function BossView({ slug }: { slug: string }) {
   useEffect(() => {
     if (autoRan.current || !params.run) return
     if (bossQuery.data === undefined || tablesQuery.data === undefined) return
+    // Wait for the GE fetch to settle first. A click is user-initiated and
+    // should be instant, so it runs with whatever prices exist; an auto-run
+    // has nobody waiting on it and no reason to race. Without this, EVERY
+    // shared link lost the race and rendered "0 gp total" with the grid
+    // sorted by rarity — technically labelled, but a poor answer for the one
+    // feature whose whole point is showing someone else your result.
+    //
+    // `isLoading`, not `data !== undefined`: a failed fetch must not hang the
+    // run forever. It settles to not-loading with no data, and the rarity
+    // fallback takes over exactly as it does for a click.
+    if (pricesQuery.isLoading) return
     autoRan.current = true
     // Every link this app produces carries a real seed, so the sentinel branch
     // is only reachable on a hand-edited `?run=1&seed=0`. Rolling is the right
     // reading of that link — "run one" — rather than seeding the RNG with 0.
     runWith(params.seed === RANDOM_SEED ? { ...params, seed: rollSeed() } : params)
-  }, [params, bossQuery.data, tablesQuery.data, runWith])
+  }, [params, bossQuery.data, tablesQuery.data, pricesQuery.isLoading, runWith])
 
   if (bossQuery.isLoading) return <p className="p-4 text-sm text-neutral-500">Loading {slug}…</p>
   if (bossQuery.isError) {

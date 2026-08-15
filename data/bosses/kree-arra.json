@@ -564,6 +564,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "24 of 52 wiki drop row(s) missing from the document: Adamant javelin, Chaos talisman, Death rune, Dragon med helm, Dragon spear, Dragonstone, Law rune, Loop half of key (+16 more)"
       }
     ]
   },

@@ -626,7 +626,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -661,6 +661,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "3 of 49 wiki drop row(s) missing from the document: Arcane sigil, Elysian sigil, Spectral sigil"
       }
     ]
   },

@@ -1,7 +1,27 @@
+import { lazy, Suspense } from 'react'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
-import { AdminPage } from './pages/AdminPage'
 import { Footer } from './components/Footer'
+
+/**
+ * The admin page is a maintenance tool — a validation report over the parsed
+ * corpus — and it does not ship to production.
+ *
+ * `import.meta.env.DEV` is replaced with a literal `false` at build time, so
+ * this whole expression folds to `null` and the `import()` inside the dead arm
+ * is never emitted as a chunk.
+ *
+ * **The condition has to wrap the `lazy()` call, not just the route.** The
+ * first attempt put `lazy(async () => import(...))` at module scope and guarded
+ * only the `<Route>`: the route died, but the `lazy()` call did not, so the
+ * dynamic import was still reachable and Rollup emitted the chunk anyway. The
+ * production bundle still contained the entire admin page. `e2e/pages-deploy.
+ * spec.ts` greps the built assets off disk, which is what caught it — a check
+ * that only looked at routes, or at what the browser loaded, would have passed.
+ */
+const AdminPage = import.meta.env.DEV
+  ? lazy(async () => ({ default: (await import('./pages/AdminPage')).AdminPage }))
+  : null
 
 /**
  * Fixed-height app shell.
@@ -38,7 +58,7 @@ export function App() {
               OSRS Wiki
             </a>
           </span>
-          {!onAdmin && (
+          {import.meta.env.DEV && !onAdmin && (
             <Link to="/admin" className="hover:text-neutral-400 hover:underline">
               admin
             </Link>
@@ -50,7 +70,18 @@ export function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/boss/:slug" element={<HomePage />} />
-          <Route path="/admin" element={<AdminPage />} />
+          {AdminPage !== null && (
+            <Route
+              path="/admin"
+              element={
+                <Suspense fallback={<p className="p-4 text-sm text-neutral-500">Loading admin…</p>}>
+                  <AdminPage />
+                </Suspense>
+              }
+            />
+          )}
+          {/* In production `/admin` has no route, so it falls through to this
+              catch-all and renders search — a dead link, not a broken page. */}
           <Route path="*" element={<HomePage />} />
         </Routes>
       </main>

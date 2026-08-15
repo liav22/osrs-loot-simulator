@@ -7,6 +7,7 @@ import { checkEvMatches, type EvMatchesResult } from '../validate/ev-matches.js'
 import { checkRefsResolve } from '../validate/refs-resolve.js'
 import { checkRatesValid } from '../validate/rates-valid.js'
 import { checkQtySane } from '../validate/qty-sane.js'
+import { checkDropsCovered } from '../validate/drops-covered.js'
 import type { ItemAllowlist } from '../items/allowlist.js'
 import type { ItemIndex } from '../items/index.js'
 import type { GePrices } from '../prices/ge-prices.js'
@@ -136,6 +137,11 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   const refsResolve = checkRefsResolve(merged, options.sharedTables)
   const ratesValid = checkRatesValid(merged)
   const qtySane = checkQtySane(merged)
+  // The one check that is NOT closed-world over the extracted document: it
+  // compares the document against the wiki's own rendered drop rows, which is
+  // what makes a silently-dropped transcluded sub-table visible. See
+  // validate/drops-covered.ts.
+  const dropsCovered = await checkDropsCovered(options.title, merged.tables, options.sharedTables)
 
   // ev_matches: real GE prices, joined by itemId, gemw-untradeable items
   // priced at 0 automatically (they carry no GE listing at all). Confirmed
@@ -164,6 +170,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     { check: 'ev_matches' as const, ok: evMatches.ok, detail: evMatches.detail },
     { check: 'items_known' as const, ok: itemsKnown.ok, detail: itemsKnown.detail },
     { check: 'not_on_watchlist' as const, ok: notOnWatchlist.ok, detail: notOnWatchlist.detail },
+    { check: 'drops_covered' as const, ok: dropsCovered.ok, detail: dropsCovered.detail },
   ]
 
   // `verified` depends only on checks that are deterministic given the parsed
@@ -182,6 +189,12 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     refsResolve.ok &&
     ratesValid.ok &&
     qtySane.ok &&
+    // Part of the gate, deliberately. `verified` has meant "the pipeline
+    // derived this from the wiki unaided" all project, and a document missing
+    // drops the wiki lists has not met that claim — whatever else it got
+    // right. Turning this on moved 21 sources to `needs_review`; that is the
+    // check working, not a regression.
+    dropsCovered.ok &&
     // An override supplying its own tables replaces exactly the structure the
     // parser was unsure about, so its ambiguous-group guesses no longer
     // describe the document being validated.
@@ -217,6 +230,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   if (!refsResolve.ok) reasons.push(`refs_resolve: ${refsResolve.detail}`)
   if (!ratesValid.ok) reasons.push(`rates_valid: ${ratesValid.detail}`)
   if (!qtySane.ok) reasons.push(`qty_sane: ${qtySane.detail}`)
+  if (!dropsCovered.ok) reasons.push(`drops_covered: ${dropsCovered.detail}`)
   reasons.push(`ev_matches (advisory, not part of the verified gate): ${evMatches.detail}`)
 
   const boss = {

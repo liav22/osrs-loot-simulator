@@ -193,6 +193,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 8 wiki drop row(s) reachable in the document"
       }
     ]
   },

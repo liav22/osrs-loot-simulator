@@ -77,9 +77,20 @@ describe('App', () => {
     expect(screen.getByText(/CC BY-NC-SA 3.0/)).toBeInTheDocument()
   })
 
-  it('renders the admin page with the validation report header', async () => {
+  /**
+   * The admin page is dev-only now (`import.meta.env.DEV`), and Vitest runs in
+   * dev mode, so it still renders here — which is the right coverage: this is
+   * the environment maintainers actually use it in. That it is ABSENT from the
+   * production bundle is asserted where that can be observed, against the real
+   * build, in `e2e/pages-deploy.spec.ts`.
+   *
+   * `findByText` rather than `getByText` in a `waitFor`: the route is behind a
+   * `lazy()` boundary now, so the first render is the Suspense fallback.
+   */
+  it('renders the admin page with the validation report header in dev', async () => {
+    expect(import.meta.env.DEV).toBe(true)
     renderApp('/admin')
-    await waitFor(() => expect(screen.getByText('Validation report')).toBeInTheDocument())
+    expect(await screen.findByText('Validation report')).toBeInTheDocument()
     expect(screen.getByText(/2 sources/)).toBeInTheDocument()
   })
 })

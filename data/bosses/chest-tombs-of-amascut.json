@@ -7,7 +7,621 @@
   "variants": [
     "normal"
   ],
-  "tables": [],
+  "tables": [
+    {
+      "id": "chest-tombs-of-amascut:0:untitled",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 27,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27293,
+            "itemKey": "cache-of-runes",
+            "name": "Cache of runes",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 1126,
+              "max": 51285
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 57,
+              "max": 2564
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 566,
+            "itemKey": "soul-rune",
+            "name": "Soul rune",
+            "qty": {
+              "kind": "range",
+              "min": 28,
+              "max": 1282
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 12,
+              "max": 569
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 11,
+              "max": 512
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6332,
+            "itemKey": "mahogany-logs",
+            "name": "Mahogany logs",
+            "qty": {
+              "kind": "range",
+              "min": 6,
+              "max": 284
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1607,
+            "itemKey": "sapphire",
+            "name": "Sapphire",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 256
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1605,
+            "itemKey": "emerald",
+            "name": "Emerald",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 205
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2357,
+            "itemKey": "gold-bar",
+            "name": "Gold bar",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 205
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3138,
+            "itemKey": "potato-cactus",
+            "name": "Potato cactus",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 205
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 205
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1603,
+            "itemKey": "ruby",
+            "name": "Ruby",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 170
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1601,
+            "itemKey": "diamond",
+            "name": "Diamond",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 128
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 389,
+            "itemKey": "raw-manta-ray",
+            "name": "Raw manta ray",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 113
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6016,
+            "itemKey": "cactus-spine",
+            "name": "Cactus spine",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 85
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1615,
+            "itemKey": "dragonstone",
+            "name": "Dragonstone",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 85
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 46
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5935,
+            "itemKey": "coconut-milk",
+            "name": "Coconut milk",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 46
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27272,
+            "itemKey": "lily-of-the-sands",
+            "name": "Lily of the sands",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 46
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5296,
+            "itemKey": "toadflax-seed",
+            "name": "Toadflax seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 36
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 28
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 23
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 23
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 7
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26390,
+            "itemKey": "blood-essence",
+            "name": "Blood essence",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 6
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "chest-tombs-of-amascut:1:untitled",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27248,
+            "itemKey": "cursed-phalanx",
+            "name": "Cursed phalanx",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27372,
+            "itemKey": "masori-crafting-kit",
+            "name": "Masori crafting kit",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27255,
+            "itemKey": "menaphite-ornament-kit",
+            "name": "Menaphite ornament kit",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27377,
+            "itemKey": "remnant-of-akkha",
+            "name": "Remnant of akkha",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27378,
+            "itemKey": "remnant-of-ba-ba",
+            "name": "Remnant of ba-ba",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27379,
+            "itemKey": "remnant-of-kephri",
+            "name": "Remnant of kephri",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27380,
+            "itemKey": "remnant-of-zebak",
+            "name": "Remnant of zebak",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27381,
+            "itemKey": "ancient-remnant",
+            "name": "Ancient remnant",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": ""
+    }
+  ],
   "contextDefaults": {},
   "status": "needs_review",
   "validation": {
@@ -20,17 +634,17 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes (tier A/B have no RDT access)"
+        "detail": "no tableRef nodes"
       },
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
       },
       {
         "check": "qty_sane",
         "ok": true,
-        "detail": "enforced by the loot-model schema"
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
       },
       {
         "check": "ev_matches",
@@ -45,6 +659,11 @@
         "check": "not_on_watchlist",
         "ok": false,
         "detail": "point_scaled: Unique chance scales with raid invocation level and completion points, not with any fixed per-kill rarity — needs the toa_invocation formula. The chest's own dropsline rows are structural leftovers of the raid's point-purchase reward shop, not independent per-row rarities; parsing them as an ordinary weighted table would misrepresent the mechanic entirely regardless of whether the weights happen to reconcile."
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "15 of 50 wiki drop row(s) missing from the document: Breach of the scarab, Clue scroll (elite), Elidinis' ward, Eye of the corruptor, Fossilised dung, Jewel of amascut, Jewel of the sun, Lightbearer (+7 more)"
       }
     ]
   },

@@ -1,4 +1,9 @@
+import { readFileSync, readdirSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { expect, test } from './fixtures'
+
+const HERE = dirname(fileURLToPath(import.meta.url))
 
 /**
  * PROJECT_PLAN.md section 9 names two GitHub Pages failures that "will bite
@@ -79,10 +84,13 @@ test('boss data is fetched from the subpath, not the server root', async ({ page
 })
 
 test('in-app links stay inside the base path', async ({ page }) => {
-  // Zalcano is not `verified`, so BossView renders its admin-page link. Any
-  // app-internal href that forgets BASE_URL points at a path that belongs to a
-  // different site on the real host — the mimic server answers it with a plain
-  // 404 and no app at all.
+  // Any app-internal href that forgets BASE_URL points at a path that belongs
+  // to a different site on the real host — the mimic server answers it with a
+  // plain 404 and no app at all.
+  //
+  // Zalcano because it is not `verified`, so it renders the most in-app links
+  // of any page. (Its admin link is gone in production now; the header brand
+  // and "change boss" remain, which is what this sweeps.)
   await page.goto('./boss/zalcano')
   await expect(page.getByRole('heading', { name: 'Zalcano' })).toBeVisible()
 
@@ -93,8 +101,48 @@ test('in-app links stay inside the base path', async ({ page }) => {
   expect(escaped).toEqual([])
 })
 
-test('the admin page is reachable at its deep link', async ({ page }) => {
+test('the admin page does NOT ship to production', async ({ page }) => {
+  // Reversed deliberately. This used to assert the admin page was reachable;
+  // it is a maintenance tool over the parsed corpus and has no business on a
+  // public site, so it is now gated behind `import.meta.env.DEV`.
+  //
+  // `/admin` still resolves — the 404.html mechanism boots the SPA — but with
+  // no route registered it falls through to the catch-all and renders search.
   const response = await page.goto('./admin')
   expect(response?.status()).toBe(404) // the 404.html mechanism again
-  await expect(page.getByRole('heading', { level: 1 })).toContainText(/validation|admin/i)
+  await expect(page.getByPlaceholder(/search a boss/i)).toBeVisible()
+  await expect(page.getByText('Validation report')).toHaveCount(0)
+
+  // And no link offers it, on any page — including a non-verified boss, which
+  // is where the only in-app admin link used to live.
+  await page.goto('./boss/zalcano')
+  await expect(page.getByRole('heading', { name: 'Zalcano' })).toBeVisible()
+  await expect(page.getByRole('link', { name: /admin/i })).toHaveCount(0)
+})
+
+// No `page` fixture: this assertion is about the built artifact on disk, not
+// about anything a browser does with it.
+test('the admin page is not even in the production bundle', async () => {
+  // Stronger than "no route": the code is gone. `import.meta.env.DEV` is a
+  // build-time literal `false`, and AdminPage sits behind a dynamic import in
+  // that dead branch, so the bundler never emits its chunk.
+  //
+  // Read off DISK rather than through the page. A lazily-imported chunk that
+  // survived elimination would not be referenced by any <script> tag, so
+  // grepping what the browser loaded would report a clean pass for exactly the
+  // failure this is looking for.
+  const assets = join(HERE, '..', 'dist', 'assets')
+  const files = readdirSync(assets).filter((f) => f.endsWith('.js'))
+  expect(files.length).toBeGreaterThan(0)
+
+  const leaking = files.filter((f) =>
+    readFileSync(join(assets, f), 'utf8').includes('Validation report')
+  )
+  expect(leaking).toEqual([])
+
+  // Guards the guard: the string really is what AdminPage renders, so a
+  // future rename cannot make this pass by looking for nothing.
+  expect(readFileSync(join(HERE, '..', 'src', 'pages', 'AdminPage.tsx'), 'utf8')).toContain(
+    'Validation report'
+  )
 })

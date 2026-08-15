@@ -11,22 +11,42 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with: { node-version: 24, cache: pnpm }
       - run: pnpm install --frozen-lockfile
+
+      # The same gate `ci.yml` applies, run here too rather than assumed.
+      #
+      # `deploy` and `ci` both trigger on push to main, so they run in
+      # PARALLEL — a red CI run does not block a deploy. Without these steps
+      # the only thing standing between a broken commit and production was
+      # `pnpm -r test`, which is the one check that cannot see a type error, a
+      # lint failure, or any of the production-only bugs (base path, SPA 404
+      # fallback, the shared-table manifest) that the e2e suite exists for.
+      - run: pnpm -r typecheck
+      - run: pnpm lint
       - run: pnpm -r test
-      # PROJECT_PLAN.md section 13 says `pnpm --filter web build` — this repo's
-      # web package is named `@osrs-loot-simulator/web` (see apps/web/package.json),
-      # not bare `web`, so the filter is adjusted to match; everything else here
-      # is the plan's own content unchanged.
+      - run: pnpm --filter @osrs-loot-simulator/web exec playwright install --with-deps chromium
+      - run: pnpm --filter @osrs-loot-simulator/web run test:e2e
+
+      # The package is `@osrs-loot-simulator/web` (apps/web/package.json). The
+      # full name is used throughout both workflows rather than the bare `web`
+      # the plan's section 13 wrote: pnpm resolves both (it matches directory
+      # names too), so this is for legibility, not necessity.
+      #
+      # `prebuild` runs scripts/sync-data.mjs (data/ -> public/) and `postbuild`
+      # runs scripts/copy-404.mjs (index.html -> 404.html, the Pages SPA
+      # fallback). GITHUB_ACTIONS is set by the runner, which is what flips
+      # vite.config.ts's `base` to /osrs-loot-simulator/.
       - run: pnpm --filter @osrs-loot-simulator/web build
-      - uses: actions/upload-pages-artifact@v3
+
+      - uses: actions/upload-pages-artifact@v5
         with: { path: apps/web/dist }
   deploy:
     needs: build
     environment: github-pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v5

@@ -946,7 +946,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -981,6 +981,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "14 of 71 wiki drop row(s) missing from the document: Avantoe seed, Belladonna seed, Cactus seed, Cadantine seed, Dwarf weed seed, Irit seed, Kwuarm seed, Lantadyme seed (+6 more)"
       }
     ]
   },

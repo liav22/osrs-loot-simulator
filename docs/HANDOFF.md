@@ -57,11 +57,18 @@ scope:
   behaviourally by `formulas.test.ts`.
 
 ```
-53 parsed at tier A+B+C: 38 verified, 2 manual_override, 10 needs_review, 3 parse_failed
-  (was 36/14/3 before Phase 7 started. Abyssal Sire + Corporeal Beast reached
-   `verified` via parser fixes; Doom of Mokhaiotl + Lunar Chest reached
-   `manual_override` via data/overrides/.)
+54 parsed at tier A+B+C(+D for chest-tombs-of-amascut):
+  18 verified, 2 manual_override, 32 needs_review, 3 parse_failed
 ```
+
+**Read that 18 against the previous 38 before assuming a regression.** The
+`drops_covered` check was turned on deliberately (see docs/DECISIONS.md), and it
+moved 20 sources out of `verified` because they are genuinely incomplete — a
+transcluded drop sub-table produces no `{{DropsLine}}` rows and vanishes, so
+those documents are smaller than their pages. `verified` has always meant "the
+pipeline derived this from the wiki unaided"; the badge is now true again.
+26 sources fail the check. **Fixing the transclusions is the open work** — see
+landmine #11c.
 
 **Read this before `docs/bosses/*.md`: all 14 carry an in-file banner
 correcting their stale capability verdicts.** Their *mechanics and cited
@@ -424,11 +431,16 @@ from the gitignored copy forever.
 ### 1. `data/bosses/*.json` is not automatically kept in sync
 
 `ingest parse` only writes a file when `assembleBoss` succeeds, and never
-deletes a stale one for a source that stops producing output. **Still live**:
-`chest-tombs-of-amascut` (tier D) still sits in `data/bosses/` from an old
-one-off run, so raw file counts show 15 `needs_review` where the real tier
-A+B+C tally is 14. Always re-run `ingest parse --tier <X>` fresh before
-trusting `data/bosses/` contents — this session did, twice (once after
+deletes a stale one for a source that stops producing output. **The live
+instance is resolved**: `chest-tombs-of-amascut` (tier D) sat in `data/bosses/`
+from an old one-off run for several sessions, and was re-parsed with
+`--tier A,B,C,D --source chest-tombs-of-amascut` when `drops_covered` shipped —
+a stale file was the only one in the corpus whose `validation.checks` lacked the
+new check, which is how it surfaced. The MECHANISM is unchanged and will bite
+again; `drops-covered.test.ts` now asserts every committed document carries the
+check, which turns the next occurrence into a test failure rather than a wrong
+count. Always re-run `ingest parse --tier <X>` fresh before trusting
+`data/bosses/` contents — this session did, twice (once after
 Extension A, once after Extension B), and both times reproduced the
 identical 36/14/3 split with only `qty_sane`'s advisory string differing
 from the pre-Extension-A content, confirming zero drift.
@@ -639,12 +651,15 @@ permissive about which parts of the DOCUMENT they read, this is the document
 being permissive about which parts of the PAGE it came from, which
 `scope-invariant.ts` structurally cannot reach.
 
-**The fix is identified and deliberately not applied**: a `drops_covered` check
-comparing `data/snapshots/dropsline/{slug}.json`'s item names against the
-document's own items reproduces the finding exactly, offline, with no new
-fetch. It is not built because turning it on fails 21 currently-`verified`
-sources at once, and what `verified` should mean in that light is a decision,
-not a code change. Full analysis in `docs/DECISIONS.md`.
+**`drops_covered` now catches it** (`src/validate/drops-covered.ts`), comparing
+`data/snapshots/dropsline/{slug}.json`'s item names against the document's own
+items, offline, with no new fetch. It is part of the `verified` gate, and
+turning it on moved 20 sources out of `verified` — deliberately, because they
+are incomplete. **The transclusions themselves are still unfixed and are the
+open work.** The parser needs to reach a section whose body is a transclusion;
+until then those 26 sources stay `needs_review` and their seed/herb/talisman/
+sigil/Wilderness-Slayer rows are absent from the shipped data. Full analysis in
+`docs/DECISIONS.md`.
 
 ### 12. A tier filter used to be able to silently overrule an authored override
 

@@ -659,6 +659,11 @@
         "check": "not_on_watchlist",
         "ok": false,
         "detail": "point_scaled: Unique chance scales with Theatre of Blood points earned across the raid (raid tier, deaths, personal performance), not a fixed per-kill rarity — needs the tob_points formula. Same caveat as the Tombs of Amascut chest: the dropsline rows reflect the points-shop structure, not independent rarities."
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "9 of 43 wiki drop row(s) missing from the document: Avernic defender hilt, Cabbage, Ghrazi rapier, Justiciar chestguard, Justiciar faceguard, Justiciar legguards, Message (Theatre of Blood), Sanguinesti staff (uncharged) (+1 more)"
       }
     ]
   },

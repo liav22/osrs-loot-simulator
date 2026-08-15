@@ -919,7 +919,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -954,6 +954,11 @@
       {
         "check": "not_on_watchlist",
         "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "16 of 83 wiki drop row(s) missing from the document: Celastrus seed, Dragonfruit tree seed, Magic seed, Mahogany seed, Maple seed, Palm tree seed, Papaya tree seed, Ranarr seed (+8 more)"
       }
     ]
   },

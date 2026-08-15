@@ -1,3 +1,4 @@
+import { test as base } from '@playwright/test'
 import { expect, resultProjection, test } from './fixtures'
 
 /**
@@ -101,4 +102,59 @@ test('changing a control after a shared run does not re-fire the old simulation'
   // Still showing the 5,000-kill result: the new kill count applies to the next
   // run someone asks for, not retroactively.
   await expect(page.getByTestId('results-summary')).toContainText('5,000 kills')
+})
+
+
+/**
+ * The auto-run waits for the GE price fetch to settle.
+ *
+ * Its own `test`, because the shared fixture returns a well-formed but EMPTY
+ * price map — fine for every other assertion, useless for this one, since an
+ * empty map is indistinguishable from no map at all.
+ */
+const testWithPrices = base.extend({
+  page: async ({ page }, use) => {
+    await page.route('**://prices.runescape.wiki/**', async (route) => {
+      // Slow enough that an auto-run which does not wait will certainly lose
+      // the race, which is exactly the bug this pins.
+      await new Promise((r) => setTimeout(r, 750))
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        // 22124 is Superior dragon bones — two guaranteed per Vorkath kill, so
+        // any priced run has a non-zero total.
+        body: JSON.stringify({ data: { '22124': { high: 1000, low: 1000 } } }),
+      })
+    })
+    await page.route('**://oldschool.runescape.wiki/**', (route) =>
+      route.fulfill({ status: 200, contentType: 'image/png', body: Buffer.alloc(0) })
+    )
+    await use(page)
+  },
+})
+
+testWithPrices.use({ viewport: { width: 1920, height: 1080 } })
+
+testWithPrices('a shared link waits for prices rather than reporting 0 gp', async ({ page }) => {
+  await page.goto('./boss/vorkath?n=2000&seed=99&run=1')
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 60_000 })
+
+  // Priced, and labelled as such. Before the wait, every shared link lost the
+  // race to the price fetch and rendered "0 gp total" sorted by rarity — the
+  // label was honest, but it was the wrong answer for the one feature whose
+  // whole purpose is showing someone else your result.
+  await expect(page.getByTestId('results-summary')).not.toContainText('0 gp total')
+  await expect(page.getByText(/sorted by total value/)).toBeVisible()
+})
+
+testWithPrices('a click does NOT wait for prices — only the auto-run does', async ({ page }) => {
+  // The asymmetry is deliberate. A click is user-initiated and must feel
+  // instant; an auto-run has nobody waiting on it. Clicking during the 750ms
+  // stall therefore runs unpriced, and says so.
+  await page.goto('./boss/vorkath?n=2000&seed=99')
+  const simulate = page.getByRole('button', { name: 'Simulate' })
+  await expect(simulate).toBeEnabled()
+  await simulate.click()
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 60_000 })
+  await expect(page.getByText(/sorted by rarity \(prices unavailable\)/)).toBeVisible()
 })
