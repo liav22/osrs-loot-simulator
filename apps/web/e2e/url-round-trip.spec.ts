@@ -61,10 +61,46 @@ test('a default run keeps a clean URL', async ({ page }) => {
   // One non-default value writes that value, the seed and the kill count —
   // and nothing else. Fourteen params on a link nobody customised is how a
   // "shareable" URL stops being readable.
-  await page.getByLabel('Members').uncheck()
+  // Brutus is the one source with a real free-to-play table, so it is the one
+  // that renders this control. Checking it sets `members: false`, which is
+  // still what the URL carries — the param is unchanged by the control being
+  // inverted, so links shared before this change still reproduce.
+  await page.getByLabel('Free-to-play').check()
   await expect(page).toHaveURL(/members=0/)
   const params = new URL(page.url()).searchParams
   expect([...params.keys()].sort()).toEqual(['members', 'n', 'seed'])
+})
+
+/**
+ * The members toggle was retired from the per-boss controls, so most sources
+ * now render nothing for it. Links shared before that change still carry
+ * `members=0`, and they have to keep working — the control was presentation,
+ * the context field was not.
+ */
+test('a members=0 link still applies on a boss that renders no control for it', async ({
+  page,
+}) => {
+  // Black Knight Titan is members-only, so it deliberately gets no
+  // free-to-play toggle — the strongest version of this case, since there is
+  // no control on the page at all to carry the value.
+  await page.goto('./boss/black-knight-titan?members=0&seed=7&n=1000')
+  await expect(page.getByRole('heading', { name: 'Black Knight Titan' })).toBeVisible()
+  await expect(page.getByLabel('Members')).toHaveCount(0)
+  await expect(page.getByLabel('Free-to-play')).toHaveCount(0)
+
+  // The value survives a control-less page rather than being silently dropped
+  // back to the default on the first URL write-back.
+  await page.getByLabel('Seed').fill('8')
+  await expect(page).toHaveURL(/members=0/)
+  await page.reload()
+  await expect(page).toHaveURL(/members=0/)
+})
+
+test('a members=0 link drives the free-to-play control where one exists', async ({ page }) => {
+  await page.goto('./boss/brutus?members=0')
+  await expect(page.getByRole('heading', { name: 'Brutus' })).toBeVisible()
+  // Inverted: members=0 means the F2P box is CHECKED.
+  await expect(page.getByLabel('Free-to-play')).toBeChecked()
 })
 
 test('set-valued and ownership context round-trip through the URL', async ({ page }) => {

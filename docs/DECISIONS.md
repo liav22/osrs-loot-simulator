@@ -3790,3 +3790,61 @@ Team size is out of scope, stated rather than approximated. The module divides
 points and chances by team size, and the page says a group's unique roll pools
 everyone's points with per-player probability proportional to contribution. One
 chest for one player is this simulator's unit.
+
+## The members toggle is retired; F2P sources get an inverted one
+
+**Presentation only.** The `members` condition, `SimContext.members`, its `true`
+default and the `members` URL param are all untouched — `weights_sum` is a
+members-variant check and depends on the first, and shared links depend on the
+last. The only change is which control `apps/web` renders.
+
+Every user is assumed to be a member, which `DEFAULT_SIM_CONTEXT.members`
+already said. Sources with a genuine free-to-play outcome render a
+**"Free-to-play"** toggle instead: unchecked is members (the default), checked
+sets `members: false`.
+
+### What the corpus actually contains
+
+Worth recording because a prior count of "10" was of *conditions*, not sources.
+There are **10 members conditions across exactly 2 sources**, and only one of
+them is an F2P boss:
+
+| source | m:true | m:false | wiki infobox | toggle? |
+|---|---|---|---|---|
+| `brutus` | 6 | 3 | `members = No` | **yes** |
+| `black-knight-titan` | 1 | 0 | `members = Yes` | no |
+
+`chest-tombs-of-amascut` has `contextDefaults.members: true` and no members
+condition, so it is not a third case.
+
+**Obor and Bryophyta are genuinely F2P bosses and are not in the corpus at
+all** — both tier D, `include: true`, never parsed, no snapshot, no document.
+They are invisible to the site today. If they are ever built, re-check the rule
+below against them.
+
+### The rule, and the case it cannot see
+
+The toggle renders when the document (shared tables followed) contains at least
+one **`members: false`** gate — i.e. the wiki described an F2P-specific outcome.
+Not "has any members condition", because the two sources above are different
+animals: Brutus has a real split whose variants both sum to its denominator of
+81, while Black Knight Titan is a Holy Grail quest boss whose lone `{{(m)}}`
+marker sits on `Key (medium)`. Free players cannot reach that encounter, so
+`members: false` is an unreachable game state there and offering it would
+present a fiction as a choice.
+
+**The limitation, stated rather than hidden:** an F2P boss whose members-only
+rows have no F2P replacement would carry only `members: true` gates and would be
+missed. That shape is not in the corpus, and it is **not distinguishable from
+Black Knight Titan's from the document alone** — the deciding fact is the wiki
+infobox's `members` field, which the `Boss` schema does not carry and which this
+change was explicitly not allowed to add. Both halves are pinned by name in
+`apps/web/test/SimContextControls.test.tsx`.
+
+### URL compatibility came for free, and is pinned
+
+`paramsFromSearch`/`searchFromParams` were already control-agnostic: they read
+and write `members` off the context, not off any widget. So `?members=0`
+reproduces on every source, **including the ones that now render no control for
+it** — `url-round-trip.spec.ts` pins exactly that against Black Knight Titan in
+a real browser, plus the inverted-checkbox case on Brutus.

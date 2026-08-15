@@ -134,7 +134,27 @@ export function SimContextControls({ boss, sharedTables, params, onChange }: Pro
   return (
     <div className="space-y-2">
       <div className="grid grid-cols-1 gap-2">
-        <Toggle label="Members" checked={params.ctx.members} onChange={(v) => setCtx({ members: v })} />
+        {/*
+          No "Members" toggle: every user is assumed to be a member, which is
+          already `DEFAULT_SIM_CONTEXT.members`. Sources that genuinely have a
+          free-to-play outcome get the inverted control instead — checked means
+          `members: false`, so only the F2P table rolls. `freeToPlayVariant`
+          explains why the signal is a `members: false` gate rather than the
+          mere presence of a members condition.
+
+          Nothing about the underlying context changed: `members` is still a
+          real `SimContext` field, still defaults to true, and still
+          round-trips through the `members` URL param untouched. A shared link
+          carrying `members=0` reproduces exactly as before on every boss,
+          including the ones that now render no control for it.
+        */}
+        {surface.freeToPlayVariant && (
+          <Toggle
+            label="Free-to-play"
+            checked={!params.ctx.members}
+            onChange={(v) => setCtx({ members: !v })}
+          />
+        )}
         <Toggle label="Ring of wealth" checked={params.ctx.ringOfWealth} onChange={(v) => setCtx({ ringOfWealth: v })} />
         <Toggle label="On slayer task" checked={params.ctx.onSlayerTask} onChange={(v) => setCtx({ onSlayerTask: v })} />
       </div>

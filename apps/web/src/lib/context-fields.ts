@@ -39,6 +39,39 @@ export interface BossContextSurface {
   fields: ReadonlySet<SimContextField>
   /** Item keys some entry gates on owning, for the `ownedCounts` controls. */
   ownershipItemKeys: readonly string[]
+  /**
+   * Whether this source describes a free-to-play outcome of its own, i.e. some
+   * entry is gated `members: false`.
+   *
+   * **Presentation only.** Nothing here changes the `members` condition, the
+   * schema, or any parsed data — `weights_sum` is a members-variant check and
+   * depends on all three. This decides one thing: whether the UI offers a
+   * free-to-play toggle at all.
+   *
+   * **Why `members: false` and not "has any members condition".** Two sources
+   * in the whole corpus carry a members condition, and they are different
+   * animals:
+   *
+   *  - **Brutus** (`members = No` on the wiki, genuinely F2P) has 6
+   *    members-only and 3 F2P-only entries — a real split, both variants
+   *    summing to its denominator of 81.
+   *  - **Black Knight Titan** (`members = Yes`, a Holy Grail quest boss) has
+   *    exactly one: `Key (medium)`, marked `{{(m)}}` on the page. Free players
+   *    cannot reach the encounter at all, so `members: false` is an
+   *    unreachable game state and a toggle offering it would be a lie.
+   *
+   * The honest signal for "an F2P player can get loot here" is the document
+   * describing an F2P-specific outcome, which is what a `members: false` gate
+   * is. **Known limitation:** an F2P boss whose members-only rows have no F2P
+   * replacement would carry only `members: true` gates and would not be
+   * offered the toggle. That shape is not in the corpus today and cannot be
+   * distinguished from Black Knight Titan's from the document alone — the
+   * distinguishing fact is the wiki infobox's `members` field, which the
+   * `Boss` schema does not carry. Obor and Bryophyta are both real F2P bosses,
+   * both tier D, and neither has ever been parsed; **re-check this rule
+   * against them if they are ever built.**
+   */
+  freeToPlayVariant: boolean
 }
 
 function addFormulaFields(id: string, into: Set<SimContextField>): void {
@@ -67,6 +100,8 @@ interface Walk {
   ownedKeys: string[]
   shared: ReadonlyMap<string, Table>
   seen: Set<string>
+  /** Set by any `members: false` gate. See `BossContextSurface.freeToPlayVariant`. */
+  freeToPlay: boolean
 }
 
 function walkNode(node: Node, walk: Walk): void {
@@ -97,6 +132,11 @@ function walkEntry(entry: Entry, walk: Walk): void {
   for (const condition of entry.conditions ?? []) {
     switch (condition.kind) {
       case 'members':
+        into.add('members')
+        // The VALUE matters here, unlike everywhere else in this walk: only a
+        // false gate evidences an F2P outcome. See `freeToPlayVariant`.
+        if (condition.value === false) walk.freeToPlay = true
+        break
       case 'ringOfWealth':
       case 'onSlayerTask':
       case 'variant':
@@ -133,7 +173,13 @@ export function contextSurfaceOf(
 ): BossContextSurface {
   const found = new Set<SimContextField>()
   const ownedKeys: string[] = []
-  const walk: Walk = { into: found, ownedKeys, shared: sharedTables, seen: new Set() }
+  const walk: Walk = {
+    into: found,
+    ownedKeys,
+    shared: sharedTables,
+    seen: new Set(),
+    freeToPlay: false,
+  }
   for (const table of boss.tables) walkTable(table, walk)
 
   // A boss whose `contextDefaults` pin a field is declaring that field
@@ -148,5 +194,9 @@ export function contextSurfaceOf(
     else for (const input of inputs) fields.add(input)
   }
 
-  return { fields, ownershipItemKeys: [...new Set(ownedKeys)].sort() }
+  return {
+    fields,
+    ownershipItemKeys: [...new Set(ownedKeys)].sort(),
+    freeToPlayVariant: walk.freeToPlay,
+  }
 }

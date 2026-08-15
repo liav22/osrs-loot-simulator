@@ -83,7 +83,11 @@ test('Brutus gets none of the extension fields', async ({ page }) => {
 
   // The negative case matters as much as the positives: rendering all sixteen
   // fields on every boss would bury the two that matter.
-  await expect(page.getByLabel('Members')).toBeVisible()
+  // No Members toggle anywhere any more — everyone is assumed to be a member.
+  // Brutus does get the inverted Free-to-play control, because it genuinely
+  // has an F2P table.
+  await expect(page.getByLabel('Members')).toHaveCount(0)
+  await expect(page.getByLabel('Free-to-play')).toBeVisible()
   await expect(page.getByLabel('Delve level reached')).toBeHidden()
   await expect(page.getByLabel('MVP (most damage dealt)')).toBeHidden()
   await expect(page.getByText(/Already owned entering the run/)).toBeHidden()
