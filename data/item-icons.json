@@ -1,6 +1,6 @@
 {
   "itemIconsVersion": 1,
-  "generatedAt": "2026-08-15T12:33:13.765Z",
+  "generatedAt": "2026-08-15T13:25:59.492Z",
   "icons": {
     "3rd age amulet": "3rd age amulet.png",
     "3rd age axe": "3rd age axe.png",
@@ -93,6 +93,7 @@
     "Battlestaff": "Battlestaff.png",
     "Beef": "Beef.png",
     "Beer": "Beer.png",
+    "Belladonna seed": "Belladonna seed 5.png",
     "Bellator vestige": "Bellator vestige.png",
     "Belle's folly (tarnished)": "Belle's folly (tarnished).png",
     "Berserker ring": "Berserker ring.png",
@@ -737,7 +738,6 @@
     "Zulrah's scales": "Zulrah's scales 5.png"
   },
   "unresolved": [
-    "Belladonna seed",
     "Muphin",
     "Nothing"
   ]

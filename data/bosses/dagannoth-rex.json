@@ -528,7 +528,7 @@
     },
     {
       "id": "dagannoth-rex:2:talismans",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -686,7 +686,7 @@
           }
         }
       ],
-      "notes": "Talismans"
+      "notes": "Talismans (confirmed independent: 9 entries expanded from one {{talismandroplines}} transclusion, whose rates sum to its stated access rate 1/128 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "dagannoth-rex:3:other",

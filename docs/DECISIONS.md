@@ -3490,3 +3490,143 @@ Corporeal Beast is the case that needed none of this and shows what "right"
 looks like: its three sigils (`1/1365`, `1/1365`, `1/4095`) homogenise onto one
 denominator of 4095 = 585 x 7, recovering the page's stated "1/585 onto the
 sigil table, then 3/7, 3/7, 1/7" exactly, through machinery that already existed.
+
+## Transcluded sub-tables are `independent`, and how the mode was decided
+
+The transclusion work shipped these blocks as `preroll`, which was measurably
+wrong, and the way that was found is more important than the fix.
+
+### The signal that was proposed, and why it does not hold
+
+The candidate was **"every rate in this transclusion derives from one
+`{{#vardefine:}}` base"**. Tested against the two shapes known to differ:
+
+- Seed / herb / talisman templates: one base (`{{#vardefine:thsdtbase|
+  {{#expr:{{{1}}}/250}}}}`), every row derived from it. ✓
+- `WildernessSlayerDropTable`: Larran's key derives from `keyDenom` (the
+  monster's combat level), Slayer's enchantment from a separate `hitpoints`
+  expression. Two independent derivations, no shared base, and the template
+  declares no access rate at all. ✓
+
+So it does separate those two — but it **fails on `Uniques/Corporeal Beast`**,
+which has no `#vardefine` anywhere and is provably mutually exclusive (the page
+states 1/585 onto the sigil table, then 3/7, 3/7, 1/7). A false negative, and
+harmless in practice since Corp homogenises onto one denominator anyway, but it
+shows provenance is not the mechanism.
+
+### What replaced it: an arithmetic identity
+
+**Do the expanded rows' rates sum to the access rate the transclusion
+declared?** If the rows are mutually exclusive alternatives reached by one
+access roll, total probability says they must. Measured across the corpus:
+
+| block | declared access | Σ rates ÷ access | verdict |
+|---|---|---|---|
+| seed / herb / talisman, 17 blocks | `5/139`, `1/128`, `2/100`, … | **1.0000** (±0.3%) | partition |
+| Vorkath's seeds | `3/150` | **1.6665** | refused — correctly |
+| `WildernessSlayerDropTable`, 8 blocks | none declared | — | abstains |
+
+Vorkath is the one worth understanding: it overrides two rarities with
+**effective** chances that fold in its main table's own seed slots ("This item
+is rolled on both the main loot table as well as the tree-herb seed drop
+table"), so its rows are not a partition of the seed roll alone. The identity
+catches that without being told, which is the argument for it over any
+provenance rule.
+
+`transclusionPartition` implements it; `checkTransclusionPartitions` runs it on
+**every** transcluded block whatever mode that block lands in, and `parse-boss`
+reports any block that is not a partition. Standing, not a one-off measurement.
+
+### The identity is not what decides the mode, and that distinction matters
+
+It establishes only that the rows are *within-block* mutually exclusive. It
+says nothing about what `preroll` ADDITIONALLY asserts — that a hit suppresses
+every later `weighted`/`preroll` table — and measured against the wiki's own
+published rates, that assertion is simply false:
+
+| source | item | as `preroll` | as `independent` |
+|---|---|---|---|
+| Arrg | Coal (1/42.7) | **−23.45%** | **0.00%** |
+| Giant sea snake | Adamant dart tip | **−13.83%** | **0.00%** |
+| Sarachnis | Grimy kwuarm | −5.64% | −0.78% |
+| Dagannoth Rex | Grimy ranarr weed | −0.78% | 0.00% |
+
+So the mode switch is driven by the block coming entirely from ONE
+transclusion — which is what makes the suppression claim unsupportable — and
+the identity is the evidence recorded alongside it.
+
+**The cost of `independent` is real and accepted**: two rows of one sub-table
+can co-occur in a single simulated kill, which the access roll forbids. About
+0.06% of kills on Abyssal Sire. That is the same quantified, documented
+kill-log artifact the CoX decision already accepts, and it is confined to the
+block instead of distorting its neighbours.
+
+**These blocks stay flagged.** The identity proves the rows are one roll;
+modelling them as independent rolls is a deliberate approximation of that, and
+the document does not express the single-access-roll shape at all. Clearing the
+flag would claim the pipeline derived the structure unaided. Corpus: **27
+verified / 2 manual_override / 23 needs_review**, one fewer verified than
+before the mode change and correct at that number.
+
+A sub-table whose rows DO homogenise onto a common denominator never reaches
+any of this — it becomes a `weighted` table, which is exact and suppresses
+nothing. Corporeal Beast's sigils take that path (4095 = 585 × 7).
+
+### `marginal-rates.test.ts`, and why nothing else could have caught this
+
+Every other check is closed-world over the document's structure: `weights_sum`
+reconciles a table against its denominator, `drops_covered` asks whether an
+item is reachable, `rates_valid` whether a rate is well-formed. **Not one of
+them composes the document and asks whether the resulting per-kill probability
+is the number the wiki states**, so a table whose own rows are individually
+perfect can still be wrong because of what a NEIGHBOURING table does to it.
+`drops_covered` in particular cannot see it — coverage is by item name, so a
+row at the wrong rate looks exactly like a row at the right one.
+
+The new test composes each document through `expectedValue` and compares
+per-item probabilities against the `dropsline` bucket. Roughly **1,270 item
+rows across 52 sources** are directly comparable. Three exclusions, each
+because the COMPARISON would be invalid rather than because the number was
+inconvenient:
+
+1. **Items appearing more than once**, or also reachable through a `tableRef`.
+   The per-item expectation sums every entry that yields them; Coins appears in
+   four tables and in the rare drop table.
+2. **Tables downstream of a real pre-roll.** A pre-roll hit short-circuits the
+   chain, so later tables are reached only when it misses, and the wiki
+   publishes a flat figure that does not account for it — Brutus' 10/150
+   pre-roll puts all thirteen of its main-table rows exactly 6.54% low.
+3. **`preroll` tables' own entries**, which are a first-hit-wins chain, so
+   every entry after the first is reduced by the ones before it (Callisto's
+   Tyrannical ring, 1.56% under its flat 1/512).
+
+(2) and (3) are the same open question in two forms — what the wiki's flat
+figures MEAN next to chain semantics — and it is the long-running "Uniques
+heading" question those very sources are already `needs_review` over. This test
+does not get to settle it by asserting one reading.
+
+A third assertion counts how many rows survive those exclusions and fails below
+300. That earned its place immediately: the first run of the suite passed
+vacuously because `Boss` has no `title` field (it is `wikiPage`), so every
+oracle lookup threw into a `catch` and returned null. Without the coverage
+guard, a green suite would have meant nothing.
+
+## The icon stack-suffix rule
+
+`Belladonna seed` arrived with the transcluded herb/seed tables and resolved to
+nothing: its icon is `File:Belladonna seed 5.png`, a stack-size suffix the item
+name never mentions. Stage 1 resolves that whole class through MediaWiki's file
+redirects; this item has none, and stage 2 refused it because it accepts only a
+case-insensitive exact title match.
+
+Stage 2 now also accepts a **strictly numeric** suffix (`stackSuffixPattern`).
+The exact-match rule exists to stop `Baby mole` resolving to
+`Baby Mole (NPC).png`, and digits-only keeps that intact — `(NPC)`, `detail`,
+`(shielded)` and `Cow slippers (1)` are all still refused, pinned by name in
+the tests. The item name is regex-escaped, so `Vet'ion jr.`'s `.` stays a
+literal.
+
+**736 items, 734 resolved, 0 wiki requests** — the fix came entirely from the
+existing snapshots, which is CLAUDE.md's "never re-hit the wiki to fix a parser
+bug" working as designed. The two remaining are genuine: `Muphin` (only
+`(shielded)`/`(melee)`/`(ranged)` variants exist) and `Nothing` (not an item).

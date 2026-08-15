@@ -88,6 +88,19 @@ const TERMINAL_TEMPLATES = new Set([
  */
 const TABLEREF_TEMPLATES = new Set(['raredroptable', 'gemdroptable', 'gwdrdt'])
 
+/**
+ * Synthetic `{{DropsLine}}` parameters the expander stamps onto every row it
+ * produces, recording which transclusion emitted it and that transclusion's
+ * declared access rate.
+ *
+ * They are parser-internal and never reach a generated document: the extractor
+ * reads them into `WikitextDropLine` and nothing downstream copies them into a
+ * `Boss`. The `__` prefix marks them as not-from-the-wiki — no real DropsLine
+ * parameter starts with one.
+ */
+export const PROVENANCE_TEMPLATE = '__expandedfrom'
+export const PROVENANCE_ACCESS = '__accessrate'
+
 /** MediaWiki template naming: underscores are spaces, first letter case-insensitive. */
 function normalizeTemplateName(name: string): string {
   return name.trim().replace(/_/g, ' ').replace(/\s+/g, ' ').toLowerCase()
@@ -129,6 +142,12 @@ interface Context {
    * `expand`.
    */
   missingArgs: number
+  /**
+   * The transclusion currently being expanded, or null at page level. Set when
+   * descending into a template body so the rows it emits can be stamped with
+   * where they came from.
+   */
+  transclusion: { template: string; accessRate: string } | null
 }
 
 const MAX_DEPTH = 20
@@ -462,7 +481,20 @@ function expandCall(inner: string, ctx: Context): string {
     // what lets `extractDropLines` treat the two identically without knowing
     // that UncommonSeedDropLines builds its own template name.
     const emitted = name === 'dropslineskill' ? 'DropsLine' : rawName.trim()
-    return `{{${[emitted, ...expandedArgs].join('|')}}}`
+    // Provenance, stamped onto the row itself. Downstream has to know that a
+    // block's rows all came from ONE transclusion, and at what declared access
+    // rate, to decide the block's mode — see `build-tables.ts`'s
+    // `transclusionPartition`. Threading it as synthetic parameters keeps the
+    // pipeline text-in-text-out, rather than adding a side channel that would
+    // have to be re-joined to lines after heading grouping.
+    const provenance =
+      ctx.transclusion === null
+        ? []
+        : [
+            `${PROVENANCE_TEMPLATE}=${ctx.transclusion.template}`,
+            `${PROVENANCE_ACCESS}=${ctx.transclusion.accessRate}`,
+          ]
+    return `{{${[emitted, ...expandedArgs, ...provenance].join('|')}}}`
   }
 
   if (TABLEREF_TEMPLATES.has(name)) return `{{${inner}}}`
@@ -497,7 +529,23 @@ function expandCall(inner: string, ctx: Context): string {
   }
 
   if (!ctx.expanded.includes(name)) ctx.expanded.push(name)
-  return expand(body, { ...ctx, args, depth: ctx.depth + 1 })
+  // The access rate this transclusion declares, as the page wrote it. Every
+  // sub-table template takes it as its first positional argument and divides
+  // it by the sub-table's own denominator to derive each row's rate
+  // (`{{#vardefine:talbase|{{#expr:{{{1}}}/70}}}}`); `FossilDropLines` names it
+  // `access`. A template that declares NEITHER — `WildernessSlayerDropTable`,
+  // whose two rows are independent rolls derived from different inputs
+  // entirely — leaves this empty, and the partition check downstream then has
+  // nothing to test and correctly abstains.
+  const accessRate = args.get('1') ?? args.get('access') ?? ''
+  return expand(body, {
+    ...ctx,
+    args,
+    depth: ctx.depth + 1,
+    // An inner transclusion wins, so the rate stamped on a row is always the
+    // one belonging to the template that actually emitted it.
+    transclusion: { template: name, accessRate },
+  })
 }
 
 function expand(text: string, ctx: Context): string {
@@ -571,6 +619,7 @@ export function expandTransclusions(
     unexpandable: [],
     depth: 0,
     missingArgs: 0,
+    transclusion: null,
   }
   const expanded = expand(wikitext, ctx)
   return { wikitext: expanded, expanded: ctx.expanded, unexpandable: ctx.unexpandable }

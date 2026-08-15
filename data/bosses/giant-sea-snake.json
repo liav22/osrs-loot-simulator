@@ -92,7 +92,7 @@
     },
     {
       "id": "giant-sea-snake:2:herbs",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -284,11 +284,11 @@
           }
         }
       ],
-      "notes": "Herbs"
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 5/128 (ratio 1.0001), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "giant-sea-snake:3:seeds",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -718,7 +718,7 @@
           }
         }
       ],
-      "notes": "Seeds"
+      "notes": "Seeds (confirmed independent: 25 entries expanded from one {{uncommonseeddroplines}} transclusion, whose rates sum to its stated access rate 14/128 (ratio 0.9983), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "giant-sea-snake:4:coins-other",

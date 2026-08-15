@@ -512,7 +512,7 @@
     },
     {
       "id": "vorkath:3:seeds",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -789,7 +789,7 @@
           }
         }
       ],
-      "notes": "Seeds (confirmed preroll: 2 entries cite the same footnote ('dd'))"
+      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to 1.6665x its stated access rate 3/150 — so they are NOT a clean partition of that roll and something on the page overrides them)"
     },
     {
       "id": "vorkath:4:shark-drop-table",
@@ -1200,7 +1200,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [

@@ -44,6 +44,13 @@ import type { WikiClient } from '../wiki/client.js'
  *    `Baby Mole detail.png`, and accepting a best guess would silently ship
  *    the wrong picture. 16 of the remaining 17.
  *
+ *    One narrow widening: a title that is the item's name plus a **strictly
+ *    numeric** stack-size suffix is also accepted (`Belladonna seed 5.png`).
+ *    That is the same class stage 1 resolves for every other stackable item
+ *    via a file redirect; a handful simply have no redirect. Digits only, so
+ *    every worded or parenthesised qualifier is still refused — see
+ *    `stackSuffixPattern`.
+ *
  * One item survives both stages — `Muphin`, whose icon the wiki only has as
  * `(shielded)`/`(melee)`/`(ranged)` variants with no plain file. It is
  * recorded in `unresolved` rather than guessed at, and renders a placeholder.
@@ -93,6 +100,28 @@ export type ItemIcons = z.infer<typeof ItemIconsSchema>
 function fileTitleFor(itemName: string): string {
   const cased = itemName.length === 0 ? itemName : itemName[0]!.toUpperCase() + itemName.slice(1)
   return `File:${cased}.png`
+}
+
+/**
+ * Matches `File:<Name> <digits>.png` and nothing else — the stack-size suffix
+ * a stackable item's icon carries and its name never mentions (`Acorn 5.png`,
+ * `Coins 100.png`, `Ancient essence 500.png`).
+ *
+ * Stage 1 normally resolves that whole class, because MediaWiki follows a file
+ * redirect from the unsuffixed name. A few items have no such redirect —
+ * `Belladonna seed`, whose only file is `Belladonna seed 5.png` — and stage 2
+ * would otherwise refuse them, since its exact-title rule is what stops
+ * `Baby mole` silently resolving to `Baby Mole (NPC).png`.
+ *
+ * This widening keeps that protection intact: the suffix must be **only**
+ * digits, so a qualifier in words or parentheses still fails. `(NPC)`,
+ * `detail`, `(shielded)` and `Cow slippers (1)` are all still rejected, which
+ * the tests pin by name.
+ */
+export function stackSuffixPattern(itemName: string): RegExp {
+  const cased = itemName.length === 0 ? itemName : itemName[0]!.toUpperCase() + itemName.slice(1)
+  const escaped = cased.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return new RegExp(`^File:${escaped} \\d+\\.png$`, 'i')
 }
 
 /** `https://…/images/Acorn_5.png?262f7` -> `Acorn 5.png`. */
@@ -209,9 +238,10 @@ export async function resolveItemIcons(
       srlimit: '10',
     })
     const wanted = fileTitleFor(name).toLowerCase()
-    const hit = FileSearchResponseSchema.parse(body).query.search.find(
-      (result) => result.title.toLowerCase() === wanted
-    )
+    const results = FileSearchResponseSchema.parse(body).query.search
+    const hit =
+      results.find((result) => result.title.toLowerCase() === wanted) ??
+      results.find((result) => stackSuffixPattern(name).test(result.title))
     if (hit === undefined) unresolved.push(name)
     else icons[name] = hit.title.slice('File:'.length)
   }

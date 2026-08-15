@@ -268,7 +268,7 @@
     },
     {
       "id": "black-knight-titan:2:herbs",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -460,7 +460,7 @@
           }
         }
       ],
-      "notes": "Herbs"
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 7/128 (ratio 1.0002), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "black-knight-titan:3:coins-other",

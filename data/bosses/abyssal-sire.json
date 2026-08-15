@@ -383,7 +383,7 @@
     },
     {
       "id": "abyssal-sire:4:seeds",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -660,7 +660,7 @@
           }
         }
       ],
-      "notes": "Seeds"
+      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 5/139 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "abyssal-sire:5:materials",
@@ -829,7 +829,7 @@
     },
     {
       "id": "abyssal-sire:6:talismans",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -987,7 +987,7 @@
           }
         }
       ],
-      "notes": "Talismans"
+      "notes": "Talismans (confirmed independent: 9 entries expanded from one {{talismandroplines}} transclusion, whose rates sum to its stated access rate 3/139 (ratio 1.0001), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "abyssal-sire:7:other",

@@ -124,7 +124,7 @@
     },
     {
       "id": "salarin-the-twisted:2:herbs",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -316,7 +316,7 @@
           }
         }
       ],
-      "notes": "Herbs"
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 39/128 (ratio 1.0009), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "salarin-the-twisted:3:materials-coins-other",

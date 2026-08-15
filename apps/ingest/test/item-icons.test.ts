@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   collectCorpusItemNames,
+  stackSuffixPattern,
   fileNameFromUrl,
   readItemIcons,
   writeItemIcons,
@@ -44,7 +45,7 @@ describe('the committed data/item-icons.json', () => {
     expect(uncovered).toEqual([])
   })
 
-  it('resolves all but the three the two-stage lookup genuinely cannot reach', async () => {
+  it('resolves all but the two the wiki genuinely has no plain icon for', async () => {
     const icons = await readItemIcons()
     // Pinned rather than counted loosely, because "unresolved" is where a
     // regression would hide: a resolution bug would quietly grow this list and
@@ -55,18 +56,12 @@ describe('the committed data/item-icons.json', () => {
     // literally named that, with itemId null, on Black Knight Titan and
     // Salarin the Twisted.
     //
-    // `Belladonna seed` entered the corpus with the transcluded herb/seed
-    // sub-tables and is a THIRD, distinct case, diagnosed rather than pinned
-    // blind: its icon is `File:Belladonna seed 5.png`, a stack-size suffix the
-    // item name never mentions. Stage 1 normally rescues exactly that class,
-    // because MediaWiki resolves a file redirect from the unsuffixed name —
-    // this item simply has no such redirect. Stage 2 then found the file and
-    // correctly REFUSED it, since it accepts only a case-insensitive exact
-    // title match, and loosening that is what would ship `Baby Mole (NPC).png`
-    // for `Baby mole`. Accepting a strictly numeric stack suffix would be a
-    // narrow, well-defined widening; it is deliberately not done here, since
-    // this change is about transclusions.
-    expect(icons.unresolved).toEqual(['Belladonna seed', 'Muphin', 'Nothing'])
+    // `Belladonna seed` was a third case and is now resolved: its icon is
+    // `File:Belladonna seed 5.png`, a stack-size suffix the item name never
+    // mentions. Stage 1 resolves that whole class through MediaWiki's file
+    // redirects and this item has none, so stage 2 now accepts a strictly
+    // numeric suffix as well — see `stackSuffixPattern`.
+    expect(icons.unresolved).toEqual(['Muphin', 'Nothing'])
   })
 
   it('stores file names rather than URLs, so the frontend owns the encoding', async () => {
@@ -143,5 +138,38 @@ describe('writeItemIcons', () => {
     // Sorted, so a re-run with the same answers is a byte-identical file.
     expect(Object.keys(written.icons)).toEqual(['Alpha', 'Zeta'])
     expect(written.unresolved).toEqual(['Ada', 'Zed'])
+  })
+})
+
+/**
+ * The stack-suffix rule that resolves `Belladonna seed`.
+ *
+ * Stage 2's whole safety is that it accepts only an exact title match, so
+ * widening it at all needs the boundary pinned: these are the real search hits
+ * that must still be refused.
+ */
+describe('stackSuffixPattern', () => {
+  it('accepts a strictly numeric stack suffix', () => {
+    expect(stackSuffixPattern('Belladonna seed').test('File:Belladonna seed 5.png')).toBe(true)
+    expect(stackSuffixPattern('Acorn').test('File:Acorn 5.png')).toBe(true)
+    expect(stackSuffixPattern('Ancient essence').test('File:Ancient essence 500.png')).toBe(true)
+    // MediaWiki upper-cases the first letter of a title.
+    expect(stackSuffixPattern('coins').test('File:Coins 100.png')).toBe(true)
+  })
+
+  it('still refuses every qualifier that is not a bare number', () => {
+    // The exact hits that made the exact-match rule necessary. Accepting any
+    // of these ships the wrong picture for a real item.
+    expect(stackSuffixPattern('Baby mole').test('File:Baby Mole (NPC).png')).toBe(false)
+    expect(stackSuffixPattern('Baby mole').test('File:Baby Mole detail.png')).toBe(false)
+    expect(stackSuffixPattern('Muphin').test('File:Muphin (shielded).png')).toBe(false)
+    expect(stackSuffixPattern('Cow slippers').test('File:Cow slippers (1).png')).toBe(false)
+    expect(stackSuffixPattern('Acorn').test('File:Acorn seed 5.png')).toBe(false)
+  })
+
+  it('does not let a name with regex metacharacters match something else', () => {
+    // `Vet'ion jr.` — the `.` is a literal, not "any character".
+    expect(stackSuffixPattern("Vet'ion jr.").test("File:Vet'ion jr. 5.png")).toBe(true)
+    expect(stackSuffixPattern("Vet'ion jr.").test("File:Vet'ion jrX 5.png")).toBe(false)
   })
 })

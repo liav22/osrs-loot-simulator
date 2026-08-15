@@ -19,12 +19,16 @@ diff`, `git log`) are fine and encouraged before trusting this file's claims.
 
 **Phases 0–4 are done and stable** (schema, conditions, formulas, RNG,
 simulator, analytic EV; the ingest pipeline; the frontend) — unchanged from
-prior sessions, not re-verified line-by-line this session but nothing in this
-session's work touched their done-when criteria.
+prior sessions. Not re-verified line-by-line recently, but nothing since has
+touched their done-when criteria. **"This session" appears throughout this file
+and means different sessions in different sections — the dated change lists at
+the end of section 1 are the reliable chronology.**
 
 **"Phase 5"/Phase 7 (PROJECT_PLAN.md section 16: overrides + hard bosses) is
 substantively underway, not done** — its own done-when is "zero
-`needs_review`," and 13 non-verified sources remain. What IS done within its
+`needs_review`," and **25 non-verified sources remain** (23 `needs_review` + 2
+`manual_override`), plus 3 `parse_failed`. Section 3 breaks that number down by
+cause — it is no longer dominated by any single one. What IS done within its
 scope:
 
 - **Phase 6 research, complete**: 14 non-verified/unmodelled sources each got
@@ -37,7 +41,7 @@ scope:
   and precisely what schema/engine capability is missing. This was done
   *before* the current session and is the input the rest of this section
   responds to.
-- **Extensions A and B, implemented** (this session, in
+- **Extensions A and B, implemented** (an earlier session, in
   `packages/loot-model/src/{schema,formulas,conditions,compile,simulate,
   expected-value}.ts`) — see sections 2–4 below for what they are and how
   they were verified. Neither builds an actual boss doc for any of the 14
@@ -58,10 +62,10 @@ scope:
 
 ```
 54 parsed at tier A+B+C(+D for chest-tombs-of-amascut):
-  28 verified, 2 manual_override, 21 needs_review, 3 parse_failed
+  27 verified, 2 manual_override, 23 needs_review, 3 parse_failed
 ```
 
-**Read that 28 against the earlier 18 and the earlier-still 38.** The 38 was
+**Read that 27 against the earlier 18 and the earlier-still 38.** The 38 was
 inflated: `drops_covered` was turned on deliberately (see docs/DECISIONS.md) and
 moved 20 sources out of `verified` because they were genuinely incomplete — a
 transcluded drop sub-table produced no `{{DropsLine}}` rows and vanished, so
@@ -126,27 +130,58 @@ keep it watchlisted; see section 3). See section 3 for what is next.
   the mutation shape that found it is now a reusable harness — see landmine #11.
 - **The benchmark bar is 1M**, adopted; the duplicated-`emit` lever is closed.
 
-**Changed in the transclusion session (this one):**
+**Changed in the transclusion session (the most recent one):**
 
 - **`apps/ingest/src/parse/expand-transclusions.ts` is new** — transcluded drop
-  sub-tables are expanded during parse, recovering 427 rows. `drops_covered`
-  failures 26 -> 5, corpus 18 -> 28 `verified`. **Read landmine #11c before
+  sub-tables are expanded during parse, recovering **427 rows across 28
+  sources**. `drops_covered` failures 26 -> 5. **Read landmine #11c before
   touching it**, especially point 3: a failed expansion produced a plausible
   WRONG rate on five sources, not a missing row, and `drops_covered` could not
   see it.
 - **`expansion.unexpandable` joined the `verified` gate** for that reason.
+- **Transcluded sub-tables are `independent`, never `preroll`** — landmine
+  #11d. `preroll` suppresses later weighted tables, which put Arrg's Coal
+  23.45% under its published rate in shipped data.
+- **A standing partition check** (`transclusionPartition` /
+  `checkTransclusionPartitions` in `build-tables.ts`) runs on every transcluded
+  block and reports any whose rates do not sum to its declared access rate.
+- **`apps/ingest/test/marginal-rates.test.ts` is new** and is the only check in
+  the repo that COMPOSES a document and compares per-item probabilities against
+  the wiki — landmine #11e. Nothing else could see the mode bug,
+  `drops_covered` included, because coverage is by item NAME.
 - **`findRowlessTemplateBlocks`** (`wikitext-drops.ts`) reports a drop
-  sub-section that still has a template for a body and no rows to show for it —
-  the silent-vanish signature, surfaced only when there is a shortfall to
-  explain.
-- **`data/item-icons.json` regenerated** (694 -> 736 items) and
-  `data/index.json` rebuilt.
-- Two tests that pinned the bug now pin the fix (`drops-covered.test.ts`'s
-  Corporeal Beast sigils, `rdt-access-mechanics.test.ts`'s check set), inverted
-  rather than deleted.
+  sub-section that still has a template for a body and no rows to show for it,
+  surfaced only when there is a shortfall to explain.
+- **`data/item-icons.json` regenerated** — 736 items, 734 resolved. Stage 2 of
+  the icon resolver now also accepts a strictly numeric stack suffix
+  (`stackSuffixPattern`), which is what resolves `Belladonna seed` ->
+  `Belladonna seed 5.png`. Digits only, so `Baby Mole (NPC).png` is still
+  refused. `data/index.json` rebuilt.
+- Two tests that pinned the transclusion bug now pin the fix
+  (`drops-covered.test.ts`'s Corporeal Beast sigils,
+  `rdt-access-mechanics.test.ts`'s check set), inverted rather than deleted.
 
-Note: the tally in this section supersedes any earlier "38 verified" reading —
-that number predates `drops_covered` and was inflated by exactly this gap.
+**Also changed, in `apps/web` (accessibility pass):**
+
+- **A `--color-muted` token exists now** (`src/index.css`) and every
+  de-emphasised text use goes through it. The header and footer shipped
+  `text-neutral-600` on the `neutral-950` body at **2.54:1**, and the shared
+  muted colour was `text-neutral-500`, which reaches only 4.18:1 — both below
+  WCAG AA's 4.5:1, and the second was wrong in 27 places. `neutral-500` cannot
+  reach AA against ANY background in this UI, so `neutral-400` is forced.
+  Header and footer also sit on a lifted `bg-neutral-900`.
+- `manual_override`'s status badge is `sky-300`, not `sky-400`: 4.46:1 over a
+  panel, just under. The rarest-item card overrides the muted token to
+  `neutral-300` because its amber tint LIFTS its own background.
+- **`apps/web/test/contrast.test.ts` computes every ratio** from the palette
+  (and first asserts the model reproduces Tailwind's published hexes, so a
+  drifting palette is caught too), plus a trip wire that `text-neutral-500/600`
+  appear nowhere in `src`. **`apps/web/e2e/contrast.spec.ts` measures what the
+  browser actually PAINTS**, because a unit test cannot prove a utility class
+  was generated or won the cascade. Note Chromium serialises these as
+  `oklch(0.708 0 none)`, not `rgb()`.
+- The header carries a GitHub repo link (icon + `aria-label`, `target="_blank"`,
+  `rel="noopener noreferrer"`).
 
 ---
 
@@ -220,7 +255,7 @@ or is out of scope — see Fortis Colosseum/CoX-suppression in section 3).
 `.optional()` so the generated corpus stayed byte-identical. Details, including
 why the flag is read on a hit rather than hoisted, are in `docs/DECISIONS.md`.
 
-### Phase 7 — 4 of 14 shipped, 10 to go
+### Phase 7 — 5 of 14 shipped, 9 to go
 
 **Shipped**: Abyssal Sire, Corporeal Beast (parser fixes in
 `apps/ingest/src/parse/rdt-access.ts` — preferred over overrides, and the
@@ -267,15 +302,105 @@ prose says "The chance of rolling Smolcano is unaffected by performance," which
 agrees with the 21 May 2020 news post and dates the Mod Lenny tweet's example to
 before the change. `docs/bosses/zalcano.md` never quoted that sentence.
 
-**Cheapest remaining**, on current evidence: TzHaar Fight Cave
-(fully unblocked at model level, but resolves no boss in the inventory, so it
-moves no counter), then Duke Sucellus (needs `duke_sucellus_ice_quartz`; its
-frozen-tablet curve is UNKNOWN per the wiki itself and is not implementable at
-any schema level — do not guess it), then Reward pool (needs the two-sided
-bracket described in the player-stat-gating entry), then Reward Cart (needs
-the `z.lazy` local-table node Phase 1 anticipated). CoX's Ancient chest and
-Fortis Colosseum both need `data/overrides/` — which now exists — plus real
-formulas.
+### Where the non-verified sources actually are
+
+The counter is no longer dominated by one cause. **23 `needs_review`**, and the
+only honest way to plan against it:
+
+| group | count | what it needs |
+|---|---|---|
+| transcluded sub-table mode | 9 | a decision, not code — see below |
+| the "Uniques"/"Mutagens" heading question | 5 | `phantom-muspah`, `sarachnis`, `shellbane-gryphon`, `the-nightmare`, `zulrah`. **Most re-litigated question in the project — see section 5 before touching it.** |
+| genuinely unknowable curves | 3 | `duke-sucellus`, `zalcano`, `reward-pool`. Watchlisted, correctly. |
+| raids that DO have a document | 2 | `chest-tombs-of-amascut`, `monumental-chest` — point-scaled, below |
+| GWDRDT | 2 | `kree-arra`, `general-graardor` — landmine #3 |
+| other | 2 | `black-knight-titan` (a Lua `{{#invoke:}}` sub-table + `items_known`), `salarin-the-twisted` (`items_known`) |
+
+Plus **2 `manual_override`** — `doom-of-mokhaiotl` and `lunar-chest`, both a
+terminal success state, not work outstanding.
+
+Plus **3 `parse_failed`, which produce no document and are therefore NOT in the
+23 above**: **Ancient chest** (CoX — see the raids section), **Black demon**
+(its headings are `==Level 172, 178, and 184 drops==`, which
+`DROPS_SECTION_TITLE` does not match — a contained heading-matching gap, pinned
+as such in `transclusion-coverage.test.ts`), and **Revenant maledictus**.
+
+**Fortis Colosseum is in none of these counts at all** — it is tier D and has
+never produced a document, so it is invisible to every tally. Worth knowing
+before reading the corpus numbers as "everything the project owns."
+
+### The four raids — the largest coherent block of work left
+
+None is blocked on engine capability any more; `data/overrides/` exists,
+Extensions A and B shipped, and landmine #12's fix means a tier-D source with
+an authored override actually gets built. What they need is the *formula* each
+one's rewards scale on, and those are stated on the pages in varying detail.
+
+1. **Chambers of Xeric -> `ancient-chest`. `parse_failed`, no document at all.**
+   Its page has no `{{DropsLine}}`-shaped content whatsoever. Needs the
+   `cox_points` formula plus a from-scratch override. **Read section 5's CoX
+   entry first**: the cross-table gating (elite clue / Olmlet) is *resolved* as
+   Extension A work and must not be re-opened as "needs new architecture" —
+   and the failure mode to avoid is quantified there (naively using the
+   unconditioned subrates overstates Olmlet by **33x**).
+2. **Tombs of Amascut -> `chest-tombs-of-amascut`.** Has a document,
+   `needs_review`, watchlisted, and `drops_covered` fails 15 of 50 — its
+   `dropsline` rows are structural leftovers of a point-purchase reward shop,
+   not per-row rarities. Needs `toa_invocation`. Also carries Extension B's
+   thread-of-Elidinis / jewel ownership state, which is built.
+3. **Theatre of Blood -> `monumental-chest`.** Same shape: document,
+   `needs_review`, watchlisted, `drops_covered` fails 9 of 43. Point-scaled.
+4. **Fortis Colosseum -> `rewards-chest-fortis-colosseum`. No document.** Tier
+   D, and its page is structured by `Wave 1`..`Wave 12`, fitting none of the
+   four canonical modes. **Its wave shape is a population of one** — that was
+   checked directly against Inferno, TzHaar Fight Cave, Barbarian Assault and
+   Nightmare Zone, and none of them shares it (docs/DECISIONS.md). So do NOT
+   generalise wave machinery from it; it is an override case. Note its
+   run-scoped, resets-per-attempt armour dedup is the one ownership shape
+   Extension B deliberately does not express (section 2).
+
+### The mode question on transcluded blocks — open, and it is a DECISION
+
+Nine sources are `needs_review` for this alone and every other check on them is
+green. The rows are provably one mutually-exclusive roll (the partition
+identity holds at ratio 1.0000 on all of them); they are modelled as
+`independent` rolls so the wiki's per-row rates survive, and the document does
+not express the single-access-roll shape at all. See landmine #11d.
+
+Two ways to close it, and it is not a coding question:
+
+- **Accept the approximation** — clear the flag on a confirmed partition. One
+  condition in `buildTableGroups`. The cost is a ~0.06%-of-kills impossible
+  co-occurrence, already accepted in the CoX decision.
+- **Model it properly** — a `oneOf` node at the access rate, which is exactly
+  what the identity proves the block is, and is exact. Bigger change:
+  `build-tables` would need to emit a new group shape and `assemble-boss` to
+  build the node.
+
+**Do not just switch the mode back to `preroll` to make the flag go away.**
+That is the measured regression #11d records.
+
+### The genuinely unknowable — leave them watchlisted
+
+These are not backlog. The wiki states the mechanic exists and never states the
+curve, so there is nothing to implement at any schema level, and guessing would
+put an invented number behind a `verified` badge:
+
+- **`duke-sucellus`** — the frozen-tablet curve.
+- **`zalcano`** — the points->loot scaling function (`P_M`/`P_T` are defined
+  exactly; what consumes them is not on the page) and the shard's "between
+  1/750 and 1/1500 depending on contribution" with no interpolation given.
+- **`reward-pool`** — the per-encounter mechanic. Shipped and correct *per
+  reward permit*, which is the page's own unit; the encounter-level rule is
+  unstated.
+- **`reward-cart`** — **BLOCKED, deliberately, do not attempt.** Its Logs rows
+  are all `rarity=Varies` with the Woodcutting-level rates never stated, and
+  the pyromancer outfit rule ("the piece players have the least of") is a
+  RELATIVE comparison across four counts that `ownershipGate` cannot express.
+
+**Do not remove a watchlist entry to move the counter.** The check exists
+precisely because parsing a page cleanly proves nothing when the rows never
+encoded the mechanic that matters.
 
 ## 4. Benchmark state
 
@@ -599,7 +724,7 @@ Two in-app links (`BossView`, `AdminPage`) were also root-absolute `<a href>`s
 that escape the base path on GitHub Pages; both are `<Link>` now, and the
 guarding test sweeps every `a[href^="/"]` rather than naming the two.
 
-### 11. Scope-permissive guards: FOUR found, and there is now a harness for the fifth
+### 11. Scope-permissive guards: FOUR found this way, and there is a harness for the next
 
 `entry.title`, `refs_resolve`, `qty_sane` and `items_known` were all found more
 permissive than they looked, all in the same way, none of them by a test. Every
@@ -613,9 +738,12 @@ case where the check stops looking, so a real failure becomes a pass.
 `scope-invariants.test.ts` applies it to all five checks with a scope
 (`refs_resolve`, `qty_sane`, `items_known`, `rates_valid`, `weights_sum`).
 
-**When a fifth hole turns up, add the mutation to `SCOPE_MUTATIONS` once and
+**When another hole turns up, add the mutation to `SCOPE_MUTATIONS` once and
 every check gains the coverage at that moment.** That is the point of the file;
 adding a per-check test instead is the old shape that missed four in a row.
+
+**A fifth has since been found, and NOT by this harness** — see landmine #11f.
+Being scope-invariant was always necessary and never sufficient.
 
 The fourth, for the record, was `items_known`: `parseBoss` collected items with
 a flat `entry.node.kind === 'item'` loop, so an item inside a `oneOf` was never
@@ -660,7 +788,8 @@ sub-tables (every seed on Vorkath, Araxxor, the Dagannoths),
 Beast's three sigils.
 
 **`apps/ingest/src/parse/expand-transclusions.ts` expands them during parse.**
-`drops_covered` failures 26 -> 5, corpus 18 -> 28 `verified`. Full reasoning in
+`drops_covered` failures 26 -> 5, corpus 18 -> 27 `verified` (28 briefly, before
+the sub-table mode was corrected — see landmine #11d). Full reasoning in
 docs/DECISIONS.md; the three things worth knowing before touching it:
 
 1. **The set of template definitions on disk IS the scope.**
@@ -710,6 +839,107 @@ are independent tertiary rolls with no shared access rate. Provenance proves
 "one unit", not "mutually exclusive". See docs/DECISIONS.md for the signal that
 would actually separate them.
 
+### 11d. A transcluded sub-table is `independent`. Do not "tidy" it to `preroll`
+
+The transclusion fix (#11c) first shipped these blocks as `preroll`, because
+that is what the heterogeneous-denominator fallback guesses. It is wrong, and
+`drops_covered` cannot see it.
+
+**Both modes get the block's own rows right** — they are disjoint, so
+first-hit-wins and independent rolls give identical marginals inside the block.
+They differ in what they claim about everything AFTER it: `preroll` suppresses
+every later `weighted`/`preroll` table. Measured against the wiki's own
+published rates that suppression put **Arrg's Coal 23.45% under its stated
+1/42.7**, Giant sea snake's Adamant dart tip 13.83% under, Sarachnis' Grimy
+kwuarm 5.64% under. As `independent` they land exactly on the published figure.
+
+The accepted cost: two rows of one sub-table can co-occur in a simulated kill,
+which the real access roll forbids — ~0.06% of kills on Abyssal Sire, the same
+quantified artifact the CoX decision already accepts.
+
+**A sub-table that homogenises onto one denominator never reaches this** and
+becomes `weighted`, which is exact and suppresses nothing (Corporeal Beast's
+sigils: 4095 = 585 x 7). Only blocks that fall through to the guess are
+affected.
+
+**The standing check:** `transclusionPartition` / `checkTransclusionPartitions`
+in `build-tables.ts` ask whether the block's rates sum to the access rate its
+transclusion declared. 1.0000 on all 17 seed/herb/talisman blocks; abstains on
+`WildernessSlayerDropTable` (declares no access rate — its two rows derive from
+combat level and hitpoints separately and really are independent); and
+correctly REFUSES Vorkath at 1.6665, because that page overrides two rarities
+with effective chances folding in its main table's own seed slots.
+
+Note the identity proves only WITHIN-block exclusivity. It is not what licenses
+the mode — coming entirely from one transclusion is. A rejected earlier
+candidate, "every rate derives from one `{{#vardefine:}}` base", fails on
+`Uniques/Corporeal Beast`, which has none and is provably exclusive.
+
+**These blocks stay `needs_review` on purpose.** The rows are one roll and the
+document does not say so.
+
+### 11e. `marginal-rates.test.ts` is the only check that composes the document
+
+Every other check is closed-world over structure — `weights_sum` against a
+denominator, `drops_covered` over item names, `rates_valid` over rate shapes.
+None of them asks whether the resulting PER-KILL PROBABILITY is the number the
+wiki publishes, which is why a table whose own rows are individually perfect
+can still be wrong because of a neighbour. That is exactly how #11d shipped
+green.
+
+~1,270 item rows across 52 sources are directly comparable. Three exclusions,
+all because the comparison would be invalid, and all documented in the file:
+items appearing more than once or reachable via `tableRef`; tables downstream
+of a real pre-roll (Brutus' 10/150 pre-roll puts all thirteen main-table rows
+6.54% low against the wiki's flat figures); and `preroll` tables' own entries,
+which are a first-hit-wins chain. The last two are the same open question about
+what the wiki's flat figures mean, and this test deliberately does not settle
+it.
+
+**Its third assertion — at least 300 comparable rows — is not decoration.** The
+suite's first run passed vacuously because `Boss` has no `title` field (it is
+`wikiPage`), so every oracle lookup threw into a `catch` and returned null. The
+coverage guard is what turned a meaningless green into a failure.
+
+### 11f. FIVE guards have now been found permissive. Assert that a check DID WORK
+
+The running tally, because the pattern is the point and not any one instance:
+
+| # | guard | how it was permissive | found by |
+|---|---|---|---|
+| 1 | `entry.title` (watchlist) | validated nothing; an entry retitled to its own boss page with an emptied `blockedBy` passed vacuously | a human reading it |
+| 2 | `refs_resolve` | scoped by `SimContext`; condition-excluded refs were invisible, so Lunar Chest "passed" against 0 shared tables | a human reading it |
+| 3 | `qty_sane` | never descended into `oneOf` | a human reading it |
+| 4 | `items_known` | flat `entry.node.kind === 'item'` loop, so an item inside a `oneOf` was never collected | a human reading it |
+| 5 | `drops_covered` | closed-world over the document; could not see a section the page had and the document did not | turning the check on |
+| 6 | `marginal-rates.test.ts` | **passed vacuously on its very first run** | its own row-count assertion |
+
+Number 6 is the one to internalise. `Boss` has no `title` field — it is
+`wikiPage` — so every oracle lookup threw, landed in a `catch` that returns
+`null`, and every comparison was skipped. The suite was green and asserting
+nothing at all. What caught it was a third assertion in the same file that
+counts how many rows survived its exclusions and fails below 300.
+
+**So: any new check needs an assertion that it did NON-TRIVIAL WORK, not merely
+that it passed.** A count of items compared, sources covered, mutations
+applied — something that goes to zero when the check silently stops looking.
+Every guard in the table above was, at some point, green while blind.
+
+Three shapes that produce a vacuous green, all of them real here:
+
+1. **A `catch` that returns a neutral value.** `null`/`[]`/`ok: true` on a
+   missing oracle is right (see `drops_covered`'s "no dropsline snapshot" note)
+   and is also indistinguishable from "it worked and found nothing."
+2. **An exclusion list that grows** until nothing is left to check.
+   `marginal-rates.test.ts` has three principled exclusions and the row count
+   is what keeps them honest.
+3. **A filter keyed on a field that changed name.** Exactly number 6.
+
+`drops_covered` already follows the rule in its detail string — it announces
+"no dropsline snapshot for X; coverage not checked" rather than reporting a
+silent pass — because `refs_resolve` once said "resolved against 0 shared
+table(s)" and nobody noticed for months. Do that.
+
 ### 12. A tier filter used to be able to silently overrule an authored override
 
 Reward pool is tier D. Every documented parse invocation is `--tier A,B,C`. So a
@@ -733,72 +963,41 @@ bitten.**
 
 ## 7. Suggested next steps, in order
 
-1. ~~**Zalcano**~~ — **DONE.** Shipped via `data/overrides/zalcano.json` + 12
-   wiki-figure tests. The condition-shape decision resolved as a **derived
-   `SimContext` field** (`totalDamage`), not a formula-valued condition, so no
-   fourth gating shape was added and the resolved-once invariant is intact.
-   `levelAtLeast` gained `shieldDamage`/`totalDamage`; `fishingLevel` is still
-   deliberately out. **Zalcano stays on the mechanics watchlist and is therefore
-   `needs_review`, not `manual_override`** — two curves the page states exist and
-   never states (the points→loot scaling function, and the Zalcano shard's
-   1/750–1/1500 interpolation). Everything else is modelled and tested. Do not
-   remove the watchlist entry to make the counter move.
-2. ~~**Wire the new `SimContext` fields into the UI**~~ — **DONE.** Controls are
-   *derived per boss* by `apps/web/src/lib/context-fields.ts` rather than being a
-   fixed list, including fields only ever read inside formulas (Zalcano's
-   `isMVP` appears in no condition anywhere) via `FORMULA_CONTEXT_FIELDS`. All
-   fields round-trip through the URL. Verified by jsdom render tests against the
-   real generated documents **and, since the Playwright session, in a real
-   browser against the production build** — `pnpm --filter web test:e2e`, 18
-   tests. That suite is what found the two production bugs in landmine #10.
-3. ~~**Reward pool**~~ — **DONE.** Shipped as `data/overrides/reward-pool.json`
-   + `data/tables/reward_pool_fish.json`, 12 wiki-figure tests, modelled **per
-   reward permit**. Two things worth carrying forward from how it was built:
+Section 3 has the reasoning; this is the order. Everything above item 1 in
+earlier versions of this file (Zalcano, the `SimContext` UI wiring, Reward
+pool, the reward-cart/reward-pool watchlist misattribution) is **DONE** and has
+been folded into sections 1 and 3 rather than kept as struck-through history.
 
-   - **`independent` mode + certainty rates (`1/1`) is how mutually exclusive
-     condition-gated alternatives are modelled.** Reward pool's seven Fishing
-     brackets cannot be a weighted table — all seven would sum to 25,200 against
-     a 3,600 denominator and `weights_sum` would fail, correctly, because it is
-     a members-variant check and understands no other condition kind. Instead
-     the seven bracket entries are certainty rates gated on their bracket, each
-     carrying a `oneOf` of that bracket's five fish; exactly one survives
-     compile-time filtering and its `oneOf` normalises over the bracket's own
-     3,600. Reach for this shape the next time brackets appear.
-   - **Per-permit/per-redemption modelling can dissolve a missing formula.** The
-     points -> permits rounding rule is still unstated, but it only ever
-     mattered for `Table.rolls`; making the permit the simulated unit — which is
-     the page's own unit — makes the table exact and needs no formula. Ask
-     whether a source's real unit is the encounter before assuming it is.
-
-   It **stays watchlisted and `needs_review`**: the per-encounter mechanic is
-   genuinely unmodelled. Do not remove the entry to move the counter.
-
-4. ~~**Reward Cart**~~ — **BLOCKED, deliberately, do not attempt.** Its Logs
-   sub-table rows are all `rarity=Varies` with the Woodcutting-level rates never
-   stated (same class as Zalcano's two curves — do not guess), and the pyromancer
-   outfit rule ("the piece players have the least of", fixed tie-break order) is
-   a *relative* comparison across four item counts, a fourth gating shape
-   `ownershipGate` does not express. Wikitext is snapshotted if you want to
-   re-read it. What IS expressible: the warm gloves / bruma torch "already has
-   three" substitutions are ordinary `ownershipGate` threshold cases.
-
-5. **The remaining sources.** `rewards-chest-fortis-colosseum` is the natural
-   next one — it is tier D like Reward pool was, so landmine #12's fix is what
-   makes an override for it reachable at all.
-
+1. **Decide the transcluded-block mode question.** Nine sources are
+   `needs_review` on it alone with every other check green, so it is the
+   single largest counter move available and it costs either one condition or
+   one new group shape. It is a judgement call about what `verified` may
+   claim, not a coding problem — section 3.
+2. **The four raids**, in rough order of how well the wiki states their
+   formula: Theatre of Blood (`monumental-chest`) and Tombs of Amascut
+   (`chest-tombs-of-amascut`) both already have documents and fail on a stated
+   point-scaling rule; CoX (`ancient-chest`) needs a from-scratch override and
+   `cox_points`; Fortis Colosseum needs an override for a wave-indexed page
+   that fits no canonical mode. **Read section 5's CoX entry before starting
+   that one.**
+3. **`black-knight-titan`** — the cheapest remaining coverage failure. Its
+   `{{GeneralSeedDropLines}}` is a Lua `{{#invoke:}}` the expander cannot run;
+   the rows would have to come from somewhere else (an override, or the
+   module's own output). It also fails `items_known`.
+4. **GWDRDT** (`kree-arra`, `general-graardor`) — landmine #3. A new
+   `data/tables/gwd_rare_drop_table.json`-shaped record, not a code fix. Two
+   sources for one record.
+5. **`black-demon`** — `DROPS_SECTION_TITLE` does not match
+   `==Level 172, 178, and 184 drops==`. Contained, and the diagnosis is
+   already pinned in a test.
 6. **Un-watchlist as mechanics land**, following the four-step sequence in
    `docs/OVERRIDES.md` — the wiki-figure test (step 3) is the part that is
    easy to skip and must not be.
-7. Nex (tier D, `include: true`) has still never been investigated — check
-   whether it's actually raid-shaped before assuming it needs any of this
+7. **Nex** (tier D, `include: true`) has still never been investigated — check
+   whether it is actually raid-shaped before assuming it needs any of this
    machinery.
-8. ~~`reward-pool`/`reward-cart` watchlist misattribution~~ — **RESOLVED, and do
-   not re-flag it.** The data was already correct; this item was a stale
-   transcription of a sentence in `docs/bosses/reward-{pool,cart}.md` that said
-   the watchlist "currently reads" the swapped values and was never updated
-   after the fix. Both banners now state the resolution and describe the bug in
-   the past tense. `checkWatchlistConsistency` also gained the two rules that
-   would have settled it without a human: it now validates `title` (previously
-   unchecked *and* load-bearing — an entry retitled to its own boss page with an
-   emptied `blockedBy` used to pass vacuously) and scans `detail` for another
-   source's boss page or formula id. See `docs/DECISIONS.md`.
+
+**Not next steps, deliberately:** the "Uniques"/"Mutagens" heading question
+(section 5 — answered "no available signal" every time it has been re-checked),
+`ev_matches` (closed permanently, section 5), the genuinely-unknowable curves
+(section 3), and `reward-cart` (blocked, section 3).

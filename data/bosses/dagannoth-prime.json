@@ -388,7 +388,7 @@
     },
     {
       "id": "dagannoth-prime:2:seeds",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -631,11 +631,11 @@
           }
         }
       ],
-      "notes": "Seeds"
+      "notes": "Seeds (confirmed independent: 14 entries expanded from one {{rareseeddroplines}} transclusion, whose rates sum to its stated access rate 7/128 (ratio 0.9999), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "dagannoth-prime:3:talismans",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -793,7 +793,7 @@
           }
         }
       ],
-      "notes": "Talismans"
+      "notes": "Talismans (confirmed independent: 9 entries expanded from one {{talismandroplines}} transclusion, whose rates sum to its stated access rate 1/128 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "dagannoth-prime:4:talismans-noted-other",

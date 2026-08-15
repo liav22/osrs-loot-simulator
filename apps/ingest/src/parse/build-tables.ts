@@ -55,6 +55,40 @@ export interface ParsedEntry {
 
 export type ParsedMode = 'always' | 'preroll' | 'weighted' | 'independent'
 
+/**
+ * The access-rate identity for a block that came entirely from ONE
+ * transclusion: do its rows' rates sum to the access rate that transclusion
+ * declared?
+ *
+ * This is the real test for "these rows are one roll that picks one item," and
+ * it is an arithmetic identity rather than an appeal to where the numbers came
+ * from. If the rows are mutually exclusive alternatives reached by a single
+ * access roll, then by total probability their rates must sum to exactly the
+ * access rate. Measured across the corpus it separates the two shapes cleanly:
+ *
+ *   - seed / herb / talisman sub-tables: ratio 1.0000 on every source
+ *   - `WildernessSlayerDropTable`: declares no access rate at all (its two rows
+ *     derive from different inputs — combat level and hitpoints — and really
+ *     are independent rolls), so there is nothing to test and this abstains
+ *   - Vorkath's seeds: 1.6665, correctly REFUSED — that page overrides two
+ *     rarities with EFFECTIVE chances folding in the main table's own seed
+ *     slots, so its rows are not a partition of the seed roll alone
+ *
+ * An earlier candidate — "every rate derives from one `{{#vardefine:}}` base" —
+ * was rejected on evidence: `Uniques/Corporeal Beast` has no `#vardefine` at
+ * all and is provably mutually exclusive, so provenance is not the mechanism.
+ * See docs/DECISIONS.md.
+ */
+export interface PartitionCheck {
+  template: string
+  /** The declared access rate as the page wrote it, e.g. `5/139`. */
+  accessRate: string
+  /** Sum of the block's own rates, and that sum divided by the access rate. */
+  sum: number
+  ratio: number
+  verdict: 'partition' | 'not-a-partition' | 'no-access-rate'
+}
+
 export interface ParsedTableGroup {
   mode: ParsedMode
   headings: string[]
@@ -64,6 +98,8 @@ export interface ParsedTableGroup {
   ambiguous: string | null
   /** Set when a heterogeneous-denominator group's mode was confirmed by a structural or textual signal, not guessed. Human-readable, for `notes`. */
   confirmedBy?: string
+  /** The access-rate identity, for any block that came entirely from one transclusion. */
+  partition?: PartitionCheck
 }
 
 /** A resolved rarity, or the reason it could not be resolved. */
@@ -327,6 +363,96 @@ function trySplitDominantAndOutliers(
   return { dominant, dominantDenominator, outliers }
 }
 
+/** Parses `5/139` into a probability; null for anything else. */
+function parseFraction(text: string): number | null {
+  const match = /^~?\s*([\d,.]+)\s*\/\s*([\d,.]+)\s*$/.exec(text.trim())
+  if (match === null) return null
+  const num = Number(match[1]?.replace(/,/g, ''))
+  const den = Number(match[2]?.replace(/,/g, ''))
+  if (!Number.isFinite(num) || !Number.isFinite(den) || den === 0) return null
+  return num / den
+}
+
+/**
+ * Published rarities are rounded to one decimal place in the denominator
+ * (`1/416.7`), so a real partition's rates sum to the access rate only to
+ * within that rounding. Measured spread across the corpus is under 0.3%; 1%
+ * leaves room without admitting anything that is not a partition — the nearest
+ * non-partition measured is Vorkath at 66.7% over.
+ */
+const PARTITION_TOLERANCE = 0.01
+
+/**
+ * Runs the access-rate identity on a heading block. Returns null when the
+ * block did not come entirely from one transclusion, which is every
+ * hand-written block on the wiki.
+ */
+export function transclusionPartition(
+  lines: readonly WikitextDropLine[],
+  rates: readonly ParsedRate[]
+): PartitionCheck | null {
+  if (lines.length === 0) return null
+  const template = lines[0]?.expandedFrom ?? ''
+  if (template === '') return null
+  // Every row must come from the SAME transclusion. A block mixing a
+  // transcluded sub-table with rows written directly on the page is not that
+  // sub-table, and its sum would not mean anything.
+  if (!lines.every((line) => line.expandedFrom === template)) return null
+
+  const accessRate = lines[0]?.accessRate ?? ''
+  const access = parseFraction(accessRate)
+  const sum = rates.reduce((total, rate) => total + (rate.kind === 'fixed' ? rate.num / rate.den : 0), 0)
+
+  if (access === null || access === 0) {
+    return { template, accessRate, sum, ratio: NaN, verdict: 'no-access-rate' }
+  }
+  const ratio = sum / access
+  return {
+    template,
+    accessRate,
+    sum,
+    ratio,
+    verdict: Math.abs(ratio - 1) <= PARTITION_TOLERANCE ? 'partition' : 'not-a-partition',
+  }
+}
+
+/** One clause describing what the identity found, for `notes` and reasons. */
+export function describePartition(check: PartitionCheck): string {
+  switch (check.verdict) {
+    case 'partition':
+      return (
+        `, whose rates sum to its stated access rate ${check.accessRate} ` +
+        `(ratio ${check.ratio.toFixed(4)}), so its rows are one mutually-exclusive roll`
+      )
+    case 'not-a-partition':
+      return (
+        `, whose rates sum to ${check.ratio.toFixed(4)}x its stated access rate ${check.accessRate} — ` +
+        `so they are NOT a clean partition of that roll and something on the page overrides them`
+      )
+    case 'no-access-rate':
+      return ' , which declares no access rate, so the partition identity has nothing to test'
+  }
+}
+
+/**
+ * Runs the identity on EVERY block that came from a transclusion, whatever
+ * mode that block ends up in, so the result is a standing check rather than a
+ * one-off measurement. `parse-boss.ts` reports any block whose rows do not sum
+ * to their own access rate.
+ */
+export function checkTransclusionPartitions(blocks: readonly HeadingBlock[]): PartitionCheck[] {
+  const checks: PartitionCheck[] = []
+  for (const block of blocks) {
+    const rates = block.lines
+      .map((line) => parseRarity(line.rarity).rate)
+      .filter((rate): rate is ParsedRate => rate !== null)
+    if (rates.length !== block.lines.length) continue
+    const check = transclusionPartition(block.lines, rates)
+    if (check !== null) checks.push(check)
+  }
+  return checks
+}
+
 const INDEPENDENT_HEADINGS = /tertiary|secondary/i
 const PREROLL_HEADINGS = /pre-?roll/i
 const ALWAYS_HEADINGS = /^100%$|^always$/i
@@ -533,13 +659,69 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
     // flagged guess, per heuristic 6.
     flushWeighted()
     const confirmedBy = findConfirmingSignal(block.lines)
+    const partition = transclusionPartition(
+      block.lines,
+      resolved.map((r) => r.resolution.rate!)
+    )
+    const entries = resolved.map(({ line, resolution }) =>
+      toEntry(line, resolution.rate!, null, resolution.conditions)
+    )
+
+    // A confirmed partition is modelled as `independent`, NOT `preroll`, and
+    // the difference is measurable rather than stylistic.
+    //
+    // Both modes get the block's own rows right — they are disjoint, so a
+    // first-hit-wins chain and a set of independent rolls give identical
+    // marginals inside the block. They differ in what they claim about
+    // everything AFTER the block: `preroll` suppresses every later weighted
+    // and preroll table, and nothing in the identity licenses that. Measured
+    // against the wiki's own published rates, that suppression is simply
+    // wrong — it put Arrg's Coal 23.45% under its stated 1/42.7, Giant sea
+    // snake's Adamant dart tip 13.83% under, Abyssal Sire's Earth orb 4.50%
+    // under. As `independent`, every one of those lands exactly on the stated
+    // figure.
+    //
+    // The cost is that two rows of one sub-table can co-occur in a single
+    // simulated kill, which the real access roll forbids: about 0.06% of kills
+    // on Abyssal Sire. That is the same quantified, documented kill-log
+    // artifact the CoX decision already accepts, and it is confined to the
+    // block instead of distorting its neighbours.
+    //
+    // `apps/ingest/test/marginal-rates.test.ts` is what caught this and is
+    // what keeps it caught.
+    // The mode switch is driven by the block coming entirely from ONE
+    // transclusion — that is what makes `preroll`'s suppression of later
+    // tables unsupportable. The identity is the evidence recorded alongside
+    // it, and it is what says whether the rows are additionally a clean
+    // partition of the declared access rate.
+    if (partition !== null) {
+      groups.push({
+        mode: 'independent',
+        headings: [block.heading],
+        denominator: null,
+        entries,
+        // Still flagged. The identity proves the rows are ONE roll; modelling
+        // them as independent rolls is a deliberate approximation of that, and
+        // the document does not express the single-access-roll shape at all.
+        // Clearing this would claim the pipeline derived the structure
+        // unaided, which is not what happened.
+        ambiguous:
+          `heading "${block.heading}" is the transcluded sub-table {{${partition.template}}}` +
+          `${describePartition(partition)}. Modelled as independent rolls to preserve the wiki's per-row ` +
+          `rates; the single-access-roll shape itself is not modelled and needs a human check`,
+        confirmedBy:
+          `${entries.length} entries expanded from one {{${partition.template}}} transclusion` +
+          describePartition(partition),
+        partition,
+      })
+      continue
+    }
+
     groups.push({
       mode: 'preroll',
       headings: [block.heading],
       denominator: null,
-      entries: resolved.map(({ line, resolution }) =>
-        toEntry(line, resolution.rate!, null, resolution.conditions)
-      ),
+      entries,
       ambiguous:
         confirmedBy !== null
           ? null
@@ -547,6 +729,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
             `named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but ` +
             `this is a guess and needs a human check`,
       ...(confirmedBy !== null ? { confirmedBy } : {}),
+      ...(partition !== null ? { partition } : {}),
     })
   }
 

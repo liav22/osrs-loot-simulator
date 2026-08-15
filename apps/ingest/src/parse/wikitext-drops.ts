@@ -1,4 +1,5 @@
 import { DROP_JSON_FIELDS, VARIANT_MARKERS } from '../wiki/fields.js'
+import { PROVENANCE_ACCESS, PROVENANCE_TEMPLATE } from './expand-transclusions.js'
 
 /**
  * Extracts `{{DropsLine}}` / `{{DropsLineClue}}` template calls from raw
@@ -40,6 +41,21 @@ export interface WikitextDropLine {
    */
   rarityNotes: string
   isClue: boolean
+  /**
+   * The transclusion this row was expanded out of, normalised, or `''` for a
+   * row written directly on the page. Set by `expand-transclusions.ts`.
+   *
+   * A block whose rows ALL carry the same value is one sub-table as the wiki
+   * itself packages it, which is what `build-tables.ts` needs to decide the
+   * block's mode instead of guessing from denominators.
+   */
+  expandedFrom: string
+  /**
+   * That transclusion's declared access rate, verbatim (`5/139`), or `''` when
+   * it declares none. The rows of a real sub-table sum to exactly this — see
+   * `transclusionPartition`.
+   */
+  accessRate: string
 }
 
 /**
@@ -290,6 +306,8 @@ function extractLinesFromSection(content: string, sectionTag: string): WikitextD
         nameNotes,
         rarityNotes,
         isClue,
+        expandedFrom: params.get(PROVENANCE_TEMPLATE) ?? '',
+        accessRate: params.get(PROVENANCE_ACCESS) ?? '',
       })
     }
   }

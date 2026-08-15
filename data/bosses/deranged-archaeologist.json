@@ -188,7 +188,7 @@
     },
     {
       "id": "deranged-archaeologist:2:seeds",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -465,7 +465,7 @@
           }
         }
       ],
-      "notes": "Seeds"
+      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 1/131 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "deranged-archaeologist:3:materials-consumables-other",

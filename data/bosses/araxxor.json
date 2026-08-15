@@ -413,7 +413,7 @@
     },
     {
       "id": "araxxor:3:tree-herb-seed-drop-table",
-      "mode": "preroll",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -690,7 +690,7 @@
           }
         }
       ],
-      "notes": "Tree-herb seed drop table"
+      "notes": "Tree-herb seed drop table (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 1/115 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
     },
     {
       "id": "araxxor:4:resources",

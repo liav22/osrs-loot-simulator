@@ -127,11 +127,14 @@ describe('expandTransclusions', () => {
     const definitions = defs({
       t: '<includeonly>{{DropsLine|name={{{1}}}|quantity={{{multiplier|1}}}|rarity={{{rare|1/2}}}}}</includeonly>',
     })
+    // Rows emitted from inside a transclusion also carry the parser-internal
+    // provenance parameters, which is how `build-tables.ts` learns that a
+    // block is one sub-table and at what declared access rate.
     expect(expandTransclusions('{{t|Thing}}', definitions).wikitext).toBe(
-      '{{DropsLine|name=Thing|quantity=1|rarity=1/2}}'
+      '{{DropsLine|name=Thing|quantity=1|rarity=1/2|__expandedfrom=t|__accessrate=Thing}}'
     )
     expect(expandTransclusions('{{t|Thing|multiplier=2|rare=1/9}}', definitions).wikitext).toBe(
-      '{{DropsLine|name=Thing|quantity=2|rarity=1/9}}'
+      '{{DropsLine|name=Thing|quantity=2|rarity=1/9|__expandedfrom=t|__accessrate=Thing}}'
     )
   })
 
@@ -208,7 +211,7 @@ describe('expandTransclusions', () => {
     })
     const result = expandTransclusions('{{t|combat=470}}', definitions)
     expect(result.unexpandable).toEqual([])
-    expect(result.wikitext).toContain('{{DropsLine|name=X|rarity=1/50}}')
+    expect(result.wikitext).toContain('{{DropsLine|name=X|rarity=1/50')
   })
 
   it('reports an #expr it cannot evaluate INSIDE an expansion, where a rate depends on it', () => {

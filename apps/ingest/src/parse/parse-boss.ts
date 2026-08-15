@@ -16,7 +16,12 @@ import { REPO_ROOT, readSnapshot, slugify } from '../snapshots/store.js'
 import { BossSchema, resolveSimContext, type Table } from '@osrs-loot-simulator/loot-model'
 import { extractDropLines, findRowlessTemplateBlocks } from './wikitext-drops.js'
 import { expandTransclusions, type TemplateDefinitions } from './expand-transclusions.js'
-import { buildTableGroups, groupByHeading } from './build-tables.js'
+import {
+  buildTableGroups,
+  checkTransclusionPartitions,
+  describePartition,
+  groupByHeading,
+} from './build-tables.js'
 import { extractRdtAccessLines } from './rdt-access.js'
 import { assembleBoss } from './assemble-boss.js'
 import { collectItemInputs } from './collect-items.js'
@@ -119,6 +124,12 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
 
   const blocks = groupByHeading(lines)
   const groups = buildTableGroups(blocks)
+  // Standing, on every transcluded block — not just the ones whose mode it
+  // decides. A sub-table whose rows do not sum to its own declared access rate
+  // is telling you the page overrides them (Vorkath states EFFECTIVE seed
+  // chances that fold in its main table's own seed slots), and that is worth
+  // saying out loud rather than only when it happens to change a mode.
+  const partitions = checkTransclusionPartitions(blocks)
 
   const result = assembleBoss(groups, rdtAccess, {
     slug: options.slug,
@@ -251,6 +262,9 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   if (!dropsCovered.ok || expansion.unexpandable.length > 0) {
     for (const { template, reason } of expansion.unexpandable) {
       reasons.push(`transclusion not expanded: '${template}' — ${reason}`)
+    }
+      for (const check of partitions.filter((p) => p.verdict === 'not-a-partition')) {
+      reasons.push(`transcluded sub-table {{${check.template}}}${describePartition(check)}`)
     }
     for (const block of rowlessBlocks.filter((b) => b.heading !== '')) {
       const where =

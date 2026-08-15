@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T12:38:50.134Z",
+  "generatedAt": "2026-08-15T13:26:45.936Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -351,7 +351,7 @@
       "slug": "vorkath",
       "name": "Vorkath",
       "aliases": [],
-      "status": "verified",
+      "status": "needs_review",
       "image": "Vorkath.png"
     },
     {

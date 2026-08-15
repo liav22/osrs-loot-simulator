@@ -14,6 +14,10 @@ function line(overrides: Partial<WikitextDropLine> & Pick<WikitextDropLine, 'nam
     nameNotes: '',
     rarityNotes: '',
     isClue: false,
+    // Defaults to a row written directly on the page. A test that wants the
+    // transclusion path sets these explicitly — see the partition suite.
+    expandedFrom: '',
+    accessRate: '',
     ...overrides,
   }
 }
@@ -328,5 +332,114 @@ describe('buildTableGroups', () => {
     )
     expect(groups[0]?.entries[0]).toMatchObject({ members: true, freeToPlay: false })
     expect(groups[0]?.entries[1]).toMatchObject({ noted: true })
+  })
+})
+
+/**
+ * The access-rate identity, and the mode it decides.
+ *
+ * The question it answers: are these rows one roll that picks one item, or a
+ * set of independent rolls? An earlier candidate signal — "every rate derives
+ * from one `{{#vardefine:}}` base" — was rejected on evidence, because
+ * `Uniques/Corporeal Beast` has no `#vardefine` at all and is provably
+ * mutually exclusive. Provenance is not the mechanism; the arithmetic is.
+ */
+describe('transclusionPartition', () => {
+  /**
+   * Rows carrying DECIMAL denominators, which is what the real sub-tables
+   * publish (`1/416.7`) and why they reach the heterogeneous fallback at all:
+   * `tryHomogenizeDenominators` requires integer denominators, so a fixture
+   * built from tidy fractions would merge into one `weighted` table before the
+   * partition check is ever consulted. That is correct behaviour — a weighted
+   * table has no suppression side-effect and its marginals are exact, so a
+   * sub-table that homogenises needs none of this machinery (Corporeal Beast's
+   * sigils take exactly that path).
+   */
+  const decimalRows = (denominators: readonly number[]): string[] =>
+    denominators.map((d) => `1/${d.toFixed(1)}`)
+
+  const fromTemplate = (
+    template: string,
+    accessRate: string,
+    rarities: readonly string[]
+  ): WikitextDropLine[] =>
+    rarities.map((rarity, i) =>
+      line({ name: `Item ${i}`, rarity, heading: 'Sub-table', expandedFrom: template, accessRate })
+    )
+
+  /** The access rate a set of rows would sum to exactly, as the page would write it. */
+  const exactAccessFor = (rarities: readonly string[]): string => {
+    const sum = rarities.reduce((total, r) => {
+      const [n, d] = r.split('/').map(Number) as [number, number]
+      return total + n / d
+    }, 0)
+    return `1/${(1 / sum).toFixed(4)}`
+  }
+
+  const SUB_TABLE = decimalRows([300.6, 601.2, 1202.4])
+
+  it('confirms a partition when the rows sum to the declared access rate', () => {
+    const lines = fromTemplate('seeddroplines', exactAccessFor(SUB_TABLE), SUB_TABLE)
+    const groups = buildTableGroups(groupByHeading(lines))
+    expect(groups[0]?.partition?.verdict).toBe('partition')
+    expect(groups[0]?.partition?.ratio).toBeCloseTo(1, 3)
+    expect(groups[0]?.mode).toBe('independent')
+  })
+
+  it('refuses when the rows do not sum to it, rather than rounding toward yes', () => {
+    // Vorkath's real shape: two rows carry EFFECTIVE chances folding in the
+    // main table's own seed slots, so the block overshoots its access rate.
+    const lines = fromTemplate('treeherbseeddroplines', '1/600.0', SUB_TABLE)
+    const groups = buildTableGroups(groupByHeading(lines))
+    expect(groups[0]?.partition?.verdict).toBe('not-a-partition')
+    expect(groups[0]?.partition?.ratio).toBeGreaterThan(2)
+  })
+
+  it('abstains when the transclusion declares no access rate at all', () => {
+    // WildernessSlayerDropTable: Larran's key derives from the monster's
+    // combat level, Slayer's enchantment from its hitpoints. Two independent
+    // rolls, and nothing for the identity to test.
+    const lines = fromTemplate('wildernessslayerdroptable', '', decimalRows([50.5, 30.5]))
+    const groups = buildTableGroups(groupByHeading(lines))
+    expect(groups[0]?.partition?.verdict).toBe('no-access-rate')
+  })
+
+  it('says nothing about a block written directly on the page', () => {
+    const groups = buildTableGroups(
+      groupByHeading(
+        decimalRows([300.6, 601.2, 1202.4]).map((rarity, i) =>
+          line({ name: `Item ${i}`, rarity, heading: 'Uniques' })
+        )
+      )
+    )
+    expect(groups[0]?.partition).toBeUndefined()
+  })
+
+  it('says nothing about a block that MIXES a transclusion with page rows', () => {
+    // Half a sub-table is not that sub-table, and its sum would mean nothing.
+    const lines = [
+      ...fromTemplate('seeddroplines', '1/171.8', decimalRows([300.6, 601.2])),
+      line({ name: 'Hand-written', rarity: '1/1202.4', heading: 'Sub-table' }),
+    ]
+    const groups = buildTableGroups(groupByHeading(lines))
+    expect(groups[0]?.partition).toBeUndefined()
+  })
+
+  it('models a transcluded sub-table as independent, never preroll', () => {
+    // The whole point. `preroll` would additionally suppress every later
+    // weighted table, which put Arrg's Coal 23.45% under its published rate;
+    // `independent` reproduces the wiki exactly. Pinned as a mode assertion so
+    // a future tidy-up has to argue with `marginal-rates.test.ts`.
+    for (const accessRate of [exactAccessFor(SUB_TABLE), '1/600.0', '']) {
+      const lines = fromTemplate('anydroplines', accessRate, SUB_TABLE)
+      const groups = buildTableGroups(groupByHeading(lines))
+      expect(groups[0]?.mode, `access rate '${accessRate}'`).toBe('independent')
+    }
+  })
+
+  it('stays flagged, because the single-access-roll shape is still not modelled', () => {
+    const lines = fromTemplate('seeddroplines', exactAccessFor(SUB_TABLE), SUB_TABLE)
+    const groups = buildTableGroups(groupByHeading(lines))
+    expect(groups[0]?.ambiguous).toMatch(/needs a human check/)
   })
 })
