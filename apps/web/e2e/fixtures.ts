@@ -51,3 +51,26 @@ export const test = base.extend<{ page: Page }>({
 })
 
 export { expect } from '@playwright/test'
+
+/**
+ * A stable projection of a run's result: the summary line plus every item card
+ * as "name xN".
+ *
+ * Deliberately not `innerText` of the results section. That was the comparison
+ * two specs used, and it became flaky the moment icons arrived: `ItemIcon`
+ * renders the item's first letter as a placeholder until the icon map query
+ * resolves, so the section's text picks up a stray "W" or "B" depending purely
+ * on whether that fetch landed before or after the first paint. The numbers a
+ * run produces are what "the same result" means; the icon loading state is not.
+ */
+export async function resultProjection(page: Page): Promise<string> {
+  const summary = (await page.getByTestId('results-summary').innerText()).trim()
+  const items = await page.locator('[data-item-card]').evaluateAll((cards) =>
+    cards.map((card) => {
+      const name = card.querySelector('div[title]')?.getAttribute('title') ?? ''
+      const count = card.querySelector('span')?.textContent ?? ''
+      return `${name} ${count}`
+    })
+  )
+  return [summary, ...items].join('\n')
+}

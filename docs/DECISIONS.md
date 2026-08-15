@@ -3046,3 +3046,145 @@ wasted work. Rolling per run made it visible immediately, because the URL
 carried the click's seed and the results carried the effect's. Fixed by claiming
 the `autoRan` latch inside `handleSimulate`: the latch means "the auto-run is
 resolved for this mount", not "the effect has fired".
+
+## Transcluded drop sub-tables are silently dropped, and no check can see it
+
+Corporeal Beast's sigils are **genuinely absent from the parsed document** —
+not hidden behind a `tableRef` the UI filtered out. `data/bosses/corporeal-
+beast.json` has three tables (the 512-denominator table, Tertiary, and gem-table
+access) and none of them mentions a sigil.
+
+The cause is visible in one line of wikitext:
+
+```
+===Sigils===
+{{Uniques/Corporeal Beast}}
+```
+
+`extractDropLines` reads `{{DropsLine}}` / `{{DropsLineClue}}` calls out of the
+raw page wikitext, for good reasons documented in `wikitext-drops.ts` (heading
+text, `(noted)` qualifiers, unambiguous parameter names). A section whose body
+is a **transclusion** contains no `DropsLine` calls, so it yields zero rows and
+disappears. There is no error: an empty section and an absent section are the
+same thing to every downstream step.
+
+### It is not just Corp
+
+Sweeping all 52 sources for drop sub-sections containing a template but no
+`DropsLine` row, then excluding the RDT access templates (handled by
+`rdt-access.ts`) and prose sections, leaves **26 transcluded drop sub-tables
+across 21 sources. All 26 are missing from the parsed documents. 18 of those
+sources are `verified`.** Cross-checking the `dropsline` snapshot bucket — a
+different view of the same page, already on disk for every source — against the
+parsed documents puts the loss at **427 item rows across 28 sources**, in four
+groups:
+
+| group | template | sources | example loss |
+|---|---|---|---|
+| seed / herb / talisman sub-tables | `TreeHerbSeedDropLines`, `HerbDropLines`, `TalismanDropLines`, `UncommonSeedDropLines`, `GeneralSeedDropLines`, `RareSeedDropLines` | 17 | every seed on Vorkath, Araxxor, the Dagannoths |
+| Wilderness Slayer tertiary | `WildernessSlayerDropTable` | 8 | Larran's key, Slayer's enchantment |
+| unique sub-table | `Uniques/Corporeal Beast` | 1 | all three sigils |
+| GWD rare drop table | `GWDRDT` | 2 | **already flagged** — HANDOFF landmine #3, deliberately unmapped |
+
+(`chest-tombs-of-amascut`'s 50/50 is the stale tier-D file of landmine #1, also
+already known.)
+
+### What the checks failed to catch, and why none of them could
+
+Every check is **closed-world over the extracted document**. Not one of them
+compares the extraction against the page it came from, so a section that
+produced zero rows is indistinguishable from a section that never existed:
+
+- `weights_sum` — Corp's 512 table sums flush *without* the sigils, because the
+  sigils are a separate 1/585 roll. Removing a whole sibling table cannot make
+  this fail.
+- `items_known`, `qty_sane`, `rates_valid` — validate the items/quantities/rates
+  that ARE present. Nothing extracted, nothing to check.
+- `refs_resolve` — the sigils are not a `tableRef`.
+- `not_on_watchlist` — Corp is not watchlisted; nothing knew to watchlist it.
+- `ev_matches` — the only check that could in principle have noticed, since
+  Corp's page states an average kill value that explicitly includes the sigils
+  (`1/585 * (3/7 Spectral + 3/7 Arcane + 1/7 Elysian)`). It is advisory and
+  permanently closed on pricing grounds, and on Corp it does not even run
+  ("no rendered page snapshot available").
+
+This is the **same class as the four scope-permissive guards, one level up.**
+Those were permissive about which parts of the document they looked at; this is
+the document being permissive about which parts of the page it came from. The
+`scope-invariant.ts` harness cannot reach it, because its invariant is about a
+document that already fails continuing to fail — it has no notion of a document
+that should have been larger.
+
+### The check that would catch it — recommended, not built
+
+`data/snapshots/dropsline/{slug}.json` already exists for every source and
+already lists the sigils. **A `drops_covered` check comparing the bucket's item
+names against the parsed document's own items** (excluding `tableRef` contents,
+which belong to the shared record) reproduces the table above exactly. It is
+cheap, it is offline, and it needs no new fetch.
+
+It is **not** added here, because it is not a code decision: turning it on fails
+21 currently-`verified` sources at once, and whether that is a status change to
+absorb, a per-source waiver list, or a signal to fix the parser's transclusion
+handling first is a call about what `verified` is allowed to mean.
+
+## Item icon URLs are resolved by ingest, not derived in the browser
+
+The frontend derived icon URLs from item names and fell back to
+`Special:FilePath` on error. Measured miss rate for the derivation: **13.6% (94
+of 693 items)**, in one structural class — stackable items whose icon file
+carries a stack-size suffix the item name never mentions, with the suffix
+varying per item (`Acorn 5.png`, `Coins 100.png`, `Ancient essence 500.png`,
+`Brimstone key 1.png`, `Cow slippers (1).png`). Now resolved once, by
+`ingest item-icons`, into `data/item-icons.json`.
+
+**Two stages, because one API does not cover it.**
+
+1. `prop=imageinfo` over `File:{Name}.png`, 50 titles per request — MediaWiki
+   resolves file redirects here, which is exactly what turns `File:Acorn.png`
+   into `Acorn 5.png`. **676 of 694.**
+2. `list=search&srnamespace=6` for whatever stage 1 reports missing. These are
+   case-only mismatches on proper nouns (`Baby mole` is filed as
+   `Baby Mole.png`, `Vet'ion jr.` as `Vet'ion Jr..png`), and which words a
+   proper noun capitalises is not a function of the item name. **Only a
+   case-insensitive EXACT title match is accepted** — searching `Baby mole`
+   also returns `Baby Mole (NPC).png` and `Baby Mole detail.png`, and taking the
+   top hit would silently ship the wrong picture. **16 of the remaining 18.**
+
+**Final coverage: 692/694.** The two residuals are recorded in `unresolved`
+rather than guessed: `Muphin` (the wiki has only `(shielded)`/`(melee)`/
+`(ranged)` variants, no plain file) and `Nothing` (not an item — a drop row
+literally named that, `itemId: null`, on Black Knight Titan and Salarin).
+
+Decisions worth carrying:
+
+- **File names, not URLs**, matching the boss-image decision. The `imageinfo`
+  URL carries a `?hash` cache-buster that changes on every re-upload and would
+  make the committed file churn for no semantic change; and sizing/encoding stay
+  presentation decisions.
+- **Snapshot-first, so re-running is free.** Every response lands in
+  `data/snapshots/item-icon/`. The command was in fact re-run twice during
+  development after a schema bug, both times with **0 wiki requests** — which is
+  CLAUDE.md's "never re-hit the wiki to fix a parser bug" working as designed.
+  Rate limiting is `WikiClient`'s: serialised, one request at a time, maxlag and
+  retry included.
+- **`Special:FilePath` is deleted, not kept as a safety net.** It was a second
+  request per miss against a MediaWiki special page that rate-limits — the
+  original audit got HTTP 429 at five-way concurrency — and there is nothing
+  left for it to catch. `ItemIcon`'s `onError` placeholder stays, for a
+  re-upload between ingest runs.
+- **`collectCorpusItemNames` follows shared tables, unlike `collectItemInputs`,
+  which deliberately does not.** The reasoning there is about blame (one bad
+  shared record should not fail seventeen bosses). Here there is no blame to
+  misattribute: the grid renders a rare-drop-table item in exactly the same card
+  as a boss's own, so an unresolved icon is equally visible.
+
+Two e2e assertions had to change shape, both for the same reason — icons made
+`innerText` unstable, because `ItemIcon` renders the item's first letter until
+the icon map resolves. The seed-reproduction comparisons now use a
+`resultProjection` helper (summary + name/count per card) rather than raw text.
+An icon test that named `Zulrah's scales` also had to be generalised: under the
+rarity sort a price-less run uses, the commonest drop lands past the 24-card
+collapse and never renders, so the assertion is now "every requested icon path
+is a value the committed map contains" plus "at least one carries a stack
+suffix".

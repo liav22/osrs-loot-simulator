@@ -31,6 +31,7 @@ async function main() {
   await mkdir(publicDir, { recursive: true })
   process.stdout.write('Syncing data/ -> apps/web/public/\n')
   await copyIfExists('index.json')
+  await copyIfExists('item-icons.json')
   await copyIfExists('bosses')
   await copyIfExists('tables')
   await copyIfExists('LICENSE')

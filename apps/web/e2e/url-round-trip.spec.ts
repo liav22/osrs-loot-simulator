@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures'
+import { expect, resultProjection, test } from './fixtures'
 
 /**
  * PROJECT_PLAN.md 9: "/boss/:slug — deep-linkable, context and seed encoded in
@@ -105,9 +105,8 @@ test('a shared link reproduces the same simulation result', async ({ page }) => 
     // The section is visible before the click too (it renders an empty state so
     // the layout doesn't jump), so waiting on it would read the empty state
     // back and make "same seed matches" pass for the wrong reason.
-    const results = page.getByTestId('results')
     await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
-    return (await results.innerText()).trim()
+    return resultProjection(page)
   }
 
   const first = await runAndRead('./boss/vorkath?seed=99&n=5000')

@@ -614,6 +614,38 @@ recorded and not built against.
 
 ---
 
+### 11c. A drop sub-table written as a TRANSCLUSION is silently dropped
+
+`extractDropLines` reads `{{DropsLine}}` calls out of page wikitext. A section
+whose body is a transclusion has none, so it yields zero rows and vanishes —
+and an empty section is indistinguishable from an absent one to everything
+downstream.
+
+**26 transcluded drop sub-tables across 21 sources are missing from the parsed
+documents; 18 of those sources are `verified`.** Cross-checking the
+`dropsline` snapshot bucket against the parsed docs puts the loss at **427 item
+rows across 28 sources**: seed/herb/talisman sub-tables (17 sources — every
+seed on Vorkath, Araxxor, the Dagannoths), `WildernessSlayerDropTable`
+(8 sources — Larran's key, Slayer's enchantment), and Corporeal Beast's three
+sigils. GWDRDT (Kree'arra, General Graardor) is the same shape but was already
+flagged — see landmine #3.
+
+**No existing check can see this.** Every check is closed-world over the
+extracted document; none compares the extraction against its source. Corp's 512
+table sums flush without the sigils, so `weights_sum` passes; `items_known`/
+`qty_sane`/`rates_valid` validate only what IS there; `refs_resolve` sees no
+ref. Same class as the four scope-permissive guards, one level up — those were
+permissive about which parts of the DOCUMENT they read, this is the document
+being permissive about which parts of the PAGE it came from, which
+`scope-invariant.ts` structurally cannot reach.
+
+**The fix is identified and deliberately not applied**: a `drops_covered` check
+comparing `data/snapshots/dropsline/{slug}.json`'s item names against the
+document's own items reproduces the finding exactly, offline, with no new
+fetch. It is not built because turning it on fails 21 currently-`verified`
+sources at once, and what `verified` should mean in that light is a decision,
+not a code change. Full analysis in `docs/DECISIONS.md`.
+
 ### 12. A tier filter used to be able to silently overrule an authored override
 
 Reward pool is tier D. Every documented parse invocation is `--tier A,B,C`. So a

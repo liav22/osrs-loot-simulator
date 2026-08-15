@@ -49,6 +49,30 @@ export async function fetchSiteIndex(): Promise<SiteIndex> {
   return SiteIndexResponseSchema.parse(await fetchJson('index.json'))
 }
 
+/**
+ * Item name -> wiki icon file name, resolved by `ingest item-icons`.
+ *
+ * ~30KB for the whole corpus, fetched once per session and cached forever —
+ * icon file names change only when someone re-uploads an image on the wiki,
+ * which a page load is not going to notice anyway. `unresolved` is parsed and
+ * discarded: it exists so the ingest coverage test can tell "the wiki has no
+ * such file" from "ingest has not run since this item appeared", and both mean
+ * the same thing to the browser (render the placeholder).
+ */
+const ItemIconsResponseSchema = z
+  .object({
+    itemIconsVersion: z.number(),
+    generatedAt: z.string(),
+    icons: z.record(z.string().min(1)),
+    unresolved: z.array(z.string()),
+  })
+  .strict()
+
+export async function fetchItemIcons(): Promise<ReadonlyMap<string, string>> {
+  const parsed = ItemIconsResponseSchema.parse(await fetchJson('item-icons.json'))
+  return new Map(Object.entries(parsed.icons))
+}
+
 export async function fetchBoss(slug: string): Promise<Boss> {
   return BossSchema.parse(await fetchJson(`bosses/${slug}.json`))
 }

@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures'
+import { expect, resultProjection, test } from './fixtures'
 
 /**
  * Section 9: the full result state survives a page load.
@@ -12,6 +12,7 @@ import { expect, test } from './fixtures'
 
 test.use({ viewport: { width: 1920, height: 1080 } })
 
+
 test('a link produced by pressing Simulate reproduces the run on load', async ({ page }) => {
   await page.goto('./boss/vorkath?n=20000&seed=77')
   await page.getByRole('button', { name: 'Simulate' }).click()
@@ -20,13 +21,13 @@ test('a link produced by pressing Simulate reproduces the run on load', async ({
   // Pressing Simulate stamps the run into the URL.
   const shared = page.url()
   expect(new URL(shared).searchParams.get('run')).toBe('1')
-  const original = (await page.getByTestId('results').innerText()).trim()
+  const original = await resultProjection(page)
 
   // A cold load of that link — a fresh boot through the 404.html fallback, a
   // fresh worker — lands on the same numbers with nothing clicked.
   await page.goto(shared)
   await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 60_000 })
-  expect((await page.getByTestId('results').innerText()).trim()).toBe(original)
+  expect(await resultProjection(page)).toBe(original)
 })
 
 test('seed 0 rolls a fresh seed each click, and leaves the input on 0', async ({ page }) => {
@@ -59,10 +60,10 @@ test('seed 0 rolls a fresh seed each click, and leaves the input on 0', async ({
 
   // The rolled link still replays exactly — the sentinel never reaches the URL.
   const replayed = page.url()
-  const before = (await page.getByTestId('results').innerText()).trim()
+  const before = await resultProjection(page)
   await page.goto(replayed)
   await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 60_000 })
-  expect((await page.getByTestId('results').innerText()).trim()).toBe(before)
+  expect(await resultProjection(page)).toBe(before)
 })
 
 test('an explicit seed is used as typed and not rolled over', async ({ page }) => {

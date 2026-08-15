@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import type { Boss, ExpectedValueResult, SimResult } from '@osrs-loot-simulator/loot-model'
 import { formatGp, formatNumber } from '../lib/format'
 import { rarestItemKeys } from '../lib/rarity'
+import { useItemIcons } from '../hooks/useItemIcons'
 import { ItemIcon } from './ItemIcon'
 
 /** Enough to fill a 1080p results column; the rest is one click away. */
@@ -26,6 +27,10 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
   const [showLog, setShowLog] = useState(false)
 
   const rarest = useMemo(() => rarestItemKeys(boss, expected), [boss, expected])
+  // One query for the whole view rather than one per card: the icon file names
+  // are a single ~30KB document, and threading the lookup down beats sixty
+  // components each subscribing to the same cache entry.
+  const { data: iconFiles } = useItemIcons()
   const rarityByKey = useMemo(
     () => new Map((expected?.items ?? []).map((item) => [item.itemKey, item.expectedDrops])),
     [expected]
@@ -104,7 +109,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                 key={row.itemKey}
                 className="flex items-center gap-2 rounded border border-amber-500/40 bg-amber-500/10 px-2 py-1.5"
               >
-                <ItemIcon name={row.name} size={24} />
+                <ItemIcon name={row.name} file={iconFiles?.get(row.name)} size={24} />
                 <span className="text-sm text-amber-100">{row.name}</span>
                 <span className="font-mono text-xs text-amber-300/80">×{formatNumber(row.drops)}</span>
               </div>
@@ -150,7 +155,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                       : 'border-neutral-800 bg-neutral-900/60'
                   }`}
                 >
-                  <ItemIcon name={row.name} size={32} />
+                  <ItemIcon name={row.name} file={iconFiles?.get(row.name)} size={32} />
                   <div className="min-w-0 flex-1">
                     <div className="truncate text-sm text-neutral-100" title={row.name}>
                       {row.name}

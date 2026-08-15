@@ -29,6 +29,8 @@ export type SnapshotKind =
   | 'monster'
   | 'item-id'
   | 'ge-prices'
+  /** `prop=imageinfo` batches and their per-name search fallbacks — see items/icons.ts. */
+  | 'item-icon'
 
 /**
  * Page title to filename-safe key. The original title is always stored inside

@@ -1,26 +1,40 @@
 import { useEffect, useState } from 'react'
-import { itemIconFallbackUrl, itemIconUrl } from '../lib/wiki-images'
+import { itemIconUrl } from '../lib/wiki-images'
 
 /**
- * An item's wiki icon, with the two-stage fallback the measured miss rate
- * requires. `lib/wiki-images.ts` carries the numbers and why the order is this
- * way round; the short version is that the direct CDN path is right 86% of the
- * time and `Special:FilePath` recovers most of the rest but rate-limits if it
- * is asked for every icon on the page.
+ * An item's wiki icon.
+ *
+ * `file` is the resolved file name from `data/item-icons.json`, not the item
+ * name — resolution happens in ingest, once, against the wiki's own API. This
+ * component used to derive the URL itself and retry through `Special:FilePath`
+ * on error; both are gone, because a measured 13.6% of derived URLs 404'd and
+ * the retry was a second request per miss against a page that rate-limits.
+ * See `lib/wiki-images.ts`.
+ *
+ * The `onError` path stays. It no longer has a known failure class to catch,
+ * but an icon can still fail on a re-upload between ingest runs or a flaky
+ * network, and a broken-image glyph is a worse answer than a letter.
  *
  * Size is fixed in CSS and mirrored onto `width`/`height`, so the box reserves
- * its space before anything loads and a 404 costs no layout shift. The
- * placeholder is the item's first letter rather than a broken-image glyph or a
- * generic box — at 32px it still tells two adjacent cards apart.
+ * its space before anything loads and a failure costs no layout shift.
  */
-export function ItemIcon({ name, size = 32 }: { name: string; size?: number }) {
-  const [stage, setStage] = useState<0 | 1 | 2>(0)
+export function ItemIcon({
+  name,
+  file,
+  size = 32,
+}: {
+  name: string
+  file: string | undefined
+  size?: number
+}) {
+  const [failed, setFailed] = useState(false)
+  const src = itemIconUrl(file)
 
   // Cards are recycled by key as the grid re-sorts; without this a card that
   // had failed would keep showing the placeholder for its new item.
-  useEffect(() => setStage(0), [name])
+  useEffect(() => setFailed(false), [src])
 
-  if (stage === 2) {
+  if (src === undefined || failed) {
     return (
       <span
         aria-hidden="true"
@@ -34,13 +48,13 @@ export function ItemIcon({ name, size = 32 }: { name: string; size?: number }) {
 
   return (
     <img
-      src={stage === 0 ? itemIconUrl(name) : itemIconFallbackUrl(name)}
+      src={src}
       alt=""
       width={size}
       height={size}
       loading="lazy"
       decoding="async"
-      onError={() => setStage((s) => (s === 0 ? 1 : 2))}
+      onError={() => setFailed(true)}
       style={{ width: size, height: size }}
       className="shrink-0 object-contain"
     />

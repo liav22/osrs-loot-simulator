@@ -92,6 +92,34 @@ export const ParseWikitextResponseSchema = z.object({
   }),
 })
 
+/**
+ * `prop=imageinfo` over a batch of `File:` titles.
+ *
+ * `formatversion=2` returns `pages` as an array and marks absent titles with
+ * `missing: true`. Both are modelled here rather than tolerated, because a
+ * missing title is a real outcome this pipeline acts on (it triggers the
+ * case-insensitive search fallback), not an error to swallow.
+ */
+export const ImageInfoResponseSchema = z.object({
+  query: z.object({
+    normalized: z.array(z.object({ from: z.string(), to: z.string() })).optional(),
+    pages: z.array(
+      z.object({
+        title: z.string(),
+        missing: z.boolean().optional(),
+        imageinfo: z.array(z.object({ url: z.string() })).optional(),
+      })
+    ),
+  }),
+})
+
+/** `list=search` restricted to the File namespace. */
+export const FileSearchResponseSchema = z.object({
+  query: z.object({
+    search: z.array(z.object({ title: z.string() })),
+  }),
+})
+
 /** Snapshot envelope written to `data/snapshots/` (6.3). */
 export const SNAPSHOT_VERSION = 1
 

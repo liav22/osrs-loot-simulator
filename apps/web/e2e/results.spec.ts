@@ -1,5 +1,11 @@
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { test as base, expect } from '@playwright/test'
 import { test } from './fixtures'
+
+// ESM: this suite runs as a module, so `__dirname` does not exist.
+const HERE = dirname(fileURLToPath(import.meta.url))
 
 test.use({ viewport: { width: 1920, height: 1080 } })
 
@@ -27,11 +33,58 @@ test('the rarest-drops strip appears only when something rare actually dropped',
   await expect(page.getByText('Rarest drops')).toHaveCount(0)
 })
 
-test('an icon that 404s falls back and never renders a broken image', async ({ page }) => {
-  // Overrides the fixture's blanket image stub for the direct CDN path only,
-  // leaving Special:FilePath served. This is the measured 13.6% case — every
-  // stackable item, whose icon file carries a stack-size suffix the item name
-  // does not mention.
+test('every icon is requested at its resolved file name, not a guess', async ({ page }) => {
+  // The whole point of `data/item-icons.json`: the browser asks for the file
+  // the wiki actually has, first time, every time.
+  //
+  // Asserted against the committed map rather than against one hand-picked
+  // item. The obvious version of this test named `Zulrah's scales` — the
+  // clearest stack-suffix case — and failed, because under the rarity sort
+  // that a price-less run uses, the commonest drop on the boss lands past the
+  // 24-card collapse and is never rendered. Checking the whole request set
+  // against the map has no such dependence on sort order, collapse or which
+  // items a seed happened to produce.
+  const icons = JSON.parse(
+    readFileSync(join(HERE, '..', '..', '..', 'data', 'item-icons.json'), 'utf8')
+  ) as { icons: Record<string, string> }
+  const validPaths = new Set(Object.values(icons.icons).map((file) => file.replace(/ /g, '_')))
+
+  const requested: string[] = []
+  page.on('request', (request) => {
+    const url = request.url()
+    if (url.includes('oldschool.runescape.wiki/images/')) requested.push(decodeURIComponent(url))
+  })
+
+  await page.goto('./boss/zulrah?n=5000&seed=3')
+  await page.getByRole('button', { name: 'Simulate' }).click()
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
+  await page.getByRole('button', { name: /^Show all \d+$/ }).click()
+  await expect(page.locator('[data-item-card]').first()).toBeVisible()
+
+  await expect.poll(() => requested.length).toBeGreaterThan(5)
+
+  // Every icon request names a file the map says exists. A name-derived guess
+  // that happened to be wrong would not be in this set — that is the 13.6%.
+  const itemIcons = requested
+    .map((url) => url.split('/images/')[1] ?? '')
+    .filter((path) => !path.startsWith('thumb/')) // the boss portrait
+  const unknown = itemIcons.filter((path) => !validPaths.has(path))
+  expect(unknown).toEqual([])
+
+  // And the resolved path is really being exercised, not merely coincident
+  // with the name: at least one request carries a stack suffix, which no rule
+  // over the item name could have produced.
+  expect(itemIcons.some((path) => /_\d+\.png$/.test(path))).toBe(true)
+
+  // Special:FilePath is gone — it was a second request per miss against a
+  // MediaWiki special page that rate-limits, and there is nothing left for it
+  // to catch.
+  expect(requested.filter((url) => url.includes('Special:FilePath'))).toEqual([])
+})
+
+test('an icon that fails to load renders a placeholder, never a broken image', async ({ page }) => {
+  // No known failure class remains, but an image can still fail on a re-upload
+  // between ingest runs or a flaky network.
   await page.route('**://oldschool.runescape.wiki/images/**', (route) =>
     route.fulfill({ status: 404, body: '' })
   )
@@ -43,24 +96,19 @@ test('an icon that 404s falls back and never renders a broken image', async ({ p
   const cards = page.locator('[data-item-card]')
   await expect(cards.first()).toBeVisible()
 
-  // Every icon either loaded something or was replaced by the letter
-  // placeholder. A zero-sized <img> is the broken-image glyph, which is the
-  // failure mode this is guarding.
+  const cardCount = await cards.count()
+  expect(cardCount).toBeGreaterThan(5)
+
+  // With every image 404'd, every icon must have been REPLACED — no <img>
+  // should survive in the grid at all.
   //
-  // The wait is not optional: icons are `loading="lazy"`, and an image that has
-  // simply not started yet also reports naturalWidth 0. Without settling first
-  // this passes or fails on timing rather than on the fallback working.
-  await page.waitForFunction(
-    () => [...document.querySelectorAll('[data-item-card] img')].every((img) => (img as HTMLImageElement).complete),
-    undefined,
-    { timeout: 15_000 }
-  )
-  const broken = await page.evaluate(() =>
-    [...document.querySelectorAll('[data-item-card] img')].filter(
-      (img) => (img as HTMLImageElement).naturalWidth === 0
-    ).length
-  )
-  expect(broken).toBe(0)
+  // Asserting "no zero-width <img>" instead would pass vacuously here for the
+  // same reason it is true: there would be no <img> elements left to check.
+  // The positive assertion is that each card still has an icon slot, filled by
+  // the letter placeholder.
+  await expect.poll(() => cards.locator('img').count(), { timeout: 15_000 }).toBe(0)
+  const placeholders = await page.locator('[data-item-card] span[aria-hidden="true"]').count()
+  expect(placeholders).toBe(cardCount)
 })
 
 /**

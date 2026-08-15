@@ -32,6 +32,7 @@ import { fetchGePrices } from './prices/ge-prices.js'
 import { loadSharedTables } from './tables/shared-tables.js'
 import { parseBoss } from './parse/parse-boss.js'
 import { buildSiteIndex, writeSiteIndex } from './site-index.js'
+import { collectCorpusItemNames, resolveItemIcons, writeItemIcons } from './items/icons.js'
 import { listOverrideSlugs } from './parse/overrides.js'
 
 /**
@@ -379,6 +380,26 @@ async function main(): Promise<void> {
       )
       return
     }
+    case 'item-icons': {
+      const names = await collectCorpusItemNames()
+      log(`Resolving icons for ${names.length} distinct corpus items…`)
+      const resolved = await resolveItemIcons(client, names)
+      await writeItemIcons(resolved)
+      const { total, viaImageInfo, viaSearch, unresolved } = resolved.stats
+      log(
+        `data/item-icons.json written: ${viaImageInfo + viaSearch}/${total} resolved ` +
+          `(${viaImageInfo} via imageinfo, ${viaSearch} via case-insensitive search), ` +
+          `${unresolved} unresolved.`
+      )
+      if (unresolved > 0) {
+        // Named, not just counted: an unresolved item renders a placeholder in
+        // the grid, and the only way to know whether that is correct is to
+        // look at the item.
+        log(`  unresolved: ${resolved.unresolved.join(', ')}`)
+      }
+      log(`  ${client.requests} wiki request(s) made; the rest came from data/snapshots/item-icon/.`)
+      return
+    }
     case 'triage':
       await triage()
       return
@@ -400,7 +421,7 @@ async function main(): Promise<void> {
     default:
       log(
         'Usage: ingest <verify-schema | fetch --all | fetch --page <Title> | sources | ' +
-          'audit-exclusions | item-index | triage | parse [--tier A[,B,C]] [--source <id>] | ' +
+          'audit-exclusions | item-index | item-icons | triage | parse [--tier A[,B,C]] [--source <id>] | ' +
           'site-index> [--delay ms]'
       )
       process.exitCode = 1
