@@ -45,6 +45,199 @@ function stubFormula(formulaId: FormulaId): FormulaFn {
 export const ZALCANO_DROP_ELIGIBILITY_SHIELD_DAMAGE = 5
 export const ZALCANO_UNIQUE_ELIGIBILITY_TOTAL_DAMAGE = 31
 
+// ---------------------------------------------------------------------------
+// Tombs of Amascut
+//
+// Two sources, and it matters which states what:
+//
+//  - `Chest (Tombs of Amascut)` states every RULE in prose, with cited news
+//    posts and Mod Ash tweets: the 1%-per-N-points unique chance, the 55% cap,
+//    the 5,000-point subtraction, the bad-luck curve, the 25% clue cap.
+//  - `Module:Tombs of Amascut loot` — the Lua behind the page's own
+//    `{{Calculator:Tombs of Amascut loot}}` — states the ARITHMETIC the prose
+//    gives only continuously: integer unique weights, and `math.floor` at each
+//    step. The page's own weight table is 5 breakpoints; the module is the
+//    rule that generates them, verified below.
+//
+// Where they differ, the difference is always flooring, and the module is
+// what the wiki's own calculator computes. Both are cited per constant.
+// ---------------------------------------------------------------------------
+
+/**
+ * The 7-unique pool's base weights and the raid level each item unlocks at,
+ * from `Module:Tombs of Amascut loot`'s `PURPLES` table.
+ *
+ * These integers are not a reconstruction: the module states them directly,
+ * and they independently reproduce all five rows of the page's own published
+ * weight table exactly (e.g. at raid level 400 the weights are fang 40,
+ * lightbearer 50, ward 30, masori 20 each, shadow 10, summing to 190 — giving
+ * 1/4.75, 1/3.8, 1/6.33, 1/9.5 and 1/19, which is that row verbatim).
+ * `toa.test.ts` pins that agreement against the wiki's figures.
+ *
+ * `level` is the raid level below which the item is out of invocation range,
+ * where the page's "additional 1/50 roll" applies.
+ */
+export const TOA_UNIQUES = {
+  'tumeken-s-shadow-uncharged': { weight: 10, level: 150 },
+  'masori-mask': { weight: 20, level: 150 },
+  'masori-body': { weight: 20, level: 150 },
+  'masori-chaps': { weight: 20, level: 150 },
+  'elidinis-ward': { weight: 30, level: 150 },
+  'osmumten-s-fang': { weight: 70, level: 50 },
+  lightbearer: { weight: 70, level: 50 },
+} as const satisfies Record<string, { weight: number; level: number }>
+
+export type ToaUnique = keyof typeof TOA_UNIQUES
+
+/** The divisor applied to an out-of-invocation-range unique's weight. */
+export const TOA_OUT_OF_RANGE_DIVISOR = 50
+
+/** The page's stated ceiling on the unique chance: "a maximum of 55%". */
+export const TOA_UNIQUE_RATE_CAP = 0.55
+
+/** "up to a maximum of 25%" (Mod Ash, 6 March 2024, cited on the page). */
+export const TOA_ELITE_CLUE_RATE_CAP = 0.25
+export const TOA_ELITE_CLUE_DENOMINATOR = 200_000
+
+/** Below this many points a raid yields fossilised dung and nothing else. */
+export const TOA_DUNG_GATE_POINTS = 1500
+
+/**
+ * Integer-exact `floor(n * numerator / denominator)`.
+ *
+ * The module writes these as `math.floor((raid_level - 450) * 0.2)`, and
+ * multiplying by 0.2/0.4/0.1 in IEEE doubles is exactly the trap
+ * `compile.ts`'s `scaledDelta` documents: the product can land a whisker below
+ * an integer and `floor` then loses a whole weight unit. Doing the multiply in
+ * integers first and dividing once is exact for every raid level in range.
+ */
+function floorScaled(value: number, numerator: number, denominator: number): number {
+  return Math.floor((value * numerator) / denominator)
+}
+
+/**
+ * Osmumten's fang and the Lightbearer at a given raid level; every other
+ * unique's weight is constant. `Module:Tombs of Amascut loot`'s `p.reweight`,
+ * transcribed branch for branch.
+ */
+export function toaReweightedUniques(raidLevel: number): { fang: number; lightbearer: number } {
+  if (raidLevel <= 300) return { fang: 70, lightbearer: 70 }
+  if (raidLevel >= 500) return { fang: 30, lightbearer: 35 }
+  if (raidLevel >= 450) {
+    return {
+      fang: 40 - floorScaled(raidLevel - 450, 2, 10),
+      lightbearer: 40 - floorScaled(raidLevel - 450, 1, 10),
+    }
+  }
+  if (raidLevel >= 400) {
+    return { fang: 40, lightbearer: 50 - floorScaled(raidLevel - 400, 2, 10) }
+  }
+  if (raidLevel >= 350) {
+    return {
+      fang: 60 - floorScaled(raidLevel - 350, 4, 10),
+      lightbearer: 60 - floorScaled(raidLevel - 350, 2, 10),
+    }
+  }
+  return {
+    fang: 70 - floorScaled(raidLevel - 300, 2, 10),
+    lightbearer: 70 - floorScaled(raidLevel - 300, 2, 10),
+  }
+}
+
+/** One unique's weight at this raid level, before the out-of-range divisor. */
+function toaRawWeight(unique: ToaUnique, raidLevel: number): number {
+  if (unique === 'osmumten-s-fang') return toaReweightedUniques(raidLevel).fang
+  if (unique === 'lightbearer') return toaReweightedUniques(raidLevel).lightbearer
+  return TOA_UNIQUES[unique].weight
+}
+
+/**
+ * One unique's weight AFTER the out-of-range divisor — the value the `oneOf`
+ * pool actually uses.
+ *
+ * The module applies the 1/50 to the item's own resolved rate
+ * (`if raid_level < v.level then true_rate = true_rate / 50`), not to the
+ * weight. Folding it into the weight is equivalent given how the pool is
+ * composed, and is what lets a `oneOf` express the whole mechanic: see
+ * `toaUniqueRate` for the identity that makes the two agree.
+ */
+export function toaUniqueWeight(unique: ToaUnique, raidLevel: number): number {
+  const raw = toaRawWeight(unique, raidLevel)
+  return raidLevel < TOA_UNIQUES[unique].level ? raw / TOA_OUT_OF_RANGE_DIVISOR : raw
+}
+
+/** The scaled raid level driving the unique chance. Module `p.get_rewards`. */
+export function toaAdjustedRaidLevel(raidLevel: number): number {
+  let adjusted = raidLevel
+  if (adjusted > 310) {
+    if (adjusted > 430) adjusted = 430 + Math.floor((adjusted - 430) / 2)
+    adjusted = 310 + Math.floor((adjusted - 310) / 3)
+  }
+  return adjusted
+}
+
+/** The scaled raid level driving the pet chance. Module `p.get_rewards`. */
+export function toaAdjustedRaidLevelPet(raidLevel: number): number {
+  if (raidLevel <= 400) return raidLevel
+  if (raidLevel > 550) return 450
+  return 400 + Math.floor((raidLevel - 400) / 3)
+}
+
+/**
+ * The raid's TOTAL chance of a unique — the probability the `oneOf` pool is
+ * entered at all.
+ *
+ * The module computes a per-item rate and sums it:
+ *   `P(item i) = base * w_i / W`, divided by 50 when out of range,
+ *   `P(unique) = Σ_i P(item i)`.
+ *
+ * A `preroll` entry whose node is a `oneOf` computes
+ * `P(item i) = R * v_i / Σ_j v_j`. Setting `v_i = w_i * f_i` (the divisor
+ * folded into the weight) and `R = base * Σ_j w_j f_j / W` makes the two
+ * identical term by term, since the `Σ v_j` cancels. That identity is why the
+ * out-of-range rule needs no machinery beyond a formula-valued weight — and
+ * why it must not be modelled as independent per-item rolls, which would let
+ * two uniques land in one raid roughly 12% of the time a unique is awarded.
+ *
+ * For every raid level at or above 150 each `f_i` is 1, so `R` is simply
+ * `base` and this whole correction is inert — which is the common case.
+ */
+export function toaUniqueRate(points: number, raidLevel: number): number {
+  const denominator = 100 * (10_500 - 20 * toaAdjustedRaidLevel(raidLevel))
+  // The module clamps the denominator at 150,000 ("caps at 1500"). Inert for
+  // every raid level the game allows — it would bind only above raid level
+  // ~450 on the ADJUSTED scale, which caps around 378 — but transcribed rather
+  // than dropped, so this stays a transcription of the module and not an
+  // edited version of it.
+  const base = Math.min(points / Math.max(denominator, 150_000), TOA_UNIQUE_RATE_CAP)
+
+  let raw = 0
+  let adjusted = 0
+  for (const unique of Object.keys(TOA_UNIQUES) as ToaUnique[]) {
+    raw += toaRawWeight(unique, raidLevel)
+    adjusted += toaUniqueWeight(unique, raidLevel)
+  }
+  return raw === 0 ? 0 : base * (adjusted / raw)
+}
+
+/**
+ * The common table's per-item quantity multiplier.
+ *
+ * `Module:Tombs of Amascut loot`, and note the FLOOR: the page writes
+ * `1.15 + 0.01*(RaidLevel-300)/5`, a continuous ramp, while the module (and
+ * the page's own prose examples — "raid level 305 is 16%, 400 is 35%, 450 is
+ * 45%") step every 5 levels. The stepped form reproduces all three stated
+ * examples; the continuous one reproduces them only where they coincide.
+ *
+ * The `raidLevel < 150` case is in the module and NOT in the page's prose at
+ * all: normal loot is scaled to 0.75.
+ */
+export function toaCommonQtyScale(raidLevel: number): number {
+  if (raidLevel < 150) return 0.75
+  if (raidLevel < 300) return 1
+  return 1 + (Math.floor((raidLevel - 300) / 5) + 15) / 100
+}
+
 /**
  * Real implementations, keyed by id. Everything absent here is still a stub
  * that throws — see `stubFormula`. A formula lands here only once the wiki
@@ -113,6 +306,106 @@ const IMPLEMENTED: Partial<Record<FormulaId, FormulaFn>> = {
    * why none was added.
    */
   zalcano_mvp_only: (_params, ctx) => (ctx.isMVP ? 1 : 0),
+
+  /**
+   * ToA's total unique chance. Consumed as a `formula`-kind `Rate` on the
+   * single entry of the `toa:unique` preroll table, whose node is the 7-item
+   * `oneOf`. See `toaUniqueRate` for why the total (rather than a per-item
+   * rate) is the right thing for this position.
+   */
+  toa_invocation: (_params, ctx) => toaUniqueRate(ctx.points, ctx.raidLevel),
+
+  /**
+   * One unique's weight in that `oneOf`. `params.unique` names which, keyed by
+   * `itemKey` so the boss document and this table cannot drift on spelling —
+   * an unknown key throws rather than silently weighting the item at zero,
+   * which would delete it from the pool and still produce a plausible-looking
+   * distribution over the remaining six.
+   */
+  toa_unique_weight: (params, ctx) => {
+    const unique = params['unique']
+    if (typeof unique !== 'string' || !(unique in TOA_UNIQUES)) {
+      throw new TypeError(
+        `toa_unique_weight needs params.unique to be one of ${Object.keys(TOA_UNIQUES).join(', ')}, got ${String(unique)}`
+      )
+    }
+    return toaUniqueWeight(unique as ToaUnique, ctx.raidLevel)
+  },
+
+  /**
+   * A common-table item's quantity: `max(1, floor(floor(points / divisor) *
+   * scale))`. Both floors are the module's, in that order — flooring the
+   * scaled value of an already-floored base is not the same as flooring once.
+   *
+   * `params.divisor` is the item's own constant from the page's divisor table.
+   * Cache of runes is not special-cased here: the module gives it a divisor of
+   * 999,999, which makes the inner floor 0 and the `max(…, 1)` produce the
+   * page's stated fixed quantity of 1 for any realistic points total. Keeping
+   * that as data rather than a branch is what the no-per-boss-`if` rule asks
+   * for.
+   */
+  toa_common_qty: (params, ctx) => {
+    const divisor = params['divisor']
+    if (typeof divisor !== 'number' || !Number.isFinite(divisor) || divisor <= 0) {
+      throw new TypeError(
+        `toa_common_qty needs params.divisor to be a positive number, got ${String(divisor)}`
+      )
+    }
+    const base = Math.floor(ctx.points / divisor)
+    return Math.max(1, Math.floor(base * toaCommonQtyScale(ctx.raidLevel)))
+  },
+
+  /**
+   * Elite clue: "For each 2k points in your personal contribution, you get 1
+   * percentage point of clue chance, up to a max of 25%" (Mod Ash, 6 March
+   * 2024, cited on the page).
+   *
+   * The cap is deliberately implemented even though
+   * `Module:Tombs of Amascut loot` omits it — the module computes a bare
+   * `points / 200000`. The page's prose and its primary source both state the
+   * maximum, and the module is a calculator display whose other simplification
+   * (per-player division by team size) is likewise not part of the mechanic.
+   * Where the two disagree the cited primary source wins; noted here because
+   * every other constant in this block resolves the other way.
+   */
+  toa_elite_clue: (_params, ctx) =>
+    Math.min(ctx.points / TOA_ELITE_CLUE_DENOMINATOR, TOA_ELITE_CLUE_RATE_CAP),
+
+  /**
+   * Tumeken's guardian: "1% chance for every 350,000 - 700 x RL points", on
+   * the pet's own scaled raid level. The page states no cap and neither does
+   * the module, so none is applied — but the result is still a probability, so
+   * `evaluateFormula`'s `[0, 1]` contract catches any context that would
+   * exceed 1 rather than letting it through.
+   */
+  toa_pet: (_params, ctx) =>
+    ctx.points / (100 * (350_000 - 700 * toaAdjustedRaidLevelPet(ctx.raidLevel))),
+
+  /**
+   * The thread-of-Elidinis / keris-jewel bad luck mitigation curve: "a base
+   * rate that linearly interpolates to three times their base rate depending
+   * on kill count", reaching 3x at a kill count of 1.5x the base denominator.
+   *
+   * `params.num`/`params.den` are the base rate (1/10 for the thread, 4/50 for
+   * "any jewel"). `den` is the BASE denominator even when `num` is not 1 —
+   * the jewels' cap is a kill count of 75, which is 1.5 x 50, not 1.5 x 12.5.
+   * That is what the page's own worked figures say ("scales from 4/50 (1/12.5)
+   * up to 12/50 (~1/4.17), when reaching a kill count of 75").
+   *
+   * `killCount` here is raid completions — the activity's own count, which is
+   * what this loot source's kill count already means.
+   */
+  toa_bad_luck_mitigation: (params, ctx) => {
+    const num = params['num']
+    const den = params['den']
+    if (typeof num !== 'number' || typeof den !== 'number' || num <= 0 || den <= 0) {
+      throw new TypeError(
+        `toa_bad_luck_mitigation needs positive numeric params.num/params.den, got ${String(num)}/${String(den)}`
+      )
+    }
+    const multiplier = Math.min(3, 1 + (2 * ctx.killCount) / (1.5 * den))
+    return Math.min(1, (num / den) * multiplier)
+  },
 }
 
 /**
@@ -147,7 +440,7 @@ export const IMPLEMENTED_FORMULA_IDS: ReadonlySet<FormulaId> = new Set(
  * does not move — so a declaration cannot silently drift from the code.
  */
 export const FORMULA_CONTEXT_FIELDS: Record<FormulaId, readonly SimContextField[]> = {
-  toa_invocation: [],
+  toa_invocation: ['points', 'raidLevel'],
   cox_points: [],
   tob_points: [],
   barrows_kc: [],
@@ -166,6 +459,11 @@ export const FORMULA_CONTEXT_FIELDS: Record<FormulaId, readonly SimContextField[
   zalcano_mvp_only: ['isMVP'],
   doom_of_mokhaiotl_deep_rolls: ['delveLevel'],
   lunar_chest_standard_rolls: ['moonsKilled'],
+  toa_unique_weight: ['raidLevel'],
+  toa_common_qty: ['points', 'raidLevel'],
+  toa_elite_clue: ['points'],
+  toa_pet: ['points', 'raidLevel'],
+  toa_bad_luck_mitigation: ['killCount'],
 }
 
 export function createFormulaRegistry(
@@ -253,6 +551,31 @@ export function evaluateMultiplier(
   const value = callFormula(formulaId, params, ctx, registry)
   if (!Number.isFinite(value) || value <= 0) {
     throw new RangeError(`Formula '${formulaId}' returned ${value}, expected a positive multiplier`)
+  }
+  return value
+}
+
+/**
+ * Positive-weight contract — a formula used as a `weight` inside a `weighted`
+ * table or a `oneOf` pool. Resolved once at compile time, like every other
+ * Extension A formula position.
+ *
+ * Not rounded, and deliberately so: ToA's out-of-invocation-range uniques
+ * carry a weight divided by 50, which is fractional by construction. A weight
+ * is a share of a denominator, not a count, so there is nothing to round to.
+ * Zero is rejected along with negatives — a zero weight would silently delete
+ * an entry from its pool while leaving a plausible distribution over the rest,
+ * which is the failure mode `toa_unique_weight` throws on rather than risks.
+ */
+export function evaluateWeight(
+  formulaId: FormulaId,
+  params: Record<string, unknown>,
+  ctx: SimContext,
+  registry: FormulaRegistry = defaultFormulaRegistry
+): number {
+  const value = callFormula(formulaId, params, ctx, registry)
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new RangeError(`Formula '${formulaId}' returned ${value}, expected a positive weight`)
   }
   return value
 }

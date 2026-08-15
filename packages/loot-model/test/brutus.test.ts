@@ -25,7 +25,7 @@ function weightSum(isMembers: boolean): number {
         (condition) => condition.kind !== 'members' || condition.value === isMembers
       )
     )
-    .reduce((sum, entry) => sum + (entry.rate.kind === 'weight' ? entry.rate.weight : 0), 0)
+    .reduce((sum, entry) => sum + (entry.rate.kind === 'weight' && typeof entry.rate.weight === 'number' ? entry.rate.weight : 0), 0)
 }
 
 describe('Brutus fixture (PROJECT_PLAN.md 6.4)', () => {
@@ -37,7 +37,7 @@ describe('Brutus fixture (PROJECT_PLAN.md 6.4)', () => {
   it('sums to 106 when the variants are naively merged, as the plan warns', () => {
     if (mainTable === undefined) throw new Error('brutus:main is missing from the fixture')
     const naive = mainTable.entries.reduce(
-      (sum, entry) => sum + (entry.rate.kind === 'weight' ? entry.rate.weight : 0),
+      (sum, entry) => sum + (entry.rate.kind === 'weight' && typeof entry.rate.weight === 'number' ? entry.rate.weight : 0),
       0
     )
     expect(naive).toBe(106)

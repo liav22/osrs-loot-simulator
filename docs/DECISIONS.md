@@ -3630,3 +3630,163 @@ literal.
 existing snapshots, which is CLAUDE.md's "never re-hit the wiki to fix a parser
 bug" working as designed. The two remaining are genuine: `Muphin` (only
 `(shielded)`/`(melee)`/`(ranged)` variants exist) and `Nothing` (not an item).
+
+## Phase 7: Tombs of Amascut
+
+`data/overrides/chest-tombs-of-amascut.json`, pinned by
+`apps/ingest/test/toa.test.ts` (28 assertions). ToA remains `needs_review` and
+stays on the mechanics watchlist — that is the correct outcome, not a shortfall,
+and the reason is narrower than the one the watchlist entry was written for.
+
+### The interpolation "UNKNOWN" was a missing source, not a missing fact
+
+`docs/bosses/chest-tombs-of-amascut.md` recorded the unique-weight rule between
+the page's five published breakpoints as UNKNOWN and guessed at where it might
+live ("the wiki's own rewards calculator presumably encodes it in Lua module
+code, which was not fetched"). That guess was right and the page was never
+re-read for it. **`Module:Tombs of Amascut loot` (revid 15216862) states the
+rule outright**, and `Module:Chart data/toa unique weights` exists too.
+
+Both were fetched through `WikiClient` on the ordinary etiquette queue, two
+requests, snapshotted like any other page. This is **not** a violation of
+CLAUDE.md's "never re-hit the wiki to fix a parser bug": nothing here is a
+parser bug, and the rule is that re-parsing comes from `data/snapshots/`, not
+that new pages may never be fetched — the same standing that fetched the RDT
+pages and the nine transclusion template definitions.
+
+The recovered rule (`p.reweight`) is `floor` expressions over raid level on
+integer weights — shadow 10, each masori piece 20, ward 30, fang and
+lightbearer 70, summing to 240. It reproduces **all five published rows
+exactly**, which is what licenses using it at the raid levels between them.
+
+**Do not "simplify" this to interpolation between the five rows.** Before the
+module was found, the deviations were checked directly and the published table
+is **non-monotone**: the fang's rate falls 0.2917 → 0.2727 → 0.2105 across raid
+levels 300/350/400 and then *rises* to 0.2222 at 450, because that band pins its
+weight at 40 while the denominator keeps shrinking. Any interpolation would have
+been wrong rather than merely unstated — the exact failure the "invented curve"
+refusals (Zalcano's shard, Duke's frozen tablet) exist to avoid.
+
+Where the module and the page's prose disagree the difference is always
+flooring, and the module wins, with two consequences the prose does not state:
+the common-quantity bonus is stepped (`floor((RL-300)/5)`, which is what
+reproduces the page's own "305 is 16%, 400 is 35%, 450 is 45%" examples, unlike
+the continuous form), and there is a `raidLevel < 150` case scaling normal loot
+by 0.75. **One exception, deliberate:** the module computes the elite clue as a
+bare `points / 200000` with no cap, while the page's prose and its cited Mod Ash
+tweet both state a 25% maximum. The cited primary source wins there; the module
+is a calculator display whose other simplification (dividing everything by team
+size) is likewise not part of the mechanic.
+
+### Formula-driven weights — Extension A's missing fourth member
+
+Extension A gave `Table.rolls`, `QtySpec` and both `qtyMultiplier` sites a
+formula variant on one principle: a per-run `SimContext` scalar may decide a
+table's shape, and since the context is fixed for the run, resolving it costs
+nothing per kill. **`weight` was the one member left out**, for the ordinary
+reason that nothing had asked. ToA asks: the fang alone takes a distinct integer
+weight at roughly forty raid levels, so this is a rule, not a table.
+
+`WeightRateSchema.weight` is now `number | FormulaRef`, resolved in
+`compile.ts`'s new `compileWeight` at the same moment as every other formula
+position. Measured cost: none. 1M-kill Brutus landed at 199.8/200.7/194.6ms
+against the documented ~203–208ms, with `gpPerKill` byte-identical at 597.2676.
+
+The alternative was considered and rejected: ~85 condition-bracketed static
+entries enumerating each distinct weight, which expresses one three-line rule as
+hand-computed data and does not compose (CoX and ToB scale the same way).
+
+### `levelAtLeast` gained `points`, `raidLevel`, `deaths` — the lunar-chest lesson, again
+
+All three fields have existed since Extension A. None was reachable from a
+condition, because `levelAtLeast`'s enum did not list them. The research doc
+filed two of these as needing *new condition shapes*; the whole fix was three
+enum entries. `docs/bosses/lunar-chest.md`'s corrected banner says it exactly:
+**having a `SimContext` field is not the same as being able to gate an entry on
+it.** `deaths` is expressed as `n: 0, atMost: 0` — exactly zero — which is what
+`atMost` made sayable.
+
+### `ownershipGate` on `LeafEntry`, and why the jewels need it
+
+`compile.ts` previously stated that ownership inside a `oneOf` was "out of scope
+rather than added speculatively" because none of Extension B's four sources
+needed it. ToA is the source that does, which is the bar that comment set.
+
+The keris jewels: a successful "any jewel" roll is *guaranteed* to give one the
+player does not own, which the page quantifies as unowned-jewel rates of 1/37.5,
+1/25 and 1/12.5 at one, two and three owned. That is a `oneOf` whose pool is the
+unowned jewels. Two alternatives were rejected on measurable grounds, not taste:
+
+- **Four independent gated entries** would let two jewels arrive in one raid,
+  which the mechanic forbids.
+- **A formula rate reading `ctx.ownedCounts`** cannot work at all: formula rates
+  resolve once at compile time, so the rate would freeze at the entering counts
+  and never move as jewels are acquired during a batch. `ownershipGate` is the
+  only thing re-evaluated per kill.
+
+`compileOneOf` now populates `ownershipGates`, and because a `oneOf` already
+compiles to a weighted `CompiledTable`, `effectiveWeightedPool` renormalises it
+with no change to `simulate.ts` or `expected-value.ts` at all.
+
+### Three of the eight challenge rewards ARE modellable
+
+The research doc recommended marking all eight out of scope. The page's own
+table disagrees: Masori crafting kit (350+), Menaphite ornament kit (425+) and
+Cursed phalanx (500+) list `{{NA}}` other requirements — raid level plus the
+party-wide zero-death rule that applies to all of them. Those three are built,
+including the "roll is canceled if the item is already in your inventory,
+equipment or bank" rule as an `ownershipGate`.
+
+The five remnants need every invocation of one encounter set at level 4, which
+is a per-raid invocation-composition fact no scalar stands in for. They are the
+only rows `drops_covered` still reports missing (5 of 50, down from 15), so the
+gap is self-documenting rather than hidden.
+
+### Why the unique roll is a preroll + `oneOf`, and not seven independent rows
+
+The module computes a per-item rate and sums it. A `preroll` entry whose node is
+a `oneOf` computes `P(item i) = R · v_i / Σv_j`; setting `v_i = w_i·f_i` (the
+out-of-range 1/50 folded into the weight) and `R = base · Σw_j f_j / W` makes
+the two identical term by term. That identity is why the out-of-range rule needs
+no machinery beyond a formula weight.
+
+Modelling the seven as `independent` entries instead was quantified rather than
+hand-waved: at the 55% cap it would award **two uniques in roughly 12% of the
+raids that award any**, which the page forbids outright ("Only one player per
+raid can receive a unique"). That is far outside the CoX-class artifact this
+project has accepted elsewhere, so it is not an approximation worth taking.
+
+### `marginal-rates.test.ts` had the `oneOf` blind spot too — the fifth instance
+
+ToA's seven uniques deviated by exactly the unique chance on the first run. The
+cause was not the model: `deviations`' `downstream` collector used a flat
+`entry.node.kind === 'item'` loop, so items inside a `oneOf` were never marked
+as suppressed by the preroll above them, and a correct model failed an incorrect
+comparison. **This is the same shape landmine #11 records finding permissive
+four separate times** (`entry.title`, `refs_resolve`, `qty_sane`, `items_known`
+— the last for this exact reason). Fixed by descending into `oneOf`, not by
+adding ToA to the exclusion list, which is what an `AUTHORED` entry would have
+done and would have hidden a real gap affecting every future `oneOf` source.
+
+### `rates_valid` no longer claims weights are schema-enforced
+
+Its doc comment said `fixed`/`always`/`weight` are "fully enforced by the schema
+… a hardcoded pass for those three kinds is correct, not lazy". That became
+false the moment a weight could be a formula. It now evaluates formula weights
+alongside formula rates **and descends into `oneOf`**, which matters because
+ToA's formula weights live *only* there — a top-level walk would have counted
+zero and reported a confident pass over nothing, the vacuous green of landmine
+#11f. Its detail string changed accordingly, and a test covers the new path in
+both directions.
+
+### Points are net of the 5,000, and the unit is one player
+
+`ctx.points` for ToA is the reward-point total **as used for loot** — already
+net of the 5,000 starting points the page says are subtracted at the end. This
+is not an interpretation: the module's `estimate_points` never adds them in the
+first place, so its `points` parameter is the same quantity.
+
+Team size is out of scope, stated rather than approximated. The module divides
+points and chances by team size, and the page says a group's unique roll pools
+everyone's points with per-player probability proportional to contribution. One
+chest for one player is this simulator's unit.

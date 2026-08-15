@@ -159,7 +159,10 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
 
   const itemInputs = collectItemInputs(merged.tables)
 
-  const weightsSum = checkWeightsSum(merged.tables)
+  // Resolved against the boss's own `contextDefaults`, not the package
+  // default: a formula-driven weight (ToA's raid-level-scaled unique pool)
+  // reads `SimContext`, and a source that pins a default raid level means it.
+  const weightsSum = checkWeightsSum(merged.tables, resolveSimContext(merged, {}))
   const itemsKnown = checkItemsKnown(itemInputs, options.itemIndex, options.allowlist)
   const notOnWatchlist = checkNotOnWatchlist(options.watchlist, options.slug)
   const refsResolve = checkRefsResolve(merged, options.sharedTables)

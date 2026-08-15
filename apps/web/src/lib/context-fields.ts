@@ -46,11 +46,20 @@ function addFormulaFields(id: string, into: Set<SimContextField>): void {
   for (const field of declared ?? []) into.add(field)
 }
 
-/** Any `{ kind: 'formula', id }`-shaped value, wherever it can appear. */
+/**
+ * Any `{ kind: 'formula', id }`-shaped value, wherever it can appear.
+ *
+ * A `weight` rate is unwrapped rather than skipped: since Extension A's fourth
+ * member, `{ kind: 'weight', weight: FormulaRef }` is legal, and the formula is
+ * one level in. ToA's unique pool is reweighted by `raidLevel` from exactly
+ * there, so a `kind === 'formula'`-only test would miss it — the same
+ * invisible-control failure this file exists to prevent.
+ */
 function collectFormula(value: unknown, into: Set<SimContextField>): void {
   if (value === null || typeof value !== 'object') return
-  const maybe = value as { kind?: unknown; id?: unknown }
+  const maybe = value as { kind?: unknown; id?: unknown; weight?: unknown }
   if (maybe.kind === 'formula' && typeof maybe.id === 'string') addFormulaFields(maybe.id, into)
+  if (maybe.kind === 'weight') collectFormula(maybe.weight, into)
 }
 
 interface Walk {

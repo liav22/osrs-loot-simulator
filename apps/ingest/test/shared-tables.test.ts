@@ -60,7 +60,7 @@ describe('shared tables (data/tables/)', () => {
       expect(table.id).toBe(id)
       expect(table.mode).toBe('weighted')
       const total = table.entries.reduce(
-        (sum, entry) => sum + (entry.rate.kind === 'weight' ? entry.rate.weight : 0),
+        (sum, entry) => sum + (entry.rate.kind === 'weight' && typeof entry.rate.weight === 'number' ? entry.rate.weight : 0),
         0
       )
       expect(total).toBe(table.denominator)

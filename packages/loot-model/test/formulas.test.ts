@@ -43,13 +43,21 @@ describe('formula registry', () => {
     expect([...IMPLEMENTED_FORMULA_IDS].sort()).toEqual([
       'doom_of_mokhaiotl_deep_rolls',
       'lunar_chest_standard_rolls',
+      'toa_bad_luck_mitigation',
+      'toa_common_qty',
+      'toa_elite_clue',
+      'toa_invocation',
+      'toa_pet',
+      'toa_unique_weight',
       'zalcano_crystal_shards',
       'zalcano_mvp_only',
       'zalcano_mvp_share',
     ])
     for (const id of IMPLEMENTED_FORMULA_IDS) {
       expect(FORMULA_IDS).toContain(id)
-      expect(() => evaluateQuantity(id, {}, { ...ctx, delveLevel: 12 })).not.toThrow()
+      expect(() =>
+        evaluateQuantity(id, REQUIRED_PARAMS[id] ?? {}, { ...ctx, delveLevel: 12 })
+      ).not.toThrow()
     }
     // One roll of the '>8' row per deep-delve level, and none before delve 9.
     expect(evaluateQuantity('doom_of_mokhaiotl_deep_rolls', {}, { ...ctx, delveLevel: 12 })).toBe(4)
@@ -123,6 +131,20 @@ describe('rateToProbability', () => {
  * behaviour rather than trusted: vary a field the formula does NOT declare and
  * its output must not move.
  */
+/**
+ * Params a formula genuinely requires, so the behavioural checks can call it at
+ * all. Three ToA formulas take a required param and throw on a missing one —
+ * deliberately, since a silently-defaulted `divisor` or `unique` would produce
+ * a plausible wrong number rather than an error. The values here are real ones
+ * from the boss document; what they must NOT do is vary with the field under
+ * test, which is what keeps the behavioural assertion honest.
+ */
+const REQUIRED_PARAMS: Partial<Record<(typeof FORMULA_IDS)[number], Record<string, unknown>>> = {
+  toa_unique_weight: { unique: 'osmumten-s-fang' },
+  toa_common_qty: { divisor: 20 },
+  toa_bad_luck_mitigation: { num: 1, den: 10 },
+}
+
 describe('FORMULA_CONTEXT_FIELDS matches what the formulas actually read', () => {
   const ALL_FIELDS = Object.keys(ctxWith()) as SimContextField[]
 
@@ -181,7 +203,7 @@ describe('FORMULA_CONTEXT_FIELDS matches what the formulas actually read', () =>
         const [a, b] = variantsOf(field)
         const evaluate = (value: unknown): number =>
           defaultFormulaRegistry.get(id)!(
-            {},
+            REQUIRED_PARAMS[id] ?? {},
             withDerivedContext({ ...ctxWith(), [field]: value } as SimContext)
           )
         expect(evaluate(a), `${id} moved when undeclared '${field}' changed`).toBe(evaluate(b))

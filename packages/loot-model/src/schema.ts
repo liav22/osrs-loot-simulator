@@ -62,10 +62,64 @@ export const FORMULA_IDS = [
    * `moonsKilled.length` that no constant and no existing id expresses.
    */
   'lunar_chest_standard_rolls',
+  /**
+   * Tombs of Amascut. Six ids because ToA fulfils six different formula
+   * contracts and one id cannot return a probability, a weight and an item
+   * count at once — the same reasoning that split Zalcano's three.
+   *
+   * - `toa_invocation` (probability, pre-existing) — the raid's total unique
+   *   chance: `min(points / (10500 - 20*RL) / 100, 0.55)`, scaled by the share
+   *   of unique weight actually in range at this raid level.
+   * - `toa_unique_weight` (weight) — one unique's weight in the 7-item pool.
+   *   Only Osmumten's fang and the Lightbearer vary with raid level; the other
+   *   five are constants and are authored as plain numbers.
+   * - `toa_common_qty` (quantity) — `max(1, floor(floor(points/divisor) *
+   *   scale))`, the common table's per-item quantity.
+   * - `toa_elite_clue` (probability) — `min(points / 200000, 0.25)`.
+   * - `toa_pet` (probability) — `points / (350000 - 700*RL_pet) / 100`.
+   * - `toa_bad_luck_mitigation` (probability) — the thread/jewel curve,
+   *   linear from `num/den` to `3*num/den` as kill count climbs to
+   *   `1.5*den`.
+   *
+   * Every one is stated outright by the wiki — the prose and cited news
+   * posts/tweets on `Chest (Tombs of Amascut)` for the rules, and
+   * `Module:Tombs of Amascut loot` (the page's own rewards calculator) for the
+   * integer weights and the flooring the prose states only continuously.
+   * PROJECT_PLAN.md 4.6's "do not add more without justification" is read as
+   * satisfied by that citation. See docs/bosses/chest-tombs-of-amascut.md.
+   */
+  'toa_unique_weight',
+  'toa_common_qty',
+  'toa_elite_clue',
+  'toa_pet',
+  'toa_bad_luck_mitigation',
 ] as const
 
 export const FormulaIdSchema = z.enum(FORMULA_IDS)
 export type FormulaId = z.infer<typeof FormulaIdSchema>
+
+/**
+ * `{ kind: 'formula', id, params }`, structurally identical to `Rate`'s
+ * `formula` variant but reused wherever a formula's *output* is not a
+ * `[0, 1]` probability: a `QtySpec`, a `weight`, `Table.qtyMultiplier`, or a
+ * `TableRefNode`'s multiplier. Which contract applies is decided by where
+ * this shape is used, not by the shape itself — `formulas.ts`'s
+ * `evaluateQuantity`/`evaluateMultiplier`/`evaluateWeight` (vs.
+ * `evaluateFormula`/`evaluateRate`) are the corresponding validators. See
+ * docs/mechanics-model-proposal.md's Extension A.
+ *
+ * Declared here, above the rates block, because `WeightRateSchema` now
+ * references it — see that schema's comment.
+ */
+export const FormulaRefSchema = z
+  .object({
+    kind: z.literal('formula'),
+    id: FormulaIdSchema,
+    params: z.record(z.unknown()).default({}),
+  })
+  .strict()
+
+export type FormulaRef = z.infer<typeof FormulaRefSchema>
 
 // ---------------------------------------------------------------------------
 // Rates (4.1)
@@ -73,8 +127,34 @@ export type FormulaId = z.infer<typeof FormulaIdSchema>
 
 const AlwaysRateSchema = z.object({ kind: z.literal('always') }).strict()
 
+/**
+ * **`weight` may be a formula, resolved once at compile time** — Extension A's
+ * missing fourth member. That extension gave `Table.rolls`, `QtySpec` and both
+ * `qtyMultiplier` sites a formula-driven variant on one shared principle: a
+ * per-run `SimContext` scalar may decide the *shape* of a table, and because
+ * `SimContext` is fixed for the run, resolving it costs nothing per kill.
+ * `weight` was the one member of that family left out, for the ordinary reason
+ * that nothing had asked for it yet.
+ *
+ * Tombs of Amascut is the source that asks. Its 7-item unique pool is
+ * reweighted by raid level, and `Module:Tombs of Amascut loot` states the rule
+ * as `floor` expressions over the raid level rather than as a table of
+ * breakpoints — Osmumten's fang alone takes a distinct integer weight at
+ * roughly forty different raid levels. Enumerating those as condition-bracketed
+ * static entries was considered and rejected: it is ~85 hand-computed entries
+ * expressing one three-line rule, and it does not compose (CoX and ToB scale
+ * the same way).
+ *
+ * Note what does NOT change: `weight` is still relative to a denominator and
+ * still has no standalone probability (`rateToProbability` rejects it either
+ * way), and a resolved weight must still be finite and positive, which
+ * `evaluateWeight` enforces at compile time rather than here.
+ */
 const WeightRateSchema = z
-  .object({ kind: z.literal('weight'), weight: z.number().finite().positive() })
+  .object({
+    kind: z.literal('weight'),
+    weight: z.union([z.number().finite().positive(), FormulaRefSchema]),
+  })
   .strict()
 
 const FixedRateSchema = z
@@ -111,26 +191,6 @@ export const RateSchema = z
   })
 
 export type Rate = z.infer<typeof RateSchema>
-
-/**
- * `{ kind: 'formula', id, params }`, structurally identical to `Rate`'s
- * `formula` variant but reused wherever a formula's *output* is not a
- * `[0, 1]` probability: a `QtySpec`, `Table.qtyMultiplier`, or a
- * `TableRefNode`'s multiplier. Which contract applies is decided by where
- * this shape is used, not by the shape itself — `formulas.ts`'s
- * `evaluateQuantity`/`evaluateMultiplier` (vs. `evaluateFormula`/
- * `evaluateRate`) are the corresponding validators. See
- * docs/mechanics-model-proposal.md's Extension A.
- */
-export const FormulaRefSchema = z
-  .object({
-    kind: z.literal('formula'),
-    id: FormulaIdSchema,
-    params: z.record(z.unknown()).default({}),
-  })
-  .strict()
-
-export type FormulaRef = z.infer<typeof FormulaRefSchema>
 
 /** A positive scalar, or a formula that resolves to one at compile time. */
 export const MultiplierSchema = z.union([z.number().finite().positive(), FormulaRefSchema])
@@ -294,6 +354,30 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
         'totalDamage',
         'fishingLevel',
         'killCount',
+        /**
+         * Tombs of Amascut's three gates, all of them plain numeric reads on
+         * `SimContext` fields that already existed. Widening the enum is the
+         * whole change — which is the point worth recording, because the
+         * research doc filed two of these as capability gaps needing new
+         * condition shapes:
+         *
+         *  - `points` — the dung gate ("only obtained if a player ends the
+         *    raid with less than 1,500 total reward points"), expressed as
+         *    `n: 0, atMost: 1499`.
+         *  - `raidLevel` — the three challenge rewards the wiki gates on raid
+         *    level alone (350+/425+/500+).
+         *  - `deaths` — "each of these challenges includes the requirement
+         *    that there are zero deaths for all party members", expressed as
+         *    `n: 0, atMost: 0`, which is what `atMost` makes sayable.
+         *
+         * This is the lesson `docs/bosses/lunar-chest.md`'s corrected banner
+         * records, hit again: having a `SimContext` field is not the same as
+         * being able to gate an entry on it. All three fields have existed
+         * since Extension A; none of them was reachable from a condition.
+         */
+        'points',
+        'raidLevel',
+        'deaths',
       ]),
       n: z.number().int().nonnegative(),
       /** Inclusive upper bound. Omit for an open-ended threshold. */
@@ -489,6 +573,31 @@ export const LeafEntrySchema = z
     node: LeafNodeSchema,
     rate: RateSchema,
     conditions: z.array(ConditionSchema).optional(),
+    /**
+     * Same field, same semantics as `Entry.ownershipGate` — see
+     * `OwnershipGateSchema`. `compile.ts` previously said this was left off
+     * `LeafEntry` because "none of the four Extension B sources need ownership
+     * *inside* a oneOf, so it's out of scope rather than added speculatively."
+     * Tombs of Amascut is the source that needs it, which is the bar that
+     * comment set.
+     *
+     * The keris partisan jewels: "If the player is missing one or more of the
+     * four jewels, they will be guaranteed to receive an unobtained one upon
+     * successfully rolling for a jewel. This effectively changes the rarity of
+     * unowned jewels to 1/37.5, 1/25, and 1/12.5 when owning one, two, or
+     * three." That is exactly a `oneOf` whose pool is the *unowned* jewels —
+     * four entries each gated `below 1`, renormalised over whichever survive.
+     * `effectiveWeightedPool` already does that renormalisation, and a `oneOf`
+     * already compiles to a weighted `CompiledTable`, so both consumers get
+     * this for free once `compileOneOf` stops discarding the field.
+     *
+     * Modelling it any other way is measurably wrong rather than merely
+     * imprecise: four independent gated entries would let two jewels arrive in
+     * one raid, and a compile-time-frozen rate reading `ownedCounts` could not
+     * move as jewels are acquired mid-batch, since only `ownershipGate` is
+     * re-evaluated per kill.
+     */
+    ownershipGate: OwnershipGateSchema.optional(),
   })
   .strict()
 

@@ -8,7 +8,12 @@ export function formatRate(rate: Rate): string {
     case 'fixed':
       return `${formatFraction(rate.num, rate.den)} (${formatPercent(rate.num / rate.den)})`
     case 'weight':
-      return `${rate.weight} (share of table)`
+      // A formula-driven weight has no number until it is compiled against a
+      // context (ToA's unique pool is reweighted by raid level), so name the
+      // formula rather than printing "[object Object]".
+      return typeof rate.weight === 'number'
+        ? `${rate.weight} (share of table)`
+        : `formula: ${rate.weight.id} (share of table)`
     case 'formula':
       return `formula: ${rate.id}`
   }

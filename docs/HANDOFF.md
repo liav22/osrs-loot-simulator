@@ -48,9 +48,11 @@ scope:
   researched sources; they make the 14 *buildable*.
 - **`data/overrides/` EXISTS and is in use** — loader, merge semantics,
   `docs/OVERRIDES.md`, and two live overrides. See section 3.
-- **Five formulas are really implemented** (`doom_of_mokhaiotl_deep_rolls`,
-  `lunar_chest_standard_rolls`, and Zalcano's `zalcano_crystal_shards` /
-  `zalcano_mvp_share` / `zalcano_mvp_only`); every other `FORMULA_IDS` entry is still
+- **Eleven formulas are really implemented** (`doom_of_mokhaiotl_deep_rolls`,
+  `lunar_chest_standard_rolls`, Zalcano's `zalcano_crystal_shards` /
+  `zalcano_mvp_share` / `zalcano_mvp_only`, and ToA's `toa_invocation` /
+  `toa_unique_weight` / `toa_common_qty` / `toa_elite_clue` / `toa_pet` /
+  `toa_bad_luck_mitigation`); every other `FORMULA_IDS` entry is still
   `stubFormula(...)` — registered, not implemented.
   `IMPLEMENTED_FORMULA_IDS` is exported from `formulas.ts` and is what
   `formulas.test.ts`'s trip wire pins. **That wire has now fired three times** —
@@ -90,11 +92,44 @@ on it.**
 
 **Step (c) is DONE** (`Table.suppressesFollowing`, `TableRefNode.drawsPerHit`),
 plus `qtyRounding`, `Condition.includes`, `data/overrides/`, and
-`SimContext.totalDamage` (derived). **Phase 7 has shipped 5 of the 14
+`SimContext.totalDamage` (derived). **Phase 7 has shipped 6 of the 14
 researched sources**: Abyssal Sire and Corporeal Beast (parser fixes,
 `verified`), Doom of Mokhaiotl and Lunar Chest (overrides, `manual_override`),
-and Zalcano (override, still `needs_review` — two curves the wiki never states
-keep it watchlisted; see section 3). See section 3 for what is next.
+Zalcano (override, still `needs_review` — two curves the wiki never states keep
+it watchlisted), and **Tombs of Amascut** (override, still `needs_review` — the
+five invocation-gated remnants keep it watchlisted; see section 3). See
+section 3 for what is next.
+
+**Changed in the ToA session (the most recent one):**
+
+- **Tombs of Amascut is BUILT** — `data/overrides/chest-tombs-of-amascut.json`,
+  28 wiki-figure tests in `apps/ingest/test/toa.test.ts`. `drops_covered` 15
+  missing -> 5, and those 5 are exactly the remnants the override declines to
+  model. Read `docs/DECISIONS.md`'s "Phase 7: Tombs of Amascut" before touching
+  any of it.
+- **The "UNKNOWN" weight interpolation was a MISSING SOURCE, not a missing
+  fact.** `Module:Tombs of Amascut loot` (the Lua behind the page's own
+  calculator) states the rule; it reproduces all five published rows exactly.
+  Two pages fetched through `WikiClient`, snapshotted. **The published 5-row
+  table is non-monotone in the fang's rate**, so interpolating between rows
+  would have been wrong, not merely unstated. **Look for a `Module:`/
+  `Calculator:` page before recording a curve as UNKNOWN** — CoX and ToB both
+  have one.
+- **`weight` may now be a formula** (`WeightRateSchema`), resolved at compile
+  time by `compile.ts`'s `compileWeight`. Extension A's missing fourth member,
+  alongside `rolls`/`QtySpec`/`qtyMultiplier`. Measured cost: none.
+- **`levelAtLeast` gained `points`, `raidLevel`, `deaths`.** All three fields
+  already existed on `SimContext`; the condition's enum simply did not list
+  them. The lunar-chest lesson again.
+- **`LeafEntry` gained `ownershipGate`**, so a `oneOf` pool can be the *unowned*
+  members of a set (ToA's keris jewels). `compileOneOf` populates
+  `ownershipGates`; `effectiveWeightedPool` already handled the rest, so
+  `simulate.ts`/`expected-value.ts` are untouched.
+- **`marginal-rates.test.ts` had the `oneOf` blind spot too** — the fifth
+  instance of the flat `entry.node.kind === 'item'` loop. Fixed by descending,
+  NOT by adding ToA to its `AUTHORED` exclusion list. See landmine #11f.
+- **`rates_valid` no longer claims weights are schema-enforced**, evaluates
+  formula weights, and descends into `oneOf`.
 
 `ev_matches` is **closed, permanently** — see "What NOT to redo," section 5.
 
@@ -311,8 +346,8 @@ only honest way to plan against it:
 |---|---|---|
 | transcluded sub-table mode | 9 | a decision, not code — see below |
 | the "Uniques"/"Mutagens" heading question | 5 | `phantom-muspah`, `sarachnis`, `shellbane-gryphon`, `the-nightmare`, `zulrah`. **Most re-litigated question in the project — see section 5 before touching it.** |
-| genuinely unknowable curves | 3 | `duke-sucellus`, `zalcano`, `reward-pool`. Watchlisted, correctly. |
-| raids that DO have a document | 2 | `chest-tombs-of-amascut`, `monumental-chest` — point-scaled, below |
+| genuinely unknowable curves | 3 | `duke-sucellus`, `zalcano`, `reward-pool`. Watchlisted, correctly. **Before adding a fourth, check for a `Module:`/`Calculator:` page — that is what closed ToA's.** |
+| raids that DO have a document | 2 | `chest-tombs-of-amascut` (BUILT; watchlisted only for the 5 invocation-gated remnants), `monumental-chest` — point-scaled, below |
 | GWDRDT | 2 | `kree-arra`, `general-graardor` — landmine #3 |
 | other | 2 | `black-knight-titan` (a Lua `{{#invoke:}}` sub-table + `items_known`), `salarin-the-twisted` (`items_known`) |
 
@@ -343,11 +378,11 @@ one's rewards scale on, and those are stated on the pages in varying detail.
    Extension A work and must not be re-opened as "needs new architecture" —
    and the failure mode to avoid is quantified there (naively using the
    unconditioned subrates overstates Olmlet by **33x**).
-2. **Tombs of Amascut -> `chest-tombs-of-amascut`.** Has a document,
-   `needs_review`, watchlisted, and `drops_covered` fails 15 of 50 — its
-   `dropsline` rows are structural leftovers of a point-purchase reward shop,
-   not per-row rarities. Needs `toa_invocation`. Also carries Extension B's
-   thread-of-Elidinis / jewel ownership state, which is built.
+2. **Tombs of Amascut -> `chest-tombs-of-amascut`. BUILT** — override, 28
+   wiki-figure tests, `drops_covered` now 5 of 50 (the five remnants it
+   deliberately does not model). Still `needs_review`/watchlisted for exactly
+   that reason, which is correct. **Its `Module:`-page lesson generalises to
+   CoX and ToB below.**
 3. **Theatre of Blood -> `monumental-chest`.** Same shape: document,
    `needs_review`, watchlisted, `drops_covered` fails 9 of 43. Point-scaled.
 4. **Fortis Colosseum -> `rewards-chest-fortis-colosseum`. No document.** Tier
@@ -418,7 +453,8 @@ of seconds").
 | Zalcano session baseline, derivation reverted in place (A/B control) | ~220ms | ~2,108ms |
 | Zalcano session, `withDerivedContext` in `compileBoss` | ~225–227ms | ~2,202–2,234ms |
 | **Playwright session, before the loop fix (A/B control)** | ~224ms | ~2,204ms |
-| **Playwright session, hoisted/inlined gate checks (current)** | **~208ms** | **~2,089ms** |
+| **Playwright session, hoisted/inlined gate checks** | ~208ms | ~2,089ms |
+| **ToA session (formula weights + oneOf ownership gates), current** | **~195–201ms** | *(not re-run)* |
 | *(reference ceiling: ALL ownership code stripped — not shipped)* | *~197ms* | *~1,893ms* |
 
 **The 10M figure is now AT OR OVER the ~2.0s reading of the bar on this
@@ -913,6 +949,8 @@ The running tally, because the pattern is the point and not any one instance:
 | 4 | `items_known` | flat `entry.node.kind === 'item'` loop, so an item inside a `oneOf` was never collected | a human reading it |
 | 5 | `drops_covered` | closed-world over the document; could not see a section the page had and the document did not | turning the check on |
 | 6 | `marginal-rates.test.ts` | **passed vacuously on its very first run** | its own row-count assertion |
+| 7 | `marginal-rates.test.ts` (again) | its `downstream` collector used a flat `entry.node.kind === 'item'` loop, so items inside a `oneOf` were never marked suppressed — ToA's uniques "deviated" by exactly the unique chance, a correct model failing an incorrect comparison | building ToA |
+| 8 | `rates_valid` | claimed `weight` rates were "fully enforced by the schema"; true until a weight could be a formula, and it also never descended into `oneOf`, which is the only place ToA's formula weights live | widening the schema |
 
 Number 6 is the one to internalise. `Boss` has no `title` field — it is
 `wikiPage` — so every oracle lookup threw, landed in a `catch` that returns
@@ -973,13 +1011,16 @@ been folded into sections 1 and 3 rather than kept as struck-through history.
    single largest counter move available and it costs either one condition or
    one new group shape. It is a judgement call about what `verified` may
    claim, not a coding problem — section 3.
-2. **The four raids**, in rough order of how well the wiki states their
-   formula: Theatre of Blood (`monumental-chest`) and Tombs of Amascut
-   (`chest-tombs-of-amascut`) both already have documents and fail on a stated
-   point-scaling rule; CoX (`ancient-chest`) needs a from-scratch override and
-   `cox_points`; Fortis Colosseum needs an override for a wave-indexed page
-   that fits no canonical mode. **Read section 5's CoX entry before starting
-   that one.**
+2. **The remaining three raids.** ToA is done and is the worked example to
+   copy — read `docs/DECISIONS.md`'s "Phase 7: Tombs of Amascut" first.
+   **Start each by checking for a `Module:`/`Calculator:` page**, which is what
+   turned ToA's one UNKNOWN into a cited rule; `{{Calculator:Chambers of Xeric
+   loot}}`-shaped transclusions are the tell, and both CoX and ToB have a
+   calculator on-page. Theatre of Blood (`monumental-chest`) has a document and
+   fails on a stated point-scaling rule; **CoX (`ancient-chest`) and Fortis
+   Colosseum both need Phase 6 research first — CoX is `parse_failed` with no
+   research doc, and Fortis Colosseum has never produced one. Do not start
+   either without it.** Read section 5's CoX entry before that one.
 3. **`black-knight-titan`** — the cheapest remaining coverage failure. Its
    `{{GeneralSeedDropLines}}` is a Lua `{{#invoke:}}` the expander cannot run;
    the rows would have to come from somewhere else (an override, or the

@@ -350,7 +350,9 @@ describe('ConditionSchema levelAtLeast brackets', () => {
   })
 
   it('rejects a field outside the enum', () => {
-    const parsed = ConditionSchema.safeParse({ kind: 'levelAtLeast', field: 'points', n: 1 })
+    // `points` used to be the example here and is now a real field (ToA's dung
+    // gate). Picked a name with no prospect of quietly becoming valid.
+    const parsed = ConditionSchema.safeParse({ kind: 'levelAtLeast', field: 'combatLevel', n: 1 })
     expect(parsed.success).toBe(false)
   })
 

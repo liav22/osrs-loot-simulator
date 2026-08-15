@@ -151,6 +151,17 @@ function excludedTableIndices(tables: readonly Table[]): Set<number> {
   return excluded
 }
 
+/** Every item name reachable from a node, `oneOf` included. */
+function collectNames(node: Table['entries'][number]['node'], into: Set<string>): void {
+  if (node.kind === 'item') {
+    into.add(node.name)
+    return
+  }
+  if (node.kind === 'oneOf') {
+    for (const entry of node.entries) collectNames(entry.node, into)
+  }
+}
+
 /**
  * Items whose composed per-kill probability is directly comparable to the
  * wiki's stated rate: they appear exactly once in the document, are not also
@@ -173,7 +184,14 @@ async function deviations(
   const downstream = new Set<string>()
   boss.tables.forEach((table, index) => {
     if (!suppressed.has(index)) return
-    for (const entry of table.entries) if (entry.node.kind === 'item') downstream.add(entry.node.name)
+    // Descends into `oneOf`. A flat `entry.node.kind === 'item'` loop is the
+    // exact shape docs/HANDOFF.md landmine #11 records finding permissive four
+    // separate times (`items_known` was the fourth), and it was wrong here too:
+    // ToA's seven uniques sit inside a `oneOf` behind a preroll rate, so this
+    // loop collected none of them and the suppression exclusion never reached
+    // them. They then "deviated" by exactly the unique chance — a correct
+    // model failing an incorrect comparison.
+    for (const entry of table.entries) collectNames(entry.node, downstream)
   })
   const result = expectedValue(boss, resolveSimContext(boss, {}), { tables: shared })
 

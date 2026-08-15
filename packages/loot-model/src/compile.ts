@@ -3,12 +3,14 @@ import {
   defaultFormulaRegistry,
   evaluateMultiplier,
   evaluateQuantity,
+  evaluateWeight,
   rateToProbability,
   type FormulaRegistry,
 } from './formulas.js'
 import type {
   Boss,
   Entry,
+  FormulaRef,
   LeafEntry,
   Multiplier,
   Node,
@@ -198,6 +200,25 @@ export function compileBoss(
     return evaluateMultiplier(multiplier.id, multiplier.params, ctx, formulas)
   }
 
+  /**
+   * A `weight` rate's resolved numeric weight, 0 for any other rate kind (the
+   * callers below all sit in weighted-mode paths where a non-weight rate is
+   * already schema-rejected, and treating it as 0 keeps them total).
+   *
+   * The formula arm is Extension A's fourth member — see `WeightRateSchema`.
+   * Resolved here, once, exactly like `rolls`/`qty`/`qtyMultiplier`, so the
+   * compiled `Float64Array` of weights is plain numbers by the time
+   * `simulate.ts` or `expected-value.ts` sees it and neither pays anything per
+   * kill for the feature existing.
+   */
+  const compileWeight = (rate: { kind: string; weight?: unknown }): number => {
+    if (rate.kind !== 'weight') return 0
+    const weight = rate.weight
+    if (typeof weight === 'number') return weight
+    const ref = weight as FormulaRef
+    return evaluateWeight(ref.id, ref.params, ctx, formulas)
+  }
+
   const compileQty = (qty: QtySpec): ResolvedQtySpec => {
     if (qty.kind !== 'formula') return qty
     return { kind: 'exact', n: evaluateQuantity(qty.id, qty.params, ctx, formulas) }
@@ -253,11 +274,25 @@ export function compileBoss(
     const weights = new Float64Array(applicable.length)
     let total = 0
     applicable.forEach((entry, i) => {
-      const weight = entry.rate.kind === 'weight' ? entry.rate.weight : 0
+      const weight = compileWeight(entry.rate)
       weights[i] = weight
       total += weight
     })
     if (total <= 0) return { kind: 'nothing' }
+
+    // `LeafEntry` carries `ownershipGate` now — ToA's keris jewels are a
+    // `oneOf` whose pool is whichever jewels are still unowned. Built to the
+    // same shape `compileTable` uses below (null for the whole array when
+    // nothing in this pool is gated) so `effectiveWeightedPool`, which already
+    // renormalises a weighted table around its gates, handles a `oneOf`
+    // without knowing it is one.
+    const rawOneOfGates = applicable.map((entry) => entry.ownershipGate ?? null)
+    const oneOfGates = rawOneOfGates.some((gate) => gate !== null) ? rawOneOfGates : null
+    if (oneOfGates !== null) {
+      for (const gate of oneOfGates) {
+        if (gate !== null) trackedItemKeys.add(gate.itemKey)
+      }
+    }
 
     const id = `${tableId}#oneOf`
     return {
@@ -273,9 +308,6 @@ export function compileBoss(
         mode: 'weighted',
         rolls: { kind: 'count', n: 1 },
         withoutReplacement: false,
-        // `LeafEntry` (oneOf's entry shape) carries no `ownershipGate` — none
-        // of the four Extension B sources need ownership *inside* a oneOf,
-        // so it's out of scope rather than added speculatively.
         nodes: applicable.map((entry) => compileNode(entry.node, id, path)),
         weights,
         cum: cumulative(weights),
@@ -284,7 +316,7 @@ export function compileBoss(
         qtyMultiplier: 1,
         qtyRounding: 'round',
         suppressesFollowing: false,
-        ownershipGates: null,
+        ownershipGates: oneOfGates,
       },
     }
   }
@@ -317,7 +349,7 @@ export function compileBoss(
     if (table.mode === 'weighted') {
       let total = 0
       applicable.forEach((entry, i) => {
-        const weight = entry.rate.kind === 'weight' ? entry.rate.weight : 0
+        const weight = compileWeight(entry.rate)
         weights[i] = weight
         total += weight
       })
@@ -333,7 +365,7 @@ export function compileBoss(
       // about the `nothing` node kind, not about a particular table.
       for (const entry of table.entries) {
         if (entry.node.kind !== 'nothing' || entryApplies(entry, ctx)) continue
-        denominator -= entry.rate.kind === 'weight' ? entry.rate.weight : 0
+        denominator -= compileWeight(entry.rate)
       }
       if (total > denominator + 1e-9) {
         throw new WeightsExceedDenominatorError(table.id, total, denominator)

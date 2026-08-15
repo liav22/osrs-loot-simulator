@@ -1,33 +1,53 @@
 # Chest (Tombs of Amascut) — ToA
 
-> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
+> ### ✅ BUILT — `data/overrides/chest-tombs-of-amascut.json`, 2026-08-15
 >
-> The **mechanics, prose and cited numbers in this doc are accurate** and are
-> what to implement from. Its "What the mapping needs that doesn't exist"
-> section is **not** — it was written before Extensions A and B, step (c)
-> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
-> never been revised. Corrections for this source:
+> **This source is now implemented.** The doc below is kept as the research
+> record; where it and the override disagree, **the override and
+> `apps/ingest/test/toa.test.ts` are correct**. Read this banner first — the
+> body's capability verdicts were stale twice over, and its *numbers* have a
+> better source now too.
 >
-> - Gap 1 (`SimContext` points) — **RESOLVED**: `ctx.points`, `ctx.raidLevel`.
-> - Gap 4 (`QtySpec` has no formula-driven kind) — **RESOLVED**:
->   `QtySpec.formula`, resolved once at compile time.
-> - Gap 5 (thread of Elidinis / jewel reverting once received) — **RESOLVED**:
->   `Entry.ownershipGate` (lifetime-scoped, which is the right scope here).
-> - Gap 2 (per-raid achievement conditions) — **STILL OPEN**: no `Condition`
->   kind expresses "all Akkha invocations at level N this raid."
-> - Gap 3 (item-weight interpolation between the 6 raid-level breakpoints) —
->   still **UNKNOWN**; research, not a model gap. `toa_invocation` is a stub.
+> **A second source exists that this doc never found: `Module:Tombs of Amascut
+> loot`** (revid 15216862), the Lua behind the page's own
+> `{{Calculator:Tombs of Amascut loot}}`. It states the arithmetic the prose
+> gives only continuously, and it **closed the one gap this doc called
+> UNKNOWN**:
 >
-> Model capabilities now available: per-run `SimContext` scalars (`points`,
-> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
-> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
-> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
-> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
-> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
-> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
-> state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry (all still stubs).
-> See `docs/DECISIONS.md`.
+> - **Gap 3 (weight interpolation between breakpoints) — RESOLVED, not
+>   guessed.** The module's `p.reweight` gives the rule as `floor` expressions
+>   over raid level, and the underlying weights are integers (shadow 10, each
+>   masori 20, ward 30, fang/lightbearer 70, summing to 240). It reproduces all
+>   five of the page's published rows exactly. Worth knowing *before* trusting
+>   the 5-row table as a curve: it is **non-monotone** in the fang's rate
+>   (400 → .2105, 450 → .2222), so interpolating between rows would have been
+>   wrong, not merely unstated.
+> - **Gaps 1, 4, 5 — RESOLVED** as the previous banner said (`ctx.points`/
+>   `ctx.raidLevel`, `QtySpec.formula`, `Entry.ownershipGate`).
+> - **Gap 2 (per-raid achievement conditions) — PARTLY WRONG.** The doc says
+>   all 8 challenge rewards are unsimulable. Three are not: the page gates
+>   Masori crafting kit (350+), Menaphite ornament kit (425+) and Cursed
+>   phalanx (500+) on raid level and party-wide zero deaths *only* (`{{NA}}`
+>   other requirements), all expressible. **The five remnants really are out of
+>   scope** and are why this source stays watchlisted.
+>
+> **What the body's "what doesn't exist" section still gets wrong**, beyond the
+> above: it does not notice that `levelAtLeast` could not read `points`,
+> `raidLevel` or `deaths` (the fields existed; the condition's enum did not
+> admit them — the `lunar-chest.md` lesson again), and its proposed `oneOf`
+> mapping assumes weights can key on `ctx.raidLevel`, which the schema forbade.
+> Both were fixed: the enum widened, and `weight` gained a formula variant —
+> Extension A's missing fourth member, alongside `rolls`/`QtySpec`/
+> `qtyMultiplier`.
+>
+> **Also corrected against the module:** the common-quantity multiplier is
+> *stepped* (`floor((RL-300)/5)`), not the continuous ramp in the body's
+> formula block, and there is a `raidLevel < 150` case (loot × 0.75) the page's
+> prose never mentions at all.
+>
+> Not modelled, deliberately, and stated in the override's note: the five
+> remnants, team size, the elite CA's 1.05× clue multiplier, and duplicate
+> jewels once all four are owned.
 
 
 `lootSourceId: chest-tombs-of-amascut`. Watchlisted (`point_scaled`). Blocks: Akkha, Ba-Ba,

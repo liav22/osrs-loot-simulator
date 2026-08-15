@@ -27,6 +27,9 @@ function conditionLabel(condition: Condition): string {
         totalDamage: 'Combined damage',
         fishingLevel: 'Fishing level',
         killCount: 'KC',
+        points: 'Reward points',
+        raidLevel: 'Raid level',
+        deaths: 'Deaths',
       }
       const label = labels[condition.field]
       // A bracket reads as a range, not as two separate facts. `atMost` is
@@ -72,13 +75,18 @@ function NodeLabel({ node }: { node: Node }) {
 
 function entryRateDisplay(entry: Entry, table: Table): string {
   const { rate } = entry
-  if (rate.kind === 'weight' && table.denominator !== undefined) {
-    return `${formatFraction(rate.weight, table.denominator)} (${formatPercent(rate.weight / table.denominator)})`
+  if (rate.kind === 'weight') {
+    // A formula-driven weight (ToA's raid-level-scaled unique pool) has no
+    // fixed share to show: both it and the denominator move with the context,
+    // so naming the formula is the honest render.
+    const { weight } = rate
+    if (typeof weight !== 'number') return `formula: ${weight.id} (share of table)`
+    if (table.denominator === undefined) return String(weight)
+    return `${formatFraction(weight, table.denominator)} (${formatPercent(weight / table.denominator)})`
   }
   if (rate.kind === 'fixed') return `${formatFraction(rate.num, rate.den)} (${formatPercent(rate.num / rate.den)})`
   if (rate.kind === 'always') return 'Always'
-  if (rate.kind === 'formula') return `formula: ${rate.id}`
-  return String(rate.weight)
+  return `formula: ${rate.id}`
 }
 
 function TableCard({ table }: { table: Table }) {

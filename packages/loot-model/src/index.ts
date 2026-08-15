@@ -68,12 +68,31 @@ export {
   evaluateFormula,
   evaluateMultiplier,
   evaluateQuantity,
+  evaluateWeight,
   FormulaNotImplementedError,
   IMPLEMENTED_FORMULA_IDS,
   rateToProbability,
+  // Tombs of Amascut's rule set, exported so `apps/ingest/test/toa.test.ts`
+  // can assert it against the wiki's own published figures rather than
+  // re-implementing the arithmetic it is supposed to be checking.
+  TOA_DUNG_GATE_POINTS,
+  TOA_ELITE_CLUE_DENOMINATOR,
+  TOA_ELITE_CLUE_RATE_CAP,
+  TOA_OUT_OF_RANGE_DIVISOR,
+  TOA_UNIQUE_RATE_CAP,
+  TOA_UNIQUES,
+  toaAdjustedRaidLevel,
+  toaAdjustedRaidLevelPet,
+  toaCommonQtyScale,
+  toaReweightedUniques,
+  toaUniqueRate,
+  toaUniqueWeight,
   UnknownFormulaError,
+  ZALCANO_DROP_ELIGIBILITY_SHIELD_DAMAGE,
+  ZALCANO_UNIQUE_ELIGIBILITY_TOTAL_DAMAGE,
   type FormulaFn,
   type FormulaRegistry,
+  type ToaUnique,
 } from './formulas.js'
 
 export { mulberry32, type Rng } from './rng.js'

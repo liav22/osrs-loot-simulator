@@ -87,7 +87,7 @@ describe('Reward pool: the main table reconciles to the page', () => {
     expect(main).toBeDefined()
     expect(main?.denominator).toBe(6400)
     const sum = (main?.entries ?? []).reduce(
-      (acc, entry) => acc + (entry.rate.kind === 'weight' ? entry.rate.weight : 0),
+      (acc, entry) => acc + (entry.rate.kind === 'weight' && typeof entry.rate.weight === 'number' ? entry.rate.weight : 0),
       0
     )
     // An exact reconciliation is the whole reason this source could be modelled

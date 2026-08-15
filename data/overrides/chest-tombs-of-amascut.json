@@ -1,18 +1,23 @@
 {
   "slug": "chest-tombs-of-amascut",
+  "note": "Hand-authored from Chest (Tombs of Amascut) revid 15274037 and Module:Tombs of Amascut loot revid 15216862 (the Lua behind the page's own {{Calculator:Tombs of Amascut loot}}). The chest's dropsline rows are structural leftovers of a point-purchase reward shop, not per-row rarities: the unique roll is a single points-and-raid-level probability, the common table's quantities are computed from points, and the tertiary rows carry kill-count and ownership state. None of that is in any drop row, so no parser improvement reaches it. Modelled per player, solo. The module divides points and chances by team size; the page states the group unique roll uses pooled points with per-player probability proportional to contribution. One chest for one player is this simulator's unit, so team size is out of scope rather than approximated. ctx.points is the reward-point total AS USED FOR LOOT, i.e. already net of the 5,000 starting points the page says are subtracted at the end (confirmed by the cited JagexAsh tweet). The module never adds them either. NOT modelled, deliberately: the five remnant challenge rewards (need \"all <boss> invocations and level 4 <boss>\", inexpressible); the elite combat achievement's 1.05x clue multiplier (no CA context exists); duplicate jewels once all four are owned (needs conjoined ownership gates, and it is a terminal state that changes no headline figure).",
   "name": "Chest (Tombs of Amascut)",
-  "aliases": [],
   "wikiPage": "Chest (Tombs of Amascut)",
   "wikiRevId": 15274037,
   "variants": [
     "normal"
   ],
+  "contextDefaults": {
+    "members": true,
+    "raidLevel": 300,
+    "points": 20000
+  },
   "tables": [
     {
       "id": "toa:dung-gate",
       "mode": "preroll",
       "rolls": 1,
-      "withoutReplacement": false,
+      "notes": "Pre-roll: 'Only obtained if a player ends the raid with less than 1,500 total reward points.' A preroll hit suppresses the later preroll (uniques) and weighted (common) tables, which is exactly the page's 'If dung is received, no common rewards are given.'",
       "entries": [
         {
           "node": {
@@ -40,14 +45,13 @@
             }
           ]
         }
-      ],
-      "notes": "Pre-roll: 'Only obtained if a player ends the raid with less than 1,500 total reward points.' A preroll hit suppresses the later preroll (uniques) and weighted (common) tables, which is exactly the page's 'If dung is received, no common rewards are given.'"
+      ]
     },
     {
       "id": "toa:unique",
       "mode": "preroll",
       "rolls": 1,
-      "withoutReplacement": false,
+      "notes": "One unique per raid at most. The rate is the raid's TOTAL unique chance and the oneOf picks which item; see toaUniqueRate for why that composition is exact, including the out-of-invocation-range 1/50. A hit suppresses the common table: 'If one of these items is received, no common rewards are given.'",
       "entries": [
         {
           "node": {
@@ -215,15 +219,14 @@
             "params": {}
           }
         }
-      ],
-      "notes": "One unique per raid at most. The rate is the raid's TOTAL unique chance and the oneOf picks which item; see toaUniqueRate for why that composition is exact, including the out-of-invocation-range 1/50. A hit suppresses the common table: 'If one of these items is received, no common rewards are given.'"
+      ]
     },
     {
       "id": "toa:common",
       "mode": "weighted",
-      "rolls": 3,
       "denominator": 27,
-      "withoutReplacement": false,
+      "rolls": 3,
+      "notes": "Three rolls, each of the 27 items equally likely. Quantities scale with points and raid level per item divisor (Module:Tombs of Amascut loot NORMAL_LOOT). Cache of runes is not special-cased: its divisor of 999999 makes the formula floor to 0 and the max(...,1) yield the page's fixed quantity of 1.",
       "entries": [
         {
           "node": {
@@ -754,14 +757,12 @@
             "weight": 1
           }
         }
-      ],
-      "notes": "Three rolls, each of the 27 items equally likely. Quantities scale with points and raid level per item divisor (Module:Tombs of Amascut loot NORMAL_LOOT). Cache of runes is not special-cased: its divisor of 999999 makes the formula floor to 0 and the max(...,1) yield the page's fixed quantity of 1."
+      ]
     },
     {
       "id": "toa:tertiary",
       "mode": "independent",
-      "rolls": 1,
-      "withoutReplacement": false,
+      "notes": "Tertiary rewards are independent of the dung/unique/common outcome ('Tertiary rewards are still obtainable'). The thread and the jewel pool each carry bad-luck mitigation on raid completions; the jewel pool draws only from jewels not yet owned, which is what the page's 1/37.5, 1/25 and 1/12.5 effective rates describe.",
       "entries": [
         {
           "node": {
@@ -943,14 +944,12 @@
             "params": {}
           }
         }
-      ],
-      "notes": "Tertiary rewards are independent of the dung/unique/common outcome ('Tertiary rewards are still obtainable'). The thread and the jewel pool each carry bad-luck mitigation on raid completions; the jewel pool draws only from jewels not yet owned, which is what the page's 1/37.5, 1/25 and 1/12.5 effective rates describe."
+      ]
     },
     {
       "id": "toa:challenge",
       "mode": "always",
-      "rolls": 1,
-      "withoutReplacement": false,
+      "notes": "Guaranteed on meeting the challenge. Only the three the wiki gates on raid level alone are modelled; the five remnants additionally require 'all <boss> invocations and level 4 <boss>', which no Condition expresses. Each is gated on zero party deaths and on not already owning it ('the game will check the player's inventory, worn equipment and bank ... if it does, then the roll is canceled').",
       "entries": [
         {
           "node": {
@@ -1051,59 +1050,7 @@
             "when": "below"
           }
         }
-      ],
-      "notes": "Guaranteed on meeting the challenge. Only the three the wiki gates on raid level alone are modelled; the five remnants additionally require 'all <boss> invocations and level 4 <boss>', which no Condition expresses. Each is gated on zero party deaths and on not already owning it ('the game will check the player's inventory, worn equipment and bank ... if it does, then the roll is canceled')."
+      ]
     }
-  ],
-  "contextDefaults": {
-    "members": true,
-    "points": 20000,
-    "raidLevel": 300
-  },
-  "status": "needs_review",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "no tableRef nodes"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "12 formula rate(s)/weight(s) evaluated successfully"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "27 formula-driven quantity/rolls/multiplier value(s) evaluated successfully"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "point_scaled: Unique chance scales with raid invocation level and completion points, not with any fixed per-kill rarity — needs the toa_invocation formula. The chest's own dropsline rows are structural leftovers of the raid's point-purchase reward shop, not independent per-row rarities; parsing them as an ordinary weighted table would misrepresent the mechanic entirely regardless of whether the weights happen to reconcile."
-      },
-      {
-        "check": "drops_covered",
-        "ok": false,
-        "detail": "5 of 50 wiki drop row(s) missing from the document: Ancient remnant, Remnant of akkha, Remnant of ba-ba, Remnant of kephri, Remnant of zebak"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1
+  ]
 }
