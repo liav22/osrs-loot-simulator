@@ -60,6 +60,7 @@ export function AdminPage() {
             slug={entry.slug}
             name={entry.name}
             status={entry.status}
+            repeatable={entry.repeatable}
             open={expanded === entry.slug}
             onToggle={() => setExpanded((current) => (current === entry.slug ? null : entry.slug))}
           />
@@ -74,12 +75,14 @@ function AdminRow({
   slug,
   name,
   status,
+  repeatable,
   open,
   onToggle,
 }: {
   slug: string
   name: string
   status: BossStatus
+  repeatable: boolean
   open: boolean
   onToggle: () => void
 }) {
@@ -95,6 +98,13 @@ function AdminRow({
         <span className="flex items-center gap-2">
           <span className="text-muted">{open ? '▾' : '▸'}</span>
           {name}
+          {/* Excluded from search by default, not deleted — this badge is
+              the audit trail that keeps that call visible. */}
+          {!repeatable && (
+            <span className="inline-flex items-center rounded-full bg-neutral-800 px-2 py-0.5 text-xs font-medium text-muted ring-1 ring-inset ring-neutral-700">
+              Not repeatable
+            </span>
+          )}
         </span>
         <StatusBadge status={status} />
       </button>

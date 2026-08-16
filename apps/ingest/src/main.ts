@@ -28,6 +28,10 @@ import {
 import { buildItemIndex, readItemIndex } from './items/index.js'
 import { loadItemAllowlist } from './items/allowlist.js'
 import { loadWatchlist, checkWatchlistConsistency } from './validate/watchlist.js'
+import {
+  loadRepeatableOverrides,
+  checkRepeatableOverridesConsistency,
+} from './inventory/repeatable.js'
 import { fetchGePrices } from './prices/ge-prices.js'
 import { loadSharedTables } from './tables/shared-tables.js'
 import { parseBoss } from './parse/parse-boss.js'
@@ -229,9 +233,16 @@ function reportDistribution(
  * advisory: it depends on live GE prices that move day to day and was found
  * non-convergent on Brutus this session (313.70 vs 597.57, 47.5% off), so it
  * cannot gate `verified` — see docs/DECISIONS.md.
+ *
+ * Default is every tier: `include: true` is the only real gate on what gets
+ * attempted (same principle landmine #12 already established for overrides —
+ * a tier is how much machinery a page LOOKS like it needs, not a decision
+ * that it's not worth building). `--tier` narrows to specific tier(s) for a
+ * targeted or iterative run; it is a filter, not a default exclusion. See
+ * docs/DECISIONS.md, "Should tier gate parsing at all?".
  */
 async function parseCommand(argv: readonly string[]): Promise<void> {
-  const tierFilter = new Set((flagValue(argv, '--tier') ?? 'A').split(','))
+  const tierFilter = new Set((flagValue(argv, '--tier') ?? TIERS.join(',')).split(','))
   const sourceFilter = flagValue(argv, '--source')
 
   const inventory = InventorySchema.parse(JSON.parse(await readFile(INVENTORY_PATH, 'utf8')))
@@ -312,6 +323,7 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
       gePrices,
       sharedTables,
       templates,
+      repeatable: source.repeatable,
     })
     outcomes.push(outcome)
     const mark = outcome.status === 'parse_failed' ? '  !! ' : '     '
@@ -359,6 +371,12 @@ async function main(): Promise<void> {
         `data/_inventory.json written: ${inventory.bosses.length} pages -> ` +
           `${inventory.lootSources.length} loot sources.`
       )
+      const repeatableOverrides = await loadRepeatableOverrides()
+      const orphans = checkRepeatableOverridesConsistency(repeatableOverrides, inventory)
+      if (orphans.length > 0) {
+        log(`\n!! data/repeatable-overrides.json has ${orphans.length} orphaned entr(ies):`)
+        for (const orphan of orphans) log(`     ${orphan.message}`)
+      }
       return
     }
     case 'audit-exclusions': {
@@ -425,7 +443,8 @@ async function main(): Promise<void> {
     default:
       log(
         'Usage: ingest <verify-schema | fetch --all | fetch --page <Title> | sources | ' +
-          'audit-exclusions | item-index | item-icons | triage | parse [--tier A[,B,C]] [--source <id>] | ' +
+          'audit-exclusions | item-index | item-icons | triage | parse [--tier A[,B,C]] [--source <id>] ' +
+          '(default: every tier) | ' +
           'site-index> [--delay ms]'
       )
       process.exitCode = 1

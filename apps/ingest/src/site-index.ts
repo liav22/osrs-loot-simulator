@@ -36,6 +36,18 @@ export const SiteIndexEntrySchema = z
      * it is read from the gitignored snapshot cache: see `buildSiteIndex`.
      */
     image: z.string().min(1).optional(),
+    /**
+     * Whether the same account can get more than one roll against this
+     * source — false for a boss fought once during a quest and never again.
+     * The document is still generated and still in the index (nothing is
+     * deleted — see docs/DECISIONS.md), just excluded from the default
+     * search results the way `apps/web`'s fuzzy search reads this field.
+     * Defaults to `true` (matching `BossSchema`) so `committedImages` can
+     * still read a `data/index.json` written before this field existed,
+     * rather than silently dropping every carried-forward image the same
+     * way an unparseable previous index already degrades.
+     */
+    repeatable: z.boolean().default(true),
   })
   .strict()
 
@@ -126,6 +138,7 @@ export async function buildSiteIndex(
       name: boss.name,
       aliases: boss.aliases,
       status: boss.status,
+      repeatable: boss.repeatable,
       ...(image === undefined ? {} : { image }),
     })
   }

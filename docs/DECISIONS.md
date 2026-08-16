@@ -4173,3 +4173,259 @@ produce genuinely different item sets (37 vs 22 distinct items for Obor, 64 vs
 the condition count alone. `weights_sum` passes cleanly for both; both stay
 `needs_review` only for the pre-existing, unrelated transcluded-mode-guess
 reason nine other sources already carry.
+
+## Tier E run, and whether tier should gate parsing at all
+
+### Tier E: the `trivial` classification held up
+
+Ran `ingest parse --tier E` over the 29 `include: true` tier-E sources (plus 5
+pulled in as always by an authored override: `chest-tombs-of-amascut`,
+`doom-of-mokhaiotl`, `lunar-chest`, `reward-pool`, `zalcano` — already-shipped
+work, not new tier-E coverage). Result over the 29: **26 verified, 1
+needs_review, 2 parse_failed.**
+
+**Structurally, "trivial" is confirmed, not stale.** Zero of the 29 produced a
+`weighted`-mode table — every document is `always` and/or `independent` only,
+several rows at most. Phase 2's own description ("a handful of `Always` rows,
+which is a valid `always` table and needs no weighted machinery") is exactly
+what came back. This is a different shape of "stale" than tier D's: the tier D
+sweep found sources that were mis-triaged as *unbuildable* when they were
+merely *unattempted* (14 of 18 assembled cleanly on the first real try). Tier
+E's 29 were correctly triaged as *simple*; they were simply never run.
+
+The three non-`verified` outcomes, checked individually rather than assumed:
+
+- **`chronozon`** — `needs_review`, structure is fine (2 tables, 3 entries, no
+  weighted mode), blocked only by `items_known`: `Crest part (Johnathon)` is
+  not in the item index. An item-resolution gap, not a table-shape one.
+- **`sigmund`** — `parse_failed`, and correctly so. Its only `{{DropsLine}}`-
+  family call is a `{{DropsLineSkill}}` under `==Pickpocketing==` (a quest-only
+  Thieving pickpocket reward, `Key (The Lost Tribe)`, restricted to [[The Lost
+  Tribe]]), not combat loot. There is no `==Drops==`/`==Rewards==` heading on
+  the page at all. This is a genuinely lootless boss page, same shape as the
+  `Dream Mentor` quartet documented above — not a hidden real table.
+- **`burnt-chest`** — `parse_failed`, but for a different, real reason: it had
+  **no wikitext snapshot on disk at all** (fetched now via the existing
+  `fetch-wikitext-for.ts` one-off script — the same tool already used for this
+  exact situation, not a new mechanism, and not a re-fetch to fix a parser bug,
+  since it had never been fetched once). Once fetched: one row, `{{DropsLineReward|name=Warm
+  key|quantity=1|rarity=Always}}`, under `==Loot==`. Genuinely trivial (an
+  `Infobox Scenery` quest chest, not even a monster) — but `DROPS_SECTION_TITLE`
+  doesn't recognise "Loot" as a drops-heading synonym, so it still
+  `parse_failed`s on the heading-matching gap, same class as Black demon's and
+  Obor/Bryophyta's (see "DROPS_SECTION_TITLE widening" above). Checked across
+  all 209 wikitext snapshots: `burnt-chest` is the only one with a `==Loot==`
+  heading, so this is not corpus-wide the way the multi-word-prefix gap was.
+  Not fixed here — flagged, matching how Black demon's gap was left flagged
+  rather than drive-by patched.
+
+### Should tier gate parsing at all? No — and it already half-didn't
+
+The prompt for this question: **Commander Zilyana and K'ril Tsutsaroth were
+absent from the corpus for the project's entire life because their main tables
+sum to 133.2/127 and 135.7/127, while Kree'arra's 126.95/127 fit** ("Why the
+four God Wars bosses split C/D — measured, not guessed", above). All four are
+mechanically the same shape (GWDRDT-gated, still blocked on landmine #3
+either way) — the only thing the 127-vs-133.2 split decided was whether
+`--tier A,B,C` would ever look at the page. Two of four Wars bosses were
+invisible to every report, every coverage count, every session, for a
+reason with nothing to do with whether they were worth building.
+
+**This is the same shape as landmine #12's reward-pool bug**, just wider: a
+tier filter deciding a source doesn't get attempted, silently, indefinitely,
+for a reason orthogonal to whether it should be built. Landmine #12 fixed the
+narrow case (an authored override always forces its source through, whatever
+`--tier` says) and reasoned it as "the tier filter is a triage convenience for
+deciding what to *attempt*; it was never meant to overrule an explicit human
+decision." That reasoning applies to every source, not just the ones lucky
+enough to have an override already written — a source's `include: true` *is*
+the explicit human decision that it belongs in the corpus. Tier answers "how
+much parser sophistication does this page look like it needs," which is
+useful for choosing what to work on next and worthless as a reason to never
+look at something. The tier-D sweep and this tier-E run both demonstrate the
+same thing empirically: most of what a tier gate hides turns out to compile
+cleanly the first time anyone actually runs it (14/18 for D, 26/29 for E).
+
+**Changed**: `apps/ingest/src/main.ts`'s `parse` command now defaults `--tier`
+to every tier (`TIERS.join(',')`) instead of `'A'`. `include: true` is now the
+only real attempt-gate; `--tier`/`--source` remain as narrowing filters for a
+targeted or iterative run (e.g. re-running just tier E after a fix). Verified
+as a pure widening, not a behaviour change for what was already being
+attempted: a full `ingest parse` (no `--tier`) re-parses all 102 sources and
+produces a byte-identical `data/bosses/*.json` for every previously-existing
+document — `git diff --stat data/bosses/` is empty against the tier-A–D
+documents already committed; the only files touched are the 27 new tier-E
+documents (26 `verified`, 1 `needs_review`), which appear as untracked
+additions, not diffs.
+`docs/OVERRIDES.md`'s "tier filter does not apply to an override" note is now
+a special case of a more general fact (tier does not gate anything by
+default) rather than the whole story — left as-is rather than rewritten, since
+it is still true and still the right thing to know when authoring an
+override.
+
+`reportDistribution`'s `gateEligible` count (the `sources`/`triage` command,
+unrelated to `parse`) is untouched — it is a pre-parse *expectation* signal
+("this tier usually compiles cleanly"), not a gate, and stays useful as
+exactly that.
+
+### Coverage, corrected
+
+Regenerated `data/index.json` (`ingest site-index`) and `data/item-icons.json`
+(`ingest item-icons`, 963 corpus items now vs. fewer before tier E, 960
+resolved/3 unresolved: `Ikkle Hydra`, `Muphin`, `Nothing` — all pre-existing,
+none new) after the tier-E documents landed; both are derived from
+`data/bosses/*.json` and go stale exactly the way `data/index.json` has
+before (landmine #10's cousin). Full `pnpm -r test` green afterwards: 447/449
+ingest (2 pre-existing skips), 176/176 loot-model (Brutus gate included), 74/74
+web.
+
+| | count | of include:true (102) |
+|---|---|---|
+| documents (any status) | 98 | 96.1% |
+| `verified` | 55 | 53.9% |
+| `manual_override` | 2 | 2.0% |
+| `needs_review` | 41 | 40.2% |
+| no document | 4 | 3.9% |
+
+`verified` against documents rather than the full gate: **55/98 = 56.1%**.
+
+By tier (`with document` / `include: true`): A 25/26, B 1/1, C 26/26, D 19/20,
+E 27/29. The 4 sources with no document at all: `revenant-maledictus` (A, own
+open parse_failed reason, unrelated), `rewards-chest-fortis-colosseum` (D,
+wave-shaped, needs an override per section 3 of `docs/HANDOFF.md`),
+`burnt-chest` and `sigmund` (E, both above).
+
+This replaces the "66 of 102 (65%), verified 28/102 (27%)" figures recorded
+under "The tier D sweep, and the coverage denominator was wrong" — those were
+correct as of that sweep and are now superseded by this run, not wrong when
+written.
+
+## `repeatable`: distinguishing "has a wiki page" from "can be farmed"
+
+Tier E's 29 sources include ~26 quest bosses fought exactly once per account
+— Culinaromancer, Agrith-Naar, Damis, Chronozon, Bouncer, Dad and similar.
+`me.json` is the sharpest case: as a slug, typing "me" into search surfaced
+it. A loot simulator has nothing to say about a source a player can only
+sample once, and this content was crowding out the bosses people actually
+farm. `repeatable: boolean` is a new field distinguishing the two, added to
+`Boss` (`packages/loot-model`), `BossEntry`/`LootSource`
+(`apps/ingest/src/inventory/schema.ts`), and `SiteIndexEntry`
+(`apps/ingest/src/site-index.ts` / `apps/web/src/lib/types.ts`).
+
+### The signal: `Category:Quest monsters` / `Category:Quest NPCs`, live
+
+`buildInventory` already calls `client.categoriesFor(titles)` for every one
+of the 172 inventory pages (real `action=query&prop=categories` data, not a
+wikitext regex — template-inherited categorisation is seen too) to detect
+encounters. `deriveRepeatable` (`apps/ingest/src/inventory/repeatable.ts`)
+reuses that same already-fetched map at zero extra request cost: a page
+tagged `Quest monsters`/`Quest NPCs` defaults to `repeatable: false`, plus a
+tiny hand-verified override file for the one case the category over-fires.
+
+**Precision/recall, measured against the corpus rather than assumed:**
+
+- **30 of 102 `include: true` sources carry one of the two categories.**
+  Checked EVERY one of the 30 individually against its own page's prose (not
+  memory) — 29 are genuinely one-time (several state it outright: Giant Sea
+  Snake — "it can only be fought once"; Arrg — "can only be fought during the
+  quest, and afterwards he can be fought in the Nightmare Zone", which does
+  NOT count, below). **One false positive: Vorkath.** Tagged (first fought
+  during Dragon Slayer II) but the page states "After completing Dragon
+  Slayer II, players may fight Vorkath again, with increased stats and
+  rewards" and carries a `Post-quest` infobox version — a quest that GATES
+  access to an ordinary, persistent, heavily-farmed boss, not one that
+  consumes the encounter. Corrected via `data/repeatable-overrides.json`, a
+  one-entry hand-authored file in the shape of `data/mechanics-
+  watchlist.json` (cited reason, `.strict()` schema, a
+  `checkRepeatableOverridesConsistency` guard wired into `ingest sources`
+  exactly like the watchlist's orphan check, plus a real-corpus regression
+  test in `apps/ingest/test/repeatable.test.ts`).
+- **Zero false negatives found.** Every `include: true` document WITHOUT
+  either category was checked for a small/trivial shape (a proxy for "looks
+  like a one-off reward") and exactly two matched: Sir Mordred and Demonic
+  Brutus. Both are genuinely repeatable per their own prose — Sir Mordred has
+  a non-instanced overworld location distinct from his quest encounter and
+  "will respawn shortly"; Demonic Brutus is a hard-mode variant of the
+  ordinary, repeatable `brutus` source, gated by carrying an item rather than
+  by a one-time script. Neither needed an override; the default (`true`) was
+  already right for both.
+- **Two phrase-matching false-positive shapes were found and deliberately
+  NOT built into a second automatic signal**, because both were noisier than
+  useful when checked against the corpus: (1) "fought again... in the
+  Nightmare Zone" (Dad, Kamil) — an NMZ dream-fight doesn't drop the source's
+  own loot table, so this is not repeatable for simulation purposes despite
+  reading like it; (2) a within-encounter HP-reset — "must be fought again
+  from full hitpoints" (Evil Spirit), "regenerates... and you must kill him
+  again" (Black Knight Titan) — not a return visit at all. A naive
+  "`fought again`" regex fires on both and is wrong both times; neither
+  needed an override, since the category default (`false`) was already
+  correct. Recorded in `repeatable.ts`'s header rather than shipped as code,
+  matching how the "Uniques heading" question stays a documented dead end
+  rather than a widened keyword list (`docs/HANDOFF.md`, "What NOT to redo").
+
+### Aggregation, threading, and what does NOT carry it
+
+`LootSource.repeatable` is `bosses.some(...)` over its constituent boss
+pages' own flags — an aggregated encounter (Barrows, a raid) is repeatable
+the moment one member page is, which every real many-boss source in the
+corpus already is; no case needed the "one page is a one-off, the others
+aren't" branch this exists to handle correctly if it ever comes up.
+
+`repeatable` reaches `data/bosses/*.json` by being threaded through
+`parseBoss` -> `assembleBoss`/`applyOverride`, NOT re-derived at parse time
+and NOT something an override file can declare (`BossOverrideSchema` stays
+`.strict()` without it) — it is corpus scope metadata from `_inventory.json`,
+supplied externally and always wins, the same way `status`/`validation` are
+supplied externally rather than trusted from an override. `Boss.repeatable`
+defaults to `true` in the zod schema so the ~150 existing hand-built test
+fixtures across the repo didn't need touching; every REAL parse always sets
+it explicitly. `SiteIndexEntry.repeatable` also defaults to `true`, for a
+narrower reason: `buildSiteIndex`'s `committedImages` reads a possibly-older
+`data/index.json` and already degrades gracefully (empty map, not a crash)
+when it can't parse one — a required field with no default would have turned
+"can't parse the previous index" into "silently drop every carried-forward
+portrait," the exact bug class landmine #10 already named once.
+
+**Not filtered: `ingest parse`.** Kept parsing everything regardless of
+`repeatable` — the coverage number stays honest and the pipeline stays the
+single source of truth, per the request. Only two things read the flag:
+`apps/web/src/components/SearchBox.tsx` (filters it out of the DEFAULT
+result list) and nothing else — `/admin` (`AdminPage.tsx`) deliberately does
+not filter, and now renders a "Not repeatable" badge next to affected
+entries, so a bad classification stays visible rather than just
+technically-not-deleted. That was the explicit condition on shipping this at
+all: the same shape of mistake hid Zilyana and K'ril for the project's whole
+life, and hiding a flag's own effect would be the identical bug one layer up.
+
+### Coverage, split by repeatable — the 55 was inflated
+
+| | total | documents | verified | needs_review | manual_override |
+|---|---|---|---|---|---|
+| **all include:true** | 102 | 98 (96.1%) | 55 (53.9%) | 41 | 2 |
+| **repeatable: true** | 72 | 70 (97.2%) | 31 (43.1%) | 37 | 2 |
+| **repeatable: false** | 30 | 28 (93.3%) | 24 (80.0%) | 4 | 0 |
+
+**24 of the 55 `verified` sources (43.6%) are one-time quest encounters** —
+almost entirely tier E's trivial `always`-only documents, which is exactly
+why they clear every deterministic check so easily. The number that actually
+answers "how much of what people would simulate is verified" is **31/72 =
+43.1%** (44.3% of the 70 repeatable documents), noticeably lower than the
+headline 53.9%. Neither number is wrong — they answer different questions —
+but the headline without this split hides which one a reader is getting.
+
+### Why this is the same shape as the tier-gate finding, and what's different
+
+Both are "a threshold silently decided what existed in / was visible from the
+corpus, without the threshold itself being about correctness or value." The
+tier gate hid REAL, buildable content (Zilyana, K'ril, all of tier E) behind
+an attempt-gate nobody meant as a permanence decision. `repeatable` is the
+mirror case: nothing was HIDDEN — every one of these 29 sources parsed,
+validated, and shipped a real, checked document — the problem was that
+`verified`/the search index made no distinction between "the pipeline is
+confident about this" and "this is worth a user's attention," and a strict
+count conflated them. The fix is also the mirror image: the tier gate was
+removed as a gate and kept as an ordering hint; `repeatable` was added as a
+new, first-class, NON-gating field precisely so the same failure mode
+(quietly excluding real data from an unqualified count) can't recur here —
+the flag is visible everywhere the data is, correctable in one small file,
+and never removes a document.

@@ -29,7 +29,13 @@ export function SearchBox({ autoFocus = true }: { autoFocus?: boolean }) {
 
   const results = useMemo(() => {
     if (data === undefined || query.trim() === '') return []
-    return fuzzySearch(data.entries, query).slice(0, MAX_RESULTS)
+    // A boss fought once during a quest and never again (Bouncer, Sigmund,
+    // "Me") has nothing for a kill simulator to say, and it crowds out the
+    // bosses people actually farm — see docs/DECISIONS.md. Excluded from
+    // search, not deleted: the document, and the flag itself, stay visible
+    // on /admin, which is the audit trail for exactly this kind of call.
+    const repeatable = data.entries.filter((entry) => entry.repeatable)
+    return fuzzySearch(repeatable, query).slice(0, MAX_RESULTS)
   }, [data, query])
 
   // A shorter result list must not leave the highlight pointing past its end.

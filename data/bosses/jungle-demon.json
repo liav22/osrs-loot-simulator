@@ -1,0 +1,83 @@
+{
+  "slug": "jungle-demon",
+  "name": "Jungle Demon",
+  "aliases": [],
+  "wikiPage": "Jungle Demon",
+  "wikiRevId": 15199289,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "jungle-demon:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25772,
+            "itemKey": "malicious-ashes",
+            "name": "Malicious ashes",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 1 wiki drop row(s) reachable in the document"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": false
+}

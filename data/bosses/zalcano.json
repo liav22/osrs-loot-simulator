@@ -749,5 +749,6 @@
     ]
   },
   "source": "merged",
-  "parserVersion": 1
+  "parserVersion": 1,
+  "repeatable": true
 }

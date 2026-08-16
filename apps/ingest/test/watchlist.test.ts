@@ -71,6 +71,7 @@ function bossEntry(overrides: Partial<Inventory['bosses'][number]>): Inventory['
     tier: 'A',
     rowCount: 1,
     encounter: null,
+    repeatable: true,
     ...overrides,
   }
 }
@@ -95,6 +96,7 @@ function lootSourceEntry(
     include: true,
     excludeReason: null,
     bosses: ['placeholder'],
+    repeatable: true,
     ...overrides,
   }
 }

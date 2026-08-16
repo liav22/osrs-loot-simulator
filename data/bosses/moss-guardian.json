@@ -1,0 +1,141 @@
+{
+  "slug": "moss-guardian",
+  "name": "Moss Guardian",
+  "aliases": [],
+  "wikiPage": "Moss Guardian",
+  "wikiRevId": 15199663,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "moss-guardian:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 532,
+            "itemKey": "big-bones",
+            "name": "Big bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4205,
+            "itemKey": "consecration-seed",
+            "name": "Consecration seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "moss-guardian:1:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10976,
+            "itemKey": "long-bone",
+            "name": "Long bone",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10977,
+            "itemKey": "curved-bone",
+            "name": "Curved bone",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5012.5
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 4 wiki drop row(s) reachable in the document"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": false
+}

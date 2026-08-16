@@ -87,7 +87,7 @@ describe('BossOverrideSchema', () => {
 describe('applyOverride: merging over a generated document', () => {
   it("replaces tables wholesale and marks the result 'merged'", () => {
     const merged = BossSchema.parse(
-      applyOverride(generated(), { slug: 'test-source', note: NOTE, tables: overrideTables }, 7)
+      applyOverride(generated(), { slug: 'test-source', note: NOTE, tables: overrideTables }, 7, true)
     )
     expect(merged.source).toBe('merged')
     expect(merged.tables).toHaveLength(1)
@@ -103,7 +103,7 @@ describe('applyOverride: merging over a generated document', () => {
 
   it('overrides only the metadata fields it actually declares', () => {
     const merged = BossSchema.parse(
-      applyOverride(generated(), { slug: 'test-source', note: NOTE, name: 'Hand Authored' }, 7)
+      applyOverride(generated(), { slug: 'test-source', note: NOTE, name: 'Hand Authored' }, 7, true)
     )
     expect(merged.name).toBe('Hand Authored')
     expect(merged.aliases).toEqual(['gen'])
@@ -123,7 +123,7 @@ describe('applyOverride: standing in for a document that never parsed', () => {
         wikiPage: 'Ancient chest',
         wikiRevId: 15295333,
         tables: overrideTables,
-      }, 7)
+      }, 7, true)
     )
     expect(full.source).toBe('override')
     expect(full.name).toBe('Ancient chest')
@@ -131,11 +131,16 @@ describe('applyOverride: standing in for a document that never parsed', () => {
   })
 
   it('fails loudly when a required field is missing, naming every one', () => {
-    expect(() => applyOverride(null, { slug: 'test-source', note: NOTE }, 7)).toThrow(
+    expect(() => applyOverride(null, { slug: 'test-source', note: NOTE }, 7, true)).toThrow(
       /must supply name, wikiPage, wikiRevId, tables/
     )
     expect(() =>
-      applyOverride(null, { slug: 'test-source', note: NOTE, name: 'x', tables: overrideTables }, 7)
+      applyOverride(
+        null,
+        { slug: 'test-source', note: NOTE, name: 'x', tables: overrideTables },
+        7,
+        true
+      )
     ).toThrow(/wikiPage, wikiRevId/)
   })
 })

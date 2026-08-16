@@ -26,21 +26,58 @@ send it to. Leave the seed on `0` and each press of Simulate rolls a fresh one.
 
 ## Corpus status
 
-52 loot sources are published, each carrying its own validation report:
+The wiki's `Category:Bosses` resolves to 102 distinct loot sources that the
+project has decided to cover (`include: true` in `data/_inventory.json` — the
+denominator; not every page in the category is a real, independent loot
+source, and a few are quest-only encounters with no loot at all). **98 of
+those 102 (96.1%) have a generated document**, each carrying its own
+validation report:
 
-| status | count | meaning |
-|---|---|---|
-| `verified` | 18 | the pipeline derived this from the wiki unaided, and every check passes |
-| `manual_override` | 2 | a hand-authored document (`data/overrides/`) that passes every check — the mechanic exists in prose the parser cannot read |
-| `needs_review` | 32 | at least one check fails; the rates shown may be incomplete or wrong |
+| status | count | of 102 include:true | of 98 documents | meaning |
+|---|---|---|---|---|
+| `verified` | 55 | 53.9% | 56.1% | the pipeline derived this from the wiki unaided, and every check passes |
+| `manual_override` | 2 | 2.0% | 2.0% | a hand-authored document (`data/overrides/`) that passes every check — the mechanic exists in prose the parser cannot read |
+| `needs_review` | 41 | 40.2% | 41.8% | at least one check fails; the rates shown may be incomplete or wrong |
+| *(no document)* | 4 | 3.9% | — | not yet parseable at all — see below |
 
-The badge in the UI is the same field. **`needs_review` is the honest majority
-right now**, largely because of one known parser gap: a drop sub-table written
-as a wiki *transclusion* (`{{TreeHerbSeedDropLines}}`, `{{Uniques/Corporeal
-Beast}}`) produces no `{{DropsLine}}` rows, so the parser never sees it. The
-`drops_covered` check compares every document against the wiki's own drop rows
-and fails the sources where that happened, rather than shipping a `verified`
-badge that is not true. See `docs/DECISIONS.md`.
+**That 55 is inflated by content nobody would simulate, and the site's search
+already corrects for it.** Every source also carries `repeatable: boolean` —
+whether the same account can get more than one roll against it, `false` for a
+boss fought exactly once during a quest and never again (Bouncer, Sigmund,
+`Dad`). Split by that field:
+
+| | total | documents | verified |
+|---|---|---|---|
+| `repeatable: true` (farmable) | 72 | 70 (97.2%) | 31 (**43.1%**) |
+| `repeatable: false` (one-time) | 30 | 28 (93.3%) | 24 (80.0%) |
+
+24 of the 55 `verified` sources (43.6%) are one-time quest encounters, whose
+tiny `always`-only tables clear every deterministic check almost by
+construction. **31/72 = 43.1%, not 53.9%, is the number that answers "how
+much of what a user would actually simulate is verified."** Nothing is
+deleted for this — the documents, and the flag itself, stay visible on
+`/admin` — but `apps/web`'s default search excludes non-repeatable sources,
+since a simulator has nothing meaningful to say about a source with exactly
+one possible sample. See `docs/DECISIONS.md`'s `repeatable` entry for the
+signal it's derived from (`Category:Quest monsters` membership, live from the
+wiki) and its measured false-positive/negative rates.
+
+The badge in the UI is the `status` field. **`needs_review` is still a large
+minority**, for several distinct reasons rather than one: a drop sub-table
+written as a wiki *transclusion* (`{{TreeHerbSeedDropLines}}`,
+`{{Uniques/Corporeal Beast}}`) that reconciles but hasn't had its
+single-mutually-exclusive-roll shape confirmed as a modelling decision; a
+handful of raids and points-scaled mechanics that the wiki states in prose the
+parser doesn't read (Tombs of Amascut, Theatre of Blood, Zalcano, Reward
+pool); and a few genuinely unknown curves the wiki names but never states a
+formula for. `drops_covered` compares every document against the wiki's own
+drop rows and fails a source where they disagree, rather than shipping a
+`verified` badge that isn't true. The 4 sources with no document yet:
+`revenant-maledictus` and `rewards-chest-fortis-colosseum` (parser gaps),
+`burnt-chest` and `sigmund` (one heading-matching gap, one has no real combat
+loot). See `docs/DECISIONS.md` for the full history and reasoning behind every
+number here — it changes as the corpus grows, this table will not always be
+current.
 
 ## Running it
 
@@ -80,7 +117,7 @@ pnpm ingest fetch --all      # snapshot the boss category, revisions, drop rows
 pnpm ingest item-index       # resolve item names to item ids
 pnpm ingest item-icons       # resolve every item's wiki icon file name
 pnpm ingest triage           # classify each source by how hard it is to parse
-pnpm ingest parse --tier A,B,C   # -> data/bosses/*.json
+pnpm ingest parse            # -> data/bosses/*.json (every include:true source; --tier narrows it)
 pnpm ingest site-index       # -> data/index.json (search index + boss portraits)
 ```
 

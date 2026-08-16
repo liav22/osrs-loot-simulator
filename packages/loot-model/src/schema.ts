@@ -1017,6 +1017,16 @@ export const BossSchema = z
     validation: ValidationResultSchema,
     source: BossSourceSchema,
     parserVersion: z.number().int().nonnegative(),
+    /**
+     * Whether the same account can generate more than one independent roll
+     * against this source — false for a boss fought once during a quest and
+     * never again. Not a loot-mechanics fact and never read by
+     * `simulate`/`expectedValue`; it is corpus scope metadata, derived from
+     * wiki category/prose signals in `apps/ingest/src/inventory/build.ts` and
+     * carried through unchanged by the parser. Defaults to `true` since that
+     * is the overwhelming majority and most test fixtures don't care.
+     */
+    repeatable: z.boolean().default(true),
   })
   .strict()
   .superRefine((boss, ctx) => {

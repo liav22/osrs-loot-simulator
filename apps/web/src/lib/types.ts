@@ -11,6 +11,12 @@ export interface SiteIndexEntry {
    * so the layout is identical either way.
    */
   image?: string
+  /**
+   * Whether the same account can get more than one roll against this source
+   * — false for a boss fought once during a quest and never again.
+   * `SearchBox` excludes these by default; `/admin` does not, on purpose.
+   */
+  repeatable: boolean
 }
 
 export interface SiteIndex {

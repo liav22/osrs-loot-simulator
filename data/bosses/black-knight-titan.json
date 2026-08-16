@@ -780,5 +780,6 @@
     ]
   },
   "source": "generated",
-  "parserVersion": 1
+  "parserVersion": 1,
+  "repeatable": false
 }

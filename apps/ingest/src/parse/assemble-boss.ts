@@ -21,6 +21,8 @@ export interface AssembleOptions {
   parserVersion: number
   itemIndex: ItemIndex
   allowlist: ItemAllowlist
+  /** Corpus scope metadata, not derived here — see `inventory/repeatable.ts`. */
+  repeatable: boolean
 }
 
 export interface AssembleResult {
@@ -232,6 +234,7 @@ export function assembleBoss(
     contextDefaults: {},
     validation: { ok: false, checks: [] },
     tables: tableInputs,
+    repeatable: options.repeatable,
   }
 
   const parsed = BossSchema.safeParse(input)

@@ -22,6 +22,7 @@ const SiteIndexEntrySchema = z
     // declared, not merely tolerated — an index carrying it would otherwise be
     // rejected outright.
     image: z.string().min(1).optional(),
+    repeatable: z.boolean(),
   })
   .strict()
 

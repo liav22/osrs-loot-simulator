@@ -1,0 +1,109 @@
+{
+  "slug": "demonic-brutus",
+  "name": "Demonic Brutus",
+  "aliases": [],
+  "wikiPage": "Demonic Brutus",
+  "wikiRevId": 15214877,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "demonic-brutus:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33099,
+            "itemKey": "brutus-slippers",
+            "name": "Brutus slippers",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "demonic-brutus:1:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33124,
+            "itemKey": "beef",
+            "name": "Beef",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 2 wiki drop row(s) reachable in the document"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": true
+}

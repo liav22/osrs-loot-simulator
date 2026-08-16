@@ -38,6 +38,8 @@ export interface ParseOptions {
   allowlist: ItemAllowlist
   watchlist: Watchlist
   gePrices: GePrices
+  /** From `data/_inventory.json`'s `LootSource.repeatable` — see `inventory/repeatable.ts`. */
+  repeatable: boolean
   /** `data/tables/*.json`, keyed by id — Phase 3's shared RDT/gem/mega-rare records. */
   sharedTables: ReadonlyMap<string, Table>
   /**
@@ -138,6 +140,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     parserVersion: options.parserVersion,
     itemIndex: options.itemIndex,
     allowlist: options.allowlist,
+    repeatable: options.repeatable,
   })
 
   if (result.boss === null && !overrideCarriesTables) {
@@ -155,7 +158,9 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   const merged =
     override === null
       ? result.boss!
-      : BossSchema.parse(applyOverride(result.boss, override, options.parserVersion))
+      : BossSchema.parse(
+          applyOverride(result.boss, override, options.parserVersion, options.repeatable)
+        )
 
   const itemInputs = collectItemInputs(merged.tables)
 

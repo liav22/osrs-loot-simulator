@@ -26,6 +26,7 @@ const options = {
   parserVersion: 1,
   itemIndex,
   allowlist: emptyAllowlist,
+  repeatable: true,
 }
 
 describe('assembleBoss', () => {

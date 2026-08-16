@@ -64,9 +64,16 @@ describe('buildSiteIndex', () => {
     const index = await buildSiteIndex(dir, tablesDir)
     expect(SiteIndexSchema.safeParse(index).success).toBe(true)
     expect(index.entries).toEqual([
-      { slug: 'other-boss', name: 'Other Boss', aliases: [], status: 'needs_review' },
-      { slug: 'test-boss', name: 'Test Boss', aliases: ['tb'], status: 'verified' },
+      { slug: 'other-boss', name: 'Other Boss', aliases: [], status: 'needs_review', repeatable: true },
+      { slug: 'test-boss', name: 'Test Boss', aliases: ['tb'], status: 'verified', repeatable: true },
     ])
+  })
+
+  it('carries a non-repeatable source through as repeatable: false, not omitted', async () => {
+    await writeFile(join(dir, 'test-boss.json'), bossJson({ repeatable: false }))
+    const index = await buildSiteIndex(dir, tablesDir)
+    expect(index.entries).toHaveLength(1)
+    expect(index.entries[0]?.repeatable).toBe(false)
   })
 
   it('produces an empty index for an empty directory', async () => {

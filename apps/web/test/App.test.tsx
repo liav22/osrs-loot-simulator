@@ -7,8 +7,11 @@ import { App } from '../src/App'
 const FAKE_INDEX = {
   generatedAt: '2026-01-01T00:00:00.000Z',
   entries: [
-    { slug: 'giant-mole', name: 'Giant Mole', aliases: [], status: 'verified' },
-    { slug: 'abyssal-sire', name: 'Abyssal Sire', aliases: [], status: 'needs_review' },
+    { slug: 'giant-mole', name: 'Giant Mole', aliases: [], status: 'verified', repeatable: true },
+    { slug: 'abyssal-sire', name: 'Abyssal Sire', aliases: [], status: 'needs_review', repeatable: true },
+    // A boss fought once during a quest and never again — present in the
+    // index (nothing is deleted) but excluded from search by default.
+    { slug: 'me', name: 'Me', aliases: [], status: 'verified', repeatable: false },
   ],
   // The shared-table manifest the browser fetches `data/tables/` by. Required
   // by the strict schema — the site index is a boundary, so a response missing
@@ -71,6 +74,20 @@ describe('App', () => {
     expect(screen.queryByText('Abyssal Sire')).not.toBeInTheDocument()
   })
 
+  /**
+   * A source fought once during a quest and never again is in the index
+   * (nothing is deleted — see docs/DECISIONS.md) and matches this query
+   * exactly, but a loot simulator has nothing to say about a source you can
+   * only sample once, so it must not appear here even on an exact-name match.
+   */
+  it('excludes a non-repeatable source from search, even on an exact match', async () => {
+    renderApp('/')
+    fireEvent.change(screen.getByPlaceholderText(/search a boss/i), { target: { value: 'Me' } })
+
+    await waitFor(() => expect(fetch).toHaveBeenCalled())
+    expect(screen.queryByText('Me')).not.toBeInTheDocument()
+  })
+
   it('renders the attribution footer on every page', async () => {
     renderApp('/')
     expect(screen.getByText(/Old School RuneScape Wiki/)).toBeInTheDocument()
@@ -109,6 +126,6 @@ describe('App', () => {
     expect(import.meta.env.DEV).toBe(true)
     renderApp('/admin')
     expect(await screen.findByText('Validation report')).toBeInTheDocument()
-    expect(screen.getByText(/2 sources/)).toBeInTheDocument()
+    expect(screen.getByText(/3 sources/)).toBeInTheDocument()
   })
 })

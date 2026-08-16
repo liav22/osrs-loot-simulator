@@ -1,6 +1,6 @@
 {
   "inventoryVersion": 1,
-  "generatedAt": "2026-08-11T14:17:53.521Z",
+  "generatedAt": "2026-08-16T09:00:31.686Z",
   "category": "Category:Bosses",
   "bosses": [
     {
@@ -12,7 +12,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 88,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "agrith-na-na",
@@ -23,7 +24,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "agrith-naar",
@@ -34,7 +36,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "ahrim-the-blighted",
@@ -45,7 +48,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Barrows"
+      "encounter": "Barrows",
+      "repeatable": false
     },
     {
       "slug": "akkha",
@@ -56,7 +60,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 2,
-      "encounter": "Tombs of Amascut"
+      "encounter": "Tombs of Amascut",
+      "repeatable": true
     },
     {
       "slug": "alchemical-hydra",
@@ -67,7 +72,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 90,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "amoxliatl",
@@ -78,7 +84,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 39,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "araxxor",
@@ -89,7 +96,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 88,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "arrg",
@@ -100,7 +108,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 68,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "artio",
@@ -111,7 +120,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 47,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "arzinian-avatar-of-magic",
@@ -122,7 +132,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "arzinian-avatar-of-ranging",
@@ -133,7 +144,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "arzinian-avatar-of-strength",
@@ -144,7 +156,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "arzinian-being-of-bordanzan",
@@ -155,7 +168,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "ba-ba",
@@ -166,7 +180,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 2,
-      "encounter": "Tombs of Amascut"
+      "encounter": "Tombs of Amascut",
+      "repeatable": true
     },
     {
       "slug": "barrelchest",
@@ -177,7 +192,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "barrows",
@@ -188,7 +204,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Barrows"
+      "encounter": "Barrows",
+      "repeatable": true
     },
     {
       "slug": "barrows-brothers",
@@ -199,7 +216,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Barrows"
+      "encounter": "Barrows",
+      "repeatable": true
     },
     {
       "slug": "black-demon",
@@ -210,7 +228,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 155,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "black-golem",
@@ -221,7 +240,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "black-knight-titan",
@@ -232,7 +252,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 94,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "blood-moon",
@@ -243,7 +264,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "blue-moon",
@@ -254,7 +276,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "boss",
@@ -265,7 +288,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "boss-kill-count",
@@ -276,7 +300,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "bouncer",
@@ -287,7 +312,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "bouncer-ghost",
@@ -298,7 +324,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "branda-the-fire-queen",
@@ -309,7 +336,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 36,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "brutus",
@@ -320,7 +348,8 @@
       "classification": "own-table",
       "tier": "B",
       "rowCount": 25,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "bryophyta",
@@ -331,7 +360,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 108,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "callisto",
@@ -342,7 +372,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 54,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "calvar-ion",
@@ -353,7 +384,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 48,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "cerberus",
@@ -364,7 +396,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 68,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "chaos-elemental",
@@ -375,7 +408,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 70,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "chaos-fanatic",
@@ -386,7 +420,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 58,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "chronozon",
@@ -397,7 +432,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 3,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "commander-zilyana",
@@ -408,7 +444,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 52,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "corporeal-beast",
@@ -419,7 +456,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 49,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "corrupted-hunllef",
@@ -430,7 +468,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "The Gauntlet"
+      "encounter": "The Gauntlet",
+      "repeatable": true
     },
     {
       "slug": "count-draynor",
@@ -441,7 +480,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "crazy-archaeologist",
@@ -452,7 +492,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 57,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "crystalline-hunllef",
@@ -463,7 +504,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "The Gauntlet"
+      "encounter": "The Gauntlet",
+      "repeatable": true
     },
     {
       "slug": "culinaromancer",
@@ -474,7 +516,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "dad",
@@ -485,7 +528,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 3,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "dagannoth-kings",
@@ -496,7 +540,8 @@
       "classification": "component",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Dagannoth Kings"
+      "encounter": "Dagannoth Kings",
+      "repeatable": true
     },
     {
       "slug": "dagannoth-mother",
@@ -507,7 +552,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 2,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "dagannoth-prime",
@@ -518,7 +564,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 85,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "dagannoth-rex",
@@ -529,7 +576,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 77,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "dagannoth-supreme",
@@ -540,7 +588,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 84,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "damis",
@@ -551,7 +600,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "dawn",
@@ -562,7 +612,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Grotesque Guardians"
+      "encounter": "Grotesque Guardians",
+      "repeatable": true
     },
     {
       "slug": "delrith",
@@ -573,7 +624,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "demonic-brutus",
@@ -584,7 +636,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 2,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "deranged-archaeologist",
@@ -595,7 +648,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 72,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "dessourt",
@@ -606,7 +660,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "dessous",
@@ -617,7 +672,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "dharok-the-wretched",
@@ -628,7 +684,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Barrows"
+      "encounter": "Barrows",
+      "repeatable": false
     },
     {
       "slug": "doom-of-mokhaiotl",
@@ -639,7 +696,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 30,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "duke-sucellus",
@@ -650,7 +708,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 44,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "dusk",
@@ -661,7 +720,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Grotesque Guardians"
+      "encounter": "Grotesque Guardians",
+      "repeatable": true
     },
     {
       "slug": "eclipse-moon",
@@ -672,7 +732,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "eldric-the-ice-king",
@@ -683,7 +744,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 37,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "elidinis-warden",
@@ -694,7 +756,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Tombs of Amascut"
+      "encounter": "Tombs of Amascut",
+      "repeatable": true
     },
     {
       "slug": "elvarg",
@@ -705,7 +768,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "evil-spirit",
@@ -716,7 +780,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "fareed",
@@ -727,7 +792,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "flambeed",
@@ -738,7 +804,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "gadderanks",
@@ -749,7 +816,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "galvek",
@@ -760,7 +828,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "gelatinnoth-mother",
@@ -771,7 +840,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "gemstone-crab",
@@ -782,7 +852,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 8,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "general-graardor",
@@ -793,7 +864,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 52,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "general-khazard",
@@ -804,7 +876,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "giant-mole",
@@ -815,7 +888,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 53,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "giant-roc",
@@ -826,7 +900,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 3,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "giant-scarab",
@@ -837,7 +912,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "giant-sea-snake",
@@ -848,7 +924,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 70,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "glod",
@@ -859,7 +936,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 7,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "glough",
@@ -870,7 +948,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "great-olm",
@@ -881,7 +960,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Chambers of Xeric"
+      "encounter": "Chambers of Xeric",
+      "repeatable": true
     },
     {
       "slug": "grey-golem",
@@ -892,7 +972,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "grotesque-guardians",
@@ -903,7 +984,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 45,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "guthan-the-infested",
@@ -914,7 +996,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Barrows"
+      "encounter": "Barrows",
+      "repeatable": false
     },
     {
       "slug": "hespori",
@@ -925,7 +1008,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 37,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "ice-demon",
@@ -936,7 +1020,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 4,
-      "encounter": "Chambers of Xeric"
+      "encounter": "Chambers of Xeric",
+      "repeatable": true
     },
     {
       "slug": "ice-troll-king",
@@ -947,7 +1032,8 @@
       "classification": "component",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Nightmare Zone"
+      "encounter": "Nightmare Zone",
+      "repeatable": false
     },
     {
       "slug": "judge-of-yama-a-kingdom-divided",
@@ -958,7 +1044,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "jungle-demon",
@@ -969,7 +1056,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "k-ril-tsutsaroth",
@@ -980,7 +1068,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 51,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "kalphite-queen",
@@ -991,7 +1080,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 77,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "kamil",
@@ -1002,7 +1092,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 2,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "karamel",
@@ -1013,7 +1104,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "karil-the-tainted",
@@ -1024,7 +1116,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Barrows"
+      "encounter": "Barrows",
+      "repeatable": false
     },
     {
       "slug": "kephri",
@@ -1035,7 +1128,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 2,
-      "encounter": "Tombs of Amascut"
+      "encounter": "Tombs of Amascut",
+      "repeatable": true
     },
     {
       "slug": "king-black-dragon",
@@ -1046,7 +1140,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 55,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "koschei-the-deathless",
@@ -1057,7 +1152,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "kraken",
@@ -1068,7 +1164,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 52,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "kree-arra",
@@ -1079,7 +1176,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 54,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "mad-angel",
@@ -1090,7 +1188,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 55,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "maggot-king",
@@ -1101,7 +1200,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 36,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "me",
@@ -1112,7 +1212,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "melzar-the-mad",
@@ -1123,7 +1224,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 2,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "moons-of-peril",
@@ -1134,7 +1236,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "moss-guardian",
@@ -1145,7 +1248,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 4,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "muttadile",
@@ -1156,7 +1260,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 9,
-      "encounter": "Chambers of Xeric"
+      "encounter": "Chambers of Xeric",
+      "repeatable": true
     },
     {
       "slug": "nex",
@@ -1167,7 +1272,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 34,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "nezikchened",
@@ -1178,7 +1284,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "nylocas-vasilias",
@@ -1189,7 +1296,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Theatre of Blood"
+      "encounter": "Theatre of Blood",
+      "repeatable": true
     },
     {
       "slug": "obor",
@@ -1200,7 +1308,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 126,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "penance-queen",
@@ -1211,7 +1320,8 @@
       "classification": "component",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Barbarian Assault"
+      "encounter": "Barbarian Assault",
+      "repeatable": true
     },
     {
       "slug": "pestilent-bloat",
@@ -1222,7 +1332,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Theatre of Blood"
+      "encounter": "Theatre of Blood",
+      "repeatable": true
     },
     {
       "slug": "phantom-muspah",
@@ -1233,7 +1344,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 98,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "phosani-s-nightmare",
@@ -1244,7 +1356,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 39,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "revenant-maledictus",
@@ -1255,7 +1368,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 59,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "royal-titans",
@@ -1266,7 +1380,8 @@
       "classification": "component",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Royal Titans"
+      "encounter": "Royal Titans",
+      "repeatable": true
     },
     {
       "slug": "salarin-the-twisted",
@@ -1277,7 +1392,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 37,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "sarachnis",
@@ -1288,7 +1404,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 75,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "scorpia",
@@ -1299,7 +1416,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 38,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "scurrius",
@@ -1310,7 +1428,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 41,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "sea-troll-queen",
@@ -1321,7 +1440,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "shellbane-gryphon",
@@ -1332,7 +1452,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 52,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "sigmund",
@@ -1343,7 +1464,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "sir-leye",
@@ -1354,7 +1476,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "sir-mordred",
@@ -1365,7 +1488,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "skotizo",
@@ -1376,7 +1500,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 34,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "slagilith",
@@ -1387,7 +1512,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 3,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "slash-bash",
@@ -1398,7 +1524,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 5,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "slug-prince",
@@ -1409,7 +1536,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "sol-heredit",
@@ -1420,7 +1548,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": "Fortis Colosseum"
+      "encounter": "Fortis Colosseum",
+      "repeatable": true
     },
     {
       "slug": "sotetseg",
@@ -1431,7 +1560,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 3,
-      "encounter": "Theatre of Blood"
+      "encounter": "Theatre of Blood",
+      "repeatable": true
     },
     {
       "slug": "spindel",
@@ -1442,7 +1572,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 45,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "tarn",
@@ -1453,7 +1584,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "tekton",
@@ -1464,7 +1596,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 6,
-      "encounter": "Chambers of Xeric"
+      "encounter": "Chambers of Xeric",
+      "repeatable": true
     },
     {
       "slug": "tempoross",
@@ -1475,7 +1608,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "the-draugen",
@@ -1486,7 +1620,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "the-everlasting",
@@ -1497,7 +1632,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "the-hueycoatl",
@@ -1508,7 +1644,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 33,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "the-illusive",
@@ -1519,7 +1656,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "the-inadequacy",
@@ -1530,7 +1668,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "the-leviathan",
@@ -1541,7 +1680,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 44,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "the-maiden-of-sugadinti",
@@ -1552,7 +1692,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Theatre of Blood"
+      "encounter": "Theatre of Blood",
+      "repeatable": true
     },
     {
       "slug": "the-mimic",
@@ -1563,7 +1704,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 62,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "the-nightmare",
@@ -1574,7 +1716,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 38,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "the-untouchable",
@@ -1585,7 +1728,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "the-whisperer",
@@ -1596,7 +1740,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 44,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "thermonuclear-smoke-devil",
@@ -1607,7 +1752,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 58,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "tolna",
@@ -1618,7 +1764,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "torag-the-corrupted",
@@ -1629,7 +1776,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Barrows"
+      "encounter": "Barrows",
+      "repeatable": false
     },
     {
       "slug": "tree-spirit-lost-city",
@@ -1640,7 +1788,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "treus-dayth",
@@ -1651,7 +1800,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "tumeken-s-warden",
@@ -1662,7 +1812,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Tombs of Amascut"
+      "encounter": "Tombs of Amascut",
+      "repeatable": true
     },
     {
       "slug": "tzkal-zuk",
@@ -1673,7 +1824,8 @@
       "classification": "component",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Inferno"
+      "encounter": "Inferno",
+      "repeatable": true
     },
     {
       "slug": "tztok-jad",
@@ -1684,7 +1836,8 @@
       "classification": "component",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "TzHaar Fight Cave"
+      "encounter": "TzHaar Fight Cave",
+      "repeatable": true
     },
     {
       "slug": "ulfric",
@@ -1695,7 +1848,8 @@
       "classification": "trivial",
       "tier": "E",
       "rowCount": 1,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "vanguard",
@@ -1706,7 +1860,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 8,
-      "encounter": "Chambers of Xeric"
+      "encounter": "Chambers of Xeric",
+      "repeatable": true
     },
     {
       "slug": "vardorvis",
@@ -1717,7 +1872,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 45,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "vasa-nistirio",
@@ -1728,7 +1884,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 5,
-      "encounter": "Chambers of Xeric"
+      "encounter": "Chambers of Xeric",
+      "repeatable": true
     },
     {
       "slug": "venenatis",
@@ -1739,7 +1896,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 54,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "verac-the-defiled",
@@ -1750,7 +1908,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Barrows"
+      "encounter": "Barrows",
+      "repeatable": false
     },
     {
       "slug": "verzik-vitur",
@@ -1761,7 +1920,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Theatre of Blood"
+      "encounter": "Theatre of Blood",
+      "repeatable": false
     },
     {
       "slug": "vespula",
@@ -1772,7 +1932,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 5,
-      "encounter": "Chambers of Xeric"
+      "encounter": "Chambers of Xeric",
+      "repeatable": true
     },
     {
       "slug": "vet-ion",
@@ -1783,7 +1944,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 55,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "vorkath",
@@ -1794,7 +1956,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 90,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "white-golem",
@@ -1805,7 +1968,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "wintertodt",
@@ -1816,7 +1980,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "wrathmaw",
@@ -1827,7 +1992,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "xamphur",
@@ -1838,7 +2004,8 @@
       "classification": "no-loot-data",
       "tier": "E",
       "rowCount": 0,
-      "encounter": null
+      "encounter": null,
+      "repeatable": false
     },
     {
       "slug": "xarpus",
@@ -1849,7 +2016,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 1,
-      "encounter": "Theatre of Blood"
+      "encounter": "Theatre of Blood",
+      "repeatable": true
     },
     {
       "slug": "yama",
@@ -1860,7 +2028,8 @@
       "classification": "own-table",
       "tier": "D",
       "rowCount": 58,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "zalcano",
@@ -1871,7 +2040,8 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 26,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     },
     {
       "slug": "zebak",
@@ -1882,7 +2052,8 @@
       "classification": "reward-page",
       "tier": "E",
       "rowCount": 2,
-      "encounter": "Tombs of Amascut"
+      "encounter": "Tombs of Amascut",
+      "repeatable": true
     },
     {
       "slug": "zulrah",
@@ -1893,7 +2064,8 @@
       "classification": "own-table",
       "tier": "C",
       "rowCount": 75,
-      "encounter": null
+      "encounter": null,
+      "repeatable": true
     }
   ],
   "lootSources": [
@@ -1907,7 +2079,8 @@
       "excludeReason": null,
       "bosses": [
         "abyssal-sire"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "agrith-na-na",
@@ -1919,7 +2092,8 @@
       "excludeReason": null,
       "bosses": [
         "agrith-na-na"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "agrith-naar",
@@ -1931,7 +2105,8 @@
       "excludeReason": null,
       "bosses": [
         "agrith-naar"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "alchemical-hydra",
@@ -1943,7 +2118,8 @@
       "excludeReason": null,
       "bosses": [
         "alchemical-hydra"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "amoxliatl",
@@ -1955,7 +2131,8 @@
       "excludeReason": null,
       "bosses": [
         "amoxliatl"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "ancient-chest",
@@ -1973,7 +2150,8 @@
         "vanguard",
         "vasa-nistirio",
         "vespula"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "araxxor",
@@ -1985,7 +2163,8 @@
       "excludeReason": null,
       "bosses": [
         "araxxor"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "arrg",
@@ -1997,7 +2176,8 @@
       "excludeReason": null,
       "bosses": [
         "arrg"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "artio",
@@ -2009,7 +2189,8 @@
       "excludeReason": null,
       "bosses": [
         "artio"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "arzinian-avatar-of-magic",
@@ -2021,7 +2202,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "arzinian-avatar-of-magic"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "arzinian-avatar-of-ranging",
@@ -2033,7 +2215,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "arzinian-avatar-of-ranging"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "arzinian-avatar-of-strength",
@@ -2045,7 +2228,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "arzinian-avatar-of-strength"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "arzinian-being-of-bordanzan",
@@ -2057,7 +2241,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "arzinian-being-of-bordanzan"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "barbarian-assault",
@@ -2069,7 +2254,8 @@
       "excludeReason": "component of Barbarian Assault, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "penance-queen"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "barrelchest",
@@ -2081,7 +2267,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "barrelchest"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "black-demon",
@@ -2093,7 +2280,8 @@
       "excludeReason": null,
       "bosses": [
         "black-demon"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "black-golem",
@@ -2105,7 +2293,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "black-golem"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "black-knight-titan",
@@ -2117,7 +2306,8 @@
       "excludeReason": null,
       "bosses": [
         "black-knight-titan"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "boss-kill-count",
@@ -2129,7 +2319,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "boss-kill-count"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "bouncer",
@@ -2141,7 +2332,8 @@
       "excludeReason": null,
       "bosses": [
         "bouncer"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "bouncer-ghost",
@@ -2153,7 +2345,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "bouncer-ghost"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "branda-the-fire-queen",
@@ -2165,7 +2358,8 @@
       "excludeReason": null,
       "bosses": [
         "branda-the-fire-queen"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "brutus",
@@ -2177,7 +2371,8 @@
       "excludeReason": null,
       "bosses": [
         "brutus"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "bryophyta",
@@ -2189,7 +2384,8 @@
       "excludeReason": null,
       "bosses": [
         "bryophyta"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "burnt-chest",
@@ -2201,7 +2397,8 @@
       "excludeReason": null,
       "bosses": [
         "fareed"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "callisto",
@@ -2213,7 +2410,8 @@
       "excludeReason": null,
       "bosses": [
         "callisto"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "calvar-ion",
@@ -2225,7 +2423,8 @@
       "excludeReason": null,
       "bosses": [
         "calvar-ion"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "cerberus",
@@ -2237,7 +2436,8 @@
       "excludeReason": null,
       "bosses": [
         "cerberus"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "chaos-elemental",
@@ -2249,7 +2449,8 @@
       "excludeReason": null,
       "bosses": [
         "chaos-elemental"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "chaos-fanatic",
@@ -2261,7 +2462,8 @@
       "excludeReason": null,
       "bosses": [
         "chaos-fanatic"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "chest-barrows",
@@ -2281,7 +2483,8 @@
         "karil-the-tainted",
         "torag-the-corrupted",
         "verac-the-defiled"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "chest-tombs-of-amascut",
@@ -2298,7 +2501,8 @@
         "kephri",
         "tumeken-s-warden",
         "zebak"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "chronozon",
@@ -2310,7 +2514,8 @@
       "excludeReason": null,
       "bosses": [
         "chronozon"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "commander-zilyana",
@@ -2322,7 +2527,8 @@
       "excludeReason": null,
       "bosses": [
         "commander-zilyana"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "corporeal-beast",
@@ -2334,7 +2540,8 @@
       "excludeReason": null,
       "bosses": [
         "corporeal-beast"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "count-draynor",
@@ -2346,7 +2553,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "count-draynor"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "crazy-archaeologist",
@@ -2358,7 +2566,8 @@
       "excludeReason": null,
       "bosses": [
         "crazy-archaeologist"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "culinaromancer",
@@ -2370,7 +2579,8 @@
       "excludeReason": null,
       "bosses": [
         "culinaromancer"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "dad",
@@ -2382,7 +2592,8 @@
       "excludeReason": null,
       "bosses": [
         "dad"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "dagannoth-kings",
@@ -2394,7 +2605,8 @@
       "excludeReason": "component of Dagannoth Kings, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "dagannoth-kings"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "dagannoth-mother",
@@ -2406,7 +2618,8 @@
       "excludeReason": null,
       "bosses": [
         "dagannoth-mother"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "dagannoth-prime",
@@ -2418,7 +2631,8 @@
       "excludeReason": null,
       "bosses": [
         "dagannoth-prime"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "dagannoth-rex",
@@ -2430,7 +2644,8 @@
       "excludeReason": null,
       "bosses": [
         "dagannoth-rex"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "dagannoth-supreme",
@@ -2442,7 +2657,8 @@
       "excludeReason": null,
       "bosses": [
         "dagannoth-supreme"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "damis",
@@ -2454,7 +2670,8 @@
       "excludeReason": null,
       "bosses": [
         "damis"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "delrith",
@@ -2466,7 +2683,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "delrith"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "demonic-brutus",
@@ -2478,7 +2696,8 @@
       "excludeReason": null,
       "bosses": [
         "demonic-brutus"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "deranged-archaeologist",
@@ -2490,7 +2709,8 @@
       "excludeReason": null,
       "bosses": [
         "deranged-archaeologist"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "dessourt",
@@ -2502,7 +2722,8 @@
       "excludeReason": null,
       "bosses": [
         "dessourt"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "dessous",
@@ -2514,7 +2735,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "dessous"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "doom-of-mokhaiotl",
@@ -2526,7 +2748,8 @@
       "excludeReason": null,
       "bosses": [
         "doom-of-mokhaiotl"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "duke-sucellus",
@@ -2538,7 +2761,8 @@
       "excludeReason": null,
       "bosses": [
         "duke-sucellus"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "eldric-the-ice-king",
@@ -2550,7 +2774,8 @@
       "excludeReason": null,
       "bosses": [
         "eldric-the-ice-king"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "elvarg",
@@ -2562,7 +2787,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "elvarg"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "evil-spirit",
@@ -2574,7 +2800,8 @@
       "excludeReason": null,
       "bosses": [
         "evil-spirit"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "flambeed",
@@ -2586,7 +2813,8 @@
       "excludeReason": null,
       "bosses": [
         "flambeed"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "gadderanks",
@@ -2598,7 +2826,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "gadderanks"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "galvek",
@@ -2610,7 +2839,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "galvek"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "gelatinnoth-mother",
@@ -2622,7 +2852,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "gelatinnoth-mother"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "gemstone-crab",
@@ -2634,7 +2865,8 @@
       "excludeReason": null,
       "bosses": [
         "gemstone-crab"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "general-graardor",
@@ -2646,7 +2878,8 @@
       "excludeReason": null,
       "bosses": [
         "general-graardor"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "general-khazard",
@@ -2658,7 +2891,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "general-khazard"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "giant-mole",
@@ -2670,7 +2904,8 @@
       "excludeReason": null,
       "bosses": [
         "giant-mole"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "giant-roc",
@@ -2682,7 +2917,8 @@
       "excludeReason": null,
       "bosses": [
         "giant-roc"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "giant-scarab",
@@ -2694,7 +2930,8 @@
       "excludeReason": null,
       "bosses": [
         "giant-scarab"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "giant-sea-snake",
@@ -2706,7 +2943,8 @@
       "excludeReason": null,
       "bosses": [
         "giant-sea-snake"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "glod",
@@ -2718,7 +2956,8 @@
       "excludeReason": null,
       "bosses": [
         "glod"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "glough",
@@ -2730,7 +2969,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "glough"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "grey-golem",
@@ -2742,7 +2982,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "grey-golem"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "grotesque-guardians",
@@ -2756,7 +2997,8 @@
         "dawn",
         "dusk",
         "grotesque-guardians"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "hespori",
@@ -2768,7 +3010,8 @@
       "excludeReason": null,
       "bosses": [
         "hespori"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "inferno",
@@ -2780,7 +3023,8 @@
       "excludeReason": "component of Inferno, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "tzkal-zuk"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "judge-of-yama-a-kingdom-divided",
@@ -2792,7 +3036,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "judge-of-yama-a-kingdom-divided"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "jungle-demon",
@@ -2804,7 +3049,8 @@
       "excludeReason": null,
       "bosses": [
         "jungle-demon"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "k-ril-tsutsaroth",
@@ -2816,7 +3062,8 @@
       "excludeReason": null,
       "bosses": [
         "k-ril-tsutsaroth"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "kalphite-queen",
@@ -2828,7 +3075,8 @@
       "excludeReason": null,
       "bosses": [
         "kalphite-queen"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "kamil",
@@ -2840,7 +3088,8 @@
       "excludeReason": null,
       "bosses": [
         "kamil"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "karamel",
@@ -2852,7 +3101,8 @@
       "excludeReason": null,
       "bosses": [
         "karamel"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "king-black-dragon",
@@ -2864,7 +3114,8 @@
       "excludeReason": null,
       "bosses": [
         "king-black-dragon"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "koschei-the-deathless",
@@ -2876,7 +3127,8 @@
       "excludeReason": null,
       "bosses": [
         "koschei-the-deathless"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "kraken",
@@ -2888,7 +3140,8 @@
       "excludeReason": null,
       "bosses": [
         "kraken"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "kree-arra",
@@ -2900,7 +3153,8 @@
       "excludeReason": null,
       "bosses": [
         "kree-arra"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "lunar-chest",
@@ -2915,7 +3169,8 @@
         "blood-moon",
         "blue-moon",
         "eclipse-moon"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "mad-angel",
@@ -2927,7 +3182,8 @@
       "excludeReason": null,
       "bosses": [
         "mad-angel"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "maggot-king",
@@ -2939,7 +3195,8 @@
       "excludeReason": null,
       "bosses": [
         "maggot-king"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "me",
@@ -2951,7 +3208,8 @@
       "excludeReason": null,
       "bosses": [
         "me"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "melzar-the-mad",
@@ -2963,7 +3221,8 @@
       "excludeReason": null,
       "bosses": [
         "melzar-the-mad"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "monumental-chest",
@@ -2980,7 +3239,8 @@
         "the-maiden-of-sugadinti",
         "verzik-vitur",
         "xarpus"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "moss-guardian",
@@ -2992,7 +3252,8 @@
       "excludeReason": null,
       "bosses": [
         "moss-guardian"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "nex",
@@ -3004,7 +3265,8 @@
       "excludeReason": null,
       "bosses": [
         "nex"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "nezikchened",
@@ -3016,7 +3278,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "nezikchened"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "nightmare-zone",
@@ -3028,7 +3291,8 @@
       "excludeReason": "component of Nightmare Zone, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "ice-troll-king"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "obor",
@@ -3040,7 +3304,8 @@
       "excludeReason": null,
       "bosses": [
         "obor"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "phantom-muspah",
@@ -3052,7 +3317,8 @@
       "excludeReason": null,
       "bosses": [
         "phantom-muspah"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "phosani-s-nightmare",
@@ -3064,7 +3330,8 @@
       "excludeReason": null,
       "bosses": [
         "phosani-s-nightmare"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "revenant-maledictus",
@@ -3076,7 +3343,8 @@
       "excludeReason": null,
       "bosses": [
         "revenant-maledictus"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "reward-cart",
@@ -3088,7 +3356,8 @@
       "excludeReason": null,
       "bosses": [
         "wintertodt"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "reward-chest-the-gauntlet",
@@ -3101,7 +3370,8 @@
       "bosses": [
         "corrupted-hunllef",
         "crystalline-hunllef"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "reward-pool",
@@ -3113,7 +3383,8 @@
       "excludeReason": null,
       "bosses": [
         "tempoross"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "rewards-chest-fortis-colosseum",
@@ -3125,7 +3396,8 @@
       "excludeReason": null,
       "bosses": [
         "sol-heredit"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "royal-titans",
@@ -3137,7 +3409,8 @@
       "excludeReason": "component of Royal Titans, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "royal-titans"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "salarin-the-twisted",
@@ -3149,7 +3422,8 @@
       "excludeReason": null,
       "bosses": [
         "salarin-the-twisted"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "sarachnis",
@@ -3161,7 +3435,8 @@
       "excludeReason": null,
       "bosses": [
         "sarachnis"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "scorpia",
@@ -3173,7 +3448,8 @@
       "excludeReason": null,
       "bosses": [
         "scorpia"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "scurrius",
@@ -3185,7 +3461,8 @@
       "excludeReason": null,
       "bosses": [
         "scurrius"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "sea-troll-queen",
@@ -3197,7 +3474,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "sea-troll-queen"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "shellbane-gryphon",
@@ -3209,7 +3487,8 @@
       "excludeReason": null,
       "bosses": [
         "shellbane-gryphon"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "sigmund",
@@ -3221,7 +3500,8 @@
       "excludeReason": null,
       "bosses": [
         "sigmund"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "sir-leye",
@@ -3233,7 +3513,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "sir-leye"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "sir-mordred",
@@ -3245,7 +3526,8 @@
       "excludeReason": null,
       "bosses": [
         "sir-mordred"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "skotizo",
@@ -3257,7 +3539,8 @@
       "excludeReason": null,
       "bosses": [
         "skotizo"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "slagilith",
@@ -3269,7 +3552,8 @@
       "excludeReason": null,
       "bosses": [
         "slagilith"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "slash-bash",
@@ -3281,7 +3565,8 @@
       "excludeReason": null,
       "bosses": [
         "slash-bash"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "slug-prince",
@@ -3293,7 +3578,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "slug-prince"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "spindel",
@@ -3305,7 +3591,8 @@
       "excludeReason": null,
       "bosses": [
         "spindel"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "tarn",
@@ -3317,7 +3604,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "tarn"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "the-draugen",
@@ -3329,7 +3617,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "the-draugen"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "the-everlasting",
@@ -3341,7 +3630,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "the-everlasting"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "the-hueycoatl",
@@ -3353,7 +3643,8 @@
       "excludeReason": null,
       "bosses": [
         "the-hueycoatl"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "the-illusive",
@@ -3365,7 +3656,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "the-illusive"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "the-inadequacy",
@@ -3377,7 +3669,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "the-inadequacy"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "the-leviathan",
@@ -3389,7 +3682,8 @@
       "excludeReason": null,
       "bosses": [
         "the-leviathan"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "the-mimic",
@@ -3401,7 +3695,8 @@
       "excludeReason": null,
       "bosses": [
         "the-mimic"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "the-nightmare",
@@ -3413,7 +3708,8 @@
       "excludeReason": null,
       "bosses": [
         "the-nightmare"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "the-untouchable",
@@ -3425,7 +3721,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "the-untouchable"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "the-whisperer",
@@ -3437,7 +3734,8 @@
       "excludeReason": null,
       "bosses": [
         "the-whisperer"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "thermonuclear-smoke-devil",
@@ -3449,7 +3747,8 @@
       "excludeReason": null,
       "bosses": [
         "thermonuclear-smoke-devil"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "tolna",
@@ -3461,7 +3760,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "tolna"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "tree-spirit-lost-city",
@@ -3473,7 +3773,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "tree-spirit-lost-city"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "treus-dayth",
@@ -3485,7 +3786,8 @@
       "excludeReason": null,
       "bosses": [
         "treus-dayth"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "tzhaar-fight-cave",
@@ -3497,7 +3799,8 @@
       "excludeReason": "component of TzHaar Fight Cave, which has no drop rows on any page — point-based rewards belong in an override",
       "bosses": [
         "tztok-jad"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "ulfric",
@@ -3509,7 +3812,8 @@
       "excludeReason": null,
       "bosses": [
         "ulfric"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "vardorvis",
@@ -3521,7 +3825,8 @@
       "excludeReason": null,
       "bosses": [
         "vardorvis"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "venenatis",
@@ -3533,7 +3838,8 @@
       "excludeReason": null,
       "bosses": [
         "venenatis"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "vet-ion",
@@ -3545,7 +3851,8 @@
       "excludeReason": null,
       "bosses": [
         "vet-ion"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "vorkath",
@@ -3557,7 +3864,8 @@
       "excludeReason": null,
       "bosses": [
         "vorkath"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "white-golem",
@@ -3569,7 +3877,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "white-golem"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "wrathmaw",
@@ -3581,7 +3890,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "wrathmaw"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "xamphur",
@@ -3593,7 +3903,8 @@
       "excludeReason": "no drop rows, no encounter, no reward page",
       "bosses": [
         "xamphur"
-      ]
+      ],
+      "repeatable": false
     },
     {
       "id": "yama",
@@ -3605,7 +3916,8 @@
       "excludeReason": null,
       "bosses": [
         "yama"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "zalcano",
@@ -3617,7 +3929,8 @@
       "excludeReason": null,
       "bosses": [
         "zalcano"
-      ]
+      ],
+      "repeatable": true
     },
     {
       "id": "zulrah",
@@ -3629,7 +3942,8 @@
       "excludeReason": null,
       "bosses": [
         "zulrah"
-      ]
+      ],
+      "repeatable": true
     }
   ]
 }

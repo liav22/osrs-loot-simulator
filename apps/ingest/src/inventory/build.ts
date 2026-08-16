@@ -21,6 +21,7 @@ import {
   type Inventory,
   type LootSource,
 } from './schema.js'
+import { deriveRepeatable, loadRepeatableOverrides } from './repeatable.js'
 
 /**
  * Reclassifies the page inventory into loot sources (PROJECT_PLAN.md 6.1).
@@ -113,6 +114,8 @@ export async function buildInventory(
   for (const [index, record] of categoryRecords.entries()) {
     await writeSnapshot('categories', `batch-${index}`, record)
   }
+
+  const repeatableOverrides = await loadRepeatableOverrides()
 
   const byCategory = new Map<string, string[]>()
   for (const [title, names] of categories) {
@@ -311,7 +314,12 @@ export async function buildInventory(
   ): void => {
     const existing = sources.get(id)
     if (existing === undefined) sources.set(id, { ...source, bosses: [bossSlug] })
-    else existing.bosses.push(bossSlug)
+    else {
+      existing.bosses.push(bossSlug)
+      // A source is repeatable the moment ANY constituent page is — an
+      // aggregated encounter only needs one repeatable member.
+      existing.repeatable = existing.repeatable || source.repeatable
+    }
   }
 
   for (const entry of manifest.entries) {
@@ -362,6 +370,12 @@ export async function buildInventory(
       excludeReason = 'no drop rows, no encounter, no reward page'
     }
 
+    const repeatable = deriveRepeatable(
+      entry.title,
+      categories.get(entry.title) ?? [],
+      repeatableOverrides
+    )
+
     bosses.push({
       slug: entry.slug,
       title: entry.title,
@@ -372,6 +386,7 @@ export async function buildInventory(
       tier: result.tier,
       rowCount: result.rowCount,
       encounter,
+      repeatable,
     })
 
     upsertSource(
@@ -384,6 +399,7 @@ export async function buildInventory(
         rowCount: sourceRows,
         include: INCLUDED_CLASSIFICATIONS.includes(classification),
         excludeReason,
+        repeatable,
       },
       entry.slug
     )

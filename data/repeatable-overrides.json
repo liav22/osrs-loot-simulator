@@ -1,0 +1,11 @@
+{
+  "repeatableOverridesVersion": 1,
+  "note": "Category:Quest monsters / Category:Quest NPCs membership is the default signal for 'this account can only get one roll against this source, ever' (repeatable: false). It over-fires for a quest that merely GATES access to an otherwise ordinary, persistent boss, rather than being the boss's only encounter. Each entry here is a hand-verified exception, citing the wiki's own words, checked against the page's own wikitext rather than assumed. See apps/ingest/src/inventory/build.ts's deriveRepeatable and docs/DECISIONS.md.",
+  "entries": [
+    {
+      "wikiPage": "Vorkath",
+      "repeatable": true,
+      "reason": "Tagged Category:Quest monsters (first fought during Dragon Slayer II), but the page states outright: 'After completing Dragon Slayer II, players may fight Vorkath again, with increased stats and rewards.' The infobox itself carries a 'Post-quest' version distinct from the 'Dragon Slayer II' one, and Vorkath is one of the most heavily farmed bosses in the game. The quest gates access; it does not consume the encounter."
+    }
+  ]
+}

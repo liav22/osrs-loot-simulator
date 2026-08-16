@@ -23,6 +23,7 @@ describe('InventorySchema', () => {
         tier: 'E',
         rowCount: 0,
         encounter: 'Barrows',
+        repeatable: true,
       },
       {
         slug: 'ahrim-the-blighted',
@@ -34,6 +35,7 @@ describe('InventorySchema', () => {
         tier: 'E',
         rowCount: 1,
         encounter: 'Barrows',
+        repeatable: true,
       },
     ],
     lootSources: [
@@ -46,6 +48,7 @@ describe('InventorySchema', () => {
         include: true,
         excludeReason: null,
         bosses: ['dharok-the-wretched', 'ahrim-the-blighted'],
+        repeatable: true,
       },
     ],
   }

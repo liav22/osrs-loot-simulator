@@ -52,6 +52,15 @@ export const BossEntrySchema = z
     rowCount: z.number().int().nonnegative(),
     /** The activity page this boss belongs to, when it is part of one. */
     encounter: z.string().nullable(),
+    /**
+     * Whether the same account can fight this specific page's encounter more
+     * than once. Derived from `Category:Quest monsters`/`Category:Quest NPCs`
+     * membership, corrected by `data/repeatable-overrides.json` for the rare
+     * case the category over-fires (a quest unlocks access to an otherwise
+     * ordinary, persistent boss — e.g. Vorkath). See `build.ts`'s
+     * `deriveRepeatable`.
+     */
+    repeatable: z.boolean(),
   })
   .strict()
 
@@ -70,6 +79,12 @@ export const LootSourceSchema = z
     excludeReason: z.string().nullable(),
     /** Boss slugs that resolve to this source. */
     bosses: z.array(z.string().min(1)).min(1),
+    /**
+     * True if ANY constituent boss page offers repeated access — an
+     * aggregated encounter (Barrows, a raid) is repeatable the moment one of
+     * its member pages is, which every real case in the corpus already is.
+     */
+    repeatable: z.boolean(),
   })
   .strict()
 

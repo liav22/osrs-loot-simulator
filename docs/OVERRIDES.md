@@ -132,13 +132,16 @@ To do this the override must supply `name`, `wikiPage`, `wikiRevId` and
 `applyOverride` refuses rather than guessing. The result is recorded as
 `source: 'override'` rather than `'merged'`.
 
-**The tier filter does not apply to a source with an authored override.**
-`ingest parse --tier A,B,C` will still build it, and the run log says so. This
-is deliberate and was a real bug before it was: Reward pool is tier D, every
-documented parse invocation names tiers A–C, and a correct override for it would
-otherwise have sat in `data/overrides/` doing nothing, silently, forever. An
-override file *is* the decision to build a source; the tier filter only decides
-what to attempt without one.
+**The tier filter does not apply to a source with an authored override**, and
+in fact no longer gates anything by default: `ingest parse` with no `--tier`
+attempts every `include: true` source regardless of tier, and `--tier` is a
+narrowing filter for a targeted run, not a whitelist. This was a real bug
+before it was fixed: Reward pool is tier D, every documented parse invocation
+named tiers A–C, and a correct override for it sat in `data/overrides/` doing
+nothing, silently, for the whole project — see `docs/DECISIONS.md`, landmine
+#12 and "Should tier gate parsing at all?". An override file *is* the decision
+to build a source; tier was never supposed to be able to overrule that, or
+anything else `include: true` already decided.
 
 A slug in `data/overrides/` matching no loot source in `data/_inventory.json` is
 reported as an orphan at the top of a parse run — otherwise a typo'd filename is

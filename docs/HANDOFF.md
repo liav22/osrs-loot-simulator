@@ -63,20 +63,67 @@ scope:
   behaviourally by `formulas.test.ts`.
 
 ```
-66 documents, of 102 loot sources with include: true (65%):
-  28 verified, 2 manual_override, 36 needs_review
+98 documents, of 102 loot sources with include: true (96.1%):
+  55 verified, 2 manual_override, 41 needs_review
 ```
 
 **READ THE DENOMINATOR CAREFULLY. It is 102, not 52.** Coverage was long read as
 "27 of 52"; 52 was the number of sources ever PARSED, not the number the project
 owns. `include: true` in `data/_inventory.json` is the gate, and it is 102.
-`verified` is **28/102 = 27%** — the same numeral the old wrong fraction gave,
-which is how it went unnoticed. Per tier (with document / include:true): A 24/26,
-B 1/1, C 25/26, D 16/20, **E 0/29**.
+`verified` is **55/102 = 53.9%** (56.1% of the 98 documents that exist). Per
+tier (with document / include:true): A 25/26, B 1/1, C 26/26, D 19/20,
+E 27/29. The 4 sources with no document at all: `revenant-maledictus` (A, own
+open parse_failed reason), `rewards-chest-fortis-colosseum` (D, wave-shaped,
+needs an override, section 3), `burnt-chest` and `sigmund` (E — both trivial;
+`burnt-chest` blocked on a `==Loot==` heading-matching gap, `sigmund` has no
+real combat loot at all, only a quest-only Thieving pickpocket reward). See
+`docs/DECISIONS.md`'s "Tier E run, and whether tier should gate parsing at all"
+for the full breakdown — that session also found `ingest parse`'s default
+(`--tier` omitted) was silently gating on tier A alone and changed it to
+default to every tier, since `include: true` is the only gate that was ever
+supposed to decide what gets attempted.
 
-**Tier E is the largest untouched block**: 29 sources, `include: true`, 1-7
-dropsline rows each, never attempted. These are the `trivial` sources Phase 2
-called *complete, not deficient*. Cheapest coverage available.
+**Tier E is done, not the largest untouched block anymore.** All 29 sources
+were run: 26 verified, 1 needs_review (`chronozon`, an item-index gap, not a
+table-shape one), 2 parse_failed (above). The `trivial` classification held up
+structurally — none of the 29 produced a `weighted`-mode table, confirming
+Phase 2's read that these are genuinely simple, not merely unattempted.
+
+**`repeatable: boolean` now exists on `Boss`/`LootSource`/`SiteIndexEntry`,
+and it moves the headline number.** Tier E's "trivial" content is mostly
+one-time quest bosses (Bouncer, Dad, `me` — a slug that shadowed common search
+terms) that a loot simulator has nothing to say about: an account gets exactly
+one roll against them, ever. `repeatable` distinguishes "has a wiki page" from
+"can be farmed", derived from live `Category:Quest monsters`/`Category:Quest
+NPCs` membership plus one hand-verified exception (`data/repeatable-
+overrides.json`; Vorkath is tagged but the quest only gates access, per the
+page's own words). **Nothing is deleted or excluded from parsing** — only
+`apps/web`'s default search list filters on it; `/admin` shows everything,
+now with a visible "Not repeatable" badge. See `docs/DECISIONS.md`'s
+`repeatable` entry for the full false-positive/negative audit.
+
+**Read `verified` split by this field before trusting the headline 55/102.**
+24 of the 55 `verified` sources (43.6%) are one-time content. The number that
+answers "how much of what a user would actually simulate is verified" is
+**31/72 = 43.1%** among `repeatable: true` sources (44.3% of their 70
+documents) — noticeably below 53.9%. Full table in `docs/DECISIONS.md`.
+
+**Found by lifting the tier gate, not yet fixed: `monumental-chest` (tier D)
+is currently a STALE committed document that the CURRENT parser cannot
+reproduce.** A fresh `ingest parse --source monumental-chest` fails
+(`'preroll' entries must use fixed or formula rates, got 'always'`) — the same
+schema-conflict class as the already-documented Vardorvis/Leviathan/Whisperer/
+Duke Sucellus `always`-inside-`independent` issue, apparently now also hitting
+`preroll`. Every prior parse invocation was `--tier A,B,C`, which never
+touched tier D, so nobody had re-parsed this specific source against current
+code until the tier-gate fix made a full `ingest parse` attempt it — this is
+the harm that fix predicted, concretely realised. The stale file survives
+untouched (`parseBoss` never deletes a file it fails to regenerate — landmine
+#1), gets a default `repeatable: true` from the schema (correct by luck: a
+ToB raid chest genuinely is repeatable), and is otherwise invisible unless you
+parse it directly. Not investigated further this session — flagged for the
+next one, same discipline as Black demon's heading gap.
+`data/index.json` and `data/item-icons.json` are regenerated to match.
 
 **Read that 27 against the earlier 18 and the earlier-still 38.** The 38 was
 inflated: `drops_covered` was turned on deliberately (see docs/DECISIONS.md) and
@@ -1027,21 +1074,26 @@ been folded into sections 1 and 3 rather than kept as struck-through history.
    **Start each by checking for a `Module:`/`Calculator:` page**, which is what
    turned ToA's one UNKNOWN into a cited rule; `{{Calculator:Chambers of Xeric
    loot}}`-shaped transclusions are the tell, and both CoX and ToB have a
-   calculator on-page. Theatre of Blood (`monumental-chest`) has a document and
-   fails on a stated point-scaling rule; **CoX (`ancient-chest`) and Fortis
-   Colosseum both need Phase 6 research first — CoX is `parse_failed` with no
-   research doc, and Fortis Colosseum has never produced one. Do not start
-   either without it.** Read section 5's CoX entry before that one.
-3. **`black-knight-titan`** — the cheapest remaining coverage failure. Its
-   `{{GeneralSeedDropLines}}` is a Lua `{{#invoke:}}` the expander cannot run;
-   the rows would have to come from somewhere else (an override, or the
-   module's own output). It also fails `items_known`.
+   calculator on-page. Theatre of Blood (`monumental-chest`) **currently has
+   no reproducible document at all** — its committed file is stale and a
+   fresh parse fails with `'preroll' entries must use fixed or formula rates,
+   got 'always'` (see section 1's newest entry). Fix that schema conflict
+   before resuming the point-scaling work, not after. **CoX (`ancient-chest`)
+   and Fortis Colosseum both need Phase 6 research first — CoX is
+   `parse_failed` with no research doc, and Fortis Colosseum has never
+   produced one. Do not start either without it.** Read section 5's CoX entry
+   before that one.
+3. **`black-knight-titan`** — a coverage failure, though `repeatable: false`
+   (a Holy Grail quest boss) means fixing it moves the raw coverage count more
+   than the number that matters. Its `{{GeneralSeedDropLines}}` is a Lua
+   `{{#invoke:}}` the expander cannot run; the rows would have to come from
+   somewhere else (an override, or the module's own output). It also fails
+   `items_known`.
 4. **GWDRDT** (`kree-arra`, `general-graardor`) — landmine #3. A new
    `data/tables/gwd_rare_drop_table.json`-shaped record, not a code fix. Two
    sources for one record.
-5. **`black-demon`** — `DROPS_SECTION_TITLE` does not match
-   `==Level 172, 178, and 184 drops==`. Contained, and the diagnosis is
-   already pinned in a test.
+5. ~~`black-demon`~~ **DONE** — recovered for free by the `DROPS_SECTION_TITLE`
+   widening (section 1); it now has a `needs_review` document.
 6. **Un-watchlist as mechanics land**, following the four-step sequence in
    `docs/OVERRIDES.md` — the wiki-figure test (step 3) is the part that is
    easy to skip and must not be.

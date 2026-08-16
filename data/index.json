@@ -1,355 +1,581 @@
 {
-  "generatedAt": "2026-08-16T07:39:13.478Z",
+  "generatedAt": "2026-08-16T09:13:22.548Z",
   "entries": [
     {
       "slug": "abyssal-sire",
       "name": "Abyssal Sire",
       "aliases": [],
       "status": "needs_review",
-      "image": "Abyssal Sire (phase 1).png"
+      "image": "Abyssal Sire (phase 1).png",
+      "repeatable": true
+    },
+    {
+      "slug": "agrith-na-na",
+      "name": "Agrith-Na-Na",
+      "aliases": [],
+      "status": "verified",
+      "image": "Agrith-Na-Na.png",
+      "repeatable": false
+    },
+    {
+      "slug": "agrith-naar",
+      "name": "Agrith Naar",
+      "aliases": [],
+      "status": "verified",
+      "image": "Agrith Naar.png",
+      "repeatable": false
     },
     {
       "slug": "alchemical-hydra",
       "name": "Alchemical Hydra",
       "aliases": [],
       "status": "needs_review",
-      "image": "Alchemical Hydra (serpentine).png"
+      "image": "Alchemical Hydra (serpentine).png",
+      "repeatable": true
     },
     {
       "slug": "amoxliatl",
       "name": "Amoxliatl",
       "aliases": [],
       "status": "verified",
-      "image": "Amoxliatl.png"
+      "image": "Amoxliatl.png",
+      "repeatable": true
     },
     {
       "slug": "ancient-chest",
       "name": "Ancient chest",
       "aliases": [],
       "status": "needs_review",
-      "image": "Crystal (ancient chest).png"
+      "image": "Crystal (ancient chest).png",
+      "repeatable": true
     },
     {
       "slug": "araxxor",
       "name": "Araxxor",
       "aliases": [],
       "status": "needs_review",
-      "image": "Araxxor.png"
+      "image": "Araxxor.png",
+      "repeatable": true
     },
     {
       "slug": "arrg",
       "name": "Arrg",
       "aliases": [],
       "status": "needs_review",
-      "image": "Arrg.png"
+      "image": "Arrg.png",
+      "repeatable": false
     },
     {
       "slug": "artio",
       "name": "Artio",
       "aliases": [],
       "status": "verified",
-      "image": "Artio.png"
+      "image": "Artio.png",
+      "repeatable": true
     },
     {
       "slug": "black-demon",
       "name": "Black demon",
       "aliases": [],
       "status": "needs_review",
-      "image": "Black demon.png"
+      "image": "Black demon.png",
+      "repeatable": true
     },
     {
       "slug": "black-knight-titan",
       "name": "Black Knight Titan",
       "aliases": [],
       "status": "needs_review",
-      "image": "Black Knight Titan.png"
+      "image": "Black Knight Titan.png",
+      "repeatable": false
+    },
+    {
+      "slug": "bouncer",
+      "name": "Bouncer",
+      "aliases": [],
+      "status": "verified",
+      "image": "Bouncer.png",
+      "repeatable": false
     },
     {
       "slug": "branda-the-fire-queen",
       "name": "Branda the Fire Queen",
       "aliases": [],
       "status": "verified",
-      "image": "Branda the Fire Queen.png"
+      "image": "Branda the Fire Queen.png",
+      "repeatable": true
     },
     {
       "slug": "brutus",
       "name": "Brutus",
       "aliases": [],
       "status": "verified",
-      "image": "Brutus.png"
+      "image": "Brutus.png",
+      "repeatable": true
     },
     {
       "slug": "bryophyta",
       "name": "Bryophyta",
       "aliases": [],
       "status": "needs_review",
-      "image": "Bryophyta.png"
+      "image": "Bryophyta.png",
+      "repeatable": true
     },
     {
       "slug": "callisto",
       "name": "Callisto",
       "aliases": [],
       "status": "verified",
-      "image": "Callisto.png"
+      "image": "Callisto.png",
+      "repeatable": true
     },
     {
       "slug": "calvar-ion",
       "name": "Calvar'ion",
       "aliases": [],
       "status": "verified",
-      "image": "Calvar'ion.png"
+      "image": "Calvar'ion.png",
+      "repeatable": true
     },
     {
       "slug": "cerberus",
       "name": "Cerberus",
       "aliases": [],
       "status": "verified",
-      "image": "Cerberus.png"
+      "image": "Cerberus.png",
+      "repeatable": true
     },
     {
       "slug": "chaos-elemental",
       "name": "Chaos Elemental",
       "aliases": [],
       "status": "needs_review",
-      "image": "Chaos Elemental.png"
+      "image": "Chaos Elemental.png",
+      "repeatable": true
     },
     {
       "slug": "chaos-fanatic",
       "name": "Chaos Fanatic",
       "aliases": [],
       "status": "needs_review",
-      "image": "Chaos Fanatic.png"
+      "image": "Chaos Fanatic.png",
+      "repeatable": true
     },
     {
       "slug": "chest-barrows",
       "name": "Chest (Barrows)",
       "aliases": [],
       "status": "verified",
-      "image": "Chest (Barrows).png"
+      "image": "Chest (Barrows).png",
+      "repeatable": true
     },
     {
       "slug": "chest-tombs-of-amascut",
       "name": "Chest (Tombs of Amascut)",
       "aliases": [],
       "status": "needs_review",
-      "image": "Chest (Tombs of Amascut, closed).png"
+      "image": "Chest (Tombs of Amascut, closed).png",
+      "repeatable": true
+    },
+    {
+      "slug": "chronozon",
+      "name": "Chronozon",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Chronozon.png",
+      "repeatable": false
     },
     {
       "slug": "commander-zilyana",
       "name": "Commander Zilyana",
       "aliases": [],
       "status": "needs_review",
-      "image": "Commander Zilyana.png"
+      "image": "Commander Zilyana.png",
+      "repeatable": true
     },
     {
       "slug": "corporeal-beast",
       "name": "Corporeal Beast",
       "aliases": [],
       "status": "verified",
-      "image": "Corporeal Beast.png"
+      "image": "Corporeal Beast.png",
+      "repeatable": true
     },
     {
       "slug": "crazy-archaeologist",
       "name": "Crazy archaeologist",
       "aliases": [],
       "status": "verified",
-      "image": "Crazy archaeologist.png"
+      "image": "Crazy archaeologist.png",
+      "repeatable": true
+    },
+    {
+      "slug": "culinaromancer",
+      "name": "Culinaromancer",
+      "aliases": [],
+      "status": "verified",
+      "image": "Culinaromancer.png",
+      "repeatable": false
+    },
+    {
+      "slug": "dad",
+      "name": "Dad",
+      "aliases": [],
+      "status": "verified",
+      "image": "Dad.png",
+      "repeatable": false
+    },
+    {
+      "slug": "dagannoth-mother",
+      "name": "Dagannoth mother",
+      "aliases": [],
+      "status": "verified",
+      "image": "Dagannoth mother white.png",
+      "repeatable": false
     },
     {
       "slug": "dagannoth-prime",
       "name": "Dagannoth Prime",
       "aliases": [],
       "status": "needs_review",
-      "image": "Dagannoth Prime.png"
+      "image": "Dagannoth Prime.png",
+      "repeatable": true
     },
     {
       "slug": "dagannoth-rex",
       "name": "Dagannoth Rex",
       "aliases": [],
       "status": "needs_review",
-      "image": "Dagannoth Rex.png"
+      "image": "Dagannoth Rex.png",
+      "repeatable": true
     },
     {
       "slug": "dagannoth-supreme",
       "name": "Dagannoth Supreme",
       "aliases": [],
       "status": "needs_review",
-      "image": "Dagannoth Supreme.png"
+      "image": "Dagannoth Supreme.png",
+      "repeatable": true
+    },
+    {
+      "slug": "damis",
+      "name": "Damis",
+      "aliases": [],
+      "status": "verified",
+      "image": "Damis first form.png",
+      "repeatable": false
+    },
+    {
+      "slug": "demonic-brutus",
+      "name": "Demonic Brutus",
+      "aliases": [],
+      "status": "verified",
+      "image": "Demonic Brutus.png",
+      "repeatable": true
     },
     {
       "slug": "deranged-archaeologist",
       "name": "Deranged archaeologist",
       "aliases": [],
       "status": "needs_review",
-      "image": "Deranged archaeologist.png"
+      "image": "Deranged archaeologist.png",
+      "repeatable": true
+    },
+    {
+      "slug": "dessourt",
+      "name": "Dessourt",
+      "aliases": [],
+      "status": "verified",
+      "image": "Dessourt.png",
+      "repeatable": false
     },
     {
       "slug": "doom-of-mokhaiotl",
       "name": "Doom of Mokhaiotl",
       "aliases": [],
       "status": "manual_override",
-      "image": "Doom of Mokhaiotl.png"
+      "image": "Doom of Mokhaiotl.png",
+      "repeatable": true
     },
     {
       "slug": "duke-sucellus",
       "name": "Duke Sucellus",
       "aliases": [],
       "status": "needs_review",
-      "image": "Duke Sucellus.png"
+      "image": "Duke Sucellus.png",
+      "repeatable": true
     },
     {
       "slug": "eldric-the-ice-king",
       "name": "Eldric the Ice King",
       "aliases": [],
       "status": "verified",
-      "image": "Eldric the Ice King.png"
+      "image": "Eldric the Ice King.png",
+      "repeatable": true
+    },
+    {
+      "slug": "evil-spirit",
+      "name": "Evil spirit",
+      "aliases": [],
+      "status": "verified",
+      "image": "Evil spirit.png",
+      "repeatable": false
+    },
+    {
+      "slug": "flambeed",
+      "name": "Flambeed",
+      "aliases": [],
+      "status": "verified",
+      "image": "Flambeed.png",
+      "repeatable": false
     },
     {
       "slug": "gemstone-crab",
       "name": "Gemstone Crab",
       "aliases": [],
       "status": "verified",
-      "image": "Gemstone Crab.png"
+      "image": "Gemstone Crab.png",
+      "repeatable": true
     },
     {
       "slug": "general-graardor",
       "name": "General Graardor",
       "aliases": [],
       "status": "needs_review",
-      "image": "General Graardor.png"
+      "image": "General Graardor.png",
+      "repeatable": true
     },
     {
       "slug": "giant-mole",
       "name": "Giant Mole",
       "aliases": [],
       "status": "verified",
-      "image": "Giant Mole.png"
+      "image": "Giant Mole.png",
+      "repeatable": true
+    },
+    {
+      "slug": "giant-roc",
+      "name": "Giant Roc",
+      "aliases": [],
+      "status": "verified",
+      "image": "Giant Roc.png",
+      "repeatable": false
+    },
+    {
+      "slug": "giant-scarab",
+      "name": "Giant Scarab",
+      "aliases": [],
+      "status": "verified",
+      "image": "Giant Scarab.png",
+      "repeatable": false
     },
     {
       "slug": "giant-sea-snake",
       "name": "Giant Sea Snake",
       "aliases": [],
       "status": "needs_review",
-      "image": "Giant Sea Snake.png"
+      "image": "Giant Sea Snake.png",
+      "repeatable": false
+    },
+    {
+      "slug": "glod",
+      "name": "Glod",
+      "aliases": [],
+      "status": "verified",
+      "image": "Glod.png",
+      "repeatable": false
     },
     {
       "slug": "grotesque-guardians",
       "name": "Grotesque Guardians",
       "aliases": [],
       "status": "needs_review",
-      "image": "Dawn.png"
+      "image": "Dawn.png",
+      "repeatable": true
     },
     {
       "slug": "hespori",
       "name": "Hespori",
       "aliases": [],
       "status": "verified",
-      "image": "Hespori.png"
+      "image": "Hespori.png",
+      "repeatable": true
+    },
+    {
+      "slug": "jungle-demon",
+      "name": "Jungle Demon",
+      "aliases": [],
+      "status": "verified",
+      "image": "Jungle Demon.png",
+      "repeatable": false
     },
     {
       "slug": "k-ril-tsutsaroth",
       "name": "K'ril Tsutsaroth",
       "aliases": [],
       "status": "needs_review",
-      "image": "K'ril Tsutsaroth.png"
+      "image": "K'ril Tsutsaroth.png",
+      "repeatable": true
     },
     {
       "slug": "kalphite-queen",
       "name": "Kalphite Queen",
       "aliases": [],
       "status": "needs_review",
-      "image": "Kalphite Queen.png"
+      "image": "Kalphite Queen.png",
+      "repeatable": true
+    },
+    {
+      "slug": "kamil",
+      "name": "Kamil",
+      "aliases": [],
+      "status": "verified",
+      "image": "Kamil.png",
+      "repeatable": false
+    },
+    {
+      "slug": "karamel",
+      "name": "Karamel",
+      "aliases": [],
+      "status": "verified",
+      "image": "Karamel.png",
+      "repeatable": false
     },
     {
       "slug": "king-black-dragon",
       "name": "King Black Dragon",
       "aliases": [],
       "status": "verified",
-      "image": "King Black Dragon.png"
+      "image": "King Black Dragon.png",
+      "repeatable": true
+    },
+    {
+      "slug": "koschei-the-deathless",
+      "name": "Koschei the deathless",
+      "aliases": [],
+      "status": "verified",
+      "image": "Koschei the deathless.png",
+      "repeatable": false
     },
     {
       "slug": "kraken",
       "name": "Kraken",
       "aliases": [],
       "status": "verified",
-      "image": "Whirlpool.png"
+      "image": "Whirlpool.png",
+      "repeatable": true
     },
     {
       "slug": "kree-arra",
       "name": "Kree'arra",
       "aliases": [],
       "status": "needs_review",
-      "image": "Kree'arra.png"
+      "image": "Kree'arra.png",
+      "repeatable": true
     },
     {
       "slug": "lunar-chest",
       "name": "Lunar Chest",
       "aliases": [],
       "status": "manual_override",
-      "image": "Lunar Chest (closed).png"
+      "image": "Lunar Chest (closed).png",
+      "repeatable": true
     },
     {
       "slug": "mad-angel",
       "name": "Mad Angel",
       "aliases": [],
       "status": "needs_review",
-      "image": "Mad Angel.png"
+      "image": "Mad Angel.png",
+      "repeatable": true
     },
     {
       "slug": "maggot-king",
       "name": "Maggot King",
       "aliases": [],
       "status": "needs_review",
-      "image": "Maggot King.png"
+      "image": "Maggot King.png",
+      "repeatable": true
+    },
+    {
+      "slug": "me",
+      "name": "Me",
+      "aliases": [],
+      "status": "verified",
+      "image": "Me.png",
+      "repeatable": false
+    },
+    {
+      "slug": "melzar-the-mad",
+      "name": "Melzar the Mad",
+      "aliases": [],
+      "status": "verified",
+      "image": "Melzar the Mad.png",
+      "repeatable": false
     },
     {
       "slug": "monumental-chest",
       "name": "Monumental chest",
       "aliases": [],
       "status": "needs_review",
-      "image": "Monumental chest (teammate's, closed).png"
+      "image": "Monumental chest (teammate's, closed).png",
+      "repeatable": true
+    },
+    {
+      "slug": "moss-guardian",
+      "name": "Moss Guardian",
+      "aliases": [],
+      "status": "verified",
+      "image": "Moss Guardian.png",
+      "repeatable": false
     },
     {
       "slug": "nex",
       "name": "Nex",
       "aliases": [],
       "status": "needs_review",
-      "image": "Nex.png"
+      "image": "Nex.png",
+      "repeatable": true
     },
     {
       "slug": "obor",
       "name": "Obor",
       "aliases": [],
       "status": "needs_review",
-      "image": "Obor.png"
+      "image": "Obor.png",
+      "repeatable": true
     },
     {
       "slug": "phantom-muspah",
       "name": "Phantom Muspah",
       "aliases": [],
       "status": "needs_review",
-      "image": "Phantom Muspah (ranged).png"
+      "image": "Phantom Muspah (ranged).png",
+      "repeatable": true
     },
     {
       "slug": "phosani-s-nightmare",
       "name": "Phosani's Nightmare",
       "aliases": [],
       "status": "needs_review",
-      "image": "The Nightmare.png"
+      "image": "The Nightmare.png",
+      "repeatable": true
     },
     {
       "slug": "reward-cart",
       "name": "Reward Cart",
       "aliases": [],
       "status": "needs_review",
-      "image": "Reward Cart (empty).png"
+      "image": "Reward Cart (empty).png",
+      "repeatable": true
     },
     {
       "slug": "reward-chest-the-gauntlet",
       "name": "Reward Chest (The Gauntlet)",
       "aliases": [],
       "status": "verified",
-      "image": "Reward Chest (The Gauntlet).png"
+      "image": "Reward Chest (The Gauntlet).png",
+      "repeatable": true
     },
     {
       "slug": "reward-pool",
@@ -359,147 +585,208 @@
         "Tempoross"
       ],
       "status": "needs_review",
-      "image": "Empty pool.png"
+      "image": "Empty pool.png",
+      "repeatable": true
     },
     {
       "slug": "salarin-the-twisted",
       "name": "Salarin the twisted",
       "aliases": [],
       "status": "needs_review",
-      "image": "Salarin the twisted.png"
+      "image": "Salarin the twisted.png",
+      "repeatable": true
     },
     {
       "slug": "sarachnis",
       "name": "Sarachnis",
       "aliases": [],
       "status": "needs_review",
-      "image": "Sarachnis.png"
+      "image": "Sarachnis.png",
+      "repeatable": true
     },
     {
       "slug": "scorpia",
       "name": "Scorpia",
       "aliases": [],
       "status": "verified",
-      "image": "Scorpia.png"
+      "image": "Scorpia.png",
+      "repeatable": true
     },
     {
       "slug": "scurrius",
       "name": "Scurrius",
       "aliases": [],
       "status": "verified",
-      "image": "Scurrius.png"
+      "image": "Scurrius.png",
+      "repeatable": true
     },
     {
       "slug": "shellbane-gryphon",
       "name": "Shellbane gryphon",
       "aliases": [],
       "status": "needs_review",
-      "image": "Shellbane gryphon.png"
+      "image": "Shellbane gryphon.png",
+      "repeatable": true
+    },
+    {
+      "slug": "sir-mordred",
+      "name": "Sir Mordred",
+      "aliases": [],
+      "status": "verified",
+      "image": "Sir Mordred.png",
+      "repeatable": true
     },
     {
       "slug": "skotizo",
       "name": "Skotizo",
       "aliases": [],
       "status": "verified",
-      "image": "Skotizo.png"
+      "image": "Skotizo.png",
+      "repeatable": true
+    },
+    {
+      "slug": "slagilith",
+      "name": "Slagilith",
+      "aliases": [],
+      "status": "verified",
+      "image": "Slagilith.png",
+      "repeatable": false
+    },
+    {
+      "slug": "slash-bash",
+      "name": "Slash Bash",
+      "aliases": [],
+      "status": "verified",
+      "image": "Slash Bash.png",
+      "repeatable": false
     },
     {
       "slug": "spindel",
       "name": "Spindel",
       "aliases": [],
       "status": "verified",
-      "image": "Spindel.png"
+      "image": "Spindel.png",
+      "repeatable": true
     },
     {
       "slug": "the-hueycoatl",
       "name": "The Hueycoatl",
       "aliases": [],
       "status": "verified",
-      "image": "The Hueycoatl.png"
+      "image": "The Hueycoatl.png",
+      "repeatable": true
     },
     {
       "slug": "the-leviathan",
       "name": "The Leviathan",
       "aliases": [],
       "status": "verified",
-      "image": "The Leviathan.png"
+      "image": "The Leviathan.png",
+      "repeatable": true
     },
     {
       "slug": "the-mimic",
       "name": "The Mimic",
       "aliases": [],
       "status": "verified",
-      "image": "The Mimic.png"
+      "image": "The Mimic.png",
+      "repeatable": true
     },
     {
       "slug": "the-nightmare",
       "name": "The Nightmare",
       "aliases": [],
       "status": "needs_review",
-      "image": "The Nightmare.png"
+      "image": "The Nightmare.png",
+      "repeatable": true
     },
     {
       "slug": "the-whisperer",
       "name": "The Whisperer",
       "aliases": [],
       "status": "verified",
-      "image": "The Whisperer.png"
+      "image": "The Whisperer.png",
+      "repeatable": true
     },
     {
       "slug": "thermonuclear-smoke-devil",
       "name": "Thermonuclear smoke devil",
       "aliases": [],
       "status": "verified",
-      "image": "Thermonuclear smoke devil.png"
+      "image": "Thermonuclear smoke devil.png",
+      "repeatable": true
+    },
+    {
+      "slug": "treus-dayth",
+      "name": "Treus Dayth",
+      "aliases": [],
+      "status": "verified",
+      "image": "Treus Dayth.png",
+      "repeatable": false
+    },
+    {
+      "slug": "ulfric",
+      "name": "Ulfric",
+      "aliases": [],
+      "status": "verified",
+      "image": "Ulfric.png",
+      "repeatable": false
     },
     {
       "slug": "vardorvis",
       "name": "Vardorvis",
       "aliases": [],
       "status": "verified",
-      "image": "Vardorvis.png"
+      "image": "Vardorvis.png",
+      "repeatable": true
     },
     {
       "slug": "venenatis",
       "name": "Venenatis",
       "aliases": [],
       "status": "verified",
-      "image": "Venenatis.png"
+      "image": "Venenatis.png",
+      "repeatable": true
     },
     {
       "slug": "vet-ion",
       "name": "Vet'ion",
       "aliases": [],
       "status": "verified",
-      "image": "Vet'ion.png"
+      "image": "Vet'ion.png",
+      "repeatable": true
     },
     {
       "slug": "vorkath",
       "name": "Vorkath",
       "aliases": [],
       "status": "needs_review",
-      "image": "Vorkath.png"
+      "image": "Vorkath.png",
+      "repeatable": true
     },
     {
       "slug": "yama",
       "name": "Yama",
       "aliases": [],
       "status": "needs_review",
-      "image": "Yama.png"
+      "image": "Yama.png",
+      "repeatable": true
     },
     {
       "slug": "zalcano",
       "name": "Zalcano",
       "aliases": [],
       "status": "needs_review",
-      "image": "Zalcano.png"
+      "image": "Zalcano.png",
+      "repeatable": true
     },
     {
       "slug": "zulrah",
       "name": "Zulrah",
       "aliases": [],
       "status": "needs_review",
-      "image": "Zulrah (serpentine).png"
+      "image": "Zulrah (serpentine).png",
+      "repeatable": true
     }
   ],
   "tables": [

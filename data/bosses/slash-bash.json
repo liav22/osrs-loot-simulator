@@ -1,0 +1,156 @@
+{
+  "slug": "slash-bash",
+  "name": "Slash Bash",
+  "aliases": [],
+  "wikiPage": "Slash Bash",
+  "wikiRevId": 15274454,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "slash-bash:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4812,
+            "itemKey": "zogre-bones",
+            "name": "Zogre bones",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4834,
+            "itemKey": "ourg-bones",
+            "name": "Ourg bones",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4818,
+            "itemKey": "ogre-artefact",
+            "name": "Ogre artefact",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "slash-bash:1:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7848,
+            "itemKey": "zogre-bone",
+            "name": "Zogre bone",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6807,
+            "itemKey": "zombie-champion-scroll",
+            "name": "Zombie champion scroll",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 5 wiki drop row(s) reachable in the document"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": false
+}

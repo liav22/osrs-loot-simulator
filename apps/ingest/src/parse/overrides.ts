@@ -105,7 +105,15 @@ export async function listOverrideSlugs(): Promise<string[]> {
 export function applyOverride(
   generated: BossInput | null,
   override: BossOverride,
-  parserVersion: number
+  parserVersion: number,
+  /**
+   * Corpus scope metadata from `_inventory.json`, not an override-authored
+   * field — an override changes how a source's mechanic is MODELLED, never
+   * whether the account can get more than one roll against it, so this is
+   * always supplied externally and always wins over whatever `generated`
+   * carried (which, when non-null, already carries the same value).
+   */
+  repeatable: boolean
 ): BossInput {
   // `slug` is set explicitly below and `note` is documentation for humans
   // reading data/overrides/ (surfaced in the parse report via
@@ -146,6 +154,7 @@ export function applyOverride(
     ...defined,
     slug,
     source: generated === null ? 'override' : 'merged',
+    repeatable,
   } as BossInput
 }
 

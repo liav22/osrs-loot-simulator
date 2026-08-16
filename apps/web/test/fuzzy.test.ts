@@ -3,7 +3,13 @@ import { fuzzySearch } from '../src/lib/fuzzy'
 import type { SiteIndexEntry } from '../src/lib/types'
 
 function entry(name: string, aliases: string[] = []): SiteIndexEntry {
-  return { slug: name.toLowerCase().replace(/\s+/g, '-'), name, aliases, status: 'verified' }
+  return {
+    slug: name.toLowerCase().replace(/\s+/g, '-'),
+    name,
+    aliases,
+    status: 'verified',
+    repeatable: true,
+  }
 }
 
 const entries = [entry('Giant Mole'), entry('Kraken'), entry('King Black Dragon'), entry('Vorkath', ['vork'])]
