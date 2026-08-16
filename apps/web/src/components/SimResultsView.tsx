@@ -71,6 +71,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
     return sorted
   }, [result.drops, pricesAvailable, rarityByKey])
 
+  const hasMoreRows = rows.length > COLLAPSED_COUNT
   const visible = expandedGrid ? rows : rows.slice(0, COLLAPSED_COUNT)
   const strip = rows.filter((row) => rarest.has(row.itemKey))
 
@@ -123,7 +124,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
           {rows.length} distinct {rows.length === 1 ? 'item' : 'items'} · sorted by{' '}
           {pricesAvailable ? 'total value' : 'rarity (prices unavailable)'}
         </span>
-        {rows.length > COLLAPSED_COUNT && (
+        {hasMoreRows && (
           <button
             type="button"
             onClick={() => setExpandedGrid((v) => !v)}

@@ -5039,3 +5039,56 @@ before and after landed on identical totals (55 verified, 42 needs_review,
 had a `variant` condition or a nested dropversion, it does not flip any
 source's overall status. `corpus-reproducibility.test.ts` passed clean after
 regenerating every committed document from the fresh parse.
+
+## `apps/web` never actually consumed `Boss.contextDefaults` — the other half of the variant fix above
+
+The entry above ("`Boss.variants` was hardcoded...") fixed the DATA side and
+the loot-model callers (`resolveSimContext(boss)`) but missed the app's own
+URL-state layer. `apps/web/src/lib/url-state.ts`'s `paramsFromSearch` built
+`SimContext` straight off the package-wide `DEFAULT_SIM_CONTEXT`, never
+`boss.contextDefaults` — so in the browser, a plain `/boss/vorkath` link (or
+any link that doesn't explicitly set `?variant=`) still simulated with
+`variant: 'normal'`, which matches none of Vorkath's `"Post-quest"`-gated
+rows. Confirmed directly, not assumed: calling `simulate()` with
+`DEFAULT_SIM_CONTEXT` against the real, committed `vorkath.json` returns
+`result.drops.length === 0`, and the same check against every boss in
+`data/bosses/` found 9 more with the identical shape (`the-mimic`,
+`scurrius`, `obor`, `black-demon`, `bryophyta`, `amoxliatl`, `zalcano`,
+`reward-chest-the-gauntlet`, `lunar-chest`) — 27 boss documents in total set
+some `contextDefaults`, all silently ignored by the app. This is what was
+actually behind five `apps/web` e2e failures in CI (`layout.spec.ts`'s
+1,000,000-kill Mimic table, three `results.spec.ts` cases, and
+`shareable-result.spec.ts`'s price-race test) that looked unrelated to each
+other and to variants — every one of them happened to run against Vorkath or
+the Mimic and asserted on the resulting drop grid, which was empty.
+
+**Fix, general rather than per-boss:** `paramsFromSearch`/`searchFromParams`
+now take an optional `contextDefaults: PartialSimContext` and resolve against
+`{...DEFAULT_SIM_CONTEXT, ...contextDefaults}` instead of the raw package
+default, for every field — not just `variant` (also `points`, `raidLevel`,
+`delveLevel`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`, `isMVP`,
+`members`), matching `resolveSimContext`'s own layering.
+`BossView.tsx` cannot pass `boss.contextDefaults` into the mount-time parse
+(the boss hasn't loaded yet), so it resolves an `effectiveCtx` via
+`useMemo(() => paramsFromSearch(searchParams, bossQuery.data?.contextDefaults).ctx, ...)`
+and uses that — not `params.ctx` — for both `expectedValue` and the worker
+dispatch. This runs synchronously at render time rather than via a
+corrective effect deliberately: an effect's fix lands a render late, and on
+the render where `bossQuery.data` first arrives the auto-run effect (shared
+`?run=1` links) would already have fired and latched onto the stale,
+unresolved ctx before any corrective effect ran. `searchParams` has no such
+lag — it's already correct on the first render the boss exists, because
+`updateParams`/`handleSimulate` always write `params` and `searchParams`
+together from the same object. A separate one-shot effect (guarded by a ref,
+so it fires exactly once) still re-parses `params` itself once the boss
+loads, purely so the on-screen controls (delve level, variant dropdown, ...)
+display the value actually used rather than the pre-boss-load default —
+`effectiveCtx` alone already makes the simulation correct without it.
+
+Verified against the real corpus and the full e2e suite, not just the one
+failing assertion: re-ran `simulate()`/`expectedValue()` for all 99 bosses
+under their now-correctly-resolved defaults (the 10 previously-empty ones
+all produce drops; the remaining `WeightsExceedDenominatorError` throws on
+~7 sources are pre-existing corpus issues unrelated to this fix, not
+introduced by it). `apps/web`'s full 49-test e2e suite and 75-test unit
+suite pass clean.

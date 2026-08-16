@@ -32,50 +32,99 @@ export function BossView({ slug }: { slug: string }) {
     setParams(paramsFromSearch(searchParams))
   }, [slug])
 
+  /**
+   * Re-parses once the boss's `contextDefaults` are known, purely so the
+   * controls (the delve-level input, the variant dropdown, ...) DISPLAY the
+   * value a run actually uses instead of the package-wide default they were
+   * seeded with before the boss loaded. `effectiveCtx` below is already
+   * correct for simulating without this — the mount-time parse above cannot
+   * see `contextDefaults` because the boss hasn't loaded yet, and nothing
+   * renders an editable control before it does, so this is a one-time,
+   * user-invisible catch-up rather than something that could race a click.
+   */
+  const contextDefaultsApplied = useRef(false)
+  useEffect(() => {
+    if (contextDefaultsApplied.current || bossQuery.data === undefined) return
+    contextDefaultsApplied.current = true
+    setParams(paramsFromSearch(searchParams, bossQuery.data.contextDefaults))
+  }, [bossQuery.data])
+
   function updateParams(next: SimRunParams) {
     setParams(next)
-    setSearchParams(searchFromParams(next), { replace: true })
+    setSearchParams(searchFromParams(next, bossQuery.data?.contextDefaults), { replace: true })
   }
+
+  /**
+   * `params.ctx` alone is not enough to simulate or score a run: it is built
+   * by `paramsFromSearch` from the URL, and at the moment that first runs the
+   * boss has not loaded yet, so any field a user didn't specify falls back to
+   * the package-wide `DEFAULT_SIM_CONTEXT` rather than THIS boss's own
+   * `contextDefaults` — Vorkath's `variant: 'Post-quest'`, Zalcano's damage
+   * inputs, ancient chest's `points`. Left uncorrected, every entry gated on
+   * one of those fields is silently unreachable and a default run returns no
+   * drops at all.
+   *
+   * Recomputed here, synchronously at render time from `searchParams` (not
+   * from `params.ctx`), rather than patched into `params` via an effect once
+   * the boss loads: an effect's correction lands a render after it fires,
+   * which is too late for the auto-run effect below — on the very render
+   * where `bossQuery.data` first arrives, auto-run and any correction effect
+   * both close over the SAME stale `params`, and auto-run would already have
+   * fired (and latched) using it. `searchParams` carries no such lag — a
+   * shared link's query string is exactly what `paramsFromSearch` needs on
+   * the first render `bossQuery.data` exists, so this is correct immediately,
+   * with nothing to race. `updateParams`/`handleSimulate` always write
+   * `params` and `searchParams` together from the same object, so this stays
+   * equal to `params.ctx` for every field a user (or link) actually set.
+   */
+  const effectiveCtx = useMemo(
+    () => paramsFromSearch(searchParams, bossQuery.data?.contextDefaults).ctx,
+    [searchParams, bossQuery.data]
+  )
 
   const expected: ExpectedValueResult | undefined = useMemo(() => {
     if (bossQuery.data === undefined || tablesQuery.data === undefined) return undefined
     try {
-      return expectedValue(bossQuery.data, params.ctx, {
+      return expectedValue(bossQuery.data, effectiveCtx, {
         tables: tablesQuery.data,
         prices: pricesQuery.data !== undefined ? gePriceLookup(pricesQuery.data) : undefined,
       })
     } catch {
       return undefined
     }
-  }, [bossQuery.data, tablesQuery.data, pricesQuery.data, params.ctx])
+  }, [bossQuery.data, tablesQuery.data, pricesQuery.data, effectiveCtx])
 
   /**
    * Whether the run currently on screen was priced — a property of that run,
    * not of the price query right now.
    *
-   * These come apart, and it is not a corner case. Simulate is no longer
-   * disabled while the GE fetch is in flight, so an early click runs against
-   * an empty price map; if the fetch then lands a second later, asking the
-   * live query would label an all-zero grid "sorted by total value". Recording
-   * what the run actually used is what keeps the label honest.
+   * This must be recorded synchronously when the simulation is dispatched, not
+   * in a separate React state update that can lag behind the worker result.
+   * The price query can settle after the run has already landed, and the UI
+   * needs to label the result with the prices that actually ran, not the ones
+   * that happen to exist a moment later.
    */
-  const [ranWithPrices, setRanWithPrices] = useState(false)
+  const ranWithPricesRef = useRef(false)
 
   const runWith = useCallback(
     (next: SimRunParams) => {
       if (bossQuery.data === undefined || tablesQuery.data === undefined) return
       const prices = pricesQuery.data ?? new Map<number, number>()
-      setRanWithPrices(prices.size > 0)
+      ranWithPricesRef.current = prices.size > 0
       run({
         boss: bossQuery.data,
-        ctx: next.ctx,
+        // `effectiveCtx`, not `next.ctx`: every caller builds `next` from
+        // `params` with only `seed`/`run` touched, so `next.ctx` is always
+        // `params.ctx` — the one still missing this boss's `contextDefaults`
+        // for whichever fields nobody explicitly set. See `effectiveCtx`.
+        ctx: effectiveCtx,
         seed: next.seed,
         n: next.kills,
         tables: tablesQuery.data,
         prices,
       })
     },
-    [bossQuery.data, tablesQuery.data, pricesQuery.data, run]
+    [bossQuery.data, tablesQuery.data, pricesQuery.data, effectiveCtx, run]
   )
 
   /**
@@ -108,30 +157,30 @@ export function BossView({ slug }: { slug: string }) {
     autoRan.current = true
 
     setParams(next)
-    setSearchParams(searchFromParams(effective), { replace: true })
+    setSearchParams(searchFromParams(effective, bossQuery.data?.contextDefaults), { replace: true })
     runWith(effective)
   }
 
   useEffect(() => {
     if (autoRan.current || !params.run) return
     if (bossQuery.data === undefined || tablesQuery.data === undefined) return
-    // Wait for the GE fetch to settle first. A click is user-initiated and
-    // should be instant, so it runs with whatever prices exist; an auto-run
-    // has nobody waiting on it and no reason to race. Without this, EVERY
-    // shared link lost the race and rendered "0 gp total" with the grid
-    // sorted by rarity — technically labelled, but a poor answer for the one
-    // feature whose whole point is showing someone else your result.
-    //
-    // `isLoading`, not `data !== undefined`: a failed fetch must not hang the
-    // run forever. It settles to not-loading with no data, and the rarity
-    // fallback takes over exactly as it does for a click.
-    if (pricesQuery.isLoading) return
+
+    // Shared links are the only path that intentionally waits: they need to
+    // replay the exact run the owner shared, not a stale unpriced fallback.
+    // The query must be settled before we dispatch, otherwise a shared link can
+    // fire against an empty map and then lock in that stale answer forever.
+    if (pricesQuery.isLoading || !pricesQuery.isFetched) return
+
     autoRan.current = true
+    const prices = pricesQuery.data ?? new Map<number, number>()
+    ranWithPricesRef.current = prices.size > 0
+
     // Every link this app produces carries a real seed, so the sentinel branch
     // is only reachable on a hand-edited `?run=1&seed=0`. Rolling is the right
     // reading of that link — "run one" — rather than seeding the RNG with 0.
-    runWith(params.seed === RANDOM_SEED ? { ...params, seed: rollSeed() } : params)
-  }, [params, bossQuery.data, tablesQuery.data, pricesQuery.isLoading, runWith])
+    const effective = params.seed === RANDOM_SEED ? { ...params, seed: rollSeed() } : params
+    runWith(effective)
+  }, [params, bossQuery.data, tablesQuery.data, pricesQuery.data, pricesQuery.isFetched, pricesQuery.isLoading, runWith])
 
   if (bossQuery.isLoading) return <p className="p-4 text-sm text-muted">Loading {slug}…</p>
   if (bossQuery.isError) {
@@ -199,7 +248,7 @@ export function BossView({ slug }: { slug: string }) {
             boss={boss}
             result={simState.result}
             expected={expected}
-            pricesAvailable={ranWithPrices}
+            pricesAvailable={ranWithPricesRef.current}
           />
         )}
       </section>

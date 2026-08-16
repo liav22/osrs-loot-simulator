@@ -1,4 +1,4 @@
-import { DEFAULT_SIM_CONTEXT, type SimContext } from '@osrs-loot-simulator/loot-model'
+import { DEFAULT_SIM_CONTEXT, type PartialSimContext, type SimContext } from '@osrs-loot-simulator/loot-model'
 
 /**
  * `SimContext` (+ the simulation's own seed/kill-count, which aren't part of
@@ -116,26 +116,44 @@ function parseOwned(raw: string | null): SimContext['ownedCounts'] {
   return owned
 }
 
-export function paramsFromSearch(search: URLSearchParams): SimRunParams {
+/**
+ * Merges the package's global defaults with a boss's own `contextDefaults`
+ * (Vorkath's `variant: 'Post-quest'`, Zalcano's damage inputs, ancient chest's
+ * `points`, ...). `resolveSimContext` (loot-model) does the identical merge
+ * for `expectedValue`/`simulate` callers that already have a concrete
+ * `SimContext` to layer overrides onto; this is the same merge used as the
+ * FALLBACK when parsing/serializing a `SimContext` from scratch, so a boss
+ * whose sole variant isn't literally named `'normal'` doesn't silently filter
+ * every drop out from under a plain, unconfigured link.
+ */
+function resolveDefaults(contextDefaults: PartialSimContext): SimContext {
+  return { ...DEFAULT_SIM_CONTEXT, ...contextDefaults }
+}
+
+export function paramsFromSearch(
+  search: URLSearchParams,
+  contextDefaults: PartialSimContext = {}
+): SimRunParams {
+  const defaults = resolveDefaults(contextDefaults)
   const questsRaw = search.get('quests')
   const ctx: SimContext = {
-    ...DEFAULT_SIM_CONTEXT,
-    members: parseBool(search.get('members'), DEFAULT_SIM_CONTEXT.members),
-    ringOfWealth: parseBool(search.get('row'), DEFAULT_SIM_CONTEXT.ringOfWealth),
-    onSlayerTask: parseBool(search.get('slayer'), DEFAULT_SIM_CONTEXT.onSlayerTask),
-    questsComplete: questsRaw === null || questsRaw === '' ? [] : questsRaw.split(','),
-    killCount: parseIntParam(search.get('kc'), DEFAULT_SIM_CONTEXT.killCount),
-    variant: search.get('variant') ?? DEFAULT_SIM_CONTEXT.variant,
-    moonsKilled: parseMoons(search.get('moons')),
-    ownedCounts: parseOwned(search.get('owned')),
+    ...defaults,
+    members: parseBool(search.get('members'), defaults.members),
+    ringOfWealth: parseBool(search.get('row'), defaults.ringOfWealth),
+    onSlayerTask: parseBool(search.get('slayer'), defaults.onSlayerTask),
+    questsComplete: questsRaw === null || questsRaw === '' ? defaults.questsComplete : questsRaw.split(','),
+    killCount: parseIntParam(search.get('kc'), defaults.killCount),
+    variant: search.get('variant') ?? defaults.variant,
+    moonsKilled: search.get('moons') === null ? defaults.moonsKilled : parseMoons(search.get('moons')),
+    ownedCounts: search.get('owned') === null ? defaults.ownedCounts : parseOwned(search.get('owned')),
   }
   for (const [field, param] of Object.entries(NUMERIC_PARAMS)) {
     const key = field as keyof typeof NUMERIC_PARAMS
-    ctx[key] = parseIntParam(search.get(param), DEFAULT_SIM_CONTEXT[key])
+    ctx[key] = parseIntParam(search.get(param), defaults[key])
   }
   for (const [field, param] of Object.entries(BOOLEAN_PARAMS)) {
     const key = field as keyof typeof BOOLEAN_PARAMS
-    ctx[key] = parseBool(search.get(param), DEFAULT_SIM_CONTEXT[key])
+    ctx[key] = parseBool(search.get(param), defaults[key])
   }
   return {
     ctx,
@@ -145,14 +163,15 @@ export function paramsFromSearch(search: URLSearchParams): SimRunParams {
   }
 }
 
-export function searchFromParams(params: SimRunParams): URLSearchParams {
+export function searchFromParams(params: SimRunParams, contextDefaults: PartialSimContext = {}): URLSearchParams {
+  const defaults = resolveDefaults(contextDefaults)
   const search = new URLSearchParams()
-  if (params.ctx.members !== DEFAULT_SIM_CONTEXT.members) search.set('members', params.ctx.members ? '1' : '0')
-  if (params.ctx.ringOfWealth) search.set('row', '1')
-  if (params.ctx.onSlayerTask) search.set('slayer', '1')
+  if (params.ctx.members !== defaults.members) search.set('members', params.ctx.members ? '1' : '0')
+  if (params.ctx.ringOfWealth !== defaults.ringOfWealth) search.set('row', params.ctx.ringOfWealth ? '1' : '0')
+  if (params.ctx.onSlayerTask !== defaults.onSlayerTask) search.set('slayer', params.ctx.onSlayerTask ? '1' : '0')
   if (params.ctx.questsComplete.length > 0) search.set('quests', params.ctx.questsComplete.join(','))
-  if (params.ctx.killCount !== 0) search.set('kc', String(params.ctx.killCount))
-  if (params.ctx.variant !== DEFAULT_SIM_CONTEXT.variant) search.set('variant', params.ctx.variant)
+  if (params.ctx.killCount !== defaults.killCount) search.set('kc', String(params.ctx.killCount))
+  if (params.ctx.variant !== defaults.variant) search.set('variant', params.ctx.variant)
   if (params.ctx.moonsKilled.length > 0) search.set('moons', params.ctx.moonsKilled.join(','))
 
   const owned = Object.entries(params.ctx.ownedCounts).filter(([, n]) => n > 0)
@@ -160,15 +179,16 @@ export function searchFromParams(params: SimRunParams): URLSearchParams {
     search.set('owned', owned.map(([key, n]) => `${key}:${n}`).join(','))
   }
 
-  // Only non-default values are written, so a plain /boss/vorkath link stays
-  // clean — the same rule the six original fields already followed.
+  // Only values that differ from THIS BOSS's resolved default are written, so
+  // a plain /boss/vorkath link stays clean even though Vorkath's own default
+  // variant is 'Post-quest', not the package-wide 'normal'.
   for (const [field, param] of Object.entries(NUMERIC_PARAMS)) {
     const key = field as keyof typeof NUMERIC_PARAMS
-    if (params.ctx[key] !== DEFAULT_SIM_CONTEXT[key]) search.set(param, String(params.ctx[key]))
+    if (params.ctx[key] !== defaults[key]) search.set(param, String(params.ctx[key]))
   }
   for (const [field, param] of Object.entries(BOOLEAN_PARAMS)) {
     const key = field as keyof typeof BOOLEAN_PARAMS
-    if (params.ctx[key] !== DEFAULT_SIM_CONTEXT[key]) search.set(param, params.ctx[key] ? '1' : '0')
+    if (params.ctx[key] !== defaults[key]) search.set(param, params.ctx[key] ? '1' : '0')
   }
 
   search.set('seed', String(params.seed))
