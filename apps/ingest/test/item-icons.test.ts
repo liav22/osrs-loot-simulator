@@ -45,7 +45,7 @@ describe('the committed data/item-icons.json', () => {
     expect(uncovered).toEqual([])
   })
 
-  it('resolves all but the two the wiki genuinely has no plain icon for', async () => {
+  it('resolves all but the three the wiki genuinely has no plain icon for', async () => {
     const icons = await readItemIcons()
     // Pinned rather than counted loosely, because "unresolved" is where a
     // regression would hide: a resolution bug would quietly grow this list and
@@ -56,12 +56,20 @@ describe('the committed data/item-icons.json', () => {
     // literally named that, with itemId null, on Black Knight Titan and
     // Salarin the Twisted.
     //
-    // `Belladonna seed` was a third case and is now resolved: its icon is
+    // `Ikkle Hydra` joined them with Alchemical Hydra (tier D). Same shape as
+    // Muphin: the pet exists only as colour variants, and its drop row says so
+    // itself — `{{DropsLine|name=Ikkle Hydra|image=Ikkle Hydra (serpentine).png}}`.
+    // Stage 2 refuses parenthetical qualifiers on purpose (the `Baby Mole (NPC)`
+    // rule), so this is the resolver working, not failing. **The row carries an
+    // explicit `image=` the parser does not currently read — using it would
+    // resolve this class outright, and is the obvious next improvement here.**
+    //
+    // `Belladonna seed` was a fourth case and is now resolved: its icon is
     // `File:Belladonna seed 5.png`, a stack-size suffix the item name never
     // mentions. Stage 1 resolves that whole class through MediaWiki's file
     // redirects and this item has none, so stage 2 now accepts a strictly
     // numeric suffix as well — see `stackSuffixPattern`.
-    expect(icons.unresolved).toEqual(['Muphin', 'Nothing'])
+    expect(icons.unresolved).toEqual(['Ikkle Hydra', 'Muphin', 'Nothing'])
   })
 
   it('stores file names rather than URLs, so the frontend owns the encoding', async () => {

@@ -65,14 +65,13 @@ const WILDERNESS_SLAYER_SOURCES = [
 
 /**
  * Black demon transcludes `{{HerbDropLines}}` too and is deliberately NOT in
- * that list. Its drop sections are titled `==Level 172, 178, and 184 drops==`
- * and `==Wilderness Slayer Cave drops==`, which `DROPS_SECTION_TITLE` does not
- * match (it allows one qualifying word before "drops", not five), so the page
- * yields no rows at all and never reaches the expander. That is a pre-existing
- * heading-matching gap, not a transclusion one — recorded here so the next
- * session does not read its absence as an oversight.
+ * that list, even though the heading gap that used to hide it entirely
+ * (`==Level 172, 178, and 184 drops==` / `==Wilderness Slayer Cave drops==`,
+ * five- and three-word prefixes the tight `DROPS_SECTION_TITLE` rule couldn't
+ * see) is fixed — `wikitext-drops.test.ts` pins that fix directly. The reason
+ * it still can't join the shared loop is a SEPARATE, unrelated gap the heading
+ * fix exposed rather than closed: see the dedicated test below.
  */
-const KNOWN_UNREACHABLE = 'Black demon'
 
 interface Row {
   name: string
@@ -207,15 +206,68 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('transclusion expansion against the wiki’s
     expect(rows.find((r) => r.name === 'Elysian sigil')?.rarity).toBe('1/4095')
   })
 
-  it('Black demon is unreachable for a heading reason, not a transclusion one', async () => {
-    const wikitext = await pageWikitext(KNOWN_UNREACHABLE)
-    if (wikitext === null) return
-    // Pins the diagnosis: the page really does carry a transcluded sub-table,
-    // and really does yield nothing even after expansion, because no section
-    // heading matches. If a future heading fix lands, this flips and the
-    // source belongs in the list above.
-    expect(wikitext).toContain('{{HerbDropLines')
-    expect(extractDropLines(expandTransclusions(wikitext, definitions).wikitext)).toHaveLength(0)
+  /**
+   * The inverse of the old pin. Black demon's herb sub-table is reachable now,
+   * and — checked directly, not assumed — every recovered herb row carries the
+   * wiki's own published rarity, exactly like the sources in
+   * `SEED_HERB_TALISMAN_SOURCES`. It isn't IN that list because it can't make
+   * that loop's blanket promise ("every row expansion recovers is correct"):
+   * the SAME page also transcludes `{{WildernessSlayerDropTable}}`, whose key
+   * denominator needs `{{#expr:320 - (floor({{min|{{{hitpoints}}}|300}} *
+   * 0.8))}}` — a genuinely different, still-open gap from landmine #11c's
+   * `#switch` fallthrough: this one is an unsupported `min()` token, reported
+   * correctly (`unparseable rarity`, `transclusion not expanded`) rather than
+   * silently producing a wrong number, so both `Slayer's enchantment` and
+   * `Larran's key` stay missing from the assembled document (the whole
+   * heading-block is excluded together, taking a resolvable sibling row down
+   * with an unresolvable one — the same all-or-nothing pattern
+   * Reward Cart's ambiguous headings show elsewhere). Not fixed here: adding
+   * `min()` support to the `#expr` evaluator is a different, unrelated task
+   * from the heading-matching gap this file is about.
+   */
+  it('Black demon: the heading gap is fixed; the herb rows match; the Wilderness Slayer key does not expand', async () => {
+    const wikitext = await pageWikitext('Black demon')
+    const oracle = await bucketRarities('Black demon')
+    if (wikitext === null || oracle === null) return
+
+    // Reachable now, where it previously yielded nothing at all.
+    const before = extractDropLines(wikitext)
+    expect(before.length).toBeGreaterThan(0)
+
+    const expansion = expandTransclusions(wikitext, definitions)
+    const after = extractDropLines(expansion.wikitext)
+    expect(after.length).toBeGreaterThan(before.length)
+
+    const known = new Set(before.map((line) => line.name))
+    const herbNames = new Set([
+      'Grimy guam leaf',
+      'Grimy marrentill',
+      'Grimy tarromin',
+      'Grimy harralander',
+      'Grimy ranarr weed',
+      'Grimy irit leaf',
+      'Grimy avantoe',
+      'Grimy kwuarm',
+      'Grimy cadantine',
+      'Grimy lantadyme',
+      'Grimy dwarf weed',
+      'Grimy torstol',
+    ])
+    const recoveredHerbs = after.filter((line) => !known.has(line.name) && herbNames.has(line.name))
+    // Recovered on both of the page's two drop sections (normal-level and
+    // Wilderness Slayer Cave) — not a flat 24 (2x12), because the two
+    // sections' herb sub-tables don't carry identical rosters.
+    expect(recoveredHerbs.length).toBeGreaterThanOrEqual(20)
+    const wrong = recoveredHerbs.filter((row) => {
+      const published = oracle.get(row.name)
+      const rarity = normalizeRarity(row.rarity)
+      return published !== undefined && !published.has(rarity)
+    })
+    expect(wrong).toEqual([])
+
+    // The residual: still genuinely unexpandable, reported as such rather than
+    // silently wrong.
+    expect(expansion.unexpandable.some((u) => u.reason.includes("unsupported token 'min'"))).toBe(true)
   })
 
   it('Vorkath: the honoured per-page rarity OVERRIDE, not just the template default', async () => {

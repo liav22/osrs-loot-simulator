@@ -1,0 +1,293 @@
+{
+  "slug": "reward-cart",
+  "name": "Reward Cart",
+  "aliases": [],
+  "wikiPage": "Reward Cart",
+  "wikiRevId": 15276053,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "reward-cart:0:unique",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 90000,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20718,
+            "itemKey": "burnt-page",
+            "name": "Burnt page",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 29
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20712,
+            "itemKey": "warm-gloves",
+            "name": "Warm gloves",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20720,
+            "itemKey": "bruma-torch",
+            "name": "Bruma torch",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20708,
+            "itemKey": "pyromancer-hood",
+            "name": "Pyromancer hood",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20704,
+            "itemKey": "pyromancer-garb",
+            "name": "Pyromancer garb",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20706,
+            "itemKey": "pyromancer-robe",
+            "name": "Pyromancer robe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20710,
+            "itemKey": "pyromancer-boots",
+            "name": "Pyromancer boots",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20716,
+            "itemKey": "tome-of-fire-empty",
+            "name": "Tome of fire (empty)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 90
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20693,
+            "itemKey": "phoenix",
+            "name": "Phoenix",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6739,
+            "itemKey": "dragon-axe",
+            "name": "Dragon axe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          }
+        }
+      ],
+      "notes": "Unique"
+    },
+    {
+      "id": "reward-cart:1:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 25,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 2000,
+              "max": 4999
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13421,
+            "itemKey": "saltpetre",
+            "name": "Saltpetre",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13573,
+            "itemKey": "dynamite",
+            "name": "Dynamite",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Other"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": false,
+        "detail": "point_scaled: Rolls scale with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer) rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the wintertodt_points formula."
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "62 of 75 wiki drop row(s) missing from the document: Acorn, Adamantite ore, Avantoe seed, Banana tree seed, Cadantine seed, Coal, Dwarf weed seed, Gold ore (+54 more)"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

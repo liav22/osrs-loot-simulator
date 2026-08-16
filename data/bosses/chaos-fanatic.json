@@ -1,0 +1,678 @@
+{
+  "slug": "chaos-fanatic",
+  "name": "Chaos Fanatic",
+  "aliases": [],
+  "wikiPage": "Chaos Fanatic",
+  "wikiRevId": 15292543,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "chaos-fanatic:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 526,
+            "itemKey": "bones",
+            "name": "Bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "chaos-fanatic:1:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11928,
+            "itemKey": "odium-shard-1",
+            "name": "Odium shard 1",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 256
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11931,
+            "itemKey": "malediction-shard-1",
+            "name": "Malediction shard 1",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 256
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "chaos-fanatic:2:weapons-and-armour-runes-consumables-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3387,
+            "itemKey": "splitbark-body",
+            "name": "Splitbark body",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3389,
+            "itemKey": "splitbark-legs",
+            "name": "Splitbark legs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1035,
+            "itemKey": "zamorak-monk-top",
+            "name": "Zamorak monk top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1033,
+            "itemKey": "zamorak-monk-bottom",
+            "name": "Zamorak monk bottom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4675,
+            "itemKey": "ancient-staff",
+            "name": "Ancient staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4697,
+            "itemKey": "smoke-rune",
+            "name": "Smoke rune",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 175
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7946,
+            "itemKey": "monkfish",
+            "name": "Monkfish",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2434,
+            "itemKey": "prayer-potion-4",
+            "name": "Prayer potion(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2297,
+            "itemKey": "anchovy-pizza",
+            "name": "Anchovy pizza",
+            "qty": {
+              "kind": "exact",
+              "n": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 499,
+              "max": 3998
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2570,
+            "itemKey": "ring-of-life",
+            "name": "Ring of life",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1452,
+            "itemKey": "chaos-talisman",
+            "name": "Chaos talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23489,
+            "itemKey": "wine-of-zamorak",
+            "name": "Wine of Zamorak",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1621,
+            "itemKey": "uncut-emerald",
+            "name": "Uncut emerald",
+            "qty": {
+              "kind": "exact",
+              "n": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1623,
+            "itemKey": "uncut-sapphire",
+            "name": "Uncut sapphire",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 993,
+            "itemKey": "sinister-key",
+            "name": "Sinister key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7936,
+            "itemKey": "pure-essence",
+            "name": "Pure essence",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes / Consumables / Other"
+    },
+    {
+      "id": "chaos-fanatic:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11941,
+            "itemKey": "looting-bag",
+            "name": "Looting bag",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 80
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-hard",
+            "name": "Clue scroll (hard)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11995,
+            "itemKey": "pet-chaos-elemental",
+            "name": "Pet Chaos Elemental",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "chaos-fanatic:4:wilderness-slayer-tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23490,
+            "itemKey": "larran-s-key",
+            "name": "Larran's key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 76
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21257,
+            "itemKey": "slayer-s-enchantment",
+            "name": "Slayer's enchantment",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        }
+      ],
+      "notes": "Wilderness Slayer tertiary"
+    },
+    {
+      "id": "chaos-fanatic:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    },
+    {
+      "id": "chaos-fanatic:rdt-access:1",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        }
+      ],
+      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": false,
+        "detail": "1 table/variant mismatch(es)"
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "5 tableRef node(s) resolved structurally against 7 shared table(s); the compileBoss cross-check could not run because the document does not compile (Table 'chaos-fanatic:2:weapons-and-armour-runes-consumables-other' has applicable weights summing to 129, which exceeds its denominator of 128) — weights_sum owns that failure"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "2 of 55 wiki drop row(s) missing from the document: Pet chaos elemental, Wine of zamorak"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

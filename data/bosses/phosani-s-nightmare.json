@@ -1,0 +1,760 @@
+{
+  "slug": "phosani-s-nightmare",
+  "name": "Phosani's Nightmare",
+  "aliases": [],
+  "wikiPage": "Phosani's Nightmare",
+  "wikiRevId": 15273922,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "phosani-s-nightmare:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 532,
+            "itemKey": "big-bones",
+            "name": "Big bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "phosani-s-nightmare:1:uniques",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 280000,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24422,
+            "itemKey": "nightmare-staff",
+            "name": "Nightmare staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 552
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24419,
+            "itemKey": "inquisitor-s-great-helm",
+            "name": "Inquisitor's great helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24420,
+            "itemKey": "inquisitor-s-hauberk",
+            "name": "Inquisitor's hauberk",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24421,
+            "itemKey": "inquisitor-s-plateskirt",
+            "name": "Inquisitor's plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24417,
+            "itemKey": "inquisitor-s-mace",
+            "name": "Inquisitor's mace",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 248
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24517,
+            "itemKey": "eldritch-orb",
+            "name": "Eldritch orb",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 175
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24511,
+            "itemKey": "harmonised-orb",
+            "name": "Harmonised orb",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 175
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24514,
+            "itemKey": "volatile-orb",
+            "name": "Volatile orb",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 175
+          }
+        }
+      ],
+      "notes": "Uniques"
+    },
+    {
+      "id": "phosani-s-nightmare:2:runes-and-ammunition-resources-consumables-coins",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 100,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "range",
+              "min": 247,
+              "max": 420
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "range",
+              "min": 165,
+              "max": 305
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 165,
+              "max": 305
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 343,
+              "max": 765
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 566,
+            "itemKey": "soul-rune",
+            "name": "Soul rune",
+            "qty": {
+              "kind": "range",
+              "min": 110,
+              "max": 228
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 137,
+              "max": 382
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "range",
+              "min": 412,
+              "max": 957
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 447,
+            "itemKey": "mithril-ore",
+            "name": "Mithril ore",
+            "qty": {
+              "kind": "range",
+              "min": 165,
+              "max": 305
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 220,
+              "max": 458
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 165,
+              "max": 305
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 95
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1513,
+            "itemKey": "magic-logs",
+            "name": "Magic logs",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 95
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "range",
+              "min": 13,
+              "max": 26
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 219,
+            "itemKey": "grimy-torstol",
+            "name": "Grimy torstol",
+            "qty": {
+              "kind": "range",
+              "min": 13,
+              "max": 26
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 10
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1621,
+            "itemKey": "uncut-emerald",
+            "name": "Uncut emerald",
+            "qty": {
+              "kind": "range",
+              "min": 33,
+              "max": 75
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "range",
+              "min": 27,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 11,
+              "max": 26
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 365,
+            "itemKey": "bass",
+            "name": "Bass",
+            "qty": {
+              "kind": "range",
+              "min": 16,
+              "max": 29
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "range",
+              "min": 13,
+              "max": 26
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 139,
+            "itemKey": "prayer-potion-3",
+            "name": "Prayer potion(3)",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10927,
+            "itemKey": "sanfew-serum-3",
+            "name": "Sanfew serum(3)",
+            "qty": {
+              "kind": "range",
+              "min": 6,
+              "max": 12
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6687,
+            "itemKey": "saradomin-brew-3",
+            "name": "Saradomin brew(3)",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 189,
+            "itemKey": "zamorak-brew-3",
+            "name": "Zamorak brew(3)",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 41417,
+              "max": 74500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Runes and ammunition / Resources / Consumables / Coins"
+    },
+    {
+      "id": "phosani-s-nightmare:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25837,
+            "itemKey": "slepey-tablet",
+            "name": "Slepey tablet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25838,
+            "itemKey": "parasitic-egg",
+            "name": "Parasitic egg",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24491,
+            "itemKey": "little-nightmare",
+            "name": "Little Nightmare",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24495,
+            "itemKey": "jar-of-dreams",
+            "name": "Jar of dreams",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 4000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": false,
+        "detail": "1 table/variant mismatch(es)"
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "1 of 39 wiki drop row(s) missing from the document: Little nightmare"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

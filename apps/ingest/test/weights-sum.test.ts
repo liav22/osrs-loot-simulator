@@ -115,4 +115,75 @@ describe('checkWeightsSum', () => {
     }
     expect(checkWeightsSum([table]).ok).toBe(true)
   })
+
+  /**
+   * Obor/Bryophyta's shape (`assemble-boss.ts`'s section-level fallback): a
+   * whole table's entries share ONE `members` value, because the OTHER
+   * variant's rows live in an entirely separate table with its own
+   * denominator — not, like Brutus above, as condition-excluded rows sharing
+   * this one. Checking it against the "both variants must reconcile"
+   * Brutus-shape rule would fail every such table on the missing side, so a
+   * table with fewer than two distinct `members` values present is checked
+   * the same lenient way as an unmarked one instead.
+   */
+  it('passes a table whose entries are ALL members:true (a separate F2P table exists elsewhere)', () => {
+    const table: Table = {
+      id: 'obor:members:100',
+      mode: 'weighted',
+      rolls: 1,
+      withoutReplacement: false,
+      denominator: 100,
+      entries: [
+        {
+          node: item('a'),
+          rate: { kind: 'weight', weight: 60 },
+          conditions: [{ kind: 'members', value: true }],
+        },
+        {
+          node: item('b'),
+          rate: { kind: 'weight', weight: 40 },
+          conditions: [{ kind: 'members', value: true }],
+        },
+      ],
+    }
+    expect(checkWeightsSum([table]).ok).toBe(true)
+  })
+
+  it('still fails a uniform-members table that overflows its own denominator', () => {
+    const table: Table = {
+      id: 'obor:members:100',
+      mode: 'weighted',
+      rolls: 1,
+      withoutReplacement: false,
+      denominator: 50,
+      entries: [
+        {
+          node: item('a'),
+          rate: { kind: 'weight', weight: 60 },
+          conditions: [{ kind: 'members', value: true }],
+        },
+      ],
+    }
+    const result = checkWeightsSum([table])
+    expect(result.ok).toBe(false)
+    expect(result.failures[0]).toMatchObject({ tableId: 'obor:members:100', variant: 'flat', sum: 60 })
+  })
+
+  it('a table that is ALL members:false (F2P-only) gets the same lenient treatment', () => {
+    const table: Table = {
+      id: 'obor:f2p:100',
+      mode: 'weighted',
+      rolls: 1,
+      withoutReplacement: false,
+      denominator: 100,
+      entries: [
+        {
+          node: item('a'),
+          rate: { kind: 'weight', weight: 90 },
+          conditions: [{ kind: 'members', value: false }],
+        },
+      ],
+    }
+    expect(checkWeightsSum([table]).ok).toBe(true)
+  })
 })

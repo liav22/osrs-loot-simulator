@@ -1,0 +1,2283 @@
+{
+  "slug": "bryophyta",
+  "name": "Bryophyta",
+  "aliases": [],
+  "wikiPage": "Bryophyta",
+  "wikiRevId": 15292491,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "bryophyta:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30898,
+            "itemKey": "giant-bones",
+            "name": "Giant bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "bryophyta:1:weapons-and-armour-runes-and-ammunition",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1179,
+            "itemKey": "black-sq-shield",
+            "name": "Black sq shield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1389,
+            "itemKey": "magic-staff",
+            "name": "Magic staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1141,
+            "itemKey": "steel-med-helm",
+            "name": "Steel med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1285,
+            "itemKey": "mithril-sword",
+            "name": "Mithril sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1243,
+            "itemKey": "mithril-spear",
+            "name": "Mithril spear",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1193,
+            "itemKey": "steel-kiteshield",
+            "name": "Steel kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 556,
+            "itemKey": "air-rune",
+            "name": "Air rune",
+            "qty": {
+              "kind": "exact",
+              "n": 18
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "exact",
+              "n": 27
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 7
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "exact",
+              "n": 6
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 884,
+            "itemKey": "iron-arrow",
+            "name": "Iron arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 886,
+            "itemKey": "steel-arrow",
+            "name": "Steel arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition"
+    },
+    {
+      "id": "bryophyta:2:herbs",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 199,
+            "itemKey": "grimy-guam-leaf",
+            "name": "Grimy guam leaf",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 102.4
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 201,
+            "itemKey": "grimy-marrentill",
+            "name": "Grimy marrentill",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 136.5
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 203,
+            "itemKey": "grimy-tarromin",
+            "name": "Grimy tarromin",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 182
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 205,
+            "itemKey": "grimy-harralander",
+            "name": "Grimy harralander",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 234.1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 297.9
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 209,
+            "itemKey": "grimy-irit-leaf",
+            "name": "Grimy irit leaf",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 409.6
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 546.1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 655.4
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 819.2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1092.3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1092.3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 5/128 (ratio 1.0001), so its rows are one mutually-exclusive roll)"
+    },
+    {
+      "id": "bryophyta:3:seeds",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5100,
+            "itemKey": "limpwurt-seed",
+            "name": "Limpwurt seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 28
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5323,
+            "itemKey": "strawberry-seed",
+            "name": "Strawberry seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 29.3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5292,
+            "itemKey": "marrentill-seed",
+            "name": "Marrentill seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30.7
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5104,
+            "itemKey": "jangerberry-seed",
+            "name": "Jangerberry seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 41.7
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5293,
+            "itemKey": "tarromin-seed",
+            "name": "Tarromin seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 45.1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5311,
+            "itemKey": "wildblood-seed",
+            "name": "Wildblood seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 46.2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5321,
+            "itemKey": "watermelon-seed",
+            "name": "Watermelon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 60.8
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5294,
+            "itemKey": "harralander-seed",
+            "name": "Harralander seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 68.4
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22879,
+            "itemKey": "snape-grass-seed",
+            "name": "Snape grass seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 95.8
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 98.3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5105,
+            "itemKey": "whiteberry-seed",
+            "name": "Whiteberry seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 112.7
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5282,
+            "itemKey": "mushroom-spore",
+            "name": "Mushroom spore",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 132.2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5296,
+            "itemKey": "toadflax-seed",
+            "name": "Toadflax seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 142
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5281,
+            "itemKey": "belladonna-seed",
+            "name": "Belladonna seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 212.9
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5297,
+            "itemKey": "irit-seed",
+            "name": "Irit seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 212.9
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5106,
+            "itemKey": "poison-ivy-seed",
+            "name": "Poison ivy seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 294.8
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5298,
+            "itemKey": "avantoe-seed",
+            "name": "Avantoe seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 319.4
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5280,
+            "itemKey": "cactus-seed",
+            "name": "Cactus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 319.4
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5299,
+            "itemKey": "kwuarm-seed",
+            "name": "Kwuarm seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 425.9
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22873,
+            "itemKey": "potato-cactus-seed",
+            "name": "Potato cactus seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 479.1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 766.5
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5301,
+            "itemKey": "cadantine-seed",
+            "name": "Cadantine seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 958.2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5302,
+            "itemKey": "lantadyme-seed",
+            "name": "Lantadyme seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1277.6
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5303,
+            "itemKey": "dwarf-weed-seed",
+            "name": "Dwarf weed seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1916.3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3832.7
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "notes": "Seeds (confirmed independent: 25 entries expanded from one {{uncommonseeddroplines}} transclusion, whose rates sum to its stated access rate 35/128 (ratio 0.9976), so its rows are one mutually-exclusive roll)"
+    },
+    {
+      "id": "bryophyta:4:coins-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 37
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 19
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 119
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2353,
+            "itemKey": "steel-bar",
+            "name": "Steel bar",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1969,
+            "itemKey": "spinach-roll",
+            "name": "Spinach roll",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "notes": "Coins / Other"
+    },
+    {
+      "id": "bryophyta:5:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7869,
+            "itemKey": "moss-giant-bone",
+            "name": "Moss giant bone",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 4
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13475,
+            "itemKey": "ensouled-giant-head",
+            "name": "Ensouled giant head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 24
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23182,
+            "itemKey": "clue-scroll-beginner",
+            "name": "Clue scroll (beginner)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 45
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22374,
+            "itemKey": "mossy-key",
+            "name": "Mossy key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 16
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10976,
+            "itemKey": "long-bone",
+            "name": "Long bone",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6800,
+            "itemKey": "giant-champion-scroll",
+            "name": "Giant champion scroll",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5000
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 10977,
+            "itemKey": "curved-bone",
+            "name": "Curved bone",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5012.5
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "bryophyta:6:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 532,
+            "itemKey": "big-bones",
+            "name": "Big bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "bryophyta:7:weapons-and-armour-runes-and-ammunition-coins-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1179,
+            "itemKey": "black-sq-shield",
+            "name": "Black sq shield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1389,
+            "itemKey": "magic-staff",
+            "name": "Magic staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1141,
+            "itemKey": "steel-med-helm",
+            "name": "Steel med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1285,
+            "itemKey": "mithril-sword",
+            "name": "Mithril sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1193,
+            "itemKey": "steel-kiteshield",
+            "name": "Steel kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 556,
+            "itemKey": "air-rune",
+            "name": "Air rune",
+            "qty": {
+              "kind": "exact",
+              "n": 18
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "exact",
+              "n": 27
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 7
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "exact",
+              "n": 6
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 884,
+            "itemKey": "iron-arrow",
+            "name": "Iron arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 886,
+            "itemKey": "steel-arrow",
+            "name": "Steel arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 37
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 19
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 11
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 119
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2353,
+            "itemKey": "steel-bar",
+            "name": "Steel bar",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1969,
+            "itemKey": "spinach-roll",
+            "name": "Spinach roll",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Coins / Other"
+    },
+    {
+      "id": "bryophyta:8:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23182,
+            "itemKey": "clue-scroll-beginner",
+            "name": "Clue scroll (beginner)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 45
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22374,
+            "itemKey": "mossy-key",
+            "name": "Mossy key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 16
+          },
+          "conditions": [
+            {
+              "kind": "members",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "bryophyta:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Members"
+            }
+          ]
+        }
+      ],
+      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    },
+    {
+      "id": "bryophyta:rdt-access:1",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
+            }
+          ]
+        }
+      ],
+      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "3 tableRef node(s) resolved against 7 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 76 wiki drop row(s) reachable in the document"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

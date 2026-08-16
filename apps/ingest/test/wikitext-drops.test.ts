@@ -154,4 +154,105 @@ describe('extractDropLines', () => {
     expect(lines).toHaveLength(1)
     expect(lines[0]).toMatchObject({ name: 'Mind rune', quantity: '253-336', rarity: '125/1012' })
   })
+
+  it('does not let two back-to-back nested templates (a "}}}}" seam) desync param splitting', () => {
+    // Real shape, from Bryophyta: raritynotes carries a {{Refn|...}} whose own
+    // content ends with a nested {{CiteDiscord|...}}, immediately followed —
+    // no separator — by a SIBLING {{CiteNews|...|name=keyrate}}. Both close at
+    // once, producing a run of four `}` characters. A depth counter that scans
+    // one character at a time (rather than skipping the matched pair) finds
+    // an extra overlapping "}}" in that run, desyncs by one level, and reads
+    // the citation's OWN `name=keyrate` as a TOP-LEVEL param of the outer
+    // DropsLine call — silently overwriting the real item name. This shipped
+    // a fabricated "keyrate}}" item into data/bosses/bryophyta.json before the
+    // fix; see splitTopLevelPipes's comment for the mechanism.
+    const wikitext =
+      `intro\n==Drops==\n===Tertiary===\n{{DropsTableHead}}\n` +
+      `{{DropsLine|name=Mossy key|quantity=1|rarity=1/16|raritynotes=` +
+      `{{Refn|group=d|prose.{{CiteDiscord|author=Mod Ash|quote=hi|name=krystilia}}}}` +
+      `{{CiteNews|title=Stackable Clues|name=keyrate}}}}\n` +
+      `{{DropsTableBottom}}`
+    const lines = extractDropLines(wikitext)
+    expect(lines).toHaveLength(1)
+    expect(lines[0]).toMatchObject({ name: 'Mossy key', quantity: '1', rarity: '1/16' })
+  })
+})
+
+/**
+ * `DROPS_SECTION_TITLE`'s tight rule (at most one word before "drops"/
+ * "rewards") missed four real corpus shapes: Obor/Bryophyta's section-level
+ * members/F2P split, and Black demon's two multi-word headings. Reward Chest
+ * (The Gauntlet) needed a second, independent fix (`HEADING_PATTERN` — its
+ * headings carry an `<span id="...">` anchor whose `=` broke heading
+ * DETECTION, before section-title matching ever ran) plus "table" as an
+ * alternate terminal keyword.
+ *
+ * The widened rule is deliberately content-gated, not just word-count-gated —
+ * see `LOOSE_DROPS_SECTION_TITLE`'s comment for why "Training and Rewards"
+ * (a real corpus heading, pure prose) must still be rejected even though nothing
+ * about its word count distinguishes it from the genuine cases.
+ */
+describe('extractDropLines: the widened multi-word / "table" / span-tag heading rule', () => {
+  it('matches a 2-word prefix before "drops" (Obor/Bryophyta shape)', () => {
+    const wikitext =
+      `intro\n==Members' worlds drops==\n{{DropsTableHead}}\n` +
+      `{{DropsLine|name=Big bones|quantity=1|rarity=Always}}\n{{DropsTableBottom}}\n` +
+      `==Free-to-play worlds drops==\n{{DropsTableHead}}\n` +
+      `{{DropsLine|name=Bones|quantity=1|rarity=Always}}\n{{DropsTableBottom}}`
+    const lines = extractDropLines(wikitext)
+    expect(lines.map((l) => l.name)).toEqual(['Big bones', 'Bones'])
+    expect(lines.map((l) => l.section)).toEqual(["Members' worlds drops", 'Free-to-play worlds drops'])
+  })
+
+  it('matches a 5-word prefix before "drops" (Black demon shape)', () => {
+    const wikitext =
+      `intro\n==Level 172, 178, and 184 drops==\n{{DropsTableHead}}\n` +
+      `{{DropsLine|name=Rune 2h sword|quantity=1|rarity=1/512}}\n{{DropsTableBottom}}`
+    const lines = extractDropLines(wikitext)
+    expect(lines).toHaveLength(1)
+    expect(lines[0]?.name).toBe('Rune 2h sword')
+  })
+
+  it('matches a bare "table" terminal, and strips a trailing <span id="..."> anchor (Reward Chest (The Gauntlet) shape)', () => {
+    const wikitext =
+      `intro\n==Junk table<span id="Failure"/>==\n{{DropsTableHead}}\n` +
+      `{{DropsLineReward|name=Rotten tomato|quantity=1|rarity=1/3|gemw=no}}\n{{DropsTableBottom}}\n` +
+      `==Regular loot table<span id="Regular"/>==\n{{DropsTableHead}}\n` +
+      `{{DropsLineReward|name=Elder maul|quantity=1|rarity=1/300}}\n{{DropsTableBottom}}`
+    const lines = extractDropLines(wikitext)
+    expect(lines.map((l) => l.name)).toEqual(['Rotten tomato', 'Elder maul'])
+    // The stored section title is the STRIPPED text, not raw wiki markup —
+    // checked because it flows into table-id slugs and, if ever rendered, a
+    // literal `<span id="Failure"/>` in a user-facing string would be a bug.
+    expect(lines.map((l) => l.section)).toEqual(['Junk table', 'Regular loot table'])
+  })
+
+  it('does NOT match "Training and Rewards" (Salarin the Twisted shape) — same word count as a real match, but no row content', () => {
+    // The precision test: word count alone cannot separate this from
+    // "Members' worlds drops" (also a 2-word prefix). Content is the
+    // tie-breaker, and this section has none.
+    const wikitext =
+      `intro\n==Strategy==\n===Training and Rewards===\n` +
+      `Prose about training methods, no template calls at all.\n` +
+      `===Sinister Key===\nMore prose.\n` +
+      `==Drops==\n{{DropsTableHead}}\n` +
+      `{{DropsLine|name=Grimy guam leaf|quantity=1|rarity=1/22}}\n{{DropsTableBottom}}`
+    const lines = extractDropLines(wikitext)
+    expect(lines).toHaveLength(1)
+    expect(lines[0]?.name).toBe('Grimy guam leaf')
+    // And critically: the phantom section must not have flipped `qualify`,
+    // tagging the one real section as if the page had more than one.
+    expect(lines[0]?.section).toBe('')
+  })
+
+  it('still rejects "Drop mechanics"/"Reward mechanics" under the widened rule', () => {
+    const wikitext =
+      `intro\n==Rewards==\n{{DropsTableHead}}\n` +
+      `{{DropsLineReward|name=Coins|quantity=1|rarity=1/2}}\n{{DropsTableBottom}}\n` +
+      `==Reward mechanics==\n===Number of rolls===\nprose about the maths, no template calls\n` +
+      `==Mechanics==\n===Drop mechanics===\nprose only, no template calls`
+    const lines = extractDropLines(wikitext)
+    expect(lines).toHaveLength(1)
+    expect(lines[0]?.name).toBe('Coins')
+  })
 })

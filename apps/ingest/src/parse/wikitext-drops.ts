@@ -83,16 +83,48 @@ export function parseTemplateCall(call: string): { name: string; params: Map<str
   return { name, params }
 }
 
-/** Splits on `|` at brace/bracket depth 0, so nested templates survive intact. */
+/**
+ * Splits on `|` at brace/bracket depth 0, so nested templates survive intact.
+ *
+ * **A matched 2-character token consumes BOTH its characters (`i += 2` via
+ * the extra `i++` below, on top of the loop's own increment), not one.**
+ * Without it, a run of 3+ identical bracket characters produces overlapping
+ * matches instead of the true count of pairs: `}}}}` (two templates closing
+ * back-to-back, e.g. `{{Refn|...{{CiteDiscord|...}}}}`) is two real closes,
+ * but scanning one character at a time finds THREE overlapping `}}` windows
+ * (`text.slice(0,2)`, `text.slice(1,3)`, `text.slice(2,4)` all equal `"}}"`),
+ * decrementing depth three times instead of two and leaving it permanently
+ * one level shallow for everything after. On a real page this corrupted an
+ * item's own `name` param: Bryophyta's `{{DropsLine|name=Mossy key|...
+ * |raritynotes={{Refn|...{{CiteDiscord|...}}}}{{CiteNews|...|name=keyrate}}}}`
+ * has exactly this `}}}}` seam where Refn's nested citation and the sibling
+ * CiteNews both close at once — the desync made `|name=keyrate` (a citation's
+ * OWN name param, nested two templates deep) read as depth 0, i.e. a
+ * TOP-LEVEL param of the outer `DropsLine` call, silently overwriting `name=
+ * Mossy key` with `keyrate}}` and shipping a fabricated item into the corpus.
+ *
+ * `findTemplateCalls` below never had this bug — its depth loop already does
+ * an equivalent extra `i++` on a match — which is why it correctly found the
+ * true 968-character extent of that same `DropsLine` call while THIS function
+ * mis-split its params. Verified as a pure fix, not a behavioural change: run
+ * against every `{{DropsLine}}`-family call recovered from all 209 wikitext
+ * snapshots (post-transclusion-expansion), parsed params are byte-identical
+ * before and after except on the two pages that actually carry this pattern
+ * (Bryophyta and Obor, which share the cited news post verbatim).
+ */
 function splitTopLevelPipes(text: string): string[] {
   const parts: string[] = []
   let depth = 0
   let start = 0
   for (let i = 0; i < text.length; i++) {
     const two = text.slice(i, i + 2)
-    if (two === '{{' || two === '[[') depth++
-    else if (two === '}}' || two === ']]') depth--
-    else if (text[i] === '|' && depth === 0) {
+    if (two === '{{' || two === '[[') {
+      depth++
+      i++
+    } else if (two === '}}' || two === ']]') {
+      depth--
+      i++
+    } else if (text[i] === '|' && depth === 0) {
       parts.push(text.slice(start, i))
       start = i + 1
     }
@@ -144,7 +176,24 @@ interface Heading {
   contentStart: number
 }
 
-const HEADING_PATTERN = /\n(={2,6})([^=\n]+)\1[ \t]*\n/g
+/**
+ * The title group is LAZY (`.+?`), not `[^=\n]+`. A heading whose title
+ * contains an inline HTML attribute — Reward Chest (The Gauntlet)'s
+ * `==Junk table<span id="Failure"/>==` — has an `=` INSIDE the title itself
+ * (`id="Failure"`), and `[^=\n]+` cannot span it: it stops at the first `=`,
+ * leaving nothing that reads as `\1` (a literal `==`) immediately after, so
+ * the whole heading was invisible to `findHeadings` — not a `DROPS_SECTION_TITLE`
+ * problem, a heading-detection one. The lazy form crawls forward until it
+ * finds the real closing `={2,6}` immediately followed by only whitespace and
+ * a newline, which correctly skips the single `=` inside the tag and lands on
+ * the genuine delimiter.
+ *
+ * Verified as a pure recovery, not a behavioural change: run against all 209
+ * wikitext snapshots, this produces byte-identical heading lists on every
+ * page except `reward-chest-the-gauntlet`, where it recovers exactly its four
+ * previously-invisible top-level headings.
+ */
+const HEADING_PATTERN = /\n(={2,6})(.+?)\1[ \t]*\n/g
 
 function findHeadings(text: string): Heading[] {
   const headings: Heading[] = []
@@ -171,8 +220,60 @@ function findHeadings(text: string): Heading[] {
  * either side (one word before, or a parenthetical after) but "drops"/
  * "rewards" itself must be the heading's last significant word — that is
  * exactly the distinction between "Elite drops" and "Reward mechanics".
+ *
+ * Trusted UNCONDITIONALLY, with no check on the section's own content —
+ * `findRowlessTemplateBlocks` depends on that: it exists specifically to
+ * report a section this rule correctly identifies as a drops area that
+ * currently yields zero rows (an unexpandable transclusion). Content-gating
+ * this rule would make that diagnostic blind on exactly the pages it exists
+ * for. See `LOOSE_DROPS_SECTION_TITLE` below for the rule that DOES need one.
  */
 const DROPS_SECTION_TITLE = /^(?:\S+\s+)?(drops?|rewards?)\s*(\(.*\))?$/i
+
+/**
+ * A looser match for headings the tight rule's one-word cap cannot see, plus
+ * "table" as an alternative to "drops"/"rewards" — two real corpus shapes:
+ *
+ *  - **An unlimited word count before "drops"/"rewards".** Obor/Bryophyta's
+ *    `==Members' worlds drops==` / `==Free-to-play worlds drops==` (2-word
+ *    prefix, a section-level members/F2P split rather than per-row markers);
+ *    Black demon's `==Level 172, 178, and 184 drops==` (5 words) and
+ *    `==Wilderness Slayer Cave drops==` (3 words).
+ *  - **"...table" instead of "...drops"/"...rewards".** Reward Chest (The
+ *    Gauntlet)'s `Junk table` / `Incomplete loot table` / `Regular loot
+ *    table` / `Corrupted loot table` (each also needed `HEADING_PATTERN`'s
+ *    fix to be visible as a heading at all, since each carries a trailing
+ *    `<span id="...">` anchor `stripInlineTags` removes before either title
+ *    regex runs).
+ *
+ * **Deliberately NOT trusted on its own — content is the tie-breaker, checked
+ * at the call site.** `Salarin the Twisted`'s `===Training and Rewards===` (a
+ * Magic-training guide subsection, pure prose) matches this exact shape and
+ * must still be rejected the same way "Reward mechanics" is. Word count alone
+ * cannot separate the two: "Training and Rewards" and "Members' worlds drops"
+ * both carry a 2-word prefix, so a wider cap doesn't help, and Black demon's
+ * genuine heading needs 5 words, more than "Training and Rewards" ever had.
+ * What DOES separate them is content: every genuine loose match in the corpus
+ * carries at least one real `DropsLine`/`DropsLineClue`/`DropsLineReward` call
+ * in its own section; "Training and Rewards" carries none. So a match here is
+ * provisional — `findDropsSections` only keeps it once the computed section
+ * content is confirmed to have a row template, which is also why this rule
+ * cannot be folded into `DROPS_SECTION_TITLE` and content-gated uniformly:
+ * `findRowlessTemplateBlocks` needs the tight rule's sections to survive with
+ * zero rows, precisely to report that they have none.
+ */
+const LOOSE_DROPS_SECTION_TITLE = /^.+?\b(drops?|rewards?|table)\s*(\(.*\))?$/i
+
+/**
+ * Strips inline HTML MediaWiki tolerates inside a heading — Reward Chest (The
+ * Gauntlet)'s `<span id="Failure"/>`-style anchors — so both title regexes and
+ * downstream table-id slugs see clean text instead of wiki markup. Checked
+ * against the whole corpus: this page is the only one with a `<` in any
+ * heading, so the strip is a no-op everywhere else.
+ */
+function stripInlineTags(title: string): string {
+  return title.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
+}
 
 export interface DropsSection {
   /** The section's own top-level heading title, e.g. "Drops" or "Elite drops". */
@@ -213,7 +314,10 @@ export function findDropsSections(wikitext: string): DropsSection[] {
     const heading = headings[i]
     if (heading === undefined) continue
     if (heading.start < claimedUntil) continue
-    if (!DROPS_SECTION_TITLE.test(heading.title)) continue
+    const title = stripInlineTags(heading.title)
+    const tight = DROPS_SECTION_TITLE.test(title)
+    if (!tight && !LOOSE_DROPS_SECTION_TITLE.test(title)) continue
+
     let end = wikitext.length
     for (let j = i + 1; j < headings.length; j++) {
       const next = headings[j]
@@ -228,7 +332,13 @@ export function findDropsSections(wikitext: string): DropsSection[] {
     // contentStart would strip that "\n" and leave the sub-heading with no
     // leading newline of its own to match against — so one character short
     // of contentStart is kept, re-supplying it.
-    sections.push({ title: heading.title, content: wikitext.slice(heading.contentStart - 1, end) })
+    const content = wikitext.slice(heading.contentStart - 1, end)
+
+    // The loose rule's content gate — see LOOSE_DROPS_SECTION_TITLE's comment
+    // for why this can't apply to a tight match too.
+    if (!tight && findTemplateCalls(content, [...ROW_TEMPLATES]).length === 0) continue
+
+    sections.push({ title, content })
     claimedUntil = end
   }
   return sections

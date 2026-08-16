@@ -1,0 +1,756 @@
+{
+  "slug": "kalphite-queen",
+  "name": "Kalphite Queen",
+  "aliases": [],
+  "wikiPage": "Kalphite Queen",
+  "wikiRevId": 15240484,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "kalphite-queen:0:consumables",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 9,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7946,
+            "itemKey": "monkfish",
+            "name": "Monkfish",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11936,
+            "itemKey": "dark-crab",
+            "name": "Dark crab",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6685,
+            "itemKey": "saradomin-brew-4",
+            "name": "Saradomin brew(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2434,
+            "itemKey": "prayer-potion-4",
+            "name": "Prayer potion(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3024,
+            "itemKey": "super-restore-4",
+            "name": "Super restore(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12699,
+            "itemKey": "super-combat-potion-2",
+            "name": "Super combat potion(2)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 169,
+            "itemKey": "ranging-potion-3",
+            "name": "Ranging potion(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 183,
+            "itemKey": "superantipoison-2",
+            "name": "Superantipoison(2)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Consumables"
+    },
+    {
+      "id": "kalphite-queen:1:weapons-and-armour-runes-and-ammunition-herbs-seeds-resources-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 126,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2501,
+            "itemKey": "red-d-hide-body",
+            "name": "Red d'hide body",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5660,
+            "itemKey": "rune-knife-p",
+            "name": "Rune knife(p++)",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3053,
+            "itemKey": "lava-battlestaff",
+            "name": "Lava battlestaff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 888,
+            "itemKey": "mithril-arrow",
+            "name": "Mithril arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3049,
+            "itemKey": "grimy-toadflax",
+            "name": "Grimy toadflax",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3051,
+            "itemKey": "grimy-snapdragon",
+            "name": "Grimy snapdragon",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 219,
+            "itemKey": "grimy-torstol",
+            "name": "Grimy torstol",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5321,
+            "itemKey": "watermelon-seed",
+            "name": "Watermelon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5288,
+            "itemKey": "papaya-tree-seed",
+            "name": "Papaya tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5289,
+            "itemKey": "palm-tree-seed",
+            "name": "Palm tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2363,
+            "itemKey": "runite-bar",
+            "name": "Runite bar",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1783,
+            "itemKey": "bucket-of-sand",
+            "name": "Bucket of sand",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1513,
+            "itemKey": "magic-logs",
+            "name": "Magic logs",
+            "qty": {
+              "kind": "exact",
+              "n": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1621,
+            "itemKey": "uncut-emerald",
+            "name": "Uncut emerald",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1617,
+            "itemKey": "uncut-diamond",
+            "name": "Uncut diamond",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23489,
+            "itemKey": "wine-of-zamorak",
+            "name": "Wine of Zamorak",
+            "qty": {
+              "kind": "exact",
+              "n": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3138,
+            "itemKey": "potato-cactus",
+            "name": "Potato cactus",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 15000,
+              "max": 20000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1987,
+            "itemKey": "grapes",
+            "name": "Grapes",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5937,
+            "itemKey": "weapon-poison",
+            "name": "Weapon poison(++)",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6016,
+            "itemKey": "cactus-spine",
+            "name": "Cactus spine",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Herbs / Seeds / Resources / Other"
+    },
+    {
+      "id": "kalphite-queen:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 126
+          }
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "4 tableRef node(s) resolved against 7 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "11 of 70 wiki drop row(s) missing from the document: Brimstone key, Clue scroll (elite), Dragon 2h sword, Dragon chainbody, Dragon pickaxe, Ensouled kalphite head, Jar of sand, Kalphite princess (+3 more)"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

@@ -56,6 +56,21 @@ describe('the real committed site index', () => {
     expect(index.entries.map((e) => e.slug).sort()).toEqual(slugs.sort())
   })
 
+  it('prefers bucketimage over an animated webp portrait', async () => {
+    // Mad Angel's `|image =` is a 5.4 MB animated webp whose "300px" thumbnail
+    // still weighs 2.6 MB; its `|bucketimage =` is a png whose 300px thumb is
+    // 88 KB. Measured against the live CDN — see `extractInfoboxImage`.
+    expect(extractInfoboxImage('|image = [[File:A.webp|300px]]\n|bucketimage = [[File:A.png]]')).toBe(
+      'A.png'
+    )
+    // Order-independent: the preference is by parameter name, not position.
+    expect(extractInfoboxImage('|bucketimage = [[File:A.png]]\n|image = [[File:A.webp]]')).toBe(
+      'A.png'
+    )
+    // And a page without one is unaffected, which is 208 of the 209 snapshots.
+    expect(extractInfoboxImage('|image = [[File:Vorkath.png|300px]]')).toBe('Vorkath.png')
+  })
+
   it('records file names rather than URLs, so the frontend chooses the size', async () => {
     const index = SiteIndexSchema.parse(JSON.parse(await readFile(SITE_INDEX_PATH, 'utf8')))
     for (const entry of index.entries) {

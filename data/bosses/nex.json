@@ -1,0 +1,231 @@
+{
+  "slug": "nex",
+  "name": "Nex",
+  "aliases": [],
+  "wikiPage": "Nex",
+  "wikiRevId": 15264238,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "nex:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 532,
+            "itemKey": "big-bones",
+            "name": "Big bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "nex:1:uniques",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 516,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26370,
+            "itemKey": "ancient-hilt",
+            "name": "Ancient hilt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26372,
+            "itemKey": "nihil-horn",
+            "name": "Nihil horn",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26376,
+            "itemKey": "torva-full-helm-damaged",
+            "name": "Torva full helm (damaged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26378,
+            "itemKey": "torva-platebody-damaged",
+            "name": "Torva platebody (damaged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26380,
+            "itemKey": "torva-platelegs-damaged",
+            "name": "Torva platelegs (damaged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26235,
+            "itemKey": "zaryte-vambraces",
+            "name": "Zaryte vambraces",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        }
+      ],
+      "notes": "Uniques"
+    },
+    {
+      "id": "nex:2:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 48
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26348,
+            "itemKey": "nexling",
+            "name": "Nexling",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 500
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "24 of 33 wiki drop row(s) missing from the document: Air orb, Air rune, Blood essence, Blood rune, Coal, Coins, Death rune, Dragon bolts (unf) (+16 more)"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

@@ -1,0 +1,973 @@
+{
+  "slug": "ancient-chest",
+  "name": "Ancient chest",
+  "aliases": [],
+  "wikiPage": "Ancient chest",
+  "wikiRevId": 15232075,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "ancient-chest:0:unique-drop-table",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 69,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21034,
+            "itemKey": "dexterous-prayer-scroll",
+            "name": "Dexterous prayer scroll",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21079,
+            "itemKey": "arcane-prayer-scroll",
+            "name": "Arcane prayer scroll",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21000,
+            "itemKey": "twisted-buckler",
+            "name": "Twisted buckler",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21012,
+            "itemKey": "dragon-hunter-crossbow",
+            "name": "Dragon hunter crossbow",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21015,
+            "itemKey": "dinh-s-bulwark",
+            "name": "Dinh's bulwark",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21018,
+            "itemKey": "ancestral-hat",
+            "name": "Ancestral hat",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21021,
+            "itemKey": "ancestral-robe-top",
+            "name": "Ancestral robe top",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21024,
+            "itemKey": "ancestral-robe-bottom",
+            "name": "Ancestral robe bottom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13652,
+            "itemKey": "dragon-claws",
+            "name": "Dragon claws",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21003,
+            "itemKey": "elder-maul",
+            "name": "Elder maul",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21043,
+            "itemKey": "kodai-insignia",
+            "name": "Kodai insignia",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20997,
+            "itemKey": "twisted-bow",
+            "name": "Twisted bow",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Unique drop table"
+    },
+    {
+      "id": "ancient-chest:1:common-drop-table",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 33,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3640
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 4095
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 566,
+            "itemKey": "soul-rune",
+            "name": "Soul rune",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 6553
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 9362
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11212,
+            "itemKey": "dragon-arrow",
+            "name": "Dragon arrow",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 648
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 138
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3049,
+            "itemKey": "grimy-toadflax",
+            "name": "Grimy toadflax",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 210
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 209,
+            "itemKey": "grimy-irit-leaf",
+            "name": "Grimy irit leaf",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 675
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 337
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 289
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3051,
+            "itemKey": "grimy-snapdragon",
+            "name": "Grimy snapdragon",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 84
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 330
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 442
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 546
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 219,
+            "itemKey": "grimy-torstol",
+            "name": "Grimy torstol",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 134
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 442,
+            "itemKey": "silver-ore",
+            "name": "Silver ore",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 6553
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 6553
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2978
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 447,
+            "itemKey": "mithril-ore",
+            "name": "Mithril ore",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 4095
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 789
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 65
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1623,
+            "itemKey": "uncut-sapphire",
+            "name": "Uncut sapphire",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 697
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1621,
+            "itemKey": "uncut-emerald",
+            "name": "Uncut emerald",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 923
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 541
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1617,
+            "itemKey": "uncut-diamond",
+            "name": "Uncut diamond",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 258
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13391,
+            "itemKey": "lizardman-fang",
+            "name": "Lizardman fang",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 4681
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7936,
+            "itemKey": "pure-essence",
+            "name": "Pure essence",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 65535
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13421,
+            "itemKey": "saltpetre",
+            "name": "Saltpetre",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 4681
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8780,
+            "itemKey": "teak-plank",
+            "name": "Teak plank",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 1365
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8782,
+            "itemKey": "mahogany-plank",
+            "name": "Mahogany plank",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 550
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13573,
+            "itemKey": "dynamite",
+            "name": "Dynamite",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2427
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21047,
+            "itemKey": "torn-prayer-scroll",
+            "name": "Torn prayer scroll",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21027,
+            "itemKey": "dark-relic",
+            "name": "Dark relic",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Common drop table (confirmed weighted: 33 of 34 entries share denominator 33; 1 rarer outlier(s) split into their own independent table)"
+    },
+    {
+      "id": "ancient-chest:2:common-drop-table-outliers",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21046,
+            "itemKey": "ancient-tablet",
+            "name": "Ancient tablet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 10
+          }
+        }
+      ],
+      "notes": "Common drop table (outliers) (confirmed independent: rarer than the 33-entry /33 pool in \"Common drop table\"; modelled as separate independent rolls)"
+    },
+    {
+      "id": "ancient-chest:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20899,
+            "itemKey": "dark-journal",
+            "name": "Dark journal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20851,
+            "itemKey": "olmlet",
+            "name": "Olmlet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 53
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24670,
+            "itemKey": "twisted-ancestral-colour-kit",
+            "name": "Twisted ancestral colour kit",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 75
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22386,
+            "itemKey": "metamorphic-dust",
+            "name": "Metamorphic dust",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": false,
+        "detail": "point_scaled: Chambers of Xeric's reward chest. Never had a document before the DROPS_SECTION_TITLE/HEADING_PATTERN widening (2026-08-16) let the parser reach its ==Loot table== section for the first time — correcting an earlier, now-falsified claim (docs/HANDOFF.md) that its page 'has no {{DropsLine}}-shaped content whatsoever'. It does; the rows are exactly as misleading as ToA's own were before its override. The page states outright: 'For every 8,676 total points obtained, a 1% chance to obtain a unique loot is given... capped at 65.7% (570,000 points)... If one of these items is received, no common rewards are given... Up to six unique rewards can be obtained per raid.' None of that is visible to the parser, which currently emits TWO INDEPENDENT weighted tables with no gating between them at all: ancient-chest:0 (12 uniques, weight/69) and ancient-chest:1 (33 common items, weight/33) both roll on EVERY simulated kill, so the generated document currently guarantees a unique AND a common drop every time — not an imprecise approximation but a ~100%-unique-rate document, far worse than an unmodelled curve. Needs the cox_points formula (points -> unique chance, capped) plus the preroll/suppression structure ToA's override pattern already established. The elite-clue/Olmlet cross-table visibility question this entry's mechanic touches is RESOLVED, not open — see docs/HANDOFF.md's 'What NOT to redo': a conditioned-marginal formula rate is exact and does not need per-kill same-raid correlation; naively using the raw unconditioned subrates instead overstates Olmlet by 33x, which is the failure mode to avoid when this is built, not evidence the mechanism needs new architecture."
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 51 wiki drop row(s) reachable in the document"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

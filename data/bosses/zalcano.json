@@ -720,7 +720,7 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "1 formula rate(s) evaluated successfully, all in [0,1]"
+        "detail": "1 formula rate(s)/weight(s) evaluated successfully"
       },
       {
         "check": "qty_sane",

@@ -34,6 +34,7 @@ describe('assembleBoss', () => {
       {
         mode: 'always',
         headings: ['100%'],
+        section: '',
         denominator: null,
         ambiguous: null,
         entries: [
@@ -63,6 +64,7 @@ describe('assembleBoss', () => {
       {
         mode: 'weighted',
         headings: ['Main'],
+        section: '',
         denominator: 10,
         ambiguous: null,
         entries: [
@@ -94,6 +96,7 @@ describe('assembleBoss', () => {
       {
         mode: 'weighted',
         headings: ['Main'],
+        section: '',
         denominator: 10,
         ambiguous: null,
         entries: [
@@ -118,6 +121,7 @@ describe('assembleBoss', () => {
       {
         mode: 'weighted',
         headings: ['Resources'],
+        section: '',
         denominator: 10,
         ambiguous: null,
         entries: [
@@ -145,6 +149,7 @@ describe('assembleBoss', () => {
       {
         mode: 'weighted',
         headings: ['Other'],
+        section: '',
         denominator: 10,
         ambiguous: null,
         entries: [
@@ -175,6 +180,7 @@ describe('assembleBoss', () => {
       {
         mode: 'preroll',
         headings: ['Unique'],
+        section: '',
         denominator: null,
         ambiguous: 'heterogeneous denominators, guessed preroll',
         entries: [
@@ -201,6 +207,7 @@ describe('assembleBoss', () => {
       {
         mode: 'weighted',
         headings: ['Empty'],
+        section: '',
         denominator: null,
         ambiguous: 'unparseable rarity',
         entries: [],
@@ -243,5 +250,112 @@ describe('assembleBoss', () => {
     expect(result.ambiguousGroups).toEqual([
       "RDT/gem-table access could not be modelled: references the God Wars Dungeon-variant table (raw: '{{GWDRDT}}')",
     ])
+  })
+
+  /**
+   * Obor/Bryophyta's shape: a section-level members/F2P split with no
+   * per-row `{{(m)}}`/`{{(f)}}` marker at all — see `conditionsFor`'s comment.
+   */
+  describe('section-level membership fallback', () => {
+    it("attaches members:true from a 'Members' worlds drops' section, unmarked at the row level", () => {
+      const groups: ParsedTableGroup[] = [
+        {
+          mode: 'always',
+          headings: ['100%'],
+          section: "Members' worlds drops",
+          denominator: null,
+          ambiguous: null,
+          entries: [
+            {
+              name: 'Bull bones',
+              quantity: '1',
+              noted: false,
+              members: false,
+              freeToPlay: false,
+              rarity: { kind: 'always', num: 1, den: 1 },
+              weight: null,
+            },
+          ],
+        },
+      ]
+      const result = assembleBoss(groups, noRdtAccess, options)
+      expect(result.boss?.tables[0]?.entries[0]?.conditions).toEqual([{ kind: 'members', value: true }])
+    })
+
+    it("attaches members:false from a 'Free-to-play worlds drops' section", () => {
+      const groups: ParsedTableGroup[] = [
+        {
+          mode: 'always',
+          headings: ['100%'],
+          section: 'Free-to-play worlds drops',
+          denominator: null,
+          ambiguous: null,
+          entries: [
+            {
+              name: 'Bull bones',
+              quantity: '1',
+              noted: false,
+              members: false,
+              freeToPlay: false,
+              rarity: { kind: 'always', num: 1, den: 1 },
+              weight: null,
+            },
+          ],
+        },
+      ]
+      const result = assembleBoss(groups, noRdtAccess, options)
+      expect(result.boss?.tables[0]?.entries[0]?.conditions).toEqual([{ kind: 'members', value: false }])
+    })
+
+    it('lets a per-row marker override the section fallback', () => {
+      const groups: ParsedTableGroup[] = [
+        {
+          mode: 'always',
+          headings: ['100%'],
+          section: "Members' worlds drops",
+          denominator: null,
+          ambiguous: null,
+          entries: [
+            {
+              name: 'Bull bones',
+              quantity: '1',
+              noted: false,
+              members: false,
+              freeToPlay: true, // an (f) marker inside a Members-only section
+              rarity: { kind: 'always', num: 1, den: 1 },
+              weight: null,
+            },
+          ],
+        },
+      ]
+      const result = assembleBoss(groups, noRdtAccess, options)
+      // The row's own marker wins, not the enclosing section.
+      expect(result.boss?.tables[0]?.entries[0]?.conditions).toEqual([{ kind: 'members', value: false }])
+    })
+
+    it('does not fire on an unrelated section title', () => {
+      const groups: ParsedTableGroup[] = [
+        {
+          mode: 'always',
+          headings: ['100%'],
+          section: 'Elite drops',
+          denominator: null,
+          ambiguous: null,
+          entries: [
+            {
+              name: 'Bull bones',
+              quantity: '1',
+              noted: false,
+              members: false,
+              freeToPlay: false,
+              rarity: { kind: 'always', num: 1, den: 1 },
+              weight: null,
+            },
+          ],
+        },
+      ]
+      const result = assembleBoss(groups, noRdtAccess, options)
+      expect(result.boss?.tables[0]?.entries[0]?.conditions).toBeUndefined()
+    })
   })
 })

@@ -6,6 +6,7 @@ import {
   BossSchema,
   expectedValue,
   resolveSimContext,
+  WeightsExceedDenominatorError,
   type Boss,
   type Node,
   type Table,
@@ -170,6 +171,19 @@ function collectNames(node: Table['entries'][number]['node'], into: Set<string>)
  * because the COMPARISON would be invalid, never because the number looked
  * inconvenient.
  */
+/**
+ * Slugs whose document does not COMPILE, so no per-item rate exists to compare.
+ *
+ * Counted and asserted below rather than skipped quietly — `weights_sum`
+ * already reports each of these as a real failure, and a document that cannot
+ * compile is not evidence about marginal rates either way. The list is
+ * asserted exactly, so a source silently joining it is a test failure, not a
+ * shrug (docs/HANDOFF.md landmine #11f: an exclusion list that grows until
+ * nothing is left to check is one of the three shapes that produce a vacuous
+ * green).
+ */
+const DOES_NOT_COMPILE: string[] = []
+
 async function deviations(
   slug: string,
   boss: Boss,
@@ -193,7 +207,19 @@ async function deviations(
     // model failing an incorrect comparison.
     for (const entry of table.entries) collectNames(entry.node, downstream)
   })
-  const result = expectedValue(boss, resolveSimContext(boss, {}), { tables: shared })
+  // A document whose weights exceed their denominator throws out of
+  // `compileBoss`. That is `weights_sum`'s failure to report, and it used to
+  // abort this whole suite on the first such source; record it and move on.
+  let result
+  try {
+    result = expectedValue(boss, resolveSimContext(boss, {}), { tables: shared })
+  } catch (error) {
+    if (error instanceof WeightsExceedDenominatorError) {
+      DOES_NOT_COMPILE.push(slug)
+      return null
+    }
+    throw error
+  }
 
   const found: Deviation[] = []
   for (const item of result.items) {
@@ -256,6 +282,23 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('per-item drop rates, composed', () => {
           `${d.slug} / ${d.item}: stated ${d.stated.toFixed(6)}, composed ${d.actual.toFixed(6)} (${d.errorPct.toFixed(2)}%)`
       )
     expect(report, `${offenders.length} item(s) deviate`).toEqual([])
+
+    // Named exactly, so this cannot quietly become the place sources go to
+    // avoid the comparison. Each is a real `weights_sum` failure reported as
+    // such on its own document.
+    // All eight are tier D sources whose main table genuinely overflows its
+    // denominator — the very thing that put them in tier D at triage. The
+    // overflow is real data, not a classification artifact.
+    expect([...new Set(DOES_NOT_COMPILE)].sort()).toEqual([
+      'chaos-fanatic',
+      'commander-zilyana',
+      'grotesque-guardians',
+      'k-ril-tsutsaroth',
+      'mad-angel',
+      'maggot-king',
+      'phosani-s-nightmare',
+      'yama',
+    ])
   })
 
   /**

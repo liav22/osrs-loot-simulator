@@ -1,0 +1,711 @@
+{
+  "slug": "yama",
+  "name": "Yama",
+  "aliases": [],
+  "wikiPage": "Yama",
+  "wikiRevId": 15292450,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "yama:0:unique",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30759,
+            "itemKey": "soulflame-horn",
+            "name": "Soulflame horn",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30750,
+            "itemKey": "oathplate-helm",
+            "name": "Oathplate helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30753,
+            "itemKey": "oathplate-chest",
+            "name": "Oathplate chest",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30756,
+            "itemKey": "oathplate-legs",
+            "name": "Oathplate legs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 600
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30803,
+            "itemKey": "dossier",
+            "name": "Dossier",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 12.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30763,
+            "itemKey": "forgotten-lockbox",
+            "name": "Forgotten lockbox",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 33
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30765,
+            "itemKey": "oathplate-shards",
+            "name": "Oathplate shards",
+            "qty": {
+              "kind": "exact",
+              "n": 12
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 17.07
+          }
+        }
+      ],
+      "notes": "Unique"
+    },
+    {
+      "id": "yama:1:weapons-and-armour",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 95.11,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "exact",
+              "n": 40
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4585,
+            "itemKey": "dragon-plateskirt",
+            "name": "Dragon plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Weapons and armour"
+    },
+    {
+      "id": "yama:2:junk",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 11,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1965,
+            "itemKey": "cabbage",
+            "name": "Cabbage",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1474,
+            "itemKey": "black-bead",
+            "name": "Black bead",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1969,
+            "itemKey": "spinach-roll",
+            "name": "Spinach roll",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30747,
+            "itemKey": "demon-dung",
+            "name": "Demon dung",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Junk"
+    },
+    {
+      "id": "yama:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30888,
+            "itemKey": "yami",
+            "name": "Yami",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2500
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "yama:4:contract",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 100,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
+            "qty": {
+              "kind": "exact",
+              "n": 2000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30773,
+            "itemKey": "diabolic-worms",
+            "name": "Diabolic worms",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30765,
+            "itemKey": "oathplate-shards",
+            "name": "Oathplate shards",
+            "qty": {
+              "kind": "exact",
+              "n": 45
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30750,
+            "itemKey": "oathplate-helm",
+            "name": "Oathplate helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30753,
+            "itemKey": "oathplate-chest",
+            "name": "Oathplate chest",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30756,
+            "itemKey": "oathplate-legs",
+            "name": "Oathplate legs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30759,
+            "itemKey": "soulflame-horn",
+            "name": "Soulflame horn",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30822,
+            "itemKey": "contract-of-forfeit-breath",
+            "name": "Contract of forfeit breath",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30789,
+            "itemKey": "purifying-sigil-top",
+            "name": "Purifying sigil (top)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30810,
+            "itemKey": "contract-of-glyphic-attenuation",
+            "name": "Contract of glyphic attenuation",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30791,
+            "itemKey": "purifying-sigil-bottom",
+            "name": "Purifying sigil (bottom)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30813,
+            "itemKey": "contract-of-sensory-clouding",
+            "name": "Contract of sensory clouding",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30783,
+            "itemKey": "purifying-sigil-left",
+            "name": "Purifying sigil (left)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30819,
+            "itemKey": "contract-of-divine-severance",
+            "name": "Contract of divine severance",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30785,
+            "itemKey": "purifying-sigil-right",
+            "name": "Purifying sigil (right)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30816,
+            "itemKey": "contract-of-bloodied-blows",
+            "name": "Contract of bloodied blows",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30787,
+            "itemKey": "purifying-sigil-middle",
+            "name": "Purifying sigil (middle)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30840,
+            "itemKey": "contract-of-familiar-acquisition",
+            "name": "Contract of familiar acquisition",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30888,
+            "itemKey": "yami",
+            "name": "Yami",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Contract"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": false,
+        "detail": "1 table/variant mismatch(es)"
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "18 of 49 wiki drop row(s) missing from the document: Barrel of demonic tallow (full), Blood rune, Chasm teleport scroll, Diamond, Emerald, Fire rune, Law rune, Onyx bolt tips (+10 more)"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

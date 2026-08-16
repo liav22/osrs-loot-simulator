@@ -1,0 +1,1441 @@
+{
+  "slug": "black-demon",
+  "name": "Black demon",
+  "aliases": [],
+  "wikiPage": "Black demon",
+  "wikiRevId": 15275657,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "black-demon:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25772,
+            "itemKey": "malicious-ashes",
+            "name": "Malicious ashes",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "black-demon:1:weapons-and-armour-runes",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1283,
+            "itemKey": "black-sword",
+            "name": "Black sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1365,
+            "itemKey": "steel-battleaxe",
+            "name": "Steel battleaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1361,
+            "itemKey": "black-axe",
+            "name": "Black axe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1197,
+            "itemKey": "mithril-kiteshield",
+            "name": "Mithril kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1147,
+            "itemKey": "rune-med-helm",
+            "name": "Rune med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 556,
+            "itemKey": "air-rune",
+            "name": "Air rune",
+            "qty": {
+              "kind": "exact",
+              "n": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 7
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "exact",
+              "n": 37
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes"
+    },
+    {
+      "id": "black-demon:2:herbs",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 199,
+            "itemKey": "grimy-guam-leaf",
+            "name": "Grimy guam leaf",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 22.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 201,
+            "itemKey": "grimy-marrentill",
+            "name": "Grimy marrentill",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 29.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 203,
+            "itemKey": "grimy-tarromin",
+            "name": "Grimy tarromin",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 39.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 205,
+            "itemKey": "grimy-harralander",
+            "name": "Grimy harralander",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 64.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 209,
+            "itemKey": "grimy-irit-leaf",
+            "name": "Grimy irit leaf",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 89
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 118.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 142.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 178.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 237.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 237.4
+          }
+        }
+      ],
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/128 (ratio 0.9993), so its rows are one mutually-exclusive roll)"
+    },
+    {
+      "id": "black-demon:3:coins-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 132
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 40
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 44
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 220
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 460
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 379,
+            "itemKey": "lobster",
+            "name": "Lobster",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2361,
+            "itemKey": "adamantite-bar",
+            "name": "Adamantite bar",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 133,
+            "itemKey": "defence-potion-3",
+            "name": "Defence potion(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Coins / Other"
+    },
+    {
+      "id": "black-demon:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11941,
+            "itemKey": "looting-bag",
+            "name": "Looting bag",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13502,
+            "itemKey": "ensouled-demon-head",
+            "name": "Ensouled demon head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 86
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-hard",
+            "name": "Clue scroll (hard)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 128
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "black-demon:5:chasm-of-fire-tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30810,
+            "itemKey": "contract-of-glyphic-attenuation",
+            "name": "Contract of glyphic attenuation",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 53
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30816,
+            "itemKey": "contract-of-bloodied-blows",
+            "name": "Contract of bloodied blows",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 53
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30819,
+            "itemKey": "contract-of-divine-severance",
+            "name": "Contract of divine severance",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 53
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30822,
+            "itemKey": "contract-of-forfeit-breath",
+            "name": "Contract of forfeit breath",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 53
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30813,
+            "itemKey": "contract-of-sensory-clouding",
+            "name": "Contract of sensory clouding",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 53
+          }
+        }
+      ],
+      "notes": "Chasm of Fire tertiary"
+    },
+    {
+      "id": "black-demon:6:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25772,
+            "itemKey": "malicious-ashes",
+            "name": "Malicious ashes",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "black-demon:7:weapons-and-armour-runes",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 74,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1289,
+            "itemKey": "rune-sword",
+            "name": "Rune sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1211,
+            "itemKey": "adamant-dagger",
+            "name": "Adamant dagger",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1371,
+            "itemKey": "adamant-battleaxe",
+            "name": "Adamant battleaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1123,
+            "itemKey": "adamant-platebody",
+            "name": "Adamant platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1213,
+            "itemKey": "rune-dagger",
+            "name": "Rune dagger",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1147,
+            "itemKey": "rune-med-helm",
+            "name": "Rune med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1163,
+            "itemKey": "rune-full-helm",
+            "name": "Rune full helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 7
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "exact",
+              "n": 15
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes"
+    },
+    {
+      "id": "black-demon:8:herbs",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 199,
+            "itemKey": "grimy-guam-leaf",
+            "name": "Grimy guam leaf",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 12.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 201,
+            "itemKey": "grimy-marrentill",
+            "name": "Grimy marrentill",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 17.2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 203,
+            "itemKey": "grimy-tarromin",
+            "name": "Grimy tarromin",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 22.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 205,
+            "itemKey": "grimy-harralander",
+            "name": "Grimy harralander",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 29.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 37.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 209,
+            "itemKey": "grimy-irit-leaf",
+            "name": "Grimy irit leaf",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 51.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 68.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 82.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 103
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 137.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 137.3
+          }
+        }
+      ],
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/74 (ratio 0.9990), so its rows are one mutually-exclusive roll)"
+    },
+    {
+      "id": "black-demon:9:materials-coins",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 74,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2361,
+            "itemKey": "adamantite-bar",
+            "name": "Adamantite bar",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        }
+      ],
+      "notes": "Materials / Coins"
+    },
+    {
+      "id": "black-demon:10:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-hard",
+            "name": "Clue scroll (hard)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11941,
+            "itemKey": "looting-bag",
+            "name": "Looting bag",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13502,
+            "itemKey": "ensouled-demon-head",
+            "name": "Ensouled demon head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 35
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "black-demon:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 128
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    },
+    {
+      "id": "black-demon:rdt-access:1",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 128
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
+        }
+      ],
+      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    },
+    {
+      "id": "black-demon:rdt-access:2",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 74
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    },
+    {
+      "id": "black-demon:rdt-access:3",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 74
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
+        }
+      ],
+      "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "7 tableRef node(s) resolved against 7 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "29 of 97 wiki drop row(s) missing from the document: Ancient shard, Annakarl teleport (tablet), Blighted ancient ice sack, Blighted anglerfish, Blighted entangle sack, Blighted karambwan, Blighted manta ray, Blighted super restore(4) (+21 more)"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

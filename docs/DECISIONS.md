@@ -3848,3 +3848,328 @@ and write `members` off the context, not off any widget. So `?members=0`
 reproduces on every source, **including the ones that now render no control for
 it** — `url-round-trip.spec.ts` pins exactly that against Black Knight Titan in
 a real browser, plus the inverted-checkbox case on Brutus.
+
+## The tier D sweep, and the coverage denominator was wrong
+
+### 52 was never the denominator
+
+Coverage had been read as "27 of 52". **52 was the number of sources that had
+ever been PARSED, not the number the project owns.** The inventory's own gate is
+`include: true`, and that is **102**. Before this sweep, 52 of 102 had a
+document; after it, **66 of 102 (65%)**, and `verified` is **28/102 = 27%** —
+the same numeral as the old "27 of 52", which is exactly how a wrong denominator
+hides.
+
+| tier | with document / include:true | what is missing |
+|---|---|---|
+| A | 24/26 | `ancient-chest` (CoX), `revenant-maledictus` |
+| B | 1/1 | — |
+| C | 25/26 | `black-demon` (known heading gap) |
+| D | 16/20 | 4 `parse_failed`, below |
+| E | **0/29** | never attempted |
+
+**Tier E is the largest remaining block and it is untouched**: 29 sources with
+`include: true`, 1–7 dropsline rows each. These are the `trivial` sources — "a
+handful of `Always` rows, which is a valid `always` table" — that the Phase 2
+notes said are *complete, not deficient*. They are cheap and have simply never
+been run.
+
+### Tier D: the classification really was stale, and partly still true
+
+20 sources at tier D with `include: true`; 18 had no document. Fetched the 15
+missing wikitext snapshots and ran the parser over all of them.
+
+Result over the 18: **1 verified** (Skotizo), **13 needs_review**, **4
+parse_failed**. Tier D overall now 15 `needs_review` / 4 `parse_failed` / 1
+`verified`.
+
+So the tier was stale in the sense that 14 of 18 now assemble into a document
+where none had before — but the original complaint is mostly *real*: **8 of them
+genuinely do not compile**, their main table overflowing its denominator
+(`chaos-fanatic`, `commander-zilyana`, `grotesque-guardians`, `k-ril-tsutsaroth`,
+`mad-angel`, `maggot-king`, `phosani-s-nightmare`, `yama`). That is the exact
+defect triage named, and `weights_sum` reports it on each.
+
+### Why the four God Wars bosses split C/D — measured, not guessed
+
+All four reach the rare drop table. `classify` checks the denominator overflow
+**before** the RDT branch, so the overflow decides:
+
+| boss | main table | tier |
+|---|---|---|
+| Kree'arra | 126.95/127 | C |
+| General Graardor | 118.95/127 | C |
+| Commander Zilyana | **133.2**/127 | D |
+| K'ril Tsutsaroth | **135.7**/127 | D |
+
+Kree'arra fits with 0.05 to spare. Nothing about the four is conceptually
+different — two of them have rows summing past 127 and two do not, and every
+documented parse invocation being `--tier A,B,C` is what kept the other two out
+of the corpus for the whole project. Both now parse to `needs_review`, both
+still blocked on GWDRDT (landmine #3) as their tier-C siblings are.
+
+### Obor and Bryophyta fail on a HEADING, not on their tier
+
+Both have plenty of rows (58 and 57 `{{DropsLine}}` calls). They
+`parse_failed` with "no DropsLine calls found under a Drops heading" because
+their top-level headings are **`==Members' worlds drops==`** and
+**`==Free-to-play worlds drops==`**. `DROPS_SECTION_TITLE` allows at most one
+word before "drops" (`/^(?:\S+\s+)?(drops?|rewards?)…/`), and these have two.
+
+This is the same gap as Black demon's `==Level 172, 178, and 184 drops==`, now
+with three more instances (`Reward Chest (The Gauntlet)` is a fourth variation:
+`==Regular loot table<span id="Regular"/>==`, with an HTML anchor in the
+heading). **Not fixed here** — that regex was deliberately tightened to reject
+"Reward mechanics" and "Drop mechanics", so widening it is a corpus-wide change
+that needs its own pass, not a drive-by.
+
+Worth connecting to the previous session: Obor and Bryophyta are the two F2P
+bosses, and their page structure is a **section-level members/F2P split**. If
+that heading gap is closed they become genuine free-to-play sources and are
+exactly the case `BossContextSurface.freeToPlayVariant` flags as needing a
+re-check.
+
+### Two robustness bugs, both found by one bad source
+
+`chaos-fanatic`'s overflowing table threw `WeightsExceedDenominatorError` out of
+`compileBoss` **inside `checkRefsResolve`**, which aborted the entire 23-source
+parse run. One source's data defect took 22 others down with it.
+
+Fixed in `refs-resolve.ts`: a compile failure that is not a ref failure is not
+this check's business. It reports `ok: true` — the structural walk did resolve
+every ref, which is what the check is for — with a detail naming why the
+`compileBoss` cross-check could not run and pointing at `weights_sum`, rather
+than claiming a clean pass it did not earn.
+
+`marginal-rates.test.ts` had the same crash for the same reason. It now records
+non-compiling sources and **asserts the list exactly**, so a source cannot
+quietly join it — the exclusion-list-grows-until-vacuous shape from landmine
+#11f.
+
+### A 2.6 MB boss portrait, caught by an extension check
+
+Mad Angel's `|image =` is `Mad Angel.webp`, a 5.4 MB **animated** webp. Measured
+against the live CDN: its "300px" thumbnail is still **2.6 MB**, against 36 KB
+for a comparable png portrait. The same page carries
+`|bucketimage = [[File:Mad Angel.png]]`, whose 300px thumb is **88 KB**.
+
+`extractInfoboxImage` now prefers `bucketimage`, which is the wiki's own
+designation of the image to use in a data context. Blast radius was checked
+first: across 209 wikitext snapshots **one page carries `bucketimage` and one
+page has a `.webp` image, and they are the same page**.
+
+`Ikkle Hydra` joined the unresolved-icon list for a legitimate reason (only
+colour variants exist). Its drop row supplies `image=Ikkle Hydra (serpentine).png`
+explicitly — **the parser does not read `DropsLine`'s `image=` parameter, and
+doing so would resolve this whole class.** Recorded, not built.
+
+## DROPS_SECTION_TITLE widening, and what it actually recovers
+
+Two independent fixes, both in `apps/ingest/src/parse/wikitext-drops.ts`, plus
+one previously-latent parsing bug the wider reach exposed.
+
+### Two-tier heading match: tight (trusted unconditionally) + loose (content-gated)
+
+`DROPS_SECTION_TITLE`'s one-word-prefix cap missed real corpus shapes: Obor/
+Bryophyta's `==Members' worlds drops==`/`==Free-to-play worlds drops==` (2
+words), Black demon's `==Level 172, 178, and 184 drops==` (5 words) and
+`==Wilderness Slayer Cave drops==` (3 words).
+
+**Word count alone cannot fix this — `Salarin the Twisted`'s
+`===Training and Rewards===`** (a Magic-training guide subsection, zero
+`{{DropsLine}}` calls) has the identical 2-word-prefix shape as `Members'
+worlds drops` and would false-positive under any wider cap. A new
+`LOOSE_DROPS_SECTION_TITLE` (unlimited prefix, plus `table` as an alternate
+terminal keyword — see below) is therefore never trusted alone: `findDropsSections`
+only keeps a loose match once the section's own computed content is confirmed
+to carry a real row template. The tight rule stays UNCONDITIONAL, deliberately
+— `findRowlessTemplateBlocks` depends on it accepting a section that
+legitimately has zero rows right now (an unexpandable transclusion), and
+content-gating it would make that diagnostic blind exactly where it matters.
+
+Checked, not assumed: `royal-titans.json` has `==Branda the Fire Queen
+drops==`/`==Eldric the Ice King drops==` (3-word prefixes) but `royal-titans`
+is `include: false` in `_inventory.json` (its two real bosses have their own,
+separate pages), so this never reaches the parser regardless.
+
+### `table` as an alternate terminal keyword, plus a second, unrelated bug it needed
+
+Reward Chest (The Gauntlet) has NO heading ending in "drops"/"rewards" at all
+— `Junk table`, `Incomplete loot table`, `Regular loot table`, `Corrupted loot
+table`. All four needed `table` added as a `LOOSE_DROPS_SECTION_TITLE`
+terminal. Checked against the whole corpus for false-positive risk: every
+other `...table`-ending heading is either a nested RDT/gem-table subheading
+(already inside a claimed section, so the non-overlap guard makes it a no-op)
+or lives on `rare-drop-table`/`gem-drop-table`/`the-gauntlet`, none of which
+are loot sources.
+
+**This alone was not enough.** Every one of the four headings also carries a
+trailing `<span id="Failure"/>`-style anchor, and `HEADING_PATTERN`
+(`/\n(={2,6})([^=\n]+)\1[ \t]*\n/g`) could not see the heading AT ALL — not a
+`DROPS_SECTION_TITLE` problem, a heading-detection one. `[^=\n]+` cannot span
+the `=` inside `id="Failure"`, so it always stops short of the closer.
+`HEADING_PATTERN`'s title group is now lazy (`.+?` in place of `[^=\n]+`),
+which crawls forward to the true closing `={2,6}` regardless of an embedded
+`=`. Verified as a pure recovery: run against all 209 wikitext snapshots, the
+new pattern produces byte-identical heading lists everywhere except
+`reward-chest-the-gauntlet`, which is the only page with a `<` in any heading
+at all — recovering exactly its four previously-invisible sections.
+`stripInlineTags` removes the tag from the stored title too, so table-id slugs
+and any future display never carry raw wiki markup.
+
+**Net result: Reward Chest (The Gauntlet) parses to `verified`, all 60 wiki
+rows reachable.** No watchlist concern — its junk/incomplete/regular/corrupted
+tiers really are per-row rarities, not a points-scaled shop like ToA/CoX.
+
+### `Ancient chest` (CoX) — the widening's biggest and most dangerous find
+
+`ancient-chest` had **never had a document at all**, and
+`docs/HANDOFF.md` stated flatly that its page "has no `{{DropsLine}}`-shaped
+content whatsoever" — true only in the sense that nobody had ever reached its
+`==Loot table==` section, since the old regex couldn't match it and the page
+was `parse_failed` before anyone looked further. **That claim is now
+falsified.** The section exists, has real `{{DropsLineReward}}` rows, and
+the widened rule reaches it — producing a document that reconciles cleanly
+(`weights_sum`, `drops_covered`: all 51 rows reachable) and would have shipped
+`verified`.
+
+**It must not.** The page states outright: "For every 8,676 total points
+obtained, a 1% chance to obtain a unique loot is given... capped at 65.7%...
+If one of these items is received, no common rewards are given... Up to six
+unique rewards can be obtained per raid." None of that reached the parser. The
+generated document is two INDEPENDENT weighted tables (12 uniques /69, 33
+commons /33) with no gating between them — meaning the naive parse has EVERY
+simulated kill roll BOTH tables unconditionally, guaranteeing a unique on
+every single kill. Not an imprecise approximation; a ~100%-unique-rate
+document, considerably worse than an honestly-unmodelled curve.
+
+**Added to `data/mechanics-watchlist.json` before this could ship**, `blockedBy`
+naming all 7 bosses `_inventory.json` maps to `ancient-chest` (Great Olm plus
+the six other CoX bosses whose loot funnels into the same chest) — caught by
+`checkWatchlistConsistency` when the first draft named only Great Olm, exactly
+the trip wire doing its job. The entry restates, rather than reopens, the
+already-resolved elite-clue/Olmlet cross-table question (`docs/HANDOFF.md`'s
+"What NOT to redo": a conditioned-marginal formula rate is exact; the naive
+unconditioned subrates overstate Olmlet by 33x). CoX needs `cox_points` plus a
+preroll/suppression override, following the exact pattern ToA's already
+established — a real Phase 7 candidate now that the document exists to build
+against, not a from-scratch investigation.
+
+### `splitTopLevelPipes`: a second, independent bug the wider reach exposed
+
+Bryophyta's page reaches the parser for the first time and immediately
+produced a fabricated item: `"keyrate}}"`, unresolvable, failing
+`items_known`. Root cause has nothing to do with heading matching — it's a
+pre-existing bug in `wikitext-drops.ts`'s param splitter, latent for the
+project's whole life because nothing had ever reached a page shaped this way
+before.
+
+`splitTopLevelPipes`'s depth counter scanned one character at a time without
+skipping a matched 2-character token (`{{`/`}}`/`[[`/`]]`), so a run of 3+
+identical bracket characters produced overlapping matches instead of the true
+pair count: `}}}}` (two templates closing back-to-back — Bryophyta's
+`{{DropsLine|...|raritynotes={{Refn|...{{CiteDiscord|...}}}}{{CiteNews|...
+|name=keyrate}}}}`, where Refn's nested citation and a sibling CiteNews both
+close at once) reads as THREE decrements instead of two, permanently
+desyncing depth by one level. Everything after that point is read one level
+shallower than it truly is — so `|name=keyrate`, a citation's OWN name param
+two templates deep, gets read as depth 0 and silently overwrites the real
+`name=Mossy key`.
+
+`findTemplateCalls` never had this bug — its own depth loop already does the
+equivalent extra skip, which is exactly why it correctly found the true
+968-character extent of that same call while `splitTopLevelPipes` mis-split
+its params. Fixed the same way: `i++` on top of the loop's own increment when
+a 2-character token matches. Verified corpus-wide: every `{{DropsLine}}`-family
+call's parsed params, across all 209 snapshots post-transclusion-expansion,
+are unchanged except on Bryophyta (which shares the cited news post verbatim
+with Obor, though Obor's own page happens not to trigger the exact `}}}}` seam).
+
+**Net effect: Bryophyta goes from a fabricated item and a failing
+`items_known` to every deterministic check green** (`needs_review` only for
+the same accepted transcluded-mode-guess reason ~9 other sources already
+carry). Zero item names containing `{`/`}` anywhere in the corpus after the
+fix, checked directly rather than assumed.
+
+### Corpus-wide verification, and what did NOT change
+
+Full re-parse across tiers A–D. Diffed every `data/bosses/*.json` against the
+committed version: **51 pre-existing documents changed by exactly the
+cosmetic `rates_valid` wording carried over from the ToA session (never
+regenerated until now) plus the intentional ToA watchlist-detail rewrite —
+byte-identical otherwise.** `monumental-chest.json` (ToB, already on the
+watchlist, also reachable via `==Loot table==`) is untouched — its rows were
+already being captured through the same nested-subheading-independently-matches
+byproduct ToA's own pre-override parse relied on. `revenant-maledictus` stays
+`parse_failed` for its own, different, still-open reason.
+
+**Not fixed here, flagged for the next session:** re-checking `freeToPlayVariant`
+against Obor/Bryophyta found it is still `false` for both, and the reason is
+precise, not a leftover bug in the regex work. `assembleBoss`'s `conditionsFor`
+attaches a `members`/`freeToPlay` `Condition` only from a PER-ROW `{{(m)}}`/
+`{{(f)}}` namenotes marker (`entry.members`/`entry.freeToPlay`, set in
+`wikitext-drops.ts` from the row's own markup) — it has no notion of a
+SECTION-LEVEL split at all. Obor and Bryophyta's rows carry no such markers
+(the whole `==Members' worlds drops==`/`==Free-to-play worlds drops==` section
+already implies it structurally), so their documents currently have ZERO
+`members` conditions anywhere: every simulated kill, regardless of
+`ctx.members`, rolls BOTH sections' tables unconditionally. Both sources
+parse cleanly and are `needs_review` only for the pre-existing transcluded-
+mode-guess reason, but this is a real, separate mechanical gap sitting
+underneath that — attaching a `members: true`/`members: false` condition to
+every entry sourced from a section whose title matches "Members"/
+"Free-to-play" is the natural fix, and is new parser logic, not something the
+heading fix triggers for free. Left as a scoped decision for the next session
+rather than built silently.
+
+## Follow-up: section-level membership conditions, and the check gap it uncovered
+
+Built on request, same session: `conditionsFor` (`assemble-boss.ts`) now falls
+back to a `members`/`freeToPlay` condition derived from the entry's own
+top-level section title when no per-row `{{(m)}}`/`{{(f)}}` marker is present,
+matched exactly against the two confirmed corpus phrases (`Members' worlds
+drops`, `Free-to-play worlds drops`) — not a broad "contains 'member'"
+heuristic, per this project's standing refusal to generalise past confirmed
+cases. A per-row marker still wins when present. `ParsedTableGroup`/
+`HeadingBlock` both gained a `section: string` field to carry this through
+from `wikitext-drops.ts`'s extraction to `assembleBoss`.
+
+**Closed a latent merge risk found while doing this, not a separate task:**
+`buildTableGroups`'s adjacent-weighted-header merge previously kept blocks
+together whenever they shared a denominator, with no check that they also
+shared a section. Two blocks from different sections merging would have left
+no single section to attribute the new fallback condition to. Not observed in
+the real corpus (no two adjacent cross-section blocks currently share a
+denominator) — closed anyway, since it's the same section data already being
+threaded through, not new scope.
+
+**This immediately broke `weights_sum`, and the break was informative, not a
+bug in the new logic.** The check's "has markers -> both members and F2P
+variants must independently reconcile to the denominator" rule assumed
+Brutus' shape: one table, condition-excluded rows on both sides. Obor/
+Bryophyta's shape is structurally different — TWO SEPARATE tables, each
+belonging to exactly one variant in its entirety, with the other variant's
+rows living in a different table object with its own denominator. Tagging
+every entry in such a table with the same condition made `hasMarkers` true
+while one side's sum was always zero, failing every affected table.
+
+Fixed by checking the number of DISTINCT `members` values actually present in
+one table, not just whether any exist: fewer than two distinct values (no
+markers, or a uniform section-derived one) gets the same lenient flat check an
+unmarked table already had (shortfall is a legitimate implicit `nothing`, only
+overflow is a defect); two distinct values in one table is Brutus' shape and
+keeps the existing per-variant reconciliation. Verified this doesn't silently
+paper over a real defect: a uniform-members table that genuinely overflows its
+own denominator still fails, pinned by test.
+
+**Net result, verified functionally not just structurally**: Obor and
+Bryophyta both went from zero `members` conditions anywhere in their documents
+to 69/71 and 93/95 entries correctly gated (the untagged handful are rows with
+no section-derived signal — none observed, so nothing left ungated by
+omission). `freeToPlayVariant` is `true` for both, confirmed via
+`contextSurfaceOf`. A simulated members run and a simulated F2P run now
+produce genuinely different item sets (37 vs 22 distinct items for Obor, 64 vs
+21 for Bryophyta) — checked by actually running `simulate`, not inferred from
+the condition count alone. `weights_sum` passes cleanly for both; both stay
+`needs_review` only for the pre-existing, unrelated transcluded-mode-guess
+reason nine other sources already carry.

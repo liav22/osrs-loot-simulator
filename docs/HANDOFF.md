@@ -63,9 +63,20 @@ scope:
   behaviourally by `formulas.test.ts`.
 
 ```
-54 parsed at tier A+B+C(+D for chest-tombs-of-amascut):
-  27 verified, 2 manual_override, 23 needs_review, 3 parse_failed
+66 documents, of 102 loot sources with include: true (65%):
+  28 verified, 2 manual_override, 36 needs_review
 ```
+
+**READ THE DENOMINATOR CAREFULLY. It is 102, not 52.** Coverage was long read as
+"27 of 52"; 52 was the number of sources ever PARSED, not the number the project
+owns. `include: true` in `data/_inventory.json` is the gate, and it is 102.
+`verified` is **28/102 = 27%** — the same numeral the old wrong fraction gave,
+which is how it went unnoticed. Per tier (with document / include:true): A 24/26,
+B 1/1, C 25/26, D 16/20, **E 0/29**.
+
+**Tier E is the largest untouched block**: 29 sources, `include: true`, 1-7
+dropsline rows each, never attempted. These are the `trivial` sources Phase 2
+called *complete, not deficient*. Cheapest coverage available.
 
 **Read that 27 against the earlier 18 and the earlier-still 38.** The 38 was
 inflated: `drops_covered` was turned on deliberately (see docs/DECISIONS.md) and

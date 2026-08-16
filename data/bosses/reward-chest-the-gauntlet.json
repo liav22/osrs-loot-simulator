@@ -1,0 +1,1697 @@
+{
+  "slug": "reward-chest-the-gauntlet",
+  "name": "Reward Chest (The Gauntlet)",
+  "aliases": [],
+  "wikiPage": "Reward Chest (The Gauntlet)",
+  "wikiRevId": 15274243,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "reward-chest-the-gauntlet:0:untitled",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 3,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23670,
+            "itemKey": "iwan-s-flyer",
+            "name": "Iwan's flyer",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 195,
+            "itemKey": "potion-apothecary",
+            "name": "Potion (Apothecary)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2518,
+            "itemKey": "rotten-tomato",
+            "name": "Rotten tomato",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "reward-chest-the-gauntlet:1:weapons-and-armour-runes-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 27,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1211,
+            "itemKey": "adamant-dagger",
+            "name": "Adamant dagger",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1161,
+            "itemKey": "adamant-full-helm",
+            "name": "Adamant full helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1430,
+            "itemKey": "adamant-mace",
+            "name": "Adamant mace",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1271,
+            "itemKey": "adamant-pickaxe",
+            "name": "Adamant pickaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1123,
+            "itemKey": "adamant-platebody",
+            "name": "Adamant platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1073,
+            "itemKey": "adamant-platelegs",
+            "name": "Adamant platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1091,
+            "itemKey": "adamant-plateskirt",
+            "name": "Adamant plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1331,
+            "itemKey": "adamant-scimitar",
+            "name": "Adamant scimitar",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 851,
+            "itemKey": "maple-longbow",
+            "name": "Maple longbow",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 13
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 853,
+            "itemKey": "maple-shortbow",
+            "name": "Maple shortbow",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 11
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1159,
+            "itemKey": "mithril-full-helm",
+            "name": "Mithril full helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1428,
+            "itemKey": "mithril-mace",
+            "name": "Mithril mace",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1121,
+            "itemKey": "mithril-platebody",
+            "name": "Mithril platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1071,
+            "itemKey": "mithril-platelegs",
+            "name": "Mithril platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1085,
+            "itemKey": "mithril-plateskirt",
+            "name": "Mithril plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 556,
+            "itemKey": "air-rune",
+            "name": "Air rune",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 559,
+            "itemKey": "body-rune",
+            "name": "Body rune",
+            "qty": {
+              "kind": "range",
+              "min": 250,
+              "max": 350
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 558,
+            "itemKey": "mind-rune",
+            "name": "Mind rune",
+            "qty": {
+              "kind": "range",
+              "min": 300,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 555,
+            "itemKey": "water-rune",
+            "name": "Water rune",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1891,
+            "itemKey": "cake",
+            "name": "Cake",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 20
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 339,
+            "itemKey": "cod",
+            "name": "Cod",
+            "qty": {
+              "kind": "range",
+              "min": 75,
+              "max": 125
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 333,
+            "itemKey": "trout",
+            "name": "Trout",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 100
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 221,
+            "itemKey": "eye-of-newt",
+            "name": "Eye of newt",
+            "qty": {
+              "kind": "range",
+              "min": 300,
+              "max": 500
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2355,
+            "itemKey": "silver-bar",
+            "name": "Silver bar",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1623,
+            "itemKey": "uncut-sapphire",
+            "name": "Uncut sapphire",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes / Other"
+    },
+    {
+      "id": "reward-chest-the-gauntlet:2:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23962,
+            "itemKey": "crystal-shard",
+            "name": "Crystal shard",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 9
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "reward-chest-the-gauntlet:3:weapons-and-armour-runes-and-ammunition-gems-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 24,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1163,
+            "itemKey": "rune-full-helm",
+            "name": "Rune full helm",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1079,
+            "itemKey": "rune-platelegs",
+            "name": "Rune platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1093,
+            "itemKey": "rune-plateskirt",
+            "name": "Rune plateskirt",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3202,
+            "itemKey": "rune-halberd",
+            "name": "Rune halberd",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3204,
+            "itemKey": "dragon-halberd",
+            "name": "Dragon halberd",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "range",
+              "min": 160,
+              "max": 240
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 140
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 140
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 180,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 160
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 140
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 888,
+            "itemKey": "mithril-arrow",
+            "name": "Mithril arrow",
+            "qty": {
+              "kind": "range",
+              "min": 800,
+              "max": 1200
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 890,
+            "itemKey": "adamant-arrow",
+            "name": "Adamant arrow",
+            "qty": {
+              "kind": "range",
+              "min": 400,
+              "max": 600
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11212,
+            "itemKey": "dragon-arrow",
+            "name": "Dragon arrow",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 85
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1623,
+            "itemKey": "uncut-sapphire",
+            "name": "Uncut sapphire",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1621,
+            "itemKey": "uncut-emerald",
+            "name": "Uncut emerald",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 50
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1617,
+            "itemKey": "uncut-diamond",
+            "name": "Uncut diamond",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 7
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 20000,
+              "max": 80000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Gems / Other"
+    },
+    {
+      "id": "reward-chest-the-gauntlet:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4207,
+            "itemKey": "crystal-weapon-seed",
+            "name": "Crystal weapon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 120
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23956,
+            "itemKey": "crystal-armour-seed",
+            "name": "Crystal armour seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 120
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25859,
+            "itemKey": "enhanced-crystal-weapon-seed",
+            "name": "Enhanced crystal weapon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23757,
+            "itemKey": "youngllef",
+            "name": "Youngllef",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "reward-chest-the-gauntlet:5:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23962,
+            "itemKey": "crystal-shard",
+            "name": "Crystal shard",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 12
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23859,
+            "itemKey": "gauntlet-cape",
+            "name": "Gauntlet cape",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "reward-chest-the-gauntlet:6:weapons-and-armour-runes-and-ammunition-gems-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 24,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1163,
+            "itemKey": "rune-full-helm",
+            "name": "Rune full helm",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1079,
+            "itemKey": "rune-platelegs",
+            "name": "Rune platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1093,
+            "itemKey": "rune-plateskirt",
+            "name": "Rune plateskirt",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3202,
+            "itemKey": "rune-halberd",
+            "name": "Rune halberd",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1275,
+            "itemKey": "rune-pickaxe",
+            "name": "Rune pickaxe",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3204,
+            "itemKey": "dragon-halberd",
+            "name": "Dragon halberd",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 0.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "range",
+              "min": 175,
+              "max": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "range",
+              "min": 125,
+              "max": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 200,
+              "max": 350
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 125,
+              "max": 175
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 888,
+            "itemKey": "mithril-arrow",
+            "name": "Mithril arrow",
+            "qty": {
+              "kind": "range",
+              "min": 1000,
+              "max": 1500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 890,
+            "itemKey": "adamant-arrow",
+            "name": "Adamant arrow",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 750
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "range",
+              "min": 250,
+              "max": 450
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11212,
+            "itemKey": "dragon-arrow",
+            "name": "Dragon arrow",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1623,
+            "itemKey": "uncut-sapphire",
+            "name": "Uncut sapphire",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 65
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1621,
+            "itemKey": "uncut-emerald",
+            "name": "Uncut emerald",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 60
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 40
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1617,
+            "itemKey": "uncut-diamond",
+            "name": "Uncut diamond",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 75000,
+              "max": 150000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1.5
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Gems / Other"
+    },
+    {
+      "id": "reward-chest-the-gauntlet:7:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4207,
+            "itemKey": "crystal-weapon-seed",
+            "name": "Crystal weapon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23956,
+            "itemKey": "crystal-armour-seed",
+            "name": "Crystal armour seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25859,
+            "itemKey": "enhanced-crystal-weapon-seed",
+            "name": "Enhanced crystal weapon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23757,
+            "itemKey": "youngllef",
+            "name": "Youngllef",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 800
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 60 wiki drop row(s) reachable in the document"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

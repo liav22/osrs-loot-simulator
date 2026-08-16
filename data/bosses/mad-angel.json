@@ -1,0 +1,598 @@
+{
+  "slug": "mad-angel",
+  "name": "Mad Angel",
+  "aliases": [],
+  "wikiPage": "Mad Angel",
+  "wikiRevId": 15292455,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "mad-angel:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21726,
+            "itemKey": "granite-dust",
+            "name": "Granite dust",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 35
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 34032,
+            "itemKey": "sunstone-crystal",
+            "name": "Sunstone crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "mad-angel:1:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 34033,
+            "itemKey": "ardeaglais-teleport",
+            "name": "Ardeaglais teleport",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 34027,
+            "itemKey": "hallowfell",
+            "name": "Hallowfell",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 127
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 34030,
+            "itemKey": "jar-of-light",
+            "name": "Jar of light",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1000
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "mad-angel:2:weapons-and-armour-runes-and-ammunition-supply-batch-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 150,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1163,
+            "itemKey": "rune-full-helm",
+            "name": "Rune full helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1301,
+            "itemKey": "adamant-longsword",
+            "name": "Adamant longsword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1377,
+            "itemKey": "dragon-battleaxe",
+            "name": "Dragon battleaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "range",
+              "min": 90,
+              "max": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 16
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "range",
+              "min": 28,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 25
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 556,
+            "itemKey": "air-rune",
+            "name": "Air rune",
+            "qty": {
+              "kind": "range",
+              "min": 110,
+              "max": 120
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 32328,
+            "itemKey": "yellowfin",
+            "name": "Yellowfin",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 141,
+            "itemKey": "prayer-potion-2",
+            "name": "Prayer potion(2)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 16
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12701,
+            "itemKey": "super-combat-potion-1",
+            "name": "Super combat potion(1)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 16
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2434,
+            "itemKey": "prayer-potion-4",
+            "name": "Prayer potion(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12697,
+            "itemKey": "super-combat-potion-3",
+            "name": "Super combat potion(3)",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 8000,
+              "max": 10000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7944,
+            "itemKey": "raw-monkfish",
+            "name": "Raw monkfish",
+            "qty": {
+              "kind": "range",
+              "min": 18,
+              "max": 22
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1605,
+            "itemKey": "emerald",
+            "name": "Emerald",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1607,
+            "itemKey": "sapphire",
+            "name": "Sapphire",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 32892,
+            "itemKey": "cupronickel-bar",
+            "name": "Cupronickel bar",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 970,
+            "itemKey": "papyrus",
+            "name": "Papyrus",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition / Supply batch / Other"
+    },
+    {
+      "id": "mad-angel:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-medium",
+            "name": "Clue scroll (medium)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 34042,
+            "itemKey": "aggy",
+            "name": "Aggy",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "mad-angel:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 150
+          }
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": false,
+        "detail": "1 table/variant mismatch(es)"
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "4 tableRef node(s) resolved structurally against 7 shared table(s); the compileBoss cross-check could not run because the document does not compile (Table 'mad-angel:2:weapons-and-armour-runes-and-ammunition-supply-batch-other' has applicable weights summing to 180, which exceeds its denominator of 150) — weights_sum owns that failure"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "1 of 49 wiki drop row(s) missing from the document: Clue scroll (hard)"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

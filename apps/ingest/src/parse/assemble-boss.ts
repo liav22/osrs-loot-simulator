@@ -49,10 +49,44 @@ function parseQuantity(raw: string): QtySpec {
   return { kind: 'exact', n: Number.isFinite(n) ? n : 1 }
 }
 
-function conditionsFor(entry: ParsedEntry): Condition[] | undefined {
+/**
+ * A page can split membership at either grain, and the two are genuinely
+ * different mechanisms:
+ *
+ *  - **Per-row** (`{{(m)}}`/`{{(f)}}` namenotes markers — Brutus): most rows
+ *    are unconditional and a handful carry their own marker.
+ *  - **Section-level** (Obor/Bryophyta's own top-level
+ *    `==Members' worlds drops==`/`==Free-to-play worlds drops==` split): every
+ *    row in a section shares the SAME membership, and none of them carry a
+ *    per-row marker at all, because the enclosing heading already says it.
+ *
+ * Before this, `conditionsFor` only read the per-row markers, so Obor and
+ * Bryophyta's documents carried ZERO `members` conditions anywhere: every
+ * simulated kill rolled BOTH sections' tables unconditionally regardless of
+ * `ctx.members` — invisible for the whole project because neither source had
+ * ever produced a document, and caught only once the heading-matching fix
+ * (see `wikitext-drops.ts`) let them reach this far. See docs/DECISIONS.md.
+ *
+ * **A per-row marker wins over the section fallback.** It is the more
+ * specific signal, and there is nothing in principle stopping a future page
+ * from marking one row inside an otherwise-uniform section differently.
+ *
+ * **The section match is exact on the two confirmed phrases, not a broad
+ * "contains 'member'" heuristic.** Checked directly: these are the only two
+ * top-level Drops/Rewards section titles in the whole corpus mentioning
+ * membership at all. Widening this needs a confirmed new heading first — the
+ * same discipline the "Uniques" heading question has been held to throughout
+ * this project (docs/DECISIONS.md's "What NOT to redo").
+ */
+const MEMBERS_SECTION_TITLE = /^members'?\s+worlds\s+drops$/i
+const FREE_TO_PLAY_SECTION_TITLE = /^free-to-play\s+worlds\s+drops$/i
+
+function conditionsFor(entry: ParsedEntry, section: string): Condition[] | undefined {
   const conditions: Condition[] = []
   if (entry.members) conditions.push({ kind: 'members', value: true })
   else if (entry.freeToPlay) conditions.push({ kind: 'members', value: false })
+  else if (MEMBERS_SECTION_TITLE.test(section)) conditions.push({ kind: 'members', value: true })
+  else if (FREE_TO_PLAY_SECTION_TITLE.test(section)) conditions.push({ kind: 'members', value: false })
   if (entry.extraConditions !== undefined) conditions.push(...entry.extraConditions)
   return conditions.length > 0 ? conditions : undefined
 }
@@ -118,7 +152,7 @@ export function assembleBoss(
           qty: parseQuantity(entry.quantity),
           ...(entry.noted ? { noted: true } : {}),
         }
-        const conditions = conditionsFor(entry)
+        const conditions = conditionsFor(entry, group.section)
         if (group.mode === 'weighted') {
           return {
             node,

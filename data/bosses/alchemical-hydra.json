@@ -1,0 +1,1256 @@
+{
+  "slug": "alchemical-hydra",
+  "name": "Alchemical Hydra",
+  "aliases": [],
+  "wikiPage": "Alchemical Hydra",
+  "wikiRevId": 15285801,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "alchemical-hydra:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22786,
+            "itemKey": "hydra-bones",
+            "name": "Hydra bones",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "alchemical-hydra:1:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22973,
+            "itemKey": "hydra-s-eye",
+            "name": "Hydra's eye",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 181.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22971,
+            "itemKey": "hydra-s-fang",
+            "name": "Hydra's fang",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 181.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22969,
+            "itemKey": "hydra-s-heart",
+            "name": "Hydra's heart",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 181.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22988,
+            "itemKey": "hydra-tail",
+            "name": "Hydra tail",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 513
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22983,
+            "itemKey": "hydra-leather",
+            "name": "Hydra leather",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 514
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22966,
+            "itemKey": "hydra-s-claw",
+            "name": "Hydra's claw",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1001
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20849,
+            "itemKey": "dragon-thrownaxe",
+            "name": "Dragon thrownaxe",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22804,
+            "itemKey": "dragon-knife",
+            "name": "Dragon knife",
+            "qty": {
+              "kind": "range",
+              "min": 500,
+              "max": 1000
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2001
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "alchemical-hydra:2:weapons-and-armour-runes-and-ammunition",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 101,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1401,
+            "itemKey": "mystic-fire-staff",
+            "name": "Mystic fire staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1403,
+            "itemKey": "mystic-water-staff",
+            "name": "Mystic water staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1391,
+            "itemKey": "battlestaff",
+            "name": "Battlestaff",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2503,
+            "itemKey": "black-d-hide-body",
+            "name": "Black d'hide body",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1305,
+            "itemKey": "dragon-longsword",
+            "name": "Dragon longsword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1149,
+            "itemKey": "dragon-med-helm",
+            "name": "Dragon med helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1377,
+            "itemKey": "dragon-battleaxe",
+            "name": "Dragon battleaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1079,
+            "itemKey": "rune-platelegs",
+            "name": "Rune platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1093,
+            "itemKey": "rune-plateskirt",
+            "name": "Rune plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4111,
+            "itemKey": "mystic-robe-top-light",
+            "name": "Mystic robe top (light)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4113,
+            "itemKey": "mystic-robe-bottom-light",
+            "name": "Mystic robe bottom (light)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 150,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 150,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 150,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9075,
+            "itemKey": "astral-rune",
+            "name": "Astral rune",
+            "qty": {
+              "kind": "range",
+              "min": 150,
+              "max": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9244,
+            "itemKey": "dragonstone-bolts-e",
+            "name": "Dragonstone bolts (e)",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 120
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9245,
+            "itemKey": "onyx-bolts-e",
+            "name": "Onyx bolts (e)",
+            "qty": {
+              "kind": "range",
+              "min": 35,
+              "max": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition"
+    },
+    {
+      "id": "alchemical-hydra:3:herbs",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 64.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 64.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 80.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3051,
+            "itemKey": "grimy-snapdragon",
+            "name": "Grimy snapdragon",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 80.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 80.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 80.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 107.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 219,
+            "itemKey": "grimy-torstol",
+            "name": "Grimy torstol",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 107.7
+          }
+        }
+      ],
+      "notes": "Herbs"
+    },
+    {
+      "id": "alchemical-hydra:4:seeds",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 420.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 450.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 573.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5321,
+            "itemKey": "watermelon-seed",
+            "name": "Watermelon seed",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 45
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 601.2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5313,
+            "itemKey": "willow-seed",
+            "name": "Willow seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 631.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21488,
+            "itemKey": "mahogany-seed",
+            "name": "Mahogany seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 701.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5314,
+            "itemKey": "maple-seed",
+            "name": "Maple seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 701.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21486,
+            "itemKey": "teak-seed",
+            "name": "Teak seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 701.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5315,
+            "itemKey": "yew-seed",
+            "name": "Yew seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 701.4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5288,
+            "itemKey": "papaya-tree-seed",
+            "name": "Papaya tree seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 901.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1147.7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5289,
+            "itemKey": "palm-tree-seed",
+            "name": "Palm tree seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1262.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5317,
+            "itemKey": "spirit-seed",
+            "name": "Spirit seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1578.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22877,
+            "itemKey": "dragonfruit-tree-seed",
+            "name": "Dragonfruit tree seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2104.2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3156.3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22871,
+            "itemKey": "redwood-tree-seed",
+            "name": "Redwood tree seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3156.3
+          }
+        }
+      ],
+      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 2/101 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
+    },
+    {
+      "id": "alchemical-hydra:5:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 101,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 5550,
+              "max": 25550
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 0.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 40000,
+              "max": 60000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9.5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 169,
+            "itemKey": "ranging-potion-3",
+            "name": "Ranging potion(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3026,
+            "itemKey": "super-restore-3",
+            "name": "Super restore(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 536,
+            "itemKey": "dragon-bones",
+            "name": "Dragon bones",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 989,
+            "itemKey": "crystal-key",
+            "name": "Crystal key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Other"
+    },
+    {
+      "id": "alchemical-hydra:6:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 40
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-hard",
+            "name": "Clue scroll (hard)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23077,
+            "itemKey": "alchemical-hydra-heads",
+            "name": "Alchemical hydra heads",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 256
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 256
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23064,
+            "itemKey": "jar-of-chemicals",
+            "name": "Jar of chemicals",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22746,
+            "itemKey": "ikkle-hydra",
+            "name": "Ikkle Hydra",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "alchemical-hydra:rdt-access:0",
+      "mode": "independent",
+      "rolls": 2,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 101
+          }
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "4 tableRef node(s) resolved against 7 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "1 of 86 wiki drop row(s) missing from the document: Ikkle hydra"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

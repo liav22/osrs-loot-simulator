@@ -340,7 +340,7 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
       },
       {
         "check": "qty_sane",

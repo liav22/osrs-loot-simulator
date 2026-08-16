@@ -126,6 +126,27 @@ describe('buildTableGroups', () => {
     expect(groups[1]?.denominator).toBe(100)
   })
 
+  /**
+   * A latent risk the section-level membership fallback (`assemble-boss.ts`'s
+   * `conditionsFor`) makes real: merging across a section boundary would
+   * produce one table whose entries came from TWO different sections, with no
+   * single section left to attribute a fallback `members` condition to.
+   * Not yet observed in the real corpus (no two adjacent cross-section blocks
+   * currently share a denominator), closed defensively since it's the same
+   * section-tracking data, not a separate fix.
+   */
+  it('does not merge adjacent weighted headings sharing a denominator across a section boundary', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'A', rarity: '40/81', heading: 'Weapons', section: "Members' worlds drops" }),
+        line({ name: 'B', rarity: '41/81', heading: 'Weapons', section: 'Free-to-play worlds drops' }),
+      ])
+    )
+    expect(groups).toHaveLength(2)
+    expect(groups[0]).toMatchObject({ denominator: 81, section: "Members' worlds drops" })
+    expect(groups[1]).toMatchObject({ denominator: 81, section: 'Free-to-play worlds drops' })
+  })
+
   it('treats a heterogeneous-denominator heading with no keyword as an ambiguous preroll guess', () => {
     const groups = buildTableGroups(
       groupByHeading([

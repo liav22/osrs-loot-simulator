@@ -1,0 +1,870 @@
+{
+  "slug": "chaos-elemental",
+  "name": "Chaos Elemental",
+  "aliases": [],
+  "wikiPage": "Chaos Elemental",
+  "wikiRevId": 15260583,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "chaos-elemental:0:minor-drops",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 5,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24592,
+            "itemKey": "blighted-anglerfish",
+            "name": "Blighted anglerfish",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24595,
+            "itemKey": "blighted-karambwan",
+            "name": "Blighted karambwan",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24598,
+            "itemKey": "blighted-super-restore-4",
+            "name": "Blighted super restore(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 536,
+            "itemKey": "dragon-bones",
+            "name": "Dragon bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12701,
+            "itemKey": "super-combat-potion-1",
+            "name": "Super combat potion(1)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Minor drops"
+    },
+    {
+      "id": "chaos-elemental:1:major-drops",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11920,
+            "itemKey": "dragon-pickaxe",
+            "name": "Dragon pickaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 256
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 811,
+            "itemKey": "rune-dart",
+            "name": "Rune dart",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1079,
+            "itemKey": "rune-platelegs",
+            "name": "Rune platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1093,
+            "itemKey": "rune-plateskirt",
+            "name": "Rune plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1373,
+            "itemKey": "rune-battleaxe",
+            "name": "Rune battleaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1163,
+            "itemKey": "rune-full-helm",
+            "name": "Rune full helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1405,
+            "itemKey": "mystic-air-staff",
+            "name": "Mystic air staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1403,
+            "itemKey": "mystic-water-staff",
+            "name": "Mystic water staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1407,
+            "itemKey": "mystic-earth-staff",
+            "name": "Mystic earth staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1401,
+            "itemKey": "mystic-fire-staff",
+            "name": "Mystic fire staff",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1215,
+            "itemKey": "dragon-dagger",
+            "name": "Dragon dagger",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7158,
+            "itemKey": "dragon-2h-sword",
+            "name": "Dragon 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4585,
+            "itemKey": "dragon-plateskirt",
+            "name": "Dragon plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 300,
+              "max": 500
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 250
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3051,
+            "itemKey": "grimy-snapdragon",
+            "name": "Grimy snapdragon",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 3,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 75,
+              "max": 150
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8782,
+            "itemKey": "mahogany-plank",
+            "name": "Mahogany plank",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 16
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2363,
+            "itemKey": "runite-bar",
+            "name": "Runite bar",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2361,
+            "itemKey": "adamantite-bar",
+            "name": "Adamantite bar",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 12
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 20005,
+              "max": 29995
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 7,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24607,
+            "itemKey": "blighted-ancient-ice-sack",
+            "name": "Blighted ancient ice sack",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 40
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24595,
+            "itemKey": "blighted-karambwan",
+            "name": "Blighted karambwan",
+            "qty": {
+              "kind": "range",
+              "min": 15,
+              "max": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24592,
+            "itemKey": "blighted-anglerfish",
+            "name": "Blighted anglerfish",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 4,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24251,
+            "itemKey": "wilderness-crabs-teleport",
+            "name": "Wilderness crabs teleport",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5937,
+            "itemKey": "weapon-poison",
+            "name": "Weapon poison(++)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 10,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11941,
+            "itemKey": "looting-bag",
+            "name": "Looting bag",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 59
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11995,
+            "itemKey": "pet-chaos-elemental",
+            "name": "Pet Chaos Elemental",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 300
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23490,
+            "itemKey": "larran-s-key",
+            "name": "Larran's key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 58
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21257,
+            "itemKey": "slayer-s-enchantment",
+            "name": "Slayer's enchantment",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 30
+          }
+        }
+      ],
+      "notes": "Major drops"
+    },
+    {
+      "id": "chaos-elemental:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 128
+          }
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "4 tableRef node(s) resolved against 7 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "1 of 62 wiki drop row(s) missing from the document: Pet chaos elemental"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

@@ -1,6 +1,7 @@
 import {
   CircularTableRefError,
   compileBoss,
+  WeightsExceedDenominatorError,
   resolveSimContext,
   UnresolvedTableRefError,
   type Boss,
@@ -133,6 +134,27 @@ export function checkRefsResolve(
   } catch (error) {
     if (error instanceof UnresolvedTableRefError || error instanceof CircularTableRefError) {
       return { check: 'refs_resolve', ok: false, detail: error.message }
+    }
+    // A document can fail to COMPILE for reasons that are nothing to do with
+    // tableRefs — most commonly weights exceeding their denominator, which is
+    // `weights_sum`'s failure to report and which it reports properly. Before
+    // this, that error escaped here and aborted the whole parse run: one tier-D
+    // source with an overflowing table took 22 others down with it.
+    //
+    // Reported rather than swallowed. `ok: true` is the honest verdict — the
+    // structural walk above resolved every ref, which is what this check is
+    // for — but the detail says the cross-check could not run and why, instead
+    // of claiming a clean pass it did not earn. Same discipline as
+    // `drops_covered` announcing "no dropsline snapshot; coverage not checked".
+    if (error instanceof WeightsExceedDenominatorError) {
+      return {
+        check: 'refs_resolve',
+        ok: true,
+        detail:
+          `${walk.found} tableRef node(s) resolved structurally against ${sharedTables.size} ` +
+          `shared table(s); the compileBoss cross-check could not run because the document ` +
+          `does not compile (${error.message}) — weights_sum owns that failure`,
+      }
     }
     throw error
   }

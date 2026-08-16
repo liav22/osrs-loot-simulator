@@ -49,6 +49,21 @@
       ]
     },
     {
+      "lootSourceId": "ancient-chest",
+      "title": "Ancient chest",
+      "mechanic": "point_scaled",
+      "detail": "Chambers of Xeric's reward chest. Never had a document before the DROPS_SECTION_TITLE/HEADING_PATTERN widening (2026-08-16) let the parser reach its ==Loot table== section for the first time — correcting an earlier, now-falsified claim (docs/HANDOFF.md) that its page 'has no {{DropsLine}}-shaped content whatsoever'. It does; the rows are exactly as misleading as ToA's own were before its override. The page states outright: 'For every 8,676 total points obtained, a 1% chance to obtain a unique loot is given... capped at 65.7% (570,000 points)... If one of these items is received, no common rewards are given... Up to six unique rewards can be obtained per raid.' None of that is visible to the parser, which currently emits TWO INDEPENDENT weighted tables with no gating between them at all: ancient-chest:0 (12 uniques, weight/69) and ancient-chest:1 (33 common items, weight/33) both roll on EVERY simulated kill, so the generated document currently guarantees a unique AND a common drop every time — not an imprecise approximation but a ~100%-unique-rate document, far worse than an unmodelled curve. Needs the cox_points formula (points -> unique chance, capped) plus the preroll/suppression structure ToA's override pattern already established. The elite-clue/Olmlet cross-table visibility question this entry's mechanic touches is RESOLVED, not open — see docs/HANDOFF.md's 'What NOT to redo': a conditioned-marginal formula rate is exact and does not need per-kill same-raid correlation; naively using the raw unconditioned subrates instead overstates Olmlet by 33x, which is the failure mode to avoid when this is built, not evidence the mechanism needs new architecture.",
+      "blockedBy": [
+        "Great Olm",
+        "Ice demon",
+        "Muttadile",
+        "Tekton",
+        "Vanguard",
+        "Vasa Nistirio",
+        "Vespula"
+      ]
+    },
+    {
       "lootSourceId": "monumental-chest",
       "title": "Monumental chest",
       "mechanic": "point_scaled",

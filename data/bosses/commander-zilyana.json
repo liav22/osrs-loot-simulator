@@ -1,0 +1,541 @@
+{
+  "slug": "commander-zilyana",
+  "name": "Commander Zilyana",
+  "aliases": [],
+  "wikiPage": "Commander Zilyana",
+  "wikiRevId": 15247762,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "commander-zilyana:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 526,
+            "itemKey": "bones",
+            "name": "Bones",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26364,
+            "itemKey": "frozen-key-piece-saradomin",
+            "name": "Frozen key piece (Saradomin)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "commander-zilyana:1:uniques",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 1524,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11838,
+            "itemKey": "saradomin-sword",
+            "name": "Saradomin sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13256,
+            "itemKey": "saradomin-s-light",
+            "name": "Saradomin's light",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11785,
+            "itemKey": "armadyl-crossbow",
+            "name": "Armadyl crossbow",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11814,
+            "itemKey": "saradomin-hilt",
+            "name": "Saradomin hilt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11818,
+            "itemKey": "godsword-shard-1",
+            "name": "Godsword shard 1",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11820,
+            "itemKey": "godsword-shard-2",
+            "name": "Godsword shard 2",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11822,
+            "itemKey": "godsword-shard-3",
+            "name": "Godsword shard 3",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Uniques"
+    },
+    {
+      "id": "commander-zilyana:2:weapons-and-armour-potions-other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 127,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1123,
+            "itemKey": "adamant-platebody",
+            "name": "Adamant platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 811,
+            "itemKey": "rune-dart",
+            "name": "Rune dart",
+            "qty": {
+              "kind": "range",
+              "min": 35,
+              "max": 40
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1093,
+            "itemKey": "rune-plateskirt",
+            "name": "Rune plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2434,
+            "itemKey": "prayer-potion-4",
+            "name": "Prayer potion(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6687,
+            "itemKey": "saradomin-brew-3",
+            "name": "Saradomin brew(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3024,
+            "itemKey": "super-restore-4",
+            "name": "Super restore(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 163,
+            "itemKey": "super-defence-3",
+            "name": "Super defence(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3042,
+            "itemKey": "magic-potion-3",
+            "name": "Magic potion(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 19500,
+              "max": 20000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 31.2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1601,
+            "itemKey": "diamond",
+            "name": "Diamond",
+            "qty": {
+              "kind": "exact",
+              "n": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "range",
+              "min": 95,
+              "max": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Potions / Other"
+    },
+    {
+      "id": "commander-zilyana:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 250
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12651,
+            "itemKey": "pet-zilyana",
+            "name": "Pet Zilyana",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": false,
+        "detail": "1 table/variant mismatch(es)"
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "25 of 50 wiki drop row(s) missing from the document: Adamant javelin, Chaos talisman, Death rune, Dragon med helm, Dragon spear, Dragonstone, Frozen key piece (saradomin), Loop half of key (+17 more)"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}

@@ -92,6 +92,15 @@ export interface PartitionCheck {
 export interface ParsedTableGroup {
   mode: ParsedMode
   headings: string[]
+  /**
+   * The top-level Drops/Rewards section this group's rows came from (`''` for
+   * the common single-section page — see `WikitextDropLine.section`).
+   * `assembleBoss` reads it to fall back to a `members`/`freeToPlay` condition
+   * for a source whose split is SECTION-level rather than per-row (Obor,
+   * Bryophyta's `==Members' worlds drops==`/`==Free-to-play worlds drops==`)
+   * — see `conditionsFor`'s comment for why a per-row marker still wins.
+   */
+  section: string
   denominator: number | null
   entries: ParsedEntry[]
   /** Set when the group's shape does not cleanly fit any mode. */
@@ -459,6 +468,8 @@ const ALWAYS_HEADINGS = /^100%$|^always$/i
 
 export interface HeadingBlock {
   heading: string
+  /** Shared by every line in the block — `groupByHeading` keys on `(section, heading)`. */
+  section: string
   lines: WikitextDropLine[]
 }
 
@@ -481,11 +492,11 @@ const GROUP_KEY_SEP = ' '
  */
 export function groupByHeading(lines: readonly WikitextDropLine[]): HeadingBlock[] {
   const order: string[] = []
-  const byKey = new Map<string, { heading: string; lines: WikitextDropLine[] }>()
+  const byKey = new Map<string, { heading: string; section: string; lines: WikitextDropLine[] }>()
   for (const line of lines) {
     const key = `${line.section}${GROUP_KEY_SEP}${line.heading}`
     if (!byKey.has(key)) {
-      byKey.set(key, { heading: line.heading, lines: [] })
+      byKey.set(key, { heading: line.heading, section: line.section, lines: [] })
       order.push(key)
     }
     byKey.get(key)!.lines.push(line)
@@ -500,14 +511,19 @@ export function groupByHeading(lines: readonly WikitextDropLine[]): HeadingBlock
  */
 export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGroup[] {
   const groups: ParsedTableGroup[] = []
-  let pendingWeighted: { denominator: number; headings: string[]; entries: ParsedEntry[] } | null =
-    null
+  let pendingWeighted: {
+    denominator: number
+    headings: string[]
+    section: string
+    entries: ParsedEntry[]
+  } | null = null
 
   const flushWeighted = (): void => {
     if (pendingWeighted === null) return
     groups.push({
       mode: 'weighted',
       headings: pendingWeighted.headings,
+      section: pendingWeighted.section,
       denominator: pendingWeighted.denominator,
       entries: pendingWeighted.entries,
       ambiguous: null,
@@ -523,6 +539,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       groups.push({
         mode: 'weighted',
         headings: [block.heading],
+        section: block.section,
         denominator: null,
         entries: [],
         ambiguous: `unparseable rarity in "${block.heading}": ${resolved
@@ -545,6 +562,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       groups.push({
         mode: 'always',
         headings: [block.heading],
+        section: block.section,
         denominator: null,
         entries: resolved.map(({ line, resolution }) =>
           toEntry(line, resolution.rate!, null, resolution.conditions)
@@ -559,6 +577,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       groups.push({
         mode: 'independent',
         headings: [block.heading],
+        section: block.section,
         denominator: null,
         entries: resolved.map(({ line, resolution }) =>
           toEntry(line, resolution.rate!, null, resolution.conditions)
@@ -577,6 +596,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       groups.push({
         mode: 'preroll',
         headings: [block.heading],
+        section: block.section,
         denominator: null,
         entries: resolved.map(({ line, resolution }) =>
           toEntry(line, resolution.rate!, null, resolution.conditions)
@@ -607,12 +627,29 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       const entries = resolved.map(({ line, resolution }) =>
         toEntry(line, resolution.rate!, homogenizedDenominator, resolution.conditions)
       )
-      if (pendingWeighted !== null && pendingWeighted.denominator === homogenizedDenominator) {
+      // Same section required to merge, not just the same denominator — two
+      // blocks that happen to share a denominator across a SECTION boundary
+      // (Obor/Bryophyta's Members/Free-to-play split) must not fold into one
+      // group, or the fallback membership condition below would have no
+      // single section to attribute the merged table to and would silently
+      // pick one side. Latent risk, not yet observed in the corpus (no two
+      // adjacent cross-section blocks currently share a denominator) — closed
+      // here because this is the same section-tracking work, not a separate fix.
+      if (
+        pendingWeighted !== null &&
+        pendingWeighted.denominator === homogenizedDenominator &&
+        pendingWeighted.section === block.section
+      ) {
         pendingWeighted.headings.push(block.heading)
         pendingWeighted.entries.push(...entries)
       } else {
         flushWeighted()
-        pendingWeighted = { denominator: homogenizedDenominator, headings: [block.heading], entries }
+        pendingWeighted = {
+          denominator: homogenizedDenominator,
+          headings: [block.heading],
+          section: block.section,
+          entries,
+        }
       }
       continue
     }
@@ -629,6 +666,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       groups.push({
         mode: 'weighted',
         headings: [block.heading],
+        section: block.section,
         denominator: split.dominantDenominator,
         entries: dominantEntries,
         ambiguous: null,
@@ -640,6 +678,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       groups.push({
         mode: 'independent',
         headings: [`${block.heading} (outliers)`],
+        section: block.section,
         denominator: null,
         entries: outlierEntries,
         ambiguous: null,
@@ -698,6 +737,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       groups.push({
         mode: 'independent',
         headings: [block.heading],
+        section: block.section,
         denominator: null,
         entries,
         // Still flagged. The identity proves the rows are ONE roll; modelling
@@ -720,6 +760,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
     groups.push({
       mode: 'preroll',
       headings: [block.heading],
+      section: block.section,
       denominator: null,
       entries,
       ambiguous:

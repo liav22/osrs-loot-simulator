@@ -71,11 +71,26 @@ export function checkWeightsSum(
 
   for (const table of tables) {
     if (table.mode !== 'weighted' || table.denominator === undefined) continue
-    const hasMarkers = table.entries.some((entry) =>
-      (entry.conditions ?? []).some((c) => c.kind === 'members')
-    )
 
-    if (!hasMarkers) {
+    // Distinct `members` VALUES present in this table, not just whether any
+    // marker exists. That distinction is the point: Obor/Bryophyta's
+    // section-level split (see `assemble-boss.ts`'s `conditionsFor`) tags
+    // EVERY entry in a table with the SAME value, because the other
+    // variant's rows live in an entirely separate table object (its own
+    // heading, its own denominator) — not, like Brutus, as condition-excluded
+    // rows sharing this one. A table with zero or one distinct value has
+    // nothing to split within itself and is checked the same lenient way as
+    // an unmarked table (shortfall is a legitimate implicit `nothing`, only
+    // overflow is a defect); a table with BOTH values present is Brutus'
+    // shape, where each variant's own rows must independently reconcile to
+    // the full denominator.
+    const membershipValues = new Set<boolean>()
+    for (const entry of table.entries) {
+      const c = (entry.conditions ?? []).find((cond) => cond.kind === 'members')
+      if (c?.kind === 'members') membershipValues.add(c.value)
+    }
+
+    if (membershipValues.size < 2) {
       const sum = variantSum(table, () => false, ctx, formulas)
       if (Math.abs(sum - table.denominator) > 1e-9 && sum > table.denominator) {
         failures.push({ tableId: table.id, variant: 'flat', sum, denominator: table.denominator })

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-15T20:19:50.806Z",
+  "generatedAt": "2026-08-16T07:39:13.478Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -9,11 +9,25 @@
       "image": "Abyssal Sire (phase 1).png"
     },
     {
+      "slug": "alchemical-hydra",
+      "name": "Alchemical Hydra",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Alchemical Hydra (serpentine).png"
+    },
+    {
       "slug": "amoxliatl",
       "name": "Amoxliatl",
       "aliases": [],
       "status": "verified",
       "image": "Amoxliatl.png"
+    },
+    {
+      "slug": "ancient-chest",
+      "name": "Ancient chest",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Crystal (ancient chest).png"
     },
     {
       "slug": "araxxor",
@@ -37,6 +51,13 @@
       "image": "Artio.png"
     },
     {
+      "slug": "black-demon",
+      "name": "Black demon",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Black demon.png"
+    },
+    {
       "slug": "black-knight-titan",
       "name": "Black Knight Titan",
       "aliases": [],
@@ -56,6 +77,13 @@
       "aliases": [],
       "status": "verified",
       "image": "Brutus.png"
+    },
+    {
+      "slug": "bryophyta",
+      "name": "Bryophyta",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Bryophyta.png"
     },
     {
       "slug": "callisto",
@@ -79,6 +107,20 @@
       "image": "Cerberus.png"
     },
     {
+      "slug": "chaos-elemental",
+      "name": "Chaos Elemental",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Chaos Elemental.png"
+    },
+    {
+      "slug": "chaos-fanatic",
+      "name": "Chaos Fanatic",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Chaos Fanatic.png"
+    },
+    {
       "slug": "chest-barrows",
       "name": "Chest (Barrows)",
       "aliases": [],
@@ -91,6 +133,13 @@
       "aliases": [],
       "status": "needs_review",
       "image": "Chest (Tombs of Amascut, closed).png"
+    },
+    {
+      "slug": "commander-zilyana",
+      "name": "Commander Zilyana",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Commander Zilyana.png"
     },
     {
       "slug": "corporeal-beast",
@@ -184,11 +233,32 @@
       "image": "Giant Sea Snake.png"
     },
     {
+      "slug": "grotesque-guardians",
+      "name": "Grotesque Guardians",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Dawn.png"
+    },
+    {
       "slug": "hespori",
       "name": "Hespori",
       "aliases": [],
       "status": "verified",
       "image": "Hespori.png"
+    },
+    {
+      "slug": "k-ril-tsutsaroth",
+      "name": "K'ril Tsutsaroth",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "K'ril Tsutsaroth.png"
+    },
+    {
+      "slug": "kalphite-queen",
+      "name": "Kalphite Queen",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Kalphite Queen.png"
     },
     {
       "slug": "king-black-dragon",
@@ -219,6 +289,20 @@
       "image": "Lunar Chest (closed).png"
     },
     {
+      "slug": "mad-angel",
+      "name": "Mad Angel",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Mad Angel.png"
+    },
+    {
+      "slug": "maggot-king",
+      "name": "Maggot King",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Maggot King.png"
+    },
+    {
       "slug": "monumental-chest",
       "name": "Monumental chest",
       "aliases": [],
@@ -226,11 +310,46 @@
       "image": "Monumental chest (teammate's, closed).png"
     },
     {
+      "slug": "nex",
+      "name": "Nex",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Nex.png"
+    },
+    {
+      "slug": "obor",
+      "name": "Obor",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Obor.png"
+    },
+    {
       "slug": "phantom-muspah",
       "name": "Phantom Muspah",
       "aliases": [],
       "status": "needs_review",
       "image": "Phantom Muspah (ranged).png"
+    },
+    {
+      "slug": "phosani-s-nightmare",
+      "name": "Phosani's Nightmare",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "The Nightmare.png"
+    },
+    {
+      "slug": "reward-cart",
+      "name": "Reward Cart",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Reward Cart (empty).png"
+    },
+    {
+      "slug": "reward-chest-the-gauntlet",
+      "name": "Reward Chest (The Gauntlet)",
+      "aliases": [],
+      "status": "verified",
+      "image": "Reward Chest (The Gauntlet).png"
     },
     {
       "slug": "reward-pool",
@@ -276,6 +395,13 @@
       "aliases": [],
       "status": "needs_review",
       "image": "Shellbane gryphon.png"
+    },
+    {
+      "slug": "skotizo",
+      "name": "Skotizo",
+      "aliases": [],
+      "status": "verified",
+      "image": "Skotizo.png"
     },
     {
       "slug": "spindel",
@@ -353,6 +479,13 @@
       "aliases": [],
       "status": "needs_review",
       "image": "Vorkath.png"
+    },
+    {
+      "slug": "yama",
+      "name": "Yama",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Yama.png"
     },
     {
       "slug": "zalcano",

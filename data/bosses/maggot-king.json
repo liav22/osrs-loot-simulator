@@ -1,0 +1,591 @@
+{
+  "slug": "maggot-king",
+  "name": "Maggot King",
+  "aliases": [],
+  "wikiPage": "Maggot King",
+  "wikiRevId": 15292096,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "maggot-king:0:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 40
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "maggot-king:1:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33634,
+            "itemKey": "elder-venator-fang",
+            "name": "Elder venator fang",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 340
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33631,
+            "itemKey": "crimson-kisten",
+            "name": "Crimson kisten",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 520
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "maggot-king:2:supplies-resources-tarnished-items",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 159,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33628,
+            "itemKey": "stymphike-tartare",
+            "name": "Stymphike tartare",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 41
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33627,
+            "itemKey": "dull-ancient-medal",
+            "name": "Dull ancient medal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 41
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 13
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33651,
+            "itemKey": "stymphike-feather",
+            "name": "Stymphike feather",
+            "qty": {
+              "kind": "range",
+              "min": 51,
+              "max": 74
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2970,
+            "itemKey": "mort-myre-fungus",
+            "name": "Mort myre fungus",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 76
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33625,
+            "itemKey": "letvek",
+            "name": "Letvek",
+            "qty": {
+              "kind": "range",
+              "min": 23,
+              "max": 34
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 12,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33623,
+            "itemKey": "blood-sac",
+            "name": "Blood sac",
+            "qty": {
+              "kind": "range",
+              "min": 8,
+              "max": 11
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 24,
+              "max": 32
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 447,
+            "itemKey": "mithril-ore",
+            "name": "Mithril ore",
+            "qty": {
+              "kind": "range",
+              "min": 36,
+              "max": 41
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "range",
+              "min": 30,
+              "max": 40
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33657,
+            "itemKey": "orikalkum-gravel",
+            "name": "Orikalkum gravel",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33661,
+            "itemKey": "venator-fang",
+            "name": "Venator fang",
+            "qty": {
+              "kind": "range",
+              "min": 112,
+              "max": 179
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33663,
+            "itemKey": "venator-tooth",
+            "name": "Venator tooth",
+            "qty": {
+              "kind": "range",
+              "min": 178,
+              "max": 219
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33679,
+            "itemKey": "tarnished-spear",
+            "name": "Tarnished spear",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33687,
+            "itemKey": "tarnished-ring",
+            "name": "Tarnished ring",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33689,
+            "itemKey": "tarnished-bracelet",
+            "name": "Tarnished bracelet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33691,
+            "itemKey": "tarnished-necklace",
+            "name": "Tarnished necklace",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33693,
+            "itemKey": "tarnished-amulet",
+            "name": "Tarnished amulet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33683,
+            "itemKey": "tarnished-battleaxe",
+            "name": "Tarnished battleaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33677,
+            "itemKey": "tarnished-longsword",
+            "name": "Tarnished longsword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33685,
+            "itemKey": "tarnished-halberd",
+            "name": "Tarnished halberd",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33681,
+            "itemKey": "tarnished-2h-sword",
+            "name": "Tarnished 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        }
+      ],
+      "notes": "Supplies / Resources / Tarnished items"
+    },
+    {
+      "id": "maggot-king:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 33642,
+            "itemKey": "maggot-marquess",
+            "name": "Maggot marquess",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3500
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 50
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 40
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": false,
+        "detail": "1 table/variant mismatch(es)"
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": false,
+        "detail": "6 of 34 wiki drop row(s) missing from the document: Maggot egg (base), Maggot egg (pulsating), Maggot egg (sickly), Maggot egg (warm), Maggot egg (wriggling), Maggot egg (writhing)"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1
+}
