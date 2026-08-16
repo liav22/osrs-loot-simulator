@@ -72,14 +72,16 @@ function parseIntParam(value: string | null, fallback: number): number {
  * run or a Zalcano MVP kill is as shareable as a ring-of-wealth run always
  * was. Short names, since these end up in a link someone pastes.
  *
- * `totalDamage` is deliberately absent: it is derived from `hitpointsDamage`
- * and `shieldDamage` by `withDerivedContext`, so encoding it would put a value
+ * `totalDamage` and `tobPoints` are deliberately absent: both are derived
+ * (from `hitpointsDamage`/`shieldDamage` and `roomsSkipped`/`deaths`
+ * respectively) by `withDerivedContext`, so encoding either would put a value
  * in the URL that the model then overwrites.
  */
 const NUMERIC_PARAMS = {
   points: 'pts',
   raidLevel: 'raid',
   deaths: 'deaths',
+  roomsSkipped: 'skip',
   delveLevel: 'delve',
   wavesReached: 'wave',
   fishingLevel: 'fishing',

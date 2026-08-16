@@ -30,6 +30,7 @@ function conditionLabel(condition: Condition): string {
         points: 'Reward points',
         raidLevel: 'Raid level',
         deaths: 'Deaths',
+        tobPoints: 'ToB points',
       }
       const label = labels[condition.field]
       // A bracket reads as a range, not as two separate facts. `atMost` is

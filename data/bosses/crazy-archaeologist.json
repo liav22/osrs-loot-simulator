@@ -5,7 +5,7 @@
   "wikiPage": "Crazy archaeologist",
   "wikiRevId": 15267737,
   "variants": [
-    "normal"
+    "{{{dropversion|}}}"
   ],
   "tables": [
     {
@@ -549,7 +549,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 76
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
         },
         {
           "node": {
@@ -566,7 +572,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 30
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
         }
       ],
       "notes": "Wilderness Slayer tertiary"
@@ -612,7 +624,9 @@
       "notes": "Access into gem_drop_table (from {{GemDropTable}})"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "{{{dropversion|}}}"
+  },
   "status": "verified",
   "validation": {
     "ok": false,

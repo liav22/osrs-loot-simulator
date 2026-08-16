@@ -6,6 +6,7 @@ import {
   DEFAULT_SIM_CONTEXT,
   SharedTableSchema,
   expectedValue,
+  resolveSimContext,
   type Boss,
   type Table,
 } from '@osrs-loot-simulator/loot-model'
@@ -34,7 +35,14 @@ const shared: Map<string, Table> = new Map(
 
 function rarestFor(slug: string): Set<string> {
   const boss = loadBoss(slug)
-  return rarestItemKeys(boss, expectedValue(boss, DEFAULT_SIM_CONTEXT, { tables: shared }))
+  // `resolveSimContext`, not the bare package `DEFAULT_SIM_CONTEXT`: a source
+  // whose only variant is quest-gated (Vorkath's "Post-quest") sets its own
+  // `contextDefaults.variant` so the DEFAULT view is not empty — see
+  // `docs/DECISIONS.md`'s "dropversion= parser fix" entry. Bypassing that
+  // (as this helper used to) reads every variant-gated entry as filtered out,
+  // which used to be invisible only because no regular drop row carried a
+  // variant condition before that fix landed.
+  return rarestItemKeys(boss, expectedValue(boss, resolveSimContext(boss), { tables: shared }))
 }
 
 describe('ownItemKeys', () => {

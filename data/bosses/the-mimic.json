@@ -5,7 +5,8 @@
   "wikiPage": "The Mimic",
   "wikiRevId": 15276887,
   "variants": [
-    "normal"
+    "Elite",
+    "Master"
   ],
   "tables": [
     {
@@ -27,7 +28,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -53,7 +60,13 @@
             "kind": "fixed",
             "num": 6,
             "den": 250
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -70,7 +83,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -87,7 +106,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -104,7 +129,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -121,7 +152,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -138,7 +175,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -155,7 +198,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -172,7 +221,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -189,7 +244,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -206,7 +267,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -223,7 +290,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -240,7 +313,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -257,7 +336,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -274,7 +359,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -291,7 +382,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -308,7 +405,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -325,7 +428,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -342,7 +451,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -359,7 +474,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -376,7 +497,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -393,7 +520,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -410,7 +543,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -427,7 +566,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -444,7 +589,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5750
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         }
       ],
       "notes": "Pre-roll"
@@ -471,7 +622,13 @@
           "rate": {
             "kind": "weight",
             "weight": 243
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -488,7 +645,13 @@
           "rate": {
             "kind": "weight",
             "weight": 243
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -506,7 +669,13 @@
           "rate": {
             "kind": "weight",
             "weight": 243
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -524,7 +693,13 @@
           "rate": {
             "kind": "weight",
             "weight": 243
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         },
         {
           "node": {
@@ -542,7 +717,13 @@
           "rate": {
             "kind": "weight",
             "weight": 243
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         }
       ],
       "notes": "Main drops"
@@ -566,7 +747,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Elite"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
@@ -590,7 +777,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -616,7 +809,13 @@
             "kind": "fixed",
             "num": 6,
             "den": 228
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -633,7 +832,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -650,7 +855,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -667,7 +878,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -684,7 +901,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -701,7 +924,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -718,7 +947,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -735,7 +970,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -752,7 +993,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -769,7 +1016,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -786,7 +1039,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -803,7 +1062,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -820,7 +1085,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -837,7 +1108,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -854,7 +1131,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -871,7 +1154,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -888,7 +1177,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -905,7 +1200,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -922,7 +1223,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -939,7 +1246,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -956,7 +1269,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -973,7 +1292,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -990,7 +1315,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -1007,7 +1338,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5244
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         }
       ],
       "notes": "Pre-roll"
@@ -1034,7 +1371,13 @@
           "rate": {
             "kind": "weight",
             "weight": 221
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -1051,7 +1394,13 @@
           "rate": {
             "kind": "weight",
             "weight": 221
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -1069,7 +1418,13 @@
           "rate": {
             "kind": "weight",
             "weight": 221
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -1087,7 +1442,13 @@
           "rate": {
             "kind": "weight",
             "weight": 221
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         },
         {
           "node": {
@@ -1105,7 +1466,13 @@
           "rate": {
             "kind": "weight",
             "weight": 221
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         }
       ],
       "notes": "Main drops"
@@ -1129,13 +1496,21 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Master"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Elite"
+  },
   "status": "verified",
   "validation": {
     "ok": false,

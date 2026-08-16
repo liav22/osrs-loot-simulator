@@ -549,12 +549,12 @@ describe('simulate', () => {
           id: 't',
           mode: 'independent',
           entries: [
-            { node: item(1, 'A'), rate: { kind: 'formula', id: 'cox_points', params: {} } },
+            { node: item(1, 'A'), rate: { kind: 'formula', id: 'barrows_kc', params: {} } },
           ],
         },
       ])
       expect(() => simulate(boss, 1, ctx, 1)).toThrow(/not implemented/)
-      const registry = createFormulaRegistry({ cox_points: () => 1 })
+      const registry = createFormulaRegistry({ barrows_kc: () => 1 })
       expect(dropCount(simulate(boss, 100, ctx, 1, { formulas: registry }).drops, 1)).toBe(100)
     })
   })

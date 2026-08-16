@@ -56,6 +56,27 @@ export interface WikitextDropLine {
    * `transclusionPartition`.
    */
   accessRate: string
+  /**
+   * `{{DropsTableHead|dropversion=X}}`'s `dropversion` value, verbatim
+   * (`"Normal Mode"`, not normalised to lowercase — matching the convention
+   * `rdt-access.ts` already established for the exact same parameter on
+   * `{{RareDropTable}}`/`{{GemDropTable}}` access lines), or `null` when this
+   * row sits under no such heading.
+   *
+   * Regular drop rows never had this before: a `dropversion`-scoped
+   * `{{DropsTableHead}}` was read for RDT access lines but not for ordinary
+   * `{{DropsLine}}`/`{{DropsLineReward}}` rows, so a page whose Normal/Hard
+   * Mode variants sit under nested sub-headings (Monumental chest's
+   * `====Normal mode====`/`====Hard mode====` inside `===Pre-roll===`) had
+   * both modes' rows collapse into one table with no variant tag at all —
+   * `splitIntoBlocks`' "nesting deeper than the section's shallowest level
+   * collapses into its parent group" rule (by design, for Barrows' per-brother
+   * sub-groups) means the two modes were never even separate BLOCKS, only
+   * separate template scopes within one block. This field closes that gap
+   * without touching the blocking/grouping behaviour at all — see
+   * `scanBlockCalls`.
+   */
+  variant: string | null
 }
 
 /**
@@ -379,15 +400,61 @@ function splitIntoBlocks(content: string): { heading: string; block: string }[] 
 /** The row templates, which carry one drop each. */
 const ROW_TEMPLATES = ['DropsLine', 'DropsLineClue', 'DropsLineReward'] as const
 
+/**
+ * Every `{{DropsTableHead}}` / row-template call within a block, IN DOCUMENT
+ * ORDER with position, so a caller can track "which `{{DropsTableHead
+ * |dropversion=}}` most recently preceded this row" — `findTemplateCalls`
+ * alone can't answer that, since it returns unordered-relative-to-each-other
+ * call strings for one template family at a time, with no position.
+ *
+ * Deliberately reuses `findTemplateCalls`' own depth-tracking extraction
+ * (called once per family, then merged and sorted by `start`) rather than a
+ * new scanner — two independently-tested extractions merged is less risk
+ * than a third parallel implementation of the same brace-depth logic.
+ */
+function scanBlockCalls(
+  block: string
+): { name: string; call: string; start: number }[] {
+  const found: { name: string; call: string; start: number }[] = []
+  for (const templateName of ['DropsTableHead', ...ROW_TEMPLATES]) {
+    // `findTemplateCalls` already returns this family's calls in document
+    // order, so walking `indexOf` forward from a moving cursor (rather than
+    // `block.indexOf(call)` from the start each time) still finds the right
+    // occurrence when the same call string repeats verbatim more than once —
+    // two byte-identical `{{DropsLineReward|...}}` rows are not hypothetical
+    // in this corpus (e.g. an item appearing at two different rarities under
+    // one heading can render identically apart from position).
+    let cursor = 0
+    for (const call of findTemplateCalls(block, [templateName])) {
+      const start = block.indexOf(call, cursor)
+      found.push({ name: templateName, call, start })
+      cursor = start + call.length
+    }
+  }
+  return found.sort((a, b) => a.start - b.start)
+}
+
 function extractLinesFromSection(content: string, sectionTag: string): WikitextDropLine[] {
   const lines: WikitextDropLine[] = []
   for (const { heading, block } of splitIntoBlocks(content)) {
-    // DropsLineReward is Barrows' reward-chest variant of DropsLine — same
-    // param shape (name/quantity/rarity/rolls/raritynotes), different name.
-    const calls = findTemplateCalls(block, [...ROW_TEMPLATES])
+    // Walked in document order so a `{{DropsTableHead|dropversion=X}}` sets
+    // the variant in effect for every row template that follows it, until the
+    // next `{{DropsTableHead}}` changes it — the same "most recent value
+    // wins" reading `rdt-access.ts` already gives this parameter on RDT/gem
+    // access lines. `{{DropsTableBottom}}` does not reset it: nothing in the
+    // corpus needs "no variant" to interrupt two dropversion-tagged blocks in
+    // a row, and treating it as a reset would require reasoning about
+    // same-block-no-heading rows that don't occur here.
+    let currentVariant: string | null = null
 
-    for (const call of calls) {
-      const { name: templateName, params } = parseTemplateCall(call)
+    for (const { name: templateName, call } of scanBlockCalls(block)) {
+      const { params } = parseTemplateCall(call)
+
+      if (templateName === 'DropsTableHead') {
+        currentVariant = params.get('dropversion') ?? currentVariant
+        continue
+      }
+
       const isClue = templateName.toLowerCase() === 'dropslineclue'
       const nameNotes = params.get('namenotes') ?? ''
       const rarityNotes = params.get('raritynotes') ?? ''
@@ -418,6 +485,7 @@ function extractLinesFromSection(content: string, sectionTag: string): WikitextD
         isClue,
         expandedFrom: params.get(PROVENANCE_TEMPLATE) ?? '',
         accessRate: params.get(PROVENANCE_ACCESS) ?? '',
+        variant: currentVariant,
       })
     }
   }

@@ -48,14 +48,45 @@ export function entryApplies(entry: Pick<Entry, 'conditions'>, ctx: SimContext):
   return conditionsHold(entry.conditions, ctx)
 }
 
+/** Theatre of Blood's per-room point value and MVP pool — see `tobPoints`. */
+const TOB_POINTS_PER_ROOM = 3
+const TOB_ROOM_COUNT = 6
+const TOB_MVP_POOL_POINTS = 14
+const TOB_DEATH_PENALTY_POINTS = 4
+
+/**
+ * `tobPoints`, from `roomsSkipped` and `deaths`. `roomsSkipped` is clamped to
+ * `[0, TOB_ROOM_COUNT]` here defensively — the schema already enforces the
+ * upper bound, but a hand-built context (this function's whole reason to
+ * exist) does not go through `SimContextSchema.parse`, and a raid genuinely
+ * cannot skip more than its own 6 rooms.
+ *
+ * Solo-player only: a solo player always receives the whole 14-point MVP pool
+ * (nobody else exists to share it with), which is what makes `roomPoints +
+ * TOB_MVP_POOL_POINTS - deathPenalty` the player's own score rather than a
+ * team's. See `Module:Theatre of Blood calculator`'s `playerpoints` for a
+ * solo run (`teammates = 1`), cited in `docs/bosses/monumental-chest.md`.
+ */
+function tobPointsFor(ctx: Pick<SimContext, 'roomsSkipped' | 'deaths'>): number {
+  const roomsSkipped = Math.min(Math.max(ctx.roomsSkipped, 0), TOB_ROOM_COUNT)
+  const roomPoints = (TOB_ROOM_COUNT - roomsSkipped) * TOB_POINTS_PER_ROOM
+  const deathPenalty = ctx.deaths * TOB_DEATH_PENALTY_POINTS
+  return Math.max(0, roomPoints + TOB_MVP_POOL_POINTS - deathPenalty)
+}
+
 /**
  * Recomputes every derived `SimContext` field from its inputs.
  *
- * There is one today: `totalDamage = hitpointsDamage + shieldDamage`, Zalcano's
- * combined unique/pet eligibility gate. It is *derived* rather than supplied so
- * that a two-field threshold needs no new condition shape — `levelAtLeast`
- * reads it as an ordinary field, and conditions stay resolved-once against a
- * fixed context (see `SimContextSchema`'s comment on the field).
+ * Two today:
+ *
+ * - `totalDamage = hitpointsDamage + shieldDamage`, Zalcano's combined
+ *   unique/pet eligibility gate.
+ * - `tobPoints`, Theatre of Blood's points total (see `tobPointsFor`).
+ *
+ * Both are *derived* rather than supplied so that a multi-field rule needs no
+ * new condition shape — `levelAtLeast` reads the result as an ordinary field,
+ * and conditions stay resolved-once against a fixed context (see
+ * `SimContextSchema`'s comment on the field).
  *
  * Whatever a caller passes for a derived field is overwritten, never merged.
  * That is the point: the field cannot drift from its inputs, and a hand-built
@@ -68,8 +99,9 @@ export function entryApplies(entry: Pick<Entry, 'conditions'>, ctx: SimContext):
  */
 export function withDerivedContext(ctx: SimContext): SimContext {
   const totalDamage = ctx.hitpointsDamage + ctx.shieldDamage
-  if (ctx.totalDamage === totalDamage) return ctx
-  return { ...ctx, totalDamage }
+  const tobPoints = tobPointsFor(ctx)
+  if (ctx.totalDamage === totalDamage && ctx.tobPoints === tobPoints) return ctx
+  return { ...ctx, totalDamage, tobPoints }
 }
 
 /**

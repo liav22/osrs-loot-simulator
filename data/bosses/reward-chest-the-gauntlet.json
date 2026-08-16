@@ -5,7 +5,10 @@
   "wikiPage": "Reward Chest (The Gauntlet)",
   "wikiRevId": 15274243,
   "variants": [
-    "normal"
+    "Failure",
+    "Partial completion",
+    "Regular",
+    "Corrupted"
   ],
   "tables": [
     {
@@ -29,7 +32,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Failure"
+            }
+          ]
         },
         {
           "node": {
@@ -45,7 +54,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Failure"
+            }
+          ]
         },
         {
           "node": {
@@ -61,7 +76,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Failure"
+            }
+          ]
         }
       ],
       "notes": ""
@@ -87,7 +108,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -103,7 +130,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -121,7 +154,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -137,7 +176,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -153,7 +198,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -169,7 +220,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -185,7 +242,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -201,7 +264,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -219,7 +288,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -237,7 +312,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -253,7 +334,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -271,7 +358,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -287,7 +380,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -303,7 +402,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -319,7 +424,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -336,7 +447,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -353,7 +470,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -370,7 +493,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -387,7 +516,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -404,7 +539,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -421,7 +562,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -439,7 +586,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -457,7 +610,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -475,7 +634,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -493,7 +658,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -511,7 +682,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         },
         {
           "node": {
@@ -529,7 +706,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Partial completion"
+            }
+          ]
         }
       ],
       "notes": "Weapons and armour / Runes / Other"
@@ -554,7 +737,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -582,7 +771,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -600,7 +795,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -618,7 +819,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -636,7 +843,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -654,7 +867,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -672,7 +891,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -690,7 +915,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -708,7 +939,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -725,7 +962,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -742,7 +985,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -759,7 +1008,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -776,7 +1031,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -793,7 +1054,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -810,7 +1077,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -827,7 +1100,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -844,7 +1123,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -861,7 +1146,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -878,7 +1169,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -895,7 +1192,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -913,7 +1216,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -931,7 +1240,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -949,7 +1264,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -967,7 +1288,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -984,7 +1311,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         }
       ],
       "notes": "Weapons and armour / Runes and ammunition / Gems / Other"
@@ -1010,7 +1343,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 25
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -1027,7 +1366,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 120
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -1044,7 +1389,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 120
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -1061,7 +1412,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 2000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -1078,7 +1435,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 2000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
@@ -1103,7 +1466,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1118,7 +1487,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -1146,7 +1521,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1164,7 +1545,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1182,7 +1569,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1199,7 +1592,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1217,7 +1616,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1235,7 +1640,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1253,7 +1664,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1271,7 +1688,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1289,7 +1712,13 @@
           "rate": {
             "kind": "weight",
             "weight": 0.5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1306,7 +1735,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1323,7 +1758,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1340,7 +1781,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1357,7 +1804,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1374,7 +1827,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1391,7 +1850,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1408,7 +1873,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1425,7 +1896,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1442,7 +1919,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1459,7 +1942,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1477,7 +1966,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1495,7 +1990,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1513,7 +2014,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1531,7 +2038,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1548,7 +2061,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1.5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         }
       ],
       "notes": "Weapons and armour / Runes and ammunition / Gems / Other"
@@ -1574,7 +2093,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 20
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1591,7 +2116,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 50
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1608,7 +2139,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 50
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1625,7 +2162,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 400
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         },
         {
           "node": {
@@ -1642,13 +2185,21 @@
             "kind": "fixed",
             "num": 1,
             "den": 800
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Corrupted"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Failure"
+  },
   "status": "verified",
   "validation": {
     "ok": false,

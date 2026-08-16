@@ -5,7 +5,9 @@
   "wikiPage": "Black demon",
   "wikiRevId": 15275657,
   "variants": [
-    "normal"
+    "Regular",
+    "Chasm of Fire",
+    "Wilderness Slayer Cave"
   ],
   "tables": [
     {
@@ -27,7 +29,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -53,7 +61,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -69,7 +83,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -85,7 +105,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -101,7 +127,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -117,7 +149,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -133,7 +171,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -149,7 +193,13 @@
           "rate": {
             "kind": "weight",
             "weight": 8
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -165,7 +215,13 @@
           "rate": {
             "kind": "weight",
             "weight": 7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -181,7 +237,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -197,7 +259,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -213,7 +281,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         }
       ],
       "notes": "Weapons and armour / Runes"
@@ -239,7 +313,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 22.3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -256,7 +336,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 29.7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -273,7 +359,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 39.6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -290,7 +382,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 50.9
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -307,7 +405,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 64.8
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -324,7 +428,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 89
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -341,7 +451,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 118.7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -358,7 +474,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 142.5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -375,7 +497,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 178.1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -392,7 +520,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 237.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -409,7 +543,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 237.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         }
       ],
       "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/128 (ratio 0.9993), so its rows are one mutually-exclusive roll)"
@@ -435,7 +575,13 @@
           "rate": {
             "kind": "weight",
             "weight": 40
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -451,7 +597,13 @@
           "rate": {
             "kind": "weight",
             "weight": 7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -467,7 +619,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -483,7 +641,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -499,7 +663,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -515,7 +685,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -531,7 +707,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -547,7 +729,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         }
       ],
       "notes": "Coins / Other"
@@ -573,7 +761,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -590,7 +784,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 35
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         },
         {
           "node": {
@@ -609,6 +809,10 @@
             "den": 86
           },
           "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            },
             {
               "kind": "onSlayerTask",
               "value": true
@@ -630,7 +834,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 128
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Regular"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
@@ -656,7 +866,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 53
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Chasm of Fire"
+            }
+          ]
         },
         {
           "node": {
@@ -673,7 +889,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 53
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Chasm of Fire"
+            }
+          ]
         },
         {
           "node": {
@@ -690,7 +912,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 53
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Chasm of Fire"
+            }
+          ]
         },
         {
           "node": {
@@ -707,7 +935,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 53
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Chasm of Fire"
+            }
+          ]
         },
         {
           "node": {
@@ -724,7 +958,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 53
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Chasm of Fire"
+            }
+          ]
         }
       ],
       "notes": "Chasm of Fire tertiary"
@@ -748,7 +988,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -774,7 +1020,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -790,7 +1042,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -806,7 +1064,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -822,7 +1086,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -838,7 +1108,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -854,7 +1130,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -870,7 +1152,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -886,7 +1174,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -902,7 +1196,13 @@
           "rate": {
             "kind": "weight",
             "weight": 8
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -918,7 +1218,13 @@
           "rate": {
             "kind": "weight",
             "weight": 7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -934,7 +1240,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -950,7 +1262,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -966,7 +1284,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         }
       ],
       "notes": "Weapons and armour / Runes"
@@ -992,7 +1316,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 12.9
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1009,7 +1339,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 17.2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1026,7 +1362,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 22.9
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1043,7 +1385,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 29.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1060,7 +1408,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 37.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1077,7 +1431,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 51.5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1094,7 +1454,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 68.6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1111,7 +1477,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 82.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1128,7 +1500,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 103
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1145,7 +1523,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 137.3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1162,7 +1546,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 137.3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         }
       ],
       "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/74 (ratio 0.9990), so its rows are one mutually-exclusive roll)"
@@ -1189,7 +1579,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1206,7 +1602,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1222,7 +1624,13 @@
           "rate": {
             "kind": "weight",
             "weight": 7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         }
       ],
       "notes": "Materials / Coins"
@@ -1248,7 +1656,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 128
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1265,7 +1679,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         },
         {
           "node": {
@@ -1282,7 +1702,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 35
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Wilderness Slayer Cave"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
@@ -1392,7 +1818,9 @@
       "notes": "Access into gem_drop_table (from {{GemDropTable}})"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Regular"
+  },
   "status": "needs_review",
   "validation": {
     "ok": false,

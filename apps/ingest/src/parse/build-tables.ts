@@ -166,6 +166,17 @@ function toEntry(
   denominator: number | null,
   conditions?: Condition[]
 ): ParsedEntry {
+  // `line.variant` is `{{DropsTableHead|dropversion=X}}`'s value, the same
+  // parameter `rdt-access.ts` already turns into a `variant` condition for
+  // RDT/gem-table access lines — see `WikitextDropLine.variant`'s comment for
+  // why regular drop rows never had this before. Prepended, not appended:
+  // conditions read as an AND, so order has no semantic effect, but keeping
+  // the structural (heading-derived) condition first and the rarity-template-
+  // derived ones after matches how `conditionsFor` already orders members/
+  // freeToPlay ahead of `entry.extraConditions`.
+  const variantCondition: Condition[] =
+    line.variant !== null ? [{ kind: 'variant', name: line.variant }] : []
+  const allConditions = [...variantCondition, ...(conditions ?? [])]
   return {
     name: line.name,
     quantity: line.quantity,
@@ -174,7 +185,7 @@ function toEntry(
     freeToPlay: line.freeToPlay,
     rarity: rate,
     weight: denominator === null ? null : (rate.num * denominator) / rate.den,
-    ...(conditions !== undefined ? { extraConditions: conditions } : {}),
+    ...(allConditions.length > 0 ? { extraConditions: allConditions } : {}),
   }
 }
 
@@ -370,6 +381,61 @@ function trySplitDominantAndOutliers(
   const outliers = fixed.filter((r) => (r.resolution.rate as { den: number }).den !== dominantDenominator)
 
   return { dominant, dominantDenominator, outliers }
+}
+
+/**
+ * When a heterogeneous-denominator block's rows split cleanly by
+ * `line.variant` (Monumental chest's Normal/Hard Mode unique tables: 7 rows
+ * at `/19` tagged "Normal Mode", 7 at `/18` tagged "Hard Mode"), and EVERY
+ * variant's own subset independently reconciles flat to ITS OWN shared
+ * denominator, returns one `{ variant, denominator, rows }` per variant —
+ * the general form of the existing "rows reconcile flush to one shared
+ * denominator -> weighted, not preroll" rule (see the `PREROLL_HEADINGS`
+ * branch's own comment), applied PER VARIANT rather than across the whole
+ * block at once.
+ *
+ * This exists because the whole-block version of that check cannot see this
+ * shape at all: `19` and `18` are two different denominators, so a
+ * whole-block `fixedDenominators.size === 1` test fails even though each
+ * variant is, on its own, a clean weighted split — exactly why Normal/Hard
+ * Mode blending was possible to miss even after the block reconciliation fix
+ * shipped for the single-mode case.
+ *
+ * Deliberately conservative, matching `tryHomogenizeDenominators`'s own
+ * "never a guess" discipline: `null` unless every row carries a variant tag
+ * (a mix of tagged and untagged rows is not a confirmed split — better to
+ * fall through to the existing whole-block behaviour than guess which
+ * untagged rows belong where), there are at least two distinct variants, and
+ * EVERY variant's subset reconciles exactly. One variant failing to
+ * reconcile is treated as "this block's shape is not this pattern" rather
+ * than partially applying the split.
+ */
+function tryReconcilePerVariant(
+  fixedRows: readonly ResolvedLine[]
+): { variant: string; denominator: number; rows: ResolvedLine[] }[] | null {
+  if (fixedRows.some(({ line }) => line.variant === null)) return null
+
+  const byVariant = new Map<string, ResolvedLine[]>()
+  for (const row of fixedRows) {
+    const variant = row.line.variant!
+    const existing = byVariant.get(variant)
+    if (existing === undefined) byVariant.set(variant, [row])
+    else existing.push(row)
+  }
+  if (byVariant.size < 2) return null
+
+  const result: { variant: string; denominator: number; rows: ResolvedLine[] }[] = []
+  for (const [variant, rows] of byVariant) {
+    const denominators = new Set(
+      rows.map(({ resolution }) => (resolution.rate!.kind === 'fixed' ? resolution.rate!.den : null))
+    )
+    if (denominators.size !== 1) return null
+    const denominator = [...denominators][0]!
+    const sum = rows.reduce((total, { resolution }) => total + resolution.rate!.num, 0)
+    if (sum !== denominator) return null
+    result.push({ variant, denominator, rows })
+  }
+  return result
 }
 
 /** Parses `5/139` into a probability; null for anything else. */
@@ -632,6 +698,31 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       // treating that as `preroll` would silently apply first-hit-wins
       // Bernoulli semantics to numbers the wiki computed as a normalised
       // weighted split, giving every row a materially wrong probability.
+      //
+      // Checked PER VARIANT first, when the block's rows carry one at all
+      // (Monumental chest's Normal/Hard Mode: 8+2+2+2+2+2+1=19 tagged
+      // "Normal Mode", 7+2+2+2+2+2+1=18 tagged "Hard Mode" — two different
+      // denominators, so the whole-block check below would never see either
+      // as reconciling). `tryReconcilePerVariant` is conservative and only
+      // fires when every row is tagged and every variant's own subset
+      // reconciles exactly; anything else falls through to the whole-block
+      // check unchanged.
+      const perVariant = tryReconcilePerVariant(fixedRows)
+      if (perVariant !== null) {
+        for (const { variant, denominator, rows } of perVariant) {
+          groups.push({
+            mode: 'weighted',
+            headings: [`${block.heading} (${variant})`],
+            section: block.section,
+            denominator,
+            entries: rows.map(({ line, resolution }) => toEntry(line, resolution.rate!, denominator, resolution.conditions)),
+            ambiguous: null,
+            confirmedBy: `reconciles flush to ${denominator} within the "${variant}" dropversion`,
+          })
+        }
+        continue
+      }
+
       const fixedDenominators = new Set(
         fixedRows.map(({ resolution }) => (resolution.rate!.kind === 'fixed' ? resolution.rate!.den : null))
       )

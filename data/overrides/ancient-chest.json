@@ -1,19 +1,22 @@
 {
   "slug": "ancient-chest",
-  "name": "Ancient chest",
-  "aliases": [],
+  "note": "Hand-authored from Ancient chest revid 15295333 (re-fetched fresh this session -- the committed snapshot was stale, still showing the pre-2026-08-12-patch weights (20/69) despite an earlier research pass's doc citing the post-patch 14/60; the fresh fetch's revid matches what that doc cites, so the doc's numbers were right, only the committed snapshot lagged) and Module:Chambers of Xeric calculator (read via Calculator:Chambers of Xeric loot -> Calculator:Chambers of Xeric/Template -> {{#invoke:Chambers of Xeric calculator|main}}, fetched fresh this session). Modelled per player, solo -- ctx.points is this player's own points, matching Chambers of Xeric's own module which sets personalRatio=1 (and dropchance uses personalPoints=groupPoints) for a solo run. Two real corrections to an earlier research pass's own proposed mapping, found while cross-checking the fresh page against the module line by line: (1) the common table is 33 weighted slots at denominator 33 (matching the page's own rarity=1/33 rows exactly), not a flat 43-item/denominator-99 table -- the 10 herb slots are each a nested oneOf(herb, seed) rather than 2 separate top-level entries, which is what keeps the '2 rolls, without replacement' semantic correct (a flat structure would let a herb and its own seed both drop in one raid); (2) item quantities are QtySpec.formula (floor(min(points,131071)/divisor)), not literal ranges -- the page's 'quantity=1-138' style rows are the DISPLAY BOUNDS of a deterministic points-driven formula (verified: the upper bound of 26 of 29 checked items is exactly floor(131071/divisor)), not a real per-roll RNG span the way Theatre of Blood's own common-table ranges are. Both would have produced a structurally-clean, plausible-looking document with the wrong distribution -- exactly the failure this source has already shipped twice (the pre-override generated document rolls both the unique AND common tables on every kill unconditionally, and the current committed generated document still carries the pre-patch weights). NOT modelled, deliberately: per-player/team allocation within a group raid (this player's own points treated as the whole raid's, matching a solo run); Ancient tablet's 'replaces one of the loot rolls' precisely (modelled as an ADDITIONAL independent roll instead -- no run-scoped cross-table roll-count mechanism exists, see cox:tertiary's own note for the quantified direction of the resulting overstatement); Metamorphic dust's unstated time-completion threshold (only its Challenge Mode gate is applied).",
   "wikiPage": "Ancient chest",
   "wikiRevId": 15295333,
   "variants": [
     "normal",
     "challenge"
   ],
+  "contextDefaults": {
+    "members": true,
+    "points": 20000
+  },
   "tables": [
     {
       "id": "cox:unique-rolls",
       "mode": "independent",
-      "rolls": 1,
-      "withoutReplacement": false,
+      "suppressesFollowing": true,
+      "notes": "Up to 6 independent rolls against the raid's total points, each a chunk of at most 570,000 points at 1/867,500-per-point (the module's own 8675 constant, not the page prose's 8676 -- both round to the same published 65.7% cap; see cox_points). Every roll is evaluated regardless of whether an earlier one hit ('each an independent roll'), so suppressesFollowing (not preroll's first-hit-wins) is what makes a hit anywhere in this table replace the whole common table while still allowing up to 6 uniques in one raid. 12 entries (6 rollIndex x 2 modes) because Normal and Challenge Mode's item weights differ (60 vs 56, prayer scrolls 14 vs 12) but the underlying roll chance does not -- duplicated rather than parameterized since Condition has no 'variant is one of' form.",
       "entries": [
         {
           "node": {
@@ -2571,16 +2574,15 @@
             }
           ]
         }
-      ],
-      "notes": "Up to 6 independent rolls against the raid's total points, each a chunk of at most 570,000 points at 1/867,500-per-point (the module's own 8675 constant, not the page prose's 8676 -- both round to the same published 65.7% cap; see cox_points). Every roll is evaluated regardless of whether an earlier one hit ('each an independent roll'), so suppressesFollowing (not preroll's first-hit-wins) is what makes a hit anywhere in this table replace the whole common table while still allowing up to 6 uniques in one raid. 12 entries (6 rollIndex x 2 modes) because Normal and Challenge Mode's item weights differ (60 vs 56, prayer scrolls 14 vs 12) but the underlying roll chance does not -- duplicated rather than parameterized since Condition has no 'variant is one of' form.",
-      "suppressesFollowing": true
+      ]
     },
     {
       "id": "cox:common",
       "mode": "weighted",
-      "rolls": 2,
       "denominator": 33,
+      "rolls": 2,
       "withoutReplacement": true,
+      "notes": "33 slots, 2 rolls, without replacement -- 'the two rolls cannot end on the same drop' (page prose). Quantities are floor(min(points,131071)/divisor) per item -- Module:Chambers of Xeric calculator's trashItems table, cross-checked against the page's own published quantity ranges: 26 of 29 checked items' stated upper bound is EXACTLY floor(131071/divisor); Grimy avantoe/kwuarm/lantadyme are off by 1, a display rounding gap too small to matter. Torn prayer scroll and Dark relic are the module's own hardcoded exception -- always quantity 1, expressed directly rather than via a huge divisor. The 10 herb slots are each a nested oneOf(herb weight 2, seed weight 1) rather than 2 separate top-level slots -- this is the mechanic behind the page's own 'X% of these herbs will drop as seeds instead (at a rate of N herbs per seed)' footnotes, not a separate structure: N=7 for ranarr/snapdragon/torstol, N=8 for the other seven, both confirmed by herb-divisor/seed-divisor ratios (e.g. ranarr 6622/946=7.0 exactly). Nesting under a single weighted SLOT (rather than 43 flat top-level entries at weight 2/1) is what keeps 'without replacement' correct: a slot consumed by roll 1 (whichever of herb/seed it resolved to) is excluded from roll 2 by its own index, so the same herb pair can never contribute twice in one raid -- a flat 43-entry table would have let a herb and its OWN seed both drop in the same raid, which the page's own 2-rolls-without-replacement mechanic forbids.",
       "entries": [
         {
           "node": {
@@ -3528,14 +3530,12 @@
             "weight": 1
           }
         }
-      ],
-      "notes": "33 slots, 2 rolls, without replacement -- 'the two rolls cannot end on the same drop' (page prose). Quantities are floor(min(points,131071)/divisor) per item -- Module:Chambers of Xeric calculator's trashItems table, cross-checked against the page's own published quantity ranges: 26 of 29 checked items' stated upper bound is EXACTLY floor(131071/divisor); Grimy avantoe/kwuarm/lantadyme are off by 1, a display rounding gap too small to matter. Torn prayer scroll and Dark relic are the module's own hardcoded exception -- always quantity 1, expressed directly rather than via a huge divisor. The 10 herb slots are each a nested oneOf(herb weight 2, seed weight 1) rather than 2 separate top-level slots -- this is the mechanic behind the page's own 'X% of these herbs will drop as seeds instead (at a rate of N herbs per seed)' footnotes, not a separate structure: N=7 for ranarr/snapdragon/torstol, N=8 for the other seven, both confirmed by herb-divisor/seed-divisor ratios (e.g. ranarr 6622/946=7.0 exactly). Nesting under a single weighted SLOT (rather than 43 flat top-level entries at weight 2/1) is what keeps 'without replacement' correct: a slot consumed by roll 1 (whichever of herb/seed it resolved to) is excluded from roll 2 by its own index, so the same herb pair can never contribute twice in one raid -- a flat 43-entry table would have let a herb and its OWN seed both drop in the same raid, which the page's own 2-rolls-without-replacement mechanic forbids."
+      ]
     },
     {
       "id": "cox:tertiary",
       "mode": "independent",
-      "rolls": 1,
-      "withoutReplacement": false,
+      "notes": "Tertiary rewards, independent of the unique/common outcome. Dark journal and Ancient tablet are both ownership-gated ('only received if players do not have it stored in their bank' / 'only received if players do not own one or have not consumed it already') -- the currently-generated document attaches no such gate at all, so it awards Dark journal on every single kill unconditionally, a real bug this override fixes. Ancient tablet's own citation says it 'replaces one of the loot rolls' -- NOT modelled precisely: this engine has no run-scoped mechanism for one table's hit to reduce another table's roll count, so it is modelled as an additional independent 1/10 roll instead, which slightly OVERSTATES total loot for an account that hasn't yet received the tablet (a small, one-time, precisely-scoped overstatement, not a guess). Elite clue and Olmlet use the conditioned marginal (see cox_points) rather than their raw 1/12 and 1/53 against an unconditioned unique outcome -- exact on every aggregate statistic since ctx.points is static for the run; cross-checked against the page's own cited '~1/1,765 at 26,025 points' example. Metamorphic dust's further 'if the raid was completed within a certain time' qualifier is not modelled -- no threshold is stated anywhere, so only the Challenge Mode gate is applied, which overstates its true availability for a slow clear (same UNKNOWN-scaling shape as the 'individual performance' qualifiers on Theatre of Blood's own tertiary rates).",
       "entries": [
         {
           "node": {
@@ -3657,59 +3657,7 @@
             }
           ]
         }
-      ],
-      "notes": "Tertiary rewards, independent of the unique/common outcome. Dark journal and Ancient tablet are both ownership-gated ('only received if players do not have it stored in their bank' / 'only received if players do not own one or have not consumed it already') -- the currently-generated document attaches no such gate at all, so it awards Dark journal on every single kill unconditionally, a real bug this override fixes. Ancient tablet's own citation says it 'replaces one of the loot rolls' -- NOT modelled precisely: this engine has no run-scoped mechanism for one table's hit to reduce another table's roll count, so it is modelled as an additional independent 1/10 roll instead, which slightly OVERSTATES total loot for an account that hasn't yet received the tablet (a small, one-time, precisely-scoped overstatement, not a guess). Elite clue and Olmlet use the conditioned marginal (see cox_points) rather than their raw 1/12 and 1/53 against an unconditioned unique outcome -- exact on every aggregate statistic since ctx.points is static for the run; cross-checked against the page's own cited '~1/1,765 at 26,025 points' example. Metamorphic dust's further 'if the raid was completed within a certain time' qualifier is not modelled -- no threshold is stated anywhere, so only the Challenge Mode gate is applied, which overstates its true availability for a slow clear (same UNKNOWN-scaling shape as the 'individual performance' qualifiers on Theatre of Blood's own tertiary rates)."
+      ]
     }
-  ],
-  "contextDefaults": {
-    "members": true,
-    "points": 20000
-  },
-  "status": "needs_review",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "no tableRef nodes"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "14 formula rate(s)/weight(s) evaluated successfully"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "41 formula-driven quantity/rolls/multiplier value(s) evaluated successfully"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "the rendered page has no \"average ... kill is worth N\" sentence to compare against"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "point_scaled: Chambers of Xeric's reward chest. Never had a document before the DROPS_SECTION_TITLE/HEADING_PATTERN widening (2026-08-16) let the parser reach its ==Loot table== section for the first time — correcting an earlier, now-falsified claim (docs/HANDOFF.md) that its page 'has no {{DropsLine}}-shaped content whatsoever'. It does; the rows are exactly as misleading as ToA's own were before its override. The page states outright: 'For every 8,676 total points obtained, a 1% chance to obtain a unique loot is given... capped at 65.7% (570,000 points)... If one of these items is received, no common rewards are given... Up to six unique rewards can be obtained per raid.' None of that is visible to the parser, which currently emits TWO INDEPENDENT weighted tables with no gating between them at all: ancient-chest:0 (12 uniques, weight/69) and ancient-chest:1 (33 common items, weight/33) both roll on EVERY simulated kill, so the generated document currently guarantees a unique AND a common drop every time — not an imprecise approximation but a ~100%-unique-rate document, far worse than an unmodelled curve. Needs the cox_points formula (points -> unique chance, capped) plus the preroll/suppression structure ToA's override pattern already established. The elite-clue/Olmlet cross-table visibility question this entry's mechanic touches is RESOLVED, not open — see docs/HANDOFF.md's 'What NOT to redo': a conditioned-marginal formula rate is exact and does not need per-kill same-raid correlation; naively using the raw unconditioned subrates instead overstates Olmlet by 33x, which is the failure mode to avoid when this is built, not evidence the mechanism needs new architecture."
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 51 wiki drop row(s) reachable in the document"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

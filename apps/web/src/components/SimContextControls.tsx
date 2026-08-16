@@ -14,6 +14,7 @@ const NUMERIC_FIELDS: Partial<
   points: { label: 'Activity points', min: 0 },
   raidLevel: { label: 'Raid level (invocation)', min: 0, max: 500 },
   deaths: { label: 'Deaths this raid', min: 0 },
+  roomsSkipped: { label: 'Rooms skipped this raid', min: 0, max: 6 },
   delveLevel: { label: 'Delve level reached', min: 0 },
   wavesReached: { label: 'Waves completed', min: 0 },
   fishingLevel: { label: 'Fishing level', min: 1, max: 99 },

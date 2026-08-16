@@ -1,7 +1,6 @@
 {
   "slug": "monumental-chest",
-  "name": "Monumental chest",
-  "aliases": [],
+  "note": "Hand-authored from Monumental chest revid 15299363 (re-fetched fresh this session; the prior 15293917 snapshot differed only in two capitalization fixes, confirmed by diff) and Module:Theatre of Blood calculator (read via Calculator:Theatre of Blood loot -> Calculator:Theatre of Blood/Template -> {{#invoke:Theatre of Blood calculator|main}}, fetched fresh this session, not previously in data/snapshots/). The page's own prose never states a points formula -- zero occurrences of 'point'/'MVP'/'skip' in the wikitext -- only the module does; the Cabbage/Message rows' own citation ('0 individual contribution points') is the one direct confirmation on the page itself that a points concept exists at all. tobPoints (SimContext, derived from the new roomsSkipped field plus the existing deaths field) is exactly the module's solo-player 'playerpoints', out of a 32-point max: 18 from 6 rooms at 3 points each, plus a flat 14 MVP-pool points (a solo player always gets the whole pool), minus 4 per death. This override REPLACES the generated tables wholesale. At the time this override was written, the generated document blended Normal and Hard Mode's unique weights into one undifferentiated 14-row table (both {{DropsTableHead|dropversion=}} sub-headings collapsed to the section's shallowest level) and attached no condition at all to the '0 points' Cabbage/Message rows, so they fired on every single kill -- both real bugs, not approximations. The dropversion= blending gap was FIXED SEPARATELY, immediately after (docs/DECISIONS.md's 'dropversion= parser fix' entry, same session): the generated document now correctly splits into per-variant weighted tables on its own. This override still wins (source: merged) since it also supplies tob_points/roomsSkipped-driven mechanics the parser alone cannot reach, but the specific blending bug this note originally cited no longer exists in the generated base underneath it. 'hard-fast' is a new variant string value (not a new SimContext field) for Hard Mode's stated time-bonus completion, using the module's flat 1.30 total multiplier rather than the page prose's compounding 1.15x1.15=1.3225 reading -- the module wins per this project's established precedent (docs/DECISIONS.md, ToA's floor-vs-continuous entries). Entry Mode's common-table -80% is prose-only and NOT ratio-scaled, since the calculator has no Entry Mode option at all and nothing confirms whether deaths/skips even apply the same way there. NOT modelled, deliberately: team/party allocation (which player receives a team-wide unique hit is 'proportional to points contributed', a multi-player mechanic this project's single-player SimContext is not built for -- flagged the same way as CoX's identical shape); the 'individual performance' scaling on all five tertiary rates (no magnitude stated anywhere, same UNKNOWN-curve refusal as Duke Sucellus/Zalcano); the Entry-Mode -80% figure's own possible points/death interaction (unconfirmed either way, so left as a flat constant rather than guessed).",
   "wikiPage": "Monumental chest",
   "wikiRevId": 15299363,
   "variants": [
@@ -14,8 +13,7 @@
     {
       "id": "tob:zero-points-consolation",
       "mode": "always",
-      "rolls": 1,
-      "withoutReplacement": false,
+      "notes": "The page's Cabbage/Message rows carry their own citation: 'Only obtained if a player ends the raid with 0 individual contribution points.' The naive parser attaches no condition to these rows at all (they are DropsLineReward rows under an always-mode heading with no row-level marker the parser reads), so the generated document currently awards Cabbage and Message unconditionally on every single kill in addition to whatever else drops -- a real bug this override fixes, not merely an approximation. gemw=No on Message (Theatre of Blood) in the page's own template call, carried through as a display fact only; this model has no GE-value gating mechanism and doesn't need one here.",
       "entries": [
         {
           "node": {
@@ -63,14 +61,13 @@
             }
           ]
         }
-      ],
-      "notes": "The page's Cabbage/Message rows carry their own citation: 'Only obtained if a player ends the raid with 0 individual contribution points.' The naive parser attaches no condition to these rows at all (they are DropsLineReward rows under an always-mode heading with no row-level marker the parser reads), so the generated document currently awards Cabbage and Message unconditionally on every single kill in addition to whatever else drops -- a real bug this override fixes, not merely an approximation. gemw=No on Message (Theatre of Blood) in the page's own template call, carried through as a display fact only; this model has no GE-value gating mechanism and doesn't need one here."
+      ]
     },
     {
       "id": "tob:unique-preroll",
       "mode": "preroll",
       "rolls": 1,
-      "withoutReplacement": false,
+      "notes": "P(unique) = tobPoints / (32 x urate), reducing to exactly 1/9.1 (Normal) or 1/7.7 (Hard/Hard-fast) at full points. 'hard-fast' is a second variant value (not a new SimContext field) for Hard Mode completed within the wiki's stated time bonus -- the unique roll itself is identical to plain 'hard' (same urate, same item weights), only tob:common's quantity multiplier differs (1.30 flat vs 1.15), which is why this table duplicates the 7-item pool across both hard-shaped entries rather than expressing the distinction once. Entry Mode gets no entry here at all -- 'Entry Mode grants no unique pre-roll at all', deterministically common-only, per the page's own prose (the calculator has no Entry option either, so nothing contradicts this). Gated on tobPoints>=1 explicitly even though the formula alone already returns exactly 0 in that state (evaluateFormula accepts 0), matching how the module treats zero points as a distinct branch rather than a degenerate probability.",
       "entries": [
         {
           "node": {
@@ -483,15 +480,19 @@
             }
           ]
         }
-      ],
-      "notes": "P(unique) = tobPoints / (32 x urate), reducing to exactly 1/9.1 (Normal) or 1/7.7 (Hard/Hard-fast) at full points. 'hard-fast' is a second variant value (not a new SimContext field) for Hard Mode completed within the wiki's stated time bonus -- the unique roll itself is identical to plain 'hard' (same urate, same item weights), only tob:common's quantity multiplier differs (1.30 flat vs 1.15), which is why this table duplicates the 7-item pool across both hard-shaped entries rather than expressing the distinction once. Entry Mode gets no entry here at all -- 'Entry Mode grants no unique pre-roll at all', deterministically common-only, per the page's own prose (the calculator has no Entry option either, so nothing contradicts this). Gated on tobPoints>=1 explicitly even though the formula alone already returns exactly 0 in that state (evaluateFormula accepts 0), matching how the module treats zero points as a distinct branch rather than a degenerate probability."
+      ]
     },
     {
       "id": "tob:common",
       "mode": "weighted",
-      "rolls": 3,
       "denominator": 30,
-      "withoutReplacement": false,
+      "rolls": 3,
+      "qtyMultiplier": {
+        "kind": "formula",
+        "id": "tob_common_qty",
+        "params": {}
+      },
+      "notes": "3 rolls, denominator 30. Quantities are floor(item.min x modeMultiplier x ratio) to floor(that x 1.2), where ratio = tobPoints/32 (Normal/Hard/Hard-fast) and modeMultiplier is 1/1.15/1.30 by variant -- see tob_common_qty. Item minimums are Module:Theatre of Blood calculator's `normies` table, cross-checked item-by-item against the page's own rendered DropsLineReward rows: Death rune, Runite ore, Grimy torstol, Rune battleaxe/platebody/chainbody, Palm tree/Yew/Magic seed and Mahogany seed all match the module exactly (including three cases where the range collapses to one value, e.g. Yew seed's stated quantity of a bare 3). Vial of blood is the one exception: the page states 45-60, the module predicts 50-60 (floor(50x1.2)=60 matches the page's own high end; only the low end differs). Used the module's 50, not the page's 45 -- the page was re-fetched fresh this session (revid climbed from 15293917 to 15299363 on an unrelated capitalization edit) and the value was unchanged, ruling out simple staleness, and every other item's exact match against the module leaves the page's 45 looking like the one outlier rather than the module being wrong. Entries are gated on tobPoints>=1 for every variant including Entry, which is a defensive extrapolation for Entry specifically (the calculator has no Entry Mode option at all, so whether Entry's own -80% composes with a zero-points state is unconfirmed either way) -- chosen over letting Entry mode roll tiny near-zero quantities at the same extreme-deaths edge case Normal/Hard hit.",
       "entries": [
         {
           "node": {
@@ -1205,19 +1206,12 @@
             }
           ]
         }
-      ],
-      "notes": "3 rolls, denominator 30. Quantities are floor(item.min x modeMultiplier x ratio) to floor(that x 1.2), where ratio = tobPoints/32 (Normal/Hard/Hard-fast) and modeMultiplier is 1/1.15/1.30 by variant -- see tob_common_qty. Item minimums are Module:Theatre of Blood calculator's `normies` table, cross-checked item-by-item against the page's own rendered DropsLineReward rows: Death rune, Runite ore, Grimy torstol, Rune battleaxe/platebody/chainbody, Palm tree/Yew/Magic seed and Mahogany seed all match the module exactly (including three cases where the range collapses to one value, e.g. Yew seed's stated quantity of a bare 3). Vial of blood is the one exception: the page states 45-60, the module predicts 50-60 (floor(50x1.2)=60 matches the page's own high end; only the low end differs). Used the module's 50, not the page's 45 -- the page was re-fetched fresh this session (revid climbed from 15293917 to 15299363 on an unrelated capitalization edit) and the value was unchanged, ruling out simple staleness, and every other item's exact match against the module leaves the page's 45 looking like the one outlier rather than the module being wrong. Entries are gated on tobPoints>=1 for every variant including Entry, which is a defensive extrapolation for Entry specifically (the calculator has no Entry Mode option at all, so whether Entry's own -80% composes with a zero-points state is unconfirmed either way) -- chosen over letting Entry mode roll tiny near-zero quantities at the same extreme-deaths edge case Normal/Hard hit.",
-      "qtyMultiplier": {
-        "kind": "formula",
-        "id": "tob_common_qty",
-        "params": {}
-      }
+      ]
     },
     {
       "id": "tob:tertiary",
       "mode": "independent",
-      "rolls": 1,
-      "withoutReplacement": false,
+      "notes": "Tertiary rewards are independent of the unique/common outcome and always rolled (no tobPoints gate). All five items carry the page's own 'Drop rate scales down based on the individual's performance during the raid' disclaimer with no cited magnitude anywhere -- the fixed rates below are the best-available published figures, not a full model of that scaling, matching the same-shaped UNKNOWN this project already declines to guess for Duke Sucellus/Zalcano. Elite clue's per-variant split (Entry 1/25, Normal 3/25, Hard 3.5/25) is the page's own citation, not the template's bare 'rarity=1/25' field, which is Entry's rate only and would have been wrong for Normal/Hard if read literally -- exactly what the currently-generated document does. Holy ornament kit, Sanguine ornament kit and Sanguine dust are ALL Hard-Mode-only: all three reference the identical named {{refn|hardmode}} group, whose one defining occurrence (on Sanguine dust) reads 'Only obtainable in Hard Mode' -- a finding not previously recorded in this project's research, since the two ornament kits' own occurrences of the reference carry no visible text of their own. Lil' Zik's Entry-Mode rate is not stated anywhere on the page (only 'Normal Mode and Hard Mode' are named in the cited tweet); assumed equal to Normal's 1/650 as the more conservative reading, absent evidence of a third figure.",
       "entries": [
         {
           "node": {
@@ -1541,58 +1535,7 @@
             }
           ]
         }
-      ],
-      "notes": "Tertiary rewards are independent of the unique/common outcome and always rolled (no tobPoints gate). All five items carry the page's own 'Drop rate scales down based on the individual's performance during the raid' disclaimer with no cited magnitude anywhere -- the fixed rates below are the best-available published figures, not a full model of that scaling, matching the same-shaped UNKNOWN this project already declines to guess for Duke Sucellus/Zalcano. Elite clue's per-variant split (Entry 1/25, Normal 3/25, Hard 3.5/25) is the page's own citation, not the template's bare 'rarity=1/25' field, which is Entry's rate only and would have been wrong for Normal/Hard if read literally -- exactly what the currently-generated document does. Holy ornament kit, Sanguine ornament kit and Sanguine dust are ALL Hard-Mode-only: all three reference the identical named {{refn|hardmode}} group, whose one defining occurrence (on Sanguine dust) reads 'Only obtainable in Hard Mode' -- a finding not previously recorded in this project's research, since the two ornament kits' own occurrences of the reference carry no visible text of their own. Lil' Zik's Entry-Mode rate is not stated anywhere on the page (only 'Normal Mode and Hard Mode' are named in the cited tweet); assumed equal to Normal's 1/650 as the more conservative reading, absent evidence of a third figure."
+      ]
     }
-  ],
-  "contextDefaults": {
-    "variant": "Normal Mode"
-  },
-  "status": "needs_review",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "no tableRef nodes"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "3 formula rate(s)/weight(s) evaluated successfully"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "1 formula-driven quantity/rolls/multiplier value(s) evaluated successfully"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "the rendered page has no \"average ... kill is worth N\" sentence to compare against"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "point_scaled: Unique chance scales with Theatre of Blood points earned across the raid (raid tier, deaths, personal performance), not a fixed per-kill rarity — needs the tob_points formula. Same caveat as the Tombs of Amascut chest: the dropsline rows reflect the points-shop structure, not independent rarities."
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 43 wiki drop row(s) reachable in the document"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

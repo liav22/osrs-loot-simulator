@@ -5,7 +5,7 @@
   "wikiPage": "Chaos Elemental",
   "wikiRevId": 15260583,
   "variants": [
-    "normal"
+    "{{{dropversion|}}}"
   ],
   "tables": [
     {
@@ -778,7 +778,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 58
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
         },
         {
           "node": {
@@ -795,7 +801,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 30
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
         }
       ],
       "notes": "Major drops"
@@ -821,7 +833,9 @@
       "notes": "Access into rare_drop_table (from {{RareDropTable}})"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "{{{dropversion|}}}"
+  },
   "status": "needs_review",
   "validation": {
     "ok": false,

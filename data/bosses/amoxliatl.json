@@ -5,7 +5,7 @@
   "wikiPage": "Amoxliatl",
   "wikiRevId": 15266380,
   "variants": [
-    "normal"
+    "Post-quest"
   ],
   "tables": [
     {
@@ -30,7 +30,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -47,7 +53,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -64,7 +76,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Frozen tears"
@@ -90,7 +108,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -106,7 +130,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -122,7 +152,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -138,7 +174,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -155,7 +197,13 @@
           "rate": {
             "kind": "weight",
             "weight": 5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -172,7 +220,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -189,7 +243,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -206,7 +266,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -223,7 +289,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -240,7 +312,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -258,7 +336,13 @@
           "rate": {
             "kind": "weight",
             "weight": 5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -276,7 +360,13 @@
           "rate": {
             "kind": "weight",
             "weight": 5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -294,7 +384,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -310,7 +406,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -327,7 +429,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -344,7 +452,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -362,7 +476,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -378,7 +498,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -394,7 +520,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Weapons and armour / Runes and ammunition / Other"
@@ -418,7 +550,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -433,7 +571,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -450,7 +594,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 25
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -467,7 +617,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 100
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -484,7 +640,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 125
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -501,7 +663,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 200
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -520,6 +688,10 @@
             "den": 54
           },
           "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            },
             {
               "kind": "onSlayerTask",
               "value": true
@@ -541,7 +713,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 3000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
@@ -573,7 +751,9 @@
       "notes": "Access into gem_drop_table (from {{GemDropTable}})"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Post-quest"
+  },
   "status": "verified",
   "validation": {
     "ok": false,

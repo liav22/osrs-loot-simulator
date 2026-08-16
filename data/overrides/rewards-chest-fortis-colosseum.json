@@ -1,0 +1,4178 @@
+{
+  "slug": "rewards-chest-fortis-colosseum",
+  "note": "Hand-authored from Rewards Chest (Fortis Colosseum) revid 15285141 (re-fetched fresh this session; the only diff against the 2026-08-11 snapshot was a 'Smol heredit' -> 'Smol Heredit' capitalization fix, confirmed by diff) -- no Module:/Calculator: page exists for this source (checked directly: Category:Calculators has no Fortis Colosseum/Sol Heredit/Rewards Chest entry, and none of the three related pages transcludes or links one), so the wave-rate table the page publishes IS the complete source, not an approximation of a hidden formula. Each of the 12 waves is its OWN complete, self-contained weighted table exactly as published (rows verified to sum exactly to that wave's own denominator) rather than a points-formula or additive-layer structure -- ctx.wavesReached (levelAtLeast, exact n=atMost=W per wave) selects which one applies, representing 'the wave this run ended at (by choice or otherwise)', not a model of the chance of dying at an earlier wave. Token (Varlamore) (wave 3 only, rarity=Varies) is excluded -- no fixed rate is stated anywhere on this page, and it is a cross-source token roll unrelated to the Colosseum's own mechanic, not part of the weighted-70 pool it sits beside (confirmed: wave 3's other 14 rows already sum exactly to 70 without it). \n\nWAVE-SCOPED DUPLICATE PROTECTION -- SHIPPED AS A WITH-REPLACEMENT APPROXIMATION, PER EXPLICIT INSTRUCTION, WITH THE SCOPE ITSELF UNRESOLVED AFTER TWO SEPARATE SESSIONS' WORTH OF CHECKING. The page's own citation ('Players are guaranteed to receive a full set prior to receiving duplicate Sunfire Fanatic pieces') does not state whether this resets each Colosseum attempt or is a permanent, account-wide guarantee. Checked directly, across two passes, none of which settled it: the Sunfire fanatic armour page; the individual Sunfire fanatic helm page; two web searches; an attempted fetch of the original Jagex 'First Look & Rewards' post (blocked, HTTP 403) and its OSRS Wiki mirror (Update:Fortis Colosseum - First Look & Rewards, fetched successfully -- discusses the armour's stats and design philosophy only, zero occurrences of 'duplicat'/'reset'/'attempt'/'account'); two further Jagex devblog mirrors from the same release cycle (Update:Poll Blog: Fortis Colosseum x Perilous Moons, Update:Varlamore: Part One - Reward Changes -- same result, zero relevant occurrences); the Rewards Chest and Fortis Colosseum pages' own full patch-history ==Changes== sections (no entry ever mentions this mechanic's scope, though OTHER Colosseum mechanics in the same changelog DO explicitly distinguish per-wave from per-run scope when it matters, e.g. 'Doom stacks are now removed at the end of a wave, rather than being permanent for a run' -- making the complete absence of similar language here mildly suggestive but not dispositive either way); and Fortis Colosseum/Strategies. Modelled here as ordinary weighted draws with NO duplicate avoidance at all (no ownershipGate), on the assumption (still unverified, inherited from an earlier research pass) that the protection is run-scoped -- if it turns out to be lifetime-scoped instead, an EXACT model via ownershipGate (identical to ToA's jewel pool) is directly available and should replace this approximation; do not assume the current shape is final without re-checking. Per explicit instruction: stopping the investigation here and keeping the approximation. \n\nQuantified cost of the approximation (computed this session, not assumed small): the individual per-piece expected drop rate (what the simulator's headline numbers show) is IDENTICAL under both models, by symmetry -- E[a specific piece, e.g. helm] is the same whether or not duplicate-avoidance is modelled. The divergence is entirely in JOINT/same-run statistics the simulator does not currently surface as a headline number: across a full 12-wave clear, P(at least one duplicate armour piece this run) is ~0.20% under this approximation vs ~0.00025% under true dedup (an ~800x relative overstatement of that specific joint event, though both are absolute-tiny), and P(a complete 3-piece set in one run) is understated by about 4.4x (0.0035% vs 0.0157%). A user reading the capped 1,000-kill log closely enough to notice 2 identical armour pieces in the same logged run would be seeing something the real game would essentially never produce -- the same class of residual as CoX's elite-clue/Olmlet co-occurrence artifact, smaller in frequency here.",
+  "name": "Rewards Chest (Fortis Colosseum)",
+  "wikiPage": "Rewards Chest (Fortis Colosseum)",
+  "wikiRevId": 15285141,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "fortis:wave-1",
+      "mode": "always",
+      "notes": "Wave 1's guaranteed reward.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 1,
+              "atMost": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-2",
+      "mode": "weighted",
+      "denominator": 7,
+      "notes": "Wave 2's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 7.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 2,
+              "atMost": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 2,
+              "atMost": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 2,
+              "atMost": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 2,
+              "atMost": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 2,
+              "atMost": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 2,
+              "atMost": 2
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 2,
+              "atMost": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-3",
+      "mode": "weighted",
+      "denominator": 70,
+      "notes": "Wave 3's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 70.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 9
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 575,
+            "itemKey": "earth-orb",
+            "name": "Earth orb",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 3,
+              "atMost": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-4",
+      "mode": "weighted",
+      "denominator": 43400,
+      "notes": "Wave 4's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 43400.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5535
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5535
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5535
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5535
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5535
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5535
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5535
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 615
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 615
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 615
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 615
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 575,
+            "itemKey": "earth-orb",
+            "name": "Earth orb",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 615
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 615
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 615
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 126
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 70
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 70
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 70
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 4,
+              "atMost": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-5",
+      "mode": "weighted",
+      "denominator": 19250,
+      "notes": "Wave 5's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 19250.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2725
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2725
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2725
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2725
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 575,
+            "itemKey": "earth-orb",
+            "name": "Earth orb",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2725
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2725
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2725
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 63
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 5,
+              "atMost": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-6",
+      "mode": "weighted",
+      "denominator": 16800,
+      "notes": "Wave 6's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 16800.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2375
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2375
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2375
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2375
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 575,
+            "itemKey": "earth-orb",
+            "name": "Earth orb",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2375
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2375
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2375
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 63
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 6,
+              "atMost": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-7",
+      "mode": "weighted",
+      "denominator": 45920,
+      "notes": "Wave 7's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 45920.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5832
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5832
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5832
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5832
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 575,
+            "itemKey": "earth-orb",
+            "name": "Earth orb",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5832
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5832
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5832
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21930,
+            "itemKey": "dragon-bolts-unf",
+            "name": "Dragon bolts (unf)",
+            "qty": {
+              "kind": "exact",
+              "n": 200
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 756
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 756
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 1100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 756
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11237,
+            "itemKey": "dragon-arrowtips",
+            "name": "Dragon arrowtips",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 756
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 756
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 756
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 189
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 21
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 105
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 105
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 105
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28919,
+            "itemKey": "tonalztics-of-ralos-uncharged",
+            "name": "Tonalztics of ralos (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 7,
+              "atMost": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-8",
+      "mode": "weighted",
+      "denominator": 114240,
+      "notes": "Wave 8's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 114240.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14472
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14472
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14472
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14472
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 575,
+            "itemKey": "earth-orb",
+            "name": "Earth orb",
+            "qty": {
+              "kind": "exact",
+              "n": 80
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14472
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14472
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 14472
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1876
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1876
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 1750
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1876
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1876
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 12
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1876
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1876
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 567
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 63
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 315
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 315
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 315
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28919,
+            "itemKey": "tonalztics-of-ralos-uncharged",
+            "name": "Tonalztics of ralos (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 105
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 8,
+              "atMost": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-9",
+      "mode": "weighted",
+      "denominator": 21600,
+      "notes": "Wave 9's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 21600.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 21930,
+            "itemKey": "dragon-bolts-unf",
+            "name": "Dragon bolts (unf)",
+            "qty": {
+              "kind": "exact",
+              "n": 200
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3180
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3180
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 1100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3180
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11237,
+            "itemKey": "dragon-arrowtips",
+            "name": "Dragon arrowtips",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3180
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3180
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3180
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 424
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 2500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 424
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 424
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 424
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1347,
+            "itemKey": "rune-warhammer",
+            "name": "Rune warhammer",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 424
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 135
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28919,
+            "itemKey": "tonalztics-of-ralos-uncharged",
+            "name": "Tonalztics of ralos (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 9,
+              "atMost": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-10",
+      "mode": "weighted",
+      "denominator": 16000,
+      "notes": "Wave 10's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 16000.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 50
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2340
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2340
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 1750
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2340
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1201,
+            "itemKey": "rune-kiteshield",
+            "name": "Rune kiteshield",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2340
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 12
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2340
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2340
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 312
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1347,
+            "itemKey": "rune-warhammer",
+            "name": "Rune warhammer",
+            "qty": {
+              "kind": "exact",
+              "n": 8
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 312
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 312
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 3500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 312
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11237,
+            "itemKey": "dragon-arrowtips",
+            "name": "Dragon arrowtips",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 312
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 135
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28919,
+            "itemKey": "tonalztics-of-ralos-uncharged",
+            "name": "Tonalztics of ralos (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 10,
+              "atMost": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-11",
+      "mode": "weighted",
+      "denominator": 2080,
+      "notes": "Wave 11's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 2080.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 360
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 2500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 360
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 360
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 300
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 360
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1347,
+            "itemKey": "rune-warhammer",
+            "name": "Rune warhammer",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 360
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2,
+            "itemKey": "steel-cannonball",
+            "name": "Steel cannonball",
+            "qty": {
+              "kind": "exact",
+              "n": 2000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 50
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4585,
+            "itemKey": "dragon-plateskirt",
+            "name": "Dragon plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 50
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11237,
+            "itemKey": "dragon-arrowtips",
+            "name": "Dragon arrowtips",
+            "qty": {
+              "kind": "exact",
+              "n": 350
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 50
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 50
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 27
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28919,
+            "itemKey": "tonalztics-of-ralos-uncharged",
+            "name": "Tonalztics of ralos (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 11,
+              "atMost": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-12",
+      "mode": "weighted",
+      "denominator": 4800,
+      "notes": "Wave 12's complete, self-contained reward table (the wiki publishes one full table per wave, not additive layers on lower waves) -- rows sum exactly to 4800.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9342,
+            "itemKey": "onyx-bolts",
+            "name": "Onyx bolts",
+            "qty": {
+              "kind": "exact",
+              "n": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 792
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1347,
+            "itemKey": "rune-warhammer",
+            "name": "Rune warhammer",
+            "qty": {
+              "kind": "exact",
+              "n": 8
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 792
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 792
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28924,
+            "itemKey": "sunfire-splinters",
+            "name": "Sunfire splinters",
+            "qty": {
+              "kind": "exact",
+              "n": 3500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 792
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11237,
+            "itemKey": "dragon-arrowtips",
+            "name": "Dragon arrowtips",
+            "qty": {
+              "kind": "exact",
+              "n": 250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 792
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6571,
+            "itemKey": "uncut-onyx",
+            "name": "Uncut onyx",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 110
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4585,
+            "itemKey": "dragon-plateskirt",
+            "name": "Dragon plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 110
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 9
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 110
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 35
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 110
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 135
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28942,
+            "itemKey": "echo-crystal",
+            "name": "Echo crystal",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28933,
+            "itemKey": "sunfire-fanatic-helm",
+            "name": "Sunfire fanatic helm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28936,
+            "itemKey": "sunfire-fanatic-cuirass",
+            "name": "Sunfire fanatic cuirass",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28939,
+            "itemKey": "sunfire-fanatic-chausses",
+            "name": "Sunfire fanatic chausses",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 75
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28919,
+            "itemKey": "tonalztics-of-ralos-uncharged",
+            "name": "Tonalztics of ralos (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fortis:wave-12-extras",
+      "mode": "independent",
+      "notes": "Dizana's quiver (guaranteed) and the Smol Heredit pet roll (flat 1/200, independent of the unique-table mechanic) both sit OUTSIDE wave 12's own weighted-4800 pool on the page -- not another row in that table.",
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28951,
+            "itemKey": "dizana-s-quiver",
+            "name": "Dizana's quiver",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28960,
+            "itemKey": "smol-heredit",
+            "name": "Smol Heredit",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "wavesReached",
+              "n": 12,
+              "atMost": 12
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

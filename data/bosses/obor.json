@@ -5,7 +5,8 @@
   "wikiPage": "Obor",
   "wikiRevId": 15264295,
   "variants": [
-    "normal"
+    "Members",
+    "Free-to-play"
   ],
   "tables": [
     {
@@ -32,6 +33,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         }
@@ -64,6 +69,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         }
@@ -96,6 +105,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -118,6 +131,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -140,6 +157,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -162,6 +183,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -184,6 +209,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -206,6 +235,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -228,6 +261,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -250,6 +287,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -272,6 +313,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -294,6 +339,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -316,6 +365,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -338,6 +391,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -360,6 +417,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -382,6 +443,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         }
@@ -414,6 +479,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -437,6 +506,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -460,6 +533,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -483,6 +560,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -506,6 +587,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -529,6 +614,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -552,6 +641,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -575,6 +668,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -598,6 +695,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -621,6 +722,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -644,6 +749,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         }
@@ -676,6 +785,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -698,6 +811,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -720,6 +837,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -742,6 +863,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -764,6 +889,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -786,6 +915,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -808,6 +941,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -830,6 +967,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -852,6 +993,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         }
@@ -884,6 +1029,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -907,6 +1056,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -930,6 +1083,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -953,6 +1110,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         },
@@ -976,6 +1137,10 @@
             {
               "kind": "members",
               "value": true
+            },
+            {
+              "kind": "variant",
+              "name": "Members"
             }
           ]
         }
@@ -1006,6 +1171,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         }
@@ -1038,6 +1207,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         }
@@ -1070,6 +1243,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1092,6 +1269,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1114,6 +1295,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1136,6 +1321,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1158,6 +1347,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1180,6 +1373,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1202,6 +1399,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1224,6 +1425,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1246,6 +1451,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1268,6 +1477,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1290,6 +1503,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1312,6 +1529,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1334,6 +1555,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1356,6 +1581,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1378,6 +1607,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1400,6 +1633,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1422,6 +1659,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1444,6 +1685,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1466,6 +1711,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1488,6 +1737,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1510,6 +1763,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1532,6 +1789,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1554,6 +1815,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1576,6 +1841,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         },
@@ -1598,6 +1867,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         }
@@ -1630,6 +1903,10 @@
             {
               "kind": "members",
               "value": false
+            },
+            {
+              "kind": "variant",
+              "name": "Free-to-play"
             }
           ]
         }
@@ -1689,7 +1966,9 @@
       "notes": "Access into gem_drop_table (from {{GemDropTable}})"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Members"
+  },
   "status": "needs_review",
   "validation": {
     "ok": false,

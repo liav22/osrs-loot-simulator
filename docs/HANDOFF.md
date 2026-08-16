@@ -17,6 +17,110 @@ diff`, `git log`) are fine and encouraged before trusting this file's claims.
 
 ## 1. Current state
 
+**Changed this session (the most recent one — ToB, CoX and Fortis Colosseum all
+shipped, plus a corpus-wide parser fix):**
+
+- **All four raids are now built.** ToA was already done; this session shipped
+  the other three — `data/overrides/{monumental-chest,ancient-chest,rewards-
+  chest-fortis-colosseum}.json`, each with its own wiki-figure test
+  (`apps/ingest/test/{monumental-chest,ancient-chest,rewards-chest-fortis-
+  colosseum}.test.ts`, 22/24/14 assertions respectively). **Phase 7 has now
+  shipped 9 of the 14 originally-researched sources**, up from 6. All three
+  stay `needs_review`/watchlisted on purpose — **explicitly decided, not an
+  oversight**: each has a real, named, unmodelled remnant (team/party
+  allocation on ToB and CoX; the tertiary "individual performance" scaling on
+  ToB; Ancient tablet's imprecise "replaces one of the loot rolls" and
+  Metamorphic dust's unstated time-threshold on CoX; the with-replacement
+  armour-dedup approximation on Fortis Colosseum), and `manual_override` is a
+  claim of completeness none of the three should make yet. Do not flip any of
+  them without re-deriving whether the remaining residual is Doom/Lunar-shaped
+  (ship it) or ToA-shaped (keep watchlisted) — that judgement call was
+  deliberately left for a human, twice, across two rounds of this same
+  question.
+- **Two of the three needed real corrections to their own OWN prior research
+  docs, found only by cross-checking a fresh page fetch against a
+  calculator's Lua source line by line — not by trusting either alone.**
+  CoX's common table is 33 weighted slots (matching the page's own
+  `rarity=1/33` rows exactly), NOT the flat 43-item/denominator-99 table an
+  earlier research pass proposed — the 10 herb slots are each a nested
+  `oneOf(herb, seed)`, which is what keeps "the two rolls cannot end on the
+  same drop" correct (a flat structure would let a herb and its own seed both
+  drop in one raid). CoX's common-table quantities are `QtySpec.formula`
+  (`floor(min(points,131071)/divisor)`), not literal RNG ranges — the page's
+  `quantity=1-138`-style rows are the DISPLAY BOUNDS of a deterministic
+  points-driven formula, not a real per-roll span the way ToB's own ranges
+  are. Both mistakes would have produced a THIRD structurally-clean,
+  badly-wrong CoX document (the source has now shipped two already — see
+  `docs/DECISIONS.md`'s "Phase 7: Chambers of Xeric" entry for the full
+  reasoning and how each was caught). ToB's two remaining UNKNOWNs (the
+  death-penalty magnitude, the common-quantity scaling) were resolved the
+  same way ToA's interpolation gap was: not a model gap, a missing source —
+  `Module:Theatre of Blood calculator` states both outright, plus the exact
+  30% (not 32.25%) Hard Mode time-bonus figure and the module's own hardcoded
+  Cabbage/Message zero-points branch. **Check for a `Module:`/`Calculator:`
+  page before trusting a prior session's "UNKNOWN" — this is now the fourth
+  time it has resolved one** (ToA, then CoX and ToB in the same session).
+- **New `SimContext` fields**: `roomsSkipped` (ToB, capped 0–6) and two
+  DERIVED fields, `tobPoints` (ToB's points total, from `roomsSkipped` +
+  `deaths`) and — unrelated to any of the three raids — nothing else new,
+  `totalDamage` is unchanged. New formula ids: `tob_points`,
+  `tob_common_qty`, `cox_points`, `cox_common_qty` — all real
+  implementations, not stubs; `IMPLEMENTED_FORMULA_IDS`' trip wire fired
+  again, now pinning 15 ids. `cox_points` is dispatched by `params.kind`
+  across three positions (one probability contract, matching
+  `toa_bad_luck_mitigation`'s precedent) rather than needing a third CoX
+  formula id.
+- **A genuine corpus-wide parser bug, found while building ToB, fixed
+  separately from the override that motivated it**: regular
+  `{{DropsLine}}`/`{{DropsLineReward}}` rows never read
+  `{{DropsTableHead|dropversion=X}}` the way RDT/gem-table access lines
+  already did, so a page whose variants sit under nested sub-headings inside
+  one already-grouped block (Monumental chest's Normal/Hard Mode) silently
+  blended them into one undifferentiated table. Fixed in
+  `wikitext-drops.ts`/`build-tables.ts`, generally — see
+  `docs/DECISIONS.md`'s "The dropversion= parser fix" entry for the full
+  mechanism, including why tagging entries alone would have made things
+  WORSE (a naive fix would have left the block `preroll`-moded with
+  first-hit-wins semantics, wrong for a normalised weighted split) and needed
+  a second, per-variant-aware reconciliation check. **Found a second,
+  broader, pre-existing bug in the process**: `Boss.variants` was hardcoded
+  to `['normal']` for every generated document regardless of what conditions
+  it actually used, so `black-demon`/`vorkath`/`amoxliatl` already had real
+  variant conditions the UI could never offer a control for. Also fixed,
+  generally, not as a ToB special case — `variants` is now derived from what
+  a document actually uses, and `contextDefaults.variant` defaults to the
+  first-seen value when `'normal'` isn't among them (otherwise a source like
+  Vorkath, whose only variant is `"Post-quest"`, would show an EMPTY default
+  simulation). A full unscoped `ingest parse` before/after landed on
+  identical totals (55 verified, 42 needs_review, 2 manual_override, 3
+  parse_failed) — this reshapes documents, it does not flip any status.
+- **Fortis Colosseum's wave-scoped armour duplicate-avoidance ships as a
+  quantified, not assumed-small, with-replacement approximation, and its
+  SCOPE (per-run vs lifetime) is still unresolved after two rounds of
+  checking.** Computed: the per-piece expected rate the simulator's headline
+  numbers show is IDENTICAL under both models (by symmetry); the cost is
+  entirely in joint/same-run statistics no headline number surfaces (P(a
+  duplicate this run) ~0.20% vs ~0.00025% true, ~800x relative, both
+  absolute-tiny). Checked, not found: the Sunfire fanatic armour page, the
+  individual Sunfire fanatic helm page, two web searches, three Jagex
+  devblog mirrors from the release cycle, both relevant pages' full
+  patch-history, and Fortis Colosseum/Strategies — none state whether the
+  protection resets per attempt. If it turns out to be lifetime-scoped, an
+  EXACT model via `ownershipGate` (identical to ToA's jewel pool) is directly
+  available and should replace the approximation entirely — see the
+  override's own `note` and `docs/DECISIONS.md` before touching this again.
+- **Two stale wiki snapshots caught before they could ship a THIRD bad
+  document**: the committed `Ancient chest` snapshot still had pre-patch
+  unique weights (20/69) despite an earlier research pass already citing the
+  post-patch 14/60 — the fresh fetch's revid matched what that pass cited,
+  confirming the research was right and only the snapshot on disk had never
+  been updated. `Monumental chest` and `Rewards Chest (Fortis Colosseum)`
+  were also re-fetched fresh (cosmetic capitalization diffs only, confirmed
+  by direct diff, not assumed). All three sources' item-icon/dropsline
+  snapshots were refreshed to match.
+
+---
+
 **Phases 0–4 are done and stable** (schema, conditions, formulas, RNG,
 simulator, analytic EV; the ingest pipeline; the frontend) — unchanged from
 prior sessions. Not re-verified line-by-line recently, but nothing since has
@@ -26,10 +130,13 @@ the end of section 1 are the reliable chronology.**
 
 **"Phase 5"/Phase 7 (PROJECT_PLAN.md section 16: overrides + hard bosses) is
 substantively underway, not done** — its own done-when is "zero
-`needs_review`," and **25 non-verified sources remain** (23 `needs_review` + 2
-`manual_override`), plus 3 `parse_failed`. Section 3 breaks that number down by
-cause — it is no longer dominated by any single one. What IS done within its
-scope:
+`needs_review`," and **44 non-verified sources remain** (42 `needs_review` + 2
+`manual_override`), plus 3 `parse_failed`. **This "25/23" figure and section
+3's breakdown table are STALE as of this session** (they predate ToB/CoX/
+Fortis Colosseum shipping, all three of which stayed `needs_review`) — a
+future session should re-run the classification rather than trust the exact
+per-cause counts; see section 3's own stale-flagged table. What IS done within
+its scope:
 
 - **Phase 6 research, complete**: 14 non-verified/unmodelled sources each got
   a deep-dive research doc — `docs/bosses/{abyssal-sire,ancient-chest,chest-
@@ -63,18 +170,18 @@ scope:
   behaviourally by `formulas.test.ts`.
 
 ```
-98 documents, of 102 loot sources with include: true (96.1%):
-  55 verified, 2 manual_override, 41 needs_review
+99 documents, of 102 loot sources with include: true (97.1%):
+  55 verified, 2 manual_override, 42 needs_review
 ```
 
 **READ THE DENOMINATOR CAREFULLY. It is 102, not 52.** Coverage was long read as
 "27 of 52"; 52 was the number of sources ever PARSED, not the number the project
 owns. `include: true` in `data/_inventory.json` is the gate, and it is 102.
-`verified` is **55/102 = 53.9%** (56.1% of the 98 documents that exist). Per
-tier (with document / include:true): A 25/26, B 1/1, C 26/26, D 19/20,
-E 27/29. The 4 sources with no document at all: `revenant-maledictus` (A, own
-open parse_failed reason), `rewards-chest-fortis-colosseum` (D, wave-shaped,
-needs an override, section 3), `burnt-chest` and `sigmund` (E — both trivial;
+`verified` is **55/102 = 53.9%** (55.6% of the 99 documents that exist). Per
+tier (with document / include:true): A 25/26, B 1/1, C 26/26, **D 20/20**
+(Fortis Colosseum's override closed the last gap this session), E 27/29. The
+**3** sources with no document at all: `revenant-maledictus` (A, own open
+parse_failed reason), `burnt-chest` and `sigmund` (E — both trivial;
 `burnt-chest` blocked on a `==Loot==` heading-matching gap, `sigmund` has no
 real combat loot at all, only a quest-only Thieving pickpocket reward). See
 `docs/DECISIONS.md`'s "Tier E run, and whether tier should gate parsing at all"
@@ -161,13 +268,14 @@ on it.**
 
 **Step (c) is DONE** (`Table.suppressesFollowing`, `TableRefNode.drawsPerHit`),
 plus `qtyRounding`, `Condition.includes`, `data/overrides/`, and
-`SimContext.totalDamage` (derived). **Phase 7 has shipped 6 of the 14
+`SimContext.totalDamage` (derived). **Phase 7 has shipped 9 of the 14
 researched sources**: Abyssal Sire and Corporeal Beast (parser fixes,
 `verified`), Doom of Mokhaiotl and Lunar Chest (overrides, `manual_override`),
 Zalcano (override, still `needs_review` — two curves the wiki never states keep
-it watchlisted), and **Tombs of Amascut** (override, still `needs_review` — the
-five invocation-gated remnants keep it watchlisted; see section 3). See
-section 3 for what is next.
+it watchlisted), and **all four raids** — Tombs of Amascut, Theatre of Blood,
+Chambers of Xeric, Fortis Colosseum (all overrides, all still `needs_review` —
+each has a real, named, unmodelled remnant; see section 3 and this session's
+own entry at the top of this section). See section 3 for what is next.
 
 **Changed in the ToA session (the most recent one):**
 
@@ -359,7 +467,7 @@ or is out of scope — see Fortis Colosseum/CoX-suppression in section 3).
 `.optional()` so the generated corpus stayed byte-identical. Details, including
 why the flag is read on a hit rather than hoisted, are in `docs/DECISIONS.md`.
 
-### Phase 7 — 5 of 14 shipped, 9 to go
+### Phase 7 — 9 of 14 shipped, 5 to go
 
 **Shipped**: Abyssal Sire, Corporeal Beast (parser fixes in
 `apps/ingest/src/parse/rdt-access.ts` — preferred over overrides, and the
@@ -408,60 +516,80 @@ before the change. `docs/bosses/zalcano.md` never quoted that sentence.
 
 ### Where the non-verified sources actually are
 
-The counter is no longer dominated by one cause. **23 `needs_review`**, and the
-only honest way to plan against it:
+**Stale as of this session — the table below predates ToB/CoX/Fortis
+Colosseum shipping and needs a full recount, not just the raids row removed.**
+Left in place as a starting point rather than deleted, since the categories
+themselves (transcluded sub-table mode, the Uniques-heading question,
+genuinely-unknowable curves, GWDRDT, other) are still real and mostly
+unchanged; a future session should re-run the classification rather than
+trust these counts. What's KNOWN to have changed: all four raids (row
+removed below, since none of them are "waiting for a document" anymore —
+all four are watchlisted `needs_review` for a real, named, unmodelled
+remnant instead, which is a different reason than what this table is
+tracking), and the `parse_failed` list (Ancient chest left it — see below).
 
-| group | count | what it needs |
+| group | count (STALE) | what it needs |
 |---|---|---|
 | transcluded sub-table mode | 9 | a decision, not code — see below |
 | the "Uniques"/"Mutagens" heading question | 5 | `phantom-muspah`, `sarachnis`, `shellbane-gryphon`, `the-nightmare`, `zulrah`. **Most re-litigated question in the project — see section 5 before touching it.** |
-| genuinely unknowable curves | 3 | `duke-sucellus`, `zalcano`, `reward-pool`. Watchlisted, correctly. **Before adding a fourth, check for a `Module:`/`Calculator:` page — that is what closed ToA's.** |
-| raids that DO have a document | 2 | `chest-tombs-of-amascut` (BUILT; watchlisted only for the 5 invocation-gated remnants), `monumental-chest` — point-scaled, below |
+| genuinely unknowable curves | 3 | `duke-sucellus`, `zalcano`, `reward-pool`. Watchlisted, correctly. **Before adding a fourth, check for a `Module:`/`Calculator:` page — that is what closed ToA's, and this session's CoX/ToB (see the top of this section).** |
 | GWDRDT | 2 | `kree-arra`, `general-graardor` — landmine #3 |
 | other | 2 | `black-knight-titan` (a Lua `{{#invoke:}}` sub-table + `items_known`), `salarin-the-twisted` (`items_known`) |
 
-Plus **2 `manual_override`** — `doom-of-mokhaiotl` and `lunar-chest`, both a
-terminal success state, not work outstanding.
+Plus **6 `manual_override`/all-four-raids-shipped-but-watchlisted** —
+`doom-of-mokhaiotl`, `lunar-chest` (terminal `manual_override`, not work
+outstanding), and `chest-tombs-of-amascut`/`monumental-chest`/`ancient-chest`/
+`rewards-chest-fortis-colosseum` (all `needs_review`, all deliberately —
+see this session's own entry at the top of section 1 for why each one's
+watchlist entry was left in place, and don't flip any of them without
+re-deriving that call).
 
-Plus **3 `parse_failed`, which produce no document and are therefore NOT in the
-23 above**: **Ancient chest** (CoX — see the raids section), **Black demon**
-(its headings are `==Level 172, 178, and 184 drops==`, which
-`DROPS_SECTION_TITLE` does not match — a contained heading-matching gap, pinned
-as such in `transclusion-coverage.test.ts`), and **Revenant maledictus**.
+Plus **3 `parse_failed`, which produce no document**: **Revenant maledictus**
+(own open parse_failed reason), **Burnt chest** and **Sigmund** (both tier E
+and trivial — `burnt-chest` blocked on a `==Loot==` heading-matching gap,
+`sigmund` has no real combat loot at all). **Corrected here**: an earlier
+draft of this entry named "Black demon" as one of the three — stale, copied
+forward without re-checking; Black demon was already recovered (a `needs_review`
+document, not `parse_failed`) by the `DROPS_SECTION_TITLE` widening in an
+EARLIER session, before this one — see landmine #4's entry below and item 5 in
+section 7. **Ancient chest also left the parse_failed list this session** —
+the SAME widening let it reach `==Loot table==` for the first time, and it now
+has a real document (`needs_review`, watchlisted, built — see the top of
+section 1).
 
-**Fortis Colosseum is in none of these counts at all** — it is tier D and has
-never produced a document, so it is invisible to every tally. Worth knowing
-before reading the corpus numbers as "everything the project owns."
+### The four raids — ALL SHIPPED this session (the last one, Fortis Colosseum, joined ToA/CoX/ToB)
 
-### The four raids — the largest coherent block of work left
+Every raid chest now has a hand-authored override (`data/overrides/`) and a
+wiki-figure test verifying it against the wiki's own published figures. None
+is blocked on engine capability; landmine #12's fix (an authored override
+forces its source through the tier filter) is what let Fortis Colosseum, tier
+D, actually get built at all. **Full detail on what each needed and what
+each still declines to model is at the top of this section (this session's
+own summary) and in `docs/DECISIONS.md`'s four "Phase 7: ..." entries — this
+subsection is now historical, kept for the reasoning trail rather than as a
+to-do list:**
 
-None is blocked on engine capability any more; `data/overrides/` exists,
-Extensions A and B shipped, and landmine #12's fix means a tier-D source with
-an authored override actually gets built. What they need is the *formula* each
-one's rewards scale on, and those are stated on the pages in varying detail.
-
-1. **Chambers of Xeric -> `ancient-chest`. `parse_failed`, no document at all.**
-   Its page has no `{{DropsLine}}`-shaped content whatsoever. Needs the
-   `cox_points` formula plus a from-scratch override. **Read section 5's CoX
-   entry first**: the cross-table gating (elite clue / Olmlet) is *resolved* as
-   Extension A work and must not be re-opened as "needs new architecture" —
-   and the failure mode to avoid is quantified there (naively using the
-   unconditioned subrates overstates Olmlet by **33x**).
-2. **Tombs of Amascut -> `chest-tombs-of-amascut`. BUILT** — override, 28
-   wiki-figure tests, `drops_covered` now 5 of 50 (the five remnants it
-   deliberately does not model). Still `needs_review`/watchlisted for exactly
-   that reason, which is correct. **Its `Module:`-page lesson generalises to
-   CoX and ToB below.**
-3. **Theatre of Blood -> `monumental-chest`.** Same shape: document,
-   `needs_review`, watchlisted, `drops_covered` fails 9 of 43. Point-scaled.
-4. **Fortis Colosseum -> `rewards-chest-fortis-colosseum`. No document.** Tier
-   D, and its page is structured by `Wave 1`..`Wave 12`, fitting none of the
-   four canonical modes. **Its wave shape is a population of one** — that was
-   checked directly against Inferno, TzHaar Fight Cave, Barbarian Assault and
-   Nightmare Zone, and none of them shares it (docs/DECISIONS.md). So do NOT
-   generalise wave machinery from it; it is an override case. Note its
-   run-scoped, resets-per-attempt armour dedup is the one ownership shape
-   Extension B deliberately does not express (section 2).
+1. **Chambers of Xeric -> `ancient-chest`. BUILT.** Needed two real
+   corrections to an earlier research pass's own proposed mapping (33-slot
+   common table with nested herb/seed `oneOf`s, not a flat 99-weight table;
+   formula-driven quantities, not literal ranges) — see this session's top
+   summary and `docs/DECISIONS.md`.
+2. **Tombs of Amascut -> `chest-tombs-of-amascut`. BUILT** (an earlier
+   session) — override, 28 wiki-figure tests, `drops_covered` now 5 of 50
+   (the five remnants it deliberately does not model). **Its `Module:`-page
+   lesson generalised to CoX and ToB, then to Fortis Colosseum's own (negative
+   this time) check — see the top of section 1.**
+3. **Theatre of Blood -> `monumental-chest`. BUILT.** Two prose UNKNOWNs
+   (death-penalty magnitude, common-quantity scaling) resolved via
+   `Module:Theatre of Blood calculator`.
+4. **Fortis Colosseum -> `rewards-chest-fortis-colosseum`. BUILT.** Every
+   wave modelled as its own complete, self-contained weighted table gated on
+   `ctx.wavesReached` — no wave engine needed, contrary to what an earlier
+   research pass's "population of one" framing worried about. The one real
+   gap (wave-scoped armour duplicate-avoidance) ships as a quantified
+   with-replacement approximation; its SCOPE (per-run vs lifetime) is still
+   unconfirmed after two rounds of checking — see the top of section 1
+   before trusting the armour-piece numbers for anything precision-sensitive.
 
 ### The mode question on transcluded blocks — open, and it is a DECISION
 
@@ -628,7 +756,10 @@ A/B** — this machine's drift is larger than several of the effects above.
   down from 24 sources to these 4. Leave flagged.
 - **CoX's cross-table outcome visibility (elite clue / Olmlet gating) is
   resolved as Extension A work — do not re-open it as "needs new
-  architecture" or "defer and approximate."** This was the proposal's own
+  architecture" or "defer and approximate." BUILT this way, confirming the
+  theory: `cox_points`'s `eliteClueMarginal`/`olmletMarginal` params
+  (`data/overrides/ancient-chest.json`), exact as predicted.** This was the
+  proposal's own
   first draft position, corrected after actually quantifying it: because
   `ctx.points` is a static per-run scalar (never resampled kill to kill),
   the *marginal* per-item rate never needs same-kill correlation — a plain
@@ -1080,23 +1211,14 @@ been folded into sections 1 and 3 rather than kept as struck-through history.
    single largest counter move available and it costs either one condition or
    one new group shape. It is a judgement call about what `verified` may
    claim, not a coding problem — section 3.
-2. **The remaining three raids.** ToA is done and is the worked example to
-   copy — read `docs/DECISIONS.md`'s "Phase 7: Tombs of Amascut" first.
-   **Start each by checking for a `Module:`/`Calculator:` page**, which is what
-   turned ToA's one UNKNOWN into a cited rule; `{{Calculator:Chambers of Xeric
-   loot}}`-shaped transclusions are the tell, and both CoX and ToB have a
-   calculator on-page. Theatre of Blood (`monumental-chest`) reproduces again
-   (section 1's newest entry fixed the stale-document/schema-conflict bug) and
-   fails on its stated point-scaling rule as before — that's the actual next
-   step, not a parser bug anymore. One known gap if you pick this up: Normal
-   Mode and Hard Mode currently blend into one table with no `variant` tag
-   (`{{DropsTableHead|dropversion=}}` isn't read for regular drop rows yet) —
-   see `docs/DECISIONS.md` before assuming the unique weights are per-mode
-   correct. **CoX (`ancient-chest`)
-   and Fortis Colosseum both need Phase 6 research first — CoX is
-   `parse_failed` with no research doc, and Fortis Colosseum has never
-   produced one. Do not start either without it.** Read section 5's CoX entry
-   before that one.
+2. ~~The remaining three raids~~ **DONE** — ToB, CoX and Fortis Colosseum all
+   shipped this session, joining ToA. See the top of section 1 for what each
+   needed, including the two real corrections to CoX's own earlier proposed
+   mapping and the dropversion= parser fix (a real, corpus-wide bug, fixed
+   generally) that Normal/Hard Mode blending on `monumental-chest` used to be
+   an example of. All four stay `needs_review`/watchlisted deliberately —
+   don't remove any watchlist entry without re-deriving whether its remaining
+   residual is acceptable-to-ship-anyway or not.
 3. **`black-knight-titan`** — a coverage failure, though `repeatable: false`
    (a Holy Grail quest boss) means fixing it moves the raw coverage count more
    than the number that matters. Its `{{GeneralSeedDropLines}}` is a Lua

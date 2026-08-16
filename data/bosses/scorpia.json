@@ -5,7 +5,7 @@
   "wikiPage": "Scorpia",
   "wikiRevId": 15237232,
   "variants": [
-    "normal"
+    "{{{dropversion|}}}"
   ],
   "tables": [
     {
@@ -670,7 +670,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 72
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
         },
         {
           "node": {
@@ -687,13 +693,21 @@
             "kind": "fixed",
             "num": 1,
             "den": 30
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
         }
       ],
       "notes": "Wilderness Slayer tertiary"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "{{{dropversion|}}}"
+  },
   "status": "verified",
   "validation": {
     "ok": false,

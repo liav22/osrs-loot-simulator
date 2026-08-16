@@ -140,6 +140,40 @@ export function assembleBoss(
     ambiguousGroups.push(`RDT/gem-table access could not be modelled: ${unresolved.reason} (raw: '${unresolved.raw}')`)
   }
 
+  // Every `variant`-kind condition this document actually uses, in the order
+  // first encountered (so Normal Mode's own dropversion-tagged rows, which the
+  // wiki always writes before Hard Mode's, land first). `Boss.variants` was
+  // hardcoded to `['normal']` for every GENERATED document regardless of what
+  // conditions its own entries carried — invisible for every source that had
+  // one (black-demon's "Regular"/"Wilderness Slayer Cave", vorkath's/
+  // amoxliatl's "Post-quest") since nothing ever surfaced a UI control for a
+  // variant `boss.variants` never listed, the same "having the capability is
+  // not the same as being reachable" lesson `docs/HANDOFF.md` already
+  // recorded for `SimContext` fields. Collected from `extraConditions` here
+  // (before groups become raw table-input objects) rather than by walking the
+  // finished `tableInputs`, since the typed `Condition[]` shape is still
+  // available at this point.
+  const usedVariants = new Set<string>()
+  for (const group of groups) {
+    for (const entry of group.entries) {
+      for (const condition of entry.extraConditions ?? []) {
+        if (condition.kind === 'variant') usedVariants.add(condition.name)
+      }
+    }
+  }
+  for (const line of rdtAccess.lines) {
+    if (line.variant !== null) usedVariants.add(line.variant)
+  }
+  const variants = usedVariants.size > 0 ? [...usedVariants] : ['normal']
+  // `DEFAULT_SIM_CONTEXT.variant` is the literal string `'normal'`. A source
+  // whose own variant values are wiki prose ("Normal Mode", "Hard Mode") never
+  // matches that default, which would otherwise filter every variant-gated
+  // entry out of the DEFAULT simulation — an empty table until a user
+  // manually picks one from the dropdown. Defaulting to the first-seen value
+  // instead keeps the default view non-empty; a source whose own value really
+  // is `'normal'` needs no override at all.
+  const contextDefaults = variants.includes('normal') ? {} : { variant: variants[0] }
+
   const tableInputs: unknown[] = groups
     .filter((group) => group.entries.length > 0)
     .map((group, index) => {
@@ -227,11 +261,11 @@ export function assembleBoss(
     aliases: [],
     wikiPage: options.title,
     wikiRevId: options.wikiRevId,
-    variants: ['normal'],
+    variants,
     status: 'needs_review',
     source: 'generated',
     parserVersion: options.parserVersion,
-    contextDefaults: {},
+    contextDefaults,
     validation: { ok: false, checks: [] },
     tables: tableInputs,
     repeatable: options.repeatable,

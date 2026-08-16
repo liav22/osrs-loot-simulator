@@ -262,6 +262,15 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('per-item drop rates, composed', () => {
     ['lunar-chest', 'per-set duplicate protection; pinned by lunar-chest.test.ts'],
     ['reward-pool', 'modelled per reward permit, not per encounter; pinned by reward-pool.test.ts'],
     ['zalcano', 'role- and damage-gated; pinned by zalcano.test.ts'],
+    [
+      'ancient-chest',
+      "elite clue/Olmlet are conditioned marginals ((1-P(unique))*1/12 and P(unique)*1/53), not " +
+        "the bucket's raw per-row rate — the wiki's own citation states the conditioning ('Olmlet " +
+        "is only rolled when the player gets a broadcasted unique reward'), and `independent` mode " +
+        "means excludedTableIndices' preroll/suppressesFollowing exclusion never reaches " +
+        "cox:tertiary (correctly — it isn't shadowed, its own RATE is conditioned). Pinned by " +
+        'ancient-chest.test.ts.',
+    ],
   ])
 
   it('every source reproduces the wiki’s stated per-item rate', async () => {
@@ -297,7 +306,17 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('per-item drop rates, composed', () => {
       'mad-angel',
       'maggot-king',
       'phosani-s-nightmare',
-      'yama',
+      // 'yama' left this list as an incidental effect of the dropversion=
+      // propagation fix (docs/DECISIONS.md's "dropversion= parser fix"
+      // entry): it no longer hits WeightsExceedDenominatorError, but is
+      // still broken — its own `===Contract===` block homogenises 18
+      // `Always` rows together with a single `Yami` 1/100 row onto
+      // denominator 100 (weight 100 each for the Always rows, since an
+      // Always rate's num/den is 1/1 and `tryHomogenizeDenominators` rescales
+      // it against the lone fixed row's denominator), summing to 1801 — a
+      // pre-existing bug in that homogenisation path, unrelated to variants,
+      // now surfaced as a `weights_sum` failure instead of a hard compile
+      // throw. Out of scope for this session; not fixed here.
     ])
   })
 

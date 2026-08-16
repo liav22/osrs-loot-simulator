@@ -46,6 +46,109 @@ export const ZALCANO_DROP_ELIGIBILITY_SHIELD_DAMAGE = 5
 export const ZALCANO_UNIQUE_ELIGIBILITY_TOTAL_DAMAGE = 31
 
 // ---------------------------------------------------------------------------
+// Theatre of Blood
+//
+// One source, `Module:Theatre of Blood calculator` — the page's own prose
+// never states a points formula at all (confirmed by direct search of the
+// wikitext: zero occurrences of "point"/"MVP"/"skip"), only the fact that a
+// raid can end at 0 points ("Only obtained if a player ends the raid with 0
+// individual contribution points", cited on the Cabbage/Message rows). The
+// module states the rule the prose only gestures at — the same "missing
+// source, not missing fact" shape as ToA's interpolation rule and CoX's
+// common-quantity divisors. See docs/bosses/monumental-chest.md.
+// ---------------------------------------------------------------------------
+
+/** `tobPoints`'s own maximum (see `conditions.ts`'s `tobPointsFor`), i.e. `ratio = tobPoints / TOB_MAX_POINTS`. */
+export const TOB_MAX_POINTS = 32
+
+/**
+ * Hard Mode's common-table quantity multiplier: **flat 1.30 with the time
+ * bonus, not 1.15 squared.** The page's own prose ("+15%, another +15% if
+ * completed within the target time") reads as compounding
+ * (1.15 x 1.15 = 1.3225); the module's `qmult = (args.timebonus == 'true')
+ * and 1.30 or 1.15` is a flat total. The module wins — the failure mode this
+ * project has hit before is trusting a continuous/compounding reading of a
+ * prose percentage over the module's own stepped/flat arithmetic (ToA's
+ * `toaCommonQtyScale` stepped-vs-continuous entry is the same lesson).
+ */
+export const TOB_HARD_MODE_QTY_MULTIPLIER = 1.15
+export const TOB_HARD_MODE_TIME_BONUS_QTY_MULTIPLIER = 1.3
+/**
+ * Entry Mode's common-table quantity: a flat -80%, from page prose alone (the
+ * calculator has no Entry Mode option at all, so nothing confirms whether
+ * this composes with the points ratio the way Normal/Hard do). Applied as a
+ * constant, NOT scaled by `tobPoints` — deliberately, since there is no
+ * source either way and inventing a composition would be exactly the kind of
+ * guessed curve this project declines to ship. See `tob_common_qty`.
+ */
+export const TOB_ENTRY_MODE_QTY_MULTIPLIER = 0.2
+
+// ---------------------------------------------------------------------------
+// Chambers of Xeric (Ancient chest)
+//
+// Two sources: `Ancient chest`'s own prose states the unique-roll rule
+// (1%-per-8,676-points, 65.7% cap, up to 6 rolls, 131,071-point common-loot
+// cap) and the per-item weight/divisor tables are NOT stated on the page at
+// all — `Module:Chambers of Xeric calculator` is the only source for those
+// (same "missing source, not missing fact" shape as ToA/ToB). Where the two
+// disagree, see the specific notes below; both are cited per constant.
+// ---------------------------------------------------------------------------
+
+/** Points consumed per unique-roll "chunk", and the resulting per-chunk chance denominator. */
+export const COX_UNIQUE_ROLL_CHUNK_POINTS = 570_000
+/**
+ * The module's own per-1%-points constant, `8675` — the page's prose states
+ * `8,676`. Both round to the same published "65.7%" cap
+ * (`570,000/867,500 = 65.6926%`, `570,000/867,600 = 65.6754%`), so no cited
+ * figure on the page distinguishes them; the module's number is used since it
+ * is what the live calculator actually computes. See
+ * `docs/bosses/ancient-chest.md`.
+ */
+export const COX_UNIQUE_ROLL_DIVISOR = 867_500
+export const COX_MAX_UNIQUE_ROLLS = 6
+/** "the two rolls cannot end on the same drop" — Ancient chest, `===Common drop table===`. */
+export const COX_ELITE_CLUE_RATE = { num: 1, den: 12 } as const
+export const COX_OLMLET_RATE = { num: 1, den: 53 } as const
+/**
+ * "Common-loot scaling caps at 131,071 points" (page prose). The module's own
+ * `trashItems` divisor loop has no such cap at all — the same asymmetry as
+ * ToA's elite-clue cap, where a cited primary source states a ceiling the
+ * calculator's simplified arithmetic omits. Verified against the page's own
+ * published quantity ranges: 26 of 29 checked items' stated upper bound is
+ * EXACTLY `floor(131071 / divisor)` (three — Grimy avantoe/kwuarm/lantadyme —
+ * are off by exactly 1, a display-rounding discrepancy too small to change
+ * which cap is being applied). The cited prose figure wins, per this
+ * project's established practice.
+ */
+export const COX_COMMON_QTY_POINTS_CAP = 131_071
+
+/** One unique-roll "chunk"'s own chance: `chunk_n_points / COX_UNIQUE_ROLL_DIVISOR`, naturally capped since a chunk never exceeds `COX_UNIQUE_ROLL_CHUNK_POINTS`. */
+function coxRollChance(points: number, rollIndex: number): number {
+  const consumedBefore = (rollIndex - 1) * COX_UNIQUE_ROLL_CHUNK_POINTS
+  const chunkPoints = Math.min(
+    COX_UNIQUE_ROLL_CHUNK_POINTS,
+    Math.max(0, points - consumedBefore)
+  )
+  return chunkPoints / COX_UNIQUE_ROLL_DIVISOR
+}
+
+/**
+ * P(at least one unique this raid) — every one of the up to 6 rolls is an
+ * independent Bernoulli trial (`docs/bosses/ancient-chest.md`: "each an
+ * independent roll against its own points remainder"), so this is
+ * `1 - Π(1 - P(roll_n))`, not a first-hit-wins chain. Needed for the elite
+ * clue / Olmlet tertiary entries, which condition on this fact rather than on
+ * any single roll.
+ */
+function coxAnyUniqueProbability(points: number): number {
+  let survival = 1
+  for (let rollIndex = 1; rollIndex <= COX_MAX_UNIQUE_ROLLS; rollIndex++) {
+    survival *= 1 - coxRollChance(points, rollIndex)
+  }
+  return 1 - survival
+}
+
+// ---------------------------------------------------------------------------
 // Tombs of Amascut
 //
 // Two sources, and it matters which states what:
@@ -406,6 +509,128 @@ const IMPLEMENTED: Partial<Record<FormulaId, FormulaFn>> = {
     const multiplier = Math.min(3, 1 + (2 * ctx.killCount) / (1.5 * den))
     return Math.min(1, (num / den) * multiplier)
   },
+
+  /**
+   * ToB's unique pre-roll: `tobPoints / (32 * urate)`, reducing to exactly
+   * 1/9.1 (Normal) or 1/7.7 (Hard) at full points, and to 0 whenever
+   * `tobPoints` is 0 (an entry conditioned on `tobPoints >= 1` never reaches
+   * this call at all in that state — see `docs/bosses/monumental-chest.md`'s
+   * override — but the formula is correct there regardless, unlike
+   * `tob_common_qty`, since `evaluateFormula` accepts 0 as a valid
+   * probability).
+   *
+   * `params.urate` is required rather than read from `ctx.variant`: Hard and
+   * the "Hard, time bonus" variant share the identical 7.7 rate (only the
+   * common-table quantity differs between them), so the override supplies
+   * the rate explicitly per entry instead of this function re-deriving mode
+   * from a variant string it would otherwise need to know two different
+   * spellings for.
+   */
+  tob_points: (params, ctx) => {
+    const urate = params['urate']
+    if (typeof urate !== 'number' || !Number.isFinite(urate) || urate <= 0) {
+      throw new TypeError(`tob_points needs params.urate to be a positive number, got ${String(urate)}`)
+    }
+    return ctx.tobPoints / (TOB_MAX_POINTS * urate)
+  },
+
+  /**
+   * ToB's common-table quantity multiplier: `modeMultiplier x ratio`, where
+   * `ratio = tobPoints / 32`. Entry Mode is the one exception — a flat
+   * constant, not ratio-scaled, since the calculator (the only source for the
+   * ratio mechanic at all) has no Entry Mode option; see
+   * `TOB_ENTRY_MODE_QTY_MULTIPLIER`.
+   *
+   * **The `Math.max(ctx.tobPoints, 1)` floor exists only to satisfy
+   * `evaluateMultiplier`'s "must be positive" contract, not because a 0
+   * multiplier would be wrong to compute.** `Table.qtyMultiplier` is resolved
+   * once for the WHOLE table regardless of which entries survive condition
+   * filtering (`compile.ts`'s `compileTable`), so this still runs even when
+   * every one of `tob:common`'s entries has been filtered out by its own
+   * `tobPoints >= 1` condition. The floor keeps that unconditional
+   * evaluation from throwing on a genuinely reachable state (enough deaths or
+   * skipped rooms to zero the raid out); the resulting value is never
+   * actually applied to any quantity in that state, since there are no
+   * surviving entries left to apply it to.
+   */
+  tob_common_qty: (_params, ctx) => {
+    if (ctx.variant === 'entry') return TOB_ENTRY_MODE_QTY_MULTIPLIER
+    const ratio = Math.max(ctx.tobPoints, 1) / TOB_MAX_POINTS
+    if (ctx.variant === 'hard') return TOB_HARD_MODE_QTY_MULTIPLIER * ratio
+    if (ctx.variant === 'hard-fast') return TOB_HARD_MODE_TIME_BONUS_QTY_MULTIPLIER * ratio
+    return ratio
+  },
+
+  /**
+   * CoX's unique roll, dispatched by `params.kind` since it fulfils three
+   * DIFFERENT positions in the document while staying inside one `[0,1]`
+   * probability contract (unlike `tob_points`/`tob_common_qty`, which needed
+   * separate ids because they cross contracts):
+   *
+   * - `{kind:'roll', rollIndex: 1..6}` — one roll's own chance, for
+   *   `cox:unique-rolls`' six `independent`-mode entries.
+   * - `{kind:'eliteClueMarginal'}` — `(1 - P(any unique)) * 1/12`, "the elite
+   *   clue scroll is only rolled when the player does not get a broadcasted
+   *   unique reward."
+   * - `{kind:'olmletMarginal'}` — `P(any unique) * 1/53`, "Olmlet is only
+   *   rolled when the player gets a broadcasted unique reward" — cross-checked
+   *   against the page's own cited example (26,025 points -> ~1/1,765): this
+   *   formula gives 1/53 x 0.03001 = 1/1766, matching to the precision the
+   *   page itself states.
+   *
+   * Both marginals are exact, not an approximation of same-kill correlation —
+   * `ctx.points` is static for the whole run, so the conditioned marginal is
+   * exactly what the simulator's aggregate statistics need
+   * (`docs/HANDOFF.md`'s "What NOT to redo": the naive unconditioned subrates
+   * would overstate Olmlet by 33x).
+   */
+  cox_points: (params, ctx) => {
+    const kind = params['kind']
+    if (kind === 'roll') {
+      const rollIndex = params['rollIndex']
+      if (
+        typeof rollIndex !== 'number' ||
+        !Number.isInteger(rollIndex) ||
+        rollIndex < 1 ||
+        rollIndex > COX_MAX_UNIQUE_ROLLS
+      ) {
+        throw new TypeError(
+          `cox_points needs params.rollIndex to be an integer 1-${COX_MAX_UNIQUE_ROLLS}, got ${String(rollIndex)}`
+        )
+      }
+      return coxRollChance(ctx.points, rollIndex)
+    }
+    if (kind === 'eliteClueMarginal') {
+      return (1 - coxAnyUniqueProbability(ctx.points)) * (COX_ELITE_CLUE_RATE.num / COX_ELITE_CLUE_RATE.den)
+    }
+    if (kind === 'olmletMarginal') {
+      return coxAnyUniqueProbability(ctx.points) * (COX_OLMLET_RATE.num / COX_OLMLET_RATE.den)
+    }
+    throw new TypeError(
+      `cox_points needs params.kind to be 'roll', 'eliteClueMarginal' or 'olmletMarginal', got ${String(kind)}`
+    )
+  },
+
+  /**
+   * A common-table item's quantity: `floor(min(points, 131071) / divisor)`.
+   * No floor of 1 the way ToA's equivalent has — the module applies none, and
+   * nothing on the page contradicts that, so a selected item can genuinely
+   * roll a quantity of 0 at low points. Torn prayer scroll and Dark relic are
+   * NOT modelled through this formula at all: the module hardcodes their
+   * quantity to a flat 1 regardless of points, which is expressed directly as
+   * `QtySpec.exact(1)` in the override rather than a `divisor` large enough to
+   * floor to zero (ToA's `cache-of-runes` trick) — the module's own special
+   * case is exact, not an approximation needing a workaround.
+   */
+  cox_common_qty: (params, ctx) => {
+    const divisor = params['divisor']
+    if (typeof divisor !== 'number' || !Number.isFinite(divisor) || divisor <= 0) {
+      throw new TypeError(
+        `cox_common_qty needs params.divisor to be a positive number, got ${String(divisor)}`
+      )
+    }
+    return Math.floor(Math.min(ctx.points, COX_COMMON_QTY_POINTS_CAP) / divisor)
+  },
 }
 
 /**
@@ -441,8 +666,8 @@ export const IMPLEMENTED_FORMULA_IDS: ReadonlySet<FormulaId> = new Set(
  */
 export const FORMULA_CONTEXT_FIELDS: Record<FormulaId, readonly SimContextField[]> = {
   toa_invocation: ['points', 'raidLevel'],
-  cox_points: [],
-  tob_points: [],
+  cox_points: ['points'],
+  tob_points: ['tobPoints'],
   barrows_kc: [],
   wintertodt_points: [],
   tempoross_points: [],
@@ -454,6 +679,8 @@ export const FORMULA_CONTEXT_FIELDS: Record<FormulaId, readonly SimContextField[
   fortis_colosseum_qty: [],
   tzhaar_fight_cave_tokkul: [],
   duke_sucellus_ice_quartz: [],
+  tob_common_qty: ['tobPoints', 'variant'],
+  cox_common_qty: ['points'],
   zalcano_crystal_shards: ['shieldDamage', 'totalDamage', 'isMVP'],
   zalcano_mvp_share: ['isMVP'],
   zalcano_mvp_only: ['isMVP'],

@@ -5,7 +5,7 @@
   "wikiPage": "Vorkath",
   "wikiRevId": 15283387,
   "variants": [
-    "normal"
+    "Post-quest"
   ],
   "tables": [
     {
@@ -27,7 +27,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -42,7 +48,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -69,7 +81,13 @@
           "rate": {
             "kind": "weight",
             "weight": 5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -86,7 +104,13 @@
           "rate": {
             "kind": "weight",
             "weight": 5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -104,7 +128,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -120,7 +150,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -136,7 +172,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -152,7 +194,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -168,7 +216,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -185,7 +239,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -202,7 +262,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -219,7 +285,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -237,7 +309,13 @@
           "rate": {
             "kind": "weight",
             "weight": 8
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -255,7 +333,13 @@
           "rate": {
             "kind": "weight",
             "weight": 7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -273,7 +357,13 @@
           "rate": {
             "kind": "weight",
             "weight": 7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -291,7 +381,13 @@
           "rate": {
             "kind": "weight",
             "weight": 7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Weapons and armour / Runes / Dragonhide"
@@ -318,7 +414,13 @@
           "rate": {
             "kind": "weight",
             "weight": 728
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -335,7 +437,13 @@
           "rate": {
             "kind": "weight",
             "weight": 455
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -352,7 +460,13 @@
           "rate": {
             "kind": "weight",
             "weight": 364
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -369,7 +483,13 @@
           "rate": {
             "kind": "weight",
             "weight": 273
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -386,7 +506,13 @@
           "rate": {
             "kind": "weight",
             "weight": 546
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -403,7 +529,13 @@
           "rate": {
             "kind": "weight",
             "weight": 273
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -420,7 +552,13 @@
           "rate": {
             "kind": "weight",
             "weight": 125
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -437,7 +575,13 @@
           "rate": {
             "kind": "weight",
             "weight": 100
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -454,7 +598,13 @@
           "rate": {
             "kind": "weight",
             "weight": 100
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -471,7 +621,13 @@
           "rate": {
             "kind": "weight",
             "weight": 70
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -488,7 +644,13 @@
           "rate": {
             "kind": "weight",
             "weight": 35
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -505,7 +667,13 @@
           "rate": {
             "kind": "weight",
             "weight": 25
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Fletching materials"
@@ -531,7 +699,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 416.7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -548,7 +722,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 112.3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -565,7 +745,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 118.7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -582,7 +768,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 595.2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -599,7 +791,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 625
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -616,7 +814,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 694.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -633,7 +837,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 694.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -650,7 +860,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 694.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -667,7 +883,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 694.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -684,7 +906,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 892.9
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -701,7 +929,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 1136.4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -718,7 +952,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 1250
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -735,7 +975,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 1562.5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -752,7 +998,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 2083.3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -769,7 +1021,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 3125
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -786,7 +1044,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 3125
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to 1.6665x its stated access rate 3/150 — so they are NOT a clean partition of that roll and something on the page overrides them)"
@@ -814,7 +1078,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -831,7 +1101,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -849,7 +1125,13 @@
           "rate": {
             "kind": "weight",
             "weight": 2
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Shark drop table"
@@ -877,7 +1159,13 @@
           "rate": {
             "kind": "weight",
             "weight": 7
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -894,7 +1182,13 @@
           "rate": {
             "kind": "weight",
             "weight": 5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -912,7 +1206,13 @@
           "rate": {
             "kind": "weight",
             "weight": 5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -929,7 +1229,13 @@
           "rate": {
             "kind": "weight",
             "weight": 5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -947,7 +1253,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -965,7 +1277,13 @@
           "rate": {
             "kind": "weight",
             "weight": 4
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -983,7 +1301,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -999,7 +1323,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Other"
@@ -1025,7 +1355,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 10
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -1042,7 +1378,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 50
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -1061,6 +1403,10 @@
             "den": 50
           },
           "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            },
             {
               "kind": "onSlayerTask",
               "value": true
@@ -1082,7 +1428,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 65
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -1099,7 +1451,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 1000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -1116,7 +1474,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 3000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -1133,7 +1497,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 3000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -1150,7 +1520,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         },
         {
           "node": {
@@ -1167,7 +1543,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Post-quest"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
@@ -1199,7 +1581,9 @@
       "notes": "Access into rare_drop_table (from {{RareDropTable}})"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Post-quest"
+  },
   "status": "needs_review",
   "validation": {
     "ok": false,

@@ -18,6 +18,7 @@ function line(overrides: Partial<WikitextDropLine> & Pick<WikitextDropLine, 'nam
     // transclusion path sets these explicitly — see the partition suite.
     expandedFrom: '',
     accessRate: '',
+    variant: null,
     ...overrides,
   }
 }

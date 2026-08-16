@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-16T09:37:28.816Z",
+  "generatedAt": "2026-08-16T13:23:54.877Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -586,6 +586,14 @@
       ],
       "status": "needs_review",
       "image": "Empty pool.png",
+      "repeatable": true
+    },
+    {
+      "slug": "rewards-chest-fortis-colosseum",
+      "name": "Rewards Chest (Fortis Colosseum)",
+      "aliases": [],
+      "status": "needs_review",
+      "image": "Rewards Chest (Fortis Colosseum).png",
       "repeatable": true
     },
     {

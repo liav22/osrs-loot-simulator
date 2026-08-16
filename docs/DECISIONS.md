@@ -4573,3 +4573,469 @@ Justiciar pieces, Scythe of vitur, the Message item — now resolved) and
 reproducibility.test.ts` now passes with zero mismatches, `build-tables.test.
 ts` 31/31, full `pnpm -r test` (176 loot-model + 459 ingest + 75 web),
 Brutus gate included.
+
+## Phase 7: Theatre of Blood shipped, and the two UNKNOWNs were a missing module
+
+`data/overrides/monumental-chest.json`, 22 wiki-figure tests in
+`apps/ingest/test/monumental-chest.test.ts`. Same shape of miss as ToA's
+interpolation gap and CoX's common-quantity divisors: `docs/bosses/
+monumental-chest.md` recorded the death-penalty magnitude and the common-table
+quantity scaling as UNKNOWN, twice, without checking for a calculator page.
+**`Module:Theatre of Blood calculator`** (behind `Calculator:Theatre of Blood
+loot`, fetched fresh this session, not previously in `data/snapshots/`) states
+both outright. Full reasoning is in the doc's corrected banner; this entry
+records the judgement calls the doc doesn't cover.
+
+**`tobPoints` is a derived `SimContext` field, not an input**, exactly
+`totalDamage`'s shape: `withDerivedContext` computes it from two inputs (the
+existing `deaths` and the new `roomsSkipped`, capped at 6 — ToB has exactly 6
+rooms) as `max(0, (6-skip)*3 + 14 - deaths*4)`, out of a solo maximum of 32.
+The `+14` is the module's whole "MVP bonus pool" (`imvp` for a team, always the
+full 14 for a solo player, since nobody else exists to share it with) — this
+is what makes the module's team-shaped formula collapse cleanly onto a
+single-player context, the same collapse CoX's own points formula already
+needed for team play.
+
+**Two new formula ids, not one, even though `PROJECT_PLAN.md` 4.6 only names
+`tob_points`.** `tob_points` (probability, the unique preroll) and
+`tob_common_qty` (multiplier, the common table's quantity scaling) both read
+`ctx.tobPoints`, but a single id cannot fulfil two contracts — the same
+reasoning that split Zalcano's three ids, applied here for the first time to a
+raid chest's own pre-declared name. `schema.ts`'s comment on the new id states
+the justification inline rather than leaving it implicit.
+
+**`tob_points` takes `params.urate` explicitly rather than reading
+`ctx.variant`.** Hard Mode and "Hard Mode with the time bonus" share an
+identical unique rate (7.7) and item-weight table — only the common table's
+quantity multiplier differs between them (1.15 vs a flat 1.30, not 1.15
+squared, per the module — the prose's own compounding reading was checked and
+rejected). Rather than have the formula re-derive "is this some kind of hard
+mode" from two different variant spellings, the override's `tob:unique-preroll`
+table supplies the rate per entry, duplicating the 7-item pool across a
+`hard` and a `hard-fast` entry. `tob_common_qty`, which genuinely needs to
+branch three ways (including a flat, non-ratio-scaled Entry Mode case), reads
+`ctx.variant` directly instead — there is exactly one `tob:common` table, not
+one per variant, so params can't carry the distinction the way they do for the
+duplicated preroll entries.
+
+**`hard-fast` is a new value of the existing `variant` field, not a new
+`SimContext` field.** `variant` was already an unconstrained string, so this
+cost nothing and stays inside the corpus's existing single-string-field
+pattern for raid modes. The alternative — a boolean `timeBonusAchieved` field
+— was rejected because it would have needed threading through exactly the
+same places `variant` already reaches (UI, URL state, override conditions)
+for a distinction the wiki treats as a mode, not an on/off toggle.
+
+**The zero-points edge case (8+ deaths, or 4+ deaths with all 6 rooms
+skipped) needed a real table, not just a formula returning 0.**
+`compile.ts`'s `qtyMultiplier` is resolved once per table, unconditionally,
+regardless of which entries survive condition filtering — so a `tob_common_qty`
+that returned exactly 0 at `tobPoints = 0` would throw via `evaluateMultiplier`'s
+positive-only contract even though `tob:common`'s own entries are all gated out
+in that state and the value is never applied to anything. Fixed two ways,
+not one: `tob_common_qty` floors its ratio at `1/32` (a placeholder that never
+reaches a real quantity, since nothing survives to multiply), and a new
+`tob:zero-points-consolation` table (gated `tobPoints` at exactly 0) supplies
+the Cabbage/Message pair the page's own citation names ("Only obtained if a
+player ends the raid with 0 individual contribution points") — a real, cited
+mechanic the naive generated document gets wrong today (it awards Cabbage and
+Message on every single kill, unconditionally, since the parser attaches no
+condition to those rows at all).
+
+**Vial of blood: the module's 50, not the page's stated 45.** Checked, not
+assumed — the page was re-fetched fresh mid-session (revid climbed
+15293917 -> 15299363 on an unrelated capitalization fix, confirmed by diff)
+and the value did not move, ruling out simple staleness. Every other
+spot-checked item (Death rune, Runite ore, Grimy torstol, and two
+collapsed-range cases, Yew seed and Rune battleaxe) matches the module's
+`floor(min x mult x ratio)` formula exactly at full points, which is what
+makes Vial of blood's 45 read as the one outlier rather than the module being
+wrong. Recorded in the override's own `note` and pinned by a dedicated test
+so a future session doesn't have to re-derive this.
+
+**Entry Mode's common-table `tobPoints >= 1` gate is a defensive
+extrapolation, applied uniformly rather than carved out.** The calculator has
+no Entry Mode option at all, so nothing confirms whether Entry's stated flat
+`-80%` composes with a zero-points state the way Normal/Hard's ratio-scaling
+does. Gating Entry's common-table entries on `tobPoints` the same as every
+other variant (rather than writing a variant-specific exemption, which
+`Condition`'s AND-only semantics can't express without duplicating all 29
+entries a second time) means an extreme-deaths Entry Mode run also falls back
+to Cabbage/Message — unconfirmed either way for Entry specifically, but a
+smaller and more defensible guess than letting the table roll near-zero
+quantities at the same edge case Normal/Hard hit.
+
+**`not_on_watchlist` was deliberately left failing.** Every capability gap the
+research doc ever named is now resolved and the mechanic is modelled end to
+end, closer to Doom of Mokhaiotl/Lunar Chest's shape (which did reach
+`manual_override`) than to ToA/Zalcano's (which stay `needs_review` on a named
+residual gap). Whether ToB's residuals — team allocation, the unquantified
+tertiary "individual performance" scaling, Entry Mode's unconfirmed
+composition — are the same *kind* of acceptable residual Doom/Lunar shipped
+with, or closer to ToA's, is a real judgement call this session declined to
+make unilaterally, since flipping a status from `needs_review` to
+`manual_override` is a claim about completeness the next reader will trust.
+Flagged for the user rather than decided.
+
+**The `{{DropsTableHead|dropversion=}}` Normal/Hard blend gap (the
+corpus-reproducibility session's own "What this does NOT fix") is untouched.**
+The override authors `tob:unique-preroll` from scratch, so it does not depend
+on the generated table's shape and did not need the parser fix to ship. Left
+as a separate, still-open piece of work — fixing it would let a future
+`ingest parse` reproduce this table generically, but nothing in this override
+requires it.
+
+## Phase 7: Chambers of Xeric shipped, after a stale snapshot and two structural corrections
+
+`data/overrides/ancient-chest.json`, 24 wiki-figure tests in
+`apps/ingest/test/ancient-chest.test.ts`. This source has now produced two
+structurally-clean, badly-wrong documents in its history — the pre-override
+generated document rolls its unique and common tables on every kill
+unconditionally (a ~100%-unique-rate document, found when the
+`DROPS_SECTION_TITLE` widening first reached it), and this session's own first
+attempt at an override (following `docs/bosses/ancient-chest.md`'s existing
+"Proposed mapping" verbatim) would have been a THIRD. Recorded here because
+the mistake was caught by cross-checking the fresh page against
+`Module:Chambers of Xeric calculator` line by line, not by any structural
+check — both `weights_sum` and `drops_covered` would have passed the wrong
+version too.
+
+**The committed snapshot was stale, and this was found before it could cause a
+fourth bad document.** `data/snapshots/wikitext/ancient-chest.json` and its
+`dropsline` counterpart still carried the pre-2026-08-12-patch unique weights
+(20/69) despite `docs/bosses/ancient-chest.md` itself citing the post-patch
+14/60, dated the same day as the patch. Both numbers were checked against a
+fresh fetch before writing a single line of the override: the fresh page's
+revid (15295333) matched what the doc already cited, meaning the doc's
+research was correct and only the snapshot on disk had silently never been
+updated to match it — a "fresh fetch was described but never persisted"
+gap, not a parser bug (CLAUDE.md's rule is about not re-fetching to fix
+parsing; this is a source with real available data landing wrong).
+
+**Mistake 1: the common table is 33 slots (denominator 33), not the doc's
+proposed flat 43-item/denominator-99 table.** The page's own rows are
+`rarity=1/33` each, uniform. `Module:Chambers of Xeric calculator`'s
+`trashItems` table — the ONLY source for the per-item divisors, since the
+page states none — happens to represent each of the 10 herbs as two virtual
+rows (weight 2 herb, weight 1 seed) for its own EV-display convenience, which
+this session's first pass mistook for the real table shape. The two are
+mathematically equivalent in AGGREGATE (every real 33-weight slot totals
+exactly 3 module-weight-units, so `23×3 + 10×3 = 99` and `99/33 = 3`
+uniformly) but NOT equivalent structurally: `Table.withoutReplacement`
+excludes by row index, so a flat 43-row table would let a herb and its own
+seed both drop in one raid — impossible under "the two rolls cannot end on
+the same drop." Fixed by nesting each herb slot as `oneOf(herb weight 2, seed
+weight 1)` inside one weighted `Entry`, confirmed against
+`simulate.ts`'s `runWeightedWithoutReplacement` (`removed[i]` is tracked by
+the OUTER entry index, so a slot consumed by roll 1 — regardless of which of
+its nested items it resolved to — is unconditionally excluded from roll 2).
+Verified structurally with a dedicated test (30,000-kill sample, zero
+co-occurrences of any of three spot-checked herb/seed pairs) rather than
+trusted from the reasoning alone.
+
+**Mistake 2: item quantities are `QtySpec.formula`, not literal ranges.** The
+page's own `quantity=1-138`-shaped rows read as a real RNG span, matching
+Theatre of Blood's own common table exactly — and would have been modelled
+that way had the module not also stated `quantity =
+math.floor(personalPoints / divisor)`, a fully deterministic function of
+points with NO randomness at all. Resolved by checking, not assuming: the
+UPPER BOUND of every one of 29 spot-checked items' published range equals
+`floor(131071 / divisor)` — exactly for 26, off by 1 for three (Grimy
+avantoe/kwuarm/lantadyme, a display-rounding gap too small to matter) — which
+is what confirmed the range is the formula's own output SPAN across
+realistic points totals, not a per-roll random draw. `131071` itself is the
+page's own cited "common-loot scaling caps at 131,071 points" — a cap the
+module's `trashItems` loop does not enforce at all, the same asymmetry as
+ToA's elite-clue cap (`docs/DECISIONS.md`'s ToA entry): the cited primary
+source wins over the calculator's own simplified arithmetic. Torn prayer
+scroll and Dark relic are the module's own hardcoded exception (quantity
+always exactly 1) and are expressed as `QtySpec.exact(1)` directly rather
+than via a divisor large enough to floor to zero.
+
+**The unique roll is `cox_points`, dispatched by `params.kind` across three
+positions, one probability contract.** Unlike ToB (which needed two ids
+because it crosses a probability/multiplier contract boundary), CoX's three
+uses — per-roll chance (`{kind:'roll', rollIndex}`), the elite-clue marginal,
+the Olmlet marginal — are all `[0,1]` probabilities, so one id parameterized
+by `params.kind` covers all three, matching `toa_bad_luck_mitigation`'s
+one-contract/many-params precedent rather than Zalcano/ToB's
+one-id-per-contract split. `cox_common_qty` is a second, genuinely necessary
+id (a quantity contract, `evaluateQuantity`) — that split IS justified the
+Zalcano/ToB way.
+
+**Up to 6 independent rolls means P(any unique) and the expected unique
+COUNT are different quantities, and this session's own test suite got it
+wrong on the first pass.** Each roll is an independent Bernoulli funded by a
+fixed 570,000-point chunk of the raid's total, evaluated regardless of
+whether earlier rolls hit — so summing `expectedValue`'s per-item
+`expectedDrops` across the 12 uniques gives the expected NUMBER of uniques
+(which legitimately exceeds 1 above 570,000 points — "up to six unique
+rewards can be obtained per raid"), not the probability of getting at least
+one. A first draft of `ancient-chest.test.ts` asserted `uniqueChance <= 1` at
+high points and failed against its own correct implementation; fixed by
+adding a separate `anyUniqueProbability` helper (`1 - Π(1-P(roll_n))`,
+computed the same way `cox_points`'s own `eliteClueMarginal`/`olmletMarginal`
+do internally) for the "at least one" claims, keeping the summed-count
+measure only where it is the right quantity. Worth internalising: the two
+measures coincide exactly below 570,000 points (only one roll is ever
+nonzero there), which is why the elite-clue test at the page's own
+26,025-point example passed on the first try and masked the bug until a
+higher-points test exposed it.
+
+**Ancient tablet's "replaces one of the loot rolls" is NOT modelled
+precisely — flagged, not built around.** No run-scoped mechanism exists for
+one table's hit to reduce another table's roll count (the same shape of gap
+Fortis Colosseum's wave-scoped armour dedup is watchlisted for). Modelled as
+an ADDITIONAL independent 1/10 roll instead, gated by ownership so it can
+only ever fire once per account — a small, one-time, precisely-scoped
+overstatement of total loot for an account that hasn't received it yet, not
+a guess. Dark journal is the same ownership-gate shape and fixes a real bug:
+the currently-generated document has no gate on it at all and awards it on
+every single kill.
+
+**`not_on_watchlist` was left failing, the same judgement call as ToB's own
+entry, for the same reason: flipping status is a completeness claim this
+session declined to make unilaterally.** Team/party point allocation,
+Ancient tablet's imprecise modelling, and Metamorphic dust's unstated
+time-completion threshold are the residuals — whether they are Doom/Lunar-
+shaped (ship it) or ToA-shaped (keep watchlisted) is for the user to decide.
+
+## Phase 7: Fortis Colosseum shipped, with the approximation quantified before shipping rather than assumed small
+
+`data/overrides/rewards-chest-fortis-colosseum.json` — no generated document
+existed at all (tier D, never parsed before), so this is `source: 'override'`
+like Reward Pool, not `'merged'`. 14 wiki-figure tests in
+`apps/ingest/test/rewards-chest-fortis-colosseum.test.ts`.
+
+**Every wave is its own complete, self-contained weighted table, not additive
+layers.** Confirmed rather than assumed: each of the 12 waves' rows sum
+exactly to that wave's own denominator (7, 70, 43400, 19250, 16800, 45920,
+114240, 21600, 16000, 2080, 4800), checked programmatically before writing
+the override, not eyeballed. `ctx.wavesReached` selects exactly one via
+`levelAtLeast(n = atMost = W)` — no wave engine, no new capability, matching
+what the doc's own 2026-08-13 banner already established and what a second,
+stale "Proposed mapping" section (fixed the same session as this build,
+see the doc's own history) had failed to catch up to.
+
+**Token (Varlamore) (wave 3 only, `rarity=Varies`) is excluded, not
+guessed.** No fixed rate is stated anywhere on the page; the row sits beside
+a already-reconciling weighted-70 pool (confirmed: the other 14 rows already
+sum to exactly 70 without it), so it is a separate, unquantified mechanic
+layered on top rather than a missing weight. `drops_covered` correctly still
+fails on exactly this one row.
+
+**A slug/itemKey bug, caught before it shipped: apostrophes must become a
+hyphen, not be deleted.** A hand-written Python `slugify` for this override's
+generator script stripped `'` entirely (`Dizana's quiver` -> `dizanas-quiver`),
+diverging from `apps/ingest/src/snapshots/store.ts`'s real `slugify` (any run
+of non-alphanumeric characters -> ONE hyphen, so apostrophe-plus-space
+collapses to a single `-`, giving `dizana-s-quiver` — the same pattern
+already visible in this corpus as `dinh-s-bulwark`, `osmumten-s-fang`).
+Caught immediately by `items_known` failing on the first parse attempt, not
+by inspection — worth naming because the two previous overrides this session
+(ToB, CoX) never hit this, since both copied their itemKeys directly from an
+already-generated document rather than re-deriving them from scratch, which
+is what a tier-D, never-parsed source with no generated base forces.
+
+### The with-replacement approximation, quantified before shipping
+
+The task that requested this build was explicit: quantify the cost of
+skipping the armour-piece duplicate-avoidance before shipping it, not after,
+and don't assume it's small — CoX's own conditioned-marginal gap this same
+session turned out to be exactly computable, and a different session's Corp
+`drawsPerHit` investigation once found two readings with identical means and
+a 10x different distribution. Computed, not assumed:
+
+- **E[a specific armour piece] is IDENTICAL under both models, by symmetry**
+  — the mean the simulator's headline numbers report is exactly correct
+  either way. This is the reassuring half of the result and is worth stating
+  plainly: the approximation does not distort the number most users will
+  actually look at.
+- **The divergence is entirely in joint/same-run statistics**: across a full
+  12-wave clear (mean armour-hit count ≈0.125, from summing the wiki's own
+  per-wave rates), P(≥1 duplicate piece this run) is ≈0.20% under
+  with-replacement vs ≈0.00025% under true dedup (an ≈800x relative
+  overstatement of that specific joint event, both absolute-tiny), and P(all
+  3 pieces in one clear) is understated ≈4.4x (0.0035% vs 0.0157%).
+- **Practical read**: a user simulating a large batch and reading the
+  capped 1,000-kill log closely enough to notice two identical armour pieces
+  in one logged clear would be seeing something the real game (if the
+  protection is truly run-scoped) would essentially never produce — the same
+  *class* of residual as CoX's elite-clue/Olmlet co-occurrence artifact,
+  smaller in frequency here (CoX's is ~4.6% across a 1,000-kill log; this is
+  two orders of magnitude rarer per clear).
+
+### The duplicate-protection's SCOPE could not be confirmed this session — flagged, not guessed either way
+
+The earlier research pass that first investigated this source asserted the
+protection is *run-scoped* ("resets each attempt"), which is what made an
+approximation necessary at all (an `ownershipGate` read against
+`ctx.ownedCounts` is lifetime-scoped by construction, per `schema.ts`'s own
+comment on that field, and cannot express "resets each attempt"). This
+session tried to re-confirm that claim before building against it and could
+not: the page's own citation ("Players are guaranteed to receive a full set
+prior to receiving duplicate Sunfire Fanatic pieces") does not say "this
+run" or "resets" anywhere, checked directly. Three further checks — the
+Sunfire fanatic armour page (WebFetch, explicitly asked whether it states
+per-run vs account-wide: it does not), two web searches (one search result
+summary contradicted its own heading, itself a sign of a low-confidence
+secondary source, not the wiki), and an attempt to fetch Jagex's original
+"Fortis Colosseum – First Look & Rewards" post directly (HTTP 403, blocked)
+— all failed to settle it either way.
+
+**Shipped anyway, per explicit instruction, with the uncertainty surfaced
+rather than resolved by picking a side.** The override's `note` and this
+entry both state plainly: if the protection turns out to be lifetime-scoped,
+an EXACT model (`ownershipGate`, identical in shape to ToA's keris jewel
+pool) is directly available and is a strictly better fix than refining the
+approximation — this is not a case where more precision requires new engine
+capability, only confirmation of a fact. Whoever revisits this should
+resolve the scope question first, not assume the shipped shape is settled.
+
+### Second pass at the scope question, specifically requested — still unresolved
+
+Explicitly re-checked against update/news posts and the armour pieces'
+individual pages, not just the three sources the first pass tried. Fetched
+and searched for "duplicat"/"reset"/"attempt"/"account": the OSRS Wiki's own
+mirror of Jagex's original "First Look & Rewards" post (`Update:Fortis
+Colosseum - First Look & Rewards`, since the direct Jagex URL 403s — design
+philosophy and stats only, zero relevant occurrences); two further Jagex
+devblog mirrors from the same release cycle (`Update:Poll Blog: Fortis
+Colosseum x Perilous Moons`, `Update:Varlamore: Part One - Reward Changes` —
+same, zero occurrences); the individual `Sunfire fanatic helm` page (drop
+rates and stats only); both the Rewards Chest and Fortis Colosseum pages'
+complete patch-history `==Changes==` sections back to 2024 launch (no entry
+ever touches this mechanic); `Fortis Colosseum/Strategies`.
+
+**One data point worth recording precisely because it is weak, not because
+it settles anything**: the SAME `==Changes==` changelog that never mentions
+the armour protection's scope DOES explicitly call out per-wave-vs-per-run
+scope for other Colosseum mechanics when it is true ("Doom stacks are now
+removed at the end of a wave, rather than being permanent for a run", 10
+April 2024) — this wiki's own patch-note style does not shy away from
+stating that distinction when it applies. Its total absence here is mild
+evidence against the armour protection being run-scoped, not proof either
+way, and not strong enough to build against.
+
+**Stopped per explicit instruction: kept the with-replacement approximation,
+did not spend further sessions on this.** Both the override's `note` and
+`docs/bosses/rewards-chest-fortis-colosseum.md`'s banner now list every
+source checked across both passes, so a future session does not have to
+repeat any of them — it should look for an authoritative in-game or
+community-verified source instead (a datapoint no OSRS Wiki page currently
+states plainly appears to require primary observation, not another text
+search).
+
+## The dropversion= parser fix, and the wider gap it turned out to be part of
+
+Two changes, not one, because the narrow fix alone would have shipped a
+control nobody could reach — the exact "capability exists, nothing reaches
+it" lesson `docs/HANDOFF.md` already recorded for `SimContext` fields,
+recurring here for `Condition.variant`.
+
+**1. `wikitext-drops.ts` now propagates `{{DropsTableHead|dropversion=X}}`
+to regular drop rows.** `rdt-access.ts` already read this parameter for
+`{{RareDropTable}}`/`{{GemDropTable}}` access lines; ordinary
+`{{DropsLine}}`/`{{DropsLineReward}}` rows never had an equivalent path, so a
+page whose variants sit under nested sub-headings inside one already-grouped
+block (Monumental chest's `====Normal mode====`/`====Hard mode====` inside
+`===Pre-roll===` — `splitIntoBlocks`' "nesting deeper than the section's
+shallowest level collapses into its parent" rule, by design, for Barrows'
+per-brother sub-groups) lost the distinction entirely. `scanBlockCalls` walks
+a block's `DropsTableHead` and row-template calls together, in document
+order (merging two independently-tested single-family extractions rather
+than writing a third parallel depth-tracking scanner), and the row extractor
+tracks "most recently seen dropversion value" the same way `rdt-access.ts`
+already treats the same parameter — carried forward until the next
+`{{DropsTableHead}}`, not reset by `{{DropsTableBottom}}`, since nothing in
+the corpus needs a same-block gap and reasoning about one was not worth the
+complexity.
+
+**2. Tagging alone was not enough — `buildTableGroups`'s preroll
+reconciliation had to become per-variant-aware too, or the tag would make
+things WORSE.** The existing "rows reconcile flush to one shared denominator
+-> `weighted`, not `preroll`" check (the corpus-reproducibility session's own
+fix) looks at ALL fixed-rate rows in a block AT ONCE. Monumental chest's
+Normal Mode subset reconciles to 19, Hard Mode's to 18 — two DIFFERENT
+denominators, so the whole-block check's `fixedDenominators.size === 1` test
+was never going to pass either way. Without a second fix, tagging entries
+with a `variant` condition alone would have left the table `mode: 'preroll'`
+with 14 conditionally-filtered entries — and at compile time,
+condition-filtering strips whichever variant doesn't match `ctx.variant`
+BEFORE the table ever runs, collapsing it to a 7-entry chain with genuine
+first-hit-wins Bernoulli semantics. That is exactly the wrong distribution
+the ORIGINAL corpus-reproducibility fix existed to prevent for the
+single-mode case, reintroduced per-variant if only the tagging shipped.
+`tryReconcilePerVariant` is the general form of the existing check: groups
+fixed rows by `line.variant`, requires EVERY row to carry one (a mix of
+tagged and untagged is not a confirmed split — falls through to the
+whole-block behaviour rather than guessing), requires at least two distinct
+variants, and requires EVERY variant's own subset to reconcile exactly
+before applying the split at all. One variant failing to reconcile abandons
+the whole attempt, matching `tryHomogenizeDenominators`'s own "never a
+guess" discipline. Verified directly, not just by test: the generated
+(non-override) Monumental chest document — checked by temporarily moving its
+override aside and re-parsing — now emits `pre-roll-normal-mode`
+(denominator 19) and `pre-roll-hard-mode` (denominator 18) as two separate
+`weighted` tables, each entry correctly `variant`-conditioned.
+
+**3. `Boss.variants` was hardcoded to `['normal']` for every GENERATED
+document, which turned out to be a real, pre-existing, broader bug the
+narrow fix would have walked straight into.** Confirmed before assuming it:
+`black-demon.json`, `vorkath.json`, `amoxliatl.json` already carried real
+`variant` conditions (`"Regular"`/`"Wilderness Slayer Cave"`, `"Post-quest"`
+twice) from mechanisms that predate this session, and every one of them
+still had `variants: ['normal']` — meaning the UI's variant dropdown
+(`SimContextControls.tsx`, populated from `boss.variants`) never offered
+anything but "normal" for any of them, so their conditioned entries were
+reachable in the schema but not from the app. Fixed generally in
+`assemble-boss.ts`: `variants` is now the set of every `variant`-kind
+condition name actually used (from both regular entries' `extraConditions`
+and RDT-access lines), in first-encountered document order, falling back to
+`['normal']` only when none exist. A second, necessary half: `variants` for
+a source like Vorkath never includes the literal string `'normal'` at all
+(`"Post-quest"` is the only value), and `DEFAULT_SIM_CONTEXT.variant` is
+always `'normal'` — so without also fixing `contextDefaults`, the DEFAULT
+simulation for such a source would filter out every variant-gated entry and
+show an empty table until a user manually picked a variant from the
+dropdown. `contextDefaults.variant` is now set to the first-seen variant
+value whenever `'normal'` is not among the ones actually used.
+
+**Caught one test regression from each fix, both fixed, neither a
+compromise on the fix itself:**
+
+- `apps/web/test/rarity.test.ts`'s `rarestFor` helper called
+  `expectedValue(boss, DEFAULT_SIM_CONTEXT, ...)` directly, bypassing
+  `resolveSimContext` and therefore `boss.contextDefaults` entirely. Vorkath's
+  draconic/skeletal visage and dragonbone necklace are genuinely
+  quest-gated (`dropversion=Post-quest`) and, once regular rows could carry
+  that tag at all, correctly stopped appearing under the literal `'normal'`
+  context the helper hardcoded — the SAME correctness improvement as the
+  main fix, just surfaced through a test that had never needed
+  `contextDefaults` before because nothing it exercised carried a
+  meaningful one. Fixed by switching the helper to
+  `resolveSimContext(boss)`, which is what every other "give me this boss's
+  sensible default" call site in the project already does.
+- `apps/ingest/test/marginal-rates.test.ts`'s pinned `DOES_NOT_COMPILE` list
+  lost `'yama'`. Root cause fully traced, not just observed: yama's own
+  `===Contract===` block mixes 18 `Always`-rate rows with one `Yami` pet row
+  at `1/100`; `tryHomogenizeDenominators` treats an `Always` rate's `1/1` as
+  a normal fixed rate and rescales it onto the lone fixed row's denominator
+  (100), giving every `Always` row a weight of 100 and summing to
+  `18*100 + 1 = 1801` against a stated denominator of 100 — a pre-existing
+  bug with nothing to do with variants. Before this session yama hit
+  `WeightsExceedDenominatorError` somewhere else first (a hard compile
+  throw); this session's fix changed which block gets reached, not whether
+  yama's document is correct — it remains broken, now reported by
+  `weights_sum` instead of a thrown error. Out of scope to fix (tier D,
+  already flagged as "the overflow is real data, not a classification
+  artifact" before this session); the pinned list was updated to match
+  reality with the reasoning recorded inline, per that test's own rule that
+  a shrinking exclusion list must be explained, not just accepted.
+
+**Corpus-wide effect, checked, not assumed:** full unscoped `ingest parse`
+before and after landed on identical totals (55 verified, 42 needs_review,
+2 manual_override, 3 parse_failed) — this reshapes documents that already
+had a `variant` condition or a nested dropversion, it does not flip any
+source's overall status. `corpus-reproducibility.test.ts` passed clean after
+regenerating every committed document from the fresh parse.

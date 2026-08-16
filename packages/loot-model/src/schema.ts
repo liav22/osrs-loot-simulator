@@ -24,6 +24,29 @@ export const FORMULA_IDS = [
   'tzhaar_fight_cave_tokkul',
   'duke_sucellus_ice_quartz',
   /**
+   * Theatre of Blood's second contract, alongside `tob_points`. Both read
+   * `ctx.tobPoints` (the derived points total) but cannot share one id:
+   * `tob_points` is a `[0,1]` probability (the unique pre-roll, via
+   * `evaluateFormula`) and this is a positive multiplier (the common table's
+   * `qtyMultiplier`, via `evaluateMultiplier`) — the same "one id cannot
+   * fulfil two contracts at once" reasoning that split Zalcano's three ids
+   * (PROJECT_PLAN.md 4.6's "do not add more without justification", satisfied
+   * here the same way). See `docs/bosses/monumental-chest.md` and
+   * `Module:Theatre of Blood calculator`.
+   */
+  'tob_common_qty',
+  /**
+   * CoX's second contract, alongside `cox_points`. `cox_points` is a `[0,1]`
+   * probability (the six unique-roll entries AND the elite-clue/Olmlet
+   * conditioned marginals all share that one contract, dispatched by
+   * `params.kind` — see `formulas.ts`); this is the common table's per-item
+   * quantity, `floor(min(points, 131071) / divisor)`, a non-negative-integer
+   * contract via `evaluateQuantity`. Same "one id cannot fulfil two
+   * contracts" reasoning as `tob_common_qty`. See
+   * `docs/bosses/ancient-chest.md` and `Module:Chambers of Xeric calculator`.
+   */
+  'cox_common_qty',
+  /**
    * Zalcano's three role-keyed rules, each stated outright on its page rather
    * than inferred. They are separate ids because they fulfil three different
    * formula contracts (quantity, multiplier, probability) and a single id
@@ -378,6 +401,17 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
         'points',
         'raidLevel',
         'deaths',
+        /**
+         * Theatre of Blood's derived points total (`tobPoints`, see
+         * `SimContextSchema`) — gates the zero-points consolation table
+         * ("Only obtained if a player ends the raid with 0 individual
+         * contribution points", cited directly on Monumental chest's own
+         * page) and excludes the unique-preroll/common tables in that same
+         * state, since a compiled `qtyMultiplier` is resolved unconditionally
+         * regardless of which entries survive filtering (see `compile.ts`)
+         * and cannot itself express "give nothing instead."
+         */
+        'tobPoints',
       ]),
       n: z.number().int().nonnegative(),
       /** Inclusive upper bound. Omit for an open-ended threshold. */
@@ -847,8 +881,18 @@ export const SimContextSchema = z
     points: z.number().int().nonnegative().default(0),
     /** ToA's configured raid invocation level (0-500). */
     raidLevel: z.number().int().nonnegative().default(0),
-    /** ToB's death count this raid (death-penalty magnitude is UNKNOWN — see docs/bosses/monumental-chest.md). */
+    /** ToB's death count this raid. Each death costs 4 of the raid's 32 max points — see `tobPoints`. */
     deaths: z.number().int().nonnegative().default(0),
+    /**
+     * ToB's rooms skipped this raid (of 6: Maiden, Bloat, Nylocas, Sotetseg,
+     * Xarpus, Verzik) — a genuinely different penalty from `deaths`, both
+     * read by the derived `tobPoints` below. Capped at 6, unlike `deaths`,
+     * because the raid structurally has only 6 skippable rooms.
+     * `Module:Theatre of Blood calculator`'s `Player's Rooms Skipped (0-6)`
+     * input; no page prose states this mechanic at all — see
+     * docs/bosses/monumental-chest.md.
+     */
+    roomsSkipped: z.number().int().min(0).max(6).default(0),
     /** Duke Sucellus's no-avoidable-damage bonus. */
     perfectKill: z.boolean().default(false),
     /** Zalcano's MVP-of-the-kill bonus. */
@@ -883,6 +927,22 @@ export const SimContextSchema = z
      */
     totalDamage: z.number().int().nonnegative().default(0),
     /**
+     * **Derived, not an input.** Theatre of Blood's per-run points total, out
+     * of a solo maximum of 32: 3 per room cleared (18 max, from
+     * `roomsSkipped`) plus a flat 14 "MVP bonus" (a solo player always
+     * receives the whole shared pool) minus 4 per death, floored at 0.
+     * Recomputed by `withDerivedContext` from `roomsSkipped` and `deaths`,
+     * same discipline as `totalDamage` — resolved once, at run setup, so
+     * `Condition`/`expectedValue`'s "fixed for the whole run" contract holds.
+     *
+     * Sourced entirely from `Module:Theatre of Blood calculator`
+     * (`playerpoints = max(0,(6-iskip)*3 + imvp - ideath*4)`, `imvp = 14` for
+     * a solo player since the whole team's pool has nobody else to share
+     * with); no prose on the page states the formula, only the fact that a
+     * raid can reach 0 points. See docs/bosses/monumental-chest.md.
+     */
+    tobPoints: z.number().int().nonnegative().default(0),
+    /**
      * How many of each item (keyed by `itemKey`) the player owns *entering*
      * this run — Extension B's `OwnershipGateSchema` reads this as the
      * starting point. `expectedValue` treats it as fixed, same as every
@@ -910,6 +970,7 @@ export type SimContextField = keyof SimContext
  */
 export const DERIVED_CONTEXT_FIELDS = {
   totalDamage: ['hitpointsDamage', 'shieldDamage'],
+  tobPoints: ['roomsSkipped', 'deaths'],
 } as const satisfies Partial<Record<SimContextField, readonly SimContextField[]>>
 
 export const PartialSimContextSchema = SimContextSchema.partial()
@@ -925,6 +986,7 @@ export const DEFAULT_SIM_CONTEXT: SimContext = {
   points: 0,
   raidLevel: 0,
   deaths: 0,
+  roomsSkipped: 0,
   perfectKill: false,
   isMVP: false,
   delveLevel: 0,
@@ -934,6 +996,7 @@ export const DEFAULT_SIM_CONTEXT: SimContext = {
   hitpointsDamage: 0,
   shieldDamage: 0,
   totalDamage: 0,
+  tobPoints: 32,
   ownedCounts: {},
 }
 

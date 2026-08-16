@@ -41,6 +41,8 @@ describe('formula registry', () => {
     // implementations changes, which is the moment to re-check that the one
     // above still covers everything it should.
     expect([...IMPLEMENTED_FORMULA_IDS].sort()).toEqual([
+      'cox_common_qty',
+      'cox_points',
       'doom_of_mokhaiotl_deep_rolls',
       'lunar_chest_standard_rolls',
       'toa_bad_luck_mitigation',
@@ -49,6 +51,8 @@ describe('formula registry', () => {
       'toa_invocation',
       'toa_pet',
       'toa_unique_weight',
+      'tob_common_qty',
+      'tob_points',
       'zalcano_crystal_shards',
       'zalcano_mvp_only',
       'zalcano_mvp_share',
@@ -76,7 +80,7 @@ describe('formula registry', () => {
   it('uses an override when one is supplied', () => {
     const registry = createFormulaRegistry({ cox_points: () => 0.25 })
     expect(evaluateFormula('cox_points', {}, ctx, registry)).toBe(0.25)
-    expect(() => evaluateFormula('tob_points', {}, ctx, registry)).toThrow(
+    expect(() => evaluateFormula('barrows_kc', {}, ctx, registry)).toThrow(
       FormulaNotImplementedError
     )
   })
@@ -143,6 +147,9 @@ const REQUIRED_PARAMS: Partial<Record<(typeof FORMULA_IDS)[number], Record<strin
   toa_unique_weight: { unique: 'osmumten-s-fang' },
   toa_common_qty: { divisor: 20 },
   toa_bad_luck_mitigation: { num: 1, den: 10 },
+  tob_points: { urate: 9.1 },
+  cox_points: { kind: 'roll', rollIndex: 1 },
+  cox_common_qty: { divisor: 20 },
 }
 
 describe('FORMULA_CONTEXT_FIELDS matches what the formulas actually read', () => {

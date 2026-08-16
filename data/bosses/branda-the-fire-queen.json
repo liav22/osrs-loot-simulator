@@ -5,7 +5,7 @@
   "wikiPage": "Branda the Fire Queen",
   "wikiRevId": 15200593,
   "variants": [
-    "normal"
+    "Take pages"
   ],
   "tables": [
     {
@@ -28,7 +28,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Take pages"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -662,7 +668,9 @@
       "notes": "Tertiary drops"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Take pages"
+  },
   "status": "verified",
   "validation": {
     "ok": false,

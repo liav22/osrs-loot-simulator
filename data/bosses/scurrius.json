@@ -5,7 +5,8 @@
   "wikiPage": "Scurrius",
   "wikiRevId": 15201009,
   "variants": [
-    "normal"
+    "MVP",
+    "non-MVP"
   ],
   "tables": [
     {
@@ -27,7 +28,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -42,7 +49,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -68,7 +81,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -84,7 +103,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -100,7 +125,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -116,7 +147,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -132,7 +169,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -148,7 +191,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -165,7 +214,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -182,7 +237,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -199,7 +260,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -216,7 +283,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -233,7 +306,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -250,7 +329,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -267,7 +352,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -283,7 +374,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -300,7 +397,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -316,7 +419,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -332,7 +441,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -348,7 +463,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -364,7 +485,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -381,7 +508,13 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         }
       ],
       "notes": "Weapons and armour / Runes and ammunition / Consumables / Other"
@@ -407,7 +540,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 25
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -424,7 +563,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 33
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -441,7 +586,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 400
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -458,7 +609,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 5012.5
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -475,7 +632,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 3000
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "MVP"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
@@ -499,7 +662,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         }
       ],
       "notes": "100%"
@@ -526,7 +695,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -543,7 +718,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -560,7 +741,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -577,7 +764,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -594,7 +787,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -611,7 +810,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -628,7 +833,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -645,7 +856,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -661,7 +878,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -677,7 +900,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -693,7 +922,13 @@
           "rate": {
             "kind": "weight",
             "weight": 3
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         },
         {
           "node": {
@@ -709,7 +944,13 @@
           "rate": {
             "kind": "weight",
             "weight": 1
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         }
       ],
       "notes": "Runes and ammunition / Consumables"
@@ -735,13 +976,21 @@
             "kind": "fixed",
             "num": 1,
             "den": 33
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "non-MVP"
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "MVP"
+  },
   "status": "verified",
   "validation": {
     "ok": false,

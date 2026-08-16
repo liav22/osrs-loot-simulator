@@ -5,7 +5,7 @@
   "wikiPage": "Spindel",
   "wikiRevId": 15290389,
   "variants": [
-    "normal"
+    "{{{dropversion|}}}"
   ],
   "tables": [
     {
@@ -795,7 +795,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 58
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
         },
         {
           "node": {
@@ -812,13 +818,21 @@
             "kind": "fixed",
             "num": 1,
             "den": 30
-          }
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
         }
       ],
       "notes": "Wilderness Slayer tertiary"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "{{{dropversion|}}}"
+  },
   "status": "verified",
   "validation": {
     "ok": false,
