@@ -48,6 +48,13 @@ export interface ParseOptions {
    * `expand-transclusions.ts`.
    */
   templates: TemplateDefinitions
+  /**
+   * Where the document is written. Defaults to the real `data/bosses/` —
+   * overridable so a test can run the real pipeline against a scratch
+   * directory and diff the result against the committed file without
+   * mutating it. See `test/corpus-reproducibility.test.ts`.
+   */
+  outputDir?: string
 }
 
 export interface ParseOutcome {
@@ -309,8 +316,9 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     validation: { ok: checks.every((c) => c.ok), checks },
   }
 
-  await mkdir(BOSSES_DIR, { recursive: true })
-  await writeFile(join(BOSSES_DIR, `${options.slug}.json`), `${JSON.stringify(boss, null, 2)}\n`, 'utf8')
+  const outputDir = options.outputDir ?? BOSSES_DIR
+  await mkdir(outputDir, { recursive: true })
+  await writeFile(join(outputDir, `${options.slug}.json`), `${JSON.stringify(boss, null, 2)}\n`, 'utf8')
 
   return { slug: options.slug, title: options.title, status, reasons }
 }

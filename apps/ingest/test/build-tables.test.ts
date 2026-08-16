@@ -84,6 +84,51 @@ describe('buildTableGroups', () => {
     expect(groups[0]?.ambiguous).toBeNull()
   })
 
+  it('splits an Always row out of a Pre-roll heading instead of rejecting it', () => {
+    // Monumental chest's real shape: Cabbage/Message are `rarity=Always`
+    // consolation rows sitting beside a genuine preroll chain under one
+    // `===Pre-roll===` heading. `preroll`'s schema correctly rejects an
+    // inline `always` entry — checked in order, first hit short-circuits, so
+    // an always-rate entry would deterministically win every kill and make
+    // everything after it (including the real chain) unreachable.
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Cabbage', rarity: 'Always', heading: 'Pre-roll' }),
+        line({ name: 'A', rarity: '5/150', heading: 'Pre-roll' }),
+        line({ name: 'B', rarity: '4/150', heading: 'Pre-roll' }),
+      ])
+    )
+    expect(groups).toHaveLength(2)
+    expect(groups[0]).toMatchObject({ mode: 'always', ambiguous: null })
+    expect(groups[0]?.entries.map((e) => e.name)).toEqual(['Cabbage'])
+    expect(groups[1]).toMatchObject({ mode: 'preroll', ambiguous: null })
+    expect(groups[1]?.entries.map((e) => e.name)).toEqual(['A', 'B'])
+  })
+
+  it('reclassifies a Pre-roll heading as weighted when its rows reconcile flush to one denominator', () => {
+    // Monumental chest's real unique-selection rows (8+2+2+2+2+2+1 = 19)
+    // sum EXACTLY to their shared denominator — a normalised weighted split
+    // the wiki happens to label by WHEN it resolves ("pre-roll" in the
+    // raid's timeline), not by HOW it behaves. A genuine preroll (Brutus:
+    // 5+4+1 = 10 against /150) does NOT reconcile, because the shortfall IS
+    // the "nothing, keep going" case that makes it a real ordered chain.
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Hilt', rarity: '8/19', heading: 'Pre-roll' }),
+        line({ name: 'Rapier', rarity: '2/19', heading: 'Pre-roll' }),
+        line({ name: 'Staff', rarity: '2/19', heading: 'Pre-roll' }),
+        line({ name: 'Faceguard', rarity: '2/19', heading: 'Pre-roll' }),
+        line({ name: 'Chestguard', rarity: '2/19', heading: 'Pre-roll' }),
+        line({ name: 'Legguards', rarity: '2/19', heading: 'Pre-roll' }),
+        line({ name: 'Scythe', rarity: '1/19', heading: 'Pre-roll' }),
+      ])
+    )
+    expect(groups).toHaveLength(1)
+    expect(groups[0]).toMatchObject({ mode: 'weighted', denominator: 19, ambiguous: null })
+    expect(groups[0]?.entries).toHaveLength(7)
+    expect(groups[0]?.entries.find((e) => e.name === 'Hilt')?.weight).toBe(8)
+  })
+
   it('merges adjacent headings sharing one denominator into one weighted table', () => {
     const groups = buildTableGroups(
       groupByHeading([

@@ -593,13 +593,60 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
     // exactly like a weighted table and get silently misclassified.
     if (PREROLL_HEADINGS.test(block.heading)) {
       flushWeighted()
+
+      // A "Pre-roll" heading can still interleave a guaranteed row with the
+      // real chance-based ones — Monumental chest's Cabbage/Message rows are
+      // "Always" (a consolation prize for 0-contribution players) sitting
+      // beside the unique-selection table. `preroll`'s schema rightly rejects
+      // `always` entries: unlike `independent` (where an inline `always` is
+      // safe — see landmine #4), `preroll` is CHECKED IN ORDER with the first
+      // hit short-circuiting everything after it, so an `always` entry would
+      // deterministically win every single kill and make every later entry
+      // (including the real unique pool) unreachable. Splitting it into its
+      // own `always` table, evaluated unconditionally rather than as a
+      // competing step in the ordered chain, is correct instead of merely
+      // schema-legal.
+      const alwaysRows = resolved.filter(({ resolution }) => resolution.rate?.kind === 'always')
+      const fixedRows = resolved.filter(({ resolution }) => resolution.rate?.kind === 'fixed')
+      if (alwaysRows.length > 0) {
+        groups.push({
+          mode: 'always',
+          headings: [block.heading],
+          section: block.section,
+          denominator: null,
+          entries: alwaysRows.map(({ line, resolution }) =>
+            toEntry(line, resolution.rate!, null, resolution.conditions)
+          ),
+          ambiguous: null,
+        })
+      }
+
+      // What's left may still not be a genuine preroll. `preroll` means
+      // "checked in order, chance nothing hits and the chain continues" — a
+      // real one (Brutus: 5/150, 4/150, 1/150) does NOT sum to its shared
+      // denominator, because that shortfall IS the "nothing" that lets later
+      // tables still run. Rows that DO reconcile flush to one shared
+      // denominator (Monumental chest's uniques: 8+2+2+2+2+2+1 = 19) are a
+      // `weighted` selection the wiki happens to label by WHEN it resolves
+      // ("pre-roll" in the raid's timeline) rather than by HOW it behaves —
+      // treating that as `preroll` would silently apply first-hit-wins
+      // Bernoulli semantics to numbers the wiki computed as a normalised
+      // weighted split, giving every row a materially wrong probability.
+      const fixedDenominators = new Set(
+        fixedRows.map(({ resolution }) => (resolution.rate!.kind === 'fixed' ? resolution.rate!.den : null))
+      )
+      const sharedDenominator = fixedDenominators.size === 1 ? [...fixedDenominators][0]! : null
+      const reconcilesFlat =
+        sharedDenominator !== null &&
+        fixedRows.reduce((sum, { resolution }) => sum + resolution.rate!.num, 0) === sharedDenominator
+
       groups.push({
-        mode: 'preroll',
+        mode: reconcilesFlat ? 'weighted' : 'preroll',
         headings: [block.heading],
         section: block.section,
-        denominator: null,
-        entries: resolved.map(({ line, resolution }) =>
-          toEntry(line, resolution.rate!, null, resolution.conditions)
+        denominator: reconcilesFlat ? sharedDenominator : null,
+        entries: fixedRows.map(({ line, resolution }) =>
+          toEntry(line, resolution.rate!, reconcilesFlat ? sharedDenominator : null, resolution.conditions)
         ),
         ambiguous: null,
       })

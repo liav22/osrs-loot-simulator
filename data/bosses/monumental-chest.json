@@ -9,7 +9,323 @@
   ],
   "tables": [
     {
-      "id": "monumental-chest:0:untitled",
+      "id": "monumental-chest:0:pre-roll",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1965,
+            "itemKey": "cabbage",
+            "name": "Cabbage",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22475,
+            "itemKey": "message-theatre-of-blood",
+            "name": "Message (Theatre of Blood)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1965,
+            "itemKey": "cabbage",
+            "name": "Cabbage",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22475,
+            "itemKey": "message-theatre-of-blood",
+            "name": "Message (Theatre of Blood)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "monumental-chest:1:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22477,
+            "itemKey": "avernic-defender-hilt",
+            "name": "Avernic defender hilt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 19
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22324,
+            "itemKey": "ghrazi-rapier",
+            "name": "Ghrazi rapier",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 19
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22481,
+            "itemKey": "sanguinesti-staff-uncharged",
+            "name": "Sanguinesti staff (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 19
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22326,
+            "itemKey": "justiciar-faceguard",
+            "name": "Justiciar faceguard",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 19
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22327,
+            "itemKey": "justiciar-chestguard",
+            "name": "Justiciar chestguard",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 19
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22328,
+            "itemKey": "justiciar-legguards",
+            "name": "Justiciar legguards",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 19
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22486,
+            "itemKey": "scythe-of-vitur-uncharged",
+            "name": "Scythe of vitur (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 19
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22477,
+            "itemKey": "avernic-defender-hilt",
+            "name": "Avernic defender hilt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 7,
+            "den": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22324,
+            "itemKey": "ghrazi-rapier",
+            "name": "Ghrazi rapier",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22481,
+            "itemKey": "sanguinesti-staff-uncharged",
+            "name": "Sanguinesti staff (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22326,
+            "itemKey": "justiciar-faceguard",
+            "name": "Justiciar faceguard",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22327,
+            "itemKey": "justiciar-chestguard",
+            "name": "Justiciar chestguard",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22328,
+            "itemKey": "justiciar-legguards",
+            "name": "Justiciar legguards",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22486,
+            "itemKey": "scythe-of-vitur-uncharged",
+            "name": "Scythe of vitur (uncharged)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 18
+          }
+        }
+      ],
+      "notes": "Pre-roll"
+    },
+    {
+      "id": "monumental-chest:2:common-rewards",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 30,
@@ -525,11 +841,11 @@
           }
         }
       ],
-      "notes": ""
+      "notes": "Common rewards"
     },
     {
-      "id": "monumental-chest:1:untitled",
-      "mode": "preroll",
+      "id": "monumental-chest:3:tertiary-rewards",
+      "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -619,7 +935,7 @@
           }
         }
       ],
-      "notes": ""
+      "notes": "Tertiary rewards"
     }
   ],
   "contextDefaults": {},
@@ -639,7 +955,7 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "fixed/always/weight rates are schema-enforced; no formula rates present"
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
       },
       {
         "check": "qty_sane",
@@ -662,11 +978,12 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "9 of 43 wiki drop row(s) missing from the document: Avernic defender hilt, Cabbage, Ghrazi rapier, Justiciar chestguard, Justiciar faceguard, Justiciar legguards, Message (Theatre of Blood), Sanguinesti staff (uncharged) (+1 more)"
+        "ok": true,
+        "detail": "all 43 wiki drop row(s) reachable in the document"
       }
     ]
   },
   "source": "generated",
-  "parserVersion": 1
+  "parserVersion": 1,
+  "repeatable": true
 }

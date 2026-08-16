@@ -4429,3 +4429,147 @@ new, first-class, NON-gating field precisely so the same failure mode
 (quietly excluding real data from an unqualified count) can't recur here —
 the flag is visible everywhere the data is, correctable in one small file,
 and never removes a document.
+
+## The corpus-reproducibility guard, and Monumental chest's real fix
+
+### `monumental-chest` was the only one — confirmed, not assumed
+
+Built `apps/ingest/test/corpus-reproducibility.test.ts`: re-runs `parseBoss`
+for real, with the real committed inputs (item index, allowlist, watchlist,
+cached GE prices, shared tables, templates), against every file in
+`data/bosses/`, and deep-compares the fresh output to the committed one.
+Writes to a scratch directory (`parseBoss` gained an `outputDir` option,
+defaulting to the real `data/bosses/`) — this check must never be the thing
+that silently rewrites committed data; a human re-runs `ingest parse` and
+reviews the diff, same as always.
+
+**Run before touching the parser: `monumental-chest` was the only mismatch in
+all 98 committed documents.** Everything else — including the four other
+sources sharing the `preroll` mode class this bug lives in (`abyssal-sire`,
+`alchemical-hydra`, `branda-the-fire-queen`, `brutus`, and 17 more that
+mention "pre-roll" somewhere in their wikitext) — reproduces exactly. "Doesn't
+reproduce" is a class, per the request that prompted this, but it turned out
+to have exactly one member.
+
+**This is now a permanent regression guard, not a one-off diagnostic.** It
+runs in `pnpm -r test` going forward (~22s of the suite's total — the cost of
+re-running every check on ~100 sources for real, not a flake; parallelised
+with `Promise.all`, which didn't meaningfully cut the wall time since the
+work is CPU-bound, not I/O-bound). It is the check landmine #1 ("`data/
+bosses/*.json` is not automatically kept in sync") always needed and never
+had: every previous defence against that landmine was a human habit ("always
+re-run `ingest parse` before trusting `data/bosses/`"), which is exactly the
+kind of thing that stops working the moment nobody remembers — which is
+precisely what let `monumental-chest` sit stale, invisible to every other
+check, until the tier-gate fix made a full parse attempt tier D for the first
+time in a long while.
+
+### Root cause: not the transclusion mode switch — the heading widening
+
+The hypothesis going in was landmine #11d (transcluded blocks switched from
+`preroll` to `independent`). **Checked directly and it is not that.**
+Monumental chest's `===Pre-roll===` section has no transclusion in it at all
+— every row is an inline `{{DropsLineReward|...}}` call. The real cause,
+confirmed by diffing the STALE committed document's table shapes
+(`weighted`/29 entries + `preroll`/5 entries, no `always` anywhere) against
+what the current parser structurally sees (`Pre-roll`: 18 lines, `Common
+rewards`: 29, `Tertiary rewards`: 5): the stale document never contained the
+`Pre-roll` section's rows AT ALL. Its page uses `==Loot table==` as the
+top-level heading, which `DROPS_SECTION_TITLE` could not match before the
+`DROPS_SECTION_TITLE` widening (needed "drops"/"rewards"; "table" was only
+added as a `LOOSE_DROPS_SECTION_TITLE` terminal keyword in that later
+session — see "DROPS_SECTION_TITLE widening, and what it actually recovers",
+above). Pre-widening, only `Common rewards`/`Tertiary rewards` (containing
+"rewards") were independently reachable; `Pre-roll` (no drops/rewards
+keyword, nested under a non-matching parent) was invisible. The user's
+instinct was right in shape — a fix that landed while ToB sat outside every
+documented parse invocation (tier D, `--tier A,B,C`) is what exposed a
+pre-existing gap nobody had hit yet — just a different specific fix than the
+transclusion one.
+
+The gap itself: `buildTableGroups`'s `PREROLL_HEADINGS` branch
+(`apps/ingest/src/parse/build-tables.ts`) built every row under a
+`Pre-roll`-matching heading into one `preroll`-mode table without checking
+rate kind, unlike the `allAlways`/`INDEPENDENT_HEADINGS` branches next to it.
+Monumental chest's `Pre-roll` section interleaves two `rarity=Always`
+consolation rows (Cabbage, Message — "only obtained if a player ends the raid
+with 0 individual contribution points") with the real unique-selection rows,
+so once the section was finally reachable, `BossSchema` correctly rejected it
+(`'preroll' entries must use fixed or formula rates, got 'always'`).
+
+### The fix: two general rules, not a special case — and why the obvious one was wrong
+
+The tempting fix was the one already used for the identical-looking Vardorvis/
+Leviathan/Whisperer/Duke Sucellus case (landmine #4): widen
+`ALLOWED_ENTRY_RATES` to let the mode accept `always` inline, the way
+`independent` already does. **This is unsafe for `preroll` specifically, and
+was checked, not assumed.** `independent` entries are evaluated separately —
+an inline `always` is inert, always contributes, no ordering concern.
+`preroll` is "checked IN ORDER, first hit short-circuits the whole chain" —
+an `always` entry anywhere in that order would deterministically win on
+every single kill, making everything checked after it (including the real
+unique pool) permanently unreachable. Verified this is not hypothetical:
+Cabbage/Message sort before the unique rows in document order, so a naive
+"just widen the allowed kinds" fix would have shipped a document where the
+Theatre of Blood uniques have a silent 0% simulated chance.
+
+Two general rules instead, both in the `PREROLL_HEADINGS` branch of
+`buildTableGroups`, neither boss-specific:
+
+1. **Split `always`-kind rows out into their own `always`-mode table**,
+   evaluated unconditionally rather than as a competing step in the ordered
+   chain. Safe by construction — an `always` table never suppresses or
+   short-circuits anything.
+2. **What remains is not necessarily a real preroll.** A genuine one (Brutus:
+   5/150, 4/150, 1/150) does NOT sum to its shared denominator — the
+   shortfall (140/150) IS the "chance nothing hits, keep going" that makes
+   ordered-first-hit-wins the correct semantic. Monumental chest's unique
+   rows (8+2+2+2+2+2+1 = 19) sum EXACTLY to their shared denominator — a
+   normalised weighted split the wiki happens to label by WHEN it resolves
+   ("pre-roll" in the raid's timeline) rather than by HOW it behaves.
+   Treating that as `preroll` wouldn't just be schema-illegal, it would be
+   numerically wrong: `preroll`'s sequential-Bernoulli semantics produce a
+   materially different distribution than a `weighted` table's normalised
+   split for the same stated fractions (checked by hand: Avernic defender
+   hilt as a standalone Bernoulli(8/19) trial checked first is ~42.1%, its
+   correct weighted share; a lower row checked only on an earlier miss is NOT
+   its stated N/19 at all). So: rows that reconcile flush to one shared
+   denominator become `weighted` (reusing the exact `toEntry`/`denominator`
+   convention the heuristic-1 merge path already uses — zero new `Rate`
+   construction code); rows that don't stay `preroll`, unchanged from before.
+
+Locked in with two new unit tests in `apps/ingest/test/build-tables.test.ts`
+(the always-split, and the reconciles-flush-to-weighted reclassification)
+plus the existing Brutus-shaped test (5/150, 4/150, 1/150, still correctly
+`preroll`) as the negative case proving the new logic doesn't overfire.
+
+### What this does NOT fix, left as a known limitation
+
+Monumental chest's `===Pre-roll===` has `====Normal mode====`/`====Hard
+mode====` H4 sub-headings carrying `{{DropsTableHead|dropversion=...}}` —
+the SAME field `rdt-access.ts` already reads as a `variant` condition for RDT
+access lines, but regular `{{DropsLineReward}}` rows have no equivalent path
+today. Per the Phase 1 "heading nesting collapses to the section's shallowest
+level" rule, Normal/Hard mode's rows flatten into ONE 14-row group with no
+variant tag, so the resulting `weighted` table blends both modes' shares
+(Avernic defender hilt appears twice, at weight 8 and weight 7, rather than
+as two separate `variant`-conditioned tables). This is a real, separate,
+well-scoped gap — teaching `{{DropsTableHead|dropversion=}}` to propagate a
+`variant` condition onto its rows, the same way RDT access already does — not
+built here, since it wasn't what broke and Monumental chest is permanently
+`needs_review` regardless (watchlisted `point_scaled`, per below).
+
+### Result
+
+`monumental-chest` parses again: `needs_review` (correctly — still
+watchlisted for the point-scaled unique-chance mechanic, unrelated to this
+fix), every structural check green (`weights_sum`, `refs_resolve`,
+`rates_valid`, `qty_sane`, `items_known`, `drops_covered` all `true`; only
+the permanently-advisory `ev_matches` and the permanently-watchlisted
+`not_on_watchlist` fail, both expected). `data/item-icons.json` regenerated
+(8 newly-reachable ToB uniques — Avernic defender hilt, Ghrazi rapier, the
+Justiciar pieces, Scythe of vitur, the Message item — now resolved) and
+`data/index.json` regenerated to match. Full suite green: `corpus-
+reproducibility.test.ts` now passes with zero mismatches, `build-tables.test.
+ts` 31/31, full `pnpm -r test` (176 loot-model + 459 ingest + 75 web),
+Brutus gate included.

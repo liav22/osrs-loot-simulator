@@ -108,22 +108,33 @@ answers "how much of what a user would actually simulate is verified" is
 **31/72 = 43.1%** among `repeatable: true` sources (44.3% of their 70
 documents) — noticeably below 53.9%. Full table in `docs/DECISIONS.md`.
 
-**Found by lifting the tier gate, not yet fixed: `monumental-chest` (tier D)
-is currently a STALE committed document that the CURRENT parser cannot
-reproduce.** A fresh `ingest parse --source monumental-chest` fails
-(`'preroll' entries must use fixed or formula rates, got 'always'`) — the same
-schema-conflict class as the already-documented Vardorvis/Leviathan/Whisperer/
-Duke Sucellus `always`-inside-`independent` issue, apparently now also hitting
-`preroll`. Every prior parse invocation was `--tier A,B,C`, which never
-touched tier D, so nobody had re-parsed this specific source against current
-code until the tier-gate fix made a full `ingest parse` attempt it — this is
-the harm that fix predicted, concretely realised. The stale file survives
-untouched (`parseBoss` never deletes a file it fails to regenerate — landmine
-#1), gets a default `repeatable: true` from the schema (correct by luck: a
-ToB raid chest genuinely is repeatable), and is otherwise invisible unless you
-parse it directly. Not investigated further this session — flagged for the
-next one, same discipline as Black demon's heading gap.
-`data/index.json` and `data/item-icons.json` are regenerated to match.
+**Found by lifting the tier gate, then fixed: `monumental-chest` (tier D) was
+a STALE committed document the parser could no longer reproduce, and a
+permanent guard against this now exists.** `apps/ingest/test/corpus-
+reproducibility.test.ts` re-parses every committed document for real (against
+a scratch dir, never `data/bosses/` itself) and fails loudly on any mismatch
+— it's in `pnpm -r test` now (~22s). Run once: `monumental-chest` was the
+**only** mismatch in all 98 documents. Root cause was NOT the transclusion
+preroll->independent switch (landmine #11d) — Monumental chest's `Pre-roll`
+section has no transclusion in it. It was the `DROPS_SECTION_TITLE` widening
+(same session, above): `==Loot table==` only started matching once "table"
+became a valid terminal keyword, which for the first time exposed a
+`===Pre-roll===` sub-heading mixing two `rarity=Always` consolation rows with
+a real unique-selection table — a gap `buildTableGroups`'s `PREROLL_HEADINGS`
+branch always had, just never reachable before. Fixed generally, not as a
+special case, in `build-tables.ts`: `always`-kind rows now split into their
+own `always` table (unsafe to leave inline, unlike `independent` — a
+`preroll`'s first-hit-wins ordering would let an `always` row deterministically
+win every kill and make the real chain unreachable), and rows that reconcile
+FLUSH to their own shared denominator (Monumental chest's 8+2+2+2+2+2+1 = 19)
+are now `weighted`, not `preroll` — a genuine preroll (Brutus: 5+4+1 against
+/150) never reconciles, since the shortfall is what makes "keep going, maybe
+nothing hit" a real semantic. Full reasoning, including the one thing this
+does NOT fix (Normal Mode/Hard Mode blend into one table with no `variant`
+tag — `{{DropsTableHead|dropversion=}}` isn't read for regular drop rows the
+way `rdt-access.ts` already reads it for RDT access lines), in
+`docs/DECISIONS.md`. `data/index.json` and `data/item-icons.json` regenerated
+to match (8 newly-reachable ToB uniques).
 
 **Read that 27 against the earlier 18 and the earlier-still 38.** The 38 was
 inflated: `drops_covered` was turned on deliberately (see docs/DECISIONS.md) and
@@ -1074,11 +1085,14 @@ been folded into sections 1 and 3 rather than kept as struck-through history.
    **Start each by checking for a `Module:`/`Calculator:` page**, which is what
    turned ToA's one UNKNOWN into a cited rule; `{{Calculator:Chambers of Xeric
    loot}}`-shaped transclusions are the tell, and both CoX and ToB have a
-   calculator on-page. Theatre of Blood (`monumental-chest`) **currently has
-   no reproducible document at all** — its committed file is stale and a
-   fresh parse fails with `'preroll' entries must use fixed or formula rates,
-   got 'always'` (see section 1's newest entry). Fix that schema conflict
-   before resuming the point-scaling work, not after. **CoX (`ancient-chest`)
+   calculator on-page. Theatre of Blood (`monumental-chest`) reproduces again
+   (section 1's newest entry fixed the stale-document/schema-conflict bug) and
+   fails on its stated point-scaling rule as before — that's the actual next
+   step, not a parser bug anymore. One known gap if you pick this up: Normal
+   Mode and Hard Mode currently blend into one table with no `variant` tag
+   (`{{DropsTableHead|dropversion=}}` isn't read for regular drop rows yet) —
+   see `docs/DECISIONS.md` before assuming the unique weights are per-mode
+   correct. **CoX (`ancient-chest`)
    and Fortis Colosseum both need Phase 6 research first — CoX is
    `parse_failed` with no research doc, and Fortis Colosseum has never
    produced one. Do not start either without it.** Read section 5's CoX entry
