@@ -224,9 +224,19 @@ describe('Fortis Colosseum: the document still carries what the override authore
    * re-parse dropped the override the `rateOf`/`simulate` lookups would
    * quietly return 0 and several tests would still pass by coincidence.
    */
-  it('is override-sourced (no generated base existed) with all 13 hand-authored tables', async () => {
+  it('carries all 13 hand-authored tables regardless of what the raw page now parses to', async () => {
+    // `source` was 'override' (no generated base at all) until the mixed
+    // Always+fixed split (docs/DECISIONS.md's "Yama's always+fixed
+    // fallthrough" entry) let Wave 12's own raw heading — Dizana's quiver
+    // (`Always`) sitting beside Smol Heredit (`1/200`) and the 792/4800
+    // weighted pool, the identical shape to Yama's `Contract` — parse into a
+    // real (if superseded) generated document for the first time. `source`
+    // is now 'merged', correctly: a generated base genuinely exists. The
+    // override still fully wins for every table that matters, which is what
+    // this test actually guards — the tables list is unaffected by which
+    // label `source` carries.
     const boss = await loadBoss()
-    expect(boss.source).toBe('override')
+    expect(boss.source).toBe('merged')
     expect(boss.tables).toHaveLength(13)
     expect(boss.tables.map((t) => t.id)).toContain('fortis:wave-12-extras')
   })

@@ -534,159 +534,162 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 1438,
-            "itemKey": "air-talisman",
-            "name": "Air talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1438,
+                  "itemKey": "air-talisman",
+                  "name": "Air talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0011160714285714285
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1446,
+                  "itemKey": "body-talisman",
+                  "name": "Body talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0011160714285714285
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1440,
+                  "itemKey": "earth-talisman",
+                  "name": "Earth talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0011160714285714285
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1442,
+                  "itemKey": "fire-talisman",
+                  "name": "Fire talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0011160714285714285
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1448,
+                  "itemKey": "mind-talisman",
+                  "name": "Mind talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0011160714285714285
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1444,
+                  "itemKey": "water-talisman",
+                  "name": "Water talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0011160714285714285
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1454,
+                  "itemKey": "cosmic-talisman",
+                  "name": "Cosmic talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0004464285714285714
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1452,
+                  "itemKey": "chaos-talisman",
+                  "name": "Chaos talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.000334817691766833
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1462,
+                  "itemKey": "nature-talisman",
+                  "name": "Nature talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.000334817691766833
+                }
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 896
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1446,
-            "itemKey": "body-talisman",
-            "name": "Body talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 896
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1440,
-            "itemKey": "earth-talisman",
-            "name": "Earth talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 896
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1442,
-            "itemKey": "fire-talisman",
-            "name": "Fire talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 896
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1448,
-            "itemKey": "mind-talisman",
-            "name": "Mind talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 896
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1444,
-            "itemKey": "water-talisman",
-            "name": "Water talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 896
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1454,
-            "itemKey": "cosmic-talisman",
-            "name": "Cosmic talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2240
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1452,
-            "itemKey": "chaos-talisman",
-            "name": "Chaos talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2986.7
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1462,
-            "itemKey": "nature-talisman",
-            "name": "Nature talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2986.7
+            "den": 128
           }
         }
       ],
-      "notes": "Talismans (confirmed independent: 9 entries expanded from one {{talismandroplines}} transclusion, whose rates sum to its stated access rate 1/128 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
+      "notes": "Talismans (confirmed independent: 9 entries expanded from one {{talismandroplines}} transclusion, whose rates sum to its stated access rate 1/128 (ratio 1.0000), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 1/128 — exact, not an approximation.)"
     },
     {
       "id": "dagannoth-rex:3:other",
@@ -938,7 +941,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [

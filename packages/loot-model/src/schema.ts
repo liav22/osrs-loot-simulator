@@ -1079,6 +1079,18 @@ export const BossSchema = z
     status: BossStatusSchema,
     validation: ValidationResultSchema,
     source: BossSourceSchema,
+    /**
+     * Provenance metadata — which parser format produced this document, for a
+     * human reading the file. **Not a staleness mechanism**: nothing reads
+     * this back to decide whether to re-parse, and every parse invocation
+     * currently writes the same literal `1` (`apps/ingest/src/main.ts`). The
+     * real staleness guard is `apps/ingest/test/corpus-reproducibility.test.ts`,
+     * which re-parses every committed document from its snapshot and diffs
+     * against what's on disk — a live check, not a hand-maintained number. See
+     * `docs/DECISIONS.md`'s "`parserVersion` retired as a staleness mechanism"
+     * entry before wiring a comparison against this field; that was
+     * considered and rejected in favour of the diff-based check.
+     */
     parserVersion: z.number().int().nonnegative(),
     /**
      * Whether the same account can generate more than one independent roll

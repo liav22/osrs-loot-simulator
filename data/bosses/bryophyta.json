@@ -477,303 +477,304 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 199,
-            "itemKey": "grimy-guam-leaf",
-            "name": "Grimy guam leaf",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 199,
+                  "itemKey": "grimy-guam-leaf",
+                  "name": "Grimy guam leaf",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.009765625
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 201,
+                  "itemKey": "grimy-marrentill",
+                  "name": "Grimy marrentill",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.007326007326007326
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 203,
+                  "itemKey": "grimy-tarromin",
+                  "name": "Grimy tarromin",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.005494505494505495
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 205,
+                  "itemKey": "grimy-harralander",
+                  "name": "Grimy harralander",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004271678769756515
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 207,
+                  "itemKey": "grimy-ranarr-weed",
+                  "name": "Grimy ranarr weed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0033568311513930854
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 209,
+                  "itemKey": "grimy-irit-leaf",
+                  "name": "Grimy irit leaf",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00244140625
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 211,
+                  "itemKey": "grimy-avantoe",
+                  "name": "Grimy avantoe",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0018311664530305805
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 213,
+                  "itemKey": "grimy-kwuarm",
+                  "name": "Grimy kwuarm",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0015257857796765334
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 215,
+                  "itemKey": "grimy-cadantine",
+                  "name": "Grimy cadantine",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.001220703125
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 2485,
+                  "itemKey": "grimy-lantadyme",
+                  "name": "Grimy lantadyme",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0009154994049253868
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 217,
+                  "itemKey": "grimy-dwarf-weed",
+                  "name": "Grimy dwarf weed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0009154994049253868
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
-            "num": 1,
-            "den": 102.4
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 201,
-            "itemKey": "grimy-marrentill",
-            "name": "Grimy marrentill",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 136.5
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 203,
-            "itemKey": "grimy-tarromin",
-            "name": "Grimy tarromin",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 182
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 205,
-            "itemKey": "grimy-harralander",
-            "name": "Grimy harralander",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 234.1
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 207,
-            "itemKey": "grimy-ranarr-weed",
-            "name": "Grimy ranarr weed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 297.9
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 209,
-            "itemKey": "grimy-irit-leaf",
-            "name": "Grimy irit leaf",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 409.6
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 211,
-            "itemKey": "grimy-avantoe",
-            "name": "Grimy avantoe",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 546.1
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 213,
-            "itemKey": "grimy-kwuarm",
-            "name": "Grimy kwuarm",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 655.4
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 215,
-            "itemKey": "grimy-cadantine",
-            "name": "Grimy cadantine",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 819.2
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 2485,
-            "itemKey": "grimy-lantadyme",
-            "name": "Grimy lantadyme",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1092.3
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 217,
-            "itemKey": "grimy-dwarf-weed",
-            "name": "Grimy dwarf weed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1092.3
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
+            "num": 5,
+            "den": 128
+          }
         }
       ],
-      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 5/128 (ratio 1.0001), so its rows are one mutually-exclusive roll)"
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 5/128 (ratio 1.0001), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 5/128 — exact, not an approximation.)"
     },
     {
       "id": "bryophyta:3:seeds",
@@ -783,681 +784,668 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 5100,
-            "itemKey": "limpwurt-seed",
-            "name": "Limpwurt seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5100,
+                  "itemKey": "limpwurt-seed",
+                  "name": "Limpwurt seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.03571428571428571
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5323,
+                  "itemKey": "strawberry-seed",
+                  "name": "Strawberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.034129692832764506
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5292,
+                  "itemKey": "marrentill-seed",
+                  "name": "Marrentill seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.03257328990228013
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5104,
+                  "itemKey": "jangerberry-seed",
+                  "name": "Jangerberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.023980815347721823
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5293,
+                  "itemKey": "tarromin-seed",
+                  "name": "Tarromin seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.022172949002217293
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5311,
+                  "itemKey": "wildblood-seed",
+                  "name": "Wildblood seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.021645021645021644
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5321,
+                  "itemKey": "watermelon-seed",
+                  "name": "Watermelon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.01644736842105263
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5294,
+                  "itemKey": "harralander-seed",
+                  "name": "Harralander seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.014619883040935672
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22879,
+                  "itemKey": "snape-grass-seed",
+                  "name": "Snape grass seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.010438413361169102
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5295,
+                  "itemKey": "ranarr-seed",
+                  "name": "Ranarr seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.01017293997965412
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5105,
+                  "itemKey": "whiteberry-seed",
+                  "name": "Whiteberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.008873114463176575
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5282,
+                  "itemKey": "mushroom-spore",
+                  "name": "Mushroom spore",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.007564296520423602
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5296,
+                  "itemKey": "toadflax-seed",
+                  "name": "Toadflax seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.007042253521126761
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5281,
+                  "itemKey": "belladonna-seed",
+                  "name": "Belladonna seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004697040864255519
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5297,
+                  "itemKey": "irit-seed",
+                  "name": "Irit seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004697040864255519
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5106,
+                  "itemKey": "poison-ivy-seed",
+                  "name": "Poison ivy seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0033921302578018993
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5298,
+                  "itemKey": "avantoe-seed",
+                  "name": "Avantoe seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003130870381966187
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5280,
+                  "itemKey": "cactus-seed",
+                  "name": "Cactus seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003130870381966187
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5299,
+                  "itemKey": "kwuarm-seed",
+                  "name": "Kwuarm seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0023479690068091102
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22873,
+                  "itemKey": "potato-cactus-seed",
+                  "name": "Potato cactus seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.002087246921310791
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5300,
+                  "itemKey": "snapdragon-seed",
+                  "name": "Snapdragon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.001304631441617743
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5301,
+                  "itemKey": "cadantine-seed",
+                  "name": "Cadantine seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0010436234606553956
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5302,
+                  "itemKey": "lantadyme-seed",
+                  "name": "Lantadyme seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0007827175954915467
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5303,
+                  "itemKey": "dwarf-weed-seed",
+                  "name": "Dwarf weed seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0005218389604967907
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5304,
+                  "itemKey": "torstol-seed",
+                  "name": "Torstol seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0002609126725285047
+                },
+                "conditions": [
+                  {
+                    "kind": "members",
+                    "value": true
+                  },
+                  {
+                    "kind": "variant",
+                    "name": "Members"
+                  }
+                ]
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
-            "num": 1,
-            "den": 28
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5323,
-            "itemKey": "strawberry-seed",
-            "name": "Strawberry seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 29.3
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5292,
-            "itemKey": "marrentill-seed",
-            "name": "Marrentill seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30.7
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5104,
-            "itemKey": "jangerberry-seed",
-            "name": "Jangerberry seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 41.7
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5293,
-            "itemKey": "tarromin-seed",
-            "name": "Tarromin seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 45.1
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5311,
-            "itemKey": "wildblood-seed",
-            "name": "Wildblood seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 46.2
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5321,
-            "itemKey": "watermelon-seed",
-            "name": "Watermelon seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 60.8
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5294,
-            "itemKey": "harralander-seed",
-            "name": "Harralander seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 68.4
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22879,
-            "itemKey": "snape-grass-seed",
-            "name": "Snape grass seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 95.8
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5295,
-            "itemKey": "ranarr-seed",
-            "name": "Ranarr seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 98.3
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5105,
-            "itemKey": "whiteberry-seed",
-            "name": "Whiteberry seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 112.7
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5282,
-            "itemKey": "mushroom-spore",
-            "name": "Mushroom spore",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 132.2
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5296,
-            "itemKey": "toadflax-seed",
-            "name": "Toadflax seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 142
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5281,
-            "itemKey": "belladonna-seed",
-            "name": "Belladonna seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 212.9
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5297,
-            "itemKey": "irit-seed",
-            "name": "Irit seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 212.9
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5106,
-            "itemKey": "poison-ivy-seed",
-            "name": "Poison ivy seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 294.8
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5298,
-            "itemKey": "avantoe-seed",
-            "name": "Avantoe seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 319.4
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5280,
-            "itemKey": "cactus-seed",
-            "name": "Cactus seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 319.4
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5299,
-            "itemKey": "kwuarm-seed",
-            "name": "Kwuarm seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 425.9
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22873,
-            "itemKey": "potato-cactus-seed",
-            "name": "Potato cactus seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 479.1
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5300,
-            "itemKey": "snapdragon-seed",
-            "name": "Snapdragon seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 766.5
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5301,
-            "itemKey": "cadantine-seed",
-            "name": "Cadantine seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 958.2
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5302,
-            "itemKey": "lantadyme-seed",
-            "name": "Lantadyme seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1277.6
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5303,
-            "itemKey": "dwarf-weed-seed",
-            "name": "Dwarf weed seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1916.3
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5304,
-            "itemKey": "torstol-seed",
-            "name": "Torstol seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 3832.7
-          },
-          "conditions": [
-            {
-              "kind": "members",
-              "value": true
-            },
-            {
-              "kind": "variant",
-              "name": "Members"
-            }
-          ]
+            "num": 35,
+            "den": 128
+          }
         }
       ],
-      "notes": "Seeds (confirmed independent: 25 entries expanded from one {{uncommonseeddroplines}} transclusion, whose rates sum to its stated access rate 35/128 (ratio 0.9976), so its rows are one mutually-exclusive roll)"
+      "notes": "Seeds (confirmed independent: 25 entries expanded from one {{uncommonseeddroplines}} transclusion, whose rates sum to its stated access rate 35/128 (ratio 0.9976), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 35/128 — exact, not an approximation.)"
     },
     {
       "id": "bryophyta:4:coins-other",
@@ -2610,7 +2598,7 @@
   "contextDefaults": {
     "variant": "Members"
   },
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [

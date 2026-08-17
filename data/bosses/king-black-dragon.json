@@ -410,7 +410,7 @@
     },
     {
       "id": "king-black-dragon:3:tertiary",
-      "mode": "independent",
+      "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -428,7 +428,16 @@
           "rate": {
             "kind": "always"
           }
-        },
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "king-black-dragon:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",

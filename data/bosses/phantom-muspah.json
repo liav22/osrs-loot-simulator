@@ -1192,6 +1192,30 @@
     },
     {
       "id": "phantom-muspah:6:tertiary",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 27643,
+            "itemKey": "charged-ice",
+            "name": "Charged ice",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "phantom-muspah:7:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -1251,21 +1275,6 @@
             "kind": "fixed",
             "num": 1,
             "den": 45
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 27643,
-            "itemKey": "charged-ice",
-            "name": "Charged ice",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "always"
           }
         },
         {

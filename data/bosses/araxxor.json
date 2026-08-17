@@ -419,278 +419,274 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 5295,
-            "itemKey": "ranarr-seed",
-            "name": "Ranarr seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5295,
+                  "itemKey": "ranarr-seed",
+                  "name": "Ranarr seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0010435145570280705
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5300,
+                  "itemKey": "snapdragon-seed",
+                  "name": "Snapdragon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0009738994935722634
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5304,
+                  "itemKey": "torstol-seed",
+                  "name": "Torstol seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0007652280379553107
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5321,
+                  "itemKey": "watermelon-seed",
+                  "name": "Watermelon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 15
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0007304601899196494
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5313,
+                  "itemKey": "willow-seed",
+                  "name": "Willow seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0006956521739130435
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 21488,
+                  "itemKey": "mahogany-seed",
+                  "name": "Mahogany seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0006260956674179815
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5314,
+                  "itemKey": "maple-seed",
+                  "name": "Maple seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0006260956674179815
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 21486,
+                  "itemKey": "teak-seed",
+                  "name": "Teak seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0006260956674179815
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5315,
+                  "itemKey": "yew-seed",
+                  "name": "Yew seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0006260956674179815
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5288,
+                  "itemKey": "papaya-tree-seed",
+                  "name": "Papaya tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0004869497467861317
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5316,
+                  "itemKey": "magic-seed",
+                  "name": "Magic seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00038261401897765536
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5289,
+                  "itemKey": "palm-tree-seed",
+                  "name": "Palm tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00034782608695652176
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5317,
+                  "itemKey": "spirit-seed",
+                  "name": "Spirit seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0002782569981635038
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22877,
+                  "itemKey": "dragonfruit-tree-seed",
+                  "name": "Dragonfruit tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00020869420038817122
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22869,
+                  "itemKey": "celastrus-seed",
+                  "name": "Celastrus seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00013913043478260868
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22871,
+                  "itemKey": "redwood-tree-seed",
+                  "name": "Redwood tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00013913043478260868
+                }
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 958.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5300,
-            "itemKey": "snapdragon-seed",
-            "name": "Snapdragon seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1026.8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5304,
-            "itemKey": "torstol-seed",
-            "name": "Torstol seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1306.8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5321,
-            "itemKey": "watermelon-seed",
-            "name": "Watermelon seed",
-            "qty": {
-              "kind": "exact",
-              "n": 15
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1369
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5313,
-            "itemKey": "willow-seed",
-            "name": "Willow seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1437.5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 21488,
-            "itemKey": "mahogany-seed",
-            "name": "Mahogany seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1597.2
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5314,
-            "itemKey": "maple-seed",
-            "name": "Maple seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1597.2
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 21486,
-            "itemKey": "teak-seed",
-            "name": "Teak seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1597.2
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5315,
-            "itemKey": "yew-seed",
-            "name": "Yew seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1597.2
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5288,
-            "itemKey": "papaya-tree-seed",
-            "name": "Papaya tree seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2053.6
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5316,
-            "itemKey": "magic-seed",
-            "name": "Magic seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2613.6
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5289,
-            "itemKey": "palm-tree-seed",
-            "name": "Palm tree seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 2875
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5317,
-            "itemKey": "spirit-seed",
-            "name": "Spirit seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 3593.8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22877,
-            "itemKey": "dragonfruit-tree-seed",
-            "name": "Dragonfruit tree seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 4791.7
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22869,
-            "itemKey": "celastrus-seed",
-            "name": "Celastrus seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 7187.5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22871,
-            "itemKey": "redwood-tree-seed",
-            "name": "Redwood tree seed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 7187.5
+            "den": 115
           }
         }
       ],
-      "notes": "Tree-herb seed drop table (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 1/115 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
+      "notes": "Tree-herb seed drop table (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 1/115 (ratio 1.0000), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 1/115 — exact, not an approximation.)"
     },
     {
       "id": "araxxor:4:resources",
@@ -1043,7 +1039,7 @@
     },
     {
       "id": "araxxor:7:tertiary",
-      "mode": "independent",
+      "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -1061,7 +1057,16 @@
           "rate": {
             "kind": "always"
           }
-        },
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "araxxor:8:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -1144,7 +1149,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [

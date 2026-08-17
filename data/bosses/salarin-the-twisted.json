@@ -130,193 +130,194 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 199,
-            "itemKey": "grimy-guam-leaf",
-            "name": "Grimy guam leaf",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 199,
+                  "itemKey": "grimy-guam-leaf",
+                  "name": "Grimy guam leaf",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.07633587786259542
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 201,
+                  "itemKey": "grimy-marrentill",
+                  "name": "Grimy marrentill",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.05714285714285714
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 203,
+                  "itemKey": "grimy-tarromin",
+                  "name": "Grimy tarromin",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.04291845493562232
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 205,
+                  "itemKey": "grimy-harralander",
+                  "name": "Grimy harralander",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.03333333333333333
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 207,
+                  "itemKey": "grimy-ranarr-weed",
+                  "name": "Grimy ranarr weed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.026178010471204185
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 209,
+                  "itemKey": "grimy-irit-leaf",
+                  "name": "Grimy irit leaf",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.01904761904761905
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 211,
+                  "itemKey": "grimy-avantoe",
+                  "name": "Grimy avantoe",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.014285714285714285
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 213,
+                  "itemKey": "grimy-kwuarm",
+                  "name": "Grimy kwuarm",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.011904761904761904
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 215,
+                  "itemKey": "grimy-cadantine",
+                  "name": "Grimy cadantine",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.009523809523809525
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 2485,
+                  "itemKey": "grimy-lantadyme",
+                  "name": "Grimy lantadyme",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.007142857142857143
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 217,
+                  "itemKey": "grimy-dwarf-weed",
+                  "name": "Grimy dwarf weed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.007142857142857143
+                }
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
-            "num": 1,
-            "den": 13.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 201,
-            "itemKey": "grimy-marrentill",
-            "name": "Grimy marrentill",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 17.5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 203,
-            "itemKey": "grimy-tarromin",
-            "name": "Grimy tarromin",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 23.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 205,
-            "itemKey": "grimy-harralander",
-            "name": "Grimy harralander",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 30
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 207,
-            "itemKey": "grimy-ranarr-weed",
-            "name": "Grimy ranarr weed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 38.2
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 209,
-            "itemKey": "grimy-irit-leaf",
-            "name": "Grimy irit leaf",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 52.5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 211,
-            "itemKey": "grimy-avantoe",
-            "name": "Grimy avantoe",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 70
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 213,
-            "itemKey": "grimy-kwuarm",
-            "name": "Grimy kwuarm",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 84
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 215,
-            "itemKey": "grimy-cadantine",
-            "name": "Grimy cadantine",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 105
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 2485,
-            "itemKey": "grimy-lantadyme",
-            "name": "Grimy lantadyme",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 140
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 217,
-            "itemKey": "grimy-dwarf-weed",
-            "name": "Grimy dwarf weed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 140
+            "num": 39,
+            "den": 128
           }
         }
       ],
-      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 39/128 (ratio 1.0009), so its rows are one mutually-exclusive roll)"
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 39/128 (ratio 1.0009), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 39/128 — exact, not an approximation.)"
     },
     {
       "id": "salarin-the-twisted:3:materials-coins-other",

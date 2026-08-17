@@ -205,6 +205,42 @@ describe('buildTableGroups', () => {
     expect(groups[0]?.confirmedBy).toBeUndefined()
   })
 
+  it('splits Always rows out of a heading with no Pre-roll/Tertiary keyword before merging the rest (Yama "Contract" shape)', () => {
+    // Yama's real shape: 18 `rarity=Always` rows (a contract's guaranteed
+    // rewards) plus one `1/100` chance row (`Yami`), under a heading named
+    // "Contract" — no keyword the earlier branches recognise. Before the
+    // mixed-Always split ran here, this fell into the homogeneous-denominator
+    // merge path with only `Yami`'s fixed rate contributing to `denominators`
+    // (size 1, from its own `/100`), so EVERY row — the 18 Always ones
+    // included — got merged onto that single denominator. `toEntry`'s weight
+    // formula gave each Always row (`num: 1, den: 1`) a weight equal to the
+    // whole denominator, shipping 18 rows at `weight: 100` against
+    // `denominator: 100`.
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Aether catalyst', rarity: 'Always', heading: 'Contract' }),
+        line({ name: 'Diabolic worms', rarity: 'Always', heading: 'Contract' }),
+        line({ name: 'Oathplate helm', rarity: 'Always', heading: 'Contract' }),
+        line({ name: 'Yami', rarity: '1/100', heading: 'Contract' }),
+      ])
+    )
+    expect(groups).toHaveLength(2)
+    expect(groups[0]).toMatchObject({ mode: 'always', ambiguous: null })
+    expect(groups[0]?.entries.map((e) => e.name)).toEqual([
+      'Aether catalyst',
+      'Diabolic worms',
+      'Oathplate helm',
+    ])
+    // `Yami` alone is the only fixed row left, so it merges into a trivial
+    // one-row weighted table on its own denominator (weight 1 of 100) —
+    // legitimate, since a lone item is not overflowing anything. The point
+    // of this test is that it is no longer folded into a bogus 4-row
+    // `weighted` table where the three Always rows each got `weight: 100`.
+    expect(groups[1]?.entries.map((e) => e.name)).toEqual(['Yami'])
+    expect(groups[1]).toMatchObject({ mode: 'weighted', denominator: 100 })
+    expect(groups[1]?.entries[0]?.weight).toBe(1)
+  })
+
   describe('heterogeneous-denominator resolution (no keyword, no Always)', () => {
     it('homogenises a clean-multiple outlier into the weighted table (Kraken shape)', () => {
       const groups = buildTableGroups(
@@ -504,9 +540,28 @@ describe('transclusionPartition', () => {
     }
   })
 
-  it('stays flagged, because the single-access-roll shape is still not modelled', () => {
+  it('models a confirmed partition as a oneOf at the access rate, and clears the flag', () => {
+    // Modelling the single-access-roll shape exactly (a `oneOf` behind one
+    // access-rate entry) replaced the `independent`-rows approximation this
+    // used to stay flagged for — see docs/DECISIONS.md's transclusion entry.
     const lines = fromTemplate('seeddroplines', exactAccessFor(SUB_TABLE), SUB_TABLE)
     const groups = buildTableGroups(groupByHeading(lines))
-    expect(groups[0]?.ambiguous).toMatch(/needs a human check/)
+    expect(groups[0]?.ambiguous).toBeNull()
+    expect(groups[0]?.oneOfAccess).toEqual({ num: 1, den: Number(exactAccessFor(SUB_TABLE).split('/')[1]) })
+    expect(groups[0]?.confirmedBy).toMatch(/oneOf/)
+    // The rows the oneOf will be built from are untouched — assembleBoss
+    // reads `entries` to build its inner entries.
+    expect(groups[0]?.entries).toHaveLength(SUB_TABLE.length)
+  })
+
+  it('leaves a refused or access-rate-less block as the flagged `independent` approximation', () => {
+    // `not-a-partition` (Vorkath) and `no-access-rate` reaching this branch
+    // must NOT get the oneOf treatment — the identity didn't confirm a
+    // single-access-roll shape to model.
+    const refused = buildTableGroups(
+      groupByHeading(fromTemplate('treeherbseeddroplines', '1/600.0', SUB_TABLE))
+    )
+    expect(refused[0]?.oneOfAccess).toBeUndefined()
+    expect(refused[0]?.ambiguous).toMatch(/needs a human check/)
   })
 })

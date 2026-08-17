@@ -389,278 +389,274 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 5295,
-            "itemKey": "ranarr-seed",
-            "name": "Ranarr seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5295,
+                  "itemKey": "ranarr-seed",
+                  "name": "Ranarr seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0043159257660768235
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5300,
+                  "itemKey": "snapdragon-seed",
+                  "name": "Snapdragon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004029008863819501
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5304,
+                  "itemKey": "torstol-seed",
+                  "name": "Torstol seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003165558721114277
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5321,
+                  "itemKey": "watermelon-seed",
+                  "name": "Watermelon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 30
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0030211480362537764
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5313,
+                  "itemKey": "willow-seed",
+                  "name": "Willow seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0028776978417266188
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 21488,
+                  "itemKey": "mahogany-seed",
+                  "name": "Mahogany seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00259000259000259
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5314,
+                  "itemKey": "maple-seed",
+                  "name": "Maple seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00259000259000259
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 21486,
+                  "itemKey": "teak-seed",
+                  "name": "Teak seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00259000259000259
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5315,
+                  "itemKey": "yew-seed",
+                  "name": "Yew seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00259000259000259
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5288,
+                  "itemKey": "papaya-tree-seed",
+                  "name": "Papaya tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0020145044319097504
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5316,
+                  "itemKey": "magic-seed",
+                  "name": "Magic seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0015827793605571385
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5289,
+                  "itemKey": "palm-tree-seed",
+                  "name": "Palm tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0014388489208633094
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5317,
+                  "itemKey": "spirit-seed",
+                  "name": "Spirit seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0011510128913443832
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22877,
+                  "itemKey": "dragonfruit-tree-seed",
+                  "name": "Dragonfruit tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00086333419666753
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22869,
+                  "itemKey": "celastrus-seed",
+                  "name": "Celastrus seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0005755395683453237
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22871,
+                  "itemKey": "redwood-tree-seed",
+                  "name": "Redwood tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0005755395683453237
+                }
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
-            "num": 1,
-            "den": 231.7
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5300,
-            "itemKey": "snapdragon-seed",
-            "name": "Snapdragon seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 248.2
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5304,
-            "itemKey": "torstol-seed",
-            "name": "Torstol seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 315.9
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5321,
-            "itemKey": "watermelon-seed",
-            "name": "Watermelon seed",
-            "qty": {
-              "kind": "exact",
-              "n": 30
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 331
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5313,
-            "itemKey": "willow-seed",
-            "name": "Willow seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 347.5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 21488,
-            "itemKey": "mahogany-seed",
-            "name": "Mahogany seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 386.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5314,
-            "itemKey": "maple-seed",
-            "name": "Maple seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 386.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 21486,
-            "itemKey": "teak-seed",
-            "name": "Teak seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 386.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5315,
-            "itemKey": "yew-seed",
-            "name": "Yew seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 386.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5288,
-            "itemKey": "papaya-tree-seed",
-            "name": "Papaya tree seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 496.4
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5316,
-            "itemKey": "magic-seed",
-            "name": "Magic seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 631.8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5289,
-            "itemKey": "palm-tree-seed",
-            "name": "Palm tree seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 695
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 5317,
-            "itemKey": "spirit-seed",
-            "name": "Spirit seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 868.8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22877,
-            "itemKey": "dragonfruit-tree-seed",
-            "name": "Dragonfruit tree seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1158.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22869,
-            "itemKey": "celastrus-seed",
-            "name": "Celastrus seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1737.5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22871,
-            "itemKey": "redwood-tree-seed",
-            "name": "Redwood tree seed",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1737.5
+            "num": 5,
+            "den": 139
           }
         }
       ],
-      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 5/139 (ratio 1.0000), so its rows are one mutually-exclusive roll)"
+      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 5/139 (ratio 1.0000), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 5/139 — exact, not an approximation.)"
     },
     {
       "id": "abyssal-sire:5:materials",
@@ -835,159 +831,162 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 1438,
-            "itemKey": "air-talisman",
-            "name": "Air talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1438,
+                  "itemKey": "air-talisman",
+                  "name": "Air talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003083564600678384
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1446,
+                  "itemKey": "body-talisman",
+                  "name": "Body talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003083564600678384
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1440,
+                  "itemKey": "earth-talisman",
+                  "name": "Earth talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003083564600678384
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1442,
+                  "itemKey": "fire-talisman",
+                  "name": "Fire talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003083564600678384
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1448,
+                  "itemKey": "mind-talisman",
+                  "name": "Mind talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003083564600678384
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1444,
+                  "itemKey": "water-talisman",
+                  "name": "Water talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003083564600678384
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1454,
+                  "itemKey": "cosmic-talisman",
+                  "name": "Cosmic talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00123334977799704
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1452,
+                  "itemKey": "chaos-talisman",
+                  "name": "Chaos talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0009249838127832763
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 1462,
+                  "itemKey": "nature-talisman",
+                  "name": "Nature talisman",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0009249838127832763
+                }
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
-            "num": 1,
-            "den": 324.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1446,
-            "itemKey": "body-talisman",
-            "name": "Body talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 324.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1440,
-            "itemKey": "earth-talisman",
-            "name": "Earth talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 324.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1442,
-            "itemKey": "fire-talisman",
-            "name": "Fire talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 324.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1448,
-            "itemKey": "mind-talisman",
-            "name": "Mind talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 324.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1444,
-            "itemKey": "water-talisman",
-            "name": "Water talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 324.3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1454,
-            "itemKey": "cosmic-talisman",
-            "name": "Cosmic talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 810.8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1452,
-            "itemKey": "chaos-talisman",
-            "name": "Chaos talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1081.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1462,
-            "itemKey": "nature-talisman",
-            "name": "Nature talisman",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1081.1
+            "num": 3,
+            "den": 139
           }
         }
       ],
-      "notes": "Talismans (confirmed independent: 9 entries expanded from one {{talismandroplines}} transclusion, whose rates sum to its stated access rate 3/139 (ratio 1.0001), so its rows are one mutually-exclusive roll)"
+      "notes": "Talismans (confirmed independent: 9 entries expanded from one {{talismandroplines}} transclusion, whose rates sum to its stated access rate 3/139 (ratio 1.0001), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 3/139 — exact, not an approximation.)"
     },
     {
       "id": "abyssal-sire:7:other",
@@ -1171,7 +1170,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [

@@ -533,7 +533,7 @@
     },
     {
       "id": "amoxliatl:2:tertiary",
-      "mode": "independent",
+      "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -578,7 +578,16 @@
               "name": "Post-quest"
             }
           ]
-        },
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "amoxliatl:3:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",

@@ -16,7 +16,12 @@ assumption. Log judgement calls the spec doesn't cover in `docs/DECISIONS.md`.
 - **`packages/loot-model` may not import from `apps/*`.** It has zero runtime deps
   besides `zod`.
 - **Never re-hit the wiki to fix a parser bug.** Snapshots in `data/snapshots/`
-  (gitignored) are the source of truth for re-parsing; bump `parserVersion` instead.
+  (gitignored) are the source of truth for re-parsing — re-run `ingest parse`
+  against them. `apps/ingest/test/corpus-reproducibility.test.ts` (in `pnpm -r
+  test`) re-parses every committed document from its snapshot and fails loudly
+  on any drift, which is the actual staleness guard; `Boss.parserVersion` is
+  provenance metadata only (see `docs/DECISIONS.md`'s "`parserVersion` retired
+  as a staleness mechanism" entry for why it doesn't drive anything).
 - **Two licenses.** Code is MIT (`/LICENSE`); everything under `data/` is
   CC BY-NC-SA 3.0 (`data/LICENSE`) because it's derived from the OSRS Wiki. Never
   relicense `data/` as MIT.

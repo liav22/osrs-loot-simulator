@@ -83,6 +83,12 @@ export interface PartitionCheck {
   template: string
   /** The declared access rate as the page wrote it, e.g. `5/139`. */
   accessRate: string
+  /**
+   * `accessRate` split into its own numerator/denominator, present exactly
+   * when `verdict !== 'no-access-rate'`. What `assembleBoss` uses to build the
+   * `oneOf` wrapper's own `Rate.fixed` when `verdict === 'partition'`.
+   */
+  access: { num: number; den: number } | null
   /** Sum of the block's own rates, and that sum divided by the access rate. */
   sum: number
   ratio: number
@@ -109,6 +115,16 @@ export interface ParsedTableGroup {
   confirmedBy?: string
   /** The access-rate identity, for any block that came entirely from one transclusion. */
   partition?: PartitionCheck
+  /**
+   * Set exactly when `partition.verdict === 'partition'`: the block's rows are
+   * a confirmed mutually-exclusive draw, so `assembleBoss` wraps `entries` in
+   * one `oneOf` node behind a single access-rate entry instead of emitting
+   * them as N independently-rolled rows. `entries` itself is unchanged (still
+   * the flat per-item list) — this field only tells `assembleBoss` HOW to
+   * consume it. See `docs/DECISIONS.md`'s transclusion entry for why this
+   * replaced the accepted `independent` approximation.
+   */
+  oneOfAccess?: { num: number; den: number }
 }
 
 /** A resolved rarity, or the reason it could not be resolved. */
@@ -439,13 +455,18 @@ function tryReconcilePerVariant(
 }
 
 /** Parses `5/139` into a probability; null for anything else. */
-function parseFraction(text: string): number | null {
+/**
+ * Parses a `num/den` string, keeping both parts rather than collapsing to a
+ * single ratio — `transclusionPartition` needs the exact pair to build the
+ * `oneOf` access entry's own `Rate.fixed`, not just the decimal value.
+ */
+function parseFraction(text: string): { num: number; den: number } | null {
   const match = /^~?\s*([\d,.]+)\s*\/\s*([\d,.]+)\s*$/.exec(text.trim())
   if (match === null) return null
   const num = Number(match[1]?.replace(/,/g, ''))
   const den = Number(match[2]?.replace(/,/g, ''))
   if (!Number.isFinite(num) || !Number.isFinite(den) || den === 0) return null
-  return num / den
+  return { num, den }
 }
 
 /**
@@ -478,13 +499,14 @@ export function transclusionPartition(
   const access = parseFraction(accessRate)
   const sum = rates.reduce((total, rate) => total + (rate.kind === 'fixed' ? rate.num / rate.den : 0), 0)
 
-  if (access === null || access === 0) {
-    return { template, accessRate, sum, ratio: NaN, verdict: 'no-access-rate' }
+  if (access === null || access.num === 0) {
+    return { template, accessRate, access: null, sum, ratio: NaN, verdict: 'no-access-rate' }
   }
-  const ratio = sum / access
+  const ratio = sum / (access.num / access.den)
   return {
     template,
     accessRate,
+    access,
     sum,
     ratio,
     verdict: Math.abs(ratio - 1) <= PARTITION_TOLERANCE ? 'partition' : 'not-a-partition',
@@ -598,7 +620,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
   }
 
   for (const block of blocks) {
-    const resolved = block.lines.map((line) => ({ line, resolution: parseRarity(line.rarity) }))
+    let resolved = block.lines.map((line) => ({ line, resolution: parseRarity(line.rarity) }))
 
     if (resolved.some(({ resolution }) => resolution.rate === null)) {
       flushWeighted()
@@ -618,6 +640,42 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
           .join(', ')}`,
       })
       continue
+    }
+
+    // `always`-rate rows interleaved with chance-based ones under one
+    // heading, split out BEFORE any mode inference runs — not scoped to the
+    // `Pre-roll` heading the way this was first fixed for (below). Yama's
+    // `Contract` heading is 18 `Always` rows plus one `1/100` chance row
+    // (`Yami`) with no `Pre-roll`/`Tertiary` keyword, so it used to reach the
+    // homogeneous-denominator merge path with the `always` rows still mixed
+    // in: `denominators` is computed from `fixed`-kind rates only, so it saw
+    // one denominator (100, from `Yami` alone) and merged EVERY row — `always`
+    // ones included — onto it. `toEntry`'s weight formula
+    // (`rate.num * denominator / rate.den`) then gave each `always` row
+    // (`num: 1, den: 1`) a weight equal to the WHOLE denominator, shipping 18
+    // rows at `weight: 100` against `denominator: 100` — an 18x overflow
+    // `weights_sum` and `WeightsExceedDenominatorError` both caught, but only
+    // after the fact. `independent`/`preroll` are unaffected by this
+    // specifically (`assembleBoss` reads `entry.rarity.kind`, not the
+    // computed `weight`, for non-`weighted` modes) — this is about anything
+    // that can end up `weighted`: the homogenise/merge path above, the
+    // dominant/outlier split, and the final heterogeneous fallback all build
+    // their entries from `resolved` without filtering out `always` rows
+    // first, so all three needed this, not just one of them.
+    const mixedAlwaysRows = resolved.filter(({ resolution }) => resolution.rate?.kind === 'always')
+    if (mixedAlwaysRows.length > 0 && mixedAlwaysRows.length < resolved.length) {
+      flushWeighted()
+      groups.push({
+        mode: 'always',
+        headings: [block.heading],
+        section: block.section,
+        denominator: null,
+        entries: mixedAlwaysRows.map(({ line, resolution }) =>
+          toEntry(line, resolution.rate!, null, resolution.conditions)
+        ),
+        ambiguous: null,
+      })
+      resolved = resolved.filter(({ resolution }) => resolution.rate?.kind !== 'always')
     }
 
     const allAlways =
@@ -672,6 +730,14 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       // own `always` table, evaluated unconditionally rather than as a
       // competing step in the ordered chain, is correct instead of merely
       // schema-legal.
+      //
+      // This is now a no-op in practice, not dead weight to delete: the mixed
+      // always+fixed split above runs for every block BEFORE the heading-text
+      // checks, so `resolved` here never has an `always` row left to find by
+      // the time this branch is reached. Left in place, rather than removed,
+      // because `preroll`'s own `always` rejection is a schema-level rule
+      // (landmine #4) independent of where the general split happens to live
+      // — if that ever moves, this is the branch that would need it back.
       const alwaysRows = resolved.filter(({ resolution }) => resolution.rate?.kind === 'always')
       const fixedRows = resolved.filter(({ resolution }) => resolution.rate?.kind === 'fixed')
       if (alwaysRows.length > 0) {
@@ -844,33 +910,51 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
       toEntry(line, resolution.rate!, null, resolution.conditions)
     )
 
-    // A confirmed partition is modelled as `independent`, NOT `preroll`, and
-    // the difference is measurable rather than stylistic.
+    // `preroll` is rejected regardless of the partition verdict — see the
+    // marginal-rates numbers in this file's own history and
+    // `docs/DECISIONS.md`'s "Transcluded sub-tables are `independent`" entry.
+    // Both modes get the block's own rows right (disjoint, so a first-hit-wins
+    // chain and a set of independent rolls give identical marginals inside the
+    // block); they differ in what they claim about everything AFTER the
+    // block, and `preroll`'s suppression of later weighted/preroll tables is
+    // simply wrong measured against the wiki's own published rates (Arrg's
+    // Coal 23.45% under, Giant sea snake's Adamant dart tip 13.83% under,
+    // Abyssal Sire's Earth orb 4.50% under — as `independent`, exact).
     //
-    // Both modes get the block's own rows right — they are disjoint, so a
-    // first-hit-wins chain and a set of independent rolls give identical
-    // marginals inside the block. They differ in what they claim about
-    // everything AFTER the block: `preroll` suppresses every later weighted
-    // and preroll table, and nothing in the identity licenses that. Measured
-    // against the wiki's own published rates, that suppression is simply
-    // wrong — it put Arrg's Coal 23.45% under its stated 1/42.7, Giant sea
-    // snake's Adamant dart tip 13.83% under, Abyssal Sire's Earth orb 4.50%
-    // under. As `independent`, every one of those lands exactly on the stated
-    // figure.
+    // A CONFIRMED partition (`verdict === 'partition'`) goes one step further
+    // than "not preroll": the identity proves the rows are one mutually-
+    // exclusive access roll, which is exactly what a `oneOf` node models —
+    // exact, not an approximation, matching CoX's own herb/seed `oneOf`
+    // nesting (`data/overrides/ancient-chest.json`). `oneOfAccess` tells
+    // `assembleBoss` to wrap `entries` in one `oneOf` behind a single
+    // access-rate entry instead of emitting them as N independently-rolled
+    // rows — see `docs/DECISIONS.md`'s transclusion entry for the corpus
+    // effect and why this replaces the `independent`-approximation era
+    // (2 rows of one sub-table co-occurring in a single kill, ~0.06% on
+    // Abyssal Sire) entirely rather than just re-labelling it.
     //
-    // The cost is that two rows of one sub-table can co-occur in a single
-    // simulated kill, which the real access roll forbids: about 0.06% of kills
-    // on Abyssal Sire. That is the same quantified, documented kill-log
-    // artifact the CoX decision already accepts, and it is confined to the
-    // block instead of distorting its neighbours.
-    //
-    // `apps/ingest/test/marginal-rates.test.ts` is what caught this and is
-    // what keeps it caught.
-    // The mode switch is driven by the block coming entirely from ONE
-    // transclusion — that is what makes `preroll`'s suppression of later
-    // tables unsupportable. The identity is the evidence recorded alongside
-    // it, and it is what says whether the rows are additionally a clean
-    // partition of the declared access rate.
+    // A verdict of `not-a-partition` (Vorkath: effective rates folding in the
+    // main table's own seed slots) or `no-access-rate` reaching this far is
+    // unchanged: modelled as `independent` with flat entries, still flagged —
+    // the identity did not confirm a single-access-roll shape to model.
+    if (partition !== null && partition.verdict === 'partition' && partition.access !== null) {
+      groups.push({
+        mode: 'independent',
+        headings: [block.heading],
+        section: block.section,
+        denominator: null,
+        entries,
+        ambiguous: null,
+        confirmedBy:
+          `${entries.length} entries expanded from one {{${partition.template}}} transclusion` +
+          `${describePartition(partition)}. Modelled as a single \`oneOf\` at the access rate ` +
+          `${partition.accessRate} — exact, not an approximation.`,
+        partition,
+        oneOfAccess: partition.access,
+      })
+      continue
+    }
+
     if (partition !== null) {
       groups.push({
         mode: 'independent',
@@ -878,11 +962,11 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
         section: block.section,
         denominator: null,
         entries,
-        // Still flagged. The identity proves the rows are ONE roll; modelling
-        // them as independent rolls is a deliberate approximation of that, and
-        // the document does not express the single-access-roll shape at all.
-        // Clearing this would claim the pipeline derived the structure
-        // unaided, which is not what happened.
+        // Still flagged. The identity did not confirm a single-access-roll
+        // shape (Vorkath's rows overshoot it; `no-access-rate` blocks have
+        // nothing to confirm at all), so modelling as `oneOf` would not be
+        // licensed the way it is above — this stays the `independent`
+        // approximation, and the document does not claim otherwise.
         ambiguous:
           `heading "${block.heading}" is the transcluded sub-table {{${partition.template}}}` +
           `${describePartition(partition)}. Modelled as independent rolls to preserve the wiki's per-row ` +

@@ -662,6 +662,30 @@
     },
     {
       "id": "the-whisperer:4:tertiary",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28336,
+            "itemKey": "ancient-blood-ornament-kit",
+            "name": "Ancient blood ornament kit",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "the-whisperer:5:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -760,21 +784,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 28336,
-            "itemKey": "ancient-blood-ornament-kit",
-            "name": "Ancient blood ornament kit",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "always"
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 28246,
             "itemKey": "wisp",
             "name": "Wisp",
@@ -794,7 +803,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -828,7 +837,8 @@
       },
       {
         "check": "not_on_watchlist",
-        "ok": true
+        "ok": false,
+        "detail": "other: Downgraded from verified, not newly discovered as needs_review (docs/DECISIONS.md's 'Weight-overflow investigated' entry, 2026-08-17). Identical shape to the other two Desert Treasure II 'awakened' bosses' own watchlist entries: Supplies is 'These supplies are all dropped together' over Ancient brew(2), Prayer potion(3), Manta ray, each at 1/5.5, modelled as a `weighted` pick-one-of-three instead of one access roll granting all three. The same fix (or non-fix) applies to all three at once."
       },
       {
         "check": "drops_covered",

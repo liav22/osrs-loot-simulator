@@ -4201,7 +4201,9 @@
       "notes": "Dizana's quiver (guaranteed) and the Smol Heredit pet roll (flat 1/200, independent of the unique-table mechanic) both sit OUTSIDE wave 12's own weighted-4800 pool on the page -- not another row in that table."
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Wave 1"
+  },
   "status": "needs_review",
   "validation": {
     "ok": false,
@@ -4246,7 +4248,7 @@
       }
     ]
   },
-  "source": "override",
+  "source": "merged",
   "parserVersion": 1,
   "repeatable": true
 }

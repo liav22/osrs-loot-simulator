@@ -174,20 +174,60 @@ export function assembleBoss(
   // is `'normal'` needs no override at all.
   const contextDefaults = variants.includes('normal') ? {} : { variant: variants[0] }
 
+  const itemNodeFor = (entry: ParsedEntry, warnings: string[]): Record<string, unknown> => {
+    const { itemId, itemKey } = resolveItem(entry.name, options.itemIndex, options.allowlist, warnings)
+    return {
+      kind: 'item' as const,
+      itemId,
+      itemKey,
+      name: entry.name,
+      qty: parseQuantity(entry.quantity),
+      ...(entry.noted ? { noted: true } : {}),
+    }
+  }
+
+  const noteFor = (group: ParsedTableGroup): string =>
+    group.confirmedBy !== undefined
+      ? `${group.headings.join(' / ')} (confirmed ${group.mode}: ${group.confirmedBy})`
+      : group.headings.join(' / ')
+
   const tableInputs: unknown[] = groups
     .filter((group) => group.entries.length > 0)
     .map((group, index) => {
       const tableId = `${options.slug}:${index}:${slugify(group.headings.join('-'))}`
-      const entries = group.entries.map((entry) => {
-        const { itemId, itemKey } = resolveItem(entry.name, options.itemIndex, options.allowlist, warnings)
-        const node = {
-          kind: 'item' as const,
-          itemId,
-          itemKey,
-          name: entry.name,
-          qty: parseQuantity(entry.quantity),
-          ...(entry.noted ? { noted: true } : {}),
+
+      // A confirmed transcluded partition: one `oneOf` node, at the block's
+      // own declared access rate, wrapping every row instead of N
+      // independently-rolled entries. `oneOf` entries are schema-required to
+      // carry a `weight` rate — each row's own published probability IS its
+      // relative share of the pool, since the partition identity already
+      // confirmed these rows sum to the access rate this entry sits behind,
+      // so no rescaling is needed for the proportions to come out right.
+      if (group.oneOfAccess !== undefined) {
+        const oneOfEntries = group.entries.map((entry) => {
+          const conditions = conditionsFor(entry, group.section)
+          return {
+            node: itemNodeFor(entry, warnings),
+            rate: { kind: 'weight' as const, weight: entry.rarity.num / entry.rarity.den },
+            ...(conditions ? { conditions } : {}),
+          }
+        })
+
+        return {
+          id: tableId,
+          mode: group.mode,
+          entries: [
+            {
+              node: { kind: 'oneOf' as const, entries: oneOfEntries },
+              rate: { kind: 'fixed' as const, num: group.oneOfAccess.num, den: group.oneOfAccess.den },
+            },
+          ],
+          notes: noteFor(group),
         }
+      }
+
+      const entries = group.entries.map((entry) => {
+        const node = itemNodeFor(entry, warnings)
         const conditions = conditionsFor(entry, group.section)
         if (group.mode === 'weighted') {
           return {
@@ -210,10 +250,7 @@ export function assembleBoss(
         id: tableId,
         mode: group.mode,
         entries,
-        notes:
-          group.confirmedBy !== undefined
-            ? `${group.headings.join(' / ')} (confirmed ${group.mode}: ${group.confirmedBy})`
-            : group.headings.join(' / '),
+        notes: noteFor(group),
         ...(group.mode === 'weighted' && group.denominator !== null
           ? { denominator: group.denominator }
           : {}),

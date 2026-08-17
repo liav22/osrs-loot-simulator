@@ -656,7 +656,7 @@
     },
     {
       "id": "shellbane-gryphon:6:tertiary",
-      "mode": "independent",
+      "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
@@ -689,7 +689,16 @@
           "rate": {
             "kind": "always"
           }
-        },
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "shellbane-gryphon:7:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",

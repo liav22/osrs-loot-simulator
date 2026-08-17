@@ -5092,3 +5092,493 @@ all produce drops; the remaining `WeightsExceedDenominatorError` throws on
 ~7 sources are pre-existing corpus issues unrelated to this fix, not
 introduced by it). `apps/web`'s full 49-test e2e suite and 75-test unit
 suite pass clean.
+
+## The needs_review recount — GWDRDT was undercounted, and a new cause class exists
+
+`docs/HANDOFF.md` section 3's per-cause table was self-flagged stale (it predates
+ToB/CoX/Fortis Colosseum shipping) and asked to be re-run rather than trusted.
+Recounted against the live `data/bosses/*.json` corpus (42 `needs_review`, 2
+`manual_override`, unchanged totals) by cross-referencing each source's
+`validation.checks` failures and table `notes`/`ambiguous` text, not by
+re-guessing from memory. Two real corrections came out of it:
+
+- **GWDRDT was undercounted: 4 sources, not 2.** `kree-arra` and
+  `general-graardor` were the only two ever named (landmine #3). `drops_covered`
+  detail strings show `commander-zilyana` and `k-ril-tsutsaroth` missing the
+  *identical* item set (Dragon med helm, Dragon spear, Dragonstone, Loop half of
+  key, Chaos talisman, Adamant javelin, Law/Death rune) — the same
+  `{{GWDRDT}}`-not-`rare_drop_table.json` hole, just never counted because
+  nobody had diffed their `drops_covered` reasons against the other two.
+- **A new, previously undocumented cause class: `weights_sum` genuinely
+  fails on 6 sources** (`chaos-fanatic`, `grotesque-guardians`, `mad-angel`,
+  `maggot-king`, `phosani-s-nightmare`, `yama`), plus the two GWDRDT sources
+  above double up on it (`commander-zilyana`, `k-ril-tsutsaroth`) — 8 sources
+  total where a `weighted` table's own declared weights sum to MORE than its
+  denominator, not less (shortfall is legitimate implicit `nothing`; overflow
+  is not, per `weights-sum.ts`'s own documented rule). This is not the
+  transcluded-mode approximation (that ships correct numbers with an unexpressed
+  structure) — this ships genuinely wrong per-item odds for the affected table,
+  and in at least 6-8 cases `compileTable` actually THROWS
+  `WeightsExceedDenominatorError` rather than merely mis-computing (see the
+  entry above this one — the ~7-source throw count noted there is this same
+  set). Investigated below.
+
+Full corrected breakdown (42 needs_review, reconciles exactly):
+
+| cause | count | sources |
+|---|---|---|
+| Transcluded-mode question | 9 | abyssal-sire, araxxor, arrg, bryophyta, dagannoth-{prime,rex,supreme}, deranged-archaeologist, giant-sea-snake |
+| "Uniques"/"Mutagens" heading question | 5 | phantom-muspah, sarachnis, shellbane-gryphon, the-nightmare, zulrah |
+| Genuinely unknowable curves | 3 | duke-sucellus, zalcano, reward-pool |
+| Blocked, deliberately | 1 | reward-cart |
+| GWDRDT (was 2, corrected to 4) | 4 | kree-arra, general-graardor, commander-zilyana, k-ril-tsutsaroth |
+| Other (Lua invoke / items_known) | 2 | black-knight-titan, salarin-the-twisted |
+| Raids (shipped, watchlisted) | 4 | chest-tombs-of-amascut, monumental-chest, ancient-chest, rewards-chest-fortis-colosseum |
+| Weight-overflow (new class, non-GWD) | 6 | chaos-fanatic, grotesque-guardians, mad-angel, maggot-king, phosani-s-nightmare, yama |
+| Coverage gaps (`drops_covered`, unrelated to transclusion/GWD) | 6 | alchemical-hydra, black-demon, chaos-elemental, kalphite-queen, nex, obor |
+| items_known only | 1 | chronozon |
+| Vorkath's refused seed partition | 1 | vorkath — ratio 1.6665, correctly refused (see landmine #11d's own entry), its own bespoke residual |
+
+Reconciles to 42: the table's own rows sum to 38 (9+5+3+1+4+2+6+6+1+1, no
+double-counting — `commander-zilyana`/`k-ril-tsutsaroth` sit only in the
+GWDRDT row, the weight-overflow row's "6" is already non-GWD-only), plus the
+4 watchlisted raids (`chest-tombs-of-amascut`, `monumental-chest`,
+`ancient-chest`, `rewards-chest-fortis-colosseum`) that the table
+deliberately excludes as a different kind of `needs_review` (see the top of
+`docs/HANDOFF.md` section 1) but that still count toward the 42 headline.
+
+## Weight-overflow investigated: three distinct defects, not one, and it already reached `verified`
+
+The entry above's original hypothesis — "the equal-denominators-mean-one-table
+heuristic mis-firing on rows whose individual rarity denominator happens to be
+100" — was tested against the real wikitext snapshots and does **not**
+generalise. It explains the shape of one case (Yama) but not the mechanism, and
+explains none of the other seven. Investigation only, nothing fixed.
+
+**Three separate, confirmed defects, found by reading each overflowing
+table's raw `data/snapshots/wikitext/` body rather than the compiled JSON:**
+
+1. **`always`+`fixed` mixed headings fall through the all-or-nothing `allAlways`
+   check into the default merge path, which never strips `always` rows before
+   homogenising.** Confirmed exact root cause of Yama's dramatic 1801/100
+   overflow (18x). Yama's `Contract` heading is 18 `rarity=Always` rows plus one
+   `rarity=1/100` row (`Yami`). `buildTableGroups`'s `allAlways` branch requires
+   *every* row to be `always`-kind, so this block fails it and falls through;
+   it isn't `Tertiary`/`Pre-roll` either, so it lands in the final
+   heterogeneous-denominator path, which computes `denominators` from `fixed`
+   rows only (Yami's `/100`), homogenises everything onto 100, and calls
+   `toEntry` on the 18 `always` rows too — `toEntry`'s weight formula
+   (`rate.num * denominator / rate.den`) gives each of them `weight: 100`
+   because an `always` `ParsedRate` carries `num: 1, den: 1`. The
+   `PREROLL_HEADINGS` branch already splits `always` rows into their own
+   `always` table before doing anything else (the Monumental chest fix, this
+   file's "dropversion= parser fix" entry) — this is the same defect, just
+   never closed in the *other* branch that reaches the homogenise/merge step.
+   **Mechanical, narrowly scoped, no schema change**: hoist the same
+   `alwaysRows` split up before the final heterogeneous-denominator block, not
+   just inside `PREROLL_HEADINGS`.
+
+2. **"These items are always dropped together" bundles are parsed as N
+   independently-competing weighted rows instead of one bundled outcome.**
+   Confirmed to the unit on Grotesque Guardians: its `Supplies` heading's
+   Magic/Ranging/Super combat potion trio (`raritynotes` cites one shared
+   `pots` footnote reading "These three potions are always dropped together")
+   is one 6/142 outcome that grants all three, not three competing 6/142
+   alternatives — parsed as the latter, it contributes 18 to the merged
+   table's weight sum instead of 6, and 154 (measured) − 142 (denominator) =
+   **12**, exactly the double-counted excess (2 × 6). Reproduced, less
+   exactly but for the same reason, on Mad Angel: its `Supply batch` heading
+   has no `raritynotes` citation at all, only PROSE above the table ("Either
+   sharks or yellowfins drop, bundled with a prayer potion(2) and a super
+   combat potion(1)") — a 16/150 access roll, half-split between two exclusive
+   fish, that ALSO unconditionally grants both potions. Parsed as four
+   independent 8/150–16/150 rows, it contributes ~48 to the pool instead of
+   16, and the measured overflow (30) is within the range that excess
+   predicts. **This is not a heuristic bug fixable by a parser tweak — the
+   schema has no node for "these N items arrive together as one outcome."**
+   `Node` is `item | tableRef | nothing | oneOf`; none of them expresses
+   "always" as a bundle *within* a `weighted` entry. Needs either a schema
+   extension or an override per source, not a `build-tables.ts` patch.
+
+3. **A composite, multi-table aggregate rarity figure inserted as if it were
+   this table's own share.** K'ril's `Other` heading's `Coins` row is
+   `rarity=36.7/127` with `raritynotes`: "Coins come from rolls on all loot
+   tables, including the unique table, GDT and RDT" — the wiki's own figure
+   explicitly disclaims being scoped to just this table, and the parser
+   includes the whole 36.7 anyway. K'ril's `Potions` heading also has two of
+   defect #2's pairs (Super attack/strength, Super restore/Zamorak brew, each
+   "always dropped together"). The measured overflow (6.7) doesn't cleanly
+   decompose into either defect alone — both are present and compounding, and
+   untangling the exact split needs more than a read of the wikitext.
+
+**This already reached `verified`, silently, which is the more important
+finding.** Grepping every `data/snapshots/wikitext/*.json` for co-drop
+phrasing ("dropped together" / "dropped alongside" / "bundled with" / "always
+accompan-") and cross-referencing against corpus status finds **13 sources**
+carrying it, not 8: the same 8 from the recount above, plus `duke-sucellus`,
+`kree-arra`, `nex`, `phantom-muspah` (all already `needs_review` for other
+reasons), **and `the-leviathan`, `the-whisperer`, `vardorvis` — three of the
+four Desert Treasure II "awakened" bosses, all currently `status: 'verified'`,
+all passing `weights_sum` clean.** Their shared `Supplies` heading ("These
+supplies are all dropped together") is the identical defect #2 shape (3 items,
+each `1/5.5`, parsed as 3 competing alternatives instead of one bundle) — it
+just never overflows, because the table's denominator (5.5) has enough slack
+to absorb the double-counted excess (sum 3 vs denominator 5.5) without
+tripping `weights_sum`'s overflow-only check. The check cannot see this shape
+by construction (shortfall is legitimate, so a shortfall caused by the wrong
+reason looks identical to a shortfall caused by the right one) — this is
+exactly the "a table that merges wrongly but still reconciles is silently
+wrong" case, now with three real instances, not a hypothetical.
+
+**Not fixed.** Defect #1 is a scoped, mechanical parser fix. Defects #2/#3
+are a real modelling gap (no way to express a co-drop bundle at all) that
+touches three already-`verified` sources' correctness, not just the eight
+`needs_review` ones counted above — reported for a decision on how deep to
+take the fix (schema extension vs. per-source override) and whether
+`the-leviathan`/`the-whisperer`/`vardorvis` should be downgraded off
+`verified` until it lands, before any of it is touched.
+
+## Transcluded sub-tables: modelled properly as a `oneOf` at the access rate
+
+The mode question (this file's "The mode question on transcluded blocks" and
+"Transcluded sub-tables are `independent`" entries) is closed. Section 3's
+own two options were: accept the `independent` approximation and clear the
+flag on a confirmed partition, or model it properly with a `oneOf` node at
+the access rate. Took the second — exact beats an accepted approximation,
+and CoX's own herb/seed slots (`data/overrides/ancient-chest.json`) already
+prove the pattern works and is buildable, so this isn't new territory.
+
+**What changed.** `build-tables.ts`'s heterogeneous-denominator fallback now
+branches on `partition.verdict`, not just `partition !== null`:
+
+- `verdict === 'partition'` (the identity confirmed the rows sum to the
+  declared access rate): the group carries a new `oneOfAccess: {num, den}`
+  field (the access rate's own numerator/denominator — `parseFraction` was
+  widened to keep both instead of collapsing to one ratio, since the `oneOf`
+  wrapper's `Rate.fixed` needs the exact pair) and `ambiguous` clears to
+  `null`. `assembleBoss` reads `oneOfAccess` and, instead of mapping
+  `group.entries` to N independently-rolled table entries, builds ONE entry:
+  `{ rate: fixed(accessNum, accessDen), node: { kind: 'oneOf', entries: [...] } }`.
+  Each inner `oneOf` entry keeps its item's own published rate as a `weight`
+  (`num/den` directly — `oneOf` entries are schema-required to carry a
+  `weight` rate, and since the partition identity already proved these rows
+  sum to the access rate, the raw per-item probabilities ARE their correct
+  relative share of the pool; no rescaling needed).
+- `verdict === 'not-a-partition'` (Vorkath) or `'no-access-rate'`
+  (`WildernessSlayerDropTable`-shaped blocks, abstained on, never reaching
+  this far anyway since their heading is literally `Tertiary`) are
+  unchanged: flat `independent` entries, still flagged. The identity didn't
+  confirm a single-access-roll shape for either, so the `oneOf` treatment
+  isn't licensed.
+
+**A small, accepted precision trade-off, worth stating explicitly.** The
+`oneOf`'s internal weights are each item's own published rate; their sum is
+only ever *within `PARTITION_TOLERANCE`* (1%, measured spread under 0.3%) of
+the declared access rate the outer entry uses, because the wiki rounds
+denominators to one decimal place. So a `oneOf` item's true marginal
+probability now shifts by that same sub-0.3% from its own individually-cited
+rate, in exchange for the co-occurrence being genuinely impossible (exact,
+matching the real single-access-roll mechanic) rather than a ~0.06%-of-kills
+artifact. `marginal-rates.test.ts`'s 0.5% tolerance already accommodates
+this — checked, not assumed: it passed clean against the regenerated corpus.
+
+**Corpus effect, measured via a full unscoped `ingest parse` (no
+`--tier`/`--source` filter) plus `ingest site-index`:** exactly the 9
+sources that were `needs_review` on the mode question alone —
+`abyssal-sire`, `araxxor`, `arrg`, `bryophyta`, `dagannoth-{prime,rex,supreme}`,
+`deranged-archaeologist`, `giant-sea-snake` — flipped to `verified`. 55 -> 64
+verified, 42 -> 33 needs_review, `manual_override`/`parse_failed` unchanged.
+`corpus-reproducibility.test.ts` passes against the regenerated
+`data/bosses/*.json` (it failed first, correctly, against the stale
+committed documents before the re-parse — that's the guard working, not a
+regression). Full `pnpm -r test`/`pnpm -r typecheck` green, including
+`packages/loot-model/test/brutus.test.ts` (untouched by this change, run as
+the regression gate anyway since `assemble-boss.ts` is engine-adjacent).
+
+**One test updated, not just re-run**: `build-tables.test.ts`'s "stays
+flagged, because the single-access-roll shape is still not modelled" case
+is inverted (kept, not deleted) into "models a confirmed partition as a
+oneOf at the access rate, and clears the flag", plus a new case pinning that
+a refused or access-rate-less block still gets the old flagged treatment —
+the same "invert rather than delete" discipline the transclusion-fix and
+dropversion-fix entries above already used.
+
+## `parserVersion` retired as a staleness mechanism, not the field itself
+
+CLAUDE.md's hard rule read "bump `parserVersion` instead" of re-hitting the
+wiki to fix a parser bug — but nothing ever bumped it (`apps/ingest/src/
+main.ts` writes the literal `1` on every parse invocation, unconditionally)
+and nothing ever read it back to decide whether a document needed
+re-parsing. A rule nothing enforces is the same shape as a guard that's
+hardcoded `{ ok: true }` — this project's own recurring "constant-returning
+validation checks" / landmine #11f lesson, just in prose instead of code.
+
+**Two ways to close it: wire a real `CURRENT_PARSER_VERSION` constant and a
+staleness check, or drop the rule.** Took the second. `apps/ingest/test/
+corpus-reproducibility.test.ts` already IS the staleness guard, and a better
+one than a version-number comparison would be: it re-parses every committed
+document from its actual snapshot and diffs the real output, so it catches
+EVERY behaviour change, not just the ones a human remembered to bump a
+constant for. A version-number check would only ever say "this document is
+behind," never "and here is what changed" — the diff already says both, has
+already caught real staleness twice (`monumental-chest`, landmine #1; this
+session's `data/bosses/*.json` before the transclusion re-parse, two entries
+above), and runs in `pnpm -r test`/CI already. Building a second, weaker
+mechanism next to a stronger one already running would be exactly the kind
+of manual-discipline dependency (remember to bump the constant on every
+parser change) this project has repeatedly found does not hold up — the
+whole reason `scope-invariant.ts`'s mutation harness and the "assert a check
+did non-trivial work" rule (landmine #11f) exist at all.
+
+**What changed:** CLAUDE.md's rule no longer prescribes bumping
+`parserVersion`; it names `corpus-reproducibility.test.ts` as the actual
+mechanism instead. `Boss.parserVersion`'s schema comment
+(`packages/loot-model/src/schema.ts`) states plainly that it is provenance
+metadata only, not a staleness input, so the next person who considers
+wiring a comparison against it finds this reasoning first rather than
+re-discovering it. **The field itself is not removed** — `parserVersion:
+number` is named in `PROJECT_PLAN.md` section 4.5's `Boss` type, unlike
+`killCountAtLeast` (retired for real, zero uses anywhere) this one is a
+committed spec field with real (if inert) provenance value, the same
+standing `wikiRevId` already has. Removing it would be a schema change
+nobody asked for; softening the rule that falsely implied it was load-bearing
+is the actual fix.
+
+## Three verified sources downgraded on the bundle defect, before any fix existed
+
+`the-leviathan`, `the-whisperer`, `vardorvis` were `verified` and shipping
+wrong odds — the "Weight-overflow investigated" entry above found their
+`Supplies` heading is "these supplies are all dropped together" (one access
+roll, all three items), modelled as a `weighted` pick-one-of-three because
+the schema has no bundle representation. Downgraded to `needs_review` via
+`data/mechanics-watchlist.json` (`mechanic: 'other'`, matching Duke Sucellus
+and Zalcano's precedent for "parses cleanly, real mechanic invisible to the
+rows"), deliberately BEFORE any fix — a `needs_review` badge on data that is
+actually wrong is honest; a `verified` badge on it is not, and closing that
+gap does not need the fix to exist first.
+
+**`blockedBy: []` for all three, not the boss's own title** — got this wrong
+on the first attempt and `checkWatchlistConsistency` caught it immediately
+(exactly what it's for): `blockedBy` lists OTHER pages a mechanic depends on
+(`reward-cart` -> `["Wintertodt"]`), never a source's own boss page — that
+boss carries the mechanic directly rather than being blocked by it, per
+`duke-sucellus`'s and `zalcano`'s own `blockedBy: []`. Also had to stop
+naming the other two bosses by their exact page titles inside each entry's
+`detail` (rule 4a flags a detail that names a *different* source's boss page
+by title) — reworded to "the other two Desert Treasure II 'awakened'
+bosses' own watchlist entries" instead, which says the same thing without
+tripping the check.
+
+Corpus effect: 64 -> 61 verified, 33 -> 36 needs_review. `data/bosses/*.json`
+and `data/index.json` regenerated via a full unscoped `ingest parse` +
+`ingest site-index`; `watchlist.test.ts` and the full `pnpm -r test` pass.
+
+## Yama's `always`+`fixed` fallthrough — fixed, mechanically, no design attached
+
+Confirmed and fixed the specific root cause the weight-overflow entry named
+for Yama: `buildTableGroups`'s `allAlways` check requires EVERY row in a
+block to be `always`-kind, so a block mixing `always` and `fixed` rows (18
+`Always` "Contract" rewards plus one `1/100` chance row, `Yami`) fails it and
+falls through. The block then reaches the homogeneous-denominator merge path
+(`denominators` is built from `fixed`-kind rates only, so it saw one
+denominator — 100, from `Yami` alone — and merged EVERY row onto it,
+`always` ones included). `toEntry`'s weight formula
+(`rate.num * denominator / rate.den`) gives an `always` row (`num: 1, den:
+1`) a weight equal to the WHOLE denominator, so all 18 shipped at `weight:
+100` against `denominator: 100` — the measured 1801/100, 18x overflow.
+
+**Fix: hoist the always-row split to run for every block, before any
+mode-inference branch, not just inside the `Pre-roll` heading branch that
+already had it** (Monumental chest's Cabbage/Message rows, this file's
+"dropversion= parser fix" entry). `resolved` (now `let`, was `const`) is
+reassigned to the non-`always` remainder whenever a block has BOTH kinds
+mixed (`mixedAlwaysRows.length > 0 && mixedAlwaysRows.length < resolved.length`
+— pure-`always` and pure-`fixed` blocks are untouched, so `allAlways`/
+`ALWAYS_HEADINGS` still see what they always saw). The `Pre-roll` branch's
+own copy of this split is left in place rather than deleted or restructured
+— it is now a guaranteed no-op (by the time it runs, `resolved` has already
+had every `always` row split out), but `preroll`'s own rejection of inline
+`always` entries is a schema-level rule (landmine #4) independent of where
+the general split happens to live, so removing it would be tidying a
+correct, tested branch for a marginal-risk gain. Its comment now says so.
+
+**Why this is a real, general defect and not just Yama's own bug**: the same
+`resolved.map(...)` (no `always`-kind filter) pattern that mis-built Yama's
+`Contract` table exists identically in the homogeneous-merge path, the
+dominant/outlier split, AND the final heterogeneous fallback — all three
+build weighted-shaped entries straight off `resolved` without excluding
+`always` rows first. Only `independent`/`preroll` modes were ever safe
+(`assembleBoss` reads `entry.rarity.kind`, not the computed `weight`, for
+those). Hoisting the split before ALL of them, rather than patching whichever
+one Yama happened to hit, is what makes this "the model," not "the call
+site" (CLAUDE.md's own framing).
+
+**A real, traced, harmless side effect surfaced by the fix, not introduced by
+it**: `rewards-chest-fortis-colosseum`'s `source` flipped from `'override'`
+to `'merged'` and its `contextDefaults` gained an inert `variant: 'Wave 1'`.
+Root cause: Wave 12's own raw heading has Dizana's quiver (`Always`) sitting
+beside Smol Heredit (`1/200`) and a 792/4800 weighted pool — the identical
+shape to Yama's `Contract`, on the page this override happens to fully
+supersede. Before this fix, that heading's overflow (or some downstream
+consequence of it) kept the WHOLE generated base document from assembling at
+all (`result.boss: null`), so the override always won by default with no
+generated base underneath at all (`source: 'override'`). Now a real (if
+entirely superseded) generated base exists, so `source` correctly reads
+`'merged'`. **The override's own 13 tables are byte-identical** — confirmed
+by diff, not assumed — so nothing simulation-relevant changed. The leaked
+`contextDefaults.variant: 'Wave 1'` is genuinely inert: `boss.variants` stays
+`['normal']` (so the UI never offers "Wave 1" as an option) and none of the
+13 override tables carry a `variant` condition (so nothing ever reads this
+default even if a URL set it by hand). `rewards-chest-fortis-colosseum.test.ts`'s
+`source` assertion updated (inverted, not deleted) to expect `'merged'` and
+explain why. **Not fixed, and out of scope for this entry**: `applyOverride`
+letting `contextDefaults`/`variants` leak through from a discarded generated
+base even when `tables` is fully replaced is a real, narrow gap in its own
+right — flagged here for whoever next touches `applyOverride`'s merge
+semantics, not chased down now.
+
+Corpus effect: verified/needs_review counts unchanged (Yama was already
+`needs_review` for unrelated reasons — an unparseable-rarity gap and a
+`drops_covered` shortfall, neither touched by this fix — so removing its
+`weights_sum` failure doesn't flip its status). `data/bosses/yama.json`'s
+`Contract` table now correctly reads `sum: 1, denominator: 100` (just
+`Yami`), not `1801/100`. Full `pnpm -r test`/`typecheck` green, including
+`packages/loot-model/test/brutus.test.ts` as the regression gate.
+
+## maggot-king, chaos-fanatic, phosani-s-nightmare root-caused — not the same defect
+
+Investigated as asked, before assuming the remaining three weight-overflow
+sources share Yama's cause or each other's. They don't, and splitting them
+correctly matters for what happens next:
+
+- **`maggot-king` is the SAME bundle defect as Grotesque Guardians/Mad
+  Angel**, and its overflow is fully and exactly explained by it. Its
+  `Supplies` heading is "These supplies are dropped together" (page prose,
+  no per-row footnote) over Stymphike tartare and Dull ancient medal, each
+  independently cited at `41/159`. Parsed as two competing rows, they
+  contribute 82 to the pool instead of the true single-outcome 41; the
+  measured overflow is exactly **41** (200 vs denominator 159), and 200 − 41
+  = 159. No other component is present — this one is clean.
+- **`chaos-fanatic` DOES carry the bundle defect (twice — Zamorak monk
+  top/bottom "always dropped together", Uncut emerald/sapphire "dropped
+  alongside", both per-row footnotes), but neither explains its weight
+  overflow.** Summed the raw per-row weights the wiki itself publishes for
+  the merged table by hand: 5+5+5+4+4+1 (weapons) + 4+4+4+4 (runes) +
+  8+8+8+4 (consumables) + 18+8+7+6+6+5+5+4+2 (other) = **129**, against a
+  denominator the SAME rows all individually cite as `/128`. That is the
+  wiki's own published numbers, taken completely at face value, already one
+  over their own stated total — before any bundle-pair double-counting is
+  even considered. Naively "fixing" the overflow by deduping the two bundle
+  pairs would swing it to 120 (an 8-unit SHORTFALL), the wrong direction —
+  proof the bundle pairs are not the cause of the specific overflow, even
+  though the joint-co-occurrence problem they represent (get the top, do you
+  also get the bottom?) is still real and still wrong, same as the three
+  downgraded sources above.
+- **`phosani-s-nightmare` carries NO bundle citation anywhere in its
+  overflowing table at all** (checked the full, untruncated wikitext for
+  its `Runes and ammunition`/`Resources`/`Consumables`/`Coins` headings —
+  no `raritynotes`, no shared footnote, no preamble prose). Summed by hand
+  the same way: 27 + 40 + 32 + 2 = **101** against a denominator every row
+  cites as `/100`. Same shape as chaos-fanatic — the wiki's own published
+  integer weights simply don't sum to their own stated total — but with no
+  bundle defect riding along this time.
+
+**So there are (at least) three distinct cause classes behind "weights sum
+to more than the denominator," not one**: Yama's always+fixed fallthrough
+(fixed, above), the bundle defect (maggot-king, cleanly; Grotesque
+Guardians/Mad Angel/K'ril/Zilyana from the earlier entry; also present,
+incidentally, in chaos-fanatic), and a third, previously undistinguished
+class — **the wiki's own published per-row weights not reconciling to
+their own stated denominator by a small margin** (chaos-fanatic +1/128,
+phosani-s-nightmare +1/100 — both roughly 0.8-1%, both round numbers,
+plausibly ordinary community-editing drift rather than anything a parser
+fix or a model extension could correct). Nothing here is fixed. This third
+class in particular has no obvious remedy at all short of re-deriving the
+correct weights from drop-log data, which is out of scope for a parser.
+
+## The bundle shape, assessed: `tableRef` to an `always`-mode table, no new node kind
+
+Asked to assess before building. Two questions, answered separately.
+
+**Does "a weighted entry pointing at a nested table with `mode: 'always'`"
+work, or does it need a new `Node` kind?** It works, with zero schema
+change, and CoX's own `oneOf(herb, seed)` nesting already proves the general
+shape (an entry whose `node` resolves to a sub-structure rather than a bare
+item) is sound. Traced the exact mechanism to confirm rather than assume:
+
+- `Node.kind: 'tableRef'` resolves against `data/tables/*.json` — checked
+  that this does NOT require the target to be reused across multiple
+  sources. `data/tables/lunar_chest_{blood,blue,eclipse}_set.json` are
+  already single-boss-specific `data/tables/` records (Lunar Chest's own
+  per-set duplicate-protection pools), so a `grotesque-guardians-potions.json`
+  -shaped file for one boss's one bundle is exactly precedented, not new
+  territory.
+- `compile.ts`'s `compileNode` handles `tableRef` by calling
+  `compileTable(target, path)` and wrapping the result — mode-agnostic. An
+  `always`-mode target compiles exactly the way a top-level `always` table
+  does (Brutus' `100%` heading); nothing about being REACHED via a
+  `tableRef` changes that.
+- `simulate.ts`'s `runTable` `case 'always'` unconditionally emits every
+  node in `table.nodes` — again mode-agnostic to how the table was reached.
+  So: an `independent`-mode entry at the bundle's own access rate
+  (`{kind:'fixed', num, den}`), whose `node` is `{kind:'tableRef', ref:
+  '<bundle-id>'}` pointing at a new `data/tables/<bundle-id>.json` with
+  `mode: 'always'` and one entry per bundled item, is exactly "this roll
+  either gives nothing, or gives ALL of these" — the inclusive counterpart
+  to `oneOf`'s "this roll gives exactly one of these," built entirely from
+  primitives already in production and already covered by
+  `refs_resolve`/`items_known`/`qty_sane`/`drops_covered`/`marginal-rates`
+  (all of which already walk `tableRef`, unconditionally on target mode).
+- `refs_resolve.ts` was checked directly for a mode constraint — there is
+  none; it resolves and cycle-checks `tableRef` targets without ever
+  inspecting their `mode`.
+
+**Can the bundle shape be detected independent of whether it overflows?**
+Yes, and it should be — a standing check, not a fix contingent on the
+arithmetic happening to break, is exactly what would have caught
+`the-leviathan`/`the-whisperer`/`vardorvis` before they ever shipped
+`verified`. Two textual signals recur across every real instance found this
+session, and neither is new machinery to detect, just new machinery to USE:
+
+1. **A per-row `raritynotes` citation shared by 2+ rows** — Grotesque
+   Guardians' potion trio, K'ril's two potion pairs, chaos-fanatic's robe
+   pair and gem pair. `findConfirmingSignal`'s `citedRefNames` ALREADY
+   extracts this exact shape (shared footnote names across rows) — it is
+   used today for a different question (confirming `preroll` mutual
+   exclusivity), and currently only checks that a citation is SHARED, never
+   reads what the citation's own text says. Classifying the DEFINING
+   occurrence's text (not just its presence) against a co-drop phrase list —
+   "dropped together", "dropped alongside", "always accompan-" — the same
+   `MUTUAL_EXCLUSIVITY_PHRASES`-style regex list this file already uses for
+   the sibling question, is the missing half.
+2. **Block-level prose sitting between a heading and its
+   `{{DropsTableHead}}`, with no per-row footnote at all** — every one of
+   the three downgraded sources, `maggot-king`, and `mad-angel`'s more
+   complex "either sharks or yellowfins, bundled with a prayer potion(2) and
+   a super combat potion(1)" all use THIS form, not a footnote. This is
+   NOT currently captured anywhere: `HeadingBlock`/`WikitextDropLine` carry
+   `heading`/`section`/`lines` only, no preamble text — a genuinely new
+   extraction point in `wikitext-drops.ts`, not a reuse of existing state
+   the way signal 1 is.
+
+Recommended shape for when this gets built (not built now): a
+`findBundleSignal`-style heuristic mirroring `findConfirmingSignal`,
+producing a per-block `bundleMembers: string[] | null` fact from either
+signal; `build-tables.ts` emits it as new group metadata (`alwaysBundle`,
+alongside `oneOfAccess` from the transclusion work) when it fires;
+`assembleBoss` builds the `tableRef` + `data/tables/<bundle-id>.json`
+structure described above; and a standing, corpus-wide check — same shape as
+`checkTransclusionPartitions`, run on every block regardless of whether it
+currently reconciles — reports any block whose bundle signal fires that
+ISN'T yet modelled as a bundle, which is what closes the "silently wrong
+`verified`" hole for good rather than just for these three. Mad Angel's
+"either...or...bundled with..." shape (a choice nested inside a bundle) is
+the one case this wouldn't fully close on the first pass — flagged, not
+solved, since it is a compound of `oneOf` AND the new bundle shape in one
+heading and deserves its own look once the simple case is real.
+
+**Not built.** This is a genuine, moderate-sized capability (a new
+extraction point, a new heuristic, new group metadata, a new standing
+check, plus the `data/tables/` bundle files themselves) — assessed and
+scoped, not attempted, pending a decision on priority against the rest of
+Phase 7.

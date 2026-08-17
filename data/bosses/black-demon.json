@@ -300,259 +300,260 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 199,
-            "itemKey": "grimy-guam-leaf",
-            "name": "Grimy guam leaf",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 199,
+                  "itemKey": "grimy-guam-leaf",
+                  "name": "Grimy guam leaf",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.04484304932735426
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 201,
+                  "itemKey": "grimy-marrentill",
+                  "name": "Grimy marrentill",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.03367003367003367
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 203,
+                  "itemKey": "grimy-tarromin",
+                  "name": "Grimy tarromin",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.025252525252525252
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 205,
+                  "itemKey": "grimy-harralander",
+                  "name": "Grimy harralander",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.019646365422396856
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 207,
+                  "itemKey": "grimy-ranarr-weed",
+                  "name": "Grimy ranarr weed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0154320987654321
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 209,
+                  "itemKey": "grimy-irit-leaf",
+                  "name": "Grimy irit leaf",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.011235955056179775
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 211,
+                  "itemKey": "grimy-avantoe",
+                  "name": "Grimy avantoe",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.008424599831508003
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 213,
+                  "itemKey": "grimy-kwuarm",
+                  "name": "Grimy kwuarm",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.007017543859649123
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 215,
+                  "itemKey": "grimy-cadantine",
+                  "name": "Grimy cadantine",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.005614823133071308
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 2485,
+                  "itemKey": "grimy-lantadyme",
+                  "name": "Grimy lantadyme",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004212299915754001
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 217,
+                  "itemKey": "grimy-dwarf-weed",
+                  "name": "Grimy dwarf weed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004212299915754001
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Regular"
+                  }
+                ]
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
-            "num": 1,
-            "den": 22.3
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 201,
-            "itemKey": "grimy-marrentill",
-            "name": "Grimy marrentill",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 29.7
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 203,
-            "itemKey": "grimy-tarromin",
-            "name": "Grimy tarromin",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 39.6
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 205,
-            "itemKey": "grimy-harralander",
-            "name": "Grimy harralander",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 50.9
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 207,
-            "itemKey": "grimy-ranarr-weed",
-            "name": "Grimy ranarr weed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 64.8
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 209,
-            "itemKey": "grimy-irit-leaf",
-            "name": "Grimy irit leaf",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 89
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 211,
-            "itemKey": "grimy-avantoe",
-            "name": "Grimy avantoe",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 118.7
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 213,
-            "itemKey": "grimy-kwuarm",
-            "name": "Grimy kwuarm",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 142.5
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 215,
-            "itemKey": "grimy-cadantine",
-            "name": "Grimy cadantine",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 178.1
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 2485,
-            "itemKey": "grimy-lantadyme",
-            "name": "Grimy lantadyme",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 237.4
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 217,
-            "itemKey": "grimy-dwarf-weed",
-            "name": "Grimy dwarf weed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 237.4
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Regular"
-            }
-          ]
+            "num": 23,
+            "den": 128
+          }
         }
       ],
-      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/128 (ratio 0.9993), so its rows are one mutually-exclusive roll)"
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/128 (ratio 0.9993), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 23/128 — exact, not an approximation.)"
     },
     {
       "id": "black-demon:3:coins-other",
@@ -1303,259 +1304,260 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 199,
-            "itemKey": "grimy-guam-leaf",
-            "name": "Grimy guam leaf",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 199,
+                  "itemKey": "grimy-guam-leaf",
+                  "name": "Grimy guam leaf",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.07751937984496124
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 201,
+                  "itemKey": "grimy-marrentill",
+                  "name": "Grimy marrentill",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.05813953488372093
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 203,
+                  "itemKey": "grimy-tarromin",
+                  "name": "Grimy tarromin",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.04366812227074236
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 205,
+                  "itemKey": "grimy-harralander",
+                  "name": "Grimy harralander",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.034013605442176874
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 207,
+                  "itemKey": "grimy-ranarr-weed",
+                  "name": "Grimy ranarr weed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.026737967914438502
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 209,
+                  "itemKey": "grimy-irit-leaf",
+                  "name": "Grimy irit leaf",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.019417475728155338
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 211,
+                  "itemKey": "grimy-avantoe",
+                  "name": "Grimy avantoe",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.01457725947521866
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 213,
+                  "itemKey": "grimy-kwuarm",
+                  "name": "Grimy kwuarm",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.012135922330097087
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 215,
+                  "itemKey": "grimy-cadantine",
+                  "name": "Grimy cadantine",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.009708737864077669
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 2485,
+                  "itemKey": "grimy-lantadyme",
+                  "name": "Grimy lantadyme",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.007283321194464675
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 217,
+                  "itemKey": "grimy-dwarf-weed",
+                  "name": "Grimy dwarf weed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.007283321194464675
+                },
+                "conditions": [
+                  {
+                    "kind": "variant",
+                    "name": "Wilderness Slayer Cave"
+                  }
+                ]
+              }
+            ]
           },
           "rate": {
             "kind": "fixed",
-            "num": 1,
-            "den": 12.9
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 201,
-            "itemKey": "grimy-marrentill",
-            "name": "Grimy marrentill",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 17.2
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 203,
-            "itemKey": "grimy-tarromin",
-            "name": "Grimy tarromin",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 22.9
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 205,
-            "itemKey": "grimy-harralander",
-            "name": "Grimy harralander",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 29.4
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 207,
-            "itemKey": "grimy-ranarr-weed",
-            "name": "Grimy ranarr weed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 37.4
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 209,
-            "itemKey": "grimy-irit-leaf",
-            "name": "Grimy irit leaf",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 51.5
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 211,
-            "itemKey": "grimy-avantoe",
-            "name": "Grimy avantoe",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 68.6
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 213,
-            "itemKey": "grimy-kwuarm",
-            "name": "Grimy kwuarm",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 82.4
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 215,
-            "itemKey": "grimy-cadantine",
-            "name": "Grimy cadantine",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 103
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 2485,
-            "itemKey": "grimy-lantadyme",
-            "name": "Grimy lantadyme",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 137.3
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 217,
-            "itemKey": "grimy-dwarf-weed",
-            "name": "Grimy dwarf weed",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 137.3
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "Wilderness Slayer Cave"
-            }
-          ]
+            "num": 23,
+            "den": 74
+          }
         }
       ],
-      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/74 (ratio 0.9990), so its rows are one mutually-exclusive roll)"
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/74 (ratio 0.9990), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 23/74 — exact, not an approximation.)"
     },
     {
       "id": "black-demon:9:materials-coins",

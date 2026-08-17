@@ -17,8 +17,101 @@ diff`, `git log`) are fine and encouraged before trusting this file's claims.
 
 ## 1. Current state
 
-**Changed this session (the most recent one — ToB, CoX and Fortis Colosseum all
-shipped, plus a corpus-wide parser fix):**
+**Changed this session (the most recent one — three sources downgraded,
+Yama fixed, the other three weight-overflow sources root-caused, the bundle
+shape assessed):**
+
+- **`the-leviathan`, `the-whisperer`, `vardorvis` downgraded from `verified`
+  to `needs_review`, deliberately, before any fix exists** — they carry the
+  bundle defect the prior session's investigation found (their `Supplies`
+  heading grants 3 items together on one roll, modelled as pick-one-of-three)
+  and were shipping wrong odds under a `verified` badge. Watchlisted via
+  `data/mechanics-watchlist.json` (`mechanic: 'other'`, `blockedBy: []` —
+  got this wrong on the first attempt, `checkWatchlistConsistency` caught it,
+  see `docs/DECISIONS.md`). **64 -> 61 verified, 33 -> 36 needs_review.**
+- **Yama's `always`+`fixed` fallthrough is fixed** — the specific mechanism
+  that shipped its `Contract` table at 1801/100. Hoisted generally (every
+  block, before any mode-inference branch), not patched narrowly for Yama,
+  since the same unfiltered-`resolved` pattern existed identically in three
+  separate merge paths. Yama stays `needs_review` for two unrelated,
+  pre-existing reasons. A real, traced, harmless side effect: this also let
+  `rewards-chest-fortis-colosseum`'s own raw page parse further than before
+  (an identical Always+fixed heading on Wave 12, which this boss's override
+  fully supersedes anyway), flipping its `source` metadata from `'override'`
+  to `'merged'` with zero change to its actual 13 tables — see
+  `docs/DECISIONS.md`.
+- **`maggot-king`, `chaos-fanatic`, `phosani-s-nightmare` root-caused, on
+  request, before assuming they shared Yama's or each other's defect. They
+  don't.** `maggot-king` is the bundle defect again, cleanly. `chaos-fanatic`
+  carries the bundle defect too but it does NOT explain that source's own
+  overflow — its wiki-published weights sum to 129 against a stated 128
+  **before** any bundle double-counting. `phosani-s-nightmare` carries no
+  bundle citation at all and has the identical shape (101 vs 100). **A third
+  cause class, previously undistinguished**: the wiki's own published
+  integer weights occasionally just don't reconcile to their own stated
+  total by a point or two — not a parser bug, likely not fixable at all.
+- **The bundle shape (a `tableRef` to a new single-boss `data/tables/`
+  record with `mode: 'always'`) is assessed, not built.** Confirmed it needs
+  zero schema change — every primitive it composes (`tableRef` resolution,
+  `always`-mode tables, single-boss-specific `data/tables/` records) is
+  already in production and mode-agnostic throughout the validator suite.
+  Also confirmed the shape is detectable independent of whether it overflows
+  (two textual signals — a shared per-row footnote, already half-detected by
+  existing machinery; block-level prose, genuinely new to capture), which is
+  what would make it a standing check rather than a fix contingent on the
+  arithmetic happening to break. Full design in `docs/DECISIONS.md`'s "bundle
+  shape, assessed" entry — not implemented.
+
+Full `pnpm -r test`/`typecheck` green after both data changes, including
+`packages/loot-model/test/brutus.test.ts` as the regression gate both times.
+
+**Changed in the prior session (recount + transclusion mode closed +
+parserVersion decision):**
+
+- **The needs_review recount is done and no longer stale** — see
+  `docs/DECISIONS.md`'s "The needs_review recount" entry and section 3's
+  table below. Two real corrections: GWDRDT was undercounted (2 sources ->
+  4, `commander-zilyana`/`k-ril-tsutsaroth` had the identical missing-item
+  signature as `kree-arra`/`general-graardor` and nobody had cross-referenced
+  it), and a previously undocumented cause class exists — `weights_sum`
+  genuinely fails on 8 sources (6 non-GWD + the 2 GWD ones doubling up), not
+  the transcluded-mode approximation's accepted shortfall but real wrong
+  odds, and it already reached `verified` silently on three sources
+  (`the-leviathan`, `the-whisperer`, `vardorvis`) — investigated (three
+  distinct root causes: an `always`+`fixed` mixed-heading parser fallthrough,
+  a "dropped together" bundle-of-items defect with no schema representation
+  yet, and a composite/multi-table aggregate rate inserted as one table's own
+  share), **not fixed** — see `docs/DECISIONS.md`'s "Weight-overflow
+  investigated" entry before touching any of it.
+- **The transcluded sub-table mode question is CLOSED.** Took section 3's
+  "model it properly" option: a confirmed partition (`transclusionPartition`
+  ratio ≈ 1.0000) now compiles to a `oneOf` node at the declared access rate
+  instead of N independently-rolled rows — exact, not the accepted
+  approximation, matching CoX's own herb/seed `oneOf` nesting. Moved exactly
+  the 9 sources that were `needs_review` on this alone — `abyssal-sire`,
+  `araxxor`, `arrg`, `bryophyta`, `dagannoth-{prime,rex,supreme}`,
+  `deranged-archaeologist`, `giant-sea-snake` — to `verified`. **55 -> 64
+  verified, 42 -> 33 needs_review.** `data/bosses/*.json` and `data/index.json`
+  regenerated via a full unscoped `ingest parse` + `ingest site-index`;
+  `corpus-reproducibility.test.ts` and the full `pnpm -r test`/`typecheck`
+  pass clean, including `brutus.test.ts` as the regression gate. See
+  `docs/DECISIONS.md`'s transclusion entry for the exact mechanism and a
+  small, accepted, sub-0.3% precision trade-off in the affected items'
+  marginal rates (within `marginal-rates.test.ts`'s tolerance, checked not
+  assumed).
+- **`parserVersion` is retired as a staleness mechanism, not removed.**
+  CLAUDE.md's "bump `parserVersion` instead" clause described a workflow
+  nothing ever followed (`main.ts` writes a literal `1` unconditionally) and
+  nothing ever read back — `corpus-reproducibility.test.ts`'s full re-parse
+  diff already is the real staleness guard and a stronger one. CLAUDE.md's
+  rule now points at that instead; `Boss.parserVersion`'s schema comment
+  says plainly it's provenance metadata only. The field itself stays (it's a
+  `PROJECT_PLAN.md` §4.5 spec field with the same standing `wikiRevId` has),
+  only the false "this drives something" implication is gone. See
+  `docs/DECISIONS.md`'s "`parserVersion` retired" entry.
+
+**Changed in the prior session (ToB, CoX and Fortis Colosseum all shipped,
+plus a corpus-wide parser fix):**
 
 - **All four raids are now built.** ToA was already done; this session shipped
   the other three — `data/overrides/{monumental-chest,ancient-chest,rewards-
@@ -130,13 +223,13 @@ the end of section 1 are the reliable chronology.**
 
 **"Phase 5"/Phase 7 (PROJECT_PLAN.md section 16: overrides + hard bosses) is
 substantively underway, not done** — its own done-when is "zero
-`needs_review`," and **44 non-verified sources remain** (42 `needs_review` + 2
-`manual_override`), plus 3 `parse_failed`. **This "25/23" figure and section
-3's breakdown table are STALE as of this session** (they predate ToB/CoX/
-Fortis Colosseum shipping, all three of which stayed `needs_review`) — a
-future session should re-run the classification rather than trust the exact
-per-cause counts; see section 3's own stale-flagged table. What IS done within
-its scope:
+`needs_review`," and **38 non-verified sources remain** (36 `needs_review` +
+2 `manual_override`), plus 3 `parse_failed`. **Recounted, no longer stale,
+across two sessions of net change** — see section 3's table and
+`docs/DECISIONS.md`'s recount entry for the methodology: 44 -> 35 (the 9
+transcluded-mode sources flipping to `verified`), then 35 -> 38 (three more
+downgraded back off `verified` on the bundle defect — a real, deliberate
+regression, not a miscount). What IS done within its scope:
 
 - **Phase 6 research, complete**: 14 non-verified/unmodelled sources each got
   a deep-dive research doc — `docs/bosses/{abyssal-sire,ancient-chest,chest-
@@ -171,13 +264,26 @@ its scope:
 
 ```
 99 documents, of 102 loot sources with include: true (97.1%):
-  55 verified, 2 manual_override, 42 needs_review
+  61 verified, 2 manual_override, 36 needs_review
 ```
+
+**Two sessions of change to this number, net 55 -> 64 -> 61 verified.** The
+transcluded-mode fix (section 3, `docs/DECISIONS.md`) moved `abyssal-sire`,
+`araxxor`, `arrg`, `bryophyta`, `dagannoth-{prime,rex,supreme}`,
+`deranged-archaeologist`, `giant-sea-snake` — exactly the 9 sources that were
+`needs_review` on that question alone — straight to `verified` (55 -> 64).
+The most recent session then downgraded `the-leviathan`/`the-whisperer`/
+`vardorvis` back off `verified` on the bundle defect (64 -> 61) — a real
+regression in the count, taken deliberately, because they were shipping
+wrong odds under the badge. Re-run `ingest parse` (no `--tier`/`--source`
+filter) landed on both splits exactly, and
+`corpus-reproducibility.test.ts` passes against the regenerated
+`data/bosses/*.json`.
 
 **READ THE DENOMINATOR CAREFULLY. It is 102, not 52.** Coverage was long read as
 "27 of 52"; 52 was the number of sources ever PARSED, not the number the project
 owns. `include: true` in `data/_inventory.json` is the gate, and it is 102.
-`verified` is **55/102 = 53.9%** (55.6% of the 99 documents that exist). Per
+`verified` is **61/102 = 59.8%** (61.6% of the 99 documents that exist). Per
 tier (with document / include:true): A 25/26, B 1/1, C 26/26, **D 20/20**
 (Fortis Colosseum's override closed the last gap this session), E 27/29. The
 **3** sources with no document at all: `revenant-maledictus` (A, own open
@@ -209,11 +315,18 @@ page's own words). **Nothing is deleted or excluded from parsing** — only
 now with a visible "Not repeatable" badge. See `docs/DECISIONS.md`'s
 `repeatable` entry for the full false-positive/negative audit.
 
-**Read `verified` split by this field before trusting the headline 55/102.**
-24 of the 55 `verified` sources (43.6%) are one-time content. The number that
-answers "how much of what a user would actually simulate is verified" is
-**31/72 = 43.1%** among `repeatable: true` sources (44.3% of their 70
-documents) — noticeably below 53.9%. Full table in `docs/DECISIONS.md`.
+**Read `verified` split by this field before trusting the headline 61/102.**
+26 of the 61 `verified` sources (42.6%) are one-time content. The 9
+transcluded-mode sources that flipped to `verified` are all `repeatable:
+true` (Abyssal Sire, Araxxor, Arrg, Bryophyta, the three Dagannoth kings,
+Deranged archaeologist and Giant sea snake are all farmable, not
+quest-gated); the 3 sources downgraded back off `verified` (`the-leviathan`,
+`the-whisperer`, `vardorvis`) are ALSO `repeatable: true`, so that later
+change pulled the repeatable share back down again: **35/71 = 49.3%** among
+documents with `repeatable: true` — net up from the original 44.3%, but
+below the intermediate session's 53.5%. Recomputed against the regenerated
+corpus both times; full table in `docs/DECISIONS.md` predates both fixes and
+should be recomputed too if the exact per-tier split matters again.
 
 **Found by lifting the tier gate, then fixed: `monumental-chest` (tier D) was
 a STALE committed document the parser could no longer reproduce, and a
@@ -516,25 +629,89 @@ before the change. `docs/bosses/zalcano.md` never quoted that sentence.
 
 ### Where the non-verified sources actually are
 
-**Stale as of this session — the table below predates ToB/CoX/Fortis
-Colosseum shipping and needs a full recount, not just the raids row removed.**
-Left in place as a starting point rather than deleted, since the categories
-themselves (transcluded sub-table mode, the Uniques-heading question,
-genuinely-unknowable curves, GWDRDT, other) are still real and mostly
-unchanged; a future session should re-run the classification rather than
-trust these counts. What's KNOWN to have changed: all four raids (row
-removed below, since none of them are "waiting for a document" anymore —
-all four are watchlisted `needs_review` for a real, named, unmodelled
-remnant instead, which is a different reason than what this table is
-tracking), and the `parse_failed` list (Ancient chest left it — see below).
+**Recounted this session against the live corpus — no longer stale.** Full
+methodology and the two real corrections found (GWDRDT undercounted, and a
+whole new cause class) are in `docs/DECISIONS.md`'s "The needs_review recount
+— GWDRDT was undercounted, and a new cause class exists" entry; this table is
+the summary. All four raids are excluded (watchlisted `needs_review` for a
+real, named, unmodelled remnant — see the top of section 1 — a different
+reason than what this table tracks).
 
-| group | count (STALE) | what it needs |
+**Transcluded sub-table mode — DONE, not a row here anymore.** All 9 sources
+(`abyssal-sire`, `araxxor`, `arrg`, `bryophyta`, `dagannoth-{prime,rex,supreme}`,
+`deranged-archaeologist`, `giant-sea-snake`) are `verified` now — a confirmed
+partition (`transclusionPartition` ratio ≈ 1.0000) is modelled as a `oneOf`
+node at the declared access rate instead of N independently-rolled rows,
+exact rather than an approximation. See `docs/DECISIONS.md`'s transclusion
+entry for what changed in `build-tables.ts`/`assemble-boss.ts` and the
+corpus effect (55 -> 64 verified).
+
+**Yama's own weight-overflow is DONE** — the `always`+`fixed` fallthrough
+that shipped its `Contract` table at 1801/100 is fixed (`docs/DECISIONS.md`'s
+"Yama's always+fixed fallthrough" entry). Yama stays `needs_review` for two
+unrelated, pre-existing reasons (an unparseable-rarity gap, a `drops_covered`
+shortfall), so it moved OUT of the weight-overflow row below into "coverage
+gaps," not off the table entirely.
+
+**Three more sources downgraded from `verified`, on purpose, before any fix
+exists** — `the-leviathan`, `the-whisperer`, `vardorvis` carry the identical
+bundle defect (`docs/DECISIONS.md`'s "Three verified sources downgraded"
+entry): their `Supplies` heading grants 3 items together on one access roll,
+modelled as a `weighted` pick-one-of-three instead. `weights_sum` never
+caught it (their tables have slack), so it shipped `verified` silently. Now
+watchlisted (`mechanic: 'other'`, `data/mechanics-watchlist.json`) — a
+`needs_review` badge on wrong odds is honest, a `verified` one isn't, and
+that's true independent of whether the underlying fix ever lands.
+
+**`maggot-king`, `chaos-fanatic`, `phosani-s-nightmare` root-caused, NOT the
+same defect as each other or as Yama** (`docs/DECISIONS.md`'s "root-caused —
+not the same defect" entry, investigated on request rather than assumed):
+`maggot-king` is the identical bundle defect, cleanly (its overflow is
+EXACTLY explained by one dropped-together pair). `chaos-fanatic` carries the
+bundle defect too (two dropped-together pairs) but it does NOT explain that
+source's own weight overflow — summing the wiki's own published per-row
+weights by hand comes to 129 against every row's own stated `/128`, one over
+BEFORE any bundle double-counting is even considered. `phosani-s-nightmare`
+carries no bundle citation at all; same shape, 101 against every row's own
+`/100`. **A third cause class**: the wiki's own published integer weights
+occasionally just don't sum to their own stated denominator by a point or
+two — plausible ordinary editing drift, not fixable by any parser or model
+change.
+
+**The bundle shape itself — assessed, not built** (`docs/DECISIONS.md`'s
+"bundle shape, assessed" entry, on request): confirmed a `tableRef` to a new
+single-boss `data/tables/<id>.json` record with `mode: 'always'` works with
+**zero schema change** — the inclusive counterpart to CoX's `oneOf`, built
+from primitives already in production (`tableRef` resolution is mode-agnostic
+throughout `compile.ts`/`simulate.ts`/every validator; single-boss-specific
+`data/tables/` records are already precedented by Lunar Chest's own
+`_set` tables). Also confirmed the shape IS detectable independent of
+whether it overflows — two recurring textual signals (a shared per-row
+footnote citing co-drop language, which `findConfirmingSignal`'s existing
+`citedRefNames` machinery already half-detects; and block-level prose with
+no footnote at all, which is genuinely new — currently discarded, not
+captured anywhere) — which is what would make this a standing check rather
+than a fix contingent on the arithmetic happening to break, exactly what
+would have caught the three downgraded sources before they ever shipped
+`verified`. Scoped, not implemented; see the DECISIONS.md entry for the full
+design before building it.
+
+| group | count | what it needs |
 |---|---|---|
-| transcluded sub-table mode | 9 | a decision, not code — see below |
 | the "Uniques"/"Mutagens" heading question | 5 | `phantom-muspah`, `sarachnis`, `shellbane-gryphon`, `the-nightmare`, `zulrah`. **Most re-litigated question in the project — see section 5 before touching it.** |
 | genuinely unknowable curves | 3 | `duke-sucellus`, `zalcano`, `reward-pool`. Watchlisted, correctly. **Before adding a fourth, check for a `Module:`/`Calculator:` page — that is what closed ToA's, and this session's CoX/ToB (see the top of this section).** |
-| GWDRDT | 2 | `kree-arra`, `general-graardor` — landmine #3 |
+| blocked, deliberately | 1 | `reward-cart` — see section 3's "genuinely unknowable" list |
+| GWDRDT — **was 2, corrected to 4** | 4 | `kree-arra`, `general-graardor`, **and `commander-zilyana`, `k-ril-tsutsaroth`** (landmine #3) — same missing item set, never previously cross-referenced |
 | other | 2 | `black-knight-titan` (a Lua `{{#invoke:}}` sub-table + `items_known`), `salarin-the-twisted` (`items_known`) |
+| **weight-overflow (bundle defect, mostly) — Yama fixed and moved out, 6 -> 5** | 5 | `chaos-fanatic`, `grotesque-guardians`, `mad-angel`, `maggot-king`, `phosani-s-nightmare` (plus the two GWDRDT sources above, which double up). Root-caused, not fixed — three distinct causes (bundle defect; a small wiki-rounding imprecision unrelated to any parser gap; Yama's, fixed). See both `docs/DECISIONS.md` entries above before touching any of these. |
+| **downgraded from `verified`, bundle defect, silent (new this session)** | 3 | `the-leviathan`, `the-whisperer`, `vardorvis` — see above |
+| coverage gaps (`drops_covered`/`items_known`/unparseable-rarity, unrelated to transclusion/GWD) | 7 | `alchemical-hydra`, `black-demon`, `chaos-elemental`, `kalphite-queen`, `nex`, `obor`, **`yama`** (weight-overflow fixed, moved here) |
+| items_known only | 1 | `chronozon` — tier-E item-index gap |
+| Vorkath's refused seed partition | 1 | `vorkath` — ratio 1.6665, correctly refused (landmine #11d), its own bespoke residual, not a clean partition |
+
+Table rows sum to 32 (5+3+1+4+2+5+3+7+1+1); the 4 watchlisted raids below (a
+different kind of `needs_review` — deliberate, not unresolved) bring the real
+total to **36**.
 
 Plus **6 `manual_override`/all-four-raids-shipped-but-watchlisted** —
 `doom-of-mokhaiotl`, `lunar-chest` (terminal `manual_override`, not work
@@ -591,32 +768,26 @@ to-do list:**
    unconfirmed after two rounds of checking — see the top of section 1
    before trusting the armour-piece numbers for anything precision-sensitive.
 
-### The mode question on transcluded blocks — open, and it is a DECISION
+### The mode question on transcluded blocks — DONE
 
-Nine sources are `needs_review` for this alone and every other check on them is
-green. The rows are provably one mutually-exclusive roll (the partition
-identity holds at ratio 1.0000 on all of them); they are modelled as
-`independent` rolls so the wiki's per-row rates survive, and the document does
-not express the single-access-roll shape at all. See landmine #11d.
+Was: nine sources `needs_review` for this alone, rows provably one
+mutually-exclusive roll (partition identity at ratio 1.0000), modelled as
+`independent` to preserve the wiki's per-row rates without expressing the
+single-access-roll shape. Closed by taking the "model it properly" option: a
+confirmed partition now compiles to a `oneOf` node at the declared access
+rate. All 9 (`abyssal-sire`, `araxxor`, `arrg`, `bryophyta`,
+`dagannoth-{prime,rex,supreme}`, `deranged-archaeologist`,
+`giant-sea-snake`) are `verified`. Landmine #11d (below) is the reasoning
+trail for why `preroll` was rejected in favour of `independent` in the first
+place — still correct, unrelated to this fix. See `docs/DECISIONS.md`'s
+transclusion entry for the mechanism.
 
-Two ways to close it, and it is not a coding question:
+### The genuinely unknowable — leave them watchlisted, permanently, not backlog
 
-- **Accept the approximation** — clear the flag on a confirmed partition. One
-  condition in `buildTableGroups`. The cost is a ~0.06%-of-kills impossible
-  co-occurrence, already accepted in the CoX decision.
-- **Model it properly** — a `oneOf` node at the access rate, which is exactly
-  what the identity proves the block is, and is exact. Bigger change:
-  `build-tables` would need to emit a new group shape and `assemble-boss` to
-  build the node.
-
-**Do not just switch the mode back to `preroll` to make the flag go away.**
-That is the measured regression #11d records.
-
-### The genuinely unknowable — leave them watchlisted
-
-These are not backlog. The wiki states the mechanic exists and never states the
-curve, so there is nothing to implement at any schema level, and guessing would
-put an invented number behind a `verified` badge:
+The wiki states the mechanic exists and never states the curve (or, for the
+last two, states numbers that don't reconcile with each other at all), so
+there is nothing to implement at any schema level and guessing would put an
+invented number behind a `verified` badge:
 
 - **`duke-sucellus`** — the frozen-tablet curve.
 - **`zalcano`** — the points->loot scaling function (`P_M`/`P_T` are defined
@@ -629,10 +800,115 @@ put an invented number behind a `verified` badge:
   are all `rarity=Varies` with the Woodcutting-level rates never stated, and
   the pyromancer outfit rule ("the piece players have the least of") is a
   RELATIVE comparison across four counts that `ownershipGate` cannot express.
+- **`chaos-fanatic`, `phosani-s-nightmare`** — added this session, a
+  DIFFERENT flavour of unknowable from the four above: not a curve the wiki
+  never states, but the wiki's own published per-row weights not summing to
+  their own stated denominator (chaos-fanatic: 129 vs a `/128` every row
+  cites; phosani-s-nightmare: 101 vs a `/100` every row cites — both ~1%
+  over, both checked by hand against the raw wikitext, neither explained by
+  the bundle defect below). No parser fix or model extension corrects a
+  small, ordinary wiki-editing discrepancy in the source data itself; this
+  would need re-derivation from drop-log data to ever close, which is out of
+  scope. See `docs/DECISIONS.md`'s "root-caused — not the same defect" entry.
+  **Not currently on `data/mechanics-watchlist.json`** — unlike the four
+  above, `weights_sum` already fails these two directly (a real overflow, not
+  a mechanic invisible to a clean parse), so nothing additional is needed to
+  keep them `needs_review`. Filed here for the same reason the watchlist
+  entries exist: so nobody spends time trying to "fix" a number that isn't
+  wrong because of anything this codebase controls.
 
-**Do not remove a watchlist entry to move the counter.** The check exists
-precisely because parsing a page cleanly proves nothing when the rows never
-encoded the mechanic that matters.
+**Do not remove a watchlist entry, or this classification, to move the
+counter.** The check exists precisely because parsing a page cleanly proves
+nothing when the rows never encoded the mechanic that matters — and, now,
+because sometimes the rows the page DOES publish simply don't add up.
+
+### The bundle defect — assessed and designed, not built
+
+**The shape**: some drop-table rows are not independent alternatives at all —
+the wiki states outright that 2-3 items always arrive TOGETHER on one access
+roll ("these supplies are all dropped together", "X and Y are always dropped
+together", "bundled with"). The schema has no way to express this, so the
+parser has always treated them as N competing `weighted` rows. That's wrong
+two ways at once: each item's own marginal rate can happen to still read
+correctly by coincidence (weight/denominator matches the bundle's true
+per-item rate), which is exactly why this went undetected for so long, but
+the JOINT structure is inverted — the model says "at most one of these,
+never together"; the wiki says "all of these, together, or none."
+
+**Full affected list, as currently understood — do not assume any of these
+are the same defect as each other without checking; the investigation
+already found they aren't all the same (below)**:
+
+| source | status | how the bundle defect shows up here |
+|---|---|---|
+| `yama` | `needs_review` (other reasons) | Was a DIFFERENT defect (`always`+`fixed` fallthrough) — **fixed**, unrelated to the bundle shape. Listed here only to head off the assumption that it's part of this list. |
+| `grotesque-guardians` | `needs_review` | Bundle defect, confirmed exact — its own overflow (154 vs 142) is EXACTLY the doubled weight of one 3-item potion trio. |
+| `mad-angel` | `needs_review` | Bundle defect (block-level prose, no footnote — "bundled with"), overflow closely matches. |
+| `maggot-king` | `needs_review` | Bundle defect (block-level prose, no footnote), overflow EXACTLY explained (200 − 41 = 159). |
+| `k-ril-tsutsaroth` | `needs_review` (also GWDRDT) | Bundle defect (two footnote-cited potion pairs) **plus a separate, second defect** — see below — both contribute to its overflow; the split between them isn't fully untangled. |
+| `commander-zilyana` | `needs_review` (also GWDRDT) | Same shape as K'ril (shared template between the two GWD generals). |
+| `chaos-fanatic` | `needs_review` | Bundle defect present (two footnote-cited pairs) but does NOT explain this source's own overflow — see "genuinely unknowable" above; a real, separate, coincidental second issue on the same source. |
+| `the-leviathan` | `needs_review`, **downgraded from `verified` this session** | Bundle defect, SILENT — table has slack, so `weights_sum` never caught it. Shipped wrong odds under a `verified` badge until downgraded. |
+| `the-whisperer` | `needs_review`, **downgraded from `verified` this session** | Same, silent. |
+| `vardorvis` | `needs_review`, **downgraded from `verified` this session** | Same, silent. |
+
+**K'ril's Coins row is a genuinely separate, third defect, not the bundle
+one** — its `rarity=36.7/127` for `Coins` carries a `raritynotes` that reads
+"Coins come from rolls on all loot tables, including the unique table, GDT
+and RDT": a composite rate the wiki computed by aggregating several DIFFERENT
+roll mechanisms, inserted into this one table as if it were this table's own
+share. Do not fix this by touching the bundle mechanism — it needs its own
+handling (most likely: recognise and exclude/flag a row whose `raritynotes`
+explicitly disclaims single-table scope, rather than blending it in).
+
+**The fix, assessed — zero schema change needed**: an `independent`-mode
+entry at the bundle's own access rate (`{kind:'fixed', num, den}`), whose
+`node` is `{kind:'tableRef', ref: '<bundle-id>'}` pointing at a NEW
+`data/tables/<bundle-id>.json` record with `mode: 'always'` and one entry per
+bundled item — the inclusive counterpart to CoX's `oneOf` (`oneOf` = exactly
+one of these; this = all of these, or none). Confirmed, not assumed:
+`compile.ts`'s `tableRef` resolution and `simulate.ts`'s `always`-mode
+handling are both fully mode/reachability-agnostic already (RDT/gem-table
+access already proves "probabilistic access roll -> `tableRef` -> the
+target's own mode takes over" works), and `data/tables/lunar_chest_{blood,
+blue,eclipse}_set.json` already precedent a single-boss-specific record living
+in `data/tables/` — this does not need to be reused across multiple sources
+to belong there. One tiny new file per bundle.
+
+**Detectable independent of whether it overflows — two signals, do not build
+around only one**:
+
+1. **A per-row `raritynotes` citation shared by 2+ rows** (Grotesque
+   Guardians' potion trio, K'ril's two pairs, chaos-fanatic's two pairs).
+   `findConfirmingSignal`'s `citedRefNames` (`build-tables.ts`) ALREADY
+   extracts this shape — shared footnote names across rows — for a different
+   question (confirming `preroll` mutual exclusivity). It currently only
+   checks that a citation is shared, never reads what the citation's own
+   text says. The missing half: classify the DEFINING occurrence's text
+   against a co-drop phrase list ("dropped together", "dropped alongside",
+   "always accompan-"), the same `MUTUAL_EXCLUSIVITY_PHRASES`-style regex
+   list this file already uses for the sibling question.
+2. **Block-level prose between a heading and its `{{DropsTableHead}}`, with
+   NO per-row footnote at all** — used by `maggot-king`, `mad-angel`, and
+   all three downgraded sources; i.e. most of the real instances, not a rare
+   variant of signal 1. **Not captured anywhere right now**:
+   `HeadingBlock`/`WikitextDropLine` carry `heading`/`section`/`lines` only,
+   no preamble text. This is a genuinely new extraction point in
+   `wikitext-drops.ts`, not a reuse of existing state.
+
+Building this as a STANDING check (mirroring `checkTransclusionPartitions` —
+runs on every block regardless of current pass/fail, not gated behind
+`weights_sum` already having failed) is the whole point: a fix contingent on
+the arithmetic breaking is exactly what let the three downgraded sources ship
+`verified` silently. `mad-angel`'s "either sharks or yellowfins drop, bundled
+with a prayer potion(2) and a super combat potion(1)" is a compound of
+`oneOf` (the fish choice) AND this bundle shape (the potions) in one heading
+— flagged as the one case that won't fully close on a first, simple pass.
+
+**Not built.** Real, moderate-sized capability (new extraction point, new
+heuristic, new group metadata, new standing check, plus the `data/tables/`
+files themselves) — scoped in `docs/DECISIONS.md`'s "bundle shape, assessed"
+entry, pending a priority decision, not a next-session default.
 
 ## 4. Benchmark state
 
@@ -838,9 +1114,13 @@ a "don't redo" item, not just a landmine.
 
 `{{GWDRDT}}` is a genuinely different table (rune sword instead of runite
 bar, mega-rares folded in, explicitly unaffected by ring of wealth). Flagged
-unresolved (Kree'arra, General Graardor), not silently mapped onto
-`rare_drop_table.json`. Building it is a new
-`data/tables/gwd_rare_drop_table.json`-shaped record, not a code fix.
+unresolved, not silently mapped onto `rare_drop_table.json`. **Four sources,
+not two** — Kree'arra and General Graardor were the only ones ever named, but
+`commander-zilyana` and `k-ril-tsutsaroth` are missing the identical item set
+per their own `drops_covered` detail strings (found by this session's
+needs_review recount, `docs/DECISIONS.md`). Building it is a new
+`data/tables/gwd_rare_drop_table.json`-shaped record, not a code fix — one
+record fixes all four.
 
 ### 4. `mode: 'independent'` allows `'always'`-rate entries — real schema fix, not a workaround
 
@@ -1206,11 +1486,12 @@ earlier versions of this file (Zalcano, the `SimContext` UI wiring, Reward
 pool, the reward-cart/reward-pool watchlist misattribution) is **DONE** and has
 been folded into sections 1 and 3 rather than kept as struck-through history.
 
-1. **Decide the transcluded-block mode question.** Nine sources are
-   `needs_review` on it alone with every other check green, so it is the
-   single largest counter move available and it costs either one condition or
-   one new group shape. It is a judgement call about what `verified` may
-   claim, not a coding problem — section 3.
+1. ~~Decide the transcluded-block mode question.~~ **DONE.** Modelled
+   properly: a confirmed partition (`transclusionPartition` ratio ≈ 1.0000)
+   now emits a `oneOf` node at the declared access rate instead of N
+   independent rows, matching CoX's own herb/seed `oneOf` nesting. Exact, not
+   an approximation — see `docs/DECISIONS.md`'s transclusion entry for what
+   changed and the corpus effect.
 2. ~~The remaining three raids~~ **DONE** — ToB, CoX and Fortis Colosseum all
    shipped this session, joining ToA. See the top of section 1 for what each
    needed, including the two real corrections to CoX's own earlier proposed
@@ -1225,19 +1506,34 @@ been folded into sections 1 and 3 rather than kept as struck-through history.
    `{{#invoke:}}` the expander cannot run; the rows would have to come from
    somewhere else (an override, or the module's own output). It also fails
    `items_known`.
-4. **GWDRDT** (`kree-arra`, `general-graardor`) — landmine #3. A new
-   `data/tables/gwd_rare_drop_table.json`-shaped record, not a code fix. Two
-   sources for one record.
-5. ~~`black-demon`~~ **DONE** — recovered for free by the `DROPS_SECTION_TITLE`
+4. **GWDRDT** (`kree-arra`, `general-graardor`, `commander-zilyana`,
+   `k-ril-tsutsaroth` — corrected from two sources to four this session) —
+   landmine #3. A new `data/tables/gwd_rare_drop_table.json`-shaped record,
+   not a code fix. One record fixes all four.
+5. **The bundle defect** — assessed and designed, not built (section 3's own
+   subsection has the full design: `tableRef` to a new per-boss
+   `data/tables/<id>.json` with `mode: 'always'`, zero schema change, two
+   detection signals). Affects `grotesque-guardians`, `mad-angel`,
+   `maggot-king`, `k-ril-tsutsaroth`, `commander-zilyana`, `chaos-fanatic`
+   (all still `needs_review`) and `the-leviathan`/`the-whisperer`/`vardorvis`
+   (downgraded off `verified` this session specifically because they had
+   this defect silently). Yama's `always`+`fixed` fallthrough — a DIFFERENT
+   defect that also produced weight overflow — is already fixed; don't
+   re-open it as part of this item. K'ril also carries a third, separate
+   defect (a composite cross-table Coins rate) that needs its own handling,
+   not the bundle mechanism.
+6. ~~`black-demon`~~ **DONE** — recovered for free by the `DROPS_SECTION_TITLE`
    widening (section 1); it now has a `needs_review` document.
-6. **Un-watchlist as mechanics land**, following the four-step sequence in
+7. **Un-watchlist as mechanics land**, following the four-step sequence in
    `docs/OVERRIDES.md` — the wiki-figure test (step 3) is the part that is
    easy to skip and must not be.
-7. **Nex** (tier D, `include: true`) has still never been investigated — check
+8. **Nex** (tier D, `include: true`) has still never been investigated — check
    whether it is actually raid-shaped before assuming it needs any of this
    machinery.
 
 **Not next steps, deliberately:** the "Uniques"/"Mutagens" heading question
 (section 5 — answered "no available signal" every time it has been re-checked),
 `ev_matches` (closed permanently, section 5), the genuinely-unknowable curves
-(section 3), and `reward-cart` (blocked, section 3).
+including `chaos-fanatic`/`phosani-s-nightmare`'s non-reconciling wiki weights
+(section 3 — permanently flagged, not backlog, same as Duke Sucellus/Zalcano),
+and `reward-cart` (blocked, section 3).

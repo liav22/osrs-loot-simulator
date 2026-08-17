@@ -657,6 +657,30 @@
     },
     {
       "id": "the-leviathan:4:tertiary",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 28336,
+            "itemKey": "ancient-blood-ornament-kit",
+            "name": "Ancient blood ornament kit",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "the-leviathan:5:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -768,28 +792,13 @@
             "num": 1,
             "den": 2500
           }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 28336,
-            "itemKey": "ancient-blood-ornament-kit",
-            "name": "Ancient blood ornament kit",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "always"
-          }
         }
       ],
       "notes": "Tertiary"
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
+  "status": "needs_review",
   "validation": {
     "ok": false,
     "checks": [
@@ -823,7 +832,8 @@
       },
       {
         "check": "not_on_watchlist",
-        "ok": true
+        "ok": false,
+        "detail": "other: Downgraded from verified, not newly discovered as needs_review (docs/DECISIONS.md's 'Weight-overflow investigated' entry, 2026-08-17). Its Supplies heading is 'These supplies are all dropped together' (page prose, no per-row footnote) over Prayer potion(3), Ranging potion(2), Sea turtle, each at 1/5.4 — one access roll that grants all three simultaneously. The parser has no bundle node, so it homogenises the three equal-denominator rows into a `weighted` table (denominator 5.4, each entry weight 1) and picks exactly ONE of the three per hit. Each item's own marginal rate happens to still read correctly (weight/denominator = 1/5.4, matching the bundle's true per-item rate), which is why weights_sum never caught it — the corpus-wide check only sees a table whose weights sum to 3, comfortably under 5.4, and has no way to know the true structure claims all three co-occur every time the roll hits rather than never. The failure is joint, not marginal: this source can never simulate getting the potion and the turtle in the same kill, which the real mechanic guarantees whenever it fires at all. The identical shape recurs on the other two Desert Treasure II 'awakened' bosses' own watchlist entries. Needs the bundle shape (see the same DECISIONS.md entry) before removing this."
       },
       {
         "check": "drops_covered",

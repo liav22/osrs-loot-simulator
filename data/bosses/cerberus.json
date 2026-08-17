@@ -641,27 +641,10 @@
     },
     {
       "id": "cerberus:3:tertiary",
-      "mode": "independent",
+      "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 26997,
-            "itemKey": "ensouled-hellhound-head",
-            "name": "Ensouled hellhound head",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 15
-          }
-        },
         {
           "node": {
             "kind": "item",
@@ -690,6 +673,32 @@
           },
           "rate": {
             "kind": "always"
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "cerberus:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26997,
+            "itemKey": "ensouled-hellhound-head",
+            "name": "Ensouled hellhound head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 15
           }
         },
         {

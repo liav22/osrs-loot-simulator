@@ -373,9 +373,8 @@
     },
     {
       "id": "yama:4:contract",
-      "mode": "weighted",
+      "mode": "always",
       "rolls": 1,
-      "denominator": 100,
       "withoutReplacement": false,
       "entries": [
         {
@@ -390,8 +389,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -412,8 +410,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -434,8 +431,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -456,8 +452,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -478,8 +473,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -500,8 +494,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -522,8 +515,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -544,8 +536,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -566,8 +557,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -588,8 +578,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -610,8 +599,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -632,8 +620,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -654,8 +641,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -676,8 +662,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -698,8 +683,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -720,8 +704,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -742,8 +725,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -764,8 +746,7 @@
             }
           },
           "rate": {
-            "kind": "weight",
-            "weight": 100
+            "kind": "always"
           },
           "conditions": [
             {
@@ -773,7 +754,17 @@
               "name": "Contract"
             }
           ]
-        },
+        }
+      ],
+      "notes": "Contract"
+    },
+    {
+      "id": "yama:5:contract",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 100,
+      "withoutReplacement": false,
+      "entries": [
         {
           "node": {
             "kind": "item",
@@ -809,8 +800,7 @@
     "checks": [
       {
         "check": "weights_sum",
-        "ok": false,
-        "detail": "1 table/variant mismatch(es)"
+        "ok": true
       },
       {
         "check": "refs_resolve",
