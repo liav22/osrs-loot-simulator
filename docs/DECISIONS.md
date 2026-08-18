@@ -5582,3 +5582,155 @@ extraction point, a new heuristic, new group metadata, a new standing
 check, plus the `data/tables/` bundle files themselves) — assessed and
 scoped, not attempted, pending a decision on priority against the rest of
 Phase 7.
+
+## The bundle shape, built: `tableRef` + `always`-mode tables, a standing check, both signals
+
+Built exactly as assessed above — no design changes, one clarification the
+assessment didn't fully anticipate (below). Detection was built FIRST and
+runs as a standing check on every heading block corpus-wide, not gated
+behind `weights_sum` already failing, per the explicit instruction: a fix
+contingent on the arithmetic breaking is the exact mechanism that let
+`the-leviathan`/`the-whisperer`/`vardorvis` ship `verified` wrong.
+
+**The one thing the assessment underspecified: a bundle is usually a SUBSET
+of a block's rows, not the whole block.** Grotesque Guardians' `Supplies`
+heading has 6 rows; only 3 (the potion trio) are bundled, the other 3
+(Mushroom potato, Saradomin brew, Prayer potion) are ordinary competing
+alternatives in the SAME weighted table. K'ril and Zilyana each carry TWO
+independent bundle pairs under one `Potions` heading, plus (Zilyana) an
+unbundled Prayer potion row in the same table. The fix therefore collapses
+each detected group's N member rows into ONE synthetic row — at the
+group's own shared rate, unchanged — and splices it back into the same
+row set every other mode-inference heuristic in `buildTableGroups` already
+runs on, rather than special-casing "the whole block is a bundle." Only the
+three DT2 "awakened" bosses, Maggot King, and Duke Sucellus happen to have
+their bundle occupy 100% of the heading's rows.
+
+**Two signals, both implemented, matching the assessment's split exactly**:
+
+1. **A shared footnote whose DEFINING text reads as a co-drop phrase.**
+   `findConfirmingSignal`'s `citedRefNames` shape is reused (`build-tables.
+   ts`'s new `definingRefText`) but answers a different question: not "is
+   this ref shared" (that alone proved nothing — Zilyana's Prayer potion
+   shares a DIFFERENT ref, `potions rate`, with its Saradomin brew/Super
+   restore bundle pair, but that ref's own defining text is a rate
+   citation, not a co-drop phrase, and correctly never fires) but "does the
+   ONE line carrying the ref's real text — not a bare `<ref name="X"/>`
+   repeat or a `{{NamedRef|X}}` shorthand — say the members arrive
+   together." `CO_DROP_PHRASES` (`dropped together`, `dropped alongside`,
+   `always accompan-`, `bundled with`) is the inverse list of
+   `MUTUAL_EXCLUSIVITY_PHRASES`.
+2. **Block-level prose with no footnote at all**, checked only when the
+   footnote signal found nothing for the block. `wikitext-drops.ts` gained
+   `WikitextDropLine.blockPreamble` (text between the heading and the
+   block's first template call) to make this readable at all — genuinely
+   new extraction, exactly as scoped. Confirmed only when EVERY row in the
+   block shares one identical rate; this is what correctly REFUSES Mad
+   Angel (see below) instead of guessing.
+
+**Grepped the whole corpus for the four phrases before trusting the
+detector on real data, not just the three previously-cited downgraded
+sources**: 13 sources carry one, matching the earlier session's own count
+exactly — the 9 in the task's affected list, plus `duke-sucellus`,
+`kree-arra`, `nex`, `phantom-muspah`. Checked each of the extra four by
+hand before assuming the standing check's universal reach was safe:
+
+- `duke-sucellus` has the IDENTICAL whole-block-prose shape as the three DT2
+  bosses (its own `Supplies` heading, same wording) and is now correctly
+  modelled too — a bonus, harmless since it stays `needs_review` for its
+  own, unrelated, already-watchlisted chain-order/perfect-kill-bonus reason.
+- `kree-arra` carries the GWDRDT group's footnote shape (a full, repeated
+  `<ref name="potiondrop">...</ref>` on BOTH citing lines, not a
+  define-once-then-self-close pair — a citation style `definingRefText`
+  handles by construction, since it just takes whichever line's text it
+  finds first) and is now correctly modelled too — bonus, stays
+  `needs_review` on the pre-existing GWDRDT missing-item gap.
+- `nex`'s two bundle pairs sit on `rarity=Common` rows, which
+  `parseRarity` cannot resolve to a `ParsedRate` at all — the block bails
+  out at the existing "unparseable rarity" check before bundle detection
+  ever runs, so nothing new happens here. Pre-existing gap, untouched.
+- `phantom-muspah`'s one "dropped alongside" occurrence is inside an
+  ANONYMOUS `<ref group=d>` (no `name=` attribute) on the Venator shard row
+  alone — describing the OPPOSITE of a bundle ("no regular loot will be
+  dropped alongside it", i.e. this item replaces other loot) — and is
+  invisible to `citedRefNames`, which requires a `name=` attribute to
+  register anything at all. Never reaches the phrase check. Confirmed by
+  reading the raw wikitext, not assumed safe from the shape alone.
+
+**The `tableRef` target is GENERATED, not hand-authored, and gets written
+during `parseBoss` itself — the one real mechanical wrinkle the assessment
+didn't spell out.** `assembleBoss` returns `bundleTables: Table[]`
+alongside the boss document; `parseBoss` writes each to
+`data/tables/<id>.json` (id = `<slug>-<heading-slug>-bundle`, with a
+numeric suffix for a second bundle under one heading — K'ril/Zilyana's two
+pairs) and folds them into a LOCAL copy of the shared-tables map before
+running `refs_resolve`/`drops_covered` against THIS document — the
+session-wide `sharedTables` passed into `parseBoss` was loaded once, before
+this source's own bundles were known to exist, so the check would
+otherwise report an unresolved ref on the same run that created it.
+`ParseOptions` gained `tablesDir` (mirroring `outputDir`) so
+`corpus-reproducibility.test.ts` writes generated bundle files to scratch,
+never the real `data/tables/`, the same discipline `outputDir` already
+enforces for boss documents.
+
+**Mad Angel is the confirmed, deliberate non-closure.** Its `Supply batch`
+heading compounds a `oneOf` fish choice (Shark/Yellowfin, 8/150 each) with
+a flat two-item bundle (Prayer potion(2)/Super combat potion(1), 16/150
+each) behind one "bundled with" prose sentence — two different rates in
+the same signal-confirmed block, which the uniform-rate requirement
+correctly refuses rather than guessing which subset is "the" bundle.
+`checkBundleSignals` reports it `confirmed: false`; `parseBoss` surfaces it
+in `reasons` and folds it into the `deterministicOk` gate the same way an
+ambiguous-mode guess already does, so it cannot silently ship `verified`
+even on a future pass where its own `weights_sum` happens to stop
+overflowing. Left exactly as flagged in the assessment — "deserves its own
+look once the simple case is real" — not attempted here.
+
+**K'ril's Coins composite defect (a THIRD, unrelated cause — see "Weight-
+overflow investigated" above) was deliberately NOT touched.** Its
+`raritynotes` explicitly disclaims single-table scope ("Coins come from
+rolls on all loot tables, including the unique table, GDT and RDT") and the
+parser still includes the whole composite figure. Per explicit instruction,
+out of scope for this entry — K'ril's own `weights_sum` happens to still
+pass after the bundle fix alone (the composite figure inflates the total
+without pushing it over 127), so this is invisible in the corpus counts,
+but the number itself is still wrong and unaddressed.
+
+**`chaos-fanatic`/`phosani-s-nightmare`'s own weight-overflow was NOT
+chased, per explicit instruction.** `chaos-fanatic` carries two bundle
+pairs (now correctly modelled) that were never the cause of its own
+overflow — removing their double-count moves its hand-summed total from
+129 to 120, UNDER its `/128` denominator, so `weights_sum` now passes by
+coincidence (shortfall is legitimate slack, not a defect) without the
+underlying "wiki's own published weights don't reconcile to their own
+stated total" question ever being resolved. `phosani-s-nightmare` carries
+no bundle citation at all and is completely untouched by this session.
+Neither is on `data/mechanics-watchlist.json` and neither needs to be —
+see the "root-caused" entry above for why.
+
+**Corpus effect**: 61 → 65 verified, 36 → 32 needs_review (102 total,
+unchanged). Four sources newly `verified`: `grotesque-guardians` (the
+bundle was its only defect), and `the-leviathan`/`the-whisperer`/
+`vardorvis` (downgraded off `verified` deliberately in an earlier session
+pending exactly this fix — their `data/mechanics-watchlist.json` entries
+are removed here, now that the mechanic they name is modelled). `maggot-king`,
+`k-ril-tsutsaroth`, `commander-zilyana`, `chaos-fanatic` stay
+`needs_review` — each has its own separate, pre-existing, unfixed reason
+(a `drops_covered` gap for the first three, GWDRDT's missing-item gap for
+the GWD pair) that the bundle fix was never going to close. `mad-angel`
+stays `needs_review`, correctly, now for a MORE PRECISE reason than
+before (`checkBundleSignals`'s explicit `confirmed: false`, not just an
+uninterpreted `weights_sum` overflow). `duke-sucellus`/`kree-arra` are
+unaffected in status (each already `needs_review` for its own separate,
+untouched reason) but now carry the correct bundle structure underneath.
+13 new `data/tables/*.json` files, all generated, none hand-authored.
+Full `pnpm -r test`/`typecheck`/`lint` green, including
+`packages/loot-model/test/brutus.test.ts` as the regression gate; new
+coverage in `apps/ingest/test/build-tables.test.ts` (`findBundleGroups`/
+`checkBundleSignals`, both signals, the uniform-rate refusal) and
+`apps/ingest/test/assemble-boss.test.ts` (the `tableRef` node, the
+generated shared table's shape, the collision-suffix id scheme).
+`marginal-rates.test.ts`'s `DOES_NOT_COMPILE` trip wire fired as expected
+and was updated (7 sources → 2: `mad-angel`, `phosani-s-nightmare`) rather
+than deleted, matching the project's standing convention for this class of
+guard.

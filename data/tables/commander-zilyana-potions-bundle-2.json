@@ -1,0 +1,39 @@
+{
+  "id": "commander-zilyana-potions-bundle-2",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 163,
+        "itemKey": "super-defence-3",
+        "name": "Super defence(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 3
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 3042,
+        "itemKey": "magic-potion-3",
+        "name": "Magic potion(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 3
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Co-drop bundle for Commander Zilyana's \"Potions\" heading — footnote 'pots2' says \"dropped together\". Every member arrives on the same access roll; see docs/DECISIONS.md's \"bundle shape, assessed\" entry."
+}

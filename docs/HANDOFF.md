@@ -17,7 +17,49 @@ diff`, `git log`) are fine and encouraged before trusting this file's claims.
 
 ## 1. Current state
 
-**Changed this session (the most recent one — three sources downgraded,
+**Changed this session (the most recent one — the bundle shape BUILT, not
+just assessed):**
+
+- **The bundle shape (`docs/DECISIONS.md`'s "bundle shape, assessed" entry,
+  the prior session) is built**: a `tableRef` to a generated, per-boss
+  `data/tables/<slug>-<heading>-bundle.json` (`mode: 'always'`), detected by
+  a standing check (`checkBundleSignals`/`findBundleGroups`, `build-tables.
+  ts`) that runs on every heading block corpus-wide, not gated behind
+  `weights_sum` already failing — both signals from the assessment: a shared
+  footnote whose DEFINING text (not just its sharedness) reads as a co-drop
+  phrase, and block-level prose with no footnote at all (new extraction,
+  `WikitextDropLine.blockPreamble`). See `docs/DECISIONS.md`'s "The bundle
+  shape, built" entry for the full mechanism, including the one thing the
+  assessment underspecified (a bundle is usually a SUBSET of a block's rows,
+  not the whole block) and how the generated `data/tables/` file gets
+  written and validated within the same `parseBoss` call that discovers it.
+- **`the-leviathan`, `the-whisperer`, `vardorvis` return to `verified`** —
+  downgraded in an earlier session specifically pending this fix; their
+  `data/mechanics-watchlist.json` entries are removed now that the mechanic
+  they named is actually modelled. **`grotesque-guardians` reaches `verified`
+  for the first time** — the bundle was its only defect. **61 -> 65
+  verified, 36 -> 32 needs_review.**
+- **`maggot-king`, `k-ril-tsutsaroth`, `commander-zilyana`, `chaos-fanatic`,
+  `duke-sucellus`, `kree-arra` all get the bundle correctly modelled too**
+  (the standing check's whole point — it isn't scoped to the task's named
+  list) **but stay `needs_review`**, each for its own separate, pre-existing,
+  untouched reason (a `drops_covered` gap for the first four, GWDRDT's own
+  missing-item gap for the GWD pair, duke-sucellus' chain-order/perfect-kill
+  watchlist entry). **`mad-angel` also stays `needs_review`, deliberately
+  NOT auto-modelled** — its `Supply batch` heading compounds a `oneOf` fish
+  choice with a flat two-item bundle at a DIFFERENT rate in one prose
+  sentence, which the bundle detector's uniform-rate requirement correctly
+  refuses rather than guessing; `checkBundleSignals` reports it
+  `confirmed: false` and `parseBoss` gates `verified` on that directly, not
+  just on whatever `weights_sum` happens to see.
+- **K'ril's separate Coins composite defect and chaos-fanatic's/phosani-
+  s-nightmare's own wiki-weight-drift overflow were both explicitly left
+  untouched**, per instruction — see `docs/DECISIONS.md`'s new entry for
+  why K'ril's `weights_sum` happens to pass anyway (the composite figure
+  inflates the total without pushing it over 127) despite the Coins number
+  itself still being wrong.
+
+**Changed in the prior session (three sources downgraded,
 Yama fixed, the other three weight-overflow sources root-caused, the bundle
 shape assessed):**
 
@@ -264,26 +306,30 @@ regression, not a miscount). What IS done within its scope:
 
 ```
 99 documents, of 102 loot sources with include: true (97.1%):
-  61 verified, 2 manual_override, 36 needs_review
+  65 verified, 2 manual_override, 32 needs_review
 ```
 
-**Two sessions of change to this number, net 55 -> 64 -> 61 verified.** The
-transcluded-mode fix (section 3, `docs/DECISIONS.md`) moved `abyssal-sire`,
+**Three sessions of change to this number, net 55 -> 64 -> 61 -> 65 verified.**
+The transcluded-mode fix (section 3, `docs/DECISIONS.md`) moved `abyssal-sire`,
 `araxxor`, `arrg`, `bryophyta`, `dagannoth-{prime,rex,supreme}`,
 `deranged-archaeologist`, `giant-sea-snake` — exactly the 9 sources that were
-`needs_review` on that question alone — straight to `verified` (55 -> 64).
-The most recent session then downgraded `the-leviathan`/`the-whisperer`/
-`vardorvis` back off `verified` on the bundle defect (64 -> 61) — a real
-regression in the count, taken deliberately, because they were shipping
-wrong odds under the badge. Re-run `ingest parse` (no `--tier`/`--source`
-filter) landed on both splits exactly, and
-`corpus-reproducibility.test.ts` passes against the regenerated
-`data/bosses/*.json`.
+`needs_review` on that question alone — straight to `verified` (55 -> 64). An
+earlier session then downgraded `the-leviathan`/`the-whisperer`/`vardorvis`
+back off `verified` on the bundle defect (64 -> 61) — a real regression in the
+count, taken deliberately, because they were shipping wrong odds under the
+badge. **The most recent session built the bundle shape** (`docs/DECISIONS.md`'s
+"The bundle shape, built" entry) and moved 61 -> 65: those same three sources
+returned to `verified` now that the mechanic they were downgraded for is
+actually modelled (their `data/mechanics-watchlist.json` entries are gone),
+plus `grotesque-guardians` newly reached `verified` for the first time (the
+bundle was its only defect). Re-run `ingest parse` (no `--tier`/`--source`
+filter) landed on all splits exactly, and `corpus-reproducibility.test.ts`
+passes against the regenerated `data/bosses/*.json`.
 
 **READ THE DENOMINATOR CAREFULLY. It is 102, not 52.** Coverage was long read as
 "27 of 52"; 52 was the number of sources ever PARSED, not the number the project
 owns. `include: true` in `data/_inventory.json` is the gate, and it is 102.
-`verified` is **61/102 = 59.8%** (61.6% of the 99 documents that exist). Per
+`verified` is **65/102 = 63.7%** (65.7% of the 99 documents that exist). Per
 tier (with document / include:true): A 25/26, B 1/1, C 26/26, **D 20/20**
 (Fortis Colosseum's override closed the last gap this session), E 27/29. The
 **3** sources with no document at all: `revenant-maledictus` (A, own open
@@ -315,18 +361,15 @@ page's own words). **Nothing is deleted or excluded from parsing** — only
 now with a visible "Not repeatable" badge. See `docs/DECISIONS.md`'s
 `repeatable` entry for the full false-positive/negative audit.
 
-**Read `verified` split by this field before trusting the headline 61/102.**
-26 of the 61 `verified` sources (42.6%) are one-time content. The 9
-transcluded-mode sources that flipped to `verified` are all `repeatable:
-true` (Abyssal Sire, Araxxor, Arrg, Bryophyta, the three Dagannoth kings,
-Deranged archaeologist and Giant sea snake are all farmable, not
-quest-gated); the 3 sources downgraded back off `verified` (`the-leviathan`,
-`the-whisperer`, `vardorvis`) are ALSO `repeatable: true`, so that later
-change pulled the repeatable share back down again: **35/71 = 49.3%** among
-documents with `repeatable: true` — net up from the original 44.3%, but
-below the intermediate session's 53.5%. Recomputed against the regenerated
-corpus both times; full table in `docs/DECISIONS.md` predates both fixes and
-should be recomputed too if the exact per-tier split matters again.
+**Read `verified` split by this field before trusting the headline 65/102.**
+26 of the 65 `verified` sources (40.0%) are one-time content — the same 26 as
+before the bundle fix, since all four sources it moved to `verified`
+(`grotesque-guardians`, `the-leviathan`, `the-whisperer`, `vardorvis`) are
+`repeatable: true`: **39/71 = 54.9%** among documents with `repeatable: true`
+— up from the prior session's 49.3%, and now the highest this figure has
+been. Recomputed against the regenerated corpus; full table in
+`docs/DECISIONS.md` predates all three fixes and should be recomputed too if
+the exact per-tier split matters again.
 
 **Found by lifting the tier gate, then fixed: `monumental-chest` (tier D) was
 a STALE committed document the parser could no longer reproduce, and a
@@ -678,23 +721,18 @@ occasionally just don't sum to their own stated denominator by a point or
 two — plausible ordinary editing drift, not fixable by any parser or model
 change.
 
-**The bundle shape itself — assessed, not built** (`docs/DECISIONS.md`'s
-"bundle shape, assessed" entry, on request): confirmed a `tableRef` to a new
-single-boss `data/tables/<id>.json` record with `mode: 'always'` works with
-**zero schema change** — the inclusive counterpart to CoX's `oneOf`, built
-from primitives already in production (`tableRef` resolution is mode-agnostic
-throughout `compile.ts`/`simulate.ts`/every validator; single-boss-specific
-`data/tables/` records are already precedented by Lunar Chest's own
-`_set` tables). Also confirmed the shape IS detectable independent of
-whether it overflows — two recurring textual signals (a shared per-row
-footnote citing co-drop language, which `findConfirmingSignal`'s existing
-`citedRefNames` machinery already half-detects; and block-level prose with
-no footnote at all, which is genuinely new — currently discarded, not
-captured anywhere) — which is what would make this a standing check rather
-than a fix contingent on the arithmetic happening to break, exactly what
-would have caught the three downgraded sources before they ever shipped
-`verified`. Scoped, not implemented; see the DECISIONS.md entry for the full
-design before building it.
+**The bundle shape is BUILT**, not just assessed — see the top of section 1
+and `docs/DECISIONS.md`'s "The bundle shape, built" entry for the full
+mechanism (a `tableRef` to a generated `data/tables/<id>.json` with
+`mode: 'always'`, a standing corpus-wide check, both signals from the
+original assessment). `grotesque-guardians` reached `verified`;
+`the-leviathan`/`the-whisperer`/`vardorvis` returned to it;
+`maggot-king`/`chaos-fanatic` still carry OTHER, separate, untouched
+`drops_covered` gaps and moved from the weight-overflow row below into the
+coverage-gaps one; `k-ril-tsutsaroth`/`commander-zilyana` are unaffected in
+status (GWDRDT's own missing-item gap, untouched); `mad-angel` stays,
+correctly, in the weight-overflow row — its compound `oneOf`-and-bundle
+shape was deliberately NOT auto-modelled (see the top of section 1).
 
 | group | count | what it needs |
 |---|---|---|
@@ -703,15 +741,14 @@ design before building it.
 | blocked, deliberately | 1 | `reward-cart` — see section 3's "genuinely unknowable" list |
 | GWDRDT — **was 2, corrected to 4** | 4 | `kree-arra`, `general-graardor`, **and `commander-zilyana`, `k-ril-tsutsaroth`** (landmine #3) — same missing item set, never previously cross-referenced |
 | other | 2 | `black-knight-titan` (a Lua `{{#invoke:}}` sub-table + `items_known`), `salarin-the-twisted` (`items_known`) |
-| **weight-overflow (bundle defect, mostly) — Yama fixed and moved out, 6 -> 5** | 5 | `chaos-fanatic`, `grotesque-guardians`, `mad-angel`, `maggot-king`, `phosani-s-nightmare` (plus the two GWDRDT sources above, which double up). Root-caused, not fixed — three distinct causes (bundle defect; a small wiki-rounding imprecision unrelated to any parser gap; Yama's, fixed). See both `docs/DECISIONS.md` entries above before touching any of these. |
-| **downgraded from `verified`, bundle defect, silent (new this session)** | 3 | `the-leviathan`, `the-whisperer`, `vardorvis` — see above |
-| coverage gaps (`drops_covered`/`items_known`/unparseable-rarity, unrelated to transclusion/GWD) | 7 | `alchemical-hydra`, `black-demon`, `chaos-elemental`, `kalphite-queen`, `nex`, `obor`, **`yama`** (weight-overflow fixed, moved here) |
+| **weight-overflow — bundle shape shipped, 5 -> 2** | 2 | `mad-angel` (bundle signal fires but is deliberately NOT auto-modelled — a compound `oneOf`-and-bundle shape at two different rates; `checkBundleSignals` reports it `confirmed: false`), `phosani-s-nightmare` (no bundle citation at all; the wiki's own published weights just don't sum to their own stated denominator). See `docs/DECISIONS.md`'s "The bundle shape, built" entry. |
+| coverage gaps (`drops_covered`/`items_known`/unparseable-rarity, unrelated to transclusion/GWD) | 9 | `alchemical-hydra`, `black-demon`, `chaos-elemental`, `kalphite-queen`, `nex`, `obor`, `yama`, **`maggot-king`, `chaos-fanatic`** (both correctly bundle-modelled now, both still short on drops_covered for their own separate reasons) |
 | items_known only | 1 | `chronozon` — tier-E item-index gap |
 | Vorkath's refused seed partition | 1 | `vorkath` — ratio 1.6665, correctly refused (landmine #11d), its own bespoke residual, not a clean partition |
 
-Table rows sum to 32 (5+3+1+4+2+5+3+7+1+1); the 4 watchlisted raids below (a
+Table rows sum to 28 (5+3+1+4+2+2+9+1+1); the 4 watchlisted raids below (a
 different kind of `needs_review` — deliberate, not unresolved) bring the real
-total to **36**.
+total to **32**.
 
 Plus **6 `manual_override`/all-four-raids-shipped-but-watchlisted** —
 `doom-of-mokhaiotl`, `lunar-chest` (terminal `manual_override`, not work
@@ -822,7 +859,19 @@ counter.** The check exists precisely because parsing a page cleanly proves
 nothing when the rows never encoded the mechanic that matters — and, now,
 because sometimes the rows the page DOES publish simply don't add up.
 
-### The bundle defect — assessed and designed, not built
+### The bundle defect — BUILT (kept as the reasoning trail, not a to-do list)
+
+**Built this session** — `docs/DECISIONS.md`'s "The bundle shape, built" entry
+has the mechanism and the exact corpus effect; the top of section 1 has the
+summary. Everything below predates the build and is kept for the reasoning
+trail (why each source's own shape is what it is), not as an outstanding
+task — **the per-source `status` column in the table just below is now
+STALE** (written before the fix): `grotesque-guardians`/`the-leviathan`/
+`the-whisperer`/`vardorvis` are `verified`; `maggot-king`/`chaos-fanatic` are
+still `needs_review` but no longer FOR the bundle (their own separate
+`drops_covered` gaps); `k-ril-tsutsaroth`/`commander-zilyana` are unaffected
+(GWDRDT); `mad-angel` alone is still `needs_review` for the bundle itself,
+deliberately, because its shape wasn't licensed for automatic modelling.
 
 **The shape**: some drop-table rows are not independent alternatives at all —
 the wiki states outright that 2-3 items always arrive TOGETHER on one access
@@ -905,10 +954,11 @@ with a prayer potion(2) and a super combat potion(1)" is a compound of
 `oneOf` (the fish choice) AND this bundle shape (the potions) in one heading
 — flagged as the one case that won't fully close on a first, simple pass.
 
-**Not built.** Real, moderate-sized capability (new extraction point, new
+**BUILT.** Real, moderate-sized capability (new extraction point, new
 heuristic, new group metadata, new standing check, plus the `data/tables/`
-files themselves) — scoped in `docs/DECISIONS.md`'s "bundle shape, assessed"
-entry, pending a priority decision, not a next-session default.
+files themselves) — see `docs/DECISIONS.md`'s "The bundle shape, built"
+entry for the mechanism, including how Mad Angel's compound shape is
+refused rather than guessed, exactly as flagged below.
 
 ## 4. Benchmark state
 

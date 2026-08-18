@@ -259,14 +259,8 @@
         },
         {
           "node": {
-            "kind": "item",
-            "itemId": 6687,
-            "itemKey": "saradomin-brew-3",
-            "name": "Saradomin brew(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
+            "kind": "tableRef",
+            "ref": "commander-zilyana-potions-bundle"
           },
           "rate": {
             "kind": "weight",
@@ -275,46 +269,8 @@
         },
         {
           "node": {
-            "kind": "item",
-            "itemId": 3024,
-            "itemKey": "super-restore-4",
-            "name": "Super restore(4)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 6
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 163,
-            "itemKey": "super-defence-3",
-            "name": "Super defence(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 3042,
-            "itemKey": "magic-potion-3",
-            "name": "Magic potion(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
+            "kind": "tableRef",
+            "ref": "commander-zilyana-potions-bundle-2"
           },
           "rate": {
             "kind": "weight",
@@ -498,13 +454,12 @@
     "checks": [
       {
         "check": "weights_sum",
-        "ok": false,
-        "detail": "1 table/variant mismatch(es)"
+        "ok": true
       },
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "2 tableRef node(s) resolved against 20 shared table(s)"
       },
       {
         "check": "rates_valid",

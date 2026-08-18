@@ -1,0 +1,39 @@
+{
+  "id": "k-ril-tsutsaroth-potions-bundle-2",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 3026,
+        "itemKey": "super-restore-3",
+        "name": "Super restore(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 3
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 189,
+        "itemKey": "zamorak-brew-3",
+        "name": "Zamorak brew(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 3
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Co-drop bundle for K'ril Tsutsaroth's \"Potions\" heading — footnote 'restbrew' says \"dropped together\". Every member arrives on the same access roll; see docs/DECISIONS.md's \"bundle shape, assessed\" entry."
+}

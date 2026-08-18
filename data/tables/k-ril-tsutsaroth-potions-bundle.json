@@ -1,0 +1,39 @@
+{
+  "id": "k-ril-tsutsaroth-potions-bundle",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 145,
+        "itemKey": "super-attack-3",
+        "name": "Super attack(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 3
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 157,
+        "itemKey": "super-strength-3",
+        "name": "Super strength(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 3
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Co-drop bundle for K'ril Tsutsaroth's \"Potions\" heading — footnote 'supatkstr' says \"dropped together\". Every member arrives on the same access roll; see docs/DECISIONS.md's \"bundle shape, assessed\" entry."
+}

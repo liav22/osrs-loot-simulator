@@ -1,0 +1,39 @@
+{
+  "id": "kree-arra-other-bundle",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 169,
+        "itemKey": "ranging-potion-3",
+        "name": "Ranging potion(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 3
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 163,
+        "itemKey": "super-defence-3",
+        "name": "Super defence(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 3
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Co-drop bundle for Kree'arra's \"Other\" heading — footnote 'potiondrop' says \"dropped together\". Every member arrives on the same access roll; see docs/DECISIONS.md's \"bundle shape, assessed\" entry."
+}

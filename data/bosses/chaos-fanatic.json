@@ -134,38 +134,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 1035,
-            "itemKey": "zamorak-monk-top",
-            "name": "Zamorak monk top",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 4
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1033,
-            "itemKey": "zamorak-monk-bottom",
-            "name": "Zamorak monk bottom",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 4
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 4675,
             "itemKey": "ancient-staff",
             "name": "Ancient staff",
@@ -177,6 +145,16 @@
           "rate": {
             "kind": "weight",
             "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "chaos-fanatic-weapons-and-armour-bundle"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
           }
         },
         {
@@ -394,40 +372,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 1621,
-            "itemKey": "uncut-emerald",
-            "name": "Uncut emerald",
-            "qty": {
-              "kind": "exact",
-              "n": 6
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1623,
-            "itemKey": "uncut-sapphire",
-            "name": "Uncut sapphire",
-            "qty": {
-              "kind": "exact",
-              "n": 4
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 993,
             "itemKey": "sinister-key",
             "name": "Sinister key",
@@ -456,6 +400,16 @@
           "rate": {
             "kind": "weight",
             "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "chaos-fanatic-other-bundle"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
           }
         }
       ],
@@ -649,13 +603,12 @@
     "checks": [
       {
         "check": "weights_sum",
-        "ok": false,
-        "detail": "1 table/variant mismatch(es)"
+        "ok": true
       },
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "5 tableRef node(s) resolved structurally against 7 shared table(s); the compileBoss cross-check could not run because the document does not compile (Table 'chaos-fanatic:2:weapons-and-armour-runes-consumables-other' has applicable weights summing to 129, which exceeds its denominator of 128) — weights_sum owns that failure"
+        "detail": "7 tableRef node(s) resolved against 20 shared table(s)"
       },
       {
         "check": "rates_valid",

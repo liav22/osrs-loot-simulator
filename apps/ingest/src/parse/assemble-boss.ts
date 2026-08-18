@@ -1,4 +1,11 @@
-import { BossSchema, type Boss, type Condition, type QtySpec } from '@osrs-loot-simulator/loot-model'
+import {
+  BossSchema,
+  SharedTableSchema,
+  type Boss,
+  type Condition,
+  type QtySpec,
+  type Table,
+} from '@osrs-loot-simulator/loot-model'
 import { slugify } from '../snapshots/store.js'
 import { indexByItemKey, type ItemIndex } from '../items/index.js'
 import { isAllowlisted, type ItemAllowlist } from '../items/allowlist.js'
@@ -39,6 +46,17 @@ export interface AssembleResult {
    * thing as a check confirming it.
    */
   ambiguousGroups: string[]
+  /**
+   * `data/tables/<id>.json` records this document's `tableRef` nodes point at
+   * — a confirmed co-drop bundle (`mode: 'always'`, one entry per member),
+   * one file per bundle. Empty for every source that doesn't carry the bundle
+   * shape. `parseBoss` writes each of these to disk and folds them into the
+   * shared-tables map it validates this same document against, exactly the
+   * way a hand-authored `data/tables/` record already works for RDT/gem/Lunar
+   * Chest — this is generated, not hand-authored, but the mechanism is
+   * identical. See docs/DECISIONS.md's "bundle shape, assessed" entry.
+   */
+  bundleTables: Table[]
 }
 
 function parseQuantity(raw: string): QtySpec {
@@ -174,16 +192,59 @@ export function assembleBoss(
   // is `'normal'` needs no override at all.
   const contextDefaults = variants.includes('normal') ? {} : { variant: variants[0] }
 
-  const itemNodeFor = (entry: ParsedEntry, warnings: string[]): Record<string, unknown> => {
-    const { itemId, itemKey } = resolveItem(entry.name, options.itemIndex, options.allowlist, warnings)
+  const itemNodeFor = (
+    item: { name: string; quantity: string; noted: boolean },
+    warnings: string[]
+  ): Record<string, unknown> => {
+    const { itemId, itemKey } = resolveItem(item.name, options.itemIndex, options.allowlist, warnings)
     return {
       kind: 'item' as const,
       itemId,
       itemKey,
-      name: entry.name,
-      qty: parseQuantity(entry.quantity),
-      ...(entry.noted ? { noted: true } : {}),
+      name: item.name,
+      qty: parseQuantity(item.quantity),
+      ...(item.noted ? { noted: true } : {}),
     }
+  }
+
+  // One `data/tables/<id>.json` per confirmed bundle, plus the `tableRef` id
+  // counter that names it. Ids are derived from the boss slug and the
+  // bundle's own heading — filename-safe and greppable, matching
+  // `data/tables/`'s existing `lunar_chest_*_set` precedent — with a numeric
+  // suffix for the rare case of two bundles under one heading (K'ril/
+  // Zilyana's two potion pairs both sit under "Potions").
+  const bundleTables: Table[] = []
+  const bundleIdCounts = new Map<string, number>()
+
+  const nodeFor = (entry: ParsedEntry, warnings: string[]): Record<string, unknown> => {
+    if (entry.bundle === undefined) return itemNodeFor(entry, warnings)
+
+    const base = `${options.slug}-${slugify(entry.bundle.heading)}-bundle`
+    const seen = (bundleIdCounts.get(base) ?? 0) + 1
+    bundleIdCounts.set(base, seen)
+    const id = seen === 1 ? base : `${base}-${seen}`
+
+    const table = {
+      id,
+      mode: 'always' as const,
+      entries: entry.bundle.members.map((member) => ({
+        node: itemNodeFor(member, warnings),
+        rate: { kind: 'always' as const },
+      })),
+      notes:
+        `Co-drop bundle for ${options.title}'s "${entry.bundle.heading}" heading — ` +
+        `${entry.bundle.signal}. Every member arrives on the same access roll; see ` +
+        `docs/DECISIONS.md's "bundle shape, assessed" entry.`,
+    }
+    const parsedTable = SharedTableSchema.safeParse(table)
+    if (!parsedTable.success) {
+      for (const issue of parsedTable.error.issues) {
+        errors.push(`bundle table '${id}': ${issue.path.join('.')}: ${issue.message}`)
+      }
+    } else {
+      bundleTables.push(parsedTable.data)
+    }
+    return { kind: 'tableRef' as const, ref: id }
   }
 
   const noteFor = (group: ParsedTableGroup): string =>
@@ -227,7 +288,7 @@ export function assembleBoss(
       }
 
       const entries = group.entries.map((entry) => {
-        const node = itemNodeFor(entry, warnings)
+        const node = nodeFor(entry, warnings)
         const conditions = conditionsFor(entry, group.section)
         if (group.mode === 'weighted') {
           return {
@@ -313,8 +374,8 @@ export function assembleBoss(
     for (const issue of parsed.error.issues) {
       errors.push(`${issue.path.join('.')}: ${issue.message}`)
     }
-    return { boss: null, errors, warnings, ambiguousGroups }
+    return { boss: null, errors, warnings, ambiguousGroups, bundleTables }
   }
 
-  return { boss: parsed.data, errors, warnings, ambiguousGroups }
+  return { boss: parsed.data, errors, warnings, ambiguousGroups, bundleTables }
 }

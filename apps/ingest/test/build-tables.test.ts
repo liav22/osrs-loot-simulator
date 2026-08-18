@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildTableGroups, groupByHeading } from '../src/parse/build-tables.js'
+import { buildTableGroups, checkBundleSignals, groupByHeading } from '../src/parse/build-tables.js'
 import type { WikitextDropLine } from '../src/parse/wikitext-drops.js'
 
 function line(overrides: Partial<WikitextDropLine> & Pick<WikitextDropLine, 'name' | 'rarity'>): WikitextDropLine {
@@ -19,6 +19,7 @@ function line(overrides: Partial<WikitextDropLine> & Pick<WikitextDropLine, 'nam
     expandedFrom: '',
     accessRate: '',
     variant: null,
+    blockPreamble: '',
     ...overrides,
   }
 }
@@ -563,5 +564,133 @@ describe('transclusionPartition', () => {
     )
     expect(refused[0]?.oneOfAccess).toBeUndefined()
     expect(refused[0]?.ambiguous).toMatch(/needs a human check/)
+  })
+})
+
+/**
+ * The bundle shape (docs/DECISIONS.md's "bundle shape, assessed" entry): rows
+ * that are not competing alternatives at all, but items the wiki states
+ * arrive TOGETHER on one access roll. Two signals, confirmed against the real
+ * corpus shapes named in each test below — see `findBundleGroups`'s own
+ * comment in `build-tables.ts`.
+ */
+describe('co-drop bundles', () => {
+  it('collapses a shared-footnote pair into one entry (K\'ril/Zilyana/chaos-fanatic shape)', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Bull bones', rarity: '8/127', heading: 'Potions', rarityNotes: '<ref name="pair">Bull bones and Cow slippers are always dropped together.</ref>' }),
+        line({ name: 'Cow slippers', rarity: '8/127', heading: 'Potions', rarityNotes: '<ref name="pair"/>' }),
+        line({ name: 'Steak', rarity: '8/127', heading: 'Potions' }),
+      ])
+    )
+    expect(groups).toHaveLength(1)
+    expect(groups[0]?.entries).toHaveLength(2)
+    const bundleEntry = groups[0]?.entries.find((e) => e.bundle !== undefined)
+    expect(bundleEntry?.bundle).toMatchObject({
+      heading: 'Potions',
+      signal: expect.stringMatching(/footnote 'pair' says "dropped together"/),
+    })
+    expect(bundleEntry?.bundle?.members.map((m) => m.name)).toEqual(['Bull bones', 'Cow slippers'])
+    // The bundle's own weight is the shared per-row rate, not the doubled sum
+    // an N-competing-rows reading would have produced (8, not 16).
+    expect(bundleEntry?.weight).toBe(8)
+  })
+
+  it('collapses two independent footnote pairs under one heading (K\'ril\'s two potion pairs)', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'A1', rarity: '8/127', heading: 'Potions', rarityNotes: '<ref name="p1">A1 and A2 are always dropped together.</ref>' }),
+        line({ name: 'A2', rarity: '8/127', heading: 'Potions', rarityNotes: '<ref name="p1"/>' }),
+        line({ name: 'B1', rarity: '8/127', heading: 'Potions', rarityNotes: '<ref name="p2">B1 and B2 are always dropped together.</ref>' }),
+        line({ name: 'B2', rarity: '8/127', heading: 'Potions', rarityNotes: '<ref name="p2"/>' }),
+      ])
+    )
+    expect(groups).toHaveLength(1)
+    const bundles = groups[0]?.entries.filter((e) => e.bundle !== undefined) ?? []
+    expect(bundles).toHaveLength(2)
+    expect(bundles.map((b) => b.bundle?.members.map((m) => m.name))).toEqual([
+      ['A1', 'A2'],
+      ['B1', 'B2'],
+    ])
+  })
+
+  it('collapses a whole block from prose alone, with no footnote (Maggot King shape)', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({
+          name: 'Stymphike tartare',
+          rarity: '41/159',
+          heading: 'Supplies',
+          blockPreamble: 'These supplies are dropped together.',
+        }),
+        line({
+          name: 'Dull ancient medal',
+          rarity: '41/159',
+          heading: 'Supplies',
+          blockPreamble: 'These supplies are dropped together.',
+        }),
+      ])
+    )
+    expect(groups).toHaveLength(1)
+    expect(groups[0]?.entries).toHaveLength(1)
+    const [entry] = groups[0]!.entries
+    expect(entry?.bundle?.members.map((m) => m.name)).toEqual(['Stymphike tartare', 'Dull ancient medal'])
+    expect(entry?.bundle?.signal).toMatch(/block prose says "dropped together"/)
+    // The bundle stands as its own single-outcome table: weighted at its own
+    // rate against its own denominator (41/159), not doubled to 82.
+    expect(groups[0]?.mode).toBe('weighted')
+    expect(groups[0]?.denominator).toBe(159)
+    expect(entry?.weight).toBe(41)
+  })
+
+  it('does not collapse a block whose prose reads as co-drop but whose rows do not share one rate (Mad Angel shape)', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Shark', rarity: '8/150', heading: 'Supply batch', blockPreamble: 'Either sharks or yellowfins drop, bundled with a prayer potion(2).' }),
+        line({ name: 'Yellowfin', rarity: '8/150', heading: 'Supply batch', blockPreamble: 'Either sharks or yellowfins drop, bundled with a prayer potion(2).' }),
+        line({ name: 'Prayer potion(2)', rarity: '16/150', heading: 'Supply batch', blockPreamble: 'Either sharks or yellowfins drop, bundled with a prayer potion(2).' }),
+      ])
+    )
+    // No entry collapsed — every row is still its own competing alternative.
+    expect(groups.flatMap((g) => g.entries).every((e) => e.bundle === undefined)).toBe(true)
+    const signals = checkBundleSignals(groupByHeading([
+      line({ name: 'Shark', rarity: '8/150', heading: 'Supply batch', blockPreamble: 'Either sharks or yellowfins drop, bundled with a prayer potion(2).' }),
+      line({ name: 'Yellowfin', rarity: '8/150', heading: 'Supply batch', blockPreamble: 'Either sharks or yellowfins drop, bundled with a prayer potion(2).' }),
+      line({ name: 'Prayer potion(2)', rarity: '16/150', heading: 'Supply batch', blockPreamble: 'Either sharks or yellowfins drop, bundled with a prayer potion(2).' }),
+    ]))
+    expect(signals).toEqual([
+      expect.objectContaining({ heading: 'Supply batch', confirmed: false }),
+    ])
+  })
+
+  it('does not fire on prose that never uses a co-drop phrase', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'A', rarity: '1/10', heading: 'Resources', blockPreamble: 'There is a 1/10 chance to roll this table.' }),
+        line({ name: 'B', rarity: '1/10', heading: 'Resources' }),
+      ])
+    )
+    expect(groups.flatMap((g) => g.entries).every((e) => e.bundle === undefined)).toBe(true)
+  })
+
+  describe('checkBundleSignals', () => {
+    it('reports a confirmed bundle for every collapsed group', () => {
+      const blocks = groupByHeading([
+        line({ name: 'A', rarity: '41/159', heading: 'Supplies', blockPreamble: 'These supplies are dropped together.' }),
+        line({ name: 'B', rarity: '41/159', heading: 'Supplies', blockPreamble: 'These supplies are dropped together.' }),
+      ])
+      const signals = checkBundleSignals(blocks)
+      expect(signals).toEqual([
+        expect.objectContaining({ heading: 'Supplies', confirmed: true }),
+      ])
+    })
+
+    it('reports nothing for a block with no bundle signal at all', () => {
+      const blocks = groupByHeading([
+        line({ name: 'A', rarity: '1/10', heading: 'Resources' }),
+        line({ name: 'B', rarity: '1/10', heading: 'Resources' }),
+      ])
+      expect(checkBundleSignals(blocks)).toEqual([])
+    })
   })
 })

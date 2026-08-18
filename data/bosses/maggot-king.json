@@ -86,31 +86,8 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 33628,
-            "itemKey": "stymphike-tartare",
-            "name": "Stymphike tartare",
-            "qty": {
-              "kind": "range",
-              "min": 2,
-              "max": 4
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 41
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 33627,
-            "itemKey": "dull-ancient-medal",
-            "name": "Dull ancient medal",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "tableRef",
+            "ref": "maggot-king-supplies-bundle"
           },
           "rate": {
             "kind": "weight",
@@ -548,13 +525,12 @@
     "checks": [
       {
         "check": "weights_sum",
-        "ok": false,
-        "detail": "1 table/variant mismatch(es)"
+        "ok": true
       },
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "1 tableRef node(s) resolved against 20 shared table(s)"
       },
       {
         "check": "rates_valid",

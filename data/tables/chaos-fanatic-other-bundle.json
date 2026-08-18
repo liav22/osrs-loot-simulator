@@ -1,0 +1,41 @@
+{
+  "id": "chaos-fanatic-other-bundle",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1621,
+        "itemKey": "uncut-emerald",
+        "name": "Uncut emerald",
+        "qty": {
+          "kind": "exact",
+          "n": 6
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1623,
+        "itemKey": "uncut-sapphire",
+        "name": "Uncut sapphire",
+        "qty": {
+          "kind": "exact",
+          "n": 4
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Co-drop bundle for Chaos Fanatic's \"Other\" heading — footnote 'gems' says \"dropped alongside\". Every member arrives on the same access roll; see docs/DECISIONS.md's \"bundle shape, assessed\" entry."
+}

@@ -183,47 +183,8 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 2301,
-            "itemKey": "pineapple-pizza",
-            "name": "Pineapple pizza",
-            "qty": {
-              "kind": "range",
-              "min": 3,
-              "max": 4
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 139,
-            "itemKey": "prayer-potion-3",
-            "name": "Prayer potion(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 12699,
-            "itemKey": "super-combat-potion-2",
-            "name": "Super combat potion(2)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "tableRef",
+            "ref": "duke-sucellus-supplies-bundle"
           },
           "rate": {
             "kind": "weight",
@@ -812,7 +773,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "1 tableRef node(s) resolved against 20 shared table(s)"
       },
       {
         "check": "rates_valid",

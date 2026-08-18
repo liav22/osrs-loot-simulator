@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T20:34:33.233Z",
+  "generatedAt": "2026-08-18T07:24:17.930Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -389,7 +389,7 @@
       "slug": "grotesque-guardians",
       "name": "Grotesque Guardians",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Dawn.png",
       "repeatable": true
     },
@@ -688,7 +688,7 @@
       "slug": "the-leviathan",
       "name": "The Leviathan",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "The Leviathan.png",
       "repeatable": true
     },
@@ -712,7 +712,7 @@
       "slug": "the-whisperer",
       "name": "The Whisperer",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "The Whisperer.png",
       "repeatable": true
     },
@@ -744,7 +744,7 @@
       "slug": "vardorvis",
       "name": "Vardorvis",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Vardorvis.png",
       "repeatable": true
     },
@@ -798,12 +798,25 @@
     }
   ],
   "tables": [
+    "chaos-fanatic-other-bundle",
+    "chaos-fanatic-weapons-and-armour-bundle",
+    "commander-zilyana-potions-bundle",
+    "commander-zilyana-potions-bundle-2",
+    "duke-sucellus-supplies-bundle",
     "gem_drop_table",
+    "grotesque-guardians-supplies-bundle",
+    "k-ril-tsutsaroth-potions-bundle",
+    "k-ril-tsutsaroth-potions-bundle-2",
+    "kree-arra-other-bundle",
     "lunar_chest_blood_set",
     "lunar_chest_blue_set",
     "lunar_chest_eclipse_set",
+    "maggot-king-supplies-bundle",
     "mega_rare_drop_table",
     "rare_drop_table",
-    "reward_pool_fish"
+    "reward_pool_fish",
+    "the-leviathan-supplies-bundle",
+    "the-whisperer-supplies-bundle",
+    "vardorvis-supplies-bundle"
   ]
 }

@@ -95,6 +95,10 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('every committed document reproduces from a 
           templates,
           repeatable: source.repeatable,
           outputDir: scratch,
+          // A confirmed co-drop bundle writes its own `data/tables/<id>.json`
+          // — must never land in the real, committed directory from a test
+          // run, the same reason `outputDir` is scratch too.
+          tablesDir: join(scratch, 'tables'),
         })
 
         if (outcome.status === 'parse_failed') {

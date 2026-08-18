@@ -51,6 +51,20 @@ export interface ParsedEntry {
   weight: number | null
   /** Conditions a rarity template's evaluation contributed (e.g. `onSlayerTask`). */
   extraConditions?: Condition[]
+  /**
+   * Set when this entry is a confirmed co-drop bundle — one access roll that
+   * grants every named member together — rather than a single item. Produced
+   * by `findBundleGroups` collapsing N wikitext rows into this one
+   * `ParsedEntry`; `assembleBoss` reads it to build a `tableRef` node into a
+   * synthesized `data/tables/<id>.json` (`mode: 'always'`) instead of
+   * resolving `name` as a single item. See docs/DECISIONS.md's "bundle
+   * shape, assessed" entry.
+   */
+  bundle?: {
+    heading: string
+    members: { name: string; quantity: string; noted: boolean }[]
+    signal: string
+  }
 }
 
 export type ParsedMode = 'always' | 'preroll' | 'weighted' | 'independent'
@@ -194,7 +208,10 @@ function toEntry(
     line.variant !== null ? [{ kind: 'variant', name: line.variant }] : []
   const allConditions = [...variantCondition, ...(conditions ?? [])]
   return {
-    name: line.name,
+    // A bundle's synthetic line carries no real item name of its own — the
+    // descriptive placeholder is never read as an item (`assembleBoss` checks
+    // `.bundle` first), it just keeps this entry legible in a debugger.
+    name: line.bundle !== undefined ? `<bundle: ${line.bundle.members.map((m) => m.name).join(' + ')}>` : line.name,
     quantity: line.quantity,
     noted: line.noted,
     members: line.members,
@@ -202,6 +219,7 @@ function toEntry(
     rarity: rate,
     weight: denominator === null ? null : (rate.num * denominator) / rate.den,
     ...(allConditions.length > 0 ? { extraConditions: allConditions } : {}),
+    ...(line.bundle !== undefined ? { bundle: line.bundle } : {}),
   }
 }
 
@@ -335,6 +353,159 @@ function findConfirmingSignal(lines: readonly WikitextDropLine[]): string | null
   }
 
   return null
+}
+
+/**
+ * Phrases the wiki uses to say several rows are not competing alternatives at
+ * all, but items that arrive TOGETHER on one access roll — the bundle shape's
+ * positive signal (docs/DECISIONS.md's "bundle shape, assessed" entry), the
+ * inverse of `MUTUAL_EXCLUSIVITY_PHRASES`' "at most one of these" framing.
+ * Confirmed against every real instance found in the corpus: Grotesque
+ * Guardians/K'ril/Zilyana/chaos-fanatic's per-row footnotes, and Maggot
+ * King/Mad Angel/Duke Sucellus/the three Desert Treasure II "awakened"
+ * bosses' block-level prose.
+ */
+const CO_DROP_PHRASES = [
+  /\bdropped together\b/i,
+  /\bdropped alongside\b/i,
+  /\balways accompan\w*\b/i,
+  /\bbundled with\b/i,
+] as const
+
+function matchCoDropPhrase(text: string): string | null {
+  for (const phrase of CO_DROP_PHRASES) {
+    const match = phrase.exec(text)
+    if (match !== null) return match[0]
+  }
+  return null
+}
+
+/**
+ * The DEFINING occurrence of a named citation's own text — the one line whose
+ * `raritynotes` actually spells it out (`<ref name="X">text</ref>`), as
+ * opposed to every other line's bare repeat (`<ref name="X"/>`,
+ * `{{NamedRef|X}}`), which carries no text of its own to classify. Only the
+ * defining text is checked against `CO_DROP_PHRASES` — a shared ref name
+ * alone says nothing about what the citation means (`citedRefNames`/
+ * `findConfirmingSignal` already lean on "shared" for a different, weaker
+ * question; this one needs to know what the footnote actually says).
+ *
+ * Deliberately requires the full `<ref ...>...</ref>` form, not a
+ * self-closing `<ref .../>` or a bare `{{NamedRef|X}}` — both of those match
+ * `citedRefNames`' own looser pattern but define nothing.
+ */
+function definingRefText(lines: readonly WikitextDropLine[], refName: string): string | null {
+  const escaped = refName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const pattern = new RegExp(
+    `<ref\\b[^>]*\\bname\\s*=\\s*"?${escaped}"?[^>]*>([\\s\\S]*?)<\\/ref>`,
+    'i'
+  )
+  for (const line of lines) {
+    const match = pattern.exec(line.rarityNotes)
+    if (match?.[1] !== undefined) return match[1]
+  }
+  return null
+}
+
+/** A `ParsedRate`'s identity for uniformity checks — two rates are "the same roll" exactly when this string matches. */
+const rateKey = (rate: ParsedRate): string => `${rate.kind}:${rate.num}/${rate.den}`
+
+export interface BundleGroup {
+  /** The wikitext rows this bundle collapses — in document order. */
+  members: ResolvedLine[]
+  /** Human-readable, for `ParsedEntry.bundle.signal` and the standing check's report. */
+  signal: string
+}
+
+/**
+ * Finds every co-drop bundle in one heading block's resolved rows — rows that
+ * are not competing alternatives, but items the wiki states arrive TOGETHER
+ * on one access roll. Two independent signals (docs/DECISIONS.md's "bundle
+ * shape, assessed" entry):
+ *
+ *   1. **Two or more rows cite the same named footnote whose DEFINING text
+ *      reads as a co-drop phrase** (Grotesque Guardians' potion trio, K'ril's
+ *      two potion pairs, Zilyana's two potion pairs, chaos-fanatic's robe and
+ *      gem pairs). `findConfirmingSignal`'s `citedRefNames` shape, reused;
+ *      the new part is reading what the citation's own text says, not just
+ *      that it's shared.
+ *   2. **Block-level prose between the heading and its rows, with no
+ *      per-row footnote at all** (Maggot King, Duke Sucellus, the three
+ *      Desert Treasure II "awakened" bosses) — only when EVERY row in the
+ *      block shares one identical rate, which is what licenses collapsing
+ *      the whole block into one access roll. A block whose prose reads as
+ *      co-drop but whose rows do NOT share one rate (Mad Angel: a `oneOf`
+ *      fish choice compounded with a flat two-item bundle, at two different
+ *      rates) is not a plain N-items-together bundle — reported in
+ *      `unconfirmed` instead of guessed into a structure the text doesn't
+ *      license.
+ *
+ * A footnote group whose own members don't share one rate is unconfirmed the
+ * same way — not observed in the real corpus, but checked defensively rather
+ * than assumed impossible.
+ */
+export function findBundleGroups(
+  resolved: readonly ResolvedLine[],
+  preamble: string
+): { groups: BundleGroup[]; unconfirmed: string[] } {
+  const groups: BundleGroup[] = []
+  const unconfirmed: string[] = []
+  const claimed = new Set<ResolvedLine>()
+
+  const citingByRef = new Map<string, ResolvedLine[]>()
+  for (const r of resolved) {
+    for (const name of citedRefNames(r.line.rarityNotes)) {
+      const existing = citingByRef.get(name)
+      if (existing === undefined) citingByRef.set(name, [r])
+      else existing.push(r)
+    }
+  }
+
+  for (const [refName, citing] of citingByRef) {
+    if (citing.length < 2) continue
+    const definingText = definingRefText(
+      citing.map((r) => r.line),
+      refName
+    )
+    if (definingText === null) continue
+    const phrase = matchCoDropPhrase(definingText)
+    if (phrase === null) continue
+    if (citing.some((r) => claimed.has(r))) continue
+
+    const rateSet = new Set(citing.map((r) => rateKey(r.resolution.rate!)))
+    if (rateSet.size !== 1) {
+      unconfirmed.push(
+        `footnote '${refName}' says "${phrase}" (a co-drop bundle) across ${citing.length} rows, ` +
+          `but they do not share one rate — needs a human check`
+      )
+      continue
+    }
+
+    for (const r of citing) claimed.add(r)
+    groups.push({ members: citing, signal: `footnote '${refName}' says "${phrase}"` })
+  }
+
+  // The block-level prose signal only applies when NOTHING in the block was
+  // already explained by a footnote — a block that mixes a confirmed
+  // footnote bundle with unrelated rows is not "the whole block is one
+  // bundle" (not observed in the corpus, but the ordering here is what would
+  // keep it from misfiring if it ever occurs).
+  if (groups.length === 0 && resolved.length >= 2) {
+    const phrase = matchCoDropPhrase(preamble)
+    if (phrase !== null) {
+      const rateSet = new Set(resolved.map((r) => rateKey(r.resolution.rate!)))
+      if (rateSet.size === 1) {
+        groups.push({ members: [...resolved], signal: `block prose says "${phrase}"` })
+      } else {
+        unconfirmed.push(
+          `block prose says "${phrase}" (a co-drop bundle), but its rows do not share one rate — ` +
+            `the shape is not a plain N-items-together bundle and needs a human check`
+        )
+      }
+    }
+  }
+
+  return { groups, unconfirmed }
 }
 
 interface ResolvedLine {
@@ -550,6 +721,52 @@ export function checkTransclusionPartitions(blocks: readonly HeadingBlock[]): Pa
   return checks
 }
 
+export interface BundleSignalCheck {
+  heading: string
+  section: string
+  /**
+   * `true` when the signal was strong enough to collapse into a bundle table
+   * (`buildTableGroups` does this itself, independently, so this is a
+   * cross-check that the two agree, not the only place it happens). `false`
+   * means a co-drop signal fired but the shape could not be confirmed for
+   * automatic modelling and needs a human check — Mad Angel's `oneOf`-and-
+   * bundle compound is the one real instance.
+   */
+  confirmed: boolean
+  detail: string
+}
+
+/**
+ * Runs bundle detection on EVERY block, whatever its shape, so the result is
+ * a standing check rather than a fix contingent on `weights_sum` happening to
+ * fail — the same discipline `checkTransclusionPartitions` already applies to
+ * the partition identity, and the whole reason `the-leviathan`/`the-
+ * whisperer`/`vardorvis` shipped `verified` on the bundle defect for as long
+ * as they did: their tables had slack, so nothing was ever forced to look.
+ * `parse-boss.ts` blocks `verified` on any `confirmed: false` result and
+ * surfaces it in `reasons`.
+ */
+export function checkBundleSignals(blocks: readonly HeadingBlock[]): BundleSignalCheck[] {
+  const checks: BundleSignalCheck[] = []
+  for (const block of blocks) {
+    const resolved = block.lines.map((line) => ({ line, resolution: parseRarity(line.rarity) }))
+    if (resolved.some(({ resolution }) => resolution.rate === null)) continue
+    const { groups, unconfirmed } = findBundleGroups(resolved, block.preamble)
+    for (const group of groups) {
+      checks.push({
+        heading: block.heading,
+        section: block.section,
+        confirmed: true,
+        detail: `${group.members.length} row(s) collapsed into a co-drop bundle (${group.signal})`,
+      })
+    }
+    for (const detail of unconfirmed) {
+      checks.push({ heading: block.heading, section: block.section, confirmed: false, detail })
+    }
+  }
+  return checks
+}
+
 const INDEPENDENT_HEADINGS = /tertiary|secondary/i
 const PREROLL_HEADINGS = /pre-?roll/i
 const ALWAYS_HEADINGS = /^100%$|^always$/i
@@ -559,6 +776,8 @@ export interface HeadingBlock {
   /** Shared by every line in the block — `groupByHeading` keys on `(section, heading)`. */
   section: string
   lines: WikitextDropLine[]
+  /** The first line's `blockPreamble` — identical across every line in the block, since they all came from the same `wikitext-drops.ts` block. `''` when there were no lines to carry it, which never happens for a non-empty block. */
+  preamble: string
 }
 
 /** Join character for the (section, heading) grouping key — never appears in wiki heading text. */
@@ -580,11 +799,11 @@ const GROUP_KEY_SEP = ' '
  */
 export function groupByHeading(lines: readonly WikitextDropLine[]): HeadingBlock[] {
   const order: string[] = []
-  const byKey = new Map<string, { heading: string; section: string; lines: WikitextDropLine[] }>()
+  const byKey = new Map<string, HeadingBlock>()
   for (const line of lines) {
     const key = `${line.section}${GROUP_KEY_SEP}${line.heading}`
     if (!byKey.has(key)) {
-      byKey.set(key, { heading: line.heading, section: line.section, lines: [] })
+      byKey.set(key, { heading: line.heading, section: line.section, lines: [], preamble: line.blockPreamble })
       order.push(key)
     }
     byKey.get(key)!.lines.push(line)
@@ -640,6 +859,42 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
           .join(', ')}`,
       })
       continue
+    }
+
+    // Confirmed co-drop bundles collapse BEFORE any mode inference runs, for
+    // the same reason the mixed-Always split below does: every downstream
+    // branch (homogenise/merge, dominant/outlier split, the heterogeneous
+    // fallback) builds its entries straight off `resolved`, so replacing N
+    // bundled rows with the one synthetic row that represents their shared
+    // access roll here means none of them need to know bundles exist. An
+    // unconfirmed signal (Mad Angel's `oneOf`-and-bundle compound) is
+    // deliberately NOT handled here — nothing about `resolved` changes, and
+    // `checkBundleSignals` (run corpus-wide from `parse-boss.ts`) is what
+    // flags it instead of guessing a structure the text doesn't license. See
+    // `findBundleGroups`'s own comment and docs/DECISIONS.md's "bundle
+    // shape, assessed" entry.
+    const bundleDetection = findBundleGroups(resolved, block.preamble)
+    if (bundleDetection.groups.length > 0) {
+      const claimed = new Set(bundleDetection.groups.flatMap((group) => group.members))
+      const bundleRows: ResolvedLine[] = bundleDetection.groups.map((group) => {
+        const first = group.members[0]!
+        return {
+          line: {
+            ...first.line,
+            bundle: {
+              heading: block.heading,
+              members: group.members.map((m) => ({
+                name: m.line.name,
+                quantity: m.line.quantity,
+                noted: m.line.noted,
+              })),
+              signal: group.signal,
+            },
+          },
+          resolution: first.resolution,
+        }
+      })
+      resolved = [...resolved.filter((r) => !claimed.has(r)), ...bundleRows]
     }
 
     // `always`-rate rows interleaved with chance-based ones under one

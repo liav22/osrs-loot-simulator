@@ -295,16 +295,27 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('per-item drop rates, composed', () => {
     // Named exactly, so this cannot quietly become the place sources go to
     // avoid the comparison. Each is a real `weights_sum` failure reported as
     // such on its own document.
-    // All eight are tier D sources whose main table genuinely overflows its
-    // denominator — the very thing that put them in tier D at triage. The
-    // overflow is real data, not a classification artifact.
+    // `chaos-fanatic`/`commander-zilyana`/`grotesque-guardians`/
+    // `k-ril-tsutsaroth`/`maggot-king` left this list once the bundle shape
+    // (docs/DECISIONS.md's "bundle shape, assessed" entry) shipped: their
+    // overflow WAS the bundle defect — N co-drop rows double-counted as
+    // competing alternatives — and collapsing each into one `tableRef` +
+    // `always`-mode entry removed exactly the excess weight. The remaining
+    // two are a different cause, unrelated to bundles and not fixed by it.
     expect([...new Set(DOES_NOT_COMPILE)].sort()).toEqual([
-      'chaos-fanatic',
-      'commander-zilyana',
-      'grotesque-guardians',
-      'k-ril-tsutsaroth',
+      // Mad Angel's `Supply batch` heading compounds a `oneOf` fish choice
+      // (Shark/Yellowfin, 8/150 each) with a flat two-item bundle (Prayer
+      // potion(2)/Super combat potion(1), 16/150 each) behind one prose-only
+      // "bundled with" signal — the bundle detector correctly finds the
+      // signal (`checkBundleSignals`, build-tables.test.ts) but refuses to
+      // auto-model it, since the rows do NOT share one rate the way every
+      // other real instance does. Flagged, not guessed — see
+      // docs/DECISIONS.md's "bundle shape, assessed" entry.
       'mad-angel',
-      'maggot-king',
+      // The wiki's own published integer weights simply don't sum to their
+      // own stated denominator (101 vs a `/100` every row cites) — no bundle
+      // citation anywhere on this source at all. Not a parser bug; see
+      // docs/DECISIONS.md's "root-caused — not the same defect" entry.
       'phosani-s-nightmare',
       // 'yama' left this list as an incidental effect of the dropversion=
       // propagation fix (docs/DECISIONS.md's "dropversion= parser fix"

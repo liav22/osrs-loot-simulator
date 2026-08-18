@@ -18,6 +18,7 @@ import { extractDropLines, findRowlessTemplateBlocks } from './wikitext-drops.js
 import { expandTransclusions, type TemplateDefinitions } from './expand-transclusions.js'
 import {
   buildTableGroups,
+  checkBundleSignals,
   checkTransclusionPartitions,
   describePartition,
   groupByHeading,
@@ -26,6 +27,7 @@ import { extractRdtAccessLines } from './rdt-access.js'
 import { assembleBoss } from './assemble-boss.js'
 import { collectItemInputs } from './collect-items.js'
 import { applyOverride, loadOverride, overrideSummary } from './overrides.js'
+import { TABLES_DIR } from '../tables/shared-tables.js'
 
 export const BOSSES_DIR = join(REPO_ROOT, 'data', 'bosses')
 
@@ -55,6 +57,13 @@ export interface ParseOptions {
    * mutating it. See `test/corpus-reproducibility.test.ts`.
    */
   outputDir?: string
+  /**
+   * Where a confirmed co-drop bundle's `data/tables/<id>.json` is written.
+   * Defaults to the real `data/tables/` — overridable for the same reason
+   * `outputDir` is: a test running the real pipeline must never write into
+   * committed data. See `test/corpus-reproducibility.test.ts`.
+   */
+  tablesDir?: string
 }
 
 export interface ParseOutcome {
@@ -139,6 +148,16 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   // chances that fold in its main table's own seed slots), and that is worth
   // saying out loud rather than only when it happens to change a mode.
   const partitions = checkTransclusionPartitions(blocks)
+  // Standing, on every block, for the same reason — a co-drop bundle
+  // (docs/DECISIONS.md's "bundle shape, assessed" entry) is otherwise
+  // invisible to weights_sum whenever the table has slack, which is exactly
+  // how `the-leviathan`/`the-whisperer`/`vardorvis` shipped `verified` wrong.
+  const bundleSignals = checkBundleSignals(blocks)
+  // A signal that fired but couldn't be confirmed for automatic modelling
+  // (Mad Angel's `oneOf`-and-bundle compound) is a correctness gap the
+  // document does not disclose on its own — blocks `verified` below, the same
+  // way an ambiguous mode guess does.
+  const unconfirmedBundles = bundleSignals.filter((signal) => !signal.confirmed)
 
   const result = assembleBoss(groups, rdtAccess, {
     slug: options.slug,
@@ -159,6 +178,25 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     }
   }
 
+  // Every confirmed bundle's shared table, written to disk and folded into a
+  // LOCAL copy of the shared-tables map — this document's own `refs_resolve`/
+  // `drops_covered` checks (below) need to see it, and `options.sharedTables`
+  // was loaded once before this source's own bundles were known to exist.
+  // Same mechanism `data/tables/`'s hand-authored records already use; these
+  // are generated rather than authored, deterministically, from this same
+  // parse, so re-running always reproduces the identical file.
+  const tablesDir = options.tablesDir ?? TABLES_DIR
+  if (result.bundleTables.length > 0) {
+    await mkdir(tablesDir, { recursive: true })
+    for (const table of result.bundleTables) {
+      await writeFile(join(tablesDir, `${table.id}.json`), `${JSON.stringify(table, null, 2)}\n`, 'utf8')
+    }
+  }
+  const sharedTables =
+    result.bundleTables.length === 0
+      ? options.sharedTables
+      : new Map([...options.sharedTables, ...result.bundleTables.map((table) => [table.id, table] as const)])
+
   // Everything downstream validates the MERGED document, not the generated
   // one — an override that introduces a broken table must fail the same
   // checks a bad parse would, never be rubber-stamped for being hand-written.
@@ -177,14 +215,14 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   const weightsSum = checkWeightsSum(merged.tables, resolveSimContext(merged, {}))
   const itemsKnown = checkItemsKnown(itemInputs, options.itemIndex, options.allowlist)
   const notOnWatchlist = checkNotOnWatchlist(options.watchlist, options.slug)
-  const refsResolve = checkRefsResolve(merged, options.sharedTables)
+  const refsResolve = checkRefsResolve(merged, sharedTables)
   const ratesValid = checkRatesValid(merged)
   const qtySane = checkQtySane(merged)
   // The one check that is NOT closed-world over the extracted document: it
   // compares the document against the wiki's own rendered drop rows, which is
   // what makes a silently-dropped transcluded sub-table visible. See
   // validate/drops-covered.ts.
-  const dropsCovered = await checkDropsCovered(options.title, merged.tables, options.sharedTables)
+  const dropsCovered = await checkDropsCovered(options.title, merged.tables, sharedTables)
 
   // ev_matches: real GE prices, joined by itemId, gemw-untradeable items
   // priced at 0 automatically (they carry no GE listing at all). Confirmed
@@ -249,9 +287,10 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     // correct one. A wrong number is worse than a missing row, so this blocks.
     expansion.unexpandable.length === 0 &&
     // An override supplying its own tables replaces exactly the structure the
-    // parser was unsure about, so its ambiguous-group guesses no longer
-    // describe the document being validated.
-    (overrideCarriesTables || result.ambiguousGroups.length === 0)
+    // parser was unsure about, so its ambiguous-group guesses (and an
+    // unconfirmed bundle signal, which describes the GENERATED document, not
+    // the override) no longer describe the document being validated.
+    (overrideCarriesTables || (result.ambiguousGroups.length === 0 && unconfirmedBundles.length === 0))
 
   // PROJECT_PLAN.md 16's Phase 5 done-when is "every boss verified or
   // manual_override" — so a hand-authored document that passes every
@@ -267,7 +306,14 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
 
   const reasons: string[] = overrideCarriesTables
     ? []
-    : [...result.warnings, ...result.ambiguousGroups]
+    : [
+        ...result.warnings,
+        ...result.ambiguousGroups,
+        ...unconfirmedBundles.map(
+          (signal) =>
+            `bundle signal in "${signal.heading}" not confirmed for automatic modelling: ${signal.detail}`
+        ),
+      ]
   // Advisory, not part of the gate: `drops_covered` decides completeness
   // against the wiki's own drop rows. These two say WHY a document is short,
   // which is what a vanished section could never say for itself — so they are

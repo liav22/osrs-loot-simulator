@@ -1,0 +1,54 @@
+{
+  "id": "grotesque-guardians-supplies-bundle",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 3044,
+        "itemKey": "magic-potion-2",
+        "name": "Magic potion(2)",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 171,
+        "itemKey": "ranging-potion-2",
+        "name": "Ranging potion(2)",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 12699,
+        "itemKey": "super-combat-potion-2",
+        "name": "Super combat potion(2)",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Co-drop bundle for Grotesque Guardians's \"Supplies\" heading — footnote 'pots' says \"dropped together\". Every member arrives on the same access roll; see docs/DECISIONS.md's \"bundle shape, assessed\" entry."
+}

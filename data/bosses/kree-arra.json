@@ -312,38 +312,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 169,
-            "itemKey": "ranging-potion-3",
-            "name": "Ranging potion(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 163,
-            "itemKey": "super-defence-3",
-            "name": "Super defence(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 217,
             "itemKey": "grimy-dwarf-weed",
             "name": "Grimy dwarf weed",
@@ -422,6 +390,16 @@
           "rate": {
             "kind": "weight",
             "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "kree-arra-other-bundle"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
           }
         }
       ],
@@ -540,7 +518,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "1 tableRef node(s) resolved against 20 shared table(s)"
       },
       {
         "check": "rates_valid",

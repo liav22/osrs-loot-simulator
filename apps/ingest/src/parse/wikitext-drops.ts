@@ -77,6 +77,32 @@ export interface WikitextDropLine {
    * `scanBlockCalls`.
    */
   variant: string | null
+  /**
+   * Prose sitting between this row's heading and the first `{{DropsTableHead}}`/
+   * row-template call in its block — block-level, not per-row, so every line in
+   * the same block carries an identical value. This is what lets
+   * `build-tables.ts`'s bundle detection see wiki text like "These supplies are
+   * dropped together" that sits ABOVE a table with no per-row footnote at all
+   * (Maggot King, Mad Angel) — the shared-footnote signal
+   * (`WikitextDropLine.rarityNotes`) cannot see this shape, since there is no
+   * footnote to share. See `findBundleGroups` in `build-tables.ts`.
+   */
+  blockPreamble: string
+  /**
+   * Set only on a SYNTHETIC line `build-tables.ts`'s `findBundleGroups`
+   * creates to stand in for N real rows it has collapsed into one confirmed
+   * co-drop bundle — never present on a line `extractDropLines` itself
+   * produces. Carries the real per-item wiki data (name/quantity/noted) for
+   * each bundled member, so `assembleBoss` can build a `tableRef` node into a
+   * synthesized `data/tables/<id>.json` (`mode: 'always'`) instead of
+   * resolving `name` as a single item — see docs/DECISIONS.md's "bundle
+   * shape, assessed" entry.
+   */
+  bundle?: {
+    heading: string
+    members: { name: string; quantity: string; noted: boolean }[]
+    signal: string
+  }
 }
 
 /**
@@ -447,7 +473,13 @@ function extractLinesFromSection(content: string, sectionTag: string): WikitextD
     // same-block-no-heading rows that don't occur here.
     let currentVariant: string | null = null
 
-    for (const { name: templateName, call } of scanBlockCalls(block)) {
+    const calls = scanBlockCalls(block)
+    // Everything before the first template call in the block — prose sitting
+    // directly under the heading, above `{{DropsTableHead}}`/the first row.
+    // Trimmed once here rather than by every caller.
+    const blockPreamble = block.slice(0, calls[0]?.start ?? block.length).trim()
+
+    for (const { name: templateName, call } of calls) {
       const { params } = parseTemplateCall(call)
 
       if (templateName === 'DropsTableHead') {
@@ -486,6 +518,7 @@ function extractLinesFromSection(content: string, sectionTag: string): WikitextD
         expandedFrom: params.get(PROVENANCE_TEMPLATE) ?? '',
         accessRate: params.get(PROVENANCE_ACCESS) ?? '',
         variant: currentVariant,
+        blockPreamble,
       })
     }
   }

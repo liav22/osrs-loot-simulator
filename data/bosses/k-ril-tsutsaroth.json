@@ -259,14 +259,8 @@
         },
         {
           "node": {
-            "kind": "item",
-            "itemId": 145,
-            "itemKey": "super-attack-3",
-            "name": "Super attack(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
+            "kind": "tableRef",
+            "ref": "k-ril-tsutsaroth-potions-bundle"
           },
           "rate": {
             "kind": "weight",
@@ -275,46 +269,8 @@
         },
         {
           "node": {
-            "kind": "item",
-            "itemId": 157,
-            "itemKey": "super-strength-3",
-            "name": "Super strength(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 3026,
-            "itemKey": "super-restore-3",
-            "name": "Super restore(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 189,
-            "itemKey": "zamorak-brew-3",
-            "name": "Zamorak brew(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            }
+            "kind": "tableRef",
+            "ref": "k-ril-tsutsaroth-potions-bundle-2"
           },
           "rate": {
             "kind": "weight",
@@ -482,13 +438,12 @@
     "checks": [
       {
         "check": "weights_sum",
-        "ok": false,
-        "detail": "1 table/variant mismatch(es)"
+        "ok": true
       },
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "2 tableRef node(s) resolved against 20 shared table(s)"
       },
       {
         "check": "rates_valid",

@@ -183,47 +183,8 @@
       "entries": [
         {
           "node": {
-            "kind": "item",
-            "itemId": 7060,
-            "itemKey": "tuna-potato",
-            "name": "Tuna potato",
-            "qty": {
-              "kind": "range",
-              "min": 3,
-              "max": 4
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 139,
-            "itemKey": "prayer-potion-3",
-            "name": "Prayer potion(3)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 12699,
-            "itemKey": "super-combat-potion-2",
-            "name": "Super combat potion(2)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
+            "kind": "tableRef",
+            "ref": "vardorvis-supplies-bundle"
           },
           "rate": {
             "kind": "weight",
@@ -814,7 +775,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -825,7 +786,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "1 tableRef node(s) resolved against 20 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -848,8 +809,7 @@
       },
       {
         "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "other: Downgraded from verified, not newly discovered as needs_review (docs/DECISIONS.md's 'Weight-overflow investigated' entry, 2026-08-17). Identical shape to the other two Desert Treasure II 'awakened' bosses' own watchlist entries: Supplies is 'These supplies are all dropped together' over Tuna potato, Prayer potion(3), Super combat potion(2), each at 1/5.3, modelled as a `weighted` pick-one-of-three instead of one access roll granting all three. The same fix (or non-fix) applies to all three at once."
+        "ok": true
       },
       {
         "check": "drops_covered",

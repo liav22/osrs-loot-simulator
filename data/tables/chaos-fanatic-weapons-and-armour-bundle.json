@@ -1,0 +1,39 @@
+{
+  "id": "chaos-fanatic-weapons-and-armour-bundle",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1035,
+        "itemKey": "zamorak-monk-top",
+        "name": "Zamorak monk top",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1033,
+        "itemKey": "zamorak-monk-bottom",
+        "name": "Zamorak monk bottom",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Co-drop bundle for Chaos Fanatic's \"Weapons and armour\" heading — footnote 'robes' says \"dropped together\". Every member arrives on the same access roll; see docs/DECISIONS.md's \"bundle shape, assessed\" entry."
+}

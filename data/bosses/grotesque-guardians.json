@@ -294,54 +294,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 3044,
-            "itemKey": "magic-potion-2",
-            "name": "Magic potion(2)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 6
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 171,
-            "itemKey": "ranging-potion-2",
-            "name": "Ranging potion(2)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 6
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 12699,
-            "itemKey": "super-combat-potion-2",
-            "name": "Super combat potion(2)",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 6
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 2434,
             "itemKey": "prayer-potion-4",
             "name": "Prayer potion(4)",
@@ -354,6 +306,16 @@
           "rate": {
             "kind": "weight",
             "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "grotesque-guardians-supplies-bundle"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
           }
         },
         {
@@ -805,19 +767,18 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
       {
         "check": "weights_sum",
-        "ok": false,
-        "detail": "1 table/variant mismatch(es)"
+        "ok": true
       },
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "1 tableRef node(s) resolved against 20 shared table(s)"
       },
       {
         "check": "rates_valid",

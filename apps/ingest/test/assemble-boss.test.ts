@@ -359,4 +359,89 @@ describe('assembleBoss', () => {
       expect(result.boss?.tables[0]?.entries[0]?.conditions).toBeUndefined()
     })
   })
+
+  /**
+   * A confirmed co-drop bundle (`build-tables.ts`'s `findBundleGroups`)
+   * arrives here as one `ParsedEntry` carrying `.bundle` instead of a real
+   * item name. `assembleBoss` is what turns that into the actual schema
+   * shape: a `tableRef` node in the boss's own table, plus a new
+   * `mode: 'always'` shared table in `AssembleResult.bundleTables` — the
+   * `tableRef`/`always`-mode primitives docs/DECISIONS.md's "bundle shape,
+   * assessed" entry confirmed need zero schema change.
+   */
+  describe('bundle entries', () => {
+    const bundleGroup: ParsedTableGroup = {
+      mode: 'weighted',
+      headings: ['Supplies'],
+      section: '',
+      denominator: 142,
+      ambiguous: null,
+      entries: [
+        {
+          name: '<bundle: Magic potion(2) + Ranging potion(2)>',
+          quantity: '1',
+          noted: false,
+          members: false,
+          freeToPlay: false,
+          rarity: { kind: 'fixed', num: 6, den: 142 },
+          weight: 6,
+          bundle: {
+            heading: 'Supplies',
+            members: [
+              { name: 'Bull bones', quantity: '2', noted: false },
+              { name: 'Cow slippers', quantity: '1', noted: true },
+            ],
+            signal: "footnote 'pots' says \"dropped together\"",
+          },
+        },
+      ],
+    }
+
+    it('builds a tableRef node instead of resolving the bundle as an item', () => {
+      const result = assembleBoss([bundleGroup], noRdtAccess, options)
+      expect(result.errors).toEqual([])
+      const node = result.boss?.tables[0]?.entries[0]?.node
+      expect(node).toEqual({ kind: 'tableRef', ref: 'test-boss-supplies-bundle' })
+      // The bundle's own weight (the shared access rate, not a per-item share)
+      // survives untouched — collapsing N rows to one doesn't change how the
+      // ENTRY into the bundle is rolled, only what's inside it.
+      expect(result.boss?.tables[0]?.entries[0]?.rate).toEqual({ kind: 'weight', weight: 6 })
+    })
+
+    it('returns one always-mode shared table with an item entry per bundled member', () => {
+      const result = assembleBoss([bundleGroup], noRdtAccess, options)
+      expect(result.bundleTables).toHaveLength(1)
+      const table = result.bundleTables[0]!
+      expect(table.id).toBe('test-boss-supplies-bundle')
+      expect(table.mode).toBe('always')
+      expect(table.entries).toHaveLength(2)
+      expect(table.entries.every((e) => e.rate.kind === 'always')).toBe(true)
+      const node0 = table.entries[0]?.node
+      expect(node0 && 'itemId' in node0 ? node0.itemId : undefined).toBe(33115)
+      const node1 = table.entries[1]?.node
+      expect(node1 && 'name' in node1 ? node1.name : undefined).toBe('Cow slippers')
+      expect(node1 && 'noted' in node1 ? node1.noted : undefined).toBe(true)
+    })
+
+    it('numbers a second bundle under the same heading rather than colliding', () => {
+      const secondBundle: ParsedTableGroup = {
+        ...bundleGroup,
+        entries: [
+          {
+            ...bundleGroup.entries[0]!,
+            bundle: {
+              heading: 'Supplies',
+              members: [{ name: 'Bull bones', quantity: '1', noted: false }],
+              signal: "footnote 'other' says \"dropped together\"",
+            },
+          },
+        ],
+      }
+      const result = assembleBoss([bundleGroup, secondBundle], noRdtAccess, options)
+      expect(result.bundleTables.map((t) => t.id)).toEqual([
+        'test-boss-supplies-bundle',
+        'test-boss-supplies-bundle-2',
+      ])
+    })
+  })
 })

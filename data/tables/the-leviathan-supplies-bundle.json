@@ -1,0 +1,55 @@
+{
+  "id": "the-leviathan-supplies-bundle",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 139,
+        "itemKey": "prayer-potion-3",
+        "name": "Prayer potion(3)",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 171,
+        "itemKey": "ranging-potion-2",
+        "name": "Ranging potion(2)",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 397,
+        "itemKey": "sea-turtle",
+        "name": "Sea turtle",
+        "qty": {
+          "kind": "range",
+          "min": 3,
+          "max": 4
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Co-drop bundle for The Leviathan's \"Supplies\" heading — block prose says \"dropped together\". Every member arrives on the same access roll; see docs/DECISIONS.md's \"bundle shape, assessed\" entry."
+}

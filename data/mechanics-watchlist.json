@@ -85,27 +85,6 @@
       "blockedBy": [
         "Sol Heredit"
       ]
-    },
-    {
-      "lootSourceId": "the-leviathan",
-      "title": "The Leviathan",
-      "mechanic": "other",
-      "detail": "Downgraded from verified, not newly discovered as needs_review (docs/DECISIONS.md's 'Weight-overflow investigated' entry, 2026-08-17). Its Supplies heading is 'These supplies are all dropped together' (page prose, no per-row footnote) over Prayer potion(3), Ranging potion(2), Sea turtle, each at 1/5.4 — one access roll that grants all three simultaneously. The parser has no bundle node, so it homogenises the three equal-denominator rows into a `weighted` table (denominator 5.4, each entry weight 1) and picks exactly ONE of the three per hit. Each item's own marginal rate happens to still read correctly (weight/denominator = 1/5.4, matching the bundle's true per-item rate), which is why weights_sum never caught it — the corpus-wide check only sees a table whose weights sum to 3, comfortably under 5.4, and has no way to know the true structure claims all three co-occur every time the roll hits rather than never. The failure is joint, not marginal: this source can never simulate getting the potion and the turtle in the same kill, which the real mechanic guarantees whenever it fires at all. The identical shape recurs on the other two Desert Treasure II 'awakened' bosses' own watchlist entries. Needs the bundle shape (see the same DECISIONS.md entry) before removing this.",
-      "blockedBy": []
-    },
-    {
-      "lootSourceId": "the-whisperer",
-      "title": "The Whisperer",
-      "mechanic": "other",
-      "detail": "Downgraded from verified, not newly discovered as needs_review (docs/DECISIONS.md's 'Weight-overflow investigated' entry, 2026-08-17). Identical shape to the other two Desert Treasure II 'awakened' bosses' own watchlist entries: Supplies is 'These supplies are all dropped together' over Ancient brew(2), Prayer potion(3), Manta ray, each at 1/5.5, modelled as a `weighted` pick-one-of-three instead of one access roll granting all three. The same fix (or non-fix) applies to all three at once.",
-      "blockedBy": []
-    },
-    {
-      "lootSourceId": "vardorvis",
-      "title": "Vardorvis",
-      "mechanic": "other",
-      "detail": "Downgraded from verified, not newly discovered as needs_review (docs/DECISIONS.md's 'Weight-overflow investigated' entry, 2026-08-17). Identical shape to the other two Desert Treasure II 'awakened' bosses' own watchlist entries: Supplies is 'These supplies are all dropped together' over Tuna potato, Prayer potion(3), Super combat potion(2), each at 1/5.3, modelled as a `weighted` pick-one-of-three instead of one access roll granting all three. The same fix (or non-fix) applies to all three at once.",
-      "blockedBy": []
     }
   ]
 }
