@@ -14,8 +14,11 @@ export const PRICES_ENDPOINT = 'https://prices.runescape.wiki/api/v1/osrs/latest
 
 const PriceEntrySchema = z.object({
   high: z.number().nullable().optional(),
+  highTime: z.number().nullable().optional(),
   low: z.number().nullable().optional(),
+  lowTime: z.number().nullable().optional(),
 })
+export type PriceEntry = z.infer<typeof PriceEntrySchema>
 
 const PricesResponseSchema = z.object({
   data: z.record(PriceEntrySchema),
@@ -23,17 +26,40 @@ const PricesResponseSchema = z.object({
 
 export type GePrices = ReadonlyMap<number, number>
 
+/**
+ * `/latest`'s `high`/`low` are the two most recent individual TRADES, not a
+ * spread or a guide price — for a cheap, high-volume item (raw fish, runes)
+ * one of them is routinely a single outlier (a bot buying a Cod for 10,000
+ * coins, timestamped minutes before an ordinary 21gp trade), and averaging
+ * the two produces a number neither trade nor the market actually supports.
+ * Found on `Cod` (id 339): `high: 10000` at an older timestamp next to
+ * `low: 21` roughly 12 minutes newer — averaging gave ~5,010gp against a
+ * live GE box reading 21gp. Preferring whichever trade is more recent (not
+ * "the higher one" or "the lower one" — the API does not say which side a
+ * given trade was) tracks a real, current price instead of splitting the
+ * difference between it and a stale one. Likely the same mechanism behind
+ * `ev_matches`' previously-unexplained Brutus divergence (docs/DECISIONS.md);
+ * not re-investigated here, but this fix applies uniformly, not per-item.
+ */
+export function priceOf(entry: PriceEntry): number | undefined {
+  const high = typeof entry.high === 'number' && Number.isFinite(entry.high) ? entry.high : undefined
+  const low = typeof entry.low === 'number' && Number.isFinite(entry.low) ? entry.low : undefined
+  if (high === undefined) return low
+  if (low === undefined) return high
+  const highTime = typeof entry.highTime === 'number' ? entry.highTime : undefined
+  const lowTime = typeof entry.lowTime === 'number' ? entry.lowTime : undefined
+  if (highTime === undefined || lowTime === undefined || highTime === lowTime) return (high + low) / 2
+  return highTime > lowTime ? high : low
+}
+
 function toPriceMap(body: unknown): GePrices {
   const parsed = PricesResponseSchema.parse(body)
   const prices = new Map<number, number>()
   for (const [idString, entry] of Object.entries(parsed.data)) {
     const itemId = Number(idString)
     if (!Number.isInteger(itemId)) continue
-    const values = [entry.high, entry.low].filter(
-      (v): v is number => typeof v === 'number' && Number.isFinite(v)
-    )
-    if (values.length === 0) continue
-    prices.set(itemId, values.reduce((sum, v) => sum + v, 0) / values.length)
+    const price = priceOf(entry)
+    if (price !== undefined) prices.set(itemId, price)
   }
   return prices
 }
