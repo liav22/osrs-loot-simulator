@@ -1,0 +1,148 @@
+{
+  "id": "gwd_gem_drop_table",
+  "mode": "weighted",
+  "rolls": 1,
+  "denominator": 128,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1623,
+        "itemKey": "uncut-sapphire",
+        "name": "Uncut sapphire",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 32
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1621,
+        "itemKey": "uncut-emerald",
+        "name": "Uncut emerald",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 16
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1619,
+        "itemKey": "uncut-ruby",
+        "name": "Uncut ruby",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 8
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1452,
+        "itemKey": "chaos-talisman",
+        "name": "Chaos talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1617,
+        "itemKey": "uncut-diamond",
+        "name": "Uncut diamond",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 830,
+        "itemKey": "rune-javelin",
+        "name": "Rune javelin",
+        "qty": {
+          "kind": "exact",
+          "n": 5
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 987,
+        "itemKey": "loop-half-of-key",
+        "name": "Loop half of key",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 985,
+        "itemKey": "tooth-half-of-key",
+        "name": "Tooth half of key",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "tableRef",
+        "ref": "mega_rare_drop_table"
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    }
+  ],
+  "notes": "The God Wars Dungeon-variant gem drop table (Template:GWDRDT's own G-pool, computed via Template:CalculateRDTNaked). Reached from gwd_rare_drop_table at weight 20/128 (the same internal RDT-to-gem routing chance as the regular rare_drop_table.json) or directly from a GWD boss page at a fixed 2/127 access rate. Differs from the regular gem_drop_table.json's own item set (Chaos talisman at weight 3 where the regular table has no drop at all) — the page's own prose only claims the rune-sword/coins substitutions, but the raw CalculateRDTNaked params say otherwise and are trusted over the prose summary, matching the rendered dropsline bucket for Kree'arra exactly. The mega-rare pool is unchanged from the regular table (same items, same weights) and is reused directly rather than duplicated. See docs/DECISIONS.md."
+}

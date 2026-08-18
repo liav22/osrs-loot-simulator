@@ -694,3 +694,71 @@ describe('co-drop bundles', () => {
     })
   })
 })
+
+/**
+ * A row whose `raritynotes` explicitly disclaims single-table scope (K'ril
+ * Tsutsaroth's/Commander Zilyana's own Coins row) is a THIRD, distinct defect
+ * from the bundle shape — docs/DECISIONS.md's "Weight-overflow investigated"
+ * entry. It must not be pooled into whatever weighted table its heading
+ * would otherwise join.
+ */
+describe('composite cross-table rates', () => {
+  it('splits a composite-rate row into its own independent entry, leaving its siblings weighted', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({
+          name: 'Coins',
+          rarity: '36.7/127',
+          heading: 'Other',
+          rarityNotes: 'Coins come from rolls on all loot tables, including the unique table, GDT and RDT.',
+        }),
+        line({ name: 'Grimy lantadyme', rarity: '8/127', heading: 'Other' }),
+        line({ name: 'Death rune', rarity: '8/127', heading: 'Other' }),
+      ])
+    )
+    expect(groups).toHaveLength(2)
+    const composite = groups.find((g) => g.entries.some((e) => e.name === 'Coins'))
+    expect(composite).toMatchObject({ mode: 'independent', denominator: null })
+    expect(composite?.entries).toHaveLength(1)
+    expect(composite?.entries[0]?.rarity).toEqual({ kind: 'fixed', num: 36.7, den: 127 })
+    expect(composite?.confirmedBy).toMatch(/disclaims single-table scope/)
+
+    const pool = groups.find((g) => g !== composite)
+    expect(pool).toMatchObject({ mode: 'weighted', denominator: 127 })
+    expect(pool?.entries.map((e) => e.name)).toEqual(['Grimy lantadyme', 'Death rune'])
+  })
+
+  it('keeps a composite-rate row merging with an earlier weighted heading at the same denominator (K\'ril shape)', () => {
+    // The real defect: Coins used to inflate the SAME merged pool as
+    // "Weapons and armour" and "Potions" — splitting it out must not also
+    // sever that merge, since those headings genuinely share one draw.
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Rune platebody', rarity: '20/127', heading: 'Weapons and armour' }),
+        line({
+          name: 'Coins',
+          rarity: '36.7/127',
+          heading: 'Other',
+          rarityNotes: 'Coins come from rolls on all loot tables, including the unique table, GDT and RDT.',
+        }),
+        line({ name: 'Death rune', rarity: '8/127', heading: 'Other' }),
+      ])
+    )
+    const pool = groups.find((g) => g.mode === 'weighted')
+    expect(pool?.headings).toEqual(['Weapons and armour', 'Other'])
+    expect(pool?.entries.map((e) => e.name)).toEqual(['Rune platebody', 'Death rune'])
+    expect(pool?.denominator).toBe(127)
+  })
+
+  it('does not fire on ordinary raritynotes text', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Coins', rarity: '5/127', heading: 'Other', rarityNotes: 'A common Coins drop.' }),
+        line({ name: 'Death rune', rarity: '5/127', heading: 'Other' }),
+      ])
+    )
+    expect(groups).toHaveLength(1)
+    expect(groups[0]?.mode).toBe('weighted')
+    expect(groups[0]?.entries).toHaveLength(2)
+  })
+})

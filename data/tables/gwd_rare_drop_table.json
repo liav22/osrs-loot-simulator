@@ -1,0 +1,283 @@
+{
+  "id": "gwd_rare_drop_table",
+  "mode": "weighted",
+  "rolls": 1,
+  "denominator": 128,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 987,
+        "itemKey": "loop-half-of-key",
+        "name": "Loop half of key",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 21
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 985,
+        "itemKey": "tooth-half-of-key",
+        "name": "Tooth half of key",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 20
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1289,
+        "itemKey": "rune-sword",
+        "name": "Rune sword",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 5
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 561,
+        "itemKey": "nature-rune",
+        "name": "Nature rune",
+        "qty": {
+          "kind": "range",
+          "min": 62,
+          "max": 67
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1319,
+        "itemKey": "rune-2h-sword",
+        "name": "Rune 2h sword",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1373,
+        "itemKey": "rune-battleaxe",
+        "name": "Rune battleaxe",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 563,
+        "itemKey": "law-rune",
+        "name": "Law rune",
+        "qty": {
+          "kind": "range",
+          "min": 40,
+          "max": 45
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 560,
+        "itemKey": "death-rune",
+        "name": "Death rune",
+        "qty": {
+          "kind": "range",
+          "min": 40,
+          "max": 45
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 886,
+        "itemKey": "steel-arrow",
+        "name": "Steel arrow",
+        "qty": {
+          "kind": "range",
+          "min": 145,
+          "max": 150
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 892,
+        "itemKey": "rune-arrow",
+        "name": "Rune arrow",
+        "qty": {
+          "kind": "range",
+          "min": 38,
+          "max": 43
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 829,
+        "itemKey": "adamant-javelin",
+        "name": "Adamant javelin",
+        "qty": {
+          "kind": "range",
+          "min": 15,
+          "max": 20
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1185,
+        "itemKey": "rune-sq-shield",
+        "name": "Rune sq shield",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1615,
+        "itemKey": "dragonstone",
+        "name": "Dragonstone",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 442,
+        "itemKey": "silver-ore",
+        "name": "Silver ore",
+        "qty": {
+          "kind": "exact",
+          "n": 100
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 2
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1201,
+        "itemKey": "rune-kiteshield",
+        "name": "Rune kiteshield",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1149,
+        "itemKey": "dragon-med-helm",
+        "name": "Dragon med helm",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "tableRef",
+        "ref": "gwd_gem_drop_table"
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 20
+      }
+    }
+  ],
+  "notes": "The God Wars Dungeon-variant rare drop table (landmine #3, docs/HANDOFF.md): a genuinely different table from data/tables/rare_drop_table.json (rune sword replaces runite bar, no ring-of-wealth effect, some quantities differ), reached via {{GWDRDT}} at a fixed 8/127 access rate on Kree'arra, General Graardor, Commander Zilyana and K'ril Tsutsaroth. Coins is deliberately NOT a row here: the page's own prose states this table's empty rolls are replaced by a coin drop on the boss's own main table instead — that is the composite Coins raritynotes each of the four boss pages carries (\"Coins come from rolls on all loot tables, including the unique table, GDT and RDT\"), a separate defect this record does not fix. Built from Template:GWDRDT and Template:CalculateRDTNaked directly (see docs/DECISIONS.md), cross-checked against every figure in the rendered dropsline bucket for one of the four sources (Kree'arra) — all 24 items match exactly."
+}

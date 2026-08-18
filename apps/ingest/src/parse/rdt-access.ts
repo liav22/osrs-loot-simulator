@@ -24,12 +24,17 @@ import { findDropsSections, findTemplateCalls, parseTemplateCall } from './wikit
  *   this two-rate form.
  * - `{{GemDropTable|G|...}}`: param 1 is a direct gem-table access rate,
  *   with no RDT access at all.
- * - `{{GWDRDT}}` takes no parameters — it transcludes to prose citing a
- *   totally distinct "God Wars Dungeon-variant rare/gem drop table" (its own
- *   page, own composition: rune sword instead of runite bar, no
- *   ring-of-wealth effect, mega-rare items folded in directly). Not the same
- *   table as `data/tables/rare_drop_table.json`, and out of scope for the
- *   three tables built this session — flagged, not guessed at.
+ * - `{{GWDRDT}}` takes no parameters — every call on every page means the
+ *   same fixed pair of access rolls into the God Wars Dungeon-variant
+ *   rare/gem drop table (landmine #3, docs/HANDOFF.md): 8/127 into
+ *   `data/tables/gwd_rare_drop_table.json`, 2/127 into
+ *   `data/tables/gwd_gem_drop_table.json` — both constants, confirmed from
+ *   Template:GWDRDT's own wikitext, not per-boss. Genuinely a different table
+ *   from the regular RDT/gem/mega-rare chain (rune sword instead of runite
+ *   bar, no ring-of-wealth effect, some quantities differ, and Coins is
+ *   handled by the boss's own main table instead of appearing as a row here)
+ *   — see the two `data/tables/gwd_*.json` records' own `notes` and
+ *   docs/DECISIONS.md for how they were built and verified.
  * - `rolls=N` (present on both templates): repeated ACCESS attempts, N
  *   independent Bernoulli rolls at the stated rate — the same meaning
  *   `Table.rolls` already has everywhere else (Zulrah's main table is
@@ -77,7 +82,7 @@ const DRAWS_PER_HIT_PROSE = /whereupon (?:its|their) contents are rolled (\d+) t
 
 export interface RdtAccessLine {
   /** Which shared table this line grants access to. */
-  ref: 'rare_drop_table' | 'gem_drop_table'
+  ref: 'rare_drop_table' | 'gem_drop_table' | 'gwd_rare_drop_table' | 'gwd_gem_drop_table'
   rate: { num: number; den: number }
   /** Independent access attempts. Always 1 when `drawsPerHit` is set — the two readings are mutually exclusive. */
   rolls: number
@@ -110,7 +115,7 @@ function parseFraction(raw: string): { num: number; den: number } | null {
 }
 
 function accessLineFor(
-  ref: 'rare_drop_table' | 'gem_drop_table',
+  ref: RdtAccessLine['ref'],
   rawRate: string,
   params: ReadonlyMap<string, string>,
   raw: string
@@ -181,13 +186,21 @@ export function extractRdtAccessLines(wikitext: string): RdtAccessResult {
       const { name, params } = parseTemplateCall(call)
 
       if (name.toLowerCase() === 'gwdrdt') {
-        unresolved.push({
-          reason:
-            "references the God Wars Dungeon-variant rare/gem drop table (Template:GWDRDT), a distinct " +
-            'table (different composition, no ring-of-wealth effect) from data/tables/rare_drop_table.json ' +
-            'and data/tables/gem_drop_table.json — not modelled',
-          raw: call,
-        })
+        // Both rates are fixed constants of the template itself (confirmed
+        // from Template:GWDRDT's own wikitext, not read from `params` — the
+        // call takes no positional rate the way RareDropTable/GemDropTable
+        // do). `accessLineFor` is still reused for the rate string it's
+        // handed, so a `dropversion=`/`rolls=`/`approx=`/`multiplier=` param
+        // — none currently used on any `{{GWDRDT}}` call in the corpus, but
+        // structurally possible — is still read generically rather than
+        // silently ignored.
+        const rare = accessLineFor('gwd_rare_drop_table', '8/127', params, call)
+        if ('reason' in rare) unresolved.push(rare)
+        else lines.push(rare)
+
+        const gem = accessLineFor('gwd_gem_drop_table', '2/127', params, call)
+        if ('reason' in gem) unresolved.push(gem)
+        else lines.push(gem)
         continue
       }
 

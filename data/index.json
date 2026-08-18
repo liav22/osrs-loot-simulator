@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T07:24:17.930Z",
+  "generatedAt": "2026-08-18T07:54:28.711Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -341,7 +341,7 @@
       "slug": "general-graardor",
       "name": "General Graardor",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "General Graardor.png",
       "repeatable": true
     },
@@ -469,7 +469,7 @@
       "slug": "kree-arra",
       "name": "Kree'arra",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Kree'arra.png",
       "repeatable": true
     },
@@ -805,6 +805,8 @@
     "duke-sucellus-supplies-bundle",
     "gem_drop_table",
     "grotesque-guardians-supplies-bundle",
+    "gwd_gem_drop_table",
+    "gwd_rare_drop_table",
     "k-ril-tsutsaroth-potions-bundle",
     "k-ril-tsutsaroth-potions-bundle-2",
     "kree-arra-other-bundle",

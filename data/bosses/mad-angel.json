@@ -561,7 +561,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "4 tableRef node(s) resolved structurally against 20 shared table(s); the compileBoss cross-check could not run because the document does not compile (Table 'mad-angel:2:weapons-and-armour-runes-and-ammunition-supply-batch-other' has applicable weights summing to 180, which exceeds its denominator of 150) — weights_sum owns that failure"
+        "detail": "4 tableRef node(s) resolved structurally against 22 shared table(s); the compileBoss cross-check could not run because the document does not compile (Table 'mad-angel:2:weapons-and-armour-runes-and-ammunition-supply-batch-other' has applicable weights summing to 180, which exceeds its denominator of 150) — weights_sum owns that failure"
       },
       {
         "check": "rates_valid",

@@ -17,11 +17,58 @@ diff`, `git log`) are fine and encouraged before trusting this file's claims.
 
 ## 1. Current state
 
-**Changed this session (the most recent one — the bundle shape BUILT, not
-just assessed):**
+**Changed this session (the most recent one — landmine #3 (GWDRDT) closed,
+K'ril's Coins defect fixed, Mad Angel's compound shape confirmed but not
+built):**
+
+- **GWDRDT resolves now.** Landmine #3, `docs/HANDOFF.md`'s own long-standing
+  gap: `{{GWDRDT}}` used to be unconditionally flagged `unresolved` in
+  `rdt-access.ts`. Two NEW `data/tables/` records (`gwd_rare_drop_table.json`,
+  `gwd_gem_drop_table.json` — the existing `mega_rare_drop_table.json` is
+  reused directly for the third tier, not duplicated), built by fetching and
+  decoding `Template:CalculateRDTNaked`'s own formula (a legitimate one-off
+  research fetch, same category as the ToA/CoX/ToB `Module:` page fetches —
+  not a re-parse of anything already snapshotted) and cross-checked against
+  Kree'arra's own rendered dropsline bucket: all 24 items match the wiki's
+  own computed figures exactly. `kree-arra`/`general-graardor` reach
+  `verified` for the first time; `commander-zilyana`/`k-ril-tsutsaroth` drop
+  from 27/25-of-50 `drops_covered` misses to 2/3 (an unrelated small
+  residual, untouched). **65 -> 67 verified, 32 -> 30 needs_review.** See
+  `docs/DECISIONS.md`'s "GWDRDT built" entry for the full formula and the
+  code change (`rdt-access.ts` now emits two access lines instead of one
+  `unresolved` entry).
+- **K'ril's/Zilyana's Coins composite-rate defect is fixed, separately, not
+  folded into the bundle mechanism** — a new early split in
+  `buildTableGroups` (`COMPOSITE_RATE_PHRASES`) pulls a row whose
+  `raritynotes` explicitly disclaims single-table scope ("Coins come from
+  rolls on all loot tables...") out of whatever weighted pool its heading
+  sits in, into its own standalone `independent` entry at the wiki's own
+  stated rate — exact, not an approximation, once isolated from items it was
+  never actually competing against. Deliberately does NOT flush the
+  in-progress weighted merge the way the bundle/mixed-Always splits do,
+  since K'ril's own siblings under the same heading genuinely belong to one
+  shared `/127` draw with the headings before it — checked directly against
+  the real table structure, not assumed. No status change (both sources
+  were already blocked on other things) — a pure correctness fix. See
+  `docs/DECISIONS.md`'s "K'ril's Coins composite rate" entry.
+- **Mad Angel's compound `oneOf`-and-bundle shape is now a CONFIRMED
+  proposal, still not built, per instruction.** Reported before touching
+  anything: the fix composes two existing capabilities that had simply
+  never been combined (an `always`-mode bundle table whose entries include
+  a `oneOf` node, itself unconditionally granted) — confirmed valid via
+  `SharedTableSchema.parse`, confirmed mode-agnostic in `compile.ts` by
+  reading, and confirmed BEHAVIOURALLY correct via a real 500k-kill
+  `simulate()` run (potions always co-occur; the two fish never do).
+  Recommends a hand-authored `data/overrides/mad-angel.json` over
+  generalising the detector, since this is the only known instance of the
+  compound shape in the whole corpus. See `docs/DECISIONS.md`'s "Mad
+  Angel's compound shape" entry for the full proposal.
+
+**Changed in the prior session (the bundle shape BUILT, not just
+assessed):**
 
 - **The bundle shape (`docs/DECISIONS.md`'s "bundle shape, assessed" entry,
-  the prior session) is built**: a `tableRef` to a generated, per-boss
+  an earlier session) is built**: a `tableRef` to a generated, per-boss
   `data/tables/<slug>-<heading>-bundle.json` (`mode: 'always'`), detected by
   a standing check (`checkBundleSignals`/`findBundleGroups`, `build-tables.
   ts`) that runs on every heading block corpus-wide, not gated behind
@@ -306,30 +353,39 @@ regression, not a miscount). What IS done within its scope:
 
 ```
 99 documents, of 102 loot sources with include: true (97.1%):
-  65 verified, 2 manual_override, 32 needs_review
+  67 verified, 2 manual_override, 30 needs_review
 ```
 
-**Three sessions of change to this number, net 55 -> 64 -> 61 -> 65 verified.**
-The transcluded-mode fix (section 3, `docs/DECISIONS.md`) moved `abyssal-sire`,
-`araxxor`, `arrg`, `bryophyta`, `dagannoth-{prime,rex,supreme}`,
+**Four sessions of change to this number, net 55 -> 64 -> 61 -> 65 -> 67
+verified.** The transcluded-mode fix (section 3, `docs/DECISIONS.md`) moved
+`abyssal-sire`, `araxxor`, `arrg`, `bryophyta`, `dagannoth-{prime,rex,supreme}`,
 `deranged-archaeologist`, `giant-sea-snake` — exactly the 9 sources that were
 `needs_review` on that question alone — straight to `verified` (55 -> 64). An
 earlier session then downgraded `the-leviathan`/`the-whisperer`/`vardorvis`
 back off `verified` on the bundle defect (64 -> 61) — a real regression in the
 count, taken deliberately, because they were shipping wrong odds under the
-badge. **The most recent session built the bundle shape** (`docs/DECISIONS.md`'s
-"The bundle shape, built" entry) and moved 61 -> 65: those same three sources
+badge. A later session built the bundle shape (`docs/DECISIONS.md`'s "The
+bundle shape, built" entry) and moved 61 -> 65: those same three sources
 returned to `verified` now that the mechanic they were downgraded for is
 actually modelled (their `data/mechanics-watchlist.json` entries are gone),
 plus `grotesque-guardians` newly reached `verified` for the first time (the
-bundle was its only defect). Re-run `ingest parse` (no `--tier`/`--source`
-filter) landed on all splits exactly, and `corpus-reproducibility.test.ts`
-passes against the regenerated `data/bosses/*.json`.
+bundle was its only defect). **The most recent session closed landmine #3**
+(GWDRDT, `docs/DECISIONS.md`'s "GWDRDT built" entry) and moved 65 -> 67:
+`kree-arra`/`general-graardor` reach `verified` for the first time (GWDRDT
+was their only remaining gap); `commander-zilyana`/`k-ril-tsutsaroth` stay
+`needs_review` on a much smaller, unrelated residual (down from 27/25-of-50
+`drops_covered` misses to 2/3). The same session also fixed K'ril's separate
+Coins composite-rate defect (a pure correctness fix, no status change) and
+produced a confirmed, unbuilt proposal for Mad Angel's compound shape — see
+`docs/DECISIONS.md`'s two newest entries. Re-run `ingest parse` (no
+`--tier`/`--source` filter) landed on all splits exactly, and
+`corpus-reproducibility.test.ts` passes against the regenerated
+`data/bosses/*.json`.
 
 **READ THE DENOMINATOR CAREFULLY. It is 102, not 52.** Coverage was long read as
 "27 of 52"; 52 was the number of sources ever PARSED, not the number the project
 owns. `include: true` in `data/_inventory.json` is the gate, and it is 102.
-`verified` is **65/102 = 63.7%** (65.7% of the 99 documents that exist). Per
+`verified` is **67/102 = 65.7%** (67.7% of the 99 documents that exist). Per
 tier (with document / include:true): A 25/26, B 1/1, C 26/26, **D 20/20**
 (Fortis Colosseum's override closed the last gap this session), E 27/29. The
 **3** sources with no document at all: `revenant-maledictus` (A, own open
@@ -361,15 +417,16 @@ page's own words). **Nothing is deleted or excluded from parsing** — only
 now with a visible "Not repeatable" badge. See `docs/DECISIONS.md`'s
 `repeatable` entry for the full false-positive/negative audit.
 
-**Read `verified` split by this field before trusting the headline 65/102.**
-26 of the 65 `verified` sources (40.0%) are one-time content — the same 26 as
-before the bundle fix, since all four sources it moved to `verified`
-(`grotesque-guardians`, `the-leviathan`, `the-whisperer`, `vardorvis`) are
-`repeatable: true`: **39/71 = 54.9%** among documents with `repeatable: true`
-— up from the prior session's 49.3%, and now the highest this figure has
-been. Recomputed against the regenerated corpus; full table in
-`docs/DECISIONS.md` predates all three fixes and should be recomputed too if
-the exact per-tier split matters again.
+**Read `verified` split by this field before trusting the headline 67/102.**
+26 of the 67 `verified` sources (38.8%) are one-time content — the same 26 as
+before the bundle/GWDRDT fixes, since every source they moved to `verified`
+(`grotesque-guardians`, `the-leviathan`, `the-whisperer`, `vardorvis`,
+`kree-arra`, `general-graardor`) is `repeatable: true`: **41/71 = 57.7%**
+among documents with `repeatable: true` — up from the prior session's 54.9%,
+and now the highest this figure has been. Recomputed against the
+regenerated corpus; full table in `docs/DECISIONS.md` predates all four
+fixes and should be recomputed too if the exact per-tier split matters
+again.
 
 **Found by lifting the tier gate, then fixed: `monumental-chest` (tier D) was
 a STALE committed document the parser could no longer reproduce, and a
@@ -729,26 +786,32 @@ original assessment). `grotesque-guardians` reached `verified`;
 `the-leviathan`/`the-whisperer`/`vardorvis` returned to it;
 `maggot-king`/`chaos-fanatic` still carry OTHER, separate, untouched
 `drops_covered` gaps and moved from the weight-overflow row below into the
-coverage-gaps one; `k-ril-tsutsaroth`/`commander-zilyana` are unaffected in
-status (GWDRDT's own missing-item gap, untouched); `mad-angel` stays,
-correctly, in the weight-overflow row — its compound `oneOf`-and-bundle
-shape was deliberately NOT auto-modelled (see the top of section 1).
+coverage-gaps one; `mad-angel` stays, correctly, in the weight-overflow
+row — its compound `oneOf`-and-bundle shape was deliberately NOT
+auto-modelled (now a confirmed, unbuilt proposal — see the top of section
+1). **GWDRDT is also now BUILT** (landmine #3, `docs/DECISIONS.md`'s
+"GWDRDT built" entry): `kree-arra`/`general-graardor` reached `verified`;
+`commander-zilyana`/`k-ril-tsutsaroth` stay in the GWDRDT row below on a
+much smaller, unrelated residual (their own separate `drops_covered` gap,
+not GWDRDT itself). **K'ril's separate Coins composite-rate defect is fixed
+too** (`docs/DECISIONS.md`'s "K'ril's Coins composite rate" entry) — a pure
+correctness fix with no row in this table to update.
 
 | group | count | what it needs |
 |---|---|---|
 | the "Uniques"/"Mutagens" heading question | 5 | `phantom-muspah`, `sarachnis`, `shellbane-gryphon`, `the-nightmare`, `zulrah`. **Most re-litigated question in the project — see section 5 before touching it.** |
 | genuinely unknowable curves | 3 | `duke-sucellus`, `zalcano`, `reward-pool`. Watchlisted, correctly. **Before adding a fourth, check for a `Module:`/`Calculator:` page — that is what closed ToA's, and this session's CoX/ToB (see the top of this section).** |
 | blocked, deliberately | 1 | `reward-cart` — see section 3's "genuinely unknowable" list |
-| GWDRDT — **was 2, corrected to 4** | 4 | `kree-arra`, `general-graardor`, **and `commander-zilyana`, `k-ril-tsutsaroth`** (landmine #3) — same missing item set, never previously cross-referenced |
+| GWDRDT own residual — **built, 4 -> 2 still needs_review** | 2 | `commander-zilyana`, `k-ril-tsutsaroth` — GWDRDT itself is resolved for all four (landmine #3, DONE); these two stay on a small, unrelated `drops_covered` gap (Frozen key piece, a pet, and — K'ril only — Staff of the dead, a capitalisation mismatch against the bucket) |
 | other | 2 | `black-knight-titan` (a Lua `{{#invoke:}}` sub-table + `items_known`), `salarin-the-twisted` (`items_known`) |
-| **weight-overflow — bundle shape shipped, 5 -> 2** | 2 | `mad-angel` (bundle signal fires but is deliberately NOT auto-modelled — a compound `oneOf`-and-bundle shape at two different rates; `checkBundleSignals` reports it `confirmed: false`), `phosani-s-nightmare` (no bundle citation at all; the wiki's own published weights just don't sum to their own stated denominator). See `docs/DECISIONS.md`'s "The bundle shape, built" entry. |
+| **weight-overflow — bundle shape shipped, 5 -> 2** | 2 | `mad-angel` (bundle signal fires but is deliberately NOT auto-modelled — a compound `oneOf`-and-bundle shape at two different rates; `checkBundleSignals` reports it `confirmed: false`; now a confirmed, unbuilt proposal, see the top of section 1), `phosani-s-nightmare` (no bundle citation at all; the wiki's own published weights just don't sum to their own stated denominator). See `docs/DECISIONS.md`'s "The bundle shape, built" entry. |
 | coverage gaps (`drops_covered`/`items_known`/unparseable-rarity, unrelated to transclusion/GWD) | 9 | `alchemical-hydra`, `black-demon`, `chaos-elemental`, `kalphite-queen`, `nex`, `obor`, `yama`, **`maggot-king`, `chaos-fanatic`** (both correctly bundle-modelled now, both still short on drops_covered for their own separate reasons) |
 | items_known only | 1 | `chronozon` — tier-E item-index gap |
 | Vorkath's refused seed partition | 1 | `vorkath` — ratio 1.6665, correctly refused (landmine #11d), its own bespoke residual, not a clean partition |
 
-Table rows sum to 28 (5+3+1+4+2+2+9+1+1); the 4 watchlisted raids below (a
+Table rows sum to 26 (5+3+1+2+2+2+9+1+1); the 4 watchlisted raids below (a
 different kind of `needs_review` — deliberate, not unresolved) bring the real
-total to **32**.
+total to **30**.
 
 Plus **6 `manual_override`/all-four-raids-shipped-but-watchlisted** —
 `doom-of-mokhaiotl`, `lunar-chest` (terminal `manual_override`, not work
@@ -1160,17 +1223,24 @@ from the pre-Extension-A content, confirming zero drift.
 See section 5's entry — same content, cross-referenced there since it's now
 a "don't redo" item, not just a landmine.
 
-### 3. `refs_resolve` and RDT/gem-table access are real now, but GWDRDT is a hole
+### 3. `refs_resolve` and RDT/gem-table access — GWDRDT is DONE
 
-`{{GWDRDT}}` is a genuinely different table (rune sword instead of runite
-bar, mega-rares folded in, explicitly unaffected by ring of wealth). Flagged
-unresolved, not silently mapped onto `rare_drop_table.json`. **Four sources,
-not two** — Kree'arra and General Graardor were the only ones ever named, but
-`commander-zilyana` and `k-ril-tsutsaroth` are missing the identical item set
-per their own `drops_covered` detail strings (found by this session's
-needs_review recount, `docs/DECISIONS.md`). Building it is a new
-`data/tables/gwd_rare_drop_table.json`-shaped record, not a code fix — one
-record fixes all four.
+**Built** — `docs/DECISIONS.md`'s "GWDRDT built" entry. It needed TWO new
+records (`gwd_rare_drop_table.json`, `gwd_gem_drop_table.json` — the
+existing `mega_rare_drop_table.json` is reused for the third tier, not
+duplicated) plus a small, generic code change in `rdt-access.ts` (the
+`{{GWDRDT}}` branch used to push to `unresolved` unconditionally; it now
+emits two access lines) — "one record, not a code fix" undersold both the
+record count and the code needed, written before anyone had read
+`Template:GWDRDT`'s own wikitext. `{{GWDRDT}}` is a genuinely different
+table (rune sword instead of runite bar, mega-rares folded in, unaffected
+by ring of wealth, Coins handled by the boss's own main table instead of a
+row here). **Four sources** — Kree'arra and General Graardor were the only
+ones ever named, but `commander-zilyana` and `k-ril-tsutsaroth` were also
+missing the identical item set per their own `drops_covered` detail strings
+(found by an earlier session's needs_review recount, `docs/DECISIONS.md`).
+`kree-arra`/`general-graardor` now reach `verified`; the other two drop to a
+small, unrelated `drops_covered` residual.
 
 ### 4. `mode: 'independent'` allows `'always'`-rate entries — real schema fix, not a workaround
 
@@ -1556,22 +1626,22 @@ been folded into sections 1 and 3 rather than kept as struck-through history.
    `{{#invoke:}}` the expander cannot run; the rows would have to come from
    somewhere else (an override, or the module's own output). It also fails
    `items_known`.
-4. **GWDRDT** (`kree-arra`, `general-graardor`, `commander-zilyana`,
-   `k-ril-tsutsaroth` — corrected from two sources to four this session) —
-   landmine #3. A new `data/tables/gwd_rare_drop_table.json`-shaped record,
-   not a code fix. One record fixes all four.
-5. **The bundle defect** — assessed and designed, not built (section 3's own
-   subsection has the full design: `tableRef` to a new per-boss
-   `data/tables/<id>.json` with `mode: 'always'`, zero schema change, two
-   detection signals). Affects `grotesque-guardians`, `mad-angel`,
-   `maggot-king`, `k-ril-tsutsaroth`, `commander-zilyana`, `chaos-fanatic`
-   (all still `needs_review`) and `the-leviathan`/`the-whisperer`/`vardorvis`
-   (downgraded off `verified` this session specifically because they had
-   this defect silently). Yama's `always`+`fixed` fallthrough — a DIFFERENT
-   defect that also produced weight overflow — is already fixed; don't
-   re-open it as part of this item. K'ril also carries a third, separate
-   defect (a composite cross-table Coins rate) that needs its own handling,
-   not the bundle mechanism.
+4. ~~GWDRDT~~ **DONE** — landmine #3 closed, `docs/DECISIONS.md`'s "GWDRDT
+   built" entry. Two new `data/tables/gwd_*.json` records plus a small
+   `rdt-access.ts` code change (the "one record, not a code fix" framing was
+   wrong on both counts). `kree-arra`/`general-graardor` now `verified`;
+   `commander-zilyana`/`k-ril-tsutsaroth` down to a small, unrelated
+   residual.
+5. ~~The bundle defect~~ **DONE** — built, `docs/DECISIONS.md`'s "The bundle
+   shape, built" entry (see the top of section 1). K'ril's separate,
+   third Coins composite-rate defect is ALSO now fixed, separately —
+   `docs/DECISIONS.md`'s "K'ril's Coins composite rate" entry. What's left
+   from this item: **Mad Angel's compound `oneOf`-and-bundle shape**, now a
+   confirmed, schema-validated, simulate()-verified proposal — NOT built,
+   per instruction. `docs/DECISIONS.md`'s "Mad Angel's compound shape"
+   entry has the full design; recommends a hand-authored
+   `data/overrides/mad-angel.json` over generalising the detector for a
+   single known instance.
 6. ~~`black-demon`~~ **DONE** — recovered for free by the `DROPS_SECTION_TITLE`
    widening (section 1); it now has a `needs_review` document.
 7. **Un-watchlist as mechanics land**, following the four-step sequence in

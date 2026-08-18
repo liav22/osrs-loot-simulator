@@ -381,6 +381,19 @@ function matchCoDropPhrase(text: string): string | null {
 }
 
 /**
+ * Phrases the wiki uses to explicitly disclaim that a row's own published
+ * rate is scoped to just the table it happens to sit in — K'ril Tsutsaroth's
+ * and Commander Zilyana's Coins rows both cite this, in two close wordings
+ * ("all loot tables, including the unique table, GDT and RDT" / "multiple
+ * loot tables, including GDT and RDT" — Kree'arra's and General Graardor's
+ * own Coins rows carry the second wording too, harmlessly: their tables
+ * already reconcile with slack, so splitting Coins out only widens that
+ * slack). A third, distinct defect from the bundle shape and the GWDRDT gap
+ * — see docs/DECISIONS.md's "Weight-overflow investigated" entry.
+ */
+const COMPOSITE_RATE_PHRASES = [/\brolls? on (?:all|multiple|several) loot tables\b/i] as const
+
+/**
  * The DEFINING occurrence of a named citation's own text — the one line whose
  * `raritynotes` actually spells it out (`<ref name="X">text</ref>`), as
  * opposed to every other line's bare repeat (`<ref name="X"/>`,
@@ -895,6 +908,47 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
         }
       })
       resolved = [...resolved.filter((r) => !claimed.has(r)), ...bundleRows]
+    }
+
+    // A row whose `raritynotes` explicitly disclaims single-table scope
+    // (K'ril Tsutsaroth's/Commander Zilyana's own Coins row: "Coins come
+    // from rolls on all loot tables, including the unique table, GDT and
+    // RDT") is not a competing alternative in whatever weighted pool its
+    // heading happens to sit in — the wiki already computed it as the FULL
+    // per-kill probability of a coins reward, aggregated across several
+    // independent roll mechanisms elsewhere on the page, and blending it
+    // into this table's own weight sum double-counts a rate that was never
+    // this table's own share to begin with (the third, distinct defect
+    // docs/DECISIONS.md's "Weight-overflow investigated" entry root-caused
+    // for K'ril). Split out into its OWN `independent` entry, at its own
+    // stated rate — not dropped, and not re-derived: the wiki's aggregate
+    // figure IS the correct standalone probability once it stops being
+    // pooled with items it was never competing against. Deliberately NOT
+    // flushing `pendingWeighted` here (unlike the mixed-Always split below):
+    // this row's siblings under the SAME heading (Grimy lantadyme, Death
+    // rune, ...) genuinely belong to the SAME merged pool as the heading
+    // before it (K'ril's Weapons and armour/Potions/Other all reconcile to
+    // one shared /127 table) and must keep accumulating into it.
+    const compositeRateRows = resolved.filter(({ line }) =>
+      COMPOSITE_RATE_PHRASES.some((phrase) => phrase.test(line.rarityNotes))
+    )
+    if (compositeRateRows.length > 0) {
+      groups.push({
+        mode: 'independent',
+        headings: [block.heading],
+        section: block.section,
+        denominator: null,
+        entries: compositeRateRows.map(({ line, resolution }) =>
+          toEntry(line, resolution.rate!, null, resolution.conditions)
+        ),
+        ambiguous: null,
+        confirmedBy:
+          `raritynotes on ${compositeRateRows.map((r) => `'${r.line.name}'`).join(', ')} ` +
+          'explicitly disclaims single-table scope; modelled as its own independent entry ' +
+          "at the wiki's own stated rate rather than pooled into this heading's weighted table",
+      })
+      const composite = new Set(compositeRateRows)
+      resolved = resolved.filter((r) => !composite.has(r))
     }
 
     // `always`-rate rows interleaved with chance-based ones under one

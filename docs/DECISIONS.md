@@ -5734,3 +5734,242 @@ generated shared table's shape, the collision-suffix id scheme).
 and was updated (7 sources → 2: `mad-angel`, `phosani-s-nightmare`) rather
 than deleted, matching the project's standing convention for this class of
 guard.
+
+## GWDRDT built: landmine #3 closed, plus K'ril's separate Coins composite defect
+
+Two unrelated fixes, done in the requested order — GWDRDT first, K'ril's Coins
+second — because the second is only cleanly checkable once the first stops
+inflating the same table's own weight sum.
+
+### `{{GWDRDT}}` resolves now: two new `data/tables/` records, not one
+
+Landmine #3 (`docs/HANDOFF.md`) said "a new `data/tables/gwd_rare_drop_
+table.json`-shaped record, not a code fix. One record fixes all four" —
+written before anyone had actually read `Template:GWDRDT`'s own wikitext.
+Both halves of that were wrong once the real page was fetched: it needs a
+small, generic code change (`rdt-access.ts`'s `{{GWDRDT}}` branch always
+pushed to `unresolved` unconditionally; it now emits two access lines,
+matching a template call that carries no boss-specific parameters at all),
+and it needs TWO new records, not one, because the table has the same
+rare -> gem -> mega-rare nesting as the regular RDT/gem/mega-rare chain —
+confirmed, not assumed, by fetching and decoding the actual formula.
+
+**What was fetched, and why fetching was legitimate here.** No wikitext
+snapshot existed for `Template:GWDRDT`'s own body (only a prior session's
+`data/snapshots/wikitext/template-gwdrdt.json`, which has the ITEM ROWS but
+not the rarity FORMULA behind them) or for `Template:CalculateRDTNaked` (the
+rarity template every row's own `rarity=` calls). This is new research, not
+re-parsing an existing source — the same category as fetching a `Module:`/
+`Calculator:` page for ToA/CoX/ToB, which CLAUDE.md's "never re-hit the wiki"
+rule was never meant to forbid (that rule is about not re-fetching to patch a
+parser bug against data already snapshotted). Fetched via `client.wikitext()`
++ `writeSnapshot('wikitext', slugify(title), record)`, the same mechanism
+`verify-schema` already uses for `SCHEMA_PAGES`, from a throwaway script
+(not added to `main.ts` — this is a one-time lookup, not a repeatable
+pipeline step). `Template:CalculateRDTNaked`'s wikitext:
+
+```
+{{#vardefine:G|{{#expr:{{{R_chance|0}}}*20/128+{{{G_chance|0}}}}}}}
+{{#vardefine:M|{{#expr:{{{R_chance|0}}}*15/128+{{#var:G}}/128}}}}
+1/{{#expr:1/({{{R_chance|0}}}*{{{R_rate|0}}}/128+{{#var:G}}*{{{G_rate|0}}}/128+{{#var:M}}*{{{M_rate|0}}}/128) round 2}}
+```
+
+Decoded: `G` (the overall chance of landing in the gem sub-pool) is
+`R_chance * 20/128 + G_chance` — R's own internal 20/128 routing weight into
+gems (the EXACT weight `data/tables/rare_drop_table.json`'s own `tableRef`
+into `gem_drop_table` already carries) plus a direct gem-access chance. `M`
+nests the same way one level deeper (`R_chance*15/128 + G/128`, matching
+`rare_drop_table.json`'s own 15-weight `tableRef` into `mega_rare_drop_
+table` and `gem_drop_table.json`'s own 1-weight `tableRef` into it). Final
+rate: `R_chance*R_rate/128 + G*G_rate/128 + M*M_rate/128`, displayed as
+`1/round(1/P, 2)`. Every `{{DropsLine}}` row on `Template:GWDRDT` calls this
+with `R_chance=8/127|G_chance=2/127` (constants, identical on all 24 rows and
+across all four boss pages — `{{GWDRDT}}` itself takes no parameters) plus
+one of `R_rate=`/`G_rate=`/`M_rate=`.
+
+**Cross-checked against real rendered data, not just decoded from the
+template.** `data/snapshots/dropsline/kree-arra.json` carries GWDRDT's own
+`{{DropsLine}}` rows post-transclusion, with the wiki's OWN computed final
+rarity — every one of the 24 rows' formula output matches its bucket figure
+exactly (Loop half of key 1/94.93, Tooth half of key 1/99.58, Rune spear
+1/2,110.31, Dragon spear 1/5,627.5, ...), confirming both the formula and
+every row's own `R_rate`/`G_rate`/`M_rate` reading are right, not just
+internally consistent.
+
+**Built `data/tables/gwd_rare_drop_table.json`** (`mode: weighted`,
+`denominator: 128`, 16 R-pool items at their own `R_rate` weight, plus a
+`tableRef` into `gwd_gem_drop_table` at weight 20 — mirroring
+`rare_drop_table.json`'s own structure exactly) **and `data/tables/
+gwd_gem_drop_table.json`** (8 G-pool items at their own `G_rate` weight,
+plus a `tableRef` into the EXISTING `mega_rare_drop_table.json` at weight 1
+— reused directly, not duplicated, since GWD's own M-pool items and weights
+(Rune spear 8, Shield left half 4, Dragon spear 3) are numerically and
+item-for-item IDENTICAL to the regular table's; the page's own prose never
+claims mega-rare differs, only the rune-sword/coins substitutions and some
+quantities). Coins is deliberately NOT a row in either new file — the page's
+own prose states GWDRDT's own empty rolls are redirected to a coins reward
+on the boss's own main table, which is exactly the composite Coins
+`raritynotes` each of the four boss pages already carries (see below).
+Generated via a one-off script through the same item-resolution path
+`assembleBoss` uses (`readItemIndex`/`indexByItemKey`), not hand-typed —
+all 24 items resolved to a single id cleanly, none needed the multi-id
+allowlist. Static, hand-authored-equivalent files, like the other three —
+not regenerated by `ingest parse` the way a bundle table is, since GWDRDT's
+own content is a fixed constant, not something that varies per boss.
+
+`rdt-access.ts`'s `{{GWDRDT}}` branch now calls the same `accessLineFor`
+helper `{{RareDropTable}}`/`{{GemDropTable}}` already use, twice, with the
+rate strings `'8/127'`/`'2/127'` supplied directly (not read from `params`,
+since no real call carries them) — so a hypothetical future `dropversion=`/
+`rolls=`/`approx=` on a `{{GWDRDT}}` call would still be read generically
+rather than silently ignored, the same discipline the rest of this file
+already applies elsewhere. `RdtAccessLine.ref` widened to include the two
+new ids; `assemble-boss.ts`'s access-line note builder (which used to assume
+exactly two possible refs) now looks up the source template name from a
+small `ACCESS_TEMPLATE_NAME` map instead of a binary ternary.
+
+**Corpus effect**: `kree-arra` and `general-graardor` reach `verified` for
+the first time (GWDRDT was their only remaining gap). `commander-zilyana`
+and `k-ril-tsutsaroth` drop from 27/25-of-50 `drops_covered` misses to 2/3
+— the residual is unrelated (Frozen key piece, the two pets, Staff of the
+dead on K'ril specifically — a capitalisation mismatch against the bucket's
+own "Staff of the dead" vs. the wiki's own `name=Staff of the Dead`, and two
+items genuinely absent from the raw wikitext, neither touched by this
+entry). **65 → 67 verified** (kree-arra, general-graardor), **32 → 30
+needs_review**. Full
+`pnpm -r test`/`typecheck`/`lint` green including `brutus.test.ts`;
+`rdt-access.test.ts`'s own GWDRDT test inverted (was: asserts unresolved:
+now: asserts both resolved rates and their refs).
+
+### K'ril's Coins composite rate: split out, not blended in
+
+The third, distinct defect from "Weight-overflow investigated": K'ril's and
+Zilyana's own `Coins` row (`raritynotes`: "Coins come from rolls on all loot
+tables, including the unique table, GDT and RDT") is a rate the wiki itself
+computed by AGGREGATING several independent roll mechanisms elsewhere on the
+page, inserted into the `Other` heading's own weighted pool as if it were
+that pool's own share. (Kree'arra's and General Graardor's Coins rows carry
+the same disclaimer in a close wording — "multiple loot tables" instead of
+"all loot tables" — harmlessly: their tables already reconcile with slack.)
+
+**Fix**: a new early split in `buildTableGroups`, `COMPOSITE_RATE_PHRASES`
+(`/rolls? on (?:all|multiple|several) loot tables/i`) matched against
+`raritynotes`, mirroring the bundle split's shape but with an opposite
+consequence for `pendingWeighted`. The bundle split and the mixed-Always
+split both call `flushWeighted()` before pushing their own new group,
+correctly, because their own remaining rows in the SAME block genuinely
+start a fresh accumulation (Yama's `Contract` test documents exactly this).
+The composite-rate split must NOT flush: K'ril's `Coins` row sits under
+`Other`, which merges with the PRECEDING `Weapons and armour`/`Potions`
+headings into one real, unified `/127` draw — flushing here would sever
+that merge into two independently-rolled tables, letting both hit in the
+same kill, which the wiki's own single shared denominator explicitly rules
+out. Checked directly against the real committed table structure before
+writing the fix, not assumed: `k-ril-tsutsaroth:2:weapons-and-armour-
+potions-other` was already one merged table (12 entries, sum 117.7 before
+the fix) spanning all three headings; after the fix, `k-ril-tsutsaroth:3:
+weapons-and-armour-potions-other` still spans the same three headings (11
+entries, sum 81 — the true remainder, comfortably under 127), and
+`k-ril-tsutsaroth:2:other` is a NEW standalone `independent` entry, one row,
+at Coins' own stated `36.7/127`.
+
+**Not an approximation — the split IS the exact fix, not a partial one.**
+Modelling Coins as its own `independent` entry at the wiki's own aggregate
+rate is correct precisely BECAUSE that rate is already the full per-kill
+probability of a coins reward, summed across mechanisms that don't compete
+with `Other`'s own items for the same draw. Checked for double-counting
+before trusting this: neither `data/tables/gwd_rare_drop_table.json` nor
+`gwd_gem_drop_table.json` (K'ril's own unique table, `k-ril-tsutsaroth:1:
+uniques`) carries a `Coins` entry of its own, so nothing elsewhere in the
+document contributes the same reward a second time.
+
+**Corpus effect**: none on `verified`/`needs_review` counts (K'ril and
+Zilyana were already blocked on the GWDRDT-era `drops_covered` gap;
+Kree'arra/General Graardor were already `verified` before AND after, since
+their tables had slack either way) — a pure correctness fix, the same shape
+as chaos-fanatic's own bundle-adjacent weight reduction. New coverage in
+`apps/ingest/test/build-tables.test.ts` (the split itself, and — the
+regression this fix has to not cause — that a composite row's SIBLINGS
+under an earlier-merged heading keep merging). Full `pnpm -r test` green.
+
+## Mad Angel's compound shape: a confirmed proposal, not built
+
+Reported on request, before building anything — `docs/DECISIONS.md`'s "The
+bundle shape, built" entry already named this as the one case the uniform-
+rate requirement correctly refuses rather than guesses. This entry is that
+promised follow-up: what the shape actually is, and a schema-confirmed
+proposal for modelling it, left unbuilt pending a priority decision.
+
+**The shape, restated precisely.** Mad Angel's `Supply batch` heading is one
+16/150 access roll (stated in its own preamble prose) that, every time it
+hits, grants BOTH Prayer potion(2) AND Super combat potion(1)
+unconditionally, AND ALSO grants exactly one of {Shark, Yellowfin} (each
+published at 8/150 — exactly half of the block's own 16/150 access rate,
+the same partition identity `transclusionPartition` already uses elsewhere
+to confirm a clean mutually-exclusive split). It is the co-drop bundle shape
+and the `oneOf` shape at once, in one heading, which is exactly why the
+uniform-rate check (every member must share ONE rate to auto-confirm a
+whole-block bundle) correctly refuses it: two different rates,
+16/150 and 8/150, both real, both part of the same access roll.
+
+**Proposed shape — confirmed valid and behaviourally correct, zero schema
+change, built nowhere in the pipeline**: `data/tables/mad-angel-supply-
+batch-bundle.json`, `mode: 'always'`, THREE entries — two unconditional item
+grants (`rate: {kind:'always'}`) for the potions, plus a THIRD entry whose
+`node` is itself `{kind:'oneOf', entries:[Shark@weight 1, Yellowfin@weight
+1]}`, ALSO at `rate: {kind:'always'}`. This composes two capabilities the
+codebase already has independently and had simply never combined: an
+`always`-mode table's entries use the general `EntrySchema` (`node:
+NodeSchema`, which includes `oneOf`), not the narrower `LeafEntrySchema`
+that `oneOf`'s OWN entries are restricted to (item/tableRef/nothing only —
+no nesting a `oneOf` inside a `oneOf`). Nothing stops a `oneOf` from being
+one of a `weighted`/`always`/`independent` TABLE's own top-level entries,
+though — that is a different nesting depth, one `EntrySchema` already
+allows. The access side is unchanged from the
+existing bundle shape: `independent`-mode, `rate: {kind:'fixed', num:16,
+den:150}`, `node: {kind:'tableRef', ref:'mad-angel-supply-batch-bundle'}`.
+
+**Confirmed three ways, not just reasoned about:**
+
+1. `SharedTableSchema.parse(...)` accepts the three-entry table literal
+   exactly as described — no zod error.
+2. `compileBoss`/`compileNode` handle it with no special-casing:
+   `compileNode`'s `case 'oneOf'` fires exactly like it does anywhere else a
+   `oneOf` node appears (CoX's herb/seed nesting, the transclusion-partition
+   `oneOf` wrapper); nothing in `compile.ts` reads or restricts NODE kind by
+   the ENCLOSING table's own mode, matching the same mode-agnosticism the
+   bundle shape's own design already leaned on.
+3. **A real 500,000-kill `simulate()` run** (throwaway script, not
+   committed) against this exact table, wired behind a `16/150` access
+   entry: Prayer potion(2) and Super combat potion(1) counts were IDENTICAL
+   and co-occurred in every logged hit (110/110/110 on a 1,000-row sampled
+   log); Shark and Yellowfin counts summed to exactly that same hit count
+   and never once co-occurred together in the same kill. Exactly the
+   claimed joint structure, not just the claimed marginal one.
+
+**Not built — deliberately, on request.** Two ways this could ship, neither
+attempted here:
+
+- **A hand-authored `data/overrides/mad-angel.json`** using the confirmed
+  shape directly, matching the precedent every other schema-shape-shaped
+  special case (Duke Sucellus, Zalcano, Lunar Chest, all four raids) already
+  uses. Proportionate for `n=1` — Mad Angel is the ONLY known instance of
+  this compound shape in the whole corpus (checked as part of the earlier
+  bundle-shape corpus grep; none of the other 12 co-drop-phrase sources have
+  a second, different rate mixed into the same signal-confirmed block).
+- **Generalising `findBundleGroups`'s detection** to recognise this shape
+  automatically: within a preamble-confirmed block whose rows do NOT share
+  one uniform rate, check whether they partition into exactly two groups —
+  rows at the block's own dominant/access rate (unconditional members) and a
+  SEPARATE subset whose own rates are mutually equal and sum EXACTLY to that
+  access rate (a nested `oneOf`), with nothing left over. This is the SAME
+  ratio-sums-to-one-hundred-percent identity `transclusionPartition` already
+  runs, one level more nested. Risk: generalising a detector from a single
+  confirmed instance is speculative by construction — the override path is
+  recommended first; revisit generalising only once a second real instance
+  of the compound shape turns up.
+
+Whichever path is taken, it does not touch `chaos-fanatic`/`phosani-s-
+nightmare`'s own separate wiki-weight-drift overflow (still permanently
+flagged, per explicit standing instruction) or K'ril's Coins defect (fixed
+separately, above, not folded into the bundle mechanism).

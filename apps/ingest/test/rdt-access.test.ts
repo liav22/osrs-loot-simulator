@@ -98,13 +98,17 @@ describe('extractRdtAccessLines', () => {
     expect(unresolved[0]?.reason).toMatch(/disagree/)
   })
 
-  it('flags {{GWDRDT}} as unresolved instead of guessing a rate (Kree\'arra / General Graardor shape)', () => {
+  it('resolves {{GWDRDT}} into its two fixed access rates (Kree\'arra / General Graardor / Commander Zilyana / K\'ril Tsutsaroth shape)', () => {
+    // landmine #3, docs/HANDOFF.md — both rates are constants of the
+    // template itself, confirmed from Template:GWDRDT's own wikitext, not
+    // read from the call (which takes no parameters on any real page).
     const wikitext = drops('===Rare drop table===\n{{GWDRDT}}')
     const { lines, unresolved } = extractRdtAccessLines(wikitext)
-    expect(lines).toEqual([])
-    expect(unresolved).toHaveLength(1)
-    expect(unresolved[0]?.reason).toMatch(/God Wars Dungeon-variant/)
-    expect(unresolved[0]?.raw).toBe('{{GWDRDT}}')
+    expect(unresolved).toEqual([])
+    expect(lines).toHaveLength(2)
+    expect(lines[0]).toMatchObject({ ref: 'gwd_rare_drop_table', rate: { num: 8, den: 127 } })
+    expect(lines[1]).toMatchObject({ ref: 'gwd_gem_drop_table', rate: { num: 2, den: 127 } })
+    expect(lines.every((l) => l.raw === '{{GWDRDT}}')).toBe(true)
   })
 
   it('flags an unreadable rate instead of silently dropping the line', () => {

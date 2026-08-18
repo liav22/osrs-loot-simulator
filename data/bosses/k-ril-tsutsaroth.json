@@ -170,7 +170,34 @@
       "notes": "Uniques"
     },
     {
-      "id": "k-ril-tsutsaroth:2:weapons-and-armour-potions-other",
+      "id": "k-ril-tsutsaroth:2:other",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 19500,
+              "max": 20000
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 36.7,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Other (confirmed independent: raritynotes on 'Coins' explicitly disclaims single-table scope; modelled as its own independent entry at the wiki's own stated rate rather than pooled into this heading's weighted table)"
+    },
+    {
+      "id": "k-ril-tsutsaroth:3:weapons-and-armour-potions-other",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 127,
@@ -280,23 +307,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 995,
-            "itemKey": "coins",
-            "name": "Coins",
-            "qty": {
-              "kind": "range",
-              "min": 19500,
-              "max": 20000
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 36.7
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 2485,
             "itemKey": "grimy-lantadyme",
             "name": "Grimy lantadyme",
@@ -365,7 +375,7 @@
       "notes": "Weapons and armour / Potions / Other"
     },
     {
-      "id": "k-ril-tsutsaroth:3:tertiary",
+      "id": "k-ril-tsutsaroth:4:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -429,6 +439,46 @@
         }
       ],
       "notes": "Tertiary"
+    },
+    {
+      "id": "k-ril-tsutsaroth:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gwd_rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Access into gwd_rare_drop_table (from {{GWDRDT}})"
+    },
+    {
+      "id": "k-ril-tsutsaroth:rdt-access:1",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gwd_gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Access into gwd_gem_drop_table (from {{GWDRDT}})"
     }
   ],
   "contextDefaults": {},
@@ -443,7 +493,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "2 tableRef node(s) resolved against 20 shared table(s)"
+        "detail": "6 tableRef node(s) resolved against 22 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -471,7 +521,7 @@
       {
         "check": "drops_covered",
         "ok": false,
-        "detail": "27 of 50 wiki drop row(s) missing from the document: Adamant javelin, Chaos talisman, Dragon med helm, Dragon spear, Dragonstone, Frozen key piece (zamorak), Law rune, Loop half of key (+19 more)"
+        "detail": "3 of 50 wiki drop row(s) missing from the document: Frozen key piece (zamorak), Pet k'ril tsutsaroth, Staff of the dead"
       }
     ]
   },

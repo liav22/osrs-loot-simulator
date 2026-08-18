@@ -318,9 +318,20 @@ export function assembleBoss(
       }
     })
 
+  // Which template call produced a given `ref` — `rare_drop_table`/
+  // `gem_drop_table` come from `{{RareDropTable}}`/`{{GemDropTable}}`
+  // (including the RDT's own optional second, direct gem-access param); the
+  // two `gwd_*` refs both come from the single, parameterless `{{GWDRDT}}`.
+  const ACCESS_TEMPLATE_NAME: Record<(typeof rdtAccess.lines)[number]['ref'], string> = {
+    rare_drop_table: 'RareDropTable',
+    gem_drop_table: 'GemDropTable',
+    gwd_rare_drop_table: 'GWDRDT',
+    gwd_gem_drop_table: 'GWDRDT',
+  }
+
   rdtAccess.lines.forEach((line, index) => {
     const notes = [
-      `Access into ${line.ref} (from {{${line.ref === 'rare_drop_table' ? 'RareDropTable' : 'GemDropTable'}}})`,
+      `Access into ${line.ref} (from {{${ACCESS_TEMPLATE_NAME[line.ref]}}})`,
       line.approx ? 'approximate rate per the wiki' : null,
       line.qtyMultiplier !== null
         ? `wiki states multiplier=${line.qtyMultiplier}: every quantity from this access is scaled by it`

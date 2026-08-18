@@ -170,7 +170,34 @@
       "notes": "Uniques"
     },
     {
-      "id": "commander-zilyana:2:weapons-and-armour-potions-other",
+      "id": "commander-zilyana:2:other",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 19500,
+              "max": 20000
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 31.2,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Other (confirmed independent: raritynotes on 'Coins' explicitly disclaims single-table scope; modelled as its own independent entry at the wiki's own stated rate rather than pooled into this heading's weighted table)"
+    },
+    {
+      "id": "commander-zilyana:3:weapons-and-armour-potions-other",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 127,
@@ -280,23 +307,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 995,
-            "itemKey": "coins",
-            "name": "Coins",
-            "qty": {
-              "kind": "range",
-              "min": 19500,
-              "max": 20000
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 31.2
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 1601,
             "itemKey": "diamond",
             "name": "Diamond",
@@ -381,7 +391,7 @@
       "notes": "Weapons and armour / Potions / Other"
     },
     {
-      "id": "commander-zilyana:3:tertiary",
+      "id": "commander-zilyana:4:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -445,6 +455,46 @@
         }
       ],
       "notes": "Tertiary"
+    },
+    {
+      "id": "commander-zilyana:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gwd_rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Access into gwd_rare_drop_table (from {{GWDRDT}})"
+    },
+    {
+      "id": "commander-zilyana:rdt-access:1",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gwd_gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Access into gwd_gem_drop_table (from {{GWDRDT}})"
     }
   ],
   "contextDefaults": {},
@@ -459,7 +509,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "2 tableRef node(s) resolved against 20 shared table(s)"
+        "detail": "6 tableRef node(s) resolved against 22 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -487,7 +537,7 @@
       {
         "check": "drops_covered",
         "ok": false,
-        "detail": "25 of 50 wiki drop row(s) missing from the document: Adamant javelin, Chaos talisman, Death rune, Dragon med helm, Dragon spear, Dragonstone, Frozen key piece (saradomin), Loop half of key (+17 more)"
+        "detail": "2 of 50 wiki drop row(s) missing from the document: Frozen key piece (saradomin), Pet zilyana"
       }
     ]
   },

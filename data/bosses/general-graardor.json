@@ -170,7 +170,34 @@
       "notes": "Uniques"
     },
     {
-      "id": "general-graardor:2:weapons-and-armour-other",
+      "id": "general-graardor:2:other",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 19500,
+              "max": 20000
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 31.7,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Other (confirmed independent: raritynotes on 'Coins' explicitly disclaims single-table scope; modelled as its own independent entry at the wiki's own stated rate rather than pooled into this heading's weighted table)"
+    },
+    {
+      "id": "general-graardor:3:weapons-and-armour-other",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 127,
@@ -238,23 +265,6 @@
           "rate": {
             "kind": "weight",
             "weight": 6
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 995,
-            "itemKey": "coins",
-            "name": "Coins",
-            "qty": {
-              "kind": "range",
-              "min": 19500,
-              "max": 20000
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 31.7
           }
         },
         {
@@ -398,7 +408,7 @@
       "notes": "Weapons and armour / Other"
     },
     {
-      "id": "general-graardor:3:tertiary",
+      "id": "general-graardor:4:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -496,10 +506,50 @@
         }
       ],
       "notes": "Tertiary"
+    },
+    {
+      "id": "general-graardor:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gwd_rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Access into gwd_rare_drop_table (from {{GWDRDT}})"
+    },
+    {
+      "id": "general-graardor:rdt-access:1",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "gwd_gem_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 2,
+            "den": 127
+          }
+        }
+      ],
+      "notes": "Access into gwd_gem_drop_table (from {{GWDRDT}})"
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -510,7 +560,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "no tableRef nodes"
+        "detail": "4 tableRef node(s) resolved against 22 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -537,8 +587,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "23 of 49 wiki drop row(s) missing from the document: Adamant javelin, Chaos talisman, Death rune, Dragon med helm, Dragon spear, Dragonstone, Law rune, Loop half of key (+15 more)"
+        "ok": true,
+        "detail": "all 49 wiki drop row(s) reachable in the document"
       }
     ]
   },
