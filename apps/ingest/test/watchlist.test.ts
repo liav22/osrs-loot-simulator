@@ -19,6 +19,7 @@ const watchlist: Watchlist = WatchlistSchema.parse({
       title: 'Lunar Chest',
       mechanic: 'without_replacement',
       detail: 'Uniques are drawn without replacement.',
+      tier: 'unknown_scaling',
       blockedBy: ['Blood Moon'],
     },
   ],
@@ -52,8 +53,8 @@ describe('WatchlistSchema', () => {
     const result = WatchlistSchema.safeParse({
       watchlistVersion: 1,
       entries: [
-        { lootSourceId: 'x', title: 'X', mechanic: 'other', detail: 'a' },
-        { lootSourceId: 'x', title: 'X again', mechanic: 'other', detail: 'b' },
+        { lootSourceId: 'x', title: 'X', mechanic: 'other', detail: 'a', tier: 'unknown_scaling' },
+        { lootSourceId: 'x', title: 'X again', mechanic: 'other', detail: 'b', tier: 'unknown_scaling' },
       ],
     })
     expect(result.success).toBe(false)
@@ -111,6 +112,7 @@ describe('checkWatchlistConsistency', () => {
           title: 'Reward Cart',
           mechanic: 'point_scaled',
           detail: 'Rolls scale with Wintertodt points.',
+          tier: 'unknown_scaling',
           blockedBy: ['Wintertodt'],
         },
       ],
@@ -140,6 +142,7 @@ describe('checkWatchlistConsistency', () => {
           title: 'Reward Cart',
           mechanic: 'point_scaled',
           detail: 'wrong, swapped with reward-pool',
+          tier: 'unknown_scaling',
           blockedBy: ['Tempoross'],
         },
       ],
@@ -173,6 +176,7 @@ describe('checkWatchlistConsistency', () => {
           title: 'Abyssal Sire',
           mechanic: 'other',
           detail: 'x2 multiplier on the rare drop table.',
+          tier: 'unknown_scaling',
           blockedBy: [],
         },
       ],
@@ -231,6 +235,7 @@ describe('checkWatchlistConsistency', () => {
             title: 'Reward pool',
             mechanic: 'point_scaled',
             detail: 'Rolls scale with reward permits earned subduing Tempoross. Needs the tempoross_points formula.',
+            tier: 'unknown_scaling',
             blockedBy: ['Tempoross'],
             ...overrides,
           },
@@ -246,6 +251,7 @@ describe('checkWatchlistConsistency', () => {
       const issues = checkWatchlistConsistency(
         poolEntry({
           detail: 'Rolls scale with points earned fighting the Wintertodt. Needs the tempoross_points formula.',
+          tier: 'unknown_scaling',
         }),
         inventory
       )
@@ -260,6 +266,7 @@ describe('checkWatchlistConsistency', () => {
       const issues = checkWatchlistConsistency(
         poolEntry({
           detail: 'Rolls scale with reward permits earned subduing Tempoross. Needs the wintertodt_points formula.',
+          tier: 'unknown_scaling',
         }),
         inventory
       )
@@ -303,6 +310,7 @@ describe('checkWatchlistConsistency', () => {
           title: 'Ghost',
           mechanic: 'other',
           detail: 'stale entry',
+          tier: 'unknown_scaling',
           blockedBy: [],
         },
       ],

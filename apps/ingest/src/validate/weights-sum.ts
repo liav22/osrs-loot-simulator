@@ -116,7 +116,12 @@ export function checkWeightsSum(
   return {
     check: 'weights_sum',
     ok: failures.length === 0,
-    detail: failures.length === 0 ? undefined : `${failures.length} table/variant mismatch(es)`,
+    detail:
+      failures.length === 0
+        ? undefined
+        : failures
+            .map((f) => `table '${f.tableId}' ${f.variant} sums to ${f.sum}, denominator ${f.denominator}`)
+            .join('; '),
     failures,
   }
 }

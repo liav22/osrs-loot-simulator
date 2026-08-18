@@ -1585,6 +1585,8 @@
     "variant": "Post-quest"
   },
   "status": "needs_review",
+  "statusTier": "approximate",
+  "statusReason": "heading \"Seeds\" is the transcluded sub-table {{treeherbseeddroplines}}, whose rates sum to 1.6665x its stated access rate 3/150 — so they are NOT a clean partition of that roll and something on the page overrides them. Modelled as independent rolls to preserve the wiki's per-row rates; the single-access-roll shape itself is not modelled and needs a human check",
   "validation": {
     "ok": false,
     "checks": [
@@ -1624,6 +1626,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 83 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": false,
+        "detail": "heading \"Seeds\" is the transcluded sub-table {{treeherbseeddroplines}}, whose rates sum to 1.6665x its stated access rate 3/150 — so they are NOT a clean partition of that roll and something on the page overrides them. Modelled as independent rolls to preserve the wiki's per-row rates; the single-access-roll shape itself is not modelled and needs a human check"
       }
     ]
   },

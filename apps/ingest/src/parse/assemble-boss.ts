@@ -372,6 +372,11 @@ export function assembleBoss(
     wikiRevId: options.wikiRevId,
     variants,
     status: 'needs_review',
+    // Overwritten by `parse-boss.ts` once `deriveStatusTier` has the real
+    // `validation.checks` to read — placeholders only so this intermediate
+    // parse (before status/validation are known) satisfies the schema.
+    statusTier: null,
+    statusReason: null,
     source: 'generated',
     parserVersion: options.parserVersion,
     contextDefaults,

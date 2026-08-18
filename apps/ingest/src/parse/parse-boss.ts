@@ -28,6 +28,7 @@ import { assembleBoss } from './assemble-boss.js'
 import { collectItemInputs } from './collect-items.js'
 import { applyOverride, loadOverride, overrideSummary } from './overrides.js'
 import { TABLES_DIR } from '../tables/shared-tables.js'
+import { deriveStatusTier } from '../tier.js'
 
 export const BOSSES_DIR = join(REPO_ROOT, 'data', 'bosses')
 
@@ -252,6 +253,23 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     { check: 'items_known' as const, ok: itemsKnown.ok, detail: itemsKnown.detail },
     { check: 'not_on_watchlist' as const, ok: notOnWatchlist.ok, detail: notOnWatchlist.detail },
     { check: 'drops_covered' as const, ok: dropsCovered.ok, detail: dropsCovered.detail },
+    // Same exemption as the gate below: an override supplying its own
+    // `tables` replaces the structure the parser was unsure about, so a
+    // parser-side ambiguous-group guess or unconfirmed bundle signal no
+    // longer describes the document being validated.
+    {
+      check: 'heading_unambiguous' as const,
+      ok: overrideCarriesTables || (result.ambiguousGroups.length === 0 && unconfirmedBundles.length === 0),
+      detail: overrideCarriesTables
+        ? 'override supplies its own tables; parser-side heading guesses do not apply'
+        : [
+            ...result.ambiguousGroups,
+            ...unconfirmedBundles.map(
+              (signal) =>
+                `bundle signal in "${signal.heading}" not confirmed for automatic modelling: ${signal.detail}`
+            ),
+          ].join('; ') || 'no ambiguous headings or unconfirmed bundle signals',
+    },
   ]
 
   // `verified` depends only on checks that are deterministic given the parsed
@@ -361,9 +379,18 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   if (!dropsCovered.ok) reasons.push(`drops_covered: ${dropsCovered.detail}`)
   reasons.push(`ev_matches (advisory, not part of the verified gate): ${evMatches.detail}`)
 
+  const { tier: statusTier, reason: statusReason } = deriveStatusTier(
+    status,
+    checks,
+    options.slug,
+    options.watchlist
+  )
+
   const boss = {
     ...merged,
     status,
+    statusTier,
+    statusReason,
     // `validation.ok` reflects every check including the advisory ones, so a
     // verified boss with a failing ev_matches still shows that failure here —
     // status and validation.ok are allowed to diverge on purpose.

@@ -64,8 +64,22 @@ describe('buildSiteIndex', () => {
     const index = await buildSiteIndex(dir, tablesDir)
     expect(SiteIndexSchema.safeParse(index).success).toBe(true)
     expect(index.entries).toEqual([
-      { slug: 'other-boss', name: 'Other Boss', aliases: [], status: 'needs_review', repeatable: true },
-      { slug: 'test-boss', name: 'Test Boss', aliases: ['tb'], status: 'verified', repeatable: true },
+      {
+        slug: 'other-boss',
+        name: 'Other Boss',
+        aliases: [],
+        status: 'needs_review',
+        statusTier: null,
+        repeatable: true,
+      },
+      {
+        slug: 'test-boss',
+        name: 'Test Boss',
+        aliases: ['tb'],
+        status: 'verified',
+        statusTier: null,
+        repeatable: true,
+      },
     ])
   })
 

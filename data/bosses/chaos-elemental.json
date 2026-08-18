@@ -837,6 +837,8 @@
     "variant": "{{{dropversion|}}}"
   },
   "status": "needs_review",
+  "statusTier": "unknown_scaling",
+  "statusReason": "heading \"Major drops\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check",
   "validation": {
     "ok": false,
     "checks": [
@@ -876,6 +878,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 62 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": false,
+        "detail": "heading \"Major drops\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check"
       }
     ]
   },

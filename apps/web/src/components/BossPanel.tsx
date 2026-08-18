@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import type { Boss, Table } from '@osrs-loot-simulator/loot-model'
+import type { Boss, StatusTier, Table } from '@osrs-loot-simulator/loot-model'
 import { bossImageUrl } from '../lib/wiki-images'
 import type { SimRunParams } from '../lib/url-state'
 import { DropTableView } from './DropTableView'
@@ -21,6 +21,20 @@ import { StatusBadge } from './StatusBadge'
  * Chest, Zalcano) does not push the primary action off the bottom of a 1080p
  * viewport.
  */
+/** Matches `StatusBadge`'s own tier colors, so the reason box reads as the badge's own explanation, not a separate signal. */
+const REASON_BOX_STYLES: Record<Exclude<StatusTier, 'verified'>, string> = {
+  minor_gaps: 'border-lime-500/30 bg-lime-500/10 text-lime-300',
+  approximate: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
+  unknown_scaling: 'border-red-500/30 bg-red-500/10 text-red-300',
+}
+
+/** `boss.statusTier` is `'verified'`/`null` only for a `needs_review` document with no tier computed yet — falls back to the reddest, most-caution styling rather than guessing a lighter one. */
+function reasonBoxStyle(statusTier: StatusTier | null): string {
+  return statusTier !== null && statusTier !== 'verified'
+    ? REASON_BOX_STYLES[statusTier]
+    : REASON_BOX_STYLES.unknown_scaling
+}
+
 export function BossPanel({
   boss,
   image,
@@ -73,7 +87,7 @@ export function BossPanel({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="truncate text-lg font-semibold text-neutral-100">{boss.name}</h1>
-            <StatusBadge status={boss.status} />
+            <StatusBadge status={boss.status} statusTier={boss.statusTier} />
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-3 text-xs">
             <Link to="/" className="text-muted hover:text-amber-400 hover:underline">
@@ -91,9 +105,17 @@ export function BossPanel({
         </div>
       </div>
 
-      {boss.status !== 'verified' && (
-        <p className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2.5 py-1.5 text-xs text-amber-300">
-          Hasn't cleared every check — rates may be wrong.
+      {/*
+        `manual_override` gets no banner: it's a hand-authored document that
+        passed every deterministic check, a terminal claim of completeness,
+        not a caveat. Only `needs_review` (`statusTier` non-null alongside
+        it) shows the SPECIFIC reason it hasn't cleared — never the generic
+        "rates may be wrong", which is exactly the "may be inaccurate" style
+        of hedge this project has refused throughout.
+      */}
+      {boss.status === 'needs_review' && (
+        <p className={`rounded-md border px-2.5 py-1.5 text-xs ${reasonBoxStyle(boss.statusTier)}`}>
+          {boss.statusReason ?? "Hasn't cleared every check — rates may be wrong."}
           {/* The admin page is dev-only, so the link is too. Without this guard
               production would render a link to a route that no longer exists,
               which lands on the search page and reads as a broken app.

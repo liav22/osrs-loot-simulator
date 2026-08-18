@@ -1031,6 +1031,19 @@ export const VALIDATION_CHECKS = [
    * (`===Sigils=== {{Uniques/Corporeal Beast}}`).
    */
   'drops_covered',
+  /**
+   * Fails when the parser found a heading block it could not resolve on its
+   * own confidence: an ambiguous group (rows at different denominators under
+   * a heading with no Pre-roll/Tertiary/Secondary name to disambiguate) or an
+   * unconfirmed bundle signal (co-drop prose the bundle detector's
+   * uniform-rate requirement declined to guess at). Both already gated
+   * `deterministicOk` before this check existed; this makes the reason they
+   * did visible on the written document instead of discarding it after the
+   * CLI printed it once. An override supplying its own `tables` clears this
+   * the same way it clears the other structural guesses — see
+   * `docs/OVERRIDES.md`.
+   */
+  'heading_unambiguous',
 ] as const
 
 export const ValidationCheckSchema = z.enum(VALIDATION_CHECKS)
@@ -1060,6 +1073,20 @@ export type ValidationResult = z.infer<typeof ValidationResultSchema>
 export const BossStatusSchema = z.enum(['verified', 'needs_review', 'manual_override'])
 export type BossStatus = z.infer<typeof BossStatusSchema>
 
+/**
+ * The web app's user-facing read of `needs_review` — coarser than a single
+ * boolean, finer than the internal validation gate. `needs_review` lumps
+ * together a missing edge-case item and a mechanic the wiki never states a
+ * formula for, which a user would treat very differently; `manual_override`
+ * has no tier (`null`) — it is a separate terminal claim of completeness, not
+ * a point on this scale. `apps/ingest/src/tier.ts` derives `verified`/
+ * `minor_gaps`/`approximate`/`unknown_scaling` from `validation.checks`
+ * (never hand-classified per source) and writes the result here at parse
+ * time — see `docs/DECISIONS.md`'s status-tier entry for the full mapping.
+ */
+export const StatusTierSchema = z.enum(['verified', 'minor_gaps', 'approximate', 'unknown_scaling'])
+export type StatusTier = z.infer<typeof StatusTierSchema>
+
 export const BossSourceSchema = z.enum(['generated', 'override', 'merged'])
 export type BossSource = z.infer<typeof BossSourceSchema>
 
@@ -1077,6 +1104,19 @@ export const BossSchema = z
     tables: z.array(TableSchema),
     contextDefaults: PartialSimContextSchema.default({}),
     status: BossStatusSchema,
+    /**
+     * `null` for `verified` (nothing to explain) and `manual_override` (its
+     * own terminal state); see `StatusTierSchema`. Defaults to `null` so
+     * fixtures/tests built before this field existed don't need updating —
+     * every document `apps/ingest` actually writes sets it explicitly.
+     */
+    statusTier: StatusTierSchema.nullable().default(null),
+    /**
+     * The specific sentence explaining `statusTier`, sourced directly from
+     * whichever `validation.checks` entry (or watchlist entry) decided it —
+     * never re-derived or summarized. `null` alongside a `null` `statusTier`.
+     */
+    statusReason: z.string().nullable().default(null),
     validation: ValidationResultSchema,
     source: BossSourceSchema,
     /**

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import type { BossStatus } from '@osrs-loot-simulator/loot-model'
+import type { BossStatus, StatusTier } from '@osrs-loot-simulator/loot-model'
 import { useSiteIndex } from '../hooks/useSiteIndex'
 import { useBoss } from '../hooks/useBoss'
 import { StatusBadge } from '../components/StatusBadge'
@@ -60,6 +60,7 @@ export function AdminPage() {
             slug={entry.slug}
             name={entry.name}
             status={entry.status}
+            statusTier={entry.statusTier}
             repeatable={entry.repeatable}
             open={expanded === entry.slug}
             onToggle={() => setExpanded((current) => (current === entry.slug ? null : entry.slug))}
@@ -75,6 +76,7 @@ function AdminRow({
   slug,
   name,
   status,
+  statusTier,
   repeatable,
   open,
   onToggle,
@@ -82,6 +84,7 @@ function AdminRow({
   slug: string
   name: string
   status: BossStatus
+  statusTier: StatusTier | null
   repeatable: boolean
   open: boolean
   onToggle: () => void
@@ -106,7 +109,7 @@ function AdminRow({
             </span>
           )}
         </span>
-        <StatusBadge status={status} />
+        <StatusBadge status={status} statusTier={statusTier} />
       </button>
       {open && (
         <div className="border-t border-neutral-900 bg-neutral-900/40 px-4 py-3 text-xs">

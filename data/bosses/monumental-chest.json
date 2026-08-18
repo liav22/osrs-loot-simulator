@@ -1549,6 +1549,8 @@
     "variant": "Normal Mode"
   },
   "status": "needs_review",
+  "statusTier": "approximate",
+  "statusReason": "Unique chance scales with Theatre of Blood points earned across the raid (raid tier, deaths, personal performance), not a fixed per-kill rarity — needs the tob_points formula. Same caveat as the Tombs of Amascut chest: the dropsline rows reflect the points-shop structure, not independent rarities.",
   "validation": {
     "ok": false,
     "checks": [
@@ -1589,6 +1591,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 43 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },

@@ -2,10 +2,15 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSiteIndex } from '../hooks/useSiteIndex'
 import { fuzzySearch } from '../lib/fuzzy'
+import { pickSuggestedBosses } from '../lib/suggestions'
 import { StatusBadge } from './StatusBadge'
+import { BossThumb } from './BossThumb'
 
 /** Five is enough to contain the answer and short enough to read without scanning. */
 const MAX_RESULTS = 5
+
+/** Four fits one row without pushing the page past 1080p, and is enough to give a first-time visitor somewhere to click. */
+const SUGGESTION_COUNT = 4
 
 /**
  * Boss search. The list is hidden until something is typed — an always-visible
@@ -37,6 +42,14 @@ export function SearchBox({ autoFocus = true }: { autoFocus?: boolean }) {
     const repeatable = data.entries.filter((entry) => entry.repeatable)
     return fuzzySearch(repeatable, query).slice(0, MAX_RESULTS)
   }, [data, query])
+
+  // Reshuffled once per page load (`data`'s identity is stable across
+  // re-renders within a session — react-query caches the site index
+  // forever, see `useSiteIndex`), not on every keystroke.
+  const suggestions = useMemo(
+    () => (data === undefined ? [] : pickSuggestedBosses(data.entries, SUGGESTION_COUNT)),
+    [data]
+  )
 
   // A shorter result list must not leave the highlight pointing past its end.
   useEffect(() => setActive(0), [query])
@@ -108,7 +121,7 @@ export function SearchBox({ autoFocus = true }: { autoFocus?: boolean }) {
                 }`}
               >
                 <span className="truncate">{entry.name}</span>
-                <StatusBadge status={entry.status} />
+                <StatusBadge status={entry.status} statusTier={entry.statusTier} />
               </button>
             </li>
           ))}
@@ -117,6 +130,24 @@ export function SearchBox({ autoFocus = true }: { autoFocus?: boolean }) {
 
       {data !== undefined && query.trim() !== '' && results.length === 0 && (
         <p className="mt-2 text-sm text-muted">No bosses match "{query}".</p>
+      )}
+
+      {/* Somewhere to click for a first-time visitor — gone as soon as they
+          type, so it never competes with real results. */}
+      {query.trim() === '' && suggestions.length > 0 && (
+        <div className="mt-4 grid grid-cols-4 gap-2">
+          {suggestions.map((entry) => (
+            <button
+              key={entry.slug}
+              type="button"
+              onClick={() => select(entry.slug)}
+              className="flex flex-col items-center gap-1.5 rounded-md p-2 text-center hover:bg-neutral-900"
+            >
+              <BossThumb name={entry.name} image={entry.image} />
+              <span className="w-full truncate text-xs text-neutral-300">{entry.name}</span>
+            </button>
+          ))}
+        </div>
       )}
     </div>
   )

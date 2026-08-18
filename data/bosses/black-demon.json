@@ -1889,6 +1889,8 @@
     "variant": "Regular"
   },
   "status": "needs_review",
+  "statusTier": "unknown_scaling",
+  "statusReason": "28 of 97 wiki drop row(s) missing from the document: Ancient shard, Annakarl teleport (tablet), Blighted ancient ice sack, Blighted anglerfish, Blighted entangle sack, Blighted karambwan, Blighted manta ray, Blighted super restore(4) (+20 more)",
   "validation": {
     "ok": false,
     "checks": [
@@ -1928,6 +1930,11 @@
         "check": "drops_covered",
         "ok": false,
         "detail": "28 of 97 wiki drop row(s) missing from the document: Ancient shard, Annakarl teleport (tablet), Blighted ancient ice sack, Blighted anglerfish, Blighted entangle sack, Blighted karambwan, Blighted manta ray, Blighted super restore(4) (+20 more)"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": false,
+        "detail": "unparseable rarity in \"Wilderness Slayer tertiary\": Slayer's enchantment='1/{{#expr:320 - (floor({{min|{{{hitpoints}}}|300}} * 0.8))}}'; unparseable rarity in \"Wilderness Slayer tertiary\": Slayer's enchantment='1/{{#expr:320 - (floor({{min|{{{hitpoints}}}|300}} * 0.8))}}'"
       }
     ]
   },

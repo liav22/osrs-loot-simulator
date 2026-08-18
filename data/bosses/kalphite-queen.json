@@ -877,6 +877,8 @@
   ],
   "contextDefaults": {},
   "status": "needs_review",
+  "statusTier": "minor_gaps",
+  "statusReason": "1 of 70 wiki drop row(s) missing from the document: Kq head (tattered)",
   "validation": {
     "ok": false,
     "checks": [
@@ -916,6 +918,11 @@
         "check": "drops_covered",
         "ok": false,
         "detail": "1 of 70 wiki drop row(s) missing from the document: Kq head (tattered)"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": false,
+        "detail": "unparseable rarity in \"Tertiary\": Kq head (tattered)='Once'"
       }
     ]
   },

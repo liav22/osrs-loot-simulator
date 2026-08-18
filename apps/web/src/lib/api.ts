@@ -1,5 +1,11 @@
 import { z } from 'zod'
-import { BossSchema, SharedTableSchema, type Boss, type Table } from '@osrs-loot-simulator/loot-model'
+import {
+  BossSchema,
+  SharedTableSchema,
+  StatusTierSchema,
+  type Boss,
+  type Table,
+} from '@osrs-loot-simulator/loot-model'
 import type { SiteIndex } from './types'
 
 /**
@@ -17,6 +23,8 @@ const SiteIndexEntrySchema = z
     name: z.string().min(1),
     aliases: z.array(z.string()),
     status: z.enum(['verified', 'needs_review', 'manual_override']),
+    // `null` for `manual_override`; see `StatusTierSchema` and `StatusBadge`.
+    statusTier: StatusTierSchema.nullable(),
     // Optional here for the same reason it is optional in ingest's schema: it
     // comes from the gitignored snapshot cache. `.strict()` means this must be
     // declared, not merely tolerated — an index carrying it would otherwise be

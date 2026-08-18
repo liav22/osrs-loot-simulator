@@ -7,11 +7,18 @@ import { App } from '../src/App'
 const FAKE_INDEX = {
   generatedAt: '2026-01-01T00:00:00.000Z',
   entries: [
-    { slug: 'giant-mole', name: 'Giant Mole', aliases: [], status: 'verified', repeatable: true },
-    { slug: 'abyssal-sire', name: 'Abyssal Sire', aliases: [], status: 'needs_review', repeatable: true },
+    { slug: 'giant-mole', name: 'Giant Mole', aliases: [], status: 'verified', statusTier: 'verified', repeatable: true },
+    {
+      slug: 'abyssal-sire',
+      name: 'Abyssal Sire',
+      aliases: [],
+      status: 'needs_review',
+      statusTier: 'minor_gaps',
+      repeatable: true,
+    },
     // A boss fought once during a quest and never again — present in the
     // index (nothing is deleted) but excluded from search by default.
-    { slug: 'me', name: 'Me', aliases: [], status: 'verified', repeatable: false },
+    { slug: 'me', name: 'Me', aliases: [], status: 'verified', statusTier: 'verified', repeatable: false },
   ],
   // The shared-table manifest the browser fetches `data/tables/` by. Required
   // by the strict schema — the site index is a boundary, so a response missing

@@ -245,6 +245,8 @@
   ],
   "contextDefaults": {},
   "status": "needs_review",
+  "statusTier": "unknown_scaling",
+  "statusReason": "Rolls scale with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer) rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the wintertodt_points formula.",
   "validation": {
     "ok": false,
     "checks": [
@@ -285,6 +287,11 @@
         "check": "drops_covered",
         "ok": false,
         "detail": "62 of 75 wiki drop row(s) missing from the document: Acorn, Adamantite ore, Avantoe seed, Banana tree seed, Cadantine seed, Coal, Dwarf weed seed, Gold ore (+54 more)"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": false,
+        "detail": "unparseable rarity in \"Logs\": Oak logs='Varies', Willow logs='Varies', Teak logs='Varies', Maple logs='Varies', Mahogany logs='Varies', Yew logs='Varies', Magic logs='Varies'; unparseable rarity in \"Gems\": Uncut sapphire='Varies', Uncut emerald='Varies', Uncut ruby='Varies', Uncut diamond='Varies'; unparseable rarity in \"Ores\": Pure essence='Varies', Limestone='Varies', Silver ore='Varies', Iron ore='Varies', Coal='Varies', Gold ore='Varies', Mithril ore='Varies', Adamantite ore='Varies', Runite ore='Varies'; unparseable rarity in \"Herbs\": Grimy guam leaf='Varies', Grimy marrentill='Varies', Grimy tarromin='Varies', Grimy harralander='Varies', Grimy ranarr weed='Varies', Grimy irit leaf='Varies', Grimy avantoe='Varies', Grimy kwuarm='Varies', Grimy cadantine='Varies', Grimy lantadyme='Varies', Grimy dwarf weed='Varies', Grimy torstol='Varies'; unparseable rarity in \"Seeds\": Acorn='Varies', Willow seed='Varies', Maple seed='Varies', Banana tree seed='Varies', Teak seed='Varies', Mahogany seed='Varies', Yew seed='Varies', Ranarr seed='Varies', Tarromin seed='Varies', Harralander seed='Varies', Toadflax seed='Varies', Irit seed='Varies', Avantoe seed='Varies', Kwuarm seed='Varies', Snapdragon seed='Varies', Cadantine seed='Varies', Lantadyme seed='Varies', Dwarf weed seed='Varies', Watermelon seed='Varies', Snape grass seed='Varies', Spirit seed='Varies', Magic seed='Varies', Torstol seed='Varies'; unparseable rarity in \"Fish\": Raw anchovies='Varies', Raw trout='Varies', Raw salmon='Varies', Raw tuna='Varies', Raw lobster='Varies', Raw swordfish='Varies', Raw shark='Varies'"
       }
     ]
   },

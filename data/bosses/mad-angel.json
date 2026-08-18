@@ -496,6 +496,8 @@
   ],
   "contextDefaults": {},
   "status": "needs_review",
+  "statusTier": "minor_gaps",
+  "statusReason": "1 of 49 wiki drop row(s) missing from the document: Clue scroll (hard)",
   "validation": {
     "ok": false,
     "checks": [
@@ -535,6 +537,11 @@
         "check": "drops_covered",
         "ok": false,
         "detail": "1 of 49 wiki drop row(s) missing from the document: Clue scroll (hard)"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },

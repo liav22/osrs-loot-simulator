@@ -1048,6 +1048,8 @@
     "variant": "Junk"
   },
   "status": "manual_override",
+  "statusTier": null,
+  "statusReason": null,
   "validation": {
     "ok": false,
     "checks": [
@@ -1087,6 +1089,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 49 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },

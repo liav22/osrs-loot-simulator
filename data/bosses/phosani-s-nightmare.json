@@ -712,13 +712,15 @@
   ],
   "contextDefaults": {},
   "status": "needs_review",
+  "statusTier": "minor_gaps",
+  "statusReason": "table 'phosani-s-nightmare:2:runes-and-ammunition-resources-consumables-coins' flat sums to 101, denominator 100",
   "validation": {
     "ok": false,
     "checks": [
       {
         "check": "weights_sum",
         "ok": false,
-        "detail": "1 table/variant mismatch(es)"
+        "detail": "table 'phosani-s-nightmare:2:runes-and-ammunition-resources-consumables-coins' flat sums to 101, denominator 100"
       },
       {
         "check": "refs_resolve",
@@ -752,6 +754,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 39 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
       }
     ]
   },

@@ -7,6 +7,7 @@
       "title": "Reward Cart",
       "mechanic": "point_scaled",
       "detail": "Rolls scale with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer) rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the wintertodt_points formula.",
+      "tier": "unknown_scaling",
       "blockedBy": [
         "Wintertodt"
       ]
@@ -16,6 +17,7 @@
       "title": "Reward pool",
       "mechanic": "point_scaled",
       "detail": "Rolls scale with reward permits earned subduing Tempoross (fishing/cooking/depositing harpoonfish, repairing totems, dousing fires) rather than being a fixed count per redemption. Needs the tempoross_points formula.",
+      "tier": "unknown_scaling",
       "blockedBy": [
         "Tempoross"
       ]
@@ -25,6 +27,7 @@
       "title": "Duke Sucellus",
       "mechanic": "other",
       "detail": "Loot is a sequential roll-until-success chain described only in page prose, not in any drop row: 1/90 tradeable unique table (1/30 awakened), else 1/48 awakener's orb, else 1/25 frozen tablet, else 1/200 ice quartz, else 1/5 supply drop table, else the standard table; separately 1/2500 Baron and 1/40 clue after that. A perfect kill also gives 50% more loot from the standard table. The page's dropsline rows reconcile to a valid denominator on their own, so this source parses cleanly and would otherwise look verified — the chain order and the perfect-kill bonus are the parts that are invisible to the parser.",
+      "tier": "unknown_scaling",
       "blockedBy": []
     },
     {
@@ -32,12 +35,14 @@
       "title": "Zalcano",
       "mechanic": "point_scaled",
       "detail": "Two curves the page never states. (1) Main- and tertiary-table drops \"scale with the player's points\" and the points themselves are defined exactly (P_M = H + 2S; P_T = min(H,400) + 2*min(S,300)), but the function turning points into loot is not on the page, so zalcano_points stays a stub and main-table quantities remain the crowd-sourced ranges. (2) The Zalcano shard is \"Between 1/750 and 1/1500 depending on contribution\" with no stated interpolation; the primary 1/750 is kept rather than a guessed curve. Everything else IS modelled and wiki-verified in data/overrides/zalcano.json and apps/ingest/test/zalcano.test.ts: both eligibility gates (>=5 shield damage, >=31 combined via the derived totalDamage field), the role-keyed crystal shard tier (1/2/3), MVP-only infernal ashes, the MVP's +10% rounded up (ceilDelta), and the tertiary 1/200 x 1/40 onyx split.",
+      "tier": "unknown_scaling",
       "blockedBy": []
     },
     {
       "lootSourceId": "chest-tombs-of-amascut",
       "title": "Chest (Tombs of Amascut)",
       "mechanic": "point_scaled",
+      "tier": "approximate",
       "detail": "MOSTLY MODELLED, and the entry is kept for a narrower reason than it was written for. data/overrides/chest-tombs-of-amascut.json now models, wiki-verified in apps/ingest/test/toa.test.ts: the points-and-raid-level unique chance and its 55% cap (toa_invocation, matching the page's own worked example of 1% per 3,700 points at raid level 400), the raid-level-scaled 7-item unique pool including the out-of-invocation-range 1/50 (toa_unique_weight, reproducing all five rows of the page's published weight table from Module:Tombs of Amascut loot's own rule), the sub-1,500-point dung gate and its suppression of common rewards, the common table's points/divisor quantity scaling (toa_common_qty), the thread and jewel bad-luck-mitigation curves with their ownership reversions (toa_bad_luck_mitigation), the jewel pool's guarantee of an unowned jewel, the elite clue's 25% cap (toa_elite_clue) and the pet curve (toa_pet). What remains unmodelled, and why this stays watchlisted: the five remnant challenge rewards each require every invocation of one encounter set at level 4 (e.g. Remnant of akkha needs all Akkha invocations and level 4 Akkha) with zero party deaths, which is a per-raid invocation-composition fact no Condition kind expresses and no scalar can stand in for — drops_covered names exactly those five. Also out of scope and stated in the override note: team size (the page's group unique roll pools points across the party; this simulator's unit is one player's chest), the elite combat achievement's 1.05x clue multiplier, and duplicate jewels once all four are owned. Do not remove this entry to move the counter.",
       "blockedBy": [
         "Akkha",
@@ -52,6 +57,7 @@
       "lootSourceId": "ancient-chest",
       "title": "Ancient chest",
       "mechanic": "point_scaled",
+      "tier": "approximate",
       "detail": "Chambers of Xeric's reward chest. Never had a document before the DROPS_SECTION_TITLE/HEADING_PATTERN widening (2026-08-16) let the parser reach its ==Loot table== section for the first time — correcting an earlier, now-falsified claim (docs/HANDOFF.md) that its page 'has no {{DropsLine}}-shaped content whatsoever'. It does; the rows are exactly as misleading as ToA's own were before its override. The page states outright: 'For every 8,676 total points obtained, a 1% chance to obtain a unique loot is given... capped at 65.7% (570,000 points)... If one of these items is received, no common rewards are given... Up to six unique rewards can be obtained per raid.' None of that is visible to the parser, which currently emits TWO INDEPENDENT weighted tables with no gating between them at all: ancient-chest:0 (12 uniques, weight/69) and ancient-chest:1 (33 common items, weight/33) both roll on EVERY simulated kill, so the generated document currently guarantees a unique AND a common drop every time — not an imprecise approximation but a ~100%-unique-rate document, far worse than an unmodelled curve. Needs the cox_points formula (points -> unique chance, capped) plus the preroll/suppression structure ToA's override pattern already established. The elite-clue/Olmlet cross-table visibility question this entry's mechanic touches is RESOLVED, not open — see docs/HANDOFF.md's 'What NOT to redo': a conditioned-marginal formula rate is exact and does not need per-kill same-raid correlation; naively using the raw unconditioned subrates instead overstates Olmlet by 33x, which is the failure mode to avoid when this is built, not evidence the mechanism needs new architecture.",
       "blockedBy": [
         "Great Olm",
@@ -67,6 +73,7 @@
       "lootSourceId": "monumental-chest",
       "title": "Monumental chest",
       "mechanic": "point_scaled",
+      "tier": "approximate",
       "detail": "Unique chance scales with Theatre of Blood points earned across the raid (raid tier, deaths, personal performance), not a fixed per-kill rarity — needs the tob_points formula. Same caveat as the Tombs of Amascut chest: the dropsline rows reflect the points-shop structure, not independent rarities.",
       "blockedBy": [
         "Nylocas Vasilias",
@@ -81,6 +88,7 @@
       "lootSourceId": "rewards-chest-fortis-colosseum",
       "title": "Rewards Chest (Fortis Colosseum)",
       "mechanic": "other",
+      "tier": "approximate",
       "detail": "Loot scales with how many of the Colosseum's 12 waves were completed before the chest was opened (partial completion is allowed and bankable between waves), not with a fixed per-kill rarity. No formula for this is in PROJECT_PLAN.md's section 4.6 registry yet — it needs a new one (wave count / invocation-style scaling), not one of the seven already listed.",
       "blockedBy": [
         "Sol Heredit"

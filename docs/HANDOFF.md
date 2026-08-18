@@ -27,6 +27,9 @@ before trusting a number here — this section is written by hand and can drift.
 is CLOSED — `{{GWDRDT}}` resolves via two new `data/tables/gwd_*.json`
 records, do not re-open it as a gap. Full detail: `docs/DECISIONS.md`'s
 "GWDRDT built" entry, section 1's top entry, and landmine #3 in section 6.
+**The 5 `manual_override` sources are `mad-angel` (an earlier session) plus
+three new this session: `yama`, `black-knight-titan`, `obor`** — see below
+for what each needed.
 
 **`checkDropsCoveredAgainst`'s case-sensitivity bug — the prior audit's own
 deferred fix — is now BUILT, do not re-derive it.** Comparison is
@@ -62,24 +65,45 @@ a real precision decision (raw, not `floor()`'d, per-seed weights) worth
 reading before touching the seed tables again.
 
 **`buildTableGroups` no longer discards an entire heading block for one
-unparseable row** (`build-tables.ts`) — a general parser fix, not per-boss,
-found while investigating `nex`/`kalphite-queen`/`maggot-king`'s
-`drops_covered` gaps per instruction. The wiki sometimes states a rarity as a
-qualitative word (`Common`/`Uncommon`/`Once`) instead of a fraction; the
-parser correctly refuses to guess at it, but used to take every well-formed
-SIBLING row in the same block down too. Now it salvages the parseable rows
-and keeps reporting the loss (still blocks `verified`, correctly — this is
-real missing information). `kalphite-queen` 10 missing -> 1 (the one
-survivor, `Kq head (tattered)`, is a genuine one-time 256th-kill drop with no
-per-kill rate — unrepresentable, not a bug). `maggot-king` 6 missing -> 0
-(surfaced a NEW `items_known` gap on the six recovered `Maggot egg (...)`
-variants, closed via the multi-id allowlist — see below). `nex` 24 missing ->
-21 (3 of its 4 affected headings are ENTIRELY word-rarity with no numeric
-backing anywhere on the page or in any linked Calculator/Module — checked,
-genuinely unrecoverable, same class as Zalcano's own unstated curves; only
-`Other`'s partial word/fraction mix had anything to salvage). None of the
-three reach `verified` — don't read this as "closed," read it as "correctly,
-narrowly flagged now instead of silently wrong."
+unparseable row** (`build-tables.ts`) — the ONE shared root cause behind all
+three of `nex`/`kalphite-queen`/`maggot-king`'s `drops_covered` gaps, found by
+investigating them per instruction (not three separate bugs — one general
+parser defect, confirmed by a corpus-wide grep to affect exactly these three
+sources and no others). The wiki sometimes states a rarity as a qualitative
+word (`Common`/`Uncommon`/`Once`) instead of a fraction; `parseRarity`
+correctly refuses to guess at it, but `buildTableGroups` used to discard
+EVERY row in that heading block — including well-formed sibling rows with
+perfectly good fractions — the moment any one row failed to parse. Fixed
+generally, not per-boss: it now salvages the parseable rows and still
+reports the unparseable ones as a blocking `ambiguous` note (this is real
+missing information, correctly still not `verified`). Do not re-diagnose
+this as three separate mysteries if it comes up again — it is one fix,
+pinned by two `build-tables.test.ts` cases (the salvage path and the
+unchanged all-unparseable path).
+
+- `kalphite-queen`: 10 missing -> 1. The one survivor, `Kq head (tattered)`,
+  is a genuine one-time 256th-kill-guaranteed drop with no per-kill rate at
+  all — unrepresentable, not a bug, now on the permanently-flagged table
+  below.
+- `maggot-king`: 6 missing -> 0. Recovering the six `Maggot egg (...)`
+  variants surfaced a NEW `items_known` gap (closed via the multi-id
+  allowlist, see below). Its own remaining `ambiguous` note (`Nothing`,
+  `Stymphike tartare`, `Dull ancient medal` — all `Common`/`Uncommon`, no
+  number stated anywhere for the `take-eggs` context) is the SAME
+  permanently-unrecoverable class as `nex`'s residual below, just three
+  items instead of twenty-one — also now on the permanently-flagged table.
+- `nex`: 24 missing -> 21. Only recovered `Blood essence`/`Rune sword`/
+  `Nihil shard` from its `Other` heading (a partial word/fraction mix). The
+  other 21 are checked and confirmed genuinely unrecoverable, not a backlog
+  item: 3 of its 4 affected headings
+  (`Runes and ammunition`/`Resources`/`Consumables`) are ENTIRELY
+  `Common`/`Uncommon`, with no numeric numbers anywhere on the page and no
+  linked Calculator/Module page either — same class as Zalcano's own
+  unstated curves. Now on the permanently-flagged table below; do not
+  re-open expecting a number to exist.
+
+None of the three reach `verified` — don't read this as "closed," read it as
+"correctly, narrowly flagged now instead of silently wrong."
 
 **`items_known`'s literal-`Nothing` sentinel is exempted, generally.**
 Closes `salarin-the-twisted` (`verified`) and part of `black-knight-titan`/
@@ -106,45 +130,51 @@ waiting to be found:**
 | `chaos-fanatic`, `phosani-s-nightmare` | The wiki's own published per-row weights don't sum to their own stated denominator (129 vs a `/128` every row cites; 101 vs `/100`) — checked by hand against the raw wikitext, not a parser bug, not explained by the bundle defect. Plausible ordinary wiki-editing drift; would need re-derivation from drop-log data to ever close. `chaos-fanatic`'s own former `drops_covered` gap (Pet chaos elemental, Wine of zamorak) turned out to be pure casing, not a second real gap — closed by the case fix above; this row is ALL that's left. |
 | `mad-angel` | `Clue scroll (hard)` — the wiki's `dropsline` bucket lags a real patch that swapped it for `Clue scroll (medium)`; not fixable from this end. |
 | `kalphite-queen` | `Kq head (tattered)` — a genuine one-time, 256th-kill-guaranteed drop; not a per-kill rate at all. |
+| `nex` | 21 of 33 wiki drop rows, checked and confirmed permanently unrecoverable, NOT a backlog item — see the `buildTableGroups` entry above. 3 of its 4 affected headings are entirely `Common`/`Uncommon` rarity words with no number anywhere on the page and no linked Calculator/Module page either. |
+| `maggot-king` | 3 rows (`Nothing`, `Stymphike tartare`, `Dull ancient medal`, its `take-eggs`-context copies) — same shape and same "checked, no number exists" verdict as `nex`, just three items instead of twenty-one. |
 | `revenant-maledictus` (`parse_failed`, not `needs_review`) | No `{{DropsLine}}` calls anywhere on the page. Its whole mechanic lives under a prose-only `===Drop mechanics===` heading (the same shape that structurally excludes Barrows'/Salarin's own prose headings from the drops-section matcher) describing "two rolls on the revenant dragon's own drop table" plus a top-damage bonus and blighted supplies for everyone else — there is no `{{Template}}` call on the page this project's pipeline could expand, unlike GWDRDT, which turned out to have one. |
 
 Full reasoning for `zalcano`/`duke-sucellus`/`reward-pool`/`reward-cart`/
 `chaos-fanatic`/`phosani-s-nightmare`: section 3's "The genuinely unknowable"
-subsection, just below. **Also functionally stuck,
-though not literally on the watchlist**: the "Uniques"/"Mutagens" heading
-question (`phantom-muspah`, `sarachnis`, `shellbane-gryphon`, `the-nightmare`,
-`zulrah` — 5 sources) has been re-litigated more than any other question in
-the project and the answer has been "no available signal" every time,
-including via a three-signal resolution pipeline. Don't re-open it without a
-genuinely new signal — see section 5, "What NOT to redo."
+subsection, just below (predates this session; `mad-angel`/`kalphite-queen`/
+`nex`/`maggot-king` are not in that subsection yet, only in the table above).
 
-**So a fresh session doesn't read "22 needs_review" as "22 units of work":**
-of the 22, **7 will never move** (`duke-sucellus`, `zalcano`, `reward-pool`,
-`reward-cart`, `phosani-s-nightmare`, `mad-angel`, `kalphite-queen` — the
-permanently-flagged table above, minus `chaos-fanatic` which is now
-essentially closed too, see below, and minus `revenant-maledictus`, which is
-in the separate `parse_failed` bucket, not this count) **+ 4 are the raids,
-watchlisted DELIBERATELY** (each has one named, deliberately-unmodelled
-remnant — a decided state, not a bug; see "The four raids" below) **+ 5 are
-the Uniques/Mutagens dead end** = **16 of 22 are not really pending work**.
-The other **6** are real, examinable gaps: `chaos-fanatic` (its own
-permanently-flagged weight-drift is the only thing left, `drops_covered` is
-now clean); `chronozon` — wait, this one closed too, see above (kept as a
-reminder to re-verify this list against `data/index.json` rather than
-trust it blindly, per this section's own opening line); `black-demon`
-(29 missing, thematically all Wilderness-teleport/blighted-supplies items,
-unexamined); `chaos-elemental` (its OWN `drops_covered` gap turned out NOT
-to be the casing bug the four other sources shared — a real, still
-uninvestigated gap under a `heading` ambiguity note); `nex` (21 missing,
-mostly permanently unrecoverable — see above); `vorkath` (a correctly-
-refused seed partition, its own bespoke residual); the "Uniques"/"Herbs"/
-"Seeds"/etc. heading-order ambiguity guesses scattered across
-`alchemical-hydra`/`the-nightmare`/`sarachnis`/`shellbane-gryphon`/`zulrah`/
-`phantom-muspah` (the Uniques/Mutagens dead end, listed once above, not
-re-listed per source). See section 3's full table for the per-source detail
-on each — it predates this session's fixes and should be recomputed before
-trusting the exact per-cause counts, the same caveat every prior session
-left it with.
+**The heading-order-ambiguity dead end is 7 sources now, not 5 — a real
+correction, checked freshly this session, not assumed from the old count.**
+The prior "Uniques"/"Mutagens" framing named 5 sources with a heading
+literally called `Uniques` or `Mutagens`; a fresh per-source check (every
+`needs_review` source's actual `ambiguousGroups` text, not remembered from a
+prior recount) finds the identical "heading has entries at different
+denominators and is not named Pre-roll/Tertiary/Secondary; assumed
+mutually-exclusive (preroll) but this is a guess and needs a human check"
+shape on 7: `phantom-muspah`, `sarachnis`, `shellbane-gryphon`,
+`the-nightmare`, `zulrah` (the original 5) **plus `alchemical-hydra` and
+`chaos-elemental`**, both newly needs_review-for-this-reason once the case
+fix closed their OWN former `drops_covered` gap and exposed what was
+underneath. Same mechanism, same "no available signal" verdict, re-litigated
+more than any other question in the project (see section 5, "What NOT to
+redo") — don't re-open without a genuinely new signal. (`phantom-muspah`
+also carries a second, unrelated `ambiguousGroups` note — an unconfirmed
+bundle signal on its own `Unique` heading — not part of this class, not
+separately tracked below.)
+
+**So a fresh session doesn't read "22 needs_review" as "22 units of work" —
+the actual breakdown, recomputed fresh against every source's real
+`validation.checks`/`ambiguousGroups` this session, not carried over from a
+stale prior count:**
+
+| category | count | sources |
+|---|---|---|
+| Permanent / genuinely unknowable (the table above) | 9 | `zalcano`, `duke-sucellus`, `reward-pool`, `reward-cart`, `phosani-s-nightmare`, `mad-angel`, `kalphite-queen`, `nex`, `maggot-king` |
+| The four raids, watchlisted DELIBERATELY (a decided state, not a bug — each has one named, deliberately-unmodelled remnant; see "The four raids" below) | 4 | `chest-tombs-of-amascut`, `monumental-chest`, `ancient-chest`, `rewards-chest-fortis-colosseum` |
+| Heading-order-ambiguity dead end (just corrected above, 5 -> 7) | 7 | `alchemical-hydra`, `chaos-elemental`, `phantom-muspah`, `sarachnis`, `shellbane-gryphon`, `the-nightmare`, `zulrah` |
+| Known issue, needs a human modelling decision (not unexamined, not unknowable — `TreeHerbSeedDropLines`' rates sum to 1.6665x the stated 3/150 access rate, so something on the page overrides them; modelled as independent rolls preserving the wiki's own per-row rates, the single-access-roll shape itself isn't) | 1 | `vorkath` |
+| Genuinely unexamined — nobody has looked at this one yet | 1 | `black-demon` (28 of 97 missing, thematically all Wilderness-teleport/blighted-supplies items — worth checking whether its wikitext even still has a Revenant-caves/Blighted heading, the same "wiki bucket vs current wikitext" class as `mad-angel`'s residual, before assuming it's a parser gap) |
+
+9 + 4 + 7 + 1 + 1 = 22, exactly. **20 of the 22 are not really pending
+work** (permanent + raids + the dead end); `vorkath` has a real, understood,
+undecided modelling question; `black-demon` is the only source in the whole
+`needs_review` bucket nobody has actually looked at.
 
 ---
 

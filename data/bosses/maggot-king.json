@@ -664,6 +664,8 @@
     "variant": "Take-eggs"
   },
   "status": "needs_review",
+  "statusTier": "unknown_scaling",
+  "statusReason": "unparseable rarity in \"\": Nothing='Common', Stymphike tartare='Uncommon', Dull ancient medal='Uncommon'",
   "validation": {
     "ok": false,
     "checks": [
@@ -703,6 +705,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 34 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": false,
+        "detail": "unparseable rarity in \"\": Nothing='Common', Stymphike tartare='Uncommon', Dull ancient medal='Uncommon'"
       }
     ]
   },

@@ -1,9 +1,13 @@
+import type { StatusTier } from '@osrs-loot-simulator/loot-model'
+
 /** `data/index.json` — mirrors apps/ingest/src/site-index.ts's SiteIndexSchema. */
 export interface SiteIndexEntry {
   slug: string
   name: string
   aliases: string[]
   status: 'verified' | 'needs_review' | 'manual_override'
+  /** `null` for `manual_override` — its own terminal state, not a tier. See `StatusTierSchema`. */
+  statusTier: StatusTier | null
   /**
    * Wiki file name of the page's infobox image ("Vorkath.png"). Optional
    * because `buildSiteIndex` reads it from the gitignored snapshot cache —

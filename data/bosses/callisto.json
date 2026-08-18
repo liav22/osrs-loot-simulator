@@ -997,6 +997,8 @@
     "variant": "{{{dropversion|}}}"
   },
   "status": "verified",
+  "statusTier": "verified",
+  "statusReason": null,
   "validation": {
     "ok": false,
     "checks": [
@@ -1036,6 +1038,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 53 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
       }
     ]
   },

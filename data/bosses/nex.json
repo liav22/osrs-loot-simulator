@@ -264,6 +264,8 @@
   ],
   "contextDefaults": {},
   "status": "needs_review",
+  "statusTier": "unknown_scaling",
+  "statusReason": "21 of 33 wiki drop row(s) missing from the document: Air orb, Air rune, Blood rune, Coal, Coins, Death rune, Dragon bolts (unf), Ecumenical key shard (+13 more)",
   "validation": {
     "ok": false,
     "checks": [
@@ -303,6 +305,11 @@
         "check": "drops_covered",
         "ok": false,
         "detail": "21 of 33 wiki drop row(s) missing from the document: Air orb, Air rune, Blood rune, Coal, Coins, Death rune, Dragon bolts (unf), Ecumenical key shard (+13 more)"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": false,
+        "detail": "unparseable rarity in \"Runes and ammunition\": Air rune='Uncommon', Fire rune='Uncommon', Blood rune='Common', Death rune='Common', Water rune='Uncommon', Soul rune='Common', Dragon bolts (unf)='Common', Onyx bolts (e)='Uncommon', Steel cannonball='Common'; unparseable rarity in \"Resources\": Air orb='Common', Coal='Uncommon', Runite ore='Uncommon', Uncut ruby='Common', Uncut diamond='Common', Wine of Zamorak='Common'; unparseable rarity in \"Consumables\": Shark='Common', Prayer potion(4)='Common', Saradomin brew(4)='Common', Super restore(4)='Common'; unparseable rarity in \"Other\": Coins='Uncommon', Ecumenical key shard='Common'; heading \"Other\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check"
       }
     ]
   },

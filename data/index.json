@@ -1,11 +1,12 @@
 {
-  "generatedAt": "2026-08-18T12:37:53.422Z",
+  "generatedAt": "2026-08-18T13:35:45.668Z",
   "entries": [
     {
       "slug": "abyssal-sire",
       "name": "Abyssal Sire",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Abyssal Sire (phase 1).png",
       "repeatable": true
     },
@@ -14,6 +15,7 @@
       "name": "Agrith-Na-Na",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Agrith-Na-Na.png",
       "repeatable": false
     },
@@ -22,6 +24,7 @@
       "name": "Agrith Naar",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Agrith Naar.png",
       "repeatable": false
     },
@@ -30,6 +33,7 @@
       "name": "Alchemical Hydra",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Alchemical Hydra (serpentine).png",
       "repeatable": true
     },
@@ -38,6 +42,7 @@
       "name": "Amoxliatl",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Amoxliatl.png",
       "repeatable": true
     },
@@ -46,6 +51,7 @@
       "name": "Ancient chest",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "approximate",
       "image": "Crystal (ancient chest).png",
       "repeatable": true
     },
@@ -54,6 +60,7 @@
       "name": "Araxxor",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Araxxor.png",
       "repeatable": true
     },
@@ -62,6 +69,7 @@
       "name": "Arrg",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Arrg.png",
       "repeatable": false
     },
@@ -70,6 +78,7 @@
       "name": "Artio",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Artio.png",
       "repeatable": true
     },
@@ -78,6 +87,7 @@
       "name": "Black demon",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Black demon.png",
       "repeatable": true
     },
@@ -86,6 +96,7 @@
       "name": "Black Knight Titan",
       "aliases": [],
       "status": "manual_override",
+      "statusTier": null,
       "image": "Black Knight Titan.png",
       "repeatable": false
     },
@@ -94,6 +105,7 @@
       "name": "Bouncer",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Bouncer.png",
       "repeatable": false
     },
@@ -102,6 +114,7 @@
       "name": "Branda the Fire Queen",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Branda the Fire Queen.png",
       "repeatable": true
     },
@@ -110,6 +123,7 @@
       "name": "Brutus",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Brutus.png",
       "repeatable": true
     },
@@ -118,6 +132,7 @@
       "name": "Bryophyta",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Bryophyta.png",
       "repeatable": true
     },
@@ -126,6 +141,7 @@
       "name": "Callisto",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Callisto.png",
       "repeatable": true
     },
@@ -134,6 +150,7 @@
       "name": "Calvar'ion",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Calvar'ion.png",
       "repeatable": true
     },
@@ -142,6 +159,7 @@
       "name": "Cerberus",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Cerberus.png",
       "repeatable": true
     },
@@ -150,6 +168,7 @@
       "name": "Chaos Elemental",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Chaos Elemental.png",
       "repeatable": true
     },
@@ -158,6 +177,7 @@
       "name": "Chaos Fanatic",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Chaos Fanatic.png",
       "repeatable": true
     },
@@ -166,6 +186,7 @@
       "name": "Chest (Barrows)",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Chest (Barrows).png",
       "repeatable": true
     },
@@ -174,6 +195,7 @@
       "name": "Chest (Tombs of Amascut)",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "approximate",
       "image": "Chest (Tombs of Amascut, closed).png",
       "repeatable": true
     },
@@ -182,6 +204,7 @@
       "name": "Chronozon",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Chronozon.png",
       "repeatable": false
     },
@@ -190,6 +213,7 @@
       "name": "Commander Zilyana",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Commander Zilyana.png",
       "repeatable": true
     },
@@ -198,6 +222,7 @@
       "name": "Corporeal Beast",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Corporeal Beast.png",
       "repeatable": true
     },
@@ -206,6 +231,7 @@
       "name": "Crazy archaeologist",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Crazy archaeologist.png",
       "repeatable": true
     },
@@ -214,6 +240,7 @@
       "name": "Culinaromancer",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Culinaromancer.png",
       "repeatable": false
     },
@@ -222,6 +249,7 @@
       "name": "Dad",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Dad.png",
       "repeatable": false
     },
@@ -230,6 +258,7 @@
       "name": "Dagannoth mother",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Dagannoth mother white.png",
       "repeatable": false
     },
@@ -238,6 +267,7 @@
       "name": "Dagannoth Prime",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Dagannoth Prime.png",
       "repeatable": true
     },
@@ -246,6 +276,7 @@
       "name": "Dagannoth Rex",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Dagannoth Rex.png",
       "repeatable": true
     },
@@ -254,6 +285,7 @@
       "name": "Dagannoth Supreme",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Dagannoth Supreme.png",
       "repeatable": true
     },
@@ -262,6 +294,7 @@
       "name": "Damis",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Damis first form.png",
       "repeatable": false
     },
@@ -270,6 +303,7 @@
       "name": "Demonic Brutus",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Demonic Brutus.png",
       "repeatable": true
     },
@@ -278,6 +312,7 @@
       "name": "Deranged archaeologist",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Deranged archaeologist.png",
       "repeatable": true
     },
@@ -286,6 +321,7 @@
       "name": "Dessourt",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Dessourt.png",
       "repeatable": false
     },
@@ -294,6 +330,7 @@
       "name": "Doom of Mokhaiotl",
       "aliases": [],
       "status": "manual_override",
+      "statusTier": null,
       "image": "Doom of Mokhaiotl.png",
       "repeatable": true
     },
@@ -302,6 +339,7 @@
       "name": "Duke Sucellus",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Duke Sucellus.png",
       "repeatable": true
     },
@@ -310,6 +348,7 @@
       "name": "Eldric the Ice King",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Eldric the Ice King.png",
       "repeatable": true
     },
@@ -318,6 +357,7 @@
       "name": "Evil spirit",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Evil spirit.png",
       "repeatable": false
     },
@@ -326,6 +366,7 @@
       "name": "Flambeed",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Flambeed.png",
       "repeatable": false
     },
@@ -334,6 +375,7 @@
       "name": "Gemstone Crab",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Gemstone Crab.png",
       "repeatable": true
     },
@@ -342,6 +384,7 @@
       "name": "General Graardor",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "General Graardor.png",
       "repeatable": true
     },
@@ -350,6 +393,7 @@
       "name": "Giant Mole",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Giant Mole.png",
       "repeatable": true
     },
@@ -358,6 +402,7 @@
       "name": "Giant Roc",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Giant Roc.png",
       "repeatable": false
     },
@@ -366,6 +411,7 @@
       "name": "Giant Scarab",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Giant Scarab.png",
       "repeatable": false
     },
@@ -374,6 +420,7 @@
       "name": "Giant Sea Snake",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Giant Sea Snake.png",
       "repeatable": false
     },
@@ -382,6 +429,7 @@
       "name": "Glod",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Glod.png",
       "repeatable": false
     },
@@ -390,6 +438,7 @@
       "name": "Grotesque Guardians",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Dawn.png",
       "repeatable": true
     },
@@ -398,6 +447,7 @@
       "name": "Hespori",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Hespori.png",
       "repeatable": true
     },
@@ -406,6 +456,7 @@
       "name": "Jungle Demon",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Jungle Demon.png",
       "repeatable": false
     },
@@ -414,6 +465,7 @@
       "name": "K'ril Tsutsaroth",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "K'ril Tsutsaroth.png",
       "repeatable": true
     },
@@ -422,6 +474,7 @@
       "name": "Kalphite Queen",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "minor_gaps",
       "image": "Kalphite Queen.png",
       "repeatable": true
     },
@@ -430,6 +483,7 @@
       "name": "Kamil",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Kamil.png",
       "repeatable": false
     },
@@ -438,6 +492,7 @@
       "name": "Karamel",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Karamel.png",
       "repeatable": false
     },
@@ -446,6 +501,7 @@
       "name": "King Black Dragon",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "King Black Dragon.png",
       "repeatable": true
     },
@@ -454,6 +510,7 @@
       "name": "Koschei the deathless",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Koschei the deathless.png",
       "repeatable": false
     },
@@ -462,6 +519,7 @@
       "name": "Kraken",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Whirlpool.png",
       "repeatable": true
     },
@@ -470,6 +528,7 @@
       "name": "Kree'arra",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Kree'arra.png",
       "repeatable": true
     },
@@ -478,6 +537,7 @@
       "name": "Lunar Chest",
       "aliases": [],
       "status": "manual_override",
+      "statusTier": null,
       "image": "Lunar Chest (closed).png",
       "repeatable": true
     },
@@ -486,6 +546,7 @@
       "name": "Mad Angel",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "minor_gaps",
       "image": "Mad Angel.png",
       "repeatable": true
     },
@@ -494,6 +555,7 @@
       "name": "Maggot King",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Maggot King.png",
       "repeatable": true
     },
@@ -502,6 +564,7 @@
       "name": "Me",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Me.png",
       "repeatable": false
     },
@@ -510,6 +573,7 @@
       "name": "Melzar the Mad",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Melzar the Mad.png",
       "repeatable": false
     },
@@ -518,6 +582,7 @@
       "name": "Monumental chest",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "approximate",
       "image": "Monumental chest (teammate's, closed).png",
       "repeatable": true
     },
@@ -526,6 +591,7 @@
       "name": "Moss Guardian",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Moss Guardian.png",
       "repeatable": false
     },
@@ -534,6 +600,7 @@
       "name": "Nex",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Nex.png",
       "repeatable": true
     },
@@ -542,6 +609,7 @@
       "name": "Obor",
       "aliases": [],
       "status": "manual_override",
+      "statusTier": null,
       "image": "Obor.png",
       "repeatable": true
     },
@@ -550,6 +618,7 @@
       "name": "Phantom Muspah",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Phantom Muspah (ranged).png",
       "repeatable": true
     },
@@ -558,6 +627,7 @@
       "name": "Phosani's Nightmare",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "minor_gaps",
       "image": "The Nightmare.png",
       "repeatable": true
     },
@@ -566,6 +636,7 @@
       "name": "Reward Cart",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Reward Cart (empty).png",
       "repeatable": true
     },
@@ -574,6 +645,7 @@
       "name": "Reward Chest (The Gauntlet)",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Reward Chest (The Gauntlet).png",
       "repeatable": true
     },
@@ -585,6 +657,7 @@
         "Tempoross"
       ],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Empty pool.png",
       "repeatable": true
     },
@@ -593,6 +666,7 @@
       "name": "Rewards Chest (Fortis Colosseum)",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "approximate",
       "image": "Rewards Chest (Fortis Colosseum).png",
       "repeatable": true
     },
@@ -601,6 +675,7 @@
       "name": "Salarin the twisted",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Salarin the twisted.png",
       "repeatable": true
     },
@@ -609,6 +684,7 @@
       "name": "Sarachnis",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Sarachnis.png",
       "repeatable": true
     },
@@ -617,6 +693,7 @@
       "name": "Scorpia",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Scorpia.png",
       "repeatable": true
     },
@@ -625,6 +702,7 @@
       "name": "Scurrius",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Scurrius.png",
       "repeatable": true
     },
@@ -633,6 +711,7 @@
       "name": "Shellbane gryphon",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Shellbane gryphon.png",
       "repeatable": true
     },
@@ -641,6 +720,7 @@
       "name": "Sir Mordred",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Sir Mordred.png",
       "repeatable": true
     },
@@ -649,6 +729,7 @@
       "name": "Skotizo",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Skotizo.png",
       "repeatable": true
     },
@@ -657,6 +738,7 @@
       "name": "Slagilith",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Slagilith.png",
       "repeatable": false
     },
@@ -665,6 +747,7 @@
       "name": "Slash Bash",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Slash Bash.png",
       "repeatable": false
     },
@@ -673,6 +756,7 @@
       "name": "Spindel",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Spindel.png",
       "repeatable": true
     },
@@ -681,6 +765,7 @@
       "name": "The Hueycoatl",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "The Hueycoatl.png",
       "repeatable": true
     },
@@ -689,6 +774,7 @@
       "name": "The Leviathan",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "The Leviathan.png",
       "repeatable": true
     },
@@ -697,6 +783,7 @@
       "name": "The Mimic",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "The Mimic.png",
       "repeatable": true
     },
@@ -705,6 +792,7 @@
       "name": "The Nightmare",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "The Nightmare.png",
       "repeatable": true
     },
@@ -713,6 +801,7 @@
       "name": "The Whisperer",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "The Whisperer.png",
       "repeatable": true
     },
@@ -721,6 +810,7 @@
       "name": "Thermonuclear smoke devil",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Thermonuclear smoke devil.png",
       "repeatable": true
     },
@@ -729,6 +819,7 @@
       "name": "Treus Dayth",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Treus Dayth.png",
       "repeatable": false
     },
@@ -737,6 +828,7 @@
       "name": "Ulfric",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Ulfric.png",
       "repeatable": false
     },
@@ -745,6 +837,7 @@
       "name": "Vardorvis",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Vardorvis.png",
       "repeatable": true
     },
@@ -753,6 +846,7 @@
       "name": "Venenatis",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Venenatis.png",
       "repeatable": true
     },
@@ -761,6 +855,7 @@
       "name": "Vet'ion",
       "aliases": [],
       "status": "verified",
+      "statusTier": "verified",
       "image": "Vet'ion.png",
       "repeatable": true
     },
@@ -769,6 +864,7 @@
       "name": "Vorkath",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "approximate",
       "image": "Vorkath.png",
       "repeatable": true
     },
@@ -777,6 +873,7 @@
       "name": "Yama",
       "aliases": [],
       "status": "manual_override",
+      "statusTier": null,
       "image": "Yama.png",
       "repeatable": true
     },
@@ -785,6 +882,7 @@
       "name": "Zalcano",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Zalcano.png",
       "repeatable": true
     },
@@ -793,6 +891,7 @@
       "name": "Zulrah",
       "aliases": [],
       "status": "needs_review",
+      "statusTier": "unknown_scaling",
       "image": "Zulrah (serpentine).png",
       "repeatable": true
     }

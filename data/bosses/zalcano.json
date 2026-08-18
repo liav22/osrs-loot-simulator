@@ -705,6 +705,8 @@
     "shieldDamage": 300
   },
   "status": "needs_review",
+  "statusTier": "unknown_scaling",
+  "statusReason": "Two curves the page never states. (1) Main- and tertiary-table drops \"scale with the player's points\" and the points themselves are defined exactly (P_M = H + 2S; P_T = min(H,400) + 2*min(S,300)), but the function turning points into loot is not on the page, so zalcano_points stays a stub and main-table quantities remain the crowd-sourced ranges. (2) The Zalcano shard is \"Between 1/750 and 1/1500 depending on contribution\" with no stated interpolation; the primary 1/750 is kept rather than a guessed curve. Everything else IS modelled and wiki-verified in data/overrides/zalcano.json and apps/ingest/test/zalcano.test.ts: both eligibility gates (>=5 shield damage, >=31 combined via the derived totalDamage field), the role-keyed crystal shard tier (1/2/3), MVP-only infernal ashes, the MVP's +10% rounded up (ceilDelta), and the tertiary 1/200 x 1/40 onyx split.",
   "validation": {
     "ok": false,
     "checks": [
@@ -745,6 +747,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 26 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },

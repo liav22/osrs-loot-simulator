@@ -337,6 +337,8 @@
     "fishingLevel": 81
   },
   "status": "needs_review",
+  "statusTier": "unknown_scaling",
+  "statusReason": "Rolls scale with reward permits earned subduing Tempoross (fishing/cooking/depositing harpoonfish, repairing totems, dousing fires) rather than being a fixed count per redemption. Needs the tempoross_points formula.",
   "validation": {
     "ok": false,
     "checks": [
@@ -377,6 +379,11 @@
         "check": "drops_covered",
         "ok": true,
         "detail": "all 26 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },

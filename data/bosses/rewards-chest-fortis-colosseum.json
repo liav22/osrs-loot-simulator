@@ -4205,6 +4205,8 @@
     "variant": "Wave 1"
   },
   "status": "needs_review",
+  "statusTier": "approximate",
+  "statusReason": "Loot scales with how many of the Colosseum's 12 waves were completed before the chest was opened (partial completion is allowed and bankable between waves), not with a fixed per-kill rarity. No formula for this is in PROJECT_PLAN.md's section 4.6 registry yet — it needs a new one (wave count / invocation-style scaling), not one of the seven already listed.",
   "validation": {
     "ok": false,
     "checks": [
@@ -4245,6 +4247,11 @@
         "check": "drops_covered",
         "ok": false,
         "detail": "1 of 29 wiki drop row(s) missing from the document: Token (Varlamore)"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },

@@ -147,6 +147,8 @@ export function applyOverride(
       contextDefaults: {},
       parserVersion,
       status: 'needs_review',
+      statusTier: null,
+      statusReason: null,
       validation: { ok: false, checks: [] },
     }
   return {

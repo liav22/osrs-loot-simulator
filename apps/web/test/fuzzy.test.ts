@@ -8,6 +8,7 @@ function entry(name: string, aliases: string[] = []): SiteIndexEntry {
     name,
     aliases,
     status: 'verified',
+    statusTier: 'verified',
     repeatable: true,
   }
 }

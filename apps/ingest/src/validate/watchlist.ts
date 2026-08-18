@@ -25,12 +25,32 @@ export const MECHANICS = ['without_replacement', 'point_scaled', 'kc_scaled', 'o
 export const MechanicSchema = z.enum(MECHANICS)
 export type Mechanic = z.infer<typeof MechanicSchema>
 
+/**
+ * Which of the web app's two watchlist-driven status tiers (`apps/web/src/
+ * lib/tier.ts`) an entry belongs to — hand-set per entry because it is an
+ * editorial judgement `mechanic`/`detail` cannot express mechanically:
+ * `'approximate'` means an override already models the mechanic and the
+ * remaining residual is a named, bounded simplification (the four raids —
+ * ToA's five remnant challenge rewards, CoX's per-player-not-per-party
+ * approximation, ToB's team allocation, Fortis's with-replacement armour
+ * dedup); `'unknown_scaling'` means the wiki names a rule and never states
+ * the function needed to model it at all (Zalcano's two curves, Reward
+ * cart/pool's point formulas, Duke Sucellus' unbuilt roll-chain). See
+ * `docs/DECISIONS.md`'s status-tier entry before changing an existing entry's
+ * value — it is a claim about how close the source is to done, not a
+ * classification of the mechanic type.
+ */
+export const WATCHLIST_TIERS = ['approximate', 'unknown_scaling'] as const
+export const WatchlistTierSchema = z.enum(WATCHLIST_TIERS)
+export type WatchlistTier = z.infer<typeof WatchlistTierSchema>
+
 export const WatchlistEntrySchema = z
   .object({
     lootSourceId: z.string().min(1),
     title: z.string().min(1),
     mechanic: MechanicSchema,
     detail: z.string().min(1),
+    tier: WatchlistTierSchema,
     /** Pages whose results depend on this mechanic, for the report. */
     blockedBy: z.array(z.string().min(1)).default([]),
   })

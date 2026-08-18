@@ -1,7 +1,7 @@
 import { readFile, readdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { z } from 'zod'
-import { BossSchema } from '@osrs-loot-simulator/loot-model'
+import { BossSchema, StatusTierSchema } from '@osrs-loot-simulator/loot-model'
 import { extractInfoboxImage } from './parse/infobox-image.js'
 import { BOSSES_DIR } from './parse/parse-boss.js'
 import { readSnapshot, REPO_ROOT, slugify } from './snapshots/store.js'
@@ -29,6 +29,21 @@ export const SiteIndexEntrySchema = z
     name: z.string().min(1),
     aliases: z.array(z.string().min(1)),
     status: z.enum(['verified', 'needs_review', 'manual_override']),
+    /**
+     * The finer-grained tier `apps/web`'s badge actually renders — see
+     * `StatusTierSchema`. `null` for `manual_override` (its own terminal
+     * state, not a point on this scale); always present for `verified`/
+     * `needs_review` once `Boss.statusTier` is. Carried straight through
+     * from the Boss document, never recomputed here — the eagerly-loaded
+     * search index needs it for list-view badges without fetching every
+     * boss document, but the *reason* text stays on the Boss document only
+     * (see `apps/web/src/components/StatusBadge.tsx`), since that would
+     * bloat this file for text only the currently-open boss needs. Defaults
+     * to `null` so a committed `data/index.json` written before this field
+     * existed still parses in `committedImages` (`buildSiteIndex` below),
+     * the same reason `repeatable` defaults rather than requires.
+     */
+    statusTier: StatusTierSchema.nullable().default(null),
     /**
      * The wiki FILE NAME of the page's infobox image ("Vorkath.png"), not a
      * URL — the frontend builds a thumbnail URL at whatever width its layout
@@ -138,6 +153,7 @@ export async function buildSiteIndex(
       name: boss.name,
       aliases: boss.aliases,
       status: boss.status,
+      statusTier: boss.statusTier,
       repeatable: boss.repeatable,
       ...(image === undefined ? {} : { image }),
     })
