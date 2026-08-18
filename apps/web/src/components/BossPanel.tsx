@@ -114,8 +114,20 @@ export function BossPanel({
         of hedge this project has refused throughout.
       */}
       {boss.status === 'needs_review' && (
-        <p className={`rounded-md border px-2.5 py-1.5 text-xs ${reasonBoxStyle(boss.statusTier)}`}>
-          {boss.statusReason ?? "Hasn't cleared every check — rates may be wrong."}
+        <div className={`rounded-md border px-2.5 py-1.5 text-xs ${reasonBoxStyle(boss.statusTier)}`}>
+          {/*
+            `line-clamp-3`, not the full paragraph: a specific reason
+            (nex's 21-item list, ancient-chest's raid override note) can run
+            to hundreds of words, and this box sits in the panel's FIXED
+            header — above the `min-h-0 flex-1 overflow-y-auto` controls
+            region, not inside it — so an unclamped reason pushes Simulate
+            off a short viewport instead of scrolling under it. `title`
+            carries the untruncated text for a hover; the admin link (below,
+            never clamped) is the reliable way to read the rest.
+          */}
+          <p className="line-clamp-3" title={boss.statusReason ?? undefined}>
+            {boss.statusReason ?? "Hasn't cleared every check — rates may be wrong."}
+          </p>
           {/* The admin page is dev-only, so the link is too. Without this guard
               production would render a link to a route that no longer exists,
               which lands on the search page and reads as a broken app.
@@ -124,16 +136,11 @@ export function BossPanel({
               served from /osrs-loot-simulator/, so a root-absolute href points
               at a path belonging to a different site. */}
           {import.meta.env.DEV && (
-            <>
-              {' '}
-              See the{' '}
-              <Link to={`/admin?slug=${boss.slug}`} className="underline">
-                admin page
-              </Link>
-              .
-            </>
+            <Link to={`/admin?slug=${boss.slug}`} className="mt-1 inline-block underline">
+              See the full reason on the admin page →
+            </Link>
           )}
-        </p>
+        </div>
       )}
 
       <button

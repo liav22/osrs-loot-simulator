@@ -31,42 +31,52 @@ export function AdminPage() {
   if (isError || data === undefined) return <p className="p-8 text-sm text-red-400">Failed to load the boss index.</p>
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
-      <h1 className="mb-1 text-lg font-semibold text-neutral-100">Validation report</h1>
-      <p className="mb-4 text-sm text-muted">
-        Generated {new Date(data.generatedAt).toLocaleString()} · {data.entries.length} sources ·{' '}
-        {counts.verified} verified, {counts.needs_review} needs review, {counts.manual_override} manual override
-      </p>
+    // `min-h-0 flex-1 overflow-y-auto`: `App.tsx`'s shell is a fixed
+    // `h-[100dvh] overflow-hidden` flex column from 900px up (the boss panel
+    // manages its own internal scroll region the same way), so without its
+    // own scroll container this page's ~99-row list was clipped at the
+    // viewport edge with no way to reach the rest — not merely
+    // uncomfortable, unreachable.
+    <div className="min-h-0 flex-1 overflow-y-auto">
+      <div className="mx-auto max-w-4xl px-4 py-8">
+        <h1 className="mb-1 text-lg font-semibold text-neutral-100">Validation report</h1>
+        <p className="mb-4 text-sm text-muted">
+          Generated {new Date(data.generatedAt).toLocaleString()} · {data.entries.length} sources ·{' '}
+          {counts.verified} verified, {counts.needs_review} needs review, {counts.manual_override} manual override
+        </p>
 
-      <div className="mb-4 flex gap-2">
-        {FILTERS.map((f) => (
-          <button
-            key={f}
-            type="button"
-            onClick={() => setFilter(f)}
-            className={`rounded-md px-3 py-1.5 text-xs font-medium ${
-              filter === f ? 'bg-amber-500 text-neutral-950' : 'bg-neutral-900 text-neutral-400 hover:bg-neutral-800'
-            }`}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
+        <div className="mb-4 flex gap-2">
+          {FILTERS.map((f) => (
+            <button
+              key={f}
+              type="button"
+              onClick={() => setFilter(f)}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium ${
+                filter === f ? 'bg-amber-500 text-neutral-950' : 'bg-neutral-900 text-neutral-400 hover:bg-neutral-800'
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
 
-      <div className="divide-y divide-neutral-900 overflow-hidden rounded-md border border-neutral-800">
-        {entries.map((entry) => (
-          <AdminRow
-            key={entry.slug}
-            slug={entry.slug}
-            name={entry.name}
-            status={entry.status}
-            statusTier={entry.statusTier}
-            repeatable={entry.repeatable}
-            open={expanded === entry.slug}
-            onToggle={() => setExpanded((current) => (current === entry.slug ? null : entry.slug))}
-          />
-        ))}
-        {entries.length === 0 && <p className="px-4 py-6 text-center text-sm text-muted">No sources match this filter.</p>}
+        <div className="divide-y divide-neutral-900 overflow-hidden rounded-md border border-neutral-800">
+          {entries.map((entry) => (
+            <AdminRow
+              key={entry.slug}
+              slug={entry.slug}
+              name={entry.name}
+              status={entry.status}
+              statusTier={entry.statusTier}
+              repeatable={entry.repeatable}
+              open={expanded === entry.slug}
+              onToggle={() => setExpanded((current) => (current === entry.slug ? null : entry.slug))}
+            />
+          ))}
+          {entries.length === 0 && (
+            <p className="px-4 py-6 text-center text-sm text-muted">No sources match this filter.</p>
+          )}
+        </div>
       </div>
     </div>
   )
