@@ -1,0 +1,137 @@
+{
+  "id": "yama-supplies-bundle",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 2301,
+              "itemKey": "pineapple-pizza",
+              "name": "Pineapple pizza",
+              "qty": {
+                "kind": "range",
+                "min": 3,
+                "max": 4
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 7208,
+              "itemKey": "wild-pie",
+              "name": "Wild pie",
+              "qty": {
+                "kind": "range",
+                "min": 3,
+                "max": 4
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 139,
+              "itemKey": "prayer-potion-3",
+              "name": "Prayer potion(3)",
+              "qty": {
+                "kind": "exact",
+                "n": 2
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 11493,
+              "itemKey": "super-restore-mix-2",
+              "name": "Super restore mix(2)",
+              "qty": {
+                "kind": "exact",
+                "n": 2
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 12701,
+              "itemKey": "super-combat-potion-1",
+              "name": "Super combat potion(1)",
+              "qty": {
+                "kind": "exact",
+                "n": 1
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 11521,
+              "itemKey": "zamorak-mix-2",
+              "name": "Zamorak mix(2)",
+              "qty": {
+                "kind": "exact",
+                "n": 1
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Yama's 'Supplies' heading (Yama, revid 15292450): one 15/95.11 access roll grants a 'supply drop' that is three independent binary choices arriving together -- 'Either 3-4 pineapple pizzas or 3-4 wild pies', 'Either 2 prayer potion(3) or 2 super restore mix(2)', 'Either 1 super combat potion(1) or 1 Zamorak mix(2)' -- not six items competing for one slot. The raw wikitext carries six DropsLine rows at a uniform 7.5/95.11 each (half of the shared 15/95.11 access rate per pair, a clean 50/50 split within each choice), which the corpus-wide bundle detector (checkBundleSignals/findBundleGroups, build-tables.ts) cannot auto-confirm: its CO_DROP_PHRASES list matches 'dropped together'/'bundled with'-style footnotes, and this block's prose ('...chance of getting a supply drop. It will include: * Either A or B * Either C or D * Either E or F') is a different phrasing the detector does not recognise, and even if it did, its BundleGroup model only expresses one flat set of always-co-occurring items, not three separate nested pairs -- the same expressivity gap Mad Angel's compound shape hit. Modelled as three oneOf picks (each entry's own weight is the item's raw 7.5/95.11 share, `oneOf` needing only the RELATIVE 1:1 split within each pair) nested inside one always-mode table, spliced back into the main weighted pool as a single tableRef row at weight 15 -- matching Mad Angel's precedent exactly (data/overrides/mad-angel.json)."
+}

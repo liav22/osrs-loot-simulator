@@ -39,6 +39,46 @@ import { snapshotPath } from '../src/snapshots/store.js'
 
 const SNAPSHOTS_PRESENT = existsSync(snapshotPath('dropsline', 'brutus'))
 
+/**
+ * `ev_matches` is the one check whose own inputs (live GE prices,
+ * `fetchGePrices`) are never snapshotted and drift day to day by design —
+ * it is explicitly advisory, never part of the `verified` gate (see
+ * `ev-matches.ts`'s own header comment). Brutus is the one committed
+ * document with a rendered-HTML snapshot behind it, so it is the one source
+ * whose `ev_matches.detail`/`gpPerKill`/`wikiValue` embed a live-computed
+ * gp figure ("338.58 gp/kill vs wiki's 597.57, 43.3% off") that silently
+ * changes every time the GE market moves, without any real parser or data
+ * regression — a flake this check must not report as a mismatch. Blanking
+ * the volatile sub-fields (not the whole check — `check` alone still catches
+ * the check disappearing outright) keeps the comparison meaningful for
+ * everything ev_matches is NOT: every other field in the document, on every
+ * other source, is fully deterministic and stays compared byte-for-byte.
+ */
+function normalizeEvMatches(doc: unknown): unknown {
+  if (
+    typeof doc !== 'object' ||
+    doc === null ||
+    !('validation' in doc) ||
+    typeof doc.validation !== 'object' ||
+    doc.validation === null ||
+    !('checks' in doc.validation) ||
+    !Array.isArray(doc.validation.checks)
+  ) {
+    return doc
+  }
+  return {
+    ...doc,
+    validation: {
+      ...doc.validation,
+      checks: doc.validation.checks.map((check: unknown) =>
+        typeof check === 'object' && check !== null && 'check' in check && check.check === 'ev_matches'
+          ? { check: 'ev_matches' }
+          : check
+      ),
+    },
+  }
+}
+
 describe.skipIf(!SNAPSHOTS_PRESENT)('every committed document reproduces from a fresh parse', () => {
   let scratch: string
 
@@ -107,7 +147,7 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('every committed document reproduces from a 
 
         const fresh: unknown = JSON.parse(await readFile(join(scratch, file), 'utf8'))
         try {
-          deepStrictEqual(fresh, committed)
+          deepStrictEqual(normalizeEvMatches(fresh), normalizeEvMatches(committed))
           return null
         } catch {
           return `${slug}: fresh parse disagrees with the committed document`

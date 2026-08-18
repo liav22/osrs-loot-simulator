@@ -843,7 +843,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "2 tableRef node(s) resolved against 22 shared table(s)"
+        "detail": "2 tableRef node(s) resolved against 24 shared table(s)"
       },
       {
         "check": "rates_valid",

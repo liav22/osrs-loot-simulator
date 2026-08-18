@@ -847,7 +847,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "4 tableRef node(s) resolved against 22 shared table(s)"
+        "detail": "4 tableRef node(s) resolved against 24 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -874,8 +874,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "1 of 62 wiki drop row(s) missing from the document: Pet chaos elemental"
+        "ok": true,
+        "detail": "all 62 wiki drop row(s) reachable in the document"
       }
     ]
   },

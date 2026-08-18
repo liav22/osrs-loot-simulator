@@ -111,6 +111,15 @@ export interface WikitextDropLine {
  * string (`"1"`, `"2"`, ...), matching MediaWiki's own numbering — needed for
  * templates like `{{Brimstone rarity|784}}`, whose only argument is
  * positional.
+ *
+ * **Named keys are lowercased.** Yama's `Supplies`/`Runes`/`Other` headings
+ * write `Rarity=`/`Quantity=` (capitalised) on some rows and `rarity=`/
+ * `quantity=` on others in the same block — a page-authoring inconsistency,
+ * not two different parameters: the wiki's own rendered drop bucket still
+ * lists every one of those 18 items, so whatever resolves `{{DropsLine}}`
+ * server-side treats the casing as equivalent. Every consumer already reads
+ * a lowercase literal (`params.get('rarity')` etc.), so this is a pure
+ * recovery, not a behavioural change for the already-lowercase common case.
  */
 export function parseTemplateCall(call: string): { name: string; params: Map<string, string> } {
   const inner = call.slice(2, -2)
@@ -125,7 +134,7 @@ export function parseTemplateCall(call: string): { name: string; params: Map<str
       positional++
       continue
     }
-    params.set(part.slice(0, eq).trim(), part.slice(eq + 1).trim())
+    params.set(part.slice(0, eq).trim().toLowerCase(), part.slice(eq + 1).trim())
   }
   return { name, params }
 }

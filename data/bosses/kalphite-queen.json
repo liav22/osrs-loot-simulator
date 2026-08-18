@@ -687,6 +687,174 @@
       "notes": "Weapons and armour / Runes and ammunition / Herbs / Seeds / Resources / Other"
     },
     {
+      "id": "kalphite-queen:2:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13490,
+            "itemKey": "ensouled-kalphite-head",
+            "name": "Ensouled kalphite head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23083,
+            "itemKey": "brimstone-key",
+            "name": "Brimstone key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 54
+          },
+          "conditions": [
+            {
+              "kind": "onSlayerTask",
+              "value": true
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7981,
+            "itemKey": "kq-head",
+            "name": "Kq head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3140,
+            "itemKey": "dragon-chainbody",
+            "name": "Dragon chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 128
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7158,
+            "itemKey": "dragon-2h-sword",
+            "name": "Dragon 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 256
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11920,
+            "itemKey": "dragon-pickaxe",
+            "name": "Dragon pickaxe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 400
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12885,
+            "itemKey": "jar-of-sand",
+            "name": "Jar of sand",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12647,
+            "itemKey": "kalphite-princess",
+            "name": "Kalphite Princess",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
       "id": "kalphite-queen:rdt-access:0",
       "mode": "independent",
       "rolls": 1,
@@ -719,7 +887,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "4 tableRef node(s) resolved against 22 shared table(s)"
+        "detail": "4 tableRef node(s) resolved against 24 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -747,7 +915,7 @@
       {
         "check": "drops_covered",
         "ok": false,
-        "detail": "11 of 70 wiki drop row(s) missing from the document: Brimstone key, Clue scroll (elite), Dragon 2h sword, Dragon chainbody, Dragon pickaxe, Ensouled kalphite head, Jar of sand, Kalphite princess (+3 more)"
+        "detail": "1 of 70 wiki drop row(s) missing from the document: Kq head (tattered)"
       }
     ]
   },

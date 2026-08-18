@@ -1,13 +1,6 @@
 {
   "slug": "yama",
-  "name": "Yama",
-  "aliases": [],
-  "wikiPage": "Yama",
-  "wikiRevId": 15292450,
-  "variants": [
-    "Junk",
-    "Contract"
-  ],
+  "note": "Yama's 'Supplies' heading (revid 15292450) compounds three independent binary choices (food, potion A, potion B) behind one shared 15/95.11 access roll -- 'Either 3-4 pineapple pizzas or 3-4 wild pies', 'Either 2 prayer potion(3) or 2 super restore mix(2)', 'Either 1 super combat potion(1) or 1 Zamorak mix(2)'. The raw wikitext splits this into six DropsLine rows at a uniform 7.5/95.11 each, which the corpus-wide bundle detector cannot auto-confirm (its phrase list matches 'dropped together'/'bundled with' footnotes, not this block's 'chance of getting a supply drop. It will include:' prose, and its BundleGroup model only expresses one flat co-occurring set, not three nested pairs -- the same expressivity gap Mad Angel's compound shape hit). Replaces the six Supplies rows (weights 7.5x6=45) in the merged Supplies/Weapons and armour/Runes/Other weighted pool with one tableRef row at weight 15 pointing at data/tables/yama-supplies-bundle.json (three oneOf picks, each unconditionally granted), matching Mad Angel's precedent exactly (data/overrides/mad-angel.json). New pool total: 16 (Weapons and armour) + 14 (Runes) + 33 (Other) + 15 (Supplies bundle) = 78 against denominator 95.11 -- reconciles with the same legitimate implicit-nothing slack every other weighted table has, and matches the wikitext's own '<!-- main table has 78 slots -->' comment exactly. This also required a separate, general parser fix (not part of this override): the wiki's Supplies/Runes/Other rows mix `Rarity=`/`Quantity=` (capitalised) with `rarity=`/`quantity=` (lowercase) in the same block, which parseTemplateCall now reads case-insensitively (wikitext-drops.ts) -- confirmed correct because the wiki's own rendered dropsline bucket still lists all 18 affected items, so whatever resolves DropsLine server-side treats the casing as equivalent.",
   "tables": [
     {
       "id": "yama:0:unique",
@@ -1043,54 +1036,5 @@
       ],
       "notes": "Contract"
     }
-  ],
-  "contextDefaults": {
-    "variant": "Junk"
-  },
-  "status": "manual_override",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "1 tableRef node(s) resolved against 24 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 49 wiki drop row(s) reachable in the document"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

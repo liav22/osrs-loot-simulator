@@ -6,6 +6,7 @@
   "wikiRevId": 15275657,
   "variants": [
     "Regular",
+    "{{{dropversion|}}}",
     "Chasm of Fire",
     "Wilderness Slayer Cave"
   ],
@@ -847,7 +848,39 @@
       "notes": "Tertiary"
     },
     {
-      "id": "black-demon:5:chasm-of-fire-tertiary",
+      "id": "black-demon:5:wilderness-slayer-tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23490,
+            "itemKey": "larran-s-key",
+            "name": "Larran's key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 82
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
+        }
+      ],
+      "notes": "Wilderness Slayer tertiary"
+    },
+    {
+      "id": "black-demon:6:chasm-of-fire-tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -971,7 +1004,7 @@
       "notes": "Chasm of Fire tertiary"
     },
     {
-      "id": "black-demon:6:100",
+      "id": "black-demon:7:100",
       "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
@@ -1001,7 +1034,7 @@
       "notes": "100%"
     },
     {
-      "id": "black-demon:7:weapons-and-armour-runes",
+      "id": "black-demon:8:weapons-and-armour-runes",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 74,
@@ -1297,7 +1330,7 @@
       "notes": "Weapons and armour / Runes"
     },
     {
-      "id": "black-demon:8:herbs",
+      "id": "black-demon:9:herbs",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -1560,7 +1593,7 @@
       "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 23/74 (ratio 0.9990), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 23/74 — exact, not an approximation.)"
     },
     {
-      "id": "black-demon:9:materials-coins",
+      "id": "black-demon:10:materials-coins",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 74,
@@ -1638,7 +1671,7 @@
       "notes": "Materials / Coins"
     },
     {
-      "id": "black-demon:10:tertiary",
+      "id": "black-demon:11:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -1714,6 +1747,38 @@
         }
       ],
       "notes": "Tertiary"
+    },
+    {
+      "id": "black-demon:12:wilderness-slayer-tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23490,
+            "itemKey": "larran-s-key",
+            "name": "Larran's key",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 68
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "{{{dropversion|}}}"
+            }
+          ]
+        }
+      ],
+      "notes": "Wilderness Slayer tertiary"
     },
     {
       "id": "black-demon:rdt-access:0",
@@ -1834,7 +1899,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "7 tableRef node(s) resolved against 22 shared table(s)"
+        "detail": "7 tableRef node(s) resolved against 24 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -1862,7 +1927,7 @@
       {
         "check": "drops_covered",
         "ok": false,
-        "detail": "29 of 97 wiki drop row(s) missing from the document: Ancient shard, Annakarl teleport (tablet), Blighted ancient ice sack, Blighted anglerfish, Blighted entangle sack, Blighted karambwan, Blighted manta ray, Blighted super restore(4) (+21 more)"
+        "detail": "28 of 97 wiki drop row(s) missing from the document: Ancient shard, Annakarl teleport (tablet), Blighted ancient ice sack, Blighted anglerfish, Blighted entangle sack, Blighted karambwan, Blighted manta ray, Blighted super restore(4) (+20 more)"
       }
     ]
   },

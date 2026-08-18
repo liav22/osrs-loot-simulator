@@ -482,7 +482,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -493,7 +493,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "6 tableRef node(s) resolved against 22 shared table(s)"
+        "detail": "6 tableRef node(s) resolved against 24 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -520,8 +520,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "3 of 50 wiki drop row(s) missing from the document: Frozen key piece (zamorak), Pet k'ril tsutsaroth, Staff of the dead"
+        "ok": true,
+        "detail": "all 50 wiki drop row(s) reachable in the document"
       }
     ]
   },

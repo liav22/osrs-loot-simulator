@@ -5,11 +5,153 @@
   "wikiPage": "Maggot King",
   "wikiRevId": 15292096,
   "variants": [
-    "normal"
+    "Take-eggs"
   ],
   "tables": [
     {
-      "id": "maggot-king:0:tertiary",
+      "id": "maggot-king:0:untitled",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 1500,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "maggot-egg-base",
+            "name": "Maggot egg (base)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 300
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Take-eggs"
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "maggot-egg-sickly",
+            "name": "Maggot egg (sickly)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 150
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Take-eggs"
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "maggot-egg-warm",
+            "name": "Maggot egg (warm)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 33
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Take-eggs"
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "maggot-egg-pulsating",
+            "name": "Maggot egg (pulsating)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Take-eggs"
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "maggot-egg-wriggling",
+            "name": "Maggot egg (wriggling)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Take-eggs"
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "maggot-egg-writhing",
+            "name": "Maggot egg (writhing)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          },
+          "conditions": [
+            {
+              "kind": "variant",
+              "name": "Take-eggs"
+            }
+          ]
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "maggot-king:1:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -35,7 +177,7 @@
       "notes": "Tertiary"
     },
     {
-      "id": "maggot-king:1:pre-roll",
+      "id": "maggot-king:2:pre-roll",
       "mode": "preroll",
       "rolls": 1,
       "withoutReplacement": false,
@@ -78,7 +220,7 @@
       "notes": "Pre-roll"
     },
     {
-      "id": "maggot-king:2:supplies-resources-tarnished-items",
+      "id": "maggot-king:3:supplies-resources-tarnished-items",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 159,
@@ -452,7 +594,7 @@
       "notes": "Supplies / Resources / Tarnished items"
     },
     {
-      "id": "maggot-king:3:tertiary",
+      "id": "maggot-king:4:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -518,7 +660,9 @@
       "notes": "Tertiary"
     }
   ],
-  "contextDefaults": {},
+  "contextDefaults": {
+    "variant": "Take-eggs"
+  },
   "status": "needs_review",
   "validation": {
     "ok": false,
@@ -530,7 +674,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "1 tableRef node(s) resolved against 22 shared table(s)"
+        "detail": "1 tableRef node(s) resolved against 24 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -557,8 +701,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "6 of 34 wiki drop row(s) missing from the document: Maggot egg (base), Maggot egg (pulsating), Maggot egg (sickly), Maggot egg (warm), Maggot egg (wriggling), Maggot egg (writhing)"
+        "ok": true,
+        "detail": "all 34 wiki drop row(s) reachable in the document"
       }
     ]
   },

@@ -75,7 +75,7 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
+  "status": "verified",
   "validation": {
     "ok": false,
     "checks": [
@@ -105,8 +105,7 @@
       },
       {
         "check": "items_known",
-        "ok": false,
-        "detail": "1 item(s) failed to resolve"
+        "ok": true
       },
       {
         "check": "not_on_watchlist",

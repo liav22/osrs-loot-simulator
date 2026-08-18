@@ -855,6 +855,16 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
     let resolved = block.lines.map((line) => ({ line, resolution: parseRarity(line.rarity) }))
 
     if (resolved.some(({ resolution }) => resolution.rate === null)) {
+      const unparseable = resolved.filter((r) => r.resolution.rate === null)
+      const parseable = resolved.filter((r) => r.resolution.rate !== null)
+      const ambiguous = `unparseable rarity in "${block.heading}": ${unparseable
+        .map((r) =>
+          r.resolution.unknownTemplate !== undefined
+            ? `${r.line.name}: unrecognised rarity template '${r.resolution.unknownTemplate}' (raw '${r.line.rarity}')`
+            : `${r.line.name}='${r.line.rarity}'`
+        )
+        .join(', ')}`
+
       flushWeighted()
       groups.push({
         mode: 'weighted',
@@ -862,16 +872,34 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
         section: block.section,
         denominator: null,
         entries: [],
-        ambiguous: `unparseable rarity in "${block.heading}": ${resolved
-          .filter((r) => r.resolution.rate === null)
-          .map((r) =>
-            r.resolution.unknownTemplate !== undefined
-              ? `${r.line.name}: unrecognised rarity template '${r.resolution.unknownTemplate}' (raw '${r.line.rarity}')`
-              : `${r.line.name}='${r.line.rarity}'`
-          )
-          .join(', ')}`,
+        ambiguous,
       })
-      continue
+
+      // A block mixing unparseable rows (the wiki states a qualitative word —
+      // `Common`/`Uncommon`/`Once` — instead of a fraction) with parseable
+      // ones used to lose the parseable rows too: the whole block bailed out
+      // above with `entries: []`, discarding real, well-formed rows as
+      // collateral damage. Confirmed on three real sources: Kalphite Queen's
+      // `Tertiary` heading lost 9 clean fractions (`Dragon 2h sword` 1/256,
+      // `Jar of sand` 1/2000, ...) because ONE sibling row (`Kq head
+      // (tattered)`, `rarity=Once` — a genuine one-time, 256th-kill-only
+      // drop with no per-kill rate at all) couldn't parse; Maggot King's
+      // `Drops (take-eggs)` heading lost all six `Maggot egg` variants
+      // alongside two `Common`/`Uncommon` supply rows. The marker group above
+      // still reports the true loss (and still blocks `verified` — this is
+      // information the document is missing, not a cosmetic gap) and stays
+      // exactly as blunt as before when EVERY row in the block is
+      // unparseable (Nex's `Runes and ammunition`/`Resources`/`Consumables`
+      // headings, entirely `Common`/`Uncommon` with no numeric rate anywhere
+      // on the page or in any linked Calculator/Module — genuinely
+      // unrecoverable, not a parser gap). When some rows DO parse, they
+      // fall through into the ordinary pipeline below exactly as if the
+      // unparseable ones never existed — every downstream branch (bundle
+      // detection, heading-text mode inference, homogenise/merge) already
+      // treats `resolved` as the complete truth, so filtering it here is the
+      // whole fix.
+      if (parseable.length === 0) continue
+      resolved = parseable
     }
 
     // Confirmed co-drop bundles collapse BEFORE any mode inference runs, for

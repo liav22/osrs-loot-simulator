@@ -271,6 +271,22 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('per-item drop rates, composed', () => {
         "cox:tertiary (correctly — it isn't shadowed, its own RATE is conditioned). Pinned by " +
         'ancient-chest.test.ts.',
     ],
+    [
+      'black-knight-titan',
+      "Seeds table (Module:GeneralSeedDropLines reimplementation) uses each seed's RAW per-item " +
+        "probability, not the wiki's own floor()'d 1/N display figure — floor() rounds each of the " +
+        '44 seeds’ denominator down independently, so summing the DISPLAYED rates overshoots the ' +
+        "declared access rate (measured 0.29% here, up to 2% on individual large-share seeds), while " +
+        'the raw values sum to the access rate to float precision. Pinned by ' +
+        'general-seed-drop-lines.test.ts.',
+    ],
+    [
+      'obor',
+      "Same as black-knight-titan: Seeds table uses raw, not floor()'d, per-seed probabilities " +
+        '(measured overshoot summing the displayed figures: 0.74%, worse than Black Knight Titan’s ' +
+        "because Obor's own combat level lands the roundings differently). Pinned by " +
+        'general-seed-drop-lines.test.ts.',
+    ],
   ])
 
   it('every source reproduces the wiki’s stated per-item rate', async () => {

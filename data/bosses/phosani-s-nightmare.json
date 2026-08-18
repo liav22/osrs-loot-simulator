@@ -750,8 +750,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "1 of 39 wiki drop row(s) missing from the document: Little nightmare"
+        "ok": true,
+        "detail": "all 39 wiki drop row(s) reachable in the document"
       }
     ]
   },

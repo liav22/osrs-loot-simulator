@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs'
 import { readFile, readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { BossSchema, type Boss, type BossInput, type Table } from '@osrs-loot-simulator/loot-model'
+import { BossSchema, type Boss, type BossInput, type Node, type Table } from '@osrs-loot-simulator/loot-model'
 import {
   bucketItemNames,
   checkDropsCovered,
@@ -189,6 +189,15 @@ describe('checkDropsCoveredAgainst', () => {
     ).toBe(false)
   })
 
+  it('matches case-insensitively, since the bucket and the document sometimes disagree on capitalisation', () => {
+    // Real corpus cases: the bucket says `Pet chaos elemental`, the document
+    // says `Pet Chaos Elemental`; `Wine of zamorak` vs `Wine of Zamorak`.
+    // Same item, different display-text capitalisation, not a missing drop.
+    const result = checkDropsCoveredAgainst(['PRESENT'], document.tables, NO_TABLES)
+    expect(result.ok).toBe(true)
+    expect(result.missing).toEqual([])
+  })
+
   it('passes when there is no oracle, and says so out loud', () => {
     // The scope this check has. `refs_resolve` once reported "resolved against
     // 0 shared table(s)" as a clean pass and nobody noticed for months; the
@@ -196,6 +205,47 @@ describe('checkDropsCoveredAgainst', () => {
     const result = checkDropsCoveredAgainst(null, document.tables, NO_TABLES, 'No Snapshot')
     expect(result.ok).toBe(true)
     expect(result.detail).toContain('coverage not checked')
+  })
+})
+
+/**
+ * The guard for case-insensitive matching: it is only safe because no two
+ * DISTINCT items in the real corpus share a name under case-folding. Needs
+ * only `data/bosses/` and `data/tables/`, both committed, so it runs
+ * unconditionally — unlike the dropsline-bucket tests below.
+ */
+describe('case-insensitive matching does not collide distinct items', () => {
+  it('finds no two different item ids sharing a case-folded name', async () => {
+    const shared = await loadSharedTables()
+    const files = (await readdir(BOSSES_DIR)).filter((f) => f.endsWith('.json'))
+
+    // case-folded name -> itemId -> the exact-cased name(s) seen for it
+    const byFoldedName = new Map<string, Map<number | null, Set<string>>>()
+    const visit = (node: Node): void => {
+      if (node.kind === 'item') {
+        const folded = node.name.toLowerCase()
+        const byId = byFoldedName.get(folded) ?? new Map<number | null, Set<string>>()
+        byFoldedName.set(folded, byId)
+        const names = byId.get(node.itemId) ?? new Set<string>()
+        byId.set(node.itemId, names)
+        names.add(node.name)
+      } else if (node.kind === 'oneOf') {
+        for (const entry of node.entries) visit(entry.node)
+      }
+    }
+
+    for (const file of files) {
+      const document = BossSchema.parse(JSON.parse(await readFile(join(BOSSES_DIR, file), 'utf8')))
+      for (const table of document.tables) for (const entry of table.entries) visit(entry.node)
+    }
+    for (const table of shared.values()) for (const entry of table.entries) visit(entry.node)
+
+    const collisions = [...byFoldedName.entries()].filter(([, byId]) => byId.size > 1)
+    expect(
+      collisions,
+      'two distinct items share a name under case-folding — checkDropsCoveredAgainst must not ' +
+        'treat them as interchangeable; see the comment above its case-insensitive comparison'
+    ).toEqual([])
   })
 })
 

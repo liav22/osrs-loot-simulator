@@ -1965,12 +1965,737 @@
         }
       ],
       "notes": "Access into gem_drop_table (from {{GemDropTable}})"
+    },
+    {
+      "id": "obor:seeds",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5318,
+                  "itemKey": "potato-seed",
+                  "name": "Potato seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 4
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.02227213736647699
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5319,
+                  "itemKey": "onion-seed",
+                  "name": "Onion seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 4
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.016704103024857742
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5324,
+                  "itemKey": "cabbage-seed",
+                  "name": "Cabbage seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 4
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.011136068683238494
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5322,
+                  "itemKey": "tomato-seed",
+                  "name": "Tomato seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 3
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.005568034341619247
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5320,
+                  "itemKey": "sweetcorn-seed",
+                  "name": "Sweetcorn seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 3
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0027840171708096236
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5323,
+                  "itemKey": "strawberry-seed",
+                  "name": "Strawberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0013920085854048118
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5321,
+                  "itemKey": "watermelon-seed",
+                  "name": "Watermelon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0006657432364979535
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22879,
+                  "itemKey": "snape-grass-seed",
+                  "name": "Snape grass seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00048417689927123886
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5305,
+                  "itemKey": "barley-seed",
+                  "name": "Barley seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 4
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.006999622641509434
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5307,
+                  "itemKey": "hammerstone-seed",
+                  "name": "Hammerstone seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 3
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.006969056603773585
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5308,
+                  "itemKey": "asgarnian-seed",
+                  "name": "Asgarnian seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 3
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.005257358490566038
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5306,
+                  "itemKey": "jute-seed",
+                  "name": "Jute seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.005226792452830189
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5309,
+                  "itemKey": "yanillian-seed",
+                  "name": "Yanillian seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0034845283018867927
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5310,
+                  "itemKey": "krandorian-seed",
+                  "name": "Krandorian seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0017422641509433963
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5311,
+                  "itemKey": "wildblood-seed",
+                  "name": "Wildblood seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0008864150943396227
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5096,
+                  "itemKey": "marigold-seed",
+                  "name": "Marigold seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.005770062893081762
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5098,
+                  "itemKey": "nasturtium-seed",
+                  "name": "Nasturtium seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0038211320754716984
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5097,
+                  "itemKey": "rosemary-seed",
+                  "name": "Rosemary seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.002470691823899371
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5099,
+                  "itemKey": "woad-seed",
+                  "name": "Woad seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0018261635220125786
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5100,
+                  "itemKey": "limpwurt-seed",
+                  "name": "Limpwurt seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0014578616352201258
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5101,
+                  "itemKey": "redberry-seed",
+                  "name": "Redberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004880503144654089
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5102,
+                  "itemKey": "cadavaberry-seed",
+                  "name": "Cadavaberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003416352201257862
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5103,
+                  "itemKey": "dwellberry-seed",
+                  "name": "Dwellberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0024402515723270443
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5104,
+                  "itemKey": "jangerberry-seed",
+                  "name": "Jangerberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0009761006289308176
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5105,
+                  "itemKey": "whiteberry-seed",
+                  "name": "Whiteberry seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0003538364779874214
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5106,
+                  "itemKey": "poison-ivy-seed",
+                  "name": "Poison ivy seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0001342138364779874
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5291,
+                  "itemKey": "guam-seed",
+                  "name": "Guam seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0019320754716981132
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5292,
+                  "itemKey": "marrentill-seed",
+                  "name": "Marrentill seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0013162264150943395
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5293,
+                  "itemKey": "tarromin-seed",
+                  "name": "Tarromin seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0008996226415094339
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5294,
+                  "itemKey": "harralander-seed",
+                  "name": "Harralander seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.000609811320754717
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5295,
+                  "itemKey": "ranarr-seed",
+                  "name": "Ranarr seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0004166037735849057
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5296,
+                  "itemKey": "toadflax-seed",
+                  "name": "Toadflax seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0002837735849056604
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5297,
+                  "itemKey": "irit-seed",
+                  "name": "Irit seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0001932075471698113
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5298,
+                  "itemKey": "avantoe-seed",
+                  "name": "Avantoe seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00013283018867924526
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5299,
+                  "itemKey": "kwuarm-seed",
+                  "name": "Kwuarm seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00009056603773584905
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5300,
+                  "itemKey": "snapdragon-seed",
+                  "name": "Snapdragon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00006037735849056604
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5301,
+                  "itemKey": "cadantine-seed",
+                  "name": "Cadantine seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.000042264150943396224
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5302,
+                  "itemKey": "lantadyme-seed",
+                  "name": "Lantadyme seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00003018867924528302
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5303,
+                  "itemKey": "dwarf-weed-seed",
+                  "name": "Dwarf weed seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00001811320754716981
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5304,
+                  "itemKey": "torstol-seed",
+                  "name": "Torstol seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.000012075471698113207
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5282,
+                  "itemKey": "mushroom-spore",
+                  "name": "Mushroom spore",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.003716409376786735
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5281,
+                  "itemKey": "belladonna-seed",
+                  "name": "Belladonna seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.002229845626072041
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5280,
+                  "itemKey": "cactus-seed",
+                  "name": "Cactus seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0014865637507146942
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22873,
+                  "itemKey": "potato-cactus-seed",
+                  "name": "Potato cactus seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0007432818753573471
+                }
+              }
+            ]
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 18,
+            "den": 135
+          }
+        }
+      ],
+      "notes": "Seeds"
     }
   ],
   "contextDefaults": {
     "variant": "Members"
   },
-  "status": "needs_review",
+  "status": "manual_override",
   "validation": {
     "ok": false,
     "checks": [
@@ -1981,7 +2706,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "3 tableRef node(s) resolved against 22 shared table(s)"
+        "detail": "3 tableRef node(s) resolved against 24 shared table(s)"
       },
       {
         "check": "rates_valid",
@@ -2000,8 +2725,7 @@
       },
       {
         "check": "items_known",
-        "ok": false,
-        "detail": "2 item(s) failed to resolve"
+        "ok": true
       },
       {
         "check": "not_on_watchlist",
@@ -2009,12 +2733,12 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "44 of 92 wiki drop row(s) missing from the document: Asgarnian seed, Avantoe seed, Barley seed, Belladonna seed, Cabbage seed, Cactus seed, Cadantine seed, Cadavaberry seed (+36 more)"
+        "ok": true,
+        "detail": "all 92 wiki drop row(s) reachable in the document"
       }
     ]
   },
-  "source": "generated",
+  "source": "merged",
   "parserVersion": 1,
   "repeatable": true
 }

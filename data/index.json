@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T08:37:01.242Z",
+  "generatedAt": "2026-08-18T12:37:53.422Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -85,7 +85,7 @@
       "slug": "black-knight-titan",
       "name": "Black Knight Titan",
       "aliases": [],
-      "status": "needs_review",
+      "status": "manual_override",
       "image": "Black Knight Titan.png",
       "repeatable": false
     },
@@ -157,7 +157,7 @@
       "slug": "chaos-fanatic",
       "name": "Chaos Fanatic",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Chaos Fanatic.png",
       "repeatable": true
     },
@@ -181,7 +181,7 @@
       "slug": "chronozon",
       "name": "Chronozon",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Chronozon.png",
       "repeatable": false
     },
@@ -189,7 +189,7 @@
       "slug": "commander-zilyana",
       "name": "Commander Zilyana",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Commander Zilyana.png",
       "repeatable": true
     },
@@ -413,7 +413,7 @@
       "slug": "k-ril-tsutsaroth",
       "name": "K'ril Tsutsaroth",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "K'ril Tsutsaroth.png",
       "repeatable": true
     },
@@ -541,7 +541,7 @@
       "slug": "obor",
       "name": "Obor",
       "aliases": [],
-      "status": "needs_review",
+      "status": "manual_override",
       "image": "Obor.png",
       "repeatable": true
     },
@@ -600,7 +600,7 @@
       "slug": "salarin-the-twisted",
       "name": "Salarin the twisted",
       "aliases": [],
-      "status": "needs_review",
+      "status": "verified",
       "image": "Salarin the twisted.png",
       "repeatable": true
     },
@@ -776,7 +776,7 @@
       "slug": "yama",
       "name": "Yama",
       "aliases": [],
-      "status": "needs_review",
+      "status": "manual_override",
       "image": "Yama.png",
       "repeatable": true
     },
@@ -820,6 +820,7 @@
     "reward_pool_fish",
     "the-leviathan-supplies-bundle",
     "the-whisperer-supplies-bundle",
-    "vardorvis-supplies-bundle"
+    "vardorvis-supplies-bundle",
+    "yama-supplies-bundle"
   ]
 }

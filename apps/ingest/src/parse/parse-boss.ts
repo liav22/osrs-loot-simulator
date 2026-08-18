@@ -284,8 +284,16 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     // Larran's key at a flat 1/50 on five sources whose real, published rates
     // are 1/55 to 1/76, and `drops_covered` passed all five: coverage is by
     // item NAME, so a recovered row with a wrong rate looks exactly like a
-    // correct one. A wrong number is worse than a missing row, so this blocks.
-    expansion.unexpandable.length === 0 &&
+    // correct one. A wrong number is worse than a missing row, so this blocks
+    // — UNLESS an override supplies its own tables, in which case (same
+    // reasoning as the ambiguous-group/unconfirmed-bundle exemption just
+    // below) the unexpandable transclusion describes the GENERATED document's
+    // own shortfall, not the one being validated. Confirmed on Black Knight
+    // Titan/Obor: `{{GeneralSeedDropLines}}` is a pure `{{#invoke:}}` Lua call
+    // no wikitext expansion could ever reach, hand-modelled instead (see
+    // their own override `note`s) — without this exemption a correct,
+    // wiki-verified override could never lift the source off `needs_review`.
+    (overrideCarriesTables || expansion.unexpandable.length === 0) &&
     // An override supplying its own tables replaces exactly the structure the
     // parser was unsure about, so its ambiguous-group guesses (and an
     // unconfirmed bundle signal, which describes the GENERATED document, not

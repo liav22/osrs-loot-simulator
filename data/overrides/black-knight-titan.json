@@ -1,12 +1,6 @@
 {
   "slug": "black-knight-titan",
-  "name": "Black Knight Titan",
-  "aliases": [],
-  "wikiPage": "Black Knight Titan",
-  "wikiRevId": 15199191,
-  "variants": [
-    "normal"
-  ],
+  "note": "'Seeds' heading (revid 15199191) is {{GeneralSeedDropLines|18/128|<combat level>}}, whose Template:GeneralSeedDropLines page is a pure `{{#invoke:GeneralSeedDropLines|main}}` Lua call with no wikitext fallback -- confirmed by fetching the template's own snapshot (data/snapshots/wikitext/template-generalseeddroplines.json), which is just the bare invoke, unlike its wikitext-based siblings (TreeHerbSeedDropLines etc. use #vardefine/#expr, which expand-transclusions.ts CAN evaluate). Reimplemented Module:GeneralSeedDropLines's actual logic from its fetched Lua source (p.main/groupSeeds/makeRow, one legitimate one-off research fetch, same category as the GWDRDT/ToA/CoX/ToB Module: fetches) rather than guessing: the module keys a seed table by six combat-level brackets (485/728/850/947/995/99999, i.e. combat level x10), walks every bracket up to and including the one straddling this monster's own combat level, and for each contributing bracket multiplies the access rate by that bracket's own share of the combat-level range and by the seed's own within-bracket weight. Verified two ways before use: (1) both the resulting 44 item NAMES and, for several spot-checked items (Potato seed, Wildblood seed, Mushroom spore, Torstol seed), the module's own floor()'d 1/N display rarity match the wiki's own dropsline bucket EXACTLY; (2) algebraically, the per-bracket relative weights sum to that bracket's own denominator and the per-bracket combat-range shares sum to 1 across all contributing brackets, so the 44 RAW (pre-floor) per-seed probabilities sum EXACTLY to the declared access rate -- a true partition, matching the project's established 'transcluded sub-tables model as one oneOf at the access rate' decision (docs/DECISIONS.md). Modelled as one independent-mode table: a single entry at the 18/128 access rate, wrapping a 44-member oneOf whose entries carry each seed's RAW (unrounded) computed probability as its relative weight, NOT the wiki's own floor()'d 1/N display figure -- using the floored figures directly summed to the access rate within only ~0.3%-0.7% (worse for Obor than Black Knight Titan, since Obor's combat level lands its floor() roundings differently), exceeding marginal-rates.test.ts's 0.5% tolerance on first attempt; the raw pre-floor values reproduce the access rate to float precision, matching abyssal-sire's/dagannoth's own already-shipped seed/talisman oneOf shape (num/den weight, no floor).",
   "tables": [
     {
       "id": "black-knight-titan:0:100",
@@ -461,7 +455,7 @@
           }
         }
       ],
-      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 7/128 (ratio 1.0002), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 7/128 — exact, not an approximation.)"
+      "notes": "Herbs (confirmed independent: 11 entries expanded from one {{herbdroplines}} transclusion, whose rates sum to its stated access rate 7/128 (ratio 1.0002), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 7/128 \u2014 exact, not an approximation.)"
     },
     {
       "id": "black-knight-titan:3:coins-other",
@@ -1310,7 +1304,7 @@
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.00008437499999999999
+                  "weight": 8.437499999999999e-05
                 }
               },
               {
@@ -1326,7 +1320,7 @@
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.00005625
+                  "weight": 5.625e-05
                 }
               },
               {
@@ -1342,7 +1336,7 @@
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.000039375
+                  "weight": 3.9375e-05
                 }
               },
               {
@@ -1358,7 +1352,7 @@
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.000028125
+                  "weight": 2.8125e-05
                 }
               },
               {
@@ -1374,7 +1368,7 @@
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.000016875
+                  "weight": 1.6875e-05
                 }
               },
               {
@@ -1390,7 +1384,7 @@
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.000011249999999999999
+                  "weight": 1.1249999999999999e-05
                 }
               },
               {
@@ -1468,52 +1462,5 @@
       ],
       "notes": "Seeds"
     }
-  ],
-  "contextDefaults": {},
-  "status": "manual_override",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "2 tableRef node(s) resolved against 24 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 90 wiki drop row(s) reachable in the document"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": false
+  ]
 }

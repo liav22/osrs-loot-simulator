@@ -380,6 +380,47 @@ describe('buildTableGroups', () => {
     expect(groups[0]?.entries).toHaveLength(0)
   })
 
+  it('salvages the parseable rows in a block instead of discarding all of them for one unparseable sibling', () => {
+    // Kalphite Queen's real shape: `Tertiary` has 9 clean fractions plus one
+    // `rarity=Once` row (a genuine one-time, kill-count-gated drop with no
+    // per-kill rate). The 9 must still reach the document — losing them as
+    // collateral damage was the actual bug (docs/DECISIONS.md).
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Kq head (tattered)', rarity: 'Once', heading: 'Tertiary' }),
+        line({ name: 'Ensouled kalphite head', rarity: '1/20', heading: 'Tertiary' }),
+        line({ name: 'Jar of sand', rarity: '1/2000', heading: 'Tertiary' }),
+      ])
+    )
+    const ambiguousGroup = groups.find((g) => g.ambiguous !== null)
+    expect(ambiguousGroup?.ambiguous).toMatch(/unparseable rarity/)
+    expect(ambiguousGroup?.ambiguous).toMatch(/Kq head \(tattered\)='Once'/)
+    expect(ambiguousGroup?.entries).toHaveLength(0)
+
+    const names = groups.flatMap((g) => g.entries.map((e) => e.name))
+    expect(names).toContain('Ensouled kalphite head')
+    expect(names).toContain('Jar of sand')
+    expect(names).not.toContain('Kq head (tattered)')
+  })
+
+  it('drops the whole block, unchanged, when every row is unparseable (no parseable sibling to salvage)', () => {
+    // Nex's `Runes and ammunition`/`Resources`/`Consumables` headings are
+    // entirely `Common`/`Uncommon` with no numeric rate stated anywhere —
+    // genuinely nothing to salvage, and this must still behave exactly as
+    // before (one ambiguous, zero-entry group).
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Air rune', rarity: 'Uncommon', heading: 'Runes and ammunition' }),
+        line({ name: 'Blood rune', rarity: 'Common', heading: 'Runes and ammunition' }),
+      ])
+    )
+    expect(groups).toHaveLength(1)
+    expect(groups[0]?.ambiguous).toMatch(/unparseable rarity/)
+    expect(groups[0]?.ambiguous).toMatch(/Air rune='Uncommon'/)
+    expect(groups[0]?.ambiguous).toMatch(/Blood rune='Common'/)
+    expect(groups[0]?.entries).toHaveLength(0)
+  })
+
   it('flags an unregistered rarity template by name instead of silently guessing', () => {
     const groups = buildTableGroups(
       groupByHeading([

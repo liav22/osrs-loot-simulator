@@ -139,7 +139,87 @@
       "notes": "Uniques"
     },
     {
-      "id": "nex:2:tertiary",
+      "id": "nex:2:other",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26390,
+            "itemKey": "blood-essence",
+            "name": "Blood essence",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 82
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1289,
+            "itemKey": "rune-sword",
+            "name": "Rune sword",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 209
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26231,
+            "itemKey": "nihil-shard",
+            "name": "Nihil shard",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 85
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 82
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26231,
+            "itemKey": "nihil-shard",
+            "name": "Nihil shard",
+            "qty": {
+              "kind": "range",
+              "min": 85,
+              "max": 95
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 8,
+            "den": 209
+          }
+        }
+      ],
+      "notes": "Other"
+    },
+    {
+      "id": "nex:3:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -222,7 +302,7 @@
       {
         "check": "drops_covered",
         "ok": false,
-        "detail": "24 of 33 wiki drop row(s) missing from the document: Air orb, Air rune, Blood essence, Blood rune, Coal, Coins, Death rune, Dragon bolts (unf) (+16 more)"
+        "detail": "21 of 33 wiki drop row(s) missing from the document: Air orb, Air rune, Blood rune, Coal, Coins, Death rune, Dragon bolts (unf), Ecumenical key shard (+13 more)"
       }
     ]
   },

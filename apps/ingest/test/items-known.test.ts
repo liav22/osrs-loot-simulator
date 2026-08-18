@@ -80,6 +80,29 @@ describe('checkItemsKnown', () => {
     expect(result.failures[0]?.reason).toMatch(/resolves 'bull-bones' to 33115/)
   })
 
+  it('passes the "nothing" sentinel (a literal wiki "Nothing" drop row) with no index/allowlist entry needed', () => {
+    // Black Knight Titan, Obor, Salarin the twisted all write a literal
+    // "Nothing" drop row — not an unresolved real item, so it must not need
+    // an item-index entry or an allowlist exception the way a genuine
+    // unresolved item would. Mirrors drops-covered.ts's own NOT_ITEM_NODES
+    // carve-out for the same sentinel.
+    const result = checkItemsKnown(
+      [...passing, { itemKey: 'nothing', itemId: null }],
+      index,
+      allowlist
+    )
+    expect(result.ok).toBe(true)
+    expect(result.failures).toEqual([])
+  })
+
+  it('does NOT exempt an itemKey of "nothing" carrying a non-null itemId', () => {
+    // The exemption is narrowly for the sentinel shape (itemId: null); a
+    // node that happens to be keyed 'nothing' but carries a real id is not
+    // the sentinel and must still resolve normally.
+    const result = checkItemsKnown([{ itemKey: 'nothing', itemId: 1 }], index, allowlist)
+    expect(result.ok).toBe(false)
+  })
+
   it('never treats a real itemId of 0 as unresolved', () => {
     const zeroIndex: ItemIndex = {
       ...index,

@@ -162,13 +162,22 @@ export function checkDropsCoveredAgainst(
     }
   }
 
+  // Case-insensitive on purpose: the bucket and the document don't always
+  // agree on capitalisation of the same proper noun (`Pet chaos elemental`
+  // vs the document's `Pet Chaos Elemental`, `Wine of zamorak` vs `Wine of
+  // Zamorak`) — a wiki display-text quirk, not a different item. Safe only
+  // because no two DISTINCT items in the corpus collide case-insensitively
+  // under the same name (pinned by `drops-covered.test.ts`'s case-collision
+  // guard) — if that ever stops being true, this must go back to exact
+  // matching for the colliding pair rather than silently merging them.
   const reachable = reachableItemNames(tables, sharedTables)
+  const reachableLower = new Set([...reachable].map((name) => name.toLowerCase()))
   const distinct = new Set(bucketNames)
   const missing = [...distinct]
     .filter(
       (name) =>
         !NOT_ITEM_NODES.has(name) &&
-        !coverageCandidates(name).some((candidate) => reachable.has(candidate))
+        !coverageCandidates(name).some((candidate) => reachableLower.has(candidate.toLowerCase()))
     )
     .sort()
 

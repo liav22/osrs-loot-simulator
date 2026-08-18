@@ -22,40 +22,77 @@ This section is the current state distilled, so a fresh session doesn't have
 to reconstruct it by reading the whole journal. Verify against `data/index.json`
 before trusting a number here — this section is written by hand and can drift.
 
-**Corpus: 67 verified, 30 needs_review, 2 manual_override, 3 parse_failed (of
+**Corpus: 72 verified, 22 needs_review, 5 manual_override, 3 parse_failed (of
 102 loot sources with `include: true`, 99 documents).** Landmine #3 (GWDRDT)
 is CLOSED — `{{GWDRDT}}` resolves via two new `data/tables/gwd_*.json`
 records, do not re-open it as a gap. Full detail: `docs/DECISIONS.md`'s
 "GWDRDT built" entry, section 1's top entry, and landmine #3 in section 6.
 
-**Mad Angel's compound shape is now BUILT — do not re-derive it from
-scratch, and do not re-open it as unbuilt.** Its `Supply batch` heading
-compounded an unconditional two-item bundle (Prayer potion(2), Super combat
-potion(1)) with a mutually-exclusive Shark/Yellowfin choice, all behind one
-16/150 access roll. Shipped as a hand-authored `data/overrides/mad-angel.json`
-(not a detector generalization, per the confirmed proposal): an `always`-mode
-`data/tables/mad-angel-supply-batch-bundle.json` whose entries are the two
-unconditional item grants PLUS one entry whose `node` is a `oneOf` (Shark,
-Yellowfin) — itself also `rate: {kind:'always'}`. The override splices a
-single `tableRef` row (weight 16, matching the compound event's own shared
-rate) into the SAME `mad-angel:2:...` weighted pool the four original rows
-lived in, matching every other bundle instance's own precedent
-(`duke-sucellus`/`maggot-king`/`k-ril-tsutsaroth`), not the separate
-`independent`-mode shape an earlier draft of the proposal described. Zero
-schema change: `always`-mode entries use the general `EntrySchema`
-(`node: NodeSchema`, which allows `oneOf`), not the narrower `LeafEntrySchema`
-a `oneOf`'s OWN entries are restricted to. `weights_sum` now passes (148
-against the stated 150, matching the "closely" — not exactly — matched
-overflow HANDOFF already flagged). **Still `needs_review`, but for a NEW,
-separate, previously-invisible reason the fix exposed**: `drops_covered`
-now fails on `Clue scroll (hard)`, a row the wiki's `dropsline` bucket still
-carries from BEFORE a 12 August 2026 patch that swapped it for
-`Clue scroll (medium)` — confirmed by reading the already-snapshotted
-wikitext's own `==Changes==` log, not a parser bug and not fixable without
-the wiki's own bucket catching up to its own page. A third instance of the
-"wiki's own data doesn't reconcile with itself" class, alongside chaos-
-fanatic's/phosani-s-nightmare's weight-drift. Full design and the residual:
-`docs/DECISIONS.md`'s "Mad Angel's compound shape" entry and its "built" follow-up.
+**`checkDropsCoveredAgainst`'s case-sensitivity bug — the prior audit's own
+deferred fix — is now BUILT, do not re-derive it.** Comparison is
+case-insensitive now (guarded by a corpus-wide "no two distinct items collide
+case-folded" test — zero found), which alone moved `commander-zilyana`,
+`k-ril-tsutsaroth`, `chaos-fanatic`, `alchemical-hydra` to `verified`. Full
+detail, plus everything below, in `docs/DECISIONS.md`'s "`checkDropsCoveredAgainst`
+case fix, built" entry — it is long and covers six sources' worth of follow-on
+work, not just the case fix.
+
+**Mad Angel's compound shape is BUILT** (an earlier session; unchanged this
+session) — `data/overrides/mad-angel.json`, an `always`-mode
+`data/tables/mad-angel-supply-batch-bundle.json` compounding two unconditional
+item grants with a `oneOf` (Shark/Yellowfin), spliced back into the shared
+weighted pool as one `tableRef` row. **Still `needs_review`**: `drops_covered`
+fails on `Clue scroll (hard)`, a wiki-bucket-vs-current-wikitext disagreement
+(a real patch swapped it for `Clue scroll (medium)`, the bucket hasn't caught
+up), not fixable from this end. Do not re-open as unbuilt. Full design:
+`docs/DECISIONS.md`'s "Mad Angel's compound shape" entries.
+
+**Yama, Black Knight Titan, Obor now reach `manual_override`.** Yama's
+`Supplies` heading turned out to be the SAME compound-bundle shape as Mad
+Angel (three independent binary choices behind one access roll), built the
+same way (`data/overrides/yama.json` + `data/tables/yama-supplies-bundle.json`).
+Black Knight Titan/Obor's `{{GeneralSeedDropLines}}` — a pure Lua
+`{{#invoke:}}` template, no wikitext fallback, the corpus's one genuine
+Lua-only gap — is reimplemented from the fetched Module source
+(`data/overrides/{black-knight-titan,obor}.json`), pinned against the wiki's
+own 44-seed dropsline bucket by
+`apps/ingest/test/general-seed-drop-lines.test.ts`. **Do not re-derive
+either from scratch** — see `docs/DECISIONS.md`'s entries for both, including
+a real precision decision (raw, not `floor()`'d, per-seed weights) worth
+reading before touching the seed tables again.
+
+**`buildTableGroups` no longer discards an entire heading block for one
+unparseable row** (`build-tables.ts`) — a general parser fix, not per-boss,
+found while investigating `nex`/`kalphite-queen`/`maggot-king`'s
+`drops_covered` gaps per instruction. The wiki sometimes states a rarity as a
+qualitative word (`Common`/`Uncommon`/`Once`) instead of a fraction; the
+parser correctly refuses to guess at it, but used to take every well-formed
+SIBLING row in the same block down too. Now it salvages the parseable rows
+and keeps reporting the loss (still blocks `verified`, correctly — this is
+real missing information). `kalphite-queen` 10 missing -> 1 (the one
+survivor, `Kq head (tattered)`, is a genuine one-time 256th-kill drop with no
+per-kill rate — unrepresentable, not a bug). `maggot-king` 6 missing -> 0
+(surfaced a NEW `items_known` gap on the six recovered `Maggot egg (...)`
+variants, closed via the multi-id allowlist — see below). `nex` 24 missing ->
+21 (3 of its 4 affected headings are ENTIRELY word-rarity with no numeric
+backing anywhere on the page or in any linked Calculator/Module — checked,
+genuinely unrecoverable, same class as Zalcano's own unstated curves; only
+`Other`'s partial word/fraction mix had anything to salvage). None of the
+three reach `verified` — don't read this as "closed," read it as "correctly,
+narrowly flagged now instead of silently wrong."
+
+**`items_known`'s literal-`Nothing` sentinel is exempted, generally.**
+Closes `salarin-the-twisted` (`verified`) and part of `black-knight-titan`/
+`obor`. `chronozon`'s own item-index gap (`Crest part (Johnathon)` — a
+name-matching gap against the indexed `Crest part`, not a real multi-id
+collision) is recorded on the allowlist and reaches `verified` too.
+
+**`corpus-reproducibility.test.ts`'s GE-price flake is fixed** — it no longer
+compares `ev_matches`'s live-price-derived `detail`/`gpPerKill`/`wikiValue`
+fields byte-for-byte (advisory, never part of the `verified` gate, and the
+one thing in a committed document that's expected to drift day to day).
+Confirmed not to weaken the guard for anything else — every other field, on
+every other source, is still compared byte-for-byte.
 
 **Permanently flagged — do not spend time on these, they are not bugs
 waiting to be found:**
@@ -66,10 +103,13 @@ waiting to be found:**
 | `duke-sucellus` | The frozen-tablet curve is never stated. (Its `data/mechanics-watchlist.json` entry also names a real, currently-unbuilt sequential roll-chain mechanic and a perfect-kill bonus — those are NOT permanently unknowable, just not built; don't conflate the two when deciding whether this source is "done forever" or "has real remaining work.") |
 | `reward-pool` | Shipped and correct PER REWARD PERMIT, the page's own unit — but the per-encounter rule (how permits map to encounters) is never stated. |
 | `reward-cart` | Blocked, deliberately. Its Logs rows are all `rarity=Varies` with the Woodcutting-level rates never stated, and the pyromancer outfit rule ("the piece players have the least of") is a RELATIVE comparison across four counts `ownershipGate` cannot express. |
-| `chaos-fanatic`, `phosani-s-nightmare` | The wiki's own published per-row weights don't sum to their own stated denominator (129 vs a `/128` every row cites; 101 vs `/100`) — checked by hand against the raw wikitext, not a parser bug, not explained by the bundle defect. Plausible ordinary wiki-editing drift; would need re-derivation from drop-log data to ever close. **`chaos-fanatic` also has a SEPARATE, real, unaddressed `drops_covered` gap (2 items: Pet chaos elemental, Wine of zamorak) — that part is NOT permanently flagged, don't lump it in.** |
+| `chaos-fanatic`, `phosani-s-nightmare` | The wiki's own published per-row weights don't sum to their own stated denominator (129 vs a `/128` every row cites; 101 vs `/100`) — checked by hand against the raw wikitext, not a parser bug, not explained by the bundle defect. Plausible ordinary wiki-editing drift; would need re-derivation from drop-log data to ever close. `chaos-fanatic`'s own former `drops_covered` gap (Pet chaos elemental, Wine of zamorak) turned out to be pure casing, not a second real gap — closed by the case fix above; this row is ALL that's left. |
+| `mad-angel` | `Clue scroll (hard)` — the wiki's `dropsline` bucket lags a real patch that swapped it for `Clue scroll (medium)`; not fixable from this end. |
+| `kalphite-queen` | `Kq head (tattered)` — a genuine one-time, 256th-kill-guaranteed drop; not a per-kill rate at all. |
 | `revenant-maledictus` (`parse_failed`, not `needs_review`) | No `{{DropsLine}}` calls anywhere on the page. Its whole mechanic lives under a prose-only `===Drop mechanics===` heading (the same shape that structurally excludes Barrows'/Salarin's own prose headings from the drops-section matcher) describing "two rolls on the revenant dragon's own drop table" plus a top-damage bonus and blighted supplies for everyone else — there is no `{{Template}}` call on the page this project's pipeline could expand, unlike GWDRDT, which turned out to have one. |
 
-Full reasoning for the first five: section 3's "The genuinely unknowable"
+Full reasoning for `zalcano`/`duke-sucellus`/`reward-pool`/`reward-cart`/
+`chaos-fanatic`/`phosani-s-nightmare`: section 3's "The genuinely unknowable"
 subsection, just below. **Also functionally stuck,
 though not literally on the watchlist**: the "Uniques"/"Mutagens" heading
 question (`phantom-muspah`, `sarachnis`, `shellbane-gryphon`, `the-nightmare`,
@@ -78,32 +118,104 @@ the project and the answer has been "no available signal" every time,
 including via a three-signal resolution pipeline. Don't re-open it without a
 genuinely new signal — see section 5, "What NOT to redo."
 
-**So a fresh session doesn't read "30 needs_review" as "30 units of work":**
-of the 30, **5 will never move** (`duke-sucellus`, `zalcano`, `reward-pool`,
-`reward-cart`, `phosani-s-nightmare` — the permanently-flagged table above,
-minus `chaos-fanatic`, which has real work alongside its own permanent part,
-see below, and minus `revenant-maledictus`, which is in the separate
-`parse_failed` bucket, not this count) **+ 4 are the raids, watchlisted
-DELIBERATELY** (each has one named, deliberately-unmodelled remnant — a
-decided state, not a bug; see "The four raids" below) **+ 5 are the
-Uniques/Mutagens dead end** = **14 of 30 are not really pending work**. The
-other **16** are real, examinable gaps: a small `drops_covered` residual on
-`commander-zilyana`/`k-ril-tsutsaroth` (unrelated to GWDRDT, already
-resolved) and on `chaos-fanatic` (2 items — separate from its own
-permanently-flagged weight-drift, which will still never fully reconcile
-even once this part is fixed); `mad-angel` (proposal confirmed above, not
-yet built); `black-knight-titan`/`salarin-the-twisted` (`items_known`);
-`alchemical-hydra`/`black-demon`/`chaos-elemental`/`kalphite-queen`/`nex`/
-`obor`/`yama`/`maggot-king` (coverage gaps, unexamined per-source);
-`chronozon` (`items_known`, tier-E item-index gap); `vorkath` (a correctly-
-refused seed partition, its own bespoke residual). See section 3's full table
-for the per-source detail on each.
+**So a fresh session doesn't read "22 needs_review" as "22 units of work":**
+of the 22, **7 will never move** (`duke-sucellus`, `zalcano`, `reward-pool`,
+`reward-cart`, `phosani-s-nightmare`, `mad-angel`, `kalphite-queen` — the
+permanently-flagged table above, minus `chaos-fanatic` which is now
+essentially closed too, see below, and minus `revenant-maledictus`, which is
+in the separate `parse_failed` bucket, not this count) **+ 4 are the raids,
+watchlisted DELIBERATELY** (each has one named, deliberately-unmodelled
+remnant — a decided state, not a bug; see "The four raids" below) **+ 5 are
+the Uniques/Mutagens dead end** = **16 of 22 are not really pending work**.
+The other **6** are real, examinable gaps: `chaos-fanatic` (its own
+permanently-flagged weight-drift is the only thing left, `drops_covered` is
+now clean); `chronozon` — wait, this one closed too, see above (kept as a
+reminder to re-verify this list against `data/index.json` rather than
+trust it blindly, per this section's own opening line); `black-demon`
+(29 missing, thematically all Wilderness-teleport/blighted-supplies items,
+unexamined); `chaos-elemental` (its OWN `drops_covered` gap turned out NOT
+to be the casing bug the four other sources shared — a real, still
+uninvestigated gap under a `heading` ambiguity note); `nex` (21 missing,
+mostly permanently unrecoverable — see above); `vorkath` (a correctly-
+refused seed partition, its own bespoke residual); the "Uniques"/"Herbs"/
+"Seeds"/etc. heading-order ambiguity guesses scattered across
+`alchemical-hydra`/`the-nightmare`/`sarachnis`/`shellbane-gryphon`/`zulrah`/
+`phantom-muspah` (the Uniques/Mutagens dead end, listed once above, not
+re-listed per source). See section 3's full table for the per-source detail
+on each — it predates this session's fixes and should be recomputed before
+trusting the exact per-cause counts, the same caveat every prior session
+left it with.
 
 ---
 
 ## 1. Current state
 
-**Changed this session (the most recent one — landmine #3 (GWDRDT) closed,
+**Changed this session (the most recent one — the case-sensitivity fix the
+prior audit deferred, six sources' worth of follow-on fixes it exposed, and
+a general parser fix for `nex`/`kalphite-queen`/`maggot-king`):**
+
+- **`checkDropsCoveredAgainst` is case-insensitive now**, exactly the fix the
+  prior audit diagnosed and deliberately left for its own session (see this
+  file's superseded "casing bug" entry, further down). Guarded by a new
+  corpus-wide test proving no two DISTINCT items collide case-folded (zero
+  found). Moved `commander-zilyana`, `k-ril-tsutsaroth`, `chaos-fanatic`,
+  `alchemical-hydra` straight to `verified`, exactly as the audit predicted
+  for the first three; `chaos-elemental` did NOT move (its own gap turned
+  out to be a real, separate, still-open issue, not casing).
+- **Yama's `Supplies`/`Runes`/`Other` headings mixed `Rarity=`/`Quantity=`
+  (capitalised) with lowercase params** — `parseTemplateCall`
+  (`wikitext-drops.ts`) now lower-cases named param keys generally, not just
+  for Yama. This exposed a THIRD Yama defect (a Mad-Angel-shaped compound
+  bundle on `Supplies`, three independent binary choices behind one access
+  roll), fixed the same way Mad Angel was: `data/overrides/yama.json` +
+  `data/tables/yama-supplies-bundle.json`. Yama reaches `manual_override`.
+  (Yama's EARLIER `Contract`-heading overflow, 1801/100, was already fixed in
+  a prior session — `weights_sum` confirms it; don't re-diagnose it.)
+- **`Module:GeneralSeedDropLines` (Black Knight Titan's/Obor's `Seeds`
+  heading) is reimplemented from its fetched Lua source** — the corpus's one
+  genuine Lua-only (`{{#invoke:}}`) gap, confirmed the only two sources using
+  it. Verified against the wiki's own 44-item dropsline bucket exactly (item
+  names AND several spot-checked display rarities), pinned by
+  `general-seed-drop-lines.test.ts`. Modelled with RAW (pre-`floor()`)
+  per-seed weights, not the wiki's own rounded display figures — a real
+  precision decision, not style; see `docs/DECISIONS.md` before touching the
+  seed tables again. Both reach `manual_override`.
+- **`items_known` no longer fails on the literal `Nothing` sentinel**
+  (`itemKey: 'nothing'`, `itemId: null`) — `drops-covered.ts` already carved
+  this out for coverage; `items-known.ts` now does the same. Closes
+  `salarin-the-twisted` (`verified`) and part of `black-knight-titan`/`obor`.
+- **Three item-index gaps added to the multi-id allowlist, not guessed**:
+  `chronozon`'s `Crest part (Johnathon)` (a name-matching gap, verified
+  against the wiki to resolve to id 780 — `chronozon` reaches `verified`) and
+  `maggot-king`'s six `Maggot egg (...)` variants (a GENUINE multi-id
+  collision — all 6 raw ids share one undifferentiated bucket name, no
+  signal distinguishes which is which; recorded rather than risking the
+  wrong icon/price on the wrong variant).
+- **`buildTableGroups` salvages the parseable rows in a block instead of
+  discarding all of them for one unparseable sibling** (`build-tables.ts`) —
+  found while investigating `nex`/`kalphite-queen`/`maggot-king` per
+  instruction, reported before fixing, then implemented on confirmation.
+  General, not per-boss — corpus-wide grep confirms exactly these three
+  sources are affected, no others. `kalphite-queen` 10 missing -> 1 (the
+  survivor, `Kq head (tattered)`, is a genuine one-time 256th-kill drop, not
+  a bug); `maggot-king` 6 missing -> 0; `nex` 24 missing -> 21 (mostly
+  permanently unrecoverable — no numeric rate exists anywhere for its
+  `Common`/`Uncommon` rows). None reach `verified`; each now has a real,
+  narrow, correctly-flagged residual instead of a silent one.
+- **`corpus-reproducibility.test.ts` no longer fails on GE price drift** —
+  `ev_matches`'s live-price-derived fields are blanked before comparison,
+  on both sides, for every source. Advisory-only field, never part of the
+  `verified` gate; every other field, everywhere, is still compared exactly
+  as before.
+
+Net: **67 -> 72 verified, 30 -> 22 needs_review, 2 -> 5 manual_override**,
+via a full unscoped `ingest parse` + `ingest item-icons` + `ingest
+site-index`. `pnpm -r test`/`typecheck`/`lint` all clean, including
+`packages/loot-model/test/brutus.test.ts` as the regression gate. Full
+reasoning for every item above: `docs/DECISIONS.md`'s "`checkDropsCoveredAgainst`
+case fix, built" entry (one long entry covering all of the above, in order).
+
+**Changed in the prior session (landmine #3 (GWDRDT) closed,
 K'ril's Coins defect fixed, Mad Angel's compound shape confirmed but not
 built):**
 

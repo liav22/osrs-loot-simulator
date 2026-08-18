@@ -41,6 +41,41 @@
       "itemKey": "gull-pet",
       "title": "Gull (pet)",
       "reason": "Shellbane gryphon's DropsLine uses name='Gull (pet)', which matches neither of infobox_item's two rows for that page: item_name 'Gull' (id 31285, default_version=true) and item_name 'Gulliver' (id 31287, an easter-egg/nickname version, default_version=false) — a name-matching gap between the drop-table label and the item's own infobox name, not a genuine multi-version collision the default_version signal can resolve. The wiki's own default_version points at id 31285 ('Gull'); recorded here rather than taught to the general resolver for one known case."
+    },
+    {
+      "itemKey": "crest-part-johnathon",
+      "title": "Crest part (Johnathon)",
+      "reason": "Same class as gull-pet: Chronozon's own DropsLine uses name='Crest part (Johnathon)' (the Family Crest quest's own in-fiction qualifier — Chronozon's crest fragment, distinct from the other two quest bosses' own crest parts), but infobox_item indexes the underlying page only as 'Crest part' (id 780, rawIds ['780','779','781'] — one row per quest-boss's fragment, not competing versions of one item). Not a genuine multi-id collision to resolve, and not the item the page itself is missing: verified directly against the wiki (oldschool.runescape.wiki/w/Crest_part_(Johnathon)) that this exact qualified name resolves to id 780, which is also infobox_item's own default_version candidate for 'Crest part'. A name-matching gap between the drop-table label and the item's own infobox name."
+    },
+    {
+      "itemKey": "maggot-egg-base",
+      "title": "Maggot egg (base)",
+      "reason": "A genuine multi-id collision, unlike gull-pet/crest-part-johnathon: infobox_item carries 6 rows for the 'Maggot egg' page, all sharing the identical item_name AND page_name 'Maggot egg' (ids 33665/33667/33669/33671/33673/33675, one true default_version=true at 33665) — the six named variants Maggot King's DropsLine rows use ('base'/'sickly'/'warm'/'pulsating'/'wriggling'/'writhing') are never spelled out anywhere in the crawled bucket data, so there is no signal (default_version, a qualified pageName, or otherwise) that could tell which raw id is which variant. Recovered from Maggot King's own 'Drops (take-eggs)' heading once build-tables.ts stopped discarding a whole block for one unrelated unparseable sibling row (see docs/DECISIONS.md) — the item names are real and correctly extracted, only their exact ids are unknowable from this crawl."
+    },
+    {
+      "itemKey": "maggot-egg-sickly",
+      "title": "Maggot egg (sickly)",
+      "reason": "Same collision as maggot-egg-base — see that entry."
+    },
+    {
+      "itemKey": "maggot-egg-warm",
+      "title": "Maggot egg (warm)",
+      "reason": "Same collision as maggot-egg-base — see that entry."
+    },
+    {
+      "itemKey": "maggot-egg-pulsating",
+      "title": "Maggot egg (pulsating)",
+      "reason": "Same collision as maggot-egg-base — see that entry."
+    },
+    {
+      "itemKey": "maggot-egg-wriggling",
+      "title": "Maggot egg (wriggling)",
+      "reason": "Same collision as maggot-egg-base — see that entry."
+    },
+    {
+      "itemKey": "maggot-egg-writhing",
+      "title": "Maggot egg (writhing)",
+      "reason": "Same collision as maggot-egg-base — see that entry."
     }
   ]
 }

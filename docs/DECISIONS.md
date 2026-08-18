@@ -6189,3 +6189,230 @@ disagree about whether an item is dropped at all (a real content question,
 not a string-matching one) — see the "Mad Angel's compound shape: built"
 entry above. This bug is purely comparison logic; that one is the two data
 sources genuinely disagreeing about game state.
+
+## `checkDropsCoveredAgainst` case fix, built — plus five more sources, plus a general parser fix the case fix exposed
+
+Picks up exactly where the audit above left off: implemented the case-insensitive
+comparison it deferred, then followed each residual it exposed to a real cause
+rather than stopping at the first green number. **Net effect on the corpus: 67 ->
+72 verified, 30 -> 22 needs_review, 2 -> 5 manual_override**, via a full unscoped
+`ingest parse` + `ingest item-icons` + `ingest site-index`, `pnpm -r test`/
+`typecheck`/`lint` all clean.
+
+### The case fix itself
+
+`checkDropsCoveredAgainst` (`drops-covered.ts`) now lower-cases both sides of the
+`reachable`/`bucketNames` comparison — exactly the change the prior audit
+described and declined to make in-session. **Safety guard, not assumed**: a new
+corpus-wide test (`drops-covered.test.ts`'s "case-insensitive matching does not
+collide distinct items") walks every item node in `data/bosses/*.json` plus every
+`data/tables/*.json` shared record and asserts no two DIFFERENT `itemId`s share a
+case-folded name — zero found. The only same-name collisions in the whole corpus
+are two items citing themselves with inconsistent capitalisation across sources
+(`Wine of zamorak`/`Wine of Zamorak`, `Little Nightmare`/`Little nightmare` — same
+`itemId` both times), which is the bug this fix targets, not a counterexample to
+it. If that guard ever finds a real collision, the fix must stop being blanket
+case-insensitive for the colliding pair specifically — the test's own failure
+message says so.
+
+**Moved straight to `verified`, no other work needed**, exactly as the prior
+audit predicted: `commander-zilyana`, `k-ril-tsutsaroth`, `chaos-fanatic`,
+`alchemical-hydra`. (`chaos-elemental` did NOT move — its own `drops_covered`
+failure turned out to be a real, uninvestigated gap under a `heading` ambiguity
+note, not casing; the prior audit's four-source prediction included it based on
+an incomplete cross-check. `phosani-s-nightmare` also stays `needs_review`,
+correctly, on its own permanently-flagged weight-drift.)
+
+### Yama: the Contract fix already landed; the real residual was a param-casing bug
+
+`docs/HANDOFF.md` already recorded Yama's `always`+`fixed` `Contract`-heading
+overflow (1801/100) as fixed in an earlier session, and `weights_sum` confirms
+it — that fix is real and does not need revisiting. The 18 `drops_covered`
+misses left after the case fix (`Blood rune`, `Pineapple pizza`, ...) are a
+**different, previously-undiagnosed bug**: Yama's `Supplies`/`Runes`/`Other`
+headings mix `Rarity=`/`Quantity=` (capitalised) with `rarity=`/`quantity=`
+(lowercase) DropsLine params in the same block — `parseTemplateCall`
+(`wikitext-drops.ts`) read param keys case-sensitively, so every capitalised row
+silently got `rarity: ''` and, worse, took its whole heading block down with it
+(see the general parser fix below). Fixed generally: named param keys are now
+lower-cased in `parseTemplateCall`, not just for Yama — every consumer already
+reads a lowercase literal (`params.get('rarity')` etc.), so this is a pure
+recovery. Confirmed correct, not assumed: the wiki's own rendered dropsline
+bucket still lists all 18 affected items, so whatever resolves `{{DropsLine}}`
+server-side already treats the casing as equivalent.
+
+Fixing the casing bug exposed a THIRD, real, previously-invisible defect: once
+`Supplies`'s six rows parse, they merge into the wiki's own single `/95.11`
+weighted table (`Weapons and armour`/`Runes`/`Other`, matching the wikitext's own
+`<!-- main table has 78 slots -->` comment) at 108 against denominator 95.11 —
+overflow. The `Supplies` heading is a Mad-Angel-shaped compound bundle: one
+15/95.11 access roll grants THREE independent binary choices at once ("Either
+3-4 pineapple pizzas or wild pies", "Either 2 prayer potion(3) or 2 super restore
+mix(2)", "Either 1 super combat potion(1) or 1 Zamorak mix(2)"), parsed as six
+independently-competing rows (weight 7.5 each, summing to 45 instead of 15). The
+corpus-wide bundle detector (`checkBundleSignals`/`findBundleGroups`) cannot
+auto-confirm this: its `CO_DROP_PHRASES` list matches `dropped together`/
+`bundled with`-style footnotes, not this block's "...chance of getting a supply
+drop. It will include: * Either A or B..." prose, and even if it matched,
+`findBundleGroups`'s `BundleGroup` model only expresses ONE flat set of
+always-co-occurring items — not three independent nested pairs. Same
+expressivity gap Mad Angel's compound shape hit. **Hand-authored
+`data/overrides/yama.json`, following Mad Angel's shipped precedent exactly**:
+`data/tables/yama-supplies-bundle.json`, an `always`-mode table with three
+`oneOf` entries (one per pair), spliced into the merged weighted pool as a
+single `tableRef` row at weight 15. New pool total 16+14+33+15=78 against
+denominator 95.11 — matches the wikitext's own "78 slots" comment exactly.
+Behaviourally verified via a 500k-kill `simulate()` run (ad hoc, not committed,
+matching Mad Angel's own verification precedent): all three pairs' drop counts
+are IDENTICAL (65,455 each) confirming they always co-occur, and no kill ever
+logs both variants of one pair. Yama reaches `manual_override`.
+
+### `Module:GeneralSeedDropLines` reimplemented — the corpus's one genuine Lua-only gap
+
+`black-knight-titan`'s and `obor`'s `===Seeds===` headings are
+`{{GeneralSeedDropLines|<accessRate>|<combat level>}}`. Unlike its wikitext-based
+siblings (`TreeHerbSeedDropLines` etc., which use `#vardefine`/`#expr` —
+evaluable by `expand-transclusions.ts`), `Template:GeneralSeedDropLines`'s own
+snapshot is a bare `<includeonly>{{#invoke:GeneralSeedDropLines|main}}</includeonly>`
+— pure Lua, genuinely unexpandable, confirming the prior recount's "genuine
+residual, reported by name" verdict exactly. Corpus-wide grep confirms these are
+the ONLY two sources using this template.
+
+**Fetched and reimplemented the module's actual logic** (one legitimate one-off
+research fetch, same category as the GWDRDT/ToA/CoX/ToB `Module:`/`Calculator:`
+fetches CLAUDE.md's rule already permits): a `data` table keyed by six
+combat-level brackets (485/728/850/947/995/99999, i.e. combat level x10), and
+`groupSeeds()` walks every bracket up to and including the one straddling the
+monster's own combat level, multiplying the access rate by that bracket's own
+share of the combat-level range and by the seed's own within-bracket weight.
+**Verified two independent ways before shipping, not assumed correct from
+reading the source alone**: (1) the reconstructed formula produces exactly the
+44 seed names the wiki's own dropsline bucket lists for BOTH sources, and
+several spot-checked items' own `floor()`'d display rarities
+(`Potato seed` 1/48, `Wildblood seed` 1/1210, `Torstol seed` 1/88888` on Black
+Knight Titan) match the bucket exactly; (2) algebraically, the per-bracket
+relative weights sum to that bracket's own denominator and the per-bracket
+combat-range shares sum to 1 across every contributing bracket, so the 44 RAW
+(pre-`floor()`) per-seed probabilities sum EXACTLY to the declared access rate —
+a true partition. Pinned by `apps/ingest/test/general-seed-drop-lines.test.ts`.
+
+**Modelled with RAW, not `floor()`'d, per-seed weights — a real precision
+decision, not a style choice.** The wiki's own displayed `1/N` figure rounds
+each seed's denominator DOWN independently, so sum of the 44 displayed figures
+overshoots the true access rate (measured: 0.29% on Black Knight Titan, 0.74% on
+Obor — worse there because its combat level lands the roundings differently),
+enough to fail `marginal-rates.test.ts`'s 0.5% tolerance on Obor specifically,
+and by up to ~2% on individual large-share seeds (`Potato seed`: true rarity
+1/44.90 displays as 1/44). The raw values reproduce the access rate to float
+precision — the true in-game mechanic almost certainly rolls on the continuous
+probability; `floor()` is the wiki's OWN display convention, not the mechanic.
+Both sources added to `marginal-rates.test.ts`'s `AUTHORED` exclusion list,
+each with its own reason and pointing at `general-seed-drop-lines.test.ts`
+matching the file's own "each carries its own wiki-figure test" discipline.
+Both reach `manual_override`.
+
+### `items_known`'s literal-`Nothing` gap, closed generally
+
+`docs/HANDOFF.md`'s "heuristic 5 gap" already named this: Black Knight Titan and
+Salarin the twisted both write a literal wiki `Nothing` drop row (`itemId:
+null`, `itemKey: 'nothing'`), which `items_known` correctly refused to resolve
+against the item index (it isn't a real item) but had no exception for either —
+so it failed as if it were a genuine unresolved item. `drops-covered.ts`'s
+`NOT_ITEM_NODES` already carves out the identical sentinel by name for the
+coverage check; `checkItemsKnown` (`items-known.ts`) now does the same, by
+`itemKey`, narrowly (`itemKey === 'nothing' && itemId === null` — a node keyed
+`'nothing'` with a real id is NOT exempted). General, not per-boss: also closes
+the identical gap on `obor` (2 `Nothing` rows) discovered while investigating,
+which the recount never separately counted. `salarin-the-twisted` reaches
+`verified`.
+
+### Three item-index gaps, recorded on the multi-id allowlist, not guessed
+
+- **`chronozon`**: its DropsLine names the drop `Crest part (Johnathon)`, but
+  `infobox_item` only knows the underlying page as `Crest part` (id 780, one
+  row per Family Crest quest-boss's own fragment). Same shape as the existing
+  `gull-pet` entry (a name-matching gap between the drop-table label and the
+  item's own infobox name, not a genuine multi-id collision) — verified
+  directly against the wiki that `Crest part (Johnathon)` resolves to id 780,
+  which is also `infobox_item`'s own `default_version` candidate for `Crest
+  part`. Reaches `verified`.
+- **`maggot-king`'s six `Maggot egg (...)` variants**: a genuine multi-id
+  collision, unlike the two cases above — all 6 raw ids share the IDENTICAL
+  `item_name`/`page_name` (`Maggot egg`) in `infobox_item`, with no signal
+  (default_version, a qualified page name, or otherwise) distinguishing which
+  raw id is `base` vs `sickly` vs `warm` etc. Recorded on the allowlist rather
+  than guessed — assigning the wrong id to the wrong variant would be a real
+  error (wrong icon/GE price), worse than the `itemId: null` it replaces.
+
+### `buildTableGroups` no longer discards a whole heading block for one bad row — closes most of nex/kalphite-queen/maggot-king
+
+Investigated per instruction before touching anything (`nex`/`kalphite-queen`/
+`maggot-king` were the three `drops_covered` gaps HANDOFF's own recount left
+unexamined). **All three turned out to share one root cause**, confirmed by a
+corpus-wide grep for `rarity=(Common|Uncommon|Rare|Once|...)` finding exactly
+these three sources and no others: the wiki sometimes states a row's rarity as
+a qualitative word instead of a fraction, which `parseRarity` correctly refuses
+to guess at — but `buildTableGroups` discarded the ENTIRE heading block the
+moment ANY one row failed to parse, taking every well-formed sibling row down
+as collateral damage.
+
+- **`kalphite-queen`** (the one flagged for special attention — "rows exist in
+  wikitext but don't reach the document and you haven't diagnosed why"):
+  **diagnosed, not a mystery.** Its `Tertiary` heading has 10 rows; one
+  (`Kq head (tattered)`, `rarity=Once` — a genuine one-time drop, guaranteed on
+  the 256th kill, with no per-kill rate at all) is unparseable, and it took the
+  other 9 clean fractions (`Dragon 2h sword` 1/256, `Jar of sand` 1/2000,
+  `Kalphite Princess` 1/3000, ...) down with it.
+- **`maggot-king`**: its `Drops (take-eggs)` heading mixes six clean
+  `Maggot egg` fractions with three `Common`/`Uncommon` rows (`Nothing`,
+  `Stymphike tartare`, `Dull ancient medal`) — same collateral pattern.
+- **`nex`**: worse in kind — 3 of its 4 affected headings
+  (`Runes and ammunition`/`Resources`/`Consumables`) are ENTIRELY
+  `Common`/`Uncommon`, checked directly against the page and confirmed no
+  Calculator/Module page exists anywhere with real numbers backing them. Only
+  `Other` mixes word- and fraction-rarity rows.
+
+**Reported before fixing, per instruction** (a general fix to shared parsing
+logic, not a per-boss patch, deserved sign-off given its corpus-wide blast
+radius) — approved, then implemented: when a block has SOME unparseable rows,
+`buildTableGroups` still emits the exact same zero-entry `ambiguous`-flagged
+marker group as before (the loss is still reported, and still blocks
+`verified` — this is real missing information, not cosmetic), but now ALSO
+continues processing the PARSEABLE rows through the ordinary pipeline
+(bundle detection, heading-text mode inference, homogenise/merge) exactly as if
+the bad rows never existed. When EVERY row in a block is unparseable (Nex's
+fully-word-rarity headings), behaviour is byte-identical to before — nothing to
+salvage. Pinned by two new `build-tables.test.ts` cases (the salvage path and
+the unchanged all-unparseable path) plus `corpus-reproducibility.test.ts`.
+
+**Result**: `kalphite-queen` drops from 10 missing to 1 (`Kq head (tattered)` —
+genuinely unrepresentable as a per-kill rate, no fix recovers it; stays
+`needs_review`, correctly, same class as Duke Sucellus' own named remnant).
+`maggot-king` drops from 6 missing to 0 (its remaining `ambiguous` note is the
+`Common`/`Uncommon` supply-drop rows, still correctly flagged, still blocking
+`verified`; recovering the 6 `Maggot egg` variants surfaced a NEW `items_known`
+gap, closed via the multi-id allowlist above). `nex` drops from 24 missing to
+21 (`Blood essence`/`Rune sword`/`Nihil shard` recovered from its `Other`
+heading; the other 21 stay flagged — genuinely no number exists to recover them,
+same class as Zalcano's own unstated curves). None of the three reach
+`verified` — each has a real, named, correctly-flagged residual now, not a
+diagnosed-but-silent one.
+
+### `corpus-reproducibility.test.ts`'s GE-price flake, fixed
+
+`ev_matches`'s `detail`/`gpPerKill`/`wikiValue` are computed from LIVE GE prices
+(`fetchGePrices`, never snapshotted, by design — see `ev-matches.ts`'s own
+header) and are explicitly advisory, never part of the `verified` gate. But
+`corpus-reproducibility.test.ts`'s `deepStrictEqual(fresh, committed)` compared
+these fields byte-for-byte anyway, so any GE price movement between commit time
+and test time would fail the whole suite for a reason that is not a parser or
+data regression — Brutus is the one committed document with a rendered-HTML
+snapshot behind it, so it is the one source whose `ev_matches` embeds a
+live-computed figure (`"338.58 gp/kill vs wiki's 597.57, 43.3% off"`) that can
+drift. Fixed by blanking `ev_matches`'s volatile sub-fields (not the whole
+check — `check` itself still catches the check disappearing outright) on both
+`fresh` and `committed` before comparing, so the guard stays meaningful for
+everything ev_matches is NOT: every other field, on every other source, is
+still compared byte-for-byte. Did not reproduce live today (GE prices happened
+not to move during this session), so this is a preventive fix confirmed not to
+break anything, not a fix proven against a live failure.
