@@ -1,0 +1,81 @@
+{
+  "id": "mad-angel-supply-batch-bundle",
+  "mode": "always",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 141,
+        "itemKey": "prayer-potion-2",
+        "name": "Prayer potion(2)",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 12701,
+        "itemKey": "super-combat-potion-1",
+        "name": "Super combat potion(1)",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 385,
+              "itemKey": "shark",
+              "name": "Shark",
+              "qty": {
+                "kind": "exact",
+                "n": 2
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 32328,
+              "itemKey": "yellowfin",
+              "name": "Yellowfin",
+              "qty": {
+                "kind": "exact",
+                "n": 2
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            }
+          }
+        ]
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ],
+  "notes": "Mad Angel's 'Supply batch' heading (Mad Angel, revid 15292455): one 16/150 access roll grants Prayer potion(2) and Super combat potion(1) unconditionally, PLUS exactly one of Shark/Yellowfin (each published at 8/150 — half of the shared 16/150 access rate, a clean 50/50 partition). Composes the co-drop bundle shape (both potions, always) with a oneOf (the fish choice), nested one level inside an always-mode table's own entry list — confirmed valid via SharedTableSchema.parse, mode-agnostic in compile.ts, and behaviourally correct via a 500k-kill simulate() run (potions always co-occur; the two fish never do). See docs/DECISIONS.md's 'Mad Angel's compound shape' entry."
+}

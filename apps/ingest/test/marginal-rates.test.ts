@@ -303,15 +303,18 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('per-item drop rates, composed', () => {
     // `always`-mode entry removed exactly the excess weight. The remaining
     // two are a different cause, unrelated to bundles and not fixed by it.
     expect([...new Set(DOES_NOT_COMPILE)].sort()).toEqual([
-      // Mad Angel's `Supply batch` heading compounds a `oneOf` fish choice
-      // (Shark/Yellowfin, 8/150 each) with a flat two-item bundle (Prayer
-      // potion(2)/Super combat potion(1), 16/150 each) behind one prose-only
-      // "bundled with" signal — the bundle detector correctly finds the
-      // signal (`checkBundleSignals`, build-tables.test.ts) but refuses to
-      // auto-model it, since the rows do NOT share one rate the way every
-      // other real instance does. Flagged, not guessed — see
-      // docs/DECISIONS.md's "bundle shape, assessed" entry.
-      'mad-angel',
+      // 'mad-angel' left this list once its compound `oneOf`-and-bundle shape
+      // (docs/DECISIONS.md's "Mad Angel's compound shape" entry) was built as
+      // a hand-authored `data/overrides/mad-angel.json`: an `always`-mode
+      // `data/tables/mad-angel-supply-batch-bundle.json` (two unconditional
+      // potion grants plus a nested `oneOf` for the Shark/Yellowfin choice)
+      // replaces the four double-counted rows with one `tableRef` entry at
+      // the group's own shared weight (16), matching the precedent every
+      // other bundle source already uses. The detector itself was
+      // deliberately NOT generalised — this is the only known instance of
+      // the compound shape in the corpus, so a hand-authored override was
+      // proportionate; see the DECISIONS entry for the full reasoning.
+      //
       // The wiki's own published integer weights simply don't sum to their
       // own stated denominator (101 vs a `/100` every row cites) — no bundle
       // citation anywhere on this source at all. Not a parser bug; see

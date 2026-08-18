@@ -1,12 +1,6 @@
 {
   "slug": "mad-angel",
-  "name": "Mad Angel",
-  "aliases": [],
-  "wikiPage": "Mad Angel",
-  "wikiRevId": 15292455,
-  "variants": [
-    "normal"
-  ],
+  "note": "Supply batch heading (Mad Angel, revid 15292455) compounds an unconditional Prayer potion(2)+Super combat potion(1) bundle with a mutually-exclusive Shark/Yellowfin choice behind one 16/150 access roll -- two different rates (16/150, 8/150) in one prose-confirmed block, which the corpus-wide bundle detector's uniform-rate requirement correctly refuses (checkBundleSignals reports confirmed: false) rather than guessing. Replaces the four affected rows (Shark, Yellowfin, Prayer potion(2), Super combat potion(1), weights 8+8+16+16=48) in the Supply batch weighted pool with one tableRef row at weight 16 pointing at data/tables/mad-angel-supply-batch-bundle.json, matching the precedent every other bundle source already uses (duke-sucellus, maggot-king, k-ril-tsutsaroth, grotesque-guardians: a single synthetic row spliced back into the same weighted pool at the group's own shared access rate). See docs/DECISIONS.md's 'Mad Angel's compound shape' entry for the full proposal and its three-way verification.",
   "tables": [
     {
       "id": "mad-angel:0:100",
@@ -493,52 +487,5 @@
       ],
       "notes": "Access into rare_drop_table (from {{RareDropTable}})"
     }
-  ],
-  "contextDefaults": {},
-  "status": "needs_review",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "5 tableRef node(s) resolved against 23 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": false,
-        "detail": "1 of 49 wiki drop row(s) missing from the document: Clue scroll (hard)"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

@@ -29,32 +29,35 @@ send it to. Leave the seed on `0` and each press of Simulate rolls a fresh one.
 The wiki's `Category:Bosses` resolves to 102 distinct loot sources that the
 project has decided to cover (`include: true` in `data/_inventory.json` — the
 denominator; not every page in the category is a real, independent loot
-source, and a few are quest-only encounters with no loot at all). **98 of
-those 102 (96.1%) have a generated document**, each carrying its own
+source, and a few are quest-only encounters with no loot at all). **99 of
+those 102 (97.1%) have a generated document**, each carrying its own
 validation report:
 
-| status | count | of 102 include:true | of 98 documents | meaning |
+| status | count | of 102 include:true | of 99 documents | meaning |
 |---|---|---|---|---|
-| `verified` | 55 | 53.9% | 56.1% | the pipeline derived this from the wiki unaided, and every check passes |
+| `verified` | 67 | 65.7% | 67.7% | the pipeline derived this from the wiki unaided, and every check passes |
 | `manual_override` | 2 | 2.0% | 2.0% | a hand-authored document (`data/overrides/`) that passes every check — the mechanic exists in prose the parser cannot read |
-| `needs_review` | 41 | 40.2% | 41.8% | at least one check fails; the rates shown may be incomplete or wrong |
-| *(no document)* | 4 | 3.9% | — | not yet parseable at all — see below |
+| `needs_review` | 30 | 29.4% | 30.3% | at least one check fails; the rates shown may be incomplete or wrong |
+| *(no document)* | 3 | 2.9% | — | not yet parseable at all — see below |
 
-**That 55 is inflated by content nobody would simulate, and the site's search
+**That 67 is inflated by content nobody would simulate, and the site's search
 already corrects for it.** Every source also carries `repeatable: boolean` —
 whether the same account can get more than one roll against it, `false` for a
 boss fought exactly once during a quest and never again (Bouncer, Sigmund,
 `Dad`). Split by that field:
 
-| | total | documents | verified |
-|---|---|---|---|
-| `repeatable: true` (farmable) | 72 | 70 (97.2%) | 31 (**43.1%**) |
-| `repeatable: false` (one-time) | 30 | 28 (93.3%) | 24 (80.0%) |
+| | total | documents | verified | manual_override |
+|---|---|---|---|---|
+| `repeatable: true` (farmable) | 72 | 71 (98.6%) | 41 (**56.9%**) | 2 (2.8%) |
+| `repeatable: false` (one-time) | 30 | 28 (93.3%) | 26 (86.7%) | 0 |
 
-24 of the 55 `verified` sources (43.6%) are one-time quest encounters, whose
+26 of the 67 `verified` sources (38.8%) are one-time quest encounters, whose
 tiny `always`-only tables clear every deterministic check almost by
-construction. **31/72 = 43.1%, not 53.9%, is the number that answers "how
-much of what a user would actually simulate is verified."** Nothing is
+construction. **41/72 = 56.9%, not 65.7%, is the number that answers "how
+much of what a user would actually simulate is verified."** Counting the two
+`manual_override` raid/chest sources too (also a terminal, passes-every-check
+state — see `docs/OVERRIDES.md` — just hand-authored rather than
+pipeline-derived) brings farmable coverage to 43/72 = 59.7%. Nothing is
 deleted for this — the documents, and the flag itself, stay visible on
 `/admin` — but `apps/web`'s default search excludes non-repeatable sources,
 since a simulator has nothing meaningful to say about a source with exactly
@@ -63,21 +66,28 @@ signal it's derived from (`Category:Quest monsters` membership, live from the
 wiki) and its measured false-positive/negative rates.
 
 The badge in the UI is the `status` field. **`needs_review` is still a large
-minority**, for several distinct reasons rather than one: a drop sub-table
-written as a wiki *transclusion* (`{{TreeHerbSeedDropLines}}`,
-`{{Uniques/Corporeal Beast}}`) that reconciles but hasn't had its
-single-mutually-exclusive-roll shape confirmed as a modelling decision; a
-handful of raids and points-scaled mechanics that the wiki states in prose the
-parser doesn't read (Tombs of Amascut, Theatre of Blood, Zalcano, Reward
-pool); and a few genuinely unknown curves the wiki names but never states a
-formula for. `drops_covered` compares every document against the wiki's own
-drop rows and fails a source where they disagree, rather than shipping a
-`verified` badge that isn't true. The 4 sources with no document yet:
-`revenant-maledictus` and `rewards-chest-fortis-colosseum` (parser gaps),
-`burnt-chest` and `sigmund` (one heading-matching gap, one has no real combat
-loot). See `docs/DECISIONS.md` for the full history and reasoning behind every
-number here — it changes as the corpus grows, this table will not always be
-current.
+minority**, for several distinct reasons rather than one: five sources stuck
+on an ambiguous heading the wiki gives no signal to resolve (the "Uniques"/
+"Mutagens" question, most re-litigated question in the project); a handful of
+raids and points-scaled mechanics the wiki states in prose but declines a
+precise formula for on purpose (Tombs of Amascut, Theatre of Blood, Chambers
+of Xeric and Fortis Colosseum all ship hand-authored overrides already and
+stay watchlisted for one named, deliberately-unmodelled remnant each; Zalcano
+and Reward pool similarly); a few curves the wiki names but never states a
+formula for at all (Duke Sucellus, Reward cart); two sources whose own
+published weights don't sum to their own stated denominator; and a residue of
+per-source coverage gaps, some already root-caused (a Lua-transclusion the
+parser can't run, on two sources; a case-sensitive item-name comparison bug
+that already fully explains two more), some not yet investigated. None of
+these are guessed around — `drops_covered` compares every document against
+the wiki's own drop rows and fails a source where they disagree, rather than
+shipping a `verified` badge that isn't true. The 3 sources with no document at
+all: `revenant-maledictus` (own open parse gap — no `{{DropsLine}}` template
+anywhere on the page), `burnt-chest` (a heading-matching gap) and `sigmund`
+(no real combat loot, only a quest-only pickpocket reward). See
+`docs/DECISIONS.md` and `docs/HANDOFF.md` for the full history and reasoning
+behind every number here — it changes as the corpus grows, this table will
+not always be current.
 
 ## Running it
 

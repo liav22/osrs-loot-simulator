@@ -5973,3 +5973,219 @@ Whichever path is taken, it does not touch `chaos-fanatic`/`phosani-s-
 nightmare`'s own separate wiki-weight-drift overflow (still permanently
 flagged, per explicit standing instruction) or K'ril's Coins defect (fixed
 separately, above, not folded into the bundle mechanism).
+
+## Mad Angel's compound shape: built, per the confirmed proposal — plus a new, separate residual it uncovered
+
+Built as recommended above: a hand-authored `data/overrides/mad-angel.json`,
+not a detector generalisation (`n=1` in the whole corpus, per the prior
+entry's own reasoning). `data/tables/mad-angel-supply-batch-bundle.json` is
+`mode: 'always'`, three entries — Prayer potion(2) and Super combat
+potion(1) both unconditional (`rate: {kind:'always'}`), plus a third entry
+whose `node` is `{kind:'oneOf', entries:[Shark@weight 1, Yellowfin@weight
+1]}`, also `rate: {kind:'always'}` — exactly the shape confirmed three ways
+in the prior entry.
+
+**One deliberate deviation from the prior entry's literal wording, resolved
+in favour of precedent over the draft text.** The proposal described "the
+access side" as `independent`-mode with a `fixed` rate. The actual `tableRef`
++ `always`-mode bundle mechanism, once built (`docs/DECISIONS.md`'s "The
+bundle shape, built" entry), does it differently everywhere it already
+ships: the synthetic `tableRef` row is spliced BACK INTO the same
+`weighted`-mode table the original rows lived in, as one more `weight`-kind
+entry at the group's own shared rate — confirmed by reading
+`duke-sucellus:2:supplies` (whole-block bundle, weight 1 against a
+denominator of 5.4), `maggot-king:2:...` (weight 41 in place of the removed
+rows), and `k-ril-tsutsaroth:3:...` (two `tableRef` rows, weight 8 each, on
+its two potion pairs) directly, not assumed from the prose description. This
+override follows THAT precedent, not the proposal entry's literal words:
+the four affected rows in `mad-angel:2:weapons-and-armour-runes-and-
+ammunition-supply-batch-other` (Shark@8, Yellowfin@8, Prayer potion(2)@16,
+Super combat potion(1)@16 — weight 48 total) are replaced by one `tableRef`
+row at **weight 16**, matching the compound event's own shared 16/150 rate,
+not a separate `independent`-mode table alongside it. This keeps the fix
+inside the SAME weighted pool every other bundle instance uses, rather than
+introducing a structurally different shape for the one source that happens
+to also need a nested `oneOf`.
+
+**The arithmetic confirms the choice, not just the precedent-matching.**
+Before the fix, the pool's applicable weights summed to 180 against its own
+stated denominator of 150 (`weights_sum`'s exact failure message, read off
+the pre-override document) — a 30-over overflow that "closely matches" (per
+`docs/HANDOFF.md`'s own phrasing) the 32-weight double-count the compound
+bundle produces (48 across four rows, collapsing to one at 16). After the
+fix: 180 − 48 + 16 = **148**, two under the stated 150 — `weights_sum` now
+passes with a small, legitimate two-point slack, not an exact reconciliation
+the way Grotesque Guardians'/Maggot King's own EXACT-match bundles do (their
+own overflow was explained to the point, Mad Angel's own wasn't quite,
+which is exactly why HANDOFF hedged with "closely" rather than "exactly").
+
+**Confirmed against the real pipeline, not just the schema.** `ingest parse
+--source mad-angel` now reports `weights_sum`, `refs_resolve`, `rates_valid`,
+`qty_sane`, `items_known`, and `not_on_watchlist` all passing (mad-angel was
+never on `data/mechanics-watchlist.json` to begin with — its `needs_review`
+status came from `checkBundleSignals`'s `confirmed: false` folding into
+`deterministicOk`, not a watchlist entry). `marginal-rates.test.ts`'s
+`DOES_NOT_COMPILE` trip wire fired as expected and was updated (removing
+`mad-angel`, leaving `phosani-s-nightmare` alone) rather than deleted, and
+the source's own composed per-item rates for all four affected items now
+match the wiki's stated rarities exactly — the same check that would have
+caught a wrong weight choice.
+
+**Mad Angel stays `needs_review` anyway — for a NEW, separate,
+previously-invisible reason the bundle fix exposed, not because the bundle
+fix is incomplete.** `drops_covered` now fails with "1 of 49 wiki drop
+row(s) missing from the document: Clue scroll (hard)". Investigated by
+reading the already-snapshotted `data/snapshots/wikitext/mad-angel.json`
+directly (no live re-fetch, per CLAUDE.md's hard rule) against the already-
+snapshotted `data/snapshots/dropsline/mad-angel.json`:
+
+- The current wikitext's `===Tertiary===` block reads
+  `{{DropsLineClue|type=medium|rarity=1/25}}` — **medium**, not hard. The
+  page's own `==Changes==` log dates this exactly: a `12 August 2026`
+  entry ("Summer Sweep Up") states outright, "The Mad Angel now drops
+  [[Clue scroll (medium)|medium clue scrolls]] instead of hard clues."
+  Six days before this session (today is 2026-08-18).
+- The `dropsline` bucket snapshot — a separate, independently-cached wiki
+  data source `checkDropsCovered` compares against — still carries a
+  `Clue scroll (hard)` row at `Rarity: 1/25`, unchanged since before that
+  patch. The bucket has not caught up to the page's own wikitext.
+- The parsed document is CORRECT relative to the current page (it already
+  carries `Clue scroll (medium)` at `1/25` in `mad-angel:3:tertiary`, which
+  is right); the bucket `drops_covered` diffs against is what's stale. This
+  is not a parser bug — nothing in the pipeline could resolve a
+  disagreement between two snapshots of the wiki's own data by picking a
+  side, and the two ARE inputs at rest, not a live re-fetch.
+
+**A third instance of the "wiki's own data doesn't reconcile with itself"
+class**, alongside chaos-fanatic's/phosani-s-nightmare's published-weights-
+don't-sum-to-their-own-denominator defect — same flavour (no model or
+parser change closes it, re-derivation from a live source is the only path,
+out of scope), different mechanism (a cache-lag disagreement between two
+data sources describing the same page, not an arithmetic slip within one).
+**Not added to `data/mechanics-watchlist.json`** — same reasoning as
+chaos-fanatic/phosani-s-nightmare: `drops_covered` already fails directly
+and correctly, nothing additional is needed to keep the source
+`needs_review`. Left here so a future session doesn't spend time trying to
+locate a "Clue scroll (hard)" row that no longer exists on the page.
+
+**Corpus effect: none on the aggregate count** (still 67 verified, 30
+needs_review, 2 manual_override — mad-angel was already needs_review and
+stays needs_review), but its OWN reason changed category: from the
+weight-overflow/bundle-refusal row to a coverage-gap row, and — per
+`docs/OVERRIDES.md`'s status table — the moment `drops_covered` is ever
+resolved (only possible once the wiki's own bucket catches up to its own
+wikitext, not by anything this session can do), it becomes `manual_override`
+on the next parse with zero further engine work, since every deterministic
+check but that one already passes. `pnpm -r test`/`typecheck`/`lint` green
+except a pre-existing, unrelated flake — see the landmine entry below.
+
+## `corpus-reproducibility.test.ts` embeds live GE prices in its own comparison, so it drifts on its own — found while validating the Mad Angel build, not caused by it
+
+**Not a regression from this session's changes.** Running the full suite
+while validating the Mad Angel override surfaced 39–42 unrelated sources
+(`cerberus`, `king-black-dragon`, `kraken`, ... — never `mad-angel` itself)
+failing `corpus-reproducibility.test.ts`'s "fresh parse matches committed
+document" check, with the EXACT SET of offending sources differing between
+consecutive runs minutes apart (42, then 39) but IDENTICAL across two runs
+seconds apart (41, then 41, zero diff). Confirmed the cause, not just the
+symptom: `parseBoss` (`apps/ingest/src/parse/parse-boss.ts`) folds
+`gePriceLookup(options.gePrices)` — real, LIVE GE prices, fetched fresh on
+every test run via `fetchGePrices` — into `checkEvMatches`, and
+`evMatches.detail` (a string carrying the actual computed comparison
+numbers whenever a rendered-page snapshot exists) is embedded verbatim in
+the committed document's own `validation.checks` array. Any source with a
+rendered snapshot therefore has a `detail` string that is a function of
+*whatever the GE price was at the moment its document was last regenerated*
+— compared, by `deepStrictEqual`, against *whatever the GE price is right
+now*. `mad-angel` never appears in any run's mismatch list because its own
+`ev_matches.detail` is the constant "no rendered page snapshot available"
+string, immune to price drift — which is also how this was isolated to
+prices rather than anything this session touched: `cerberus`, re-parsed
+alone via the CLI (which writes to the real `data/bosses/` directory, not
+scratch), reproduced its committed file byte-for-byte, but the SAME source
+failed under the test's own scratch-dir comparison — the CLI run and the
+test run simply landed on different live price snapshots.
+
+**Not fixed here — out of scope for this session, flagged for a decision.**
+Two shapes a fix could take, neither attempted: exclude `ev_matches.detail`
+from the comparison (weakens the guard's own stated purpose — the "REAL
+committed inputs" framing in the test's own doc comment — for the one field
+that's deliberately non-deterministic), or freeze `checkEvMatches` in this
+test behind a fixed/snapshotted price table instead of `fetchGePrices`
+(closer to `data/snapshots/`'s own snapshot-first discipline, but this test
+deliberately does NOT use `data/snapshots/` at all for prices — a
+first-time gap, not a regression in an existing mechanism). This is a
+pre-existing landmine that will keep firing on any future session that
+happens to run the full suite far enough from `data/bosses/*.json`'s last
+regeneration for GE prices to have moved — not specific to today's date or
+today's session's changes.
+
+## `drops_covered` compares item names case-sensitively — a real bug, found while auditing `needs_review`, that already fully explains several sources' "own separate reason"
+
+Found while producing an honest breakdown of the 30 `needs_review` sources
+(requested directly, not incidental). Several sources' `drops_covered`
+failures — believed, per prior sessions' own framing, to be small but real
+*content* gaps ("their own separate reason") — turn out to be a single,
+different kind of bug: the reported items are **already correctly modeled**
+in the document, at the right rate, and `checkDropsCoveredAgainst`
+(`apps/ingest/src/validate/drops-covered.ts`) simply fails to recognize them
+because its match is a bare `Set.has` — case-sensitive, no normalization —
+comparing the document's own item `name` (taken verbatim from the wikitext's
+`{{DropsLine|name=...}}` parameter, which commonly Title Cases pet/qualifier
+names) against the `dropsline` bucket's `item_name` field (the wiki's own
+canonical item-page title, commonly sentence-cased after the first word).
+
+**Verified directly against the real committed documents, not inferred from
+the missing-item strings alone** — for every source below, the "missing"
+item was located inside the document's own `tables`, matching by
+case-insensitive name:
+
+| source | reported missing | actually present as |
+|---|---|---|
+| `chaos-elemental` | `Pet chaos elemental` | `Pet Chaos Elemental`, 1/300, `chaos-elemental:1:major-drops` |
+| `chaos-fanatic` | `Pet chaos elemental`, `Wine of zamorak` | `Pet Chaos Elemental` (1/1000), `Wine of Zamorak` (weight 6) |
+| `commander-zilyana` | `Frozen key piece (saradomin)`, `Pet zilyana` | `Frozen key piece (Saradomin)` (always), `Pet Zilyana` (1/5000) |
+| `k-ril-tsutsaroth` | `Frozen key piece (zamorak)`, `Pet k'ril tsutsaroth`, `Staff of the dead` | `Frozen key piece (Zamorak)` (always), `Pet K'ril Tsutsaroth` (1/5000), `Staff of the Dead` (weight 3) — this is the SAME "capitalisation mismatch" landmine #3's GWDRDT entry already named for this one item; it was never generalised to see it was the whole gap |
+| `alchemical-hydra` | `Ikkle hydra` | `Ikkle Hydra`, 1/3000 |
+| `phosani-s-nightmare` | `Little nightmare` | `Little Nightmare`, 1/1400 |
+
+**This changes the honest status of two sources materially, and two not at
+all.** `commander-zilyana` and `k-ril-tsutsaroth` were believed to carry a
+small, real, unrelated-to-GWDRDT residual (`docs/HANDOFF.md`'s "GWDRDT own
+residual" row) — their ENTIRE remaining `drops_covered` failure is this bug;
+nothing else blocks either source. `alchemical-hydra` and `chaos-elemental`
+were listed as "coverage gaps, unexamined per-source" — for both, this bug
+is the WHOLE gap. Fixing the comparison (normalize case — and confirmed
+nothing here needs more than that; every mismatch above is pure casing,
+not whitespace, punctuation, or a `(qualifier)` naming-convention question
+`coverageCandidates` already handles) would move all four straight to
+`verified` with no other work. `chaos-fanatic` and `phosani-s-nightmare` do
+NOT change status — both carry their own separate, already-permanently-
+flagged wiki-weights-don't-reconcile defect (`chaos-fanatic`: 129 vs a
+`/128` every row cites; `phosani-s-nightmare`: 101 vs `/100`), so `weights_sum`
+keeps them `needs_review` regardless of this fix — but their OWN
+`drops_covered` line, previously read as "a real, separate, coincidental
+second issue" (`chaos-fanatic`) is now shown to be this bug too, not a
+second real gap.
+
+**Not fixed here — flagged, not attempted, because task scope for this
+session was an honest audit, not a change to shared validation code that
+would touch `not_on_watchlist`/`verified` status for four sources at once.**
+The fix itself looks small (lowercase both sides before the `Set`
+comparison in `checkDropsCoveredAgainst`, matching `coverageCandidates`'s
+existing narrow-translation discipline rather than fuzzy-matching), but
+"small" changes to a check that gates `verified` across the whole corpus
+still deserve their own session: a test asserting the case-insensitive
+match, a re-run of `ingest parse` (no `--tier` filter) to confirm the
+corpus-wide effect, and a check for whether any OTHER source's
+`drops_covered` failure is partially explained by this too (a scan across
+all 30 `needs_review` sources for this session found no additional casing-
+only matches beyond the six above, but that scan did not use the exact
+match-and-flag mechanism a real fix would, only manual spot checks).
+
+**Distinguish from `mad-angel`'s and (partly) `black-demon`'s residuals —
+those are a DIFFERENT class**, where the bucket and the current wikitext
+disagree about whether an item is dropped at all (a real content question,
+not a string-matching one) — see the "Mad Angel's compound shape: built"
+entry above. This bug is purely comparison logic; that one is the two data
+sources genuinely disagreeing about game state.
