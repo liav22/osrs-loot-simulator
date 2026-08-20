@@ -58,7 +58,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
      */
     const sorted = result.drops.filter((row) => row.drops > 0)
     if (pricesAvailable) {
-      sorted.sort((a, b) => b.gp - a.gp || b.drops - a.drops || a.name.localeCompare(b.name))
+      sorted.sort((a, b) => b.gp - a.gp || b.quantity - a.quantity || a.name.localeCompare(b.name))
     } else {
       sorted.sort((a, b) => {
         // Absent from the EV result (an unsupported source) sorts last rather
@@ -112,7 +112,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
               >
                 <ItemIcon name={row.name} file={iconFiles?.get(row.name)} size={24} />
                 <span className="text-sm text-amber-100">{row.name}</span>
-                <span className="font-mono text-xs text-amber-300/80">×{formatNumber(row.drops)}</span>
+                <span className="font-mono text-xs text-amber-300/80">×{formatNumber(row.quantity)}</span>
               </div>
             ))}
           </div>
@@ -172,7 +172,14 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                         isRarest ? 'text-neutral-300' : 'text-muted'
                       }`}
                     >
-                      <span>×{formatNumber(row.drops)}</span>
+                      <span>×{formatNumber(row.quantity)}</span>
+                      {/* Stackable items (e.g. "50 Gold bars") drop fewer TIMES
+                          than the total units received — surface the occurrence
+                          count too whenever it diverges from the quantity, since
+                          "×50" alone would hide that it came from a single roll. */}
+                      {row.quantity !== row.drops && (
+                        <span className="truncate opacity-70">({formatNumber(row.drops)} drops)</span>
+                      )}
                       {pricesAvailable && row.gp > 0 && (
                         <span className="truncate">{formatGp(row.gp)}</span>
                       )}
