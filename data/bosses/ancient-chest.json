@@ -1,7 +1,9 @@
 {
   "slug": "ancient-chest",
   "name": "Ancient chest",
-  "aliases": [],
+  "aliases": [
+    "Chambers of Xeric"
+  ],
   "wikiPage": "Ancient chest",
   "wikiRevId": 15295333,
   "variants": [

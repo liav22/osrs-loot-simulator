@@ -27,6 +27,7 @@ const options = {
   itemIndex,
   allowlist: emptyAllowlist,
   repeatable: true,
+  aliases: [],
 }
 
 describe('assembleBoss', () => {
@@ -58,6 +59,34 @@ describe('assembleBoss', () => {
     expect(result.boss?.tables[0]?.mode).toBe('always')
     const node = result.boss?.tables[0]?.entries[0]?.node
     expect(node && 'itemId' in node ? node.itemId : undefined).toBe(33115)
+  })
+
+  it('carries a many-to-one source\'s common name through as an alias', () => {
+    const groups: ParsedTableGroup[] = [
+      {
+        mode: 'always',
+        headings: ['100%'],
+        section: '',
+        denominator: null,
+        ambiguous: null,
+        entries: [
+          {
+            name: 'Bull bones',
+            quantity: '1',
+            noted: false,
+            members: false,
+            freeToPlay: false,
+            rarity: { kind: 'always', num: 1, den: 1 },
+            weight: null,
+          },
+        ],
+      },
+    ]
+    // e.g. `title: 'Ancient chest'` (the wiki drops page) alongside the loot
+    // source's real name, "Chambers of Xeric" — see `main.ts`'s `aliases`.
+    const result = assembleBoss(groups, noRdtAccess, { ...options, aliases: ['Chambers of Xeric'] })
+    expect(result.boss?.name).toBe('Test Boss')
+    expect(result.boss?.aliases).toEqual(['Chambers of Xeric'])
   })
 
   it('resolves an item to a null itemId and warns when the index does not resolve it', () => {

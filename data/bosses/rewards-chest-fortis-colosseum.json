@@ -1,7 +1,9 @@
 {
   "slug": "rewards-chest-fortis-colosseum",
   "name": "Rewards Chest (Fortis Colosseum)",
-  "aliases": [],
+  "aliases": [
+    "Fortis Colosseum"
+  ],
   "wikiPage": "Rewards Chest (Fortis Colosseum)",
   "wikiRevId": 15285141,
   "variants": [

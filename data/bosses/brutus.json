@@ -537,7 +537,7 @@
       {
         "check": "ev_matches",
         "ok": false,
-        "detail": "338.58 gp/kill vs wiki's 597.57, 43.3% off"
+        "detail": "359.00 gp/kill vs wiki's 597.57, 39.9% off"
       },
       {
         "check": "items_known",

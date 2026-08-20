@@ -328,6 +328,11 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
       sharedTables,
       templates,
       repeatable: source.repeatable,
+      // A many-to-one source's common name (e.g. "Chambers of Xeric" for the
+      // `Ancient chest` drops page) is not always a substring of the page
+      // name `fuzzy.ts` already searches, so it would otherwise be
+      // unfindable under the name players actually use.
+      aliases: source.title !== source.dropsPage ? [source.title] : [],
     })
     outcomes.push(outcome)
     const mark = outcome.status === 'parse_failed' ? '  !! ' : '     '

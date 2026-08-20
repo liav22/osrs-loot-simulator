@@ -134,6 +134,7 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('every committed document reproduces from a 
           sharedTables,
           templates,
           repeatable: source.repeatable,
+          aliases: source.title !== source.dropsPage ? [source.title] : [],
           outputDir: scratch,
           // A confirmed co-drop bundle writes its own `data/tables/<id>.json`
           // — must never land in the real, committed directory from a test

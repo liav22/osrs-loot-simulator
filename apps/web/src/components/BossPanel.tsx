@@ -91,7 +91,15 @@ export function BossPanel({
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="truncate text-lg font-semibold text-neutral-100">{boss.name}</h1>
+            <h1 className="truncate text-lg font-semibold text-neutral-100">
+              {boss.name}
+              {/* Same reasoning as `SearchBox`: a many-to-one source's own
+                  page name (e.g. "Ancient chest") doesn't say on its own that
+                  this is Chambers of Xeric's loot. */}
+              {boss.aliases.length > 0 && (
+                <span className="ml-1.5 text-sm font-normal text-muted">({boss.aliases.join(', ')})</span>
+              )}
+            </h1>
             <StatusBadge status={boss.status} statusTier={boss.statusTier} />
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-3 text-xs">

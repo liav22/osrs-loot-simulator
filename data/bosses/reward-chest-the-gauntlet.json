@@ -1,7 +1,9 @@
 {
   "slug": "reward-chest-the-gauntlet",
   "name": "Reward Chest (The Gauntlet)",
-  "aliases": [],
+  "aliases": [
+    "The Gauntlet"
+  ],
   "wikiPage": "Reward Chest (The Gauntlet)",
   "wikiRevId": 15274243,
   "variants": [

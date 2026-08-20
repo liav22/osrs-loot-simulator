@@ -30,6 +30,15 @@ export interface AssembleOptions {
   allowlist: ItemAllowlist
   /** Corpus scope metadata, not derived here — see `inventory/repeatable.ts`. */
   repeatable: boolean
+  /**
+   * The loot source's own common name from `_inventory.json`'s `title`,
+   * whenever it differs from `title` (the wiki drops-page name used above for
+   * `name`/`wikiPage`) — e.g. "Chambers of Xeric" for the `Ancient chest`
+   * drops page. Search matches `name` and `aliases` both (`fuzzy.ts`), so
+   * without this a many-to-one source is only findable under its literal
+   * chest/page name, which is not what a player searches for.
+   */
+  aliases: string[]
 }
 
 export interface AssembleResult {
@@ -367,7 +376,7 @@ export function assembleBoss(
   const input = {
     slug: options.slug,
     name: options.title,
-    aliases: [],
+    aliases: options.aliases,
     wikiPage: options.title,
     wikiRevId: options.wikiRevId,
     variants,

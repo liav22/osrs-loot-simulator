@@ -120,7 +120,17 @@ export function SearchBox({ autoFocus = true }: { autoFocus?: boolean }) {
                   i === active ? 'bg-neutral-800' : 'hover:bg-neutral-800'
                 }`}
               >
-                <span className="truncate">{entry.name}</span>
+                <span className="truncate">
+                  {entry.name}
+                  {/* A many-to-one source's own literal page name (e.g. "Ancient
+                      chest") is what it's findable under by MATCHING an alias,
+                      but on its own gives no sign this is Chambers of Xeric's
+                      loot — spell out the alias(es) so the result is legible on
+                      sight, not just searchable. */}
+                  {entry.aliases.length > 0 && (
+                    <span className="text-muted"> ({entry.aliases.join(', ')})</span>
+                  )}
+                </span>
                 <StatusBadge status={entry.status} statusTier={entry.statusTier} />
               </button>
             </li>

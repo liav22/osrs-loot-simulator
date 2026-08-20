@@ -43,6 +43,8 @@ export interface ParseOptions {
   gePrices: GePrices
   /** From `data/_inventory.json`'s `LootSource.repeatable` — see `inventory/repeatable.ts`. */
   repeatable: boolean
+  /** See `AssembleOptions.aliases` — usually `[]`; `main.ts` populates it from `LootSource.title`. */
+  aliases: string[]
   /** `data/tables/*.json`, keyed by id — Phase 3's shared RDT/gem/mega-rare records. */
   sharedTables: ReadonlyMap<string, Table>
   /**
@@ -168,6 +170,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     itemIndex: options.itemIndex,
     allowlist: options.allowlist,
     repeatable: options.repeatable,
+    aliases: options.aliases,
   })
 
   if (result.boss === null && !overrideCarriesTables) {

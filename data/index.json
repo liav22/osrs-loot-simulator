@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T13:35:45.668Z",
+  "generatedAt": "2026-08-20T14:18:58.455Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -49,7 +49,9 @@
     {
       "slug": "ancient-chest",
       "name": "Ancient chest",
-      "aliases": [],
+      "aliases": [
+        "Chambers of Xeric"
+      ],
       "status": "needs_review",
       "statusTier": "approximate",
       "image": "Crystal (ancient chest).png",
@@ -193,7 +195,9 @@
     {
       "slug": "chest-tombs-of-amascut",
       "name": "Chest (Tombs of Amascut)",
-      "aliases": [],
+      "aliases": [
+        "Tombs of Amascut"
+      ],
       "status": "needs_review",
       "statusTier": "approximate",
       "image": "Chest (Tombs of Amascut, closed).png",
@@ -580,7 +584,9 @@
     {
       "slug": "monumental-chest",
       "name": "Monumental chest",
-      "aliases": [],
+      "aliases": [
+        "Theatre of Blood"
+      ],
       "status": "needs_review",
       "statusTier": "approximate",
       "image": "Monumental chest (teammate's, closed).png",
@@ -643,7 +649,9 @@
     {
       "slug": "reward-chest-the-gauntlet",
       "name": "Reward Chest (The Gauntlet)",
-      "aliases": [],
+      "aliases": [
+        "The Gauntlet"
+      ],
       "status": "verified",
       "statusTier": "verified",
       "image": "Reward Chest (The Gauntlet).png",
@@ -664,7 +672,9 @@
     {
       "slug": "rewards-chest-fortis-colosseum",
       "name": "Rewards Chest (Fortis Colosseum)",
-      "aliases": [],
+      "aliases": [
+        "Fortis Colosseum"
+      ],
       "status": "needs_review",
       "statusTier": "approximate",
       "image": "Rewards Chest (Fortis Colosseum).png",
