@@ -48,9 +48,14 @@ test('Lunar Chest gets its Moon selector AND its ownership controls', async ({ p
   // three `lunar_chest_*_set` shared tables, so these controls exist only if
   // the browser actually fetched those records and `contextSurfaceOf` could
   // follow the tableRefs into them.
+  //
+  // Ownership renders as toggle chips labelled with the real item name, not
+  // the raw itemKey slug (`SimContextControls.test.tsx`'s "ownership controls
+  // render as toggleable chips, not number inputs" — every `ownershipGate` in
+  // the corpus today is "own it or not", so a chip is the honest control).
   await expect(page.getByText(/Already owned entering the run/)).toBeVisible()
-  await expect(page.getByLabel('blood-moon-helm')).toBeVisible()
-  await expect(page.getByLabel('eclipse-atlatl')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Blood moon helm' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Eclipse atlatl' })).toBeVisible()
 })
 
 test('Reward pool gets a Fishing level control and simulates through its bracket table', async ({

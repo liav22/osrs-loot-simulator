@@ -113,16 +113,20 @@ test('set-valued and ownership context round-trip through the URL', async ({ pag
   await expect(page.getByLabel('Blood Moon')).toBeChecked()
   await expect(page.getByLabel('Eclipse Moon')).toBeChecked()
   await expect(page.getByLabel('Blue Moon')).not.toBeChecked()
-  await expect(page.getByLabel('blood-moon-helm')).toHaveValue('1')
+  // Ownership is a toggle chip (real item name, `aria-pressed`), not a number
+  // input — every `ownershipGate` in the corpus is "own it or not". See
+  // `SimContextControls.test.tsx`'s "ownership controls render as toggleable
+  // chips, not number inputs".
+  await expect(page.getByRole('button', { name: 'Blood moon helm' })).toHaveAttribute('aria-pressed', 'true')
 
   await page.getByLabel('Blue Moon').check()
-  await page.getByLabel('eclipse-atlatl').fill('2')
+  await page.getByRole('button', { name: 'Eclipse atlatl' }).click()
 
   const params = new URL(page.url()).searchParams
   // MOONS order is canonical (blood, blue, eclipse), not click order.
   expect(params.get('moons')).toBe('blood,blue,eclipse')
   expect(params.get('owned')).toContain('blood-moon-helm:1')
-  expect(params.get('owned')).toContain('eclipse-atlatl:2')
+  expect(params.get('owned')).toContain('eclipse-atlatl:1')
 })
 
 test('a shared link reproduces the same simulation result', async ({ page }) => {

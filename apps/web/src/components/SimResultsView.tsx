@@ -168,20 +168,22 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                         to be overridden, and it is because the surface moved,
                         not because the token is wrong. */}
                     <div
-                      className={`flex items-baseline gap-2 font-mono text-xs ${
+                      className={`flex items-baseline justify-between gap-2 font-mono text-xs ${
                         isRarest ? 'text-neutral-300' : 'text-muted'
                       }`}
                     >
-                      <span>×{formatNumber(row.quantity)}</span>
                       {/* Stackable items (e.g. "50 Gold bars") drop fewer TIMES
-                          than the total units received — surface the occurrence
-                          count too whenever it diverges from the quantity, since
-                          "×50" alone would hide that it came from a single roll. */}
-                      {row.quantity !== row.drops && (
-                        <span className="truncate opacity-70">({formatNumber(row.drops)} drops)</span>
-                      )}
+                          than the total units received. The occurrence count
+                          doesn't fit the card alongside quantity and value, so
+                          it's a hover title instead of a third visible field. */}
+                      <span
+                        className="truncate"
+                        title={row.quantity !== row.drops ? `${formatNumber(row.drops)} drops` : undefined}
+                      >
+                        ×{formatNumber(row.quantity)}
+                      </span>
                       {pricesAvailable && row.gp > 0 && (
-                        <span className="truncate">{formatGp(row.gp)}</span>
+                        <span className="shrink-0 truncate">{formatGp(row.gp)}</span>
                       )}
                     </div>
                   </div>
