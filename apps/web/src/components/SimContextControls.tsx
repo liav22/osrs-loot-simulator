@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import type { Boss, SimContext, SimContextField, Table } from '@osrs-loot-simulator/loot-model'
 import { contextSurfaceOf } from '../lib/context-fields'
 import type { SimRunParams } from '../lib/url-state'
+import { ItemIcon } from './ItemIcon'
 
 /**
  * Numeric `SimContext` fields, with the label and bounds each one wants. Only
@@ -54,6 +55,8 @@ interface Props {
   sharedTables?: ReadonlyMap<string, Table>
   params: SimRunParams
   onChange: (params: SimRunParams) => void
+  /** Item name -> wiki icon file, so ownership chips are scannable by icon rather than only by reading 12 labels. Optional: `ItemIcon` renders a letter placeholder without it, so a caller that hasn't fetched icons yet loses nothing but the polish. */
+  iconFiles?: ReadonlyMap<string, string>
 }
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
@@ -102,7 +105,44 @@ function NumberField({
   )
 }
 
-export function SimContextControls({ boss, sharedTables, params, onChange }: Props) {
+/**
+ * A single already-owned item, as a toggleable pill rather than a labeled
+ * row. Twelve of these (Lunar Chest's three 4-piece sets) read as one
+ * "which of these do you already own?" selection at a glance instead of
+ * twelve stacked yes/no questions — the actual complaint this replaces a
+ * `NumberField`-per-item layout for. `aria-pressed` carries the checked
+ * state for assistive tech since the visual state is border/fill color, not
+ * a native checkbox.
+ */
+function OwnershipChip({
+  name,
+  iconFile,
+  checked,
+  onChange,
+}: {
+  name: string
+  iconFile: string | undefined
+  checked: boolean
+  onChange: (v: boolean) => void
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={checked}
+      onClick={() => onChange(!checked)}
+      className={`flex min-h-9 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition ${
+        checked
+          ? 'border-amber-500 bg-amber-500/15 text-amber-300'
+          : 'border-neutral-800 bg-neutral-900 text-neutral-400 hover:border-neutral-700 hover:text-neutral-300'
+      }`}
+    >
+      <ItemIcon name={name} file={iconFile} size={16} />
+      <span>{name}</span>
+    </button>
+  )
+}
+
+export function SimContextControls({ boss, sharedTables, params, onChange, iconFiles }: Props) {
   const quests = useMemo(() => questsReferencedBy(boss), [boss])
   const surface = useMemo(() => contextSurfaceOf(boss, sharedTables), [boss, sharedTables])
   const uses = (field: SimContextField) => surface.fields.has(field)
@@ -131,6 +171,11 @@ export function SimContextControls({ boss, sharedTables, params, onChange }: Pro
 
   const numericShown = (Object.keys(NUMERIC_FIELDS) as SimContextField[]).filter(uses)
   const booleanShown = (Object.keys(BOOLEAN_FIELDS) as SimContextField[]).filter(uses)
+  // `maxN <= 1` is "own it or not", which is every gate in the corpus today —
+  // see `OwnershipItem.maxN`'s own comment for why this is read from the
+  // data rather than assumed permanent.
+  const ownershipChips = surface.ownershipItems.filter((item) => item.maxN <= 1)
+  const ownershipNumeric = surface.ownershipItems.filter((item) => item.maxN > 1)
 
   return (
     <div className="space-y-2">
@@ -237,22 +282,46 @@ export function SimContextControls({ boss, sharedTables, params, onChange }: Pro
         </div>
       )}
 
-      {surface.ownershipItemKeys.length > 0 && (
+      {surface.ownershipItems.length > 0 && (
         <div className="space-y-2">
           <span className="block text-sm text-neutral-400">
             Already owned entering the run (duplicate protection)
           </span>
-          <div className="grid grid-cols-1 gap-2">
-            {surface.ownershipItemKeys.map((itemKey) => (
-              <NumberField
-                key={itemKey}
-                label={itemKey}
-                value={params.ctx.ownedCounts[itemKey] ?? 0}
-                min={0}
-                onChange={(v) => setOwned(itemKey, v)}
-              />
-            ))}
-          </div>
+          {/*
+            Split by precision the DATA actually needs, not assumed: every
+            `ownershipGate` in the corpus today is `n: 1` ("own it or not"),
+            so `chipItems` covers all of them and this numeric fallback
+            currently renders nothing. It stays wired up rather than deleted
+            so a future source needing `n > 1` gets a working control
+            immediately, for just that item, without this component being
+            touched again.
+          */}
+          {ownershipChips.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {ownershipChips.map((item) => (
+                <OwnershipChip
+                  key={item.itemKey}
+                  name={item.name}
+                  iconFile={iconFiles?.get(item.name)}
+                  checked={(params.ctx.ownedCounts[item.itemKey] ?? 0) >= 1}
+                  onChange={(v) => setOwned(item.itemKey, v ? 1 : 0)}
+                />
+              ))}
+            </div>
+          )}
+          {ownershipNumeric.length > 0 && (
+            <div className="grid grid-cols-1 gap-2">
+              {ownershipNumeric.map((item) => (
+                <NumberField
+                  key={item.itemKey}
+                  label={item.name}
+                  value={params.ctx.ownedCounts[item.itemKey] ?? 0}
+                  min={0}
+                  onChange={(v) => setOwned(item.itemKey, v)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
 

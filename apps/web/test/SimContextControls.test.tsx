@@ -157,3 +157,119 @@ describe('the members toggle is retired in favour of a free-to-play one', () => 
     expect((toggle as HTMLInputElement).checked).toBe(true)
   })
 })
+
+/**
+ * The redesign this file's own header comment doesn't yet mention: ownership
+ * controls (Lunar Chest's 12 per-set pieces) used to be a `NumberField` per
+ * item, labeled with the raw `itemKey` slug. They're chips now — real item
+ * names, toggled by click, not typed — because every `ownershipGate` in the
+ * corpus is a threshold of 1 ("own it or not"), which a number input was
+ * offering false precision for. See `docs/DECISIONS.md`'s ownership-chip
+ * entry for the full reasoning.
+ */
+describe('ownership controls render as toggleable chips, not number inputs', () => {
+  it('labels a chip with the real item name, not the raw itemKey', () => {
+    renderFor('lunar-chest')
+    expect(screen.getByText('Blood moon helm')).toBeDefined()
+    expect(screen.queryByText('blood-moon-helm')).toBeNull()
+  })
+
+  it('renders each owned-piece control as a button, not a number input', () => {
+    renderFor('lunar-chest')
+    const chip = screen.getByText('Blood moon helm').closest('button')
+    expect(chip).not.toBeNull()
+    expect(chip?.getAttribute('type')).toBe('button')
+  })
+
+  it('starts unpressed, and clicking sets ownedCounts to 1', () => {
+    const boss = loadBoss('lunar-chest')
+    const seen: SimRunParams[] = []
+    render(
+      <SimContextControls
+        boss={boss}
+        sharedTables={shared}
+        params={{ ctx: { ...DEFAULT_SIM_CONTEXT }, seed: DEFAULT_SEED, kills: DEFAULT_KILLS, run: false }}
+        onChange={(p) => seen.push(p)}
+      />
+    )
+    const chip = screen.getByText('Blood moon helm').closest('button')!
+    expect(chip.getAttribute('aria-pressed')).toBe('false')
+
+    fireEvent.click(chip)
+    expect(seen).toHaveLength(1)
+    expect(seen[0]!.ctx.ownedCounts['blood-moon-helm']).toBe(1)
+  })
+
+  it('clicking an already-owned chip clears it back to 0, not decrements it', () => {
+    const boss = loadBoss('lunar-chest')
+    const seen: SimRunParams[] = []
+    render(
+      <SimContextControls
+        boss={boss}
+        sharedTables={shared}
+        params={{
+          ctx: { ...DEFAULT_SIM_CONTEXT, ownedCounts: { 'blood-moon-helm': 1 } },
+          seed: DEFAULT_SEED,
+          kills: DEFAULT_KILLS,
+          run: false,
+        }}
+        onChange={(p) => seen.push(p)}
+      />
+    )
+    const chip = screen.getByText('Blood moon helm').closest('button')!
+    expect(chip.getAttribute('aria-pressed')).toBe('true')
+
+    fireEvent.click(chip)
+    expect(seen[0]!.ctx.ownedCounts['blood-moon-helm']).toBe(0)
+  })
+
+  it('falls back to a labeled number input for an item whose gate needs more than own-or-not', () => {
+    // No real source needs this today (every corpus gate is n:1 — see
+    // `context-fields.test.ts`'s reconciliation tests), so this exercises the
+    // fallback with a synthetic boss rather than waiting for one to exist.
+    // It's the guarantee behind the design: an item doesn't lose precision
+    // just because it happens to be rendered as a chip elsewhere.
+    const boss = BossSchema.parse({
+      slug: 'test-boss',
+      name: 'Test Boss',
+      wikiPage: 'Test Boss',
+      wikiRevId: 1,
+      status: 'verified',
+      source: 'generated',
+      parserVersion: 1,
+      validation: { ok: true, checks: [] },
+      tables: [
+        {
+          id: 't1',
+          mode: 'weighted',
+          denominator: 1,
+          entries: [
+            {
+              node: {
+                kind: 'item',
+                itemId: 1,
+                itemKey: 'rare-thing',
+                name: 'Rare thing',
+                qty: { kind: 'exact', n: 1 },
+              },
+              rate: { kind: 'weight', weight: 1 },
+              ownershipGate: { itemKey: 'rare-thing', n: 3, when: 'atLeast' },
+            },
+          ],
+        },
+      ],
+    })
+    render(
+      <SimContextControls
+        boss={boss}
+        sharedTables={shared}
+        params={{ ctx: { ...DEFAULT_SIM_CONTEXT }, seed: DEFAULT_SEED, kills: DEFAULT_KILLS, run: false }}
+        onChange={() => {}}
+      />
+    )
+    // A number input, not a chip: no button wrapping the label.
+    expect(screen.getByText('Rare thing').closest('button')).toBeNull()
+    const input = screen.getByLabelText('Rare thing') as HTMLInputElement
+    expect(input.type).toBe('number')
+  })
+})

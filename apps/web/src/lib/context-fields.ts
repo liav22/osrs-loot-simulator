@@ -35,10 +35,38 @@ import {
  * `withDerivedContext` overwrites it. The user moves `hitpointsDamage` and
  * `shieldDamage`, and `totalDamage` follows.
  */
+/**
+ * One `ownedCounts` control's worth of information — everything the UI needs
+ * to decide both its label and its shape, derived rather than hand-maintained
+ * per boss.
+ */
+export interface OwnershipItem {
+  itemKey: string
+  /**
+   * Display name, read off the same item node the gate lives on (every
+   * `ownershipGate` in the corpus sits on a plain `{ kind: 'item' }` node, so
+   * this always resolves in practice; `itemKey` is the fallback for the
+   * structural case — a gate on a `oneOf`/`tableRef` entry — that does not
+   * exist today but the schema does not rule out).
+   */
+  name: string
+  /**
+   * The highest `n` any gate against this item key requires. Every gate in
+   * the corpus today is `n: 1` — "own it or not" — which is what lets the UI
+   * render a checkbox instead of a number field. A future source needing
+   * `n > 1` (e.g. "own 3 or more") flips ONLY that item back to a numeric
+   * control, automatically, because this is read from the data rather than
+   * assumed.
+   */
+  maxN: number
+}
+
 export interface BossContextSurface {
   fields: ReadonlySet<SimContextField>
-  /** Item keys some entry gates on owning, for the `ownedCounts` controls. */
+  /** Item keys some entry gates on owning, for the `ownedCounts` controls. Derived from `ownershipItems`; kept for callers that only need the keys. */
   ownershipItemKeys: readonly string[]
+  /** The same gated items, with display name and required precision — see `OwnershipItem`. */
+  ownershipItems: readonly OwnershipItem[]
   /**
    * Whether this source describes a free-to-play outcome of its own, i.e. some
    * entry is gated `members: false`.
@@ -97,7 +125,8 @@ function collectFormula(value: unknown, into: Set<SimContextField>): void {
 
 interface Walk {
   into: Set<SimContextField>
-  ownedKeys: string[]
+  /** itemKey -> the richest info seen for it so far. A `Map` because the same item can be gated by more than one entry (ToA's thread-of-elidinis: one `below` grant, one `atLeast` bonus) and `maxN` has to reconcile across all of them. */
+  ownership: Map<string, { name: string; maxN: number }>
   shared: ReadonlyMap<string, Table>
   seen: Set<string>
   /** Set by any `members: false` gate. See `BossContextSurface.freeToPlayVariant`. */
@@ -155,7 +184,10 @@ function walkEntry(entry: Entry, walk: Walk): void {
   }
   if (entry.ownershipGate !== undefined) {
     into.add('ownedCounts')
-    walk.ownedKeys.push(entry.ownershipGate.itemKey)
+    const { itemKey, n } = entry.ownershipGate
+    const name = entry.node.kind === 'item' ? entry.node.name : itemKey
+    const existing = walk.ownership.get(itemKey)
+    walk.ownership.set(itemKey, { name, maxN: Math.max(existing?.maxN ?? 0, n) })
   }
   collectFormula(entry.rate, into)
   walkNode(entry.node, walk)
@@ -172,10 +204,10 @@ export function contextSurfaceOf(
   sharedTables: ReadonlyMap<string, Table> = new Map()
 ): BossContextSurface {
   const found = new Set<SimContextField>()
-  const ownedKeys: string[] = []
+  const ownership = new Map<string, { name: string; maxN: number }>()
   const walk: Walk = {
     into: found,
-    ownedKeys,
+    ownership,
     shared: sharedTables,
     seen: new Set(),
     freeToPlay: false,
@@ -194,9 +226,14 @@ export function contextSurfaceOf(
     else for (const input of inputs) fields.add(input)
   }
 
+  const ownershipItems = [...ownership.entries()]
+    .map(([itemKey, { name, maxN }]) => ({ itemKey, name, maxN }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+
   return {
     fields,
-    ownershipItemKeys: [...new Set(ownedKeys)].sort(),
+    ownershipItemKeys: ownershipItems.map((item) => item.itemKey),
+    ownershipItems,
     freeToPlayVariant: walk.freeToPlay,
   }
 }

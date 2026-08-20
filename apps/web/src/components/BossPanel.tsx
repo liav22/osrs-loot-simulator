@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Boss, StatusTier, Table } from '@osrs-loot-simulator/loot-model'
+import { useItemIcons } from '../hooks/useItemIcons'
 import { bossImageUrl } from '../lib/wiki-images'
 import type { SimRunParams } from '../lib/url-state'
 import { DropTableView } from './DropTableView'
@@ -54,6 +55,10 @@ export function BossPanel({
 }) {
   const [tableOpen, setTableOpen] = useState(false)
   const src = bossImageUrl(image, 300)
+  // `staleTime: Infinity` (see the hook) and the same query key `SimResultsView`
+  // already uses, so this shares one cached fetch rather than duplicating it —
+  // just for the ownership chips' icons, which fall back to a letter without it.
+  const { data: iconFiles } = useItemIcons()
 
   return (
     /*
@@ -163,6 +168,7 @@ export function BossPanel({
             sharedTables={sharedTables}
             params={params}
             onChange={onChange}
+            iconFiles={iconFiles}
           />
         )}
       </div>
