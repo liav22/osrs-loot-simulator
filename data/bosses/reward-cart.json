@@ -246,7 +246,7 @@
   "contextDefaults": {},
   "status": "needs_review",
   "statusTier": "unknown_scaling",
-  "statusReason": "Rolls scale with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer) rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the wintertodt_points formula.",
+  "statusReason": "Genuinely blocked on two unstated numbers, not merely a missing formula — read directly from the fetched wikitext. (1) The Logs sub-table's rows are all rarity=Varies; the prose says only that a higher Woodcutting level makes higher-tier logs more likely, with no numbers given anywhere — stated to exist, never stated, the same 'named but never quantified' shape as elsewhere on this watchlist, not a guessable rate. (2) The pyromancer outfit roll ('1/150 chance ... players have the least of', tie-broken Garb, hood, robe, boots) is a RELATIVE comparison across four item counts, a shape ownershipGate's single-count threshold cannot express. Separately, and also still unbuilt: how many rolls a run yields scales with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer), needing the still-stub wintertodt_points formula. The warm gloves/bruma torch substitutions and the remaining uniques ARE expressible today (ordinary ownershipGate thresholds and plain fixed rates), but none of it has been built yet.",
   "validation": {
     "ok": false,
     "checks": [
@@ -281,7 +281,7 @@
       {
         "check": "not_on_watchlist",
         "ok": false,
-        "detail": "point_scaled: Rolls scale with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer) rather than being a fixed count per kill. The rows give per-item rarities within one roll and say nothing about how many rolls a run yields. Needs the wintertodt_points formula."
+        "detail": "point_scaled: Genuinely blocked on two unstated numbers, not merely a missing formula — read directly from the fetched wikitext. (1) The Logs sub-table's rows are all rarity=Varies; the prose says only that a higher Woodcutting level makes higher-tier logs more likely, with no numbers given anywhere — stated to exist, never stated, the same 'named but never quantified' shape as elsewhere on this watchlist, not a guessable rate. (2) The pyromancer outfit roll ('1/150 chance ... players have the least of', tie-broken Garb, hood, robe, boots) is a RELATIVE comparison across four item counts, a shape ownershipGate's single-count threshold cannot express. Separately, and also still unbuilt: how many rolls a run yields scales with points earned fighting the Wintertodt (lighting braziers, adding kindling, healing the pyromancer), needing the still-stub wintertodt_points formula. The warm gloves/bruma torch substitutions and the remaining uniques ARE expressible today (ordinary ownershipGate thresholds and plain fixed rates), but none of it has been built yet."
       },
       {
         "check": "drops_covered",

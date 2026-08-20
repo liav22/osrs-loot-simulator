@@ -698,14 +698,36 @@ Mokhaiotl's delve-scaled override, which its own wiki-figure test pins). See
 landmine #11c, now a record of the fix and its residuals.
 
 **Read this before `docs/bosses/*.md`: all 14 carry an in-file banner
-correcting their stale capability verdicts.** Their *mechanics and cited
-numbers are accurate and are what to implement from*; their "what doesn't
-exist" sections predate Extensions A/B and are wrong in places (most sharply
-`doom-of-mokhaiotl.md`, whose central "needs wave machinery" verdict is
-false). One banner — `lunar-chest.md`'s — was itself written wrong this
-session and then corrected; the lesson is recorded there and worth absorbing:
+correcting their stale capability verdicts — but trust the banner
+selectively, not wholesale, per a session that found this instruction had
+itself gone stale.** Their *mechanics and cited numbers are accurate and are
+what to implement from*, and a **structural correction** ("Gap 2 is RESOLVED
+via `Table.qtyMultiplier`" — a capability existing, once true, stays true) is
+safe to build on. **Do NOT trust a banner's claim that something is still
+UNBUILT — still a stub, still absent, still unimplemented — without checking
+the actual source it's claiming about first**: this exact shape of claim has
+now gone stale FOUR times (`doom-of-mokhaiotl.md`'s false "needs wave
+machinery" verdict; `lunar-chest.md`'s own banner, written wrong once this
+session and then corrected — the lesson there is still worth absorbing:
 **having a `SimContext` field is not the same as being able to gate an entry
-on it.**
+on it**; and, found by auditing all 14 for the same pattern, 13 files' "real
+implementations for every `FORMULA_IDS` entry (all still stubs)" plus two
+specific `ancient-chest.md`/`monumental-chest.md` formula claims — all false
+by the time anyone re-read them, see `docs/DECISIONS.md`'s "formula-status
+claims" and "Was 'read the banners as ground truth' ever right" entries for
+the full history and reasoning). A banner is a snapshot of a moment before
+more work landed on top of it, and nothing re-checks it automatically —
+except formula-implementation claims specifically now: `apps/ingest/test/
+docs-bosses-formula-status.test.ts` fails `pnpm -r test` if any
+`docs/bosses/*.md` claims a formula is unimplemented that
+`IMPLEMENTED_FORMULA_IDS` says is real. For anything else a banner asserts
+is NOT yet built (an override existing, a source's `status`), check
+`data/overrides/`/`data/bosses/<slug>.json` directly — those lists are
+KNOWN to already be stale in several banners (`ancient-chest`/`monumental-
+chest`/`rewards-chest-fortis-colosseum` all shipped overrides this session;
+the banners' own "`data/overrides/` exists and is in use (...)" lists still
+don't name any of the three), flagged but not yet fixed, so don't assume
+silence there means it's fine.
 
 **Step (c) is DONE** (`Table.suppressesFollowing`, `TableRefNode.drawsPerHit`),
 plus `qtyRounding`, `Condition.includes`, `data/overrides/`, and

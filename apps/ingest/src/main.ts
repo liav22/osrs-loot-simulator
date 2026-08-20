@@ -255,7 +255,13 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
   const templates = await loadTemplateDefinitions()
   log(`Loaded ${templates.size} template definition(s) for transclusion expansion.\n`)
 
-  const watchlistIssues = checkWatchlistConsistency(watchlist, inventory)
+  // Read once, up front: rule 6 of checkWatchlistConsistency needs to know
+  // which sources have a shipped override to catch a `detail` that never
+  // mentions its own — the same "read once" reasoning as `overrideOrphans`
+  // below, just needed earlier now.
+  const overrideSlugs = new Set(await listOverrideSlugs())
+
+  const watchlistIssues = checkWatchlistConsistency(watchlist, inventory, overrideSlugs)
   if (watchlistIssues.length > 0) {
     log(`!! data/mechanics-watchlist.json disagrees with data/_inventory.json:`)
     for (const issue of watchlistIssues) log(`     [${issue.lootSourceId}] ${issue.message}`)
@@ -275,8 +281,6 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
   // (`overrideCarriesTables` rescues all three of its `parse_failed` exits, and
   // `applyOverride` accepts a null generated document and emits
   // `source: 'override'`) — the capability existed, nothing ever reached it.
-  const overrideSlugs = new Set(await listOverrideSlugs())
-
   const overrideOrphans = [...overrideSlugs].filter(
     (slug) => !inventory.lootSources.some((source) => source.id === slug)
   )

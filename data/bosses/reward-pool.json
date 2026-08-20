@@ -338,7 +338,7 @@
   },
   "status": "needs_review",
   "statusTier": "unknown_scaling",
-  "statusReason": "Rolls scale with reward permits earned subduing Tempoross (fishing/cooking/depositing harpoonfish, repairing totems, dousing fires) rather than being a fixed count per redemption. Needs the tempoross_points formula.",
+  "statusReason": "SHIPPED per permit, not per encounter — data/overrides/reward-pool.json, 12 wiki-figure tests in apps/ingest/test/reward-pool.test.ts. The page's own unit is the permit (banked, then redeemed one at a time, resolved at the Fishing level held at redemption), and both the 6,400-slot main table and the separate nine-item rare-unique table are modelled exactly at that unit — cross-checked against the page's own '~45/80 chance to roll the fish sub-table' figure and all seven Fishing-level brackets. What stays unmodelled, and why this remains watchlisted: converting Tempoross activity points into a permit count. The page states permits start at 1 above 2,000 points and add 1 per 700 points 'with a chance at rounding up' but never gives the rounding rule, so tempoross_points stays a stub and a user supplies a permit count directly rather than a points total. Genuinely unstated, not unbuilt laziness.",
   "validation": {
     "ok": false,
     "checks": [
@@ -373,7 +373,7 @@
       {
         "check": "not_on_watchlist",
         "ok": false,
-        "detail": "point_scaled: Rolls scale with reward permits earned subduing Tempoross (fishing/cooking/depositing harpoonfish, repairing totems, dousing fires) rather than being a fixed count per redemption. Needs the tempoross_points formula."
+        "detail": "point_scaled: SHIPPED per permit, not per encounter — data/overrides/reward-pool.json, 12 wiki-figure tests in apps/ingest/test/reward-pool.test.ts. The page's own unit is the permit (banked, then redeemed one at a time, resolved at the Fishing level held at redemption), and both the 6,400-slot main table and the separate nine-item rare-unique table are modelled exactly at that unit — cross-checked against the page's own '~45/80 chance to roll the fish sub-table' figure and all seven Fishing-level brackets. What stays unmodelled, and why this remains watchlisted: converting Tempoross activity points into a permit count. The page states permits start at 1 above 2,000 points and add 1 per 700 points 'with a chance at rounding up' but never gives the rounding rule, so tempoross_points stays a stub and a user supplies a permit count directly rather than a points total. Genuinely unstated, not unbuilt laziness."
       },
       {
         "check": "drops_covered",

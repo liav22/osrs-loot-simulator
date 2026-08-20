@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { z } from 'zod'
-import { FORMULA_IDS } from '@osrs-loot-simulator/loot-model'
+import { FORMULA_IDS, IMPLEMENTED_FORMULA_IDS, type FormulaId } from '@osrs-loot-simulator/loot-model'
 import { REPO_ROOT } from '../snapshots/store.js'
 import { InventorySchema, type Inventory } from '../inventory/schema.js'
 import { INVENTORY_PATH } from '../inventory/build.js'
@@ -155,7 +155,19 @@ function normalizeSubject(value: string): string {
  * version of this function only ever looked at `blockedBy`, so re-swapping the
  * prose alone passed clean — and the prose is where the formula id lives,
  * which is the half that actually misdirects the next person to wire one up.
- * Hence four rules, not one:
+ *
+ * Rules 5 and 6 exist for a *different* bug, found later: six of the eight
+ * `detail` fields turned out to be describing a PRE-OVERRIDE state on a
+ * source that had since shipped one — `monumental-chest` and `ancient-chest`
+ * both still claimed to need a formula (`tob_points`, `cox_points`) that had
+ * been a real implementation, not a stub, for a session or more; `detail` is
+ * what a user reads as the reason a source is `needs_review`, so a stale
+ * claim there is actively misleading, not merely untidy. Nothing compared
+ * this prose to the codebase until now. Deliberately narrow — this catches
+ * the two SPECIFIC shapes that actually went wrong, not prose drift in
+ * general, which cannot be checked mechanically without false positives.
+ *
+ * Hence six rules, not one:
  *
  * 1. `lootSourceId` resolves against the inventory at all.
  * 2. `title` is pinned to the inventory's own `title`/`dropsPage` for that
@@ -177,10 +189,50 @@ function normalizeSubject(value: string): string {
  *    their own (`toa_invocation`, `tob_points`, `cox_points`) draw no
  *    conclusion at all — the same "act only when the signal narrows
  *    unambiguously" discipline `build-tables.ts` uses for its own signals.
+ * 5. `detail` never claims a formula ("needs the X formula") is still needed
+ *    when `IMPLEMENTED_FORMULA_IDS` already has it. Narrow on the exact
+ *    phrasing this project's own entries use for the claim
+ *    (`formulaIdsClaimedNeeded`'s `NEEDS_FORMULA_PATTERN`) — a formula
+ *    mentioned any other way (e.g. "models ... (cox_points: ...)", stating
+ *    what it does) is not this claim and is correctly not matched.
+ * 6. `detail` never omits its own shipped override. When
+ *    `data/overrides/<lootSourceId>.json` exists (`overrideSlugs`, passed by
+ *    the caller — this function stays pure, no filesystem access here),
+ *    `detail` must cite that path literally. Every entry that accurately
+ *    describes a shipped override already does this as a matter of house
+ *    style (`data/overrides/ancient-chest.json`, `.../zalcano.json`, ...);
+ *    an entry that doesn't is the same "written before the override existed,
+ *    never revisited" shape as the six that had to be rewritten.
  */
+/**
+ * Matches "needs the X formula" (and "needing"/"needed", an optional "the",
+ * and an optional "still-stub"/"a new" qualifier) and captures the
+ * identifier — the exact phrasing every stale entry this project has shipped
+ * so far used for the claim (`Needs the wintertodt_points formula.`, `needs
+ * the tob_points formula`). Requires at least one underscore in the
+ * identifier, matching every real `FormulaId`'s own naming convention, so it
+ * does not fire on ordinary English ("needs a new formula" with no id).
+ */
+const NEEDS_FORMULA_PATTERN =
+  /\bneed(?:s|ing|ed)?\s+(?:the\s+)?(?:still-stub\s+|a\s+new\s+)?([a-z][a-z0-9]*(?:_[a-z0-9]+)+)\s+formula\b/gi
+
+/** The `FormulaId`s an entry's own `detail` claims are still needed, per `NEEDS_FORMULA_PATTERN`. */
+function formulaIdsClaimedNeeded(detail: string): FormulaId[] {
+  const found: FormulaId[] = []
+  for (const match of detail.matchAll(NEEDS_FORMULA_PATTERN)) {
+    const candidate = match[1]?.toLowerCase()
+    if (candidate !== undefined && (FORMULA_IDS as readonly string[]).includes(candidate)) {
+      found.push(candidate as FormulaId)
+    }
+  }
+  return found
+}
+
 export function checkWatchlistConsistency(
   watchlist: Watchlist,
-  inventory: Inventory
+  inventory: Inventory,
+  /** Loot source ids with a `data/overrides/<id>.json` file — rule 6. Empty by default so every existing caller/test that doesn't care about override-existence needs no change. */
+  overrideSlugs: ReadonlySet<string> = new Set()
 ): WatchlistConsistencyIssue[] {
   const issues: WatchlistConsistencyIssue[] = []
   const lootSourcesById = new Map(inventory.lootSources.map((source) => [source.id, source]))
@@ -275,6 +327,34 @@ export function checkWatchlistConsistency(
           })
         }
       }
+    }
+
+    // Rule 5 — `detail` claims a formula is still needed when it is already
+    // implemented. This is the CoX/ToB staleness shape exactly: true when
+    // written, never re-checked once the formula shipped.
+    for (const formulaId of formulaIdsClaimedNeeded(entry.detail)) {
+      if (IMPLEMENTED_FORMULA_IDS.has(formulaId)) {
+        issues.push({
+          lootSourceId: entry.lootSourceId,
+          message:
+            `detail claims formula '${formulaId}' is still needed, but ` +
+            `IMPLEMENTED_FORMULA_IDS already has it (not a stub) — detail is likely stale`,
+        })
+      }
+    }
+
+    // Rule 6 — `detail` never mentions its own override, even though
+    // data/overrides/<lootSourceId>.json exists. The other half of the same
+    // staleness shape: a source can ship an override that makes rule 5's
+    // specific formula claim technically still true (reward-pool's
+    // tempoross_points really is still a stub) while the rest of the entry
+    // still describes a document that no longer exists.
+    const overridePath = `data/overrides/${entry.lootSourceId}.json`
+    if (overrideSlugs.has(entry.lootSourceId) && !entry.detail.includes(overridePath)) {
+      issues.push({
+        lootSourceId: entry.lootSourceId,
+        message: `${overridePath} exists, but detail never mentions it — detail likely describes a pre-override state`,
+      })
     }
   }
 

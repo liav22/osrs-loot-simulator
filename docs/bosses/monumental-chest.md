@@ -63,8 +63,9 @@
 >   SOURCE. `Module:Theatre of Blood calculator` states the exact points
 >   formula neither this page's prose nor the earlier research session's page
 >   reads ever surfaced — see "The `Calculator:Theatre of Blood loot` module"
->   below. `tob_points` remains an unimplemented `FORMULA_IDS` stub, but the
->   rule it needs to implement is now fully cited rather than unknown.
+>   below. (`tob_points`'s implementation status: see
+>   `IMPLEMENTED_FORMULA_IDS`, not a snapshot here.) The rule it needs to
+>   implement is now fully cited rather than unknown.
 > - **New gap surfaced by the module, not previously flagged**: the points
 >   formula needs a per-run "rooms skipped" scalar that `SimContext` does not
 >   have today (`deaths` alone is not sufficient — skipping a room costs
@@ -104,8 +105,10 @@
 > `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
 > state, deeper inline table nesting, a `roomsSkipped`-shaped `SimContext`
 > field (see above — trivial to add, same shape as `deaths`), party/team
-> context, and real implementations for every `FORMULA_IDS` entry (all still
-> stubs). `data/overrides/` exists and is in use (ToA, Doom of Mokhaiotl,
+> context, and real implementations for every `FORMULA_IDS` entry — current
+> status: `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`,
+> not a count restated here (see `docs/DECISIONS.md`'s formula-status entry).
+> `data/overrides/` exists and is in use (ToA, Doom of Mokhaiotl,
 > Lunar Chest, Zalcano, Reward pool). See `docs/DECISIONS.md`.
 
 
@@ -376,9 +379,9 @@ would produce.
    `docs/HANDOFF.md`'s "lunar-chest lesson" warns about: having the *capability* to add a field
    is not the same as having already added the specific one a source needs).
 3. ~~The magnitude of both scaling effects is UNKNOWN~~ **RESOLVED**: both are `points/32`-driven,
-   sourced from `Module:Theatre of Blood calculator`, cited in full above. `tob_points` remains an
-   unimplemented `FORMULA_IDS` stub, but the rule to implement is now fully specified rather than
-   unknown.
+   sourced from `Module:Theatre of Blood calculator`, cited in full above. (`tob_points`'s
+   implementation status: see `IMPLEMENTED_FORMULA_IDS`, not a snapshot here.) The rule to
+   implement is now fully specified rather than unknown.
 4. ~~Applying the mode/death quantity scaling needs a conditional multiplier on a table's whole
    yield, which doesn't exist~~ **RESOLVED**: `Table.qtyMultiplier` (shipped for Duke
    Sucellus/Zalcano/general use) already accepts a `FormulaRef`, not just a constant — no new

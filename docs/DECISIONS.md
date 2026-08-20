@@ -6416,3 +6416,484 @@ everything ev_matches is NOT: every other field, on every other source, is
 still compared byte-for-byte. Did not reproduce live today (GE prices happened
 not to move during this session), so this is a preventive fix confirmed not to
 break anything, not a fix proven against a live failure.
+
+## `GeneralSeedDropLines`: the first case where the model is MORE precise than the wiki's own displayed rates — a real risk for `drops_covered`/`marginal-rates`, worth naming before it recurs
+
+Black Knight Titan's and Obor's `Seeds` heading (`docs/DECISIONS.md`'s
+"`Module:GeneralSeedDropLines` reimplemented" entry, above) is modelled with
+RAW, un-`floor()`'d per-seed weights, not the wiki's own displayed `1/N`
+figures — a deliberate precision decision, not a style choice. The wiki's
+displayed rarity independently floors each of the 44 seeds' denominators, so
+the 44 displayed figures overshoot the true access rate by a measured 0.29%
+on Black Knight Titan and 0.74% on Obor (worse there because its combat level
+lands the roundings differently), and by up to ~2% on individual large-share
+seeds (`Potato seed`: true rarity 1/44.90 displays as 1/44). The raw model
+reproduces the declared access rate to float precision; the wiki's own
+display convention does not.
+
+**This is the first source in the corpus where the MODEL is more precise than
+the wiki's own rendered numbers — every other source in the project has had
+the opposite shape** (the model approximating, simplifying, or falling short
+of what the wiki states). Worth naming as its own case, not folding into the
+GWDRDT-style "fixed a defect" entries, because the failure mode it risks is
+the inverse of every other one this project has guarded against:
+
+- **`drops_covered`** (`apps/ingest/src/validate/drops-covered.ts`) compares
+  the document against the wiki's own `dropsline` bucket by ITEM NAME, not
+  rate — both Black Knight Titan and Obor pass it cleanly today because the
+  44 seed names match exactly, and `drops_covered` has no opinion on the rate
+  attached to a name it already recognizes.
+- **`marginal-rates.test.ts`** is the one check that DOES compare a computed
+  per-item rate against the wiki's own figure — and both sources are
+  deliberately on its `AUTHORED` exclusion list for exactly this reason (see
+  the "reimplemented" entry), each pointing at
+  `general-seed-drop-lines.test.ts`'s own wiki-figure pinning instead. That
+  test's real oracle is the RECONSTRUCTED MODULE LOGIC (verified two
+  independent ways: name-for-name match against the dropsline bucket, and the
+  44 raw probabilities summing to the declared access rate to float
+  precision), not the wiki's displayed `1/N` column — so this pair does not
+  currently trip `marginal-rates`' tolerance, but only because they are
+  excluded from that check's oracle rather than because the check would
+  agree with the model if asked.
+
+**The risk for a future session**: `marginal-rates.test.ts`'s tolerance
+(0.5%, see its own header) is built assuming the wiki's displayed figure IS
+the ground truth being approximated — the only shape the project had seen
+until this pair. If a THIRD source turns up where the correct model is
+provably more precise than the wiki's own rounding (another `{{#invoke:}}`
+Lua template reimplemented from source, most likely), the reflex "the model
+disagrees with the wiki, so the model is wrong" would be backwards here — the
+wiki's displayed column is itself the approximation in this shape, not the
+oracle. Before adding a third source to `AUTHORED` on this basis, re-derive
+independently (as this pair did: reproduce the source logic, verify the
+reconstructed rates sum to the declared access rate algebraically) rather
+than assuming the exclusion list is itself precedent enough to extend by
+inspection alone.
+
+## Suggested bosses on the empty search state: alias-count weighting tried, measured, and reverted
+
+`apps/web/src/lib/suggestions.ts`'s `pickSuggestedBosses` first shipped
+weighted by `1 + aliases.length` — a boss with more recorded
+nicknames/variant spellings (the Godwars generals, Vorkath) was assumed to be
+one people actually look up, against `Melzar the Mad`-shaped obscure content
+with none. Checked against the real corpus before trusting it, not left as an
+assumption: `data/index.json`'s entire 99-source corpus has exactly ONE entry
+with any alias at all (`reward-pool`'s `['Tempoross reward pool',
+'Tempoross']`) — and that source is `needs_review`, never reachable through
+the suggestion pool's `repeatable && verified` filter anyway. Every one of
+the 45 pool candidates therefore carried `aliases.length === 0`, making the
+Efraimidis-Spirakis weighted sampler mathematically identical to uniform
+random while presenting as if it favoured anything.
+
+**Measured, not just reasoned about**: a 20-page-load sample (80 picks at 4
+per load) surfaced 38 of the 45 pool sources, with `Salarin the twisted` and
+`Eldric the Ice King` appearing exactly as often as `Cerberus` and
+`Corporeal Beast` — flat noise, not a prominence signal. No other
+derivable-from-data prominence proxy exists in the corpus either (drop-table
+size, popularity, anything) — checked, not assumed absent, per
+`apps/web/src/lib/suggestions.ts`'s own header comment.
+
+**Reverted to plain (partial Fisher-Yates) random over the same
+`repeatable && verified` pool.** A proxy that does not correlate with the
+thing it claims to weight toward is worse than no proxy at all: it implies a
+curation this project never actually did, which is a stronger, more
+misleading claim than "these four are arbitrary." This is not a placeholder
+pending a better signal — it is the honest answer given what the corpus
+currently contains, and should only be revisited if a real per-boss
+prominence field (drop-table size, view counts, anything) is added to
+`data/` itself, not by reaching for `aliases.length` again on the same
+data.
+
+## CoX's `not_on_watchlist` detail was stale (pre-override text on a post-override source); rewritten, not resolved — Metamorphic dust's time threshold checked against `Module:Chambers of Xeric calculator` and confirmed genuinely absent
+
+`data/mechanics-watchlist.json`'s `ancient-chest` entry still carried the
+`detail` text written before `data/overrides/ancient-chest.json` existed — it
+described the pre-override generated document's ~100%-unique-rate bug (two
+ungated independent tables rolling on every kill) as if that were still the
+reason for `needs_review`/tier `approximate`, which was simply false: the
+override has modelled `cox_points`, the nested herb/seed `oneOf` structure,
+and the ownership gates for over a session's worth of history now (see this
+file's own "Phase 7: Chambers of Xeric shipped" entry). `not_on_watchlist`'s
+`detail` is what `apps/web`'s tier-3 "Approximate" badge shows a user as the
+reason — a stale reason is actively misleading, not merely untidy, since it
+tells a user the wrong thing is wrong.
+
+**Checked whether any of CoX's three named residuals is actually resolvable
+before rewriting the text, per instruction** — specifically re-read
+`Module:Chambers of Xeric calculator`'s full wikitext
+(`data/snapshots/wikitext/module-chambers-of-xeric-calculator.json`) end to
+end, since ToA's, ToB's, and CoX's own prior "UNKNOWN" constants have all
+previously turned out to be stated in a `Module:`/`Calculator:` page the
+prose alone didn't have (this file's ToA and "Phase 7: Chambers of Xeric"
+entries). Result differs by residual:
+
+1. **Per-player, not per-party** (`ctx.points` stands in for the whole
+   raid's points, `personalRatio = 1`, matching a solo run) is not a missing
+   fact — the module's own `personalRatio`/`args.split`/`args.teamSize`
+   logic proves the real per-player split is fully specified on the wiki.
+   It's unmodelled because this simulator's unit is one player, not a raid
+   group (the same scope line as Theatre of Blood's team allocation and
+   ToA's team size) — a scope decision, not a research gap, and not
+   resolvable by finding a formula.
+2. **Ancient tablet's "replaces one of the loot rolls"** remains an
+   engine-capability gap, not a data gap: no run-scoped mechanism exists for
+   one table's hit to reduce another table's roll count. Already modelled as
+   a small, bounded, quantified overstatement (an additional independent
+   1/10 roll) rather than left as a guess.
+3. **Metamorphic dust's "if the raid was completed within a certain time"
+   qualifier — checked specifically, confirmed NOT stated anywhere
+   reachable.** `Module:Chambers of Xeric calculator`'s full source (~140
+   lines, read in full) never touches tertiary rewards at all: Dark journal,
+   Ancient tablet, Metamorphic dust, and Twisted ancestral colour kit appear
+   nowhere in it — its scope is strictly the unique-roll and common/trash EV
+   tables (`p.main`'s only outputs). The `Ancient chest` page's own
+   `raritynotes` citation for this line is a `{{CiteVideo}}` reference to a
+   21 June 2018 developer Q&A YouTube video at a specific timestamp, not a
+   written number — the wiki's own editors evidently never had one to write
+   down either. Also checked and empty: the main `Chambers of Xeric` page's
+   full wikitext for `time limit`/`speedrun`/`personal best`/`completion
+   time` (the one `completion time` hit is an unrelated 2019 patch-note line
+   about the adventure log displaying fastest-completion times, nothing to
+   do with a loot gate). **This is the genuinely-unknowable case, not a
+   repeat of ToA/ToB's "it was in the module all along."**
+
+**Action taken: `detail` rewritten to name all three residuals precisely and
+explain why each is unmodelled (scope decision / engine gap / genuinely
+unstated), replacing the stale pre-override text. `tier` stays
+`approximate`; `mechanic` stays `point_scaled`; `blockedBy` unchanged
+(already correct). Status stays `needs_review` — none of the three residuals
+resolved, so CoX does NOT move to `manual_override`.** Re-ran `ingest parse
+--source ancient-chest` to regenerate `data/bosses/ancient-chest.json`'s
+`statusReason` from the new `detail`; full `pnpm -r test`/`typecheck`/`lint`
+clean afterward, including `corpus-reproducibility.test.ts`,
+`watchlist.test.ts`, and `brutus-snapshot.test.ts` as the regression gate.
+Do not re-open Metamorphic dust's threshold expecting a number to exist
+without a new primary source (e.g. someone transcribing the cited video) —
+it is not sitting unread in a page or module this project has snapshotted.
+
+## Raid loot is modelled per player, solo, everywhere — one scope decision, not three separate per-source approximations
+
+Chambers of Xeric's, Theatre of Blood's, and Tombs of Amascut's reward
+chests each treat `ctx.points` as the WHOLE raid's points rather than one
+player's share of a group total — every override's own `note` already says
+this identically: CoX's "Modelled per player, solo — `ctx.points` is this
+player's own points, matching Chambers of Xeric's own module which sets
+`personalRatio=1`... for a solo run"; ToB's team/party allocation is
+"a multi-player mechanic this project's single-player `SimContext` is not
+built for"; ToA's "One chest for one player is this simulator's unit, so
+team size is out of scope rather than approximated." Three overrides,
+written in different sessions, converged on the identical sentence because
+it is the same fact every time: this project's `SimContext` models one
+player, not a raid party, full stop — nothing group-shaped is in scope
+anywhere in the codebase, not just on these three sources. It is a global
+architecture decision, not a per-boss modelling gap, and it is not
+resolvable by researching any one source harder — a party-points formula
+being fully known (as ToB's and CoX's now are, via their own
+`Module:`/`Calculator:` pages) does not change that this simulator only
+ever computes one account's own chest.
+
+**Documented once here rather than restated in full in each of the three
+watchlist entries**, which is a direct lesson from the CoX staleness fix
+above: three independently hand-maintained copies of the same paragraph is
+exactly the shape that drifts out of sync when only one of the three gets
+touched. Each of `chest-tombs-of-amascut`'s, `ancient-chest`'s, and
+`monumental-chest`'s `data/mechanics-watchlist.json` entries now carries a
+short one-clause pointer to this entry instead of re-deriving the reasoning;
+the full reasoning behind why "solo" is treated as an approximation worth
+naming (rather than just quietly true) lives in each override's own `note`,
+unchanged. Not a claim that this will ever be resolved — a genuinely
+different, multi-player `SimContext` is out of this project's stated scope,
+not a missing formula.
+
+## Watchlist audit: `not_on_watchlist` detail checked source-by-source against what's actually built, not assumed current
+
+Prompted directly by the CoX staleness bug above: if one entry's user-facing
+`detail` can silently describe a fixed bug instead of the real remaining
+gap, any of the other seven could too, and nobody had checked. Went
+through all eight entries in `data/mechanics-watchlist.json`, cross-reading
+each against `data/overrides/` (does an override exist at all?), the
+relevant `apps/ingest/test/*.test.ts` file (does a wiki-figure test exist?),
+and that override's own `note` (what does IT say is actually modelled and
+what's deliberately left out?) rather than trusting the watchlist's own
+prose. Two more were stale in the identical CoX shape (describing a
+pre-override state on a now-shipped source); one was accurate but
+incomplete; four were already current and needed no change:
+
+- **`reward-pool` — STALE, same shape as CoX.** The entry read "Rolls scale
+  with reward permits... Needs the tempoross_points formula", as if nothing
+  had been built. In fact `data/overrides/reward-pool.json` has shipped for
+  multiple sessions (12 wiki-figure tests, `apps/ingest/test/reward-pool.
+  test.ts`), modelled exactly at the permit unit the page itself uses. The
+  real remaining gap is narrower and different: only the points-to-permit
+  conversion is unstated (the rounding rule for "1 per 700 points, with a
+  chance at rounding up" is never given), which is why `tempoross_points`
+  stays a stub — everything else about the redemption table itself is
+  exact. Rewritten to say so. **`tier` stays `unknown_scaling`** — the
+  residual is still a genuinely unstated function, not a bounded
+  simplification, so it does not qualify for `approximate` under that tier's
+  own definition (`apps/ingest/src/validate/watchlist.ts`'s
+  `WATCHLIST_TIERS` comment) even though the shipped part is exact.
+- **`monumental-chest` — STALE, same shape as CoX, more severely.** The
+  entry read "needs the tob_points formula" verbatim, but `tob_points` has
+  been a real, tested implementation (not a stub) since the same session
+  that shipped all four raids — `IMPLEMENTED_FORMULA_IDS` has included it
+  the whole time. `data/overrides/monumental-chest.json` (22 wiki-figure
+  tests) models the points-scaled unique roll, the Normal/Hard Mode weight
+  split, Hard Mode's stated 1.30x time bonus, and the Cabbage/Message
+  zero-points gate. The real remaining residuals — team/party allocation
+  (now just a pointer to the entry above), the tertiary "individual
+  performance" rates' unstated magnitude (a genuine unknown, not
+  approximated), and Entry Mode's unconfirmed points/death interaction with
+  its flat -80% — are completely different from what the old text named.
+  Rewritten in full. **`tier` unchanged (`approximate`)** — matches the
+  other three raids' precedent of one entry covering both a bounded,
+  quantified residual and a genuinely-unstated one.
+- **`rewards-chest-fortis-colosseum` — STALE, and the old text described a
+  problem that turned out not to exist.** It claimed "No formula for this
+  is in PROJECT_PLAN.md's section 4.6 registry yet — it needs a new one",
+  but the shipped override (`data/overrides/rewards-chest-fortis-colosseum.
+  json`, 14 wiki-figure tests) needed no new formula at all: each of the 12
+  waves is its own complete, self-contained weighted table exactly as
+  published, and `ctx.wavesReached` is selected by an ordinary
+  `levelAtLeast` condition. The real, current, and much narrower residual is
+  the wave-scoped Sunfire fanatic armour duplicate-protection rule, shipped
+  as a quantified with-replacement approximation because whether the
+  protection resets per attempt or is a permanent account-wide guarantee is
+  not stated anywhere checked (checked across two separate sessions — see
+  this file's own Fortis Colosseum entries). Rewritten in full, including
+  the quantified cost (~0.20% vs ~0.00025% true chance of a same-run
+  duplicate — ~800x relative, both absolute-tiny; a 3-piece set in one run
+  understated ~4.4x). **`tier` unchanged (`approximate`)**.
+- **`reward-cart` — NOT stale (nothing has been built; `data/bosses/
+  reward-cart.json` is still `source: generated`), but INCOMPLETE.** The old
+  one-line "Needs the wintertodt_points formula" underclaimed the blocker:
+  even with that formula built, two separate hard stops (both already
+  diagnosed in this file's own "Reward pool and Reward Cart: NOT built, and
+  precisely why" entry, just never carried over into the watchlist's own
+  text) would still block it — the Logs sub-table's Woodcutting-scaled rates
+  are never given a number at all, and the pyromancer outfit roll is a
+  relative comparison across four item counts, a shape `ownershipGate`
+  cannot express. Rewritten to name both. **`tier` unchanged
+  (`unknown_scaling`)** — still correctly blocked, just for reasons the text
+  now actually states.
+- **`duke-sucellus`, `zalcano` — checked, already current, no change.** Both
+  entries already describe the live state precisely (`duke-sucellus`: no
+  override exists, matching `data/bosses/duke-sucellus.json`'s
+  `source: generated`; `zalcano`: the override's own scope — what's modelled
+  vs. the two genuinely-unstated curves — matches `data/overrides/
+  zalcano.json`'s `note` and `IMPLEMENTED_FORMULA_IDS`'s stub status for
+  `zalcano_points` exactly).
+- **`chest-tombs-of-amascut` — checked, already current; only the team-size
+  clause was trimmed** to a one-line pointer at the new shared-scope entry
+  above, for the same reason `ancient-chest`'s and `monumental-chest`'s
+  full paragraphs were trimmed to pointers rather than each restating the
+  "one player, not a party" reasoning in full.
+
+**Cross-reference discipline, worth naming since it is easy to violate by
+accident**: entries must not name another watchlist source's own boss-page
+title as a whole word (`checkWatchlistConsistency`'s rule 4a) or a formula
+id whose subject belongs to a different source (rule 4b) —
+`watchlist.test.ts`'s real-corpus assertion enforces this. Where these
+rewrites needed to reference another source's shape (Reward Cart's "same as
+elsewhere on this watchlist" instead of naming Zalcano or Duke Sucellus by
+title), they were phrased generically rather than by title, matching the
+existing entries' own established discipline rather than introducing a new
+violation while fixing an old one.
+
+**Net result: two entries moved from describing a fixed bug to describing
+the real residual (`reward-pool`, `monumental-chest`), one moved from a
+phantom problem to the real one (`rewards-chest-fortis-colosseum`), one
+gained the two hard stops it was missing (`reward-cart`), one had a
+duplicated paragraph trimmed to a pointer (`chest-tombs-of-amascut`), and
+`ancient-chest` (this session's earlier fix) also had its own team-size
+paragraph trimmed to the same pointer. No `tier` moved on any of the eight
+— every rewrite was a text-accuracy fix, not a re-classification. Two
+sources (`duke-sucellus`, `zalcano`) needed no change at all.**
+
+## A trip wire for the two staleness shapes that actually occurred, not a general prose validator
+
+The audit above fixed the six stale entries by hand; nothing stopped a
+seventh from drifting the same way tomorrow. Added two new rules to
+`checkWatchlistConsistency` (`apps/ingest/src/validate/watchlist.ts`) —
+rules 5 and 6, alongside the existing four — that check `detail` against the
+codebase instead of only against `data/_inventory.json`. Deliberately narrow,
+matching the instruction: these catch the two SPECIFIC shapes that produced
+this session's bugs, not prose drift in general (which cannot be checked
+mechanically without a real false-positive risk).
+
+**Rule 5 — a formula claimed still-needed that is already implemented.**
+`formulaIdsClaimedNeeded` extracts identifiers from the phrasing this
+project's own entries have used for the claim every time so far — "needs the
+X formula" / "needing ... X formula", tolerant of "the"/"still-stub"/"a
+new" and need/needs/needing/needed — via `NEEDS_FORMULA_PATTERN`, filters to
+real `FormulaId`s (so it can't fire on ordinary prose that happens to end in
+"formula"), and flags any that `IMPLEMENTED_FORMULA_IDS` already has. This
+is exactly `ancient-chest`'s and `monumental-chest`'s old bug reproduced
+mechanically: both literally said "needs the cox_points/tob_points formula"
+after those formulas had shipped. Deliberately does NOT fire on a formula
+mentioned any other way — "models ... (cox_points: ...)", stating what it
+does rather than claiming it's needed — matching the "narrow the signal, act
+only when unambiguous" discipline rule 4b and `build-tables.ts`'s own
+detectors already use. Verified it does NOT catch `reward-cart`'s/`reward-
+pool`'s real, still-accurate "needs the wintertodt_points/tempoross_points
+formula" claims (both genuinely still stubs) — the rule's whole job is to
+distinguish these two cases, not to flag every such sentence.
+
+**Rule 6 — an override exists but `detail` never mentions it.** The
+complementary half: `reward-pool`'s old text was not caught by rule 5 (its
+one formula claim, `tempoross_points`, is still genuinely a stub — the
+override shipped everything else) but was still describing a document that
+no longer existed. Every entry that accurately describes a shipped override
+already cites its own `data/overrides/<slug>.json` path as a matter of house
+style (checked directly across all eight current entries before relying on
+it as a signal); an entry that doesn't, for a source where that file exists,
+is the same "written before the override existed, never revisited" shape.
+Takes `overrideSlugs: ReadonlySet<string>` as a new third parameter,
+**defaulted to an empty set** — `checkWatchlistConsistency` stays pure (no
+filesystem access inside it), and every existing call site/test that
+doesn't care about override-existence needed zero changes. The two real
+callers (`main.ts`'s `parseCommand`, `watchlist.test.ts`'s real-corpus
+assertion) pass the actual set via the already-existing `listOverrideSlugs()`
+— `main.ts` only needed its existing `overrideSlugs` computation hoisted
+earlier, not new logic.
+
+**Both verified against the real corpus, not just synthetic fixtures**:
+`watchlist.test.ts`'s real-data test now passes `realOverrideSlugs` and
+still asserts zero issues — proving the six rewrites this session actually
+satisfy both new rules, not just that the rules compile. One pre-existing
+synthetic test (`draws no conclusion from a formula with no boss page of its
+own`) had its fixture text changed from "Needs the toa_invocation formula"
+to "computed via the toa_invocation formula" — the old phrasing, written to
+test rule 4b in isolation, incidentally also matched rule 5 now that
+`toa_invocation` is a real implementation, which would have made that test
+assert something no longer true rather than testing what it was written to
+test. Six new dedicated tests cover both rules' fire/stay-quiet cases,
+including the two straight from this session's real bugs
+(`implementedId`/`stubId` picked dynamically from the real `FORMULA_IDS`/
+`IMPLEMENTED_FORMULA_IDS`, not hand-picked ids that could go stale
+themselves). Full `pnpm -r test`/`typecheck`/`lint` clean, 566 tests
+(`apps/ingest`) including `corpus-reproducibility.test.ts` and
+`brutus-snapshot.test.ts` as the regression gate.
+
+## `docs/bosses/*.md`'s formula-status claims: the fourth stale-verdict bug, fixed by pointing instead of restating, plus a mechanical check
+
+The eight-entry watchlist audit above found the pattern once. Checking
+whether it recurred elsewhere in the repo found it immediately, in the
+exact place `docs/HANDOFF.md` already flags as prone to this
+(`doom-of-mokhaiotl.md`'s false "needs wave machinery" verdict,
+`lunar-chest.md`'s own banner written wrong once already) — the 14
+`docs/bosses/*.md` research docs' own "STALE, re-audited 2026-08-13/16"
+correction banners. **13 of the 14 files (all but `chest-tombs-of-
+amascut.md`, which never had a banner) ended their "Model capabilities now
+available" paragraph with the identical copy-pasted sentence**: "...and real
+implementations for every `FORMULA_IDS` entry (all still stubs)." True when
+first written. False now — `IMPLEMENTED_FORMULA_IDS` has grown to 15 of 26.
+**Two files carried a second, independent instance of the same bug, naming
+one specific formula**: `ancient-chest.md` said `cox_points` "remains an
+unimplemented `FORMULA_IDS` stub" (it shipped this session); `monumental-
+chest.md` said the same of `tob_points`, twice, once inside its banner and
+once in an already-corrected numbered list further down the file (someone
+had already `~~strikethrough~~`-marked that list item's UNKNOWN-magnitude
+claim as RESOLVED once, without revisiting the stub claim sitting right next
+to it — the "written once, corrected once, drifted again" cycle in
+miniature). Checked and confirmed still accurate, left untouched:
+`duke-sucellus.md` (`duke_sucellus_ice_quartz`), `tzhaar-fight-cave.md`
+(`tzhaar_fight_cave_tokkul`), `zalcano.md` (`zalcano_points`) — all three are
+genuinely still stubs.
+
+**Fixed per the preferred approach: point at the source of truth instead of
+restating a fact that can drift from it.** The 13 generic sentences and the
+3 specific claims were all rewritten to name `IMPLEMENTED_FORMULA_IDS`
+(`packages/loot-model/src/formulas.ts`) as where to check, rather than
+asserting a snapshot of which formulas are implemented. A fact stated in one
+place — the actual `IMPLEMENTED_FORMULA_IDS` `Set` — cannot drift from
+itself; a fact restated in fourteen markdown files can, and evidently does,
+repeatedly.
+
+**A mechanical check now backs this, `apps/ingest/test/docs-bosses-formula-
+status.test.ts`, two rules:**
+
+1. No `docs/bosses/*.md` file may claim every `FORMULA_IDS` entry is
+   unimplemented ("all still stubs"), once `IMPLEMENTED_FORMULA_IDS` is
+   non-empty — permanently true from here on, since nothing un-implements a
+   formula.
+2. No file may claim a SPECIFIC formula is still a stub/unimplemented when
+   `IMPLEMENTED_FORMULA_IDS` actually has it — a proximity check (`stub` or
+   `unimplemented` within 80 characters of a real `FormulaId` mention, either
+   direction), not a hand-listed set of exact phrases, so it catches the next
+   differently-worded claim too, not just this session's three. Deliberately
+   does NOT fire on a formula that genuinely IS still a stub (the three left
+   untouched above stay quiet).
+
+**Both rules verified against the actual pre-fix files, pulled from git
+history (`git show HEAD:docs/bosses/<file>.md`), not just the post-fix
+state** — proving the check would really have caught this bug, not just that
+it compiles. This surfaced one real gap while building it: the first draft
+of rule 1 used a plain `\s+` between "still" and "stubs", which does not
+span a markdown blockquote's `> ` line-continuation marker — and
+`monumental-chest.md`'s original wrapped the phrase across exactly such a
+line break (`(all still\n> stubs).`), so the naive regex silently missed the
+one file it most needed to catch. Fixed generally (`stripBlockquoteMarkers`
+strips every line's leading `> ` before either rule runs, not a special case
+for that one file) and reverified against all 14 originals: 13 flagged,
+`chest-tombs-of-amascut.md` correctly quiet (no banner, no claims), matching
+expectations exactly before trusting the check going forward.
+
+**Scope note, deliberately not chased further this session**: several of
+these same banners also list which sources have a shipped override by name
+("`data/overrides/` exists and is in use (ToA, Doom of Mokhaiotl, Lunar
+Chest, Zalcano, Reward pool)") — a list that is now ALSO stale, missing
+`ancient-chest`/`monumental-chest`/`rewards-chest-fortis-colosseum`, all
+three shipped this session. Same decaying-negative-claim shape as the
+formula-status bug, structurally the research-doc cousin of the watchlist's
+own rule 6. Left alone: the task asked specifically for formula-
+implementation claims, and widening scope mid-fix risks the same kind of
+half-finished sweep that produced this bug in the first place. Named here so
+it isn't mistaken for unknown, and named again in the instruction-update
+entry immediately below.
+
+## Was "read the docs/bosses/*.md banners as ground truth" ever the right instruction? No — replaced
+
+`docs/HANDOFF.md` (not `CLAUDE.md`, which never mentions `docs/bosses/*.md`
+at all — checked directly rather than assumed from how the question was
+phrased) told every future session, in section 1: **"Read this before
+`docs/bosses/*.md`: all 14 carry an in-file banner correcting their stale
+capability verdicts,"** followed by "their mechanics and cited numbers are
+accurate and are what to implement from" as the reason to trust them. That
+framing was written after the SECOND staleness incident (`doom-of-
+mokhaiotl.md`'s false "needs wave machinery" verdict) as a fix for it — and
+between then and this session, the identical failure shape happened twice
+more (`lunar-chest.md`'s own banner, written wrong once and self-corrected
+in the same session per its own account; now these 13 formula-status
+claims). Four incidents, same root cause each time: a hand-written claim
+about current CODE STATE, asserted once, never mechanically re-checked.
+
+**The instruction wasn't wrong about everything — it was wrong about not
+distinguishing two different kinds of claim a banner makes:**
+
+- **Facts about the wiki/mechanics** (drop rates, formulas, page citations)
+  and **structural corrections** ("Gap 2 is RESOLVED via `Table.
+  qtyMultiplier`" — a capability existing, once true, stays true) do not
+  decay. Nothing in four incidents has ever found one of these wrong after
+  the fact.
+- **Negative/snapshot claims about current code state** ("X is still a
+  stub", "X is still absent", "the generated document does Y" for a source
+  that later shipped an override) decay by construction, because the whole
+  point of a banner is to describe a moment before more work landed on top
+  of it. Every one of the four incidents was this second kind.
+
+**`docs/HANDOFF.md`'s instruction is rewritten accordingly** (see its own
+section 1, this session's entry) to keep the first half — the mechanics and
+structural corrections are still what to implement from — and retract the
+second: a banner's claim that something is NOT YET implemented, built, or
+present is no longer to be trusted at face value, only as a hint of where to
+check the actual source (`IMPLEMENTED_FORMULA_IDS`, `data/overrides/`,
+`data/bosses/<slug>.json`'s own `status`) before relying on it. Two of the
+three sources that check now has a mechanical guard behind it
+(`docs-bosses-formula-status.test.ts` for formula status;
+`checkWatchlistConsistency`'s rules 5-6 for the watchlist's own claims,
+though those don't reach `docs/bosses/*.md` itself). The override-listing
+staleness named in the scope note above is the visible proof the new
+instruction is necessary, not hypothetical: it is a currently-true instance
+of exactly the claim type the old instruction said to trust, sitting in
+files this session touched for an unrelated reason.

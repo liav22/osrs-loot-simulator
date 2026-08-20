@@ -84,9 +84,9 @@
 >   imprecise approximation. See `data/mechanics-watchlist.json`'s
 >   `ancient-chest` entry. This is now a real Phase 7 override candidate,
 >   following the exact `cox_points` + preroll/suppression pattern ToA already
->   established — not a from-scratch investigation. `cox_points` itself
->   remains an unimplemented `FORMULA_IDS` stub. Per-player allocation within
->   a team stays out of scope (below).
+>   established — not a from-scratch investigation. (`cox_points`'s
+>   implementation status: see `IMPLEMENTED_FORMULA_IDS`, not a snapshot
+>   here.) Per-player allocation within a team stays out of scope (below).
 >
 > Model capabilities now available: per-run `SimContext` scalars (`points`,
 > `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
@@ -96,7 +96,9 @@
 > `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
 > `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
 > state, deeper inline table nesting, party/team context, and real
-> implementations for every `FORMULA_IDS` entry (all still stubs).
+> implementations for every `FORMULA_IDS` entry — current status:
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
+> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
 > `data/overrides/` exists and is in use (ToA, Doom of Mokhaiotl, Lunar Chest,
 > Zalcano, Reward pool). See `docs/DECISIONS.md`.
 

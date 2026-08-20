@@ -26,7 +26,9 @@
 > `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
 > `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
 > state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry (all still stubs).
+> and real implementations for every `FORMULA_IDS` entry — current status:
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
+> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
 > See `docs/DECISIONS.md`.
 
 

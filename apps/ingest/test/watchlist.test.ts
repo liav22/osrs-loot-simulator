@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
+import { FORMULA_IDS, IMPLEMENTED_FORMULA_IDS } from '@osrs-loot-simulator/loot-model'
 import {
   checkNotOnWatchlist,
   checkWatchlistConsistency,
@@ -10,6 +11,7 @@ import {
 } from '../src/validate/watchlist.js'
 import { InventorySchema, type Inventory } from '../src/inventory/schema.js'
 import { INVENTORY_PATH } from '../src/inventory/build.js'
+import { listOverrideSlugs } from '../src/parse/overrides.js'
 
 const watchlist: Watchlist = WatchlistSchema.parse({
   watchlistVersion: 1,
@@ -291,10 +293,12 @@ describe('checkWatchlistConsistency', () => {
 
     it('draws no conclusion from a formula with no boss page of its own', () => {
       // `toa_invocation`/`tob_points`/`cox_points` have no matching boss slug,
-      // so rule 4b stays silent rather than guessing.
+      // so rule 4b stays silent rather than guessing. Phrased as "computed
+      // via", not "needs", so rule 5 (a separate, later rule — toa_invocation
+      // is a real implementation, not a stub) has nothing to say either.
       expect(
         checkWatchlistConsistency(
-          poolEntry({ detail: 'Scales with raid level. Needs the toa_invocation formula.' }),
+          poolEntry({ detail: 'Scales with raid level, computed via the toa_invocation formula.' }),
           inventory
         )
       ).toEqual([])
@@ -330,6 +334,101 @@ describe('checkWatchlistConsistency', () => {
 })
 
 /**
+ * Reproduces the two failure modes found when `ancient-chest`'s/
+ * `monumental-chest`'s/`reward-pool`'s own `detail` was audited against the
+ * codebase and found to still describe a pre-override state: a formula
+ * claimed needed that had shipped, and a source whose override existed but
+ * was never mentioned. Rules 1-4 above only ever cross-check the watchlist
+ * against `data/_inventory.json`; nothing checked `detail` against
+ * `IMPLEMENTED_FORMULA_IDS` or `data/overrides/` until now.
+ */
+describe('checkWatchlistConsistency: rules 5-6 (detail checked against the codebase)', () => {
+  const inventory: Inventory = InventorySchema.parse({
+    inventoryVersion: 1,
+    generatedAt: '2026-01-01T00:00:00.000Z',
+    category: 'Category:Bosses',
+    bosses: [bossEntry({ slug: 'placeholder', title: 'Placeholder', lootSourceId: 'placeholder' })],
+    lootSources: [
+      lootSourceEntry({ id: 'placeholder', title: 'Placeholder', bosses: ['placeholder'] }),
+    ],
+  })
+
+  function placeholderEntry(detail: string): Watchlist {
+    return WatchlistSchema.parse({
+      watchlistVersion: 1,
+      entries: [
+        {
+          lootSourceId: 'placeholder',
+          title: 'Placeholder',
+          mechanic: 'point_scaled',
+          detail,
+          tier: 'unknown_scaling',
+          blockedBy: [],
+        },
+      ],
+    })
+  }
+
+  describe('rule 5: a formula claimed needed that is already implemented', () => {
+    it('flags it', () => {
+      const implementedId = [...IMPLEMENTED_FORMULA_IDS][0]
+      expect(implementedId).toBeDefined()
+      const watchlist = placeholderEntry(
+        `Unique chance scales with points — needs the ${implementedId} formula.`
+      )
+
+      const issues = checkWatchlistConsistency(watchlist, inventory)
+      expect(issues).toHaveLength(1)
+      expect(issues[0]?.message).toContain(`formula '${implementedId}'`)
+      expect(issues[0]?.message).toContain('already')
+    })
+
+    it('stays quiet for a formula genuinely still a stub (reward-pool/reward-cart\'s real shape)', () => {
+      const stubId = FORMULA_IDS.find((id) => !IMPLEMENTED_FORMULA_IDS.has(id))
+      expect(stubId).toBeDefined()
+      const watchlist = placeholderEntry(`Rolls scale with points — needs the ${stubId} formula.`)
+
+      expect(checkWatchlistConsistency(watchlist, inventory)).toEqual([])
+    })
+
+    it('stays quiet when a formula is named as already implemented, not claimed needed', () => {
+      const implementedId = [...IMPLEMENTED_FORMULA_IDS][0]
+      const watchlist = placeholderEntry(
+        `Modelled via the ${implementedId} formula, wiki-verified against the page's own figures.`
+      )
+
+      expect(checkWatchlistConsistency(watchlist, inventory)).toEqual([])
+    })
+  })
+
+  describe('rule 6: a source whose override exists but is never mentioned', () => {
+    it('flags it', () => {
+      const watchlist = placeholderEntry('Unique chance scales with points earned across the raid.')
+
+      const issues = checkWatchlistConsistency(watchlist, inventory, new Set(['placeholder']))
+      expect(issues).toHaveLength(1)
+      expect(issues[0]?.message).toContain('data/overrides/placeholder.json exists')
+    })
+
+    it('stays quiet when the entry cites its own override path', () => {
+      const watchlist = placeholderEntry(
+        'MOSTLY MODELLED — data/overrides/placeholder.json models the unique roll exactly.'
+      )
+
+      expect(
+        checkWatchlistConsistency(watchlist, inventory, new Set(['placeholder']))
+      ).toEqual([])
+    })
+
+    it('stays quiet when no override exists for the source at all', () => {
+      const watchlist = placeholderEntry('Unique chance scales with points earned across the raid.')
+
+      expect(checkWatchlistConsistency(watchlist, inventory, new Set())).toEqual([])
+    })
+  })
+})
+
+/**
  * Reads the real, committed `data/mechanics-watchlist.json` and
  * `data/_inventory.json` and asserts they agree. This is the regression test
  * for the reward-cart/reward-pool swap: both files are checked in, so this
@@ -339,12 +438,13 @@ describe('checkWatchlistConsistency', () => {
 const bothPresent = existsSync(WATCHLIST_PATH) && existsSync(INVENTORY_PATH)
 
 describe.skipIf(!bothPresent)('data/mechanics-watchlist.json vs data/_inventory.json', () => {
-  it('has no drift between blockedBy and the real inventory', () => {
+  it('has no drift between blockedBy and the real inventory, or against the real overrides/formulas (rules 5-6)', async () => {
     const realWatchlist = WatchlistSchema.parse(JSON.parse(readFileSync(WATCHLIST_PATH, 'utf8')))
     const realInventory: Inventory = InventorySchema.parse(
       JSON.parse(readFileSync(INVENTORY_PATH, 'utf8'))
     )
+    const realOverrideSlugs = new Set(await listOverrideSlugs())
 
-    expect(checkWatchlistConsistency(realWatchlist, realInventory)).toEqual([])
+    expect(checkWatchlistConsistency(realWatchlist, realInventory, realOverrideSlugs)).toEqual([])
   })
 })
