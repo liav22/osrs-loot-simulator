@@ -9,6 +9,7 @@ import { checkRatesValid } from '../validate/rates-valid.js'
 import { checkQtySane } from '../validate/qty-sane.js'
 import { checkDropsCovered } from '../validate/drops-covered.js'
 import type { ItemAllowlist } from '../items/allowlist.js'
+import type { ItemFlags } from '../items/item-flags.js'
 import type { ItemIndex } from '../items/index.js'
 import type { GePrices } from '../prices/ge-prices.js'
 import { gePriceLookup } from '../prices/ge-prices.js'
@@ -39,6 +40,7 @@ export interface ParseOptions {
   parserVersion: number
   itemIndex: ItemIndex
   allowlist: ItemAllowlist
+  itemFlags: ItemFlags
   watchlist: Watchlist
   gePrices: GePrices
   /** From `data/_inventory.json`'s `LootSource.repeatable` — see `inventory/repeatable.ts`. */
@@ -169,6 +171,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     parserVersion: options.parserVersion,
     itemIndex: options.itemIndex,
     allowlist: options.allowlist,
+    itemFlags: options.itemFlags,
     repeatable: options.repeatable,
     aliases: options.aliases,
   })

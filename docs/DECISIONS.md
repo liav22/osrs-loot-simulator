@@ -3007,6 +3007,39 @@ both are correct (24 Barrows set pieces at ~1/2,460, 23 3rd age pieces at
 defect; the test asserts the invariant instead — nothing commoner than the
 threshold ever gets in.
 
+### "Rarest drops" superseded by curated `unique`/`pet` flags
+
+The rarity-threshold approach above was a deliberate, evidence-based
+compromise: no threshold cleanly separates uniques from ordinary rares, so
+the UI was honestly labelled "rarest drops" rather than "uniques" to avoid
+overclaiming. That evidence (the six-boss table above) is still correct and
+still the reason a *rarity threshold* can never back a literal "uniques"
+label.
+
+What changed is that the underlying question turned out to be answerable a
+different way: "is this item one of the boss's actual uniques" and "is this
+item the boss's pet" are curatable facts, not derivable signals — the same
+category as `data/item-multi-id-allowlist.json`'s multi-id exceptions. Two
+booleans (`unique`, `pet`) were added to `ItemNodeSchema`, populated at
+ingest time from a hand-curated `data/item-flags.json`
+(`apps/ingest/src/items/item-flags.ts`) keyed by `(bossSlug, itemKey)`, never
+from wiki structure.
+
+The wiki's own "Uniques" heading was considered and rejected as the curation
+source — `docs/HANDOFF.md`'s "What NOT to redo" already closed that question
+("most re-litigated question in the project's history," no available signal
+on the remaining ambiguous sources) — so `data/item-flags.json` is authored
+directly from OSRS domain knowledge, cross-checked against each boss's own
+committed item list so nothing not already present in the corpus is ever
+flagged.
+
+`apps/web/src/lib/rarity.ts`/`rarestItemKeys` and the "Rarest drops" strip
+are retired in favour of `apps/web/src/lib/uniques.ts`'s `uniqueItemKeys`,
+which is a plain `Boss` read (`node.unique || node.pet`) with no rarity
+computation and no `ExpectedValueResult` dependency. The rarity-threshold
+mechanism itself is not deleted from the historical record — it remains
+correct for what it measured — only superseded as the strip's data source.
+
 ### Boss images: the only pipeline change
 
 Not derivable from the page title (`Kraken` illustrates its page with

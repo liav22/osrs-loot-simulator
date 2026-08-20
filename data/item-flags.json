@@ -1,0 +1,3038 @@
+{
+  "itemFlagsVersion": 1,
+  "note": "Curated per-(bossSlug, itemKey) facts: which items are a boss's actual unique drops and which is its pet. Neither is derivable from wiki structure (see apps/ingest/src/items/item-flags.ts). Hand-curated from OSRS domain knowledge, cross-checked against each boss's own committed item list.",
+  "entries": [
+    {
+      "bossSlug": "abyssal-sire",
+      "itemKey": "unsired",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Abyssal Sire's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "alchemical-hydra",
+      "itemKey": "hydra-s-claw",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Alchemical Hydra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "alchemical-hydra",
+      "itemKey": "hydra-s-eye",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Alchemical Hydra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "alchemical-hydra",
+      "itemKey": "hydra-s-fang",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Alchemical Hydra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "alchemical-hydra",
+      "itemKey": "hydra-s-heart",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Alchemical Hydra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "alchemical-hydra",
+      "itemKey": "hydra-tail",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Alchemical Hydra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "alchemical-hydra",
+      "itemKey": "ikkle-hydra",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Alchemical Hydra's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "amoxliatl",
+      "itemKey": "glacial-temotli",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Amoxliatl's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "amoxliatl",
+      "itemKey": "moxi",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Amoxliatl's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "amoxliatl",
+      "itemKey": "pendant-of-ates-inert",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Amoxliatl's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "ancestral-hat",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "ancestral-robe-bottom",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "ancestral-robe-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "arcane-prayer-scroll",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "dexterous-prayer-scroll",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "dinh-s-bulwark",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "dragon-claws",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "dragon-hunter-crossbow",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "elder-maul",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "kodai-insignia",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "olmlet",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Ancient chest's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "twisted-ancestral-colour-kit",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "twisted-bow",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "ancient-chest",
+      "itemKey": "twisted-buckler",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Ancient chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "araxxor",
+      "itemKey": "araxyte-fang",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Araxxor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "araxxor",
+      "itemKey": "araxyte-venom-sac",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Araxxor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "araxxor",
+      "itemKey": "nid",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Araxxor's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "araxxor",
+      "itemKey": "noxious-blade",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Araxxor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "araxxor",
+      "itemKey": "noxious-point",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Araxxor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "araxxor",
+      "itemKey": "noxious-pommel",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Araxxor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "artio",
+      "itemKey": "callisto-cub",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Artio's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "artio",
+      "itemKey": "claws-of-callisto",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Artio's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "artio",
+      "itemKey": "tyrannical-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Artio's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "artio",
+      "itemKey": "voidwaker-hilt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Artio's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "branda-the-fire-queen",
+      "itemKey": "bran",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Branda the Fire Queen's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "branda-the-fire-queen",
+      "itemKey": "fire-element-staff-crown",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Branda the Fire Queen's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "branda-the-fire-queen",
+      "itemKey": "giantsoul-amulet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Branda the Fire Queen's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "branda-the-fire-queen",
+      "itemKey": "mystic-vigour-prayer-scroll",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Branda the Fire Queen's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "brutus",
+      "itemKey": "bottomless-milk-bucket-empty",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Brutus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "brutus",
+      "itemKey": "cow-slippers",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Brutus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "brutus",
+      "itemKey": "mooleta",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Brutus's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "callisto",
+      "itemKey": "callisto-cub",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Callisto's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "callisto",
+      "itemKey": "claws-of-callisto",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Callisto's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "callisto",
+      "itemKey": "tyrannical-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Callisto's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "callisto",
+      "itemKey": "voidwaker-hilt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Callisto's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "calvar-ion",
+      "itemKey": "ring-of-the-gods",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Calvar'ion's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "calvar-ion",
+      "itemKey": "skull-of-vet-ion",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Calvar'ion's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "calvar-ion",
+      "itemKey": "vet-ion-jr",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Calvar'ion's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "calvar-ion",
+      "itemKey": "voidwaker-blade",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Calvar'ion's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "cerberus",
+      "itemKey": "eternal-crystal",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Cerberus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "cerberus",
+      "itemKey": "hellpuppy",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Cerberus's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "cerberus",
+      "itemKey": "pegasian-crystal",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Cerberus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "cerberus",
+      "itemKey": "primordial-crystal",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Cerberus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "cerberus",
+      "itemKey": "smouldering-stone",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Cerberus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chaos-elemental",
+      "itemKey": "pet-chaos-elemental",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Chaos Elemental's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chaos-fanatic",
+      "itemKey": "malediction-shard-1",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chaos Fanatic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chaos-fanatic",
+      "itemKey": "odium-shard-1",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chaos Fanatic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chaos-fanatic",
+      "itemKey": "pet-chaos-elemental",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Chaos Fanatic's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "ahrim-s-hood",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "ahrim-s-robeskirt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "ahrim-s-robetop",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "ahrim-s-staff",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "dharok-s-greataxe",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "dharok-s-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "dharok-s-platebody",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "dharok-s-platelegs",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "guthan-s-chainskirt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "guthan-s-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "guthan-s-platebody",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "guthan-s-warspear",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "karil-s-coif",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "karil-s-crossbow",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "karil-s-leatherskirt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "karil-s-leathertop",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "torag-s-hammers",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "torag-s-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "torag-s-platebody",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "torag-s-platelegs",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "verac-s-brassard",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "verac-s-flail",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "verac-s-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-barrows",
+      "itemKey": "verac-s-plateskirt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Barrows)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "elidinis-ward",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Tombs of Amascut)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "lightbearer",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Tombs of Amascut)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "masori-body",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Tombs of Amascut)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "masori-chaps",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Tombs of Amascut)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "masori-crafting-kit",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Tombs of Amascut)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "masori-mask",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Tombs of Amascut)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "osmumten-s-fang",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Tombs of Amascut)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "tumeken-s-guardian",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Chest (Tombs of Amascut)'s pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "chest-tombs-of-amascut",
+      "itemKey": "tumeken-s-shadow-uncharged",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Chest (Tombs of Amascut)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "commander-zilyana",
+      "itemKey": "armadyl-crossbow",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Commander Zilyana's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "commander-zilyana",
+      "itemKey": "godsword-shard-1",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Commander Zilyana's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "commander-zilyana",
+      "itemKey": "godsword-shard-2",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Commander Zilyana's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "commander-zilyana",
+      "itemKey": "godsword-shard-3",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Commander Zilyana's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "commander-zilyana",
+      "itemKey": "pet-zilyana",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Commander Zilyana's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "commander-zilyana",
+      "itemKey": "saradomin-hilt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Commander Zilyana's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "commander-zilyana",
+      "itemKey": "saradomin-s-light",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Commander Zilyana's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "commander-zilyana",
+      "itemKey": "saradomin-sword",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Commander Zilyana's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "corporeal-beast",
+      "itemKey": "arcane-sigil",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Corporeal Beast's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "corporeal-beast",
+      "itemKey": "elysian-sigil",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Corporeal Beast's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "corporeal-beast",
+      "itemKey": "holy-elixir",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Corporeal Beast's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "corporeal-beast",
+      "itemKey": "pet-dark-core",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Corporeal Beast's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "corporeal-beast",
+      "itemKey": "spectral-sigil",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Corporeal Beast's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "corporeal-beast",
+      "itemKey": "spirit-shield",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Corporeal Beast's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "crazy-archaeologist",
+      "itemKey": "fedora",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Crazy archaeologist's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "crazy-archaeologist",
+      "itemKey": "malediction-shard-2",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Crazy archaeologist's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "crazy-archaeologist",
+      "itemKey": "odium-shard-2",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Crazy archaeologist's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "dragon-axe",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "farseer-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "fremennik-blade",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "fremennik-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "fremennik-shield",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "mud-battlestaff",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "pet-dagannoth-prime",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Dagannoth Prime's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "seers-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "skeletal-bottoms",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-prime",
+      "itemKey": "skeletal-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Prime's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "berserker-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Rex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "dragon-axe",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Rex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "fremennik-blade",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Rex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "fremennik-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Rex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "fremennik-shield",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Rex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "pet-dagannoth-rex",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Dagannoth Rex's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "rock-shell-legs",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Rex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "rock-shell-plate",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Rex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-rex",
+      "itemKey": "warrior-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Rex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "archer-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "archers-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "dragon-axe",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "fremennik-blade",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "fremennik-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "fremennik-shield",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "pet-dagannoth-supreme",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Dagannoth Supreme's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "seercull",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "spined-body",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "dagannoth-supreme",
+      "itemKey": "spined-chaps",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Dagannoth Supreme's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "doom-of-mokhaiotl",
+      "itemKey": "avernic-treads",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Doom of Mokhaiotl's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "doom-of-mokhaiotl",
+      "itemKey": "dom",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Doom of Mokhaiotl's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "doom-of-mokhaiotl",
+      "itemKey": "eye-of-ayak-uncharged",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Doom of Mokhaiotl's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "awakener-s-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Duke Sucellus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "baron",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Duke Sucellus's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "chromium-ingot",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Duke Sucellus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "eye-of-the-duke",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Duke Sucellus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "frozen-tablet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Duke Sucellus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "magus-vestige",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Duke Sucellus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "virtus-mask",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Duke Sucellus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "virtus-robe-bottom",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Duke Sucellus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "duke-sucellus",
+      "itemKey": "virtus-robe-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Duke Sucellus's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "eldric-the-ice-king",
+      "itemKey": "bran",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Eldric the Ice King's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "eldric-the-ice-king",
+      "itemKey": "deadeye-prayer-scroll",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Eldric the Ice King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "eldric-the-ice-king",
+      "itemKey": "giantsoul-amulet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Eldric the Ice King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "eldric-the-ice-king",
+      "itemKey": "ice-element-staff-crown",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Eldric the Ice King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "general-graardor",
+      "itemKey": "bandos-boots",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of General Graardor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "general-graardor",
+      "itemKey": "bandos-chestplate",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of General Graardor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "general-graardor",
+      "itemKey": "bandos-hilt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of General Graardor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "general-graardor",
+      "itemKey": "bandos-tassets",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of General Graardor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "general-graardor",
+      "itemKey": "godsword-shard-1",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of General Graardor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "general-graardor",
+      "itemKey": "godsword-shard-2",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of General Graardor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "general-graardor",
+      "itemKey": "godsword-shard-3",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of General Graardor's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "general-graardor",
+      "itemKey": "pet-general-graardor",
+      "flags": [
+        "pet"
+      ],
+      "reason": "General Graardor's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "giant-mole",
+      "itemKey": "baby-mole",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Giant Mole's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "giant-mole",
+      "itemKey": "immaculate-mole-skin",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Giant Mole's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "giant-mole",
+      "itemKey": "mole-claw",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Giant Mole's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "giant-mole",
+      "itemKey": "mole-skin",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Giant Mole's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "glod",
+      "itemKey": "golden-goblin",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Glod's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "grotesque-guardians",
+      "itemKey": "black-tourmaline-core",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Grotesque Guardians's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "grotesque-guardians",
+      "itemKey": "granite-gloves",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Grotesque Guardians's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "grotesque-guardians",
+      "itemKey": "granite-hammer",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Grotesque Guardians's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "grotesque-guardians",
+      "itemKey": "granite-maul",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Grotesque Guardians's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "grotesque-guardians",
+      "itemKey": "granite-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Grotesque Guardians's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "grotesque-guardians",
+      "itemKey": "noon",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Grotesque Guardians's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "hespori",
+      "itemKey": "tangleroot",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Hespori's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "k-ril-tsutsaroth",
+      "itemKey": "godsword-shard-1",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of K'ril Tsutsaroth's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "k-ril-tsutsaroth",
+      "itemKey": "godsword-shard-2",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of K'ril Tsutsaroth's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "k-ril-tsutsaroth",
+      "itemKey": "godsword-shard-3",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of K'ril Tsutsaroth's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "k-ril-tsutsaroth",
+      "itemKey": "pet-k-ril-tsutsaroth",
+      "flags": [
+        "pet"
+      ],
+      "reason": "K'ril Tsutsaroth's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "k-ril-tsutsaroth",
+      "itemKey": "staff-of-the-dead",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of K'ril Tsutsaroth's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "k-ril-tsutsaroth",
+      "itemKey": "steam-battlestaff",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of K'ril Tsutsaroth's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "k-ril-tsutsaroth",
+      "itemKey": "zamorak-hilt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of K'ril Tsutsaroth's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "k-ril-tsutsaroth",
+      "itemKey": "zamorakian-spear",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of K'ril Tsutsaroth's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kalphite-queen",
+      "itemKey": "dragon-chainbody",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kalphite Queen's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kalphite-queen",
+      "itemKey": "kalphite-princess",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Kalphite Queen's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kalphite-queen",
+      "itemKey": "kq-head",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kalphite Queen's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "king-black-dragon",
+      "itemKey": "draconic-visage",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of King Black Dragon's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "king-black-dragon",
+      "itemKey": "prince-black-dragon",
+      "flags": [
+        "pet"
+      ],
+      "reason": "King Black Dragon's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kraken",
+      "itemKey": "kraken-tentacle",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kraken's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kraken",
+      "itemKey": "pet-kraken",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Kraken's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kraken",
+      "itemKey": "trident-of-the-seas-full",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kraken's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kree-arra",
+      "itemKey": "armadyl-chainskirt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kree'arra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kree-arra",
+      "itemKey": "armadyl-chestplate",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kree'arra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kree-arra",
+      "itemKey": "armadyl-helmet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kree'arra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kree-arra",
+      "itemKey": "armadyl-hilt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kree'arra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kree-arra",
+      "itemKey": "godsword-shard-1",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kree'arra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kree-arra",
+      "itemKey": "godsword-shard-2",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kree'arra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kree-arra",
+      "itemKey": "godsword-shard-3",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Kree'arra's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "kree-arra",
+      "itemKey": "pet-kree-arra",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Kree'arra's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "mad-angel",
+      "itemKey": "aggy",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Mad Angel's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "mad-angel",
+      "itemKey": "hallowfell",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Mad Angel's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "mad-angel",
+      "itemKey": "sunstone-crystal",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Mad Angel's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "crimson-kisten",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "elder-venator-fang",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "letvek",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "maggot-marquess",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Maggot King's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-2h-sword",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-amulet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-battleaxe",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-bracelet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-halberd",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-longsword",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-necklace",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "tarnished-spear",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "venator-fang",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "maggot-king",
+      "itemKey": "venator-tooth",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Maggot King's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "avernic-defender-hilt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "ghrazi-rapier",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "holy-ornament-kit",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "justiciar-chestguard",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "justiciar-faceguard",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "justiciar-legguards",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "lil-zik",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Monumental chest's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "sanguine-dust",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "sanguine-ornament-kit",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "sanguinesti-staff-uncharged",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "monumental-chest",
+      "itemKey": "scythe-of-vitur-uncharged",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Monumental chest's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "nex",
+      "itemKey": "ancient-hilt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Nex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "nex",
+      "itemKey": "nexling",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Nex's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "nex",
+      "itemKey": "nihil-horn",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Nex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "nex",
+      "itemKey": "torva-full-helm-damaged",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Nex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "nex",
+      "itemKey": "torva-platebody-damaged",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Nex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "nex",
+      "itemKey": "torva-platelegs-damaged",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Nex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "nex",
+      "itemKey": "zaryte-vambraces",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Nex's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phantom-muspah",
+      "itemKey": "ancient-icon",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phantom Muspah's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phantom-muspah",
+      "itemKey": "muphin",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Phantom Muspah's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phantom-muspah",
+      "itemKey": "venator-shard",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phantom Muspah's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "eldritch-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phosani's Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "harmonised-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phosani's Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "inquisitor-s-great-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phosani's Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "inquisitor-s-hauberk",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phosani's Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "inquisitor-s-mace",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phosani's Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "inquisitor-s-plateskirt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phosani's Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "little-nightmare",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Phosani's Nightmare's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "nightmare-staff",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phosani's Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "phosani-s-nightmare",
+      "itemKey": "volatile-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Phosani's Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-cart",
+      "itemKey": "phoenix",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Reward Cart's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-cart",
+      "itemKey": "tome-of-fire-empty",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Reward Cart's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-chest-the-gauntlet",
+      "itemKey": "crystal-armour-seed",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Reward Chest (The Gauntlet)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-chest-the-gauntlet",
+      "itemKey": "crystal-weapon-seed",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Reward Chest (The Gauntlet)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-chest-the-gauntlet",
+      "itemKey": "enhanced-crystal-weapon-seed",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Reward Chest (The Gauntlet)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-chest-the-gauntlet",
+      "itemKey": "gauntlet-cape",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Reward Chest (The Gauntlet)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-chest-the-gauntlet",
+      "itemKey": "youngllef",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Reward Chest (The Gauntlet)'s pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-pool",
+      "itemKey": "dragon-harpoon",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Reward pool's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "reward-pool",
+      "itemKey": "tiny-tempor",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Reward pool's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "rewards-chest-fortis-colosseum",
+      "itemKey": "dizana-s-quiver",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Rewards Chest (Fortis Colosseum)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "rewards-chest-fortis-colosseum",
+      "itemKey": "echo-crystal",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Rewards Chest (Fortis Colosseum)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "rewards-chest-fortis-colosseum",
+      "itemKey": "smol-heredit",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Rewards Chest (Fortis Colosseum)'s pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "rewards-chest-fortis-colosseum",
+      "itemKey": "sunfire-fanatic-chausses",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Rewards Chest (Fortis Colosseum)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "rewards-chest-fortis-colosseum",
+      "itemKey": "sunfire-fanatic-cuirass",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Rewards Chest (Fortis Colosseum)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "rewards-chest-fortis-colosseum",
+      "itemKey": "sunfire-fanatic-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Rewards Chest (Fortis Colosseum)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "rewards-chest-fortis-colosseum",
+      "itemKey": "tonalztics-of-ralos-uncharged",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Rewards Chest (Fortis Colosseum)'s own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "sarachnis",
+      "itemKey": "sarachnis-cudgel",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Sarachnis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "sarachnis",
+      "itemKey": "sraracha",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Sarachnis's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "scorpia",
+      "itemKey": "malediction-shard-3",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Scorpia's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "scorpia",
+      "itemKey": "odium-shard-3",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Scorpia's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "scorpia",
+      "itemKey": "scorpia-s-offspring",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Scorpia's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "scurrius",
+      "itemKey": "scurrius-spine",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Scurrius's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "scurrius",
+      "itemKey": "scurry",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Scurrius's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "shellbane-gryphon",
+      "itemKey": "belle-s-folly-tarnished",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Shellbane gryphon's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "shellbane-gryphon",
+      "itemKey": "elkhorn-frag",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Shellbane gryphon's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "shellbane-gryphon",
+      "itemKey": "gull-pet",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Shellbane gryphon's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "shellbane-gryphon",
+      "itemKey": "pillar-frag",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Shellbane gryphon's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "skotizo",
+      "itemKey": "dark-claw",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Skotizo's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "skotizo",
+      "itemKey": "dark-totem",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Skotizo's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "skotizo",
+      "itemKey": "dark-totem-base",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Skotizo's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "skotizo",
+      "itemKey": "dark-totem-middle",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Skotizo's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "skotizo",
+      "itemKey": "dark-totem-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Skotizo's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "skotizo",
+      "itemKey": "shield-left-half",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Skotizo's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "skotizo",
+      "itemKey": "skotos",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Skotizo's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "spindel",
+      "itemKey": "fangs-of-venenatis",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Spindel's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "spindel",
+      "itemKey": "treasonous-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Spindel's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "spindel",
+      "itemKey": "venenatis-spiderling",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Spindel's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "spindel",
+      "itemKey": "voidwaker-gem",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Spindel's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-hueycoatl",
+      "itemKey": "dragon-hunter-wand",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Hueycoatl's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-hueycoatl",
+      "itemKey": "huberte",
+      "flags": [
+        "pet"
+      ],
+      "reason": "The Hueycoatl's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "awakener-s-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Leviathan's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "chromium-ingot",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Leviathan's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "leviathan-s-lure",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Leviathan's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "lil-viathan",
+      "flags": [
+        "pet"
+      ],
+      "reason": "The Leviathan's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "scarred-tablet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Leviathan's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "venator-vestige",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Leviathan's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "virtus-mask",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Leviathan's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "virtus-robe-bottom",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Leviathan's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-leviathan",
+      "itemKey": "virtus-robe-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Leviathan's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-amulet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-axe",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-bow",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-cloak",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-druidic-cloak",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-druidic-robe-bottoms",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-druidic-robe-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-druidic-staff",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-full-helmet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-kiteshield",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-longsword",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-mage-hat",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-pickaxe",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-platebody",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-platelegs",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-plateskirt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-range-coif",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-range-legs",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-range-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-robe",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-robe-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-vambraces",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "3rd-age-wand",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-mimic",
+      "itemKey": "ring-of-3rd-age",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Mimic's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "eldritch-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "harmonised-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "inquisitor-s-great-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "inquisitor-s-hauberk",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "inquisitor-s-mace",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "inquisitor-s-plateskirt",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "little-nightmare",
+      "flags": [
+        "pet"
+      ],
+      "reason": "The Nightmare's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "nightmare-staff",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-nightmare",
+      "itemKey": "volatile-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Nightmare's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "awakener-s-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Whisperer's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "bellator-vestige",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Whisperer's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "chromium-ingot",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Whisperer's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "siren-s-staff",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Whisperer's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "sirenic-tablet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Whisperer's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "virtus-mask",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Whisperer's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "virtus-robe-bottom",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Whisperer's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "virtus-robe-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of The Whisperer's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "the-whisperer",
+      "itemKey": "wisp",
+      "flags": [
+        "pet"
+      ],
+      "reason": "The Whisperer's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "thermonuclear-smoke-devil",
+      "itemKey": "occult-necklace",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Thermonuclear smoke devil's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "thermonuclear-smoke-devil",
+      "itemKey": "pet-smoke-devil",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Thermonuclear smoke devil's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "awakener-s-orb",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vardorvis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "butch",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Vardorvis's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "chromium-ingot",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vardorvis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "executioner-s-axe-head",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vardorvis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "strangled-tablet",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vardorvis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "ultor-vestige",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vardorvis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "virtus-mask",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vardorvis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "virtus-robe-bottom",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vardorvis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vardorvis",
+      "itemKey": "virtus-robe-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vardorvis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "venenatis",
+      "itemKey": "fangs-of-venenatis",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Venenatis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "venenatis",
+      "itemKey": "treasonous-ring",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Venenatis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "venenatis",
+      "itemKey": "venenatis-spiderling",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Venenatis's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "venenatis",
+      "itemKey": "voidwaker-gem",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Venenatis's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vet-ion",
+      "itemKey": "ring-of-the-gods",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vet'ion's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vet-ion",
+      "itemKey": "skull-of-vet-ion",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vet'ion's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vet-ion",
+      "itemKey": "vet-ion-jr",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Vet'ion's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vet-ion",
+      "itemKey": "voidwaker-blade",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vet'ion's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vorkath",
+      "itemKey": "draconic-visage",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vorkath's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vorkath",
+      "itemKey": "dragonbone-necklace",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vorkath's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vorkath",
+      "itemKey": "skeletal-visage",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vorkath's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vorkath",
+      "itemKey": "vorkath-s-head",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Vorkath's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "vorkath",
+      "itemKey": "vorki",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Vorkath's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "oathplate-chest",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "oathplate-helm",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "oathplate-legs",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "purifying-sigil-bottom",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "purifying-sigil-left",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "purifying-sigil-middle",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "purifying-sigil-right",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "purifying-sigil-top",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "soulflame-horn",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Yama's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "yama",
+      "itemKey": "yami",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Yama's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zalcano",
+      "itemKey": "crystal-tool-seed",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Zalcano's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zalcano",
+      "itemKey": "smolcano",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Zalcano's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zalcano",
+      "itemKey": "zalcano-shard",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Zalcano's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zulrah",
+      "itemKey": "magic-fang",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Zulrah's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zulrah",
+      "itemKey": "magma-mutagen",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Zulrah's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zulrah",
+      "itemKey": "pet-snakeling",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Zulrah's pet, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zulrah",
+      "itemKey": "serpentine-visage",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Zulrah's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zulrah",
+      "itemKey": "tanzanite-fang",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Zulrah's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "zulrah",
+      "itemKey": "tanzanite-mutagen",
+      "flags": [
+        "unique"
+      ],
+      "reason": "One of Zulrah's own unique drops, per the OSRS Wiki's drop table."
+    }
+  ]
+}

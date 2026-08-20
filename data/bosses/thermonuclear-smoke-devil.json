@@ -47,7 +47,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "fixed",
@@ -830,7 +831,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "pet": true
           },
           "rate": {
             "kind": "fixed",

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { assembleBoss } from '../src/parse/assemble-boss.js'
 import type { ItemAllowlist } from '../src/items/allowlist.js'
+import type { ItemFlags } from '../src/items/item-flags.js'
 import type { ItemIndex } from '../src/items/index.js'
 import type { ParsedTableGroup } from '../src/parse/build-tables.js'
 import type { RdtAccessResult } from '../src/parse/rdt-access.js'
@@ -18,6 +19,7 @@ const itemIndex: ItemIndex = {
 }
 
 const emptyAllowlist: ItemAllowlist = { allowlistVersion: 1, entries: [] }
+const emptyItemFlags: ItemFlags = { itemFlagsVersion: 1, entries: [] }
 
 const options = {
   slug: 'test-boss',
@@ -26,6 +28,7 @@ const options = {
   parserVersion: 1,
   itemIndex,
   allowlist: emptyAllowlist,
+  itemFlags: emptyItemFlags,
   repeatable: true,
   aliases: [],
 }

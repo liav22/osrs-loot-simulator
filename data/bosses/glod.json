@@ -83,7 +83,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "always"

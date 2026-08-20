@@ -7,6 +7,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { USER_AGENT } from '../src/wiki/client.js'
 import { readItemIndex } from '../src/items/index.js'
 import { loadItemAllowlist } from '../src/items/allowlist.js'
+import { loadItemFlags } from '../src/items/item-flags.js'
 import { loadWatchlist } from '../src/validate/watchlist.js'
 import { fetchGePrices } from '../src/prices/ge-prices.js'
 import { loadSharedTables } from '../src/tables/shared-tables.js'
@@ -97,6 +98,7 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('every committed document reproduces from a 
     const inventory = InventorySchema.parse(JSON.parse(await readFile(INVENTORY_PATH, 'utf8')))
     const itemIndex = await readItemIndex()
     const allowlist = await loadItemAllowlist()
+    const itemFlags = await loadItemFlags()
     const watchlist = await loadWatchlist()
     const gePrices = await fetchGePrices(USER_AGENT)
     const sharedTables = await loadSharedTables()
@@ -129,6 +131,7 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('every committed document reproduces from a 
           parserVersion: 1,
           itemIndex,
           allowlist,
+          itemFlags,
           watchlist,
           gePrices,
           sharedTables,

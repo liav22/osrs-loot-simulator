@@ -9,6 +9,7 @@ import {
 import { slugify } from '../snapshots/store.js'
 import { indexByItemKey, type ItemIndex } from '../items/index.js'
 import { isAllowlisted, type ItemAllowlist } from '../items/allowlist.js'
+import { itemFlagsFor, type ItemFlags } from '../items/item-flags.js'
 import type { ParsedEntry, ParsedTableGroup } from './build-tables.js'
 import type { RdtAccessResult } from './rdt-access.js'
 
@@ -28,6 +29,7 @@ export interface AssembleOptions {
   parserVersion: number
   itemIndex: ItemIndex
   allowlist: ItemAllowlist
+  itemFlags: ItemFlags
   /** Corpus scope metadata, not derived here — see `inventory/repeatable.ts`. */
   repeatable: boolean
   /**
@@ -206,6 +208,7 @@ export function assembleBoss(
     warnings: string[]
   ): Record<string, unknown> => {
     const { itemId, itemKey } = resolveItem(item.name, options.itemIndex, options.allowlist, warnings)
+    const flags = itemFlagsFor(options.itemFlags, options.slug, itemKey)
     return {
       kind: 'item' as const,
       itemId,
@@ -213,6 +216,8 @@ export function assembleBoss(
       name: item.name,
       qty: parseQuantity(item.quantity),
       ...(item.noted ? { noted: true } : {}),
+      ...(flags.has('unique') ? { unique: true } : {}),
+      ...(flags.has('pet') ? { pet: true } : {}),
     }
   }
 

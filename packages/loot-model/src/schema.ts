@@ -548,6 +548,10 @@ const ItemNodeSchema = z
     name: z.string().min(1),
     qty: QtySpecSchema,
     noted: z.boolean().optional(),
+    /** Curated: this item is one of the boss's actual unique drops. See data/item-flags.json. */
+    unique: z.boolean().optional(),
+    /** Curated: this item is the boss's pet. See data/item-flags.json. */
+    pet: z.boolean().optional(),
   })
   .strict()
 

@@ -27,6 +27,7 @@ import {
 } from './inventory/schema.js'
 import { buildItemIndex, readItemIndex } from './items/index.js'
 import { loadItemAllowlist } from './items/allowlist.js'
+import { loadItemFlags } from './items/item-flags.js'
 import { loadWatchlist, checkWatchlistConsistency } from './validate/watchlist.js'
 import {
   loadRepeatableOverrides,
@@ -248,6 +249,7 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
   const inventory = InventorySchema.parse(JSON.parse(await readFile(INVENTORY_PATH, 'utf8')))
   const itemIndex = await readItemIndex()
   const allowlist = await loadItemAllowlist()
+  const itemFlags = await loadItemFlags()
   const watchlist = await loadWatchlist()
   const gePrices = await fetchGePrices(USER_AGENT)
   log(`Loaded ${gePrices.size} live GE prices.\n`)
@@ -323,6 +325,7 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
       parserVersion: 1,
       itemIndex,
       allowlist,
+      itemFlags,
       watchlist,
       gePrices,
       sharedTables,

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { Boss, ExpectedValueResult, SimResult } from '@osrs-loot-simulator/loot-model'
 import { formatCompact, formatGp, formatNumber } from '../lib/format'
-import { rarestItemKeys } from '../lib/rarity'
+import { uniqueItemKeys } from '../lib/uniques'
 import { useItemIcons } from '../hooks/useItemIcons'
 import { ItemIcon } from './ItemIcon'
 
@@ -26,7 +26,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
   const [expandedGrid, setExpandedGrid] = useState(false)
   const [showLog, setShowLog] = useState(false)
 
-  const rarest = useMemo(() => rarestItemKeys(boss, expected), [boss, expected])
+  const uniques = useMemo(() => uniqueItemKeys(boss), [boss])
   // One query for the whole view rather than one per card: the icon file names
   // are a single ~30KB document, and threading the lookup down beats sixty
   // components each subscribing to the same cache entry.
@@ -53,7 +53,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
      * drop. The old table rendered those too, which was survivable in a
      * spreadsheet of rates but is not here: a card grid of "Draconic visage
      * ×0" states the opposite of what a grid of drops means, and it would put
-     * never-dropped items in the rarest strip, which is the one place the
+     * never-dropped items in the uniques strip, which is the one place the
      * page is claiming something happened.
      */
     const sorted = result.drops.filter((row) => row.drops > 0)
@@ -73,7 +73,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
 
   const hasMoreRows = rows.length > COLLAPSED_COUNT
   const visible = expandedGrid ? rows : rows.slice(0, COLLAPSED_COUNT)
-  const strip = rows.filter((row) => rarest.has(row.itemKey))
+  const strip = rows.filter((row) => uniques.has(row.itemKey))
 
   return (
     <div className="flex min-h-0 flex-col gap-3">
@@ -102,7 +102,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
       {strip.length > 0 && (
         <div className="shrink-0 rounded-md border border-amber-500/30 bg-amber-500/5 p-2">
           <div className="mb-1.5 px-1 text-xs font-medium uppercase tracking-wide text-amber-400/80">
-            Rarest drops
+            Uniques
           </div>
           <div className="flex flex-wrap gap-1.5">
             {strip.map((row) => (
@@ -152,7 +152,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
         ) : (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-2">
             {visible.map((row) => {
-              const isRarest = rarest.has(row.itemKey)
+              const isUnique = uniques.has(row.itemKey)
               return (
                 <div
                   key={row.itemKey}
@@ -160,7 +160,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                   // Border AND background, never colour alone — the highlight
                   // has to survive being the only signal someone can see.
                   className={`flex items-center gap-2 rounded-md border px-2.5 py-2 ${
-                    isRarest
+                    isUnique
                       ? 'border-amber-500/50 bg-amber-500/10'
                       : 'border-neutral-800 bg-neutral-900/60'
                   }`}
@@ -170,7 +170,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                     <div className="truncate text-sm text-neutral-100" title={row.name}>
                       {row.name}
                     </div>
-                    {/* The rarest card's amber tint LIFTS its background, so
+                    {/* The unique card's amber tint LIFTS its background, so
                         the muted colour that clears AA everywhere else does
                         not clear it here (4.19:1). One step lighter restores
                         it (7.33:1). This is the one place the muted token has
@@ -178,7 +178,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                         not because the token is wrong. */}
                     <div
                       className={`flex items-baseline justify-between gap-2 font-mono text-xs ${
-                        isRarest ? 'text-neutral-300' : 'text-muted'
+                        isUnique ? 'text-neutral-300' : 'text-muted'
                       }`}
                     >
                       {/* K/M/B-suffixed so a stack in the hundreds of
