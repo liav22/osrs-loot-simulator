@@ -1,12 +1,6 @@
 {
   "slug": "duke-sucellus",
-  "name": "Duke Sucellus",
-  "aliases": [],
-  "wikiPage": "Duke Sucellus",
-  "wikiRevId": 15275314,
-  "variants": [
-    "normal"
-  ],
+  "note": "Every DT2 boss page states the same raritynotes ref verbatim: \"Only when defeated in the awakened encounter as the last of the four.\" The generated document modelled Ancient blood ornament kit (item 28336) as an unconditional always-drop, which is wrong on every ordinary kill. Gated it behind the new awakened SimContext boolean instead (see docs/DECISIONS.md) \u2014 everything else in this table set is untouched, carried forward from the parser-generated document as-is.",
   "tables": [
     {
       "id": "duke-sucellus:0:uniques",
@@ -799,60 +793,5 @@
       ],
       "notes": "Tertiary"
     }
-  ],
-  "contextDefaults": {},
-  "status": "needs_review",
-  "statusTier": "unknown_scaling",
-  "statusReason": "Loot is a sequential roll-until-success chain described only in page prose, not in any drop row: 1/90 tradeable unique table (1/30 awakened), else 1/48 awakener's orb, else 1/25 frozen tablet, else 1/200 ice quartz, else 1/5 supply drop table, else the standard table; separately 1/2500 Baron and 1/40 clue after that. A perfect kill also gives 50% more loot from the standard table. The page's dropsline rows reconcile to a valid denominator on their own, so this source parses cleanly and would otherwise look verified — the chain order and the perfect-kill bonus are the parts that are invisible to the parser. Separately, data/overrides/duke-sucellus.json now gates the awakened-only Ancient blood ornament kit drop behind the new awakened toggle — that piece is fixed; the roll-chain order and perfect-kill bonus above are not.",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "1 tableRef node(s) resolved against 24 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "other: Loot is a sequential roll-until-success chain described only in page prose, not in any drop row: 1/90 tradeable unique table (1/30 awakened), else 1/48 awakener's orb, else 1/25 frozen tablet, else 1/200 ice quartz, else 1/5 supply drop table, else the standard table; separately 1/2500 Baron and 1/40 clue after that. A perfect kill also gives 50% more loot from the standard table. The page's dropsline rows reconcile to a valid denominator on their own, so this source parses cleanly and would otherwise look verified — the chain order and the perfect-kill bonus are the parts that are invisible to the parser. Separately, data/overrides/duke-sucellus.json now gates the awakened-only Ancient blood ornament kit drop behind the new awakened toggle — that piece is fixed; the roll-chain order and perfect-kill bonus above are not."
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 44 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

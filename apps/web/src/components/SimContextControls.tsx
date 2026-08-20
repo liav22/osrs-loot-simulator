@@ -27,6 +27,7 @@ const BOOLEAN_FIELDS: Partial<Record<SimContextField, string>> = {
   perfectKill: 'Perfect kill (no avoidable damage)',
   isMVP: 'MVP (most damage dealt)',
   onKonarTask: 'Konar task',
+  awakened: 'Awakened (last of the four)',
 }
 
 const MOONS: readonly SimContext['moonsKilled'][number][] = ['blood', 'blue', 'eclipse']

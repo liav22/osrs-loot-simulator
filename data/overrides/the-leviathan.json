@@ -1,26 +1,20 @@
 {
-  "slug": "duke-sucellus",
-  "name": "Duke Sucellus",
-  "aliases": [],
-  "wikiPage": "Duke Sucellus",
-  "wikiRevId": 15275314,
-  "variants": [
-    "normal"
-  ],
+  "slug": "the-leviathan",
+  "note": "Every DT2 boss page states the same raritynotes ref verbatim: \"Only when defeated in the awakened encounter as the last of the four.\" The generated document modelled Ancient blood ornament kit (item 28336) as an unconditional always-drop, which is wrong on every ordinary kill. Gated it behind the new awakened SimContext boolean instead (see docs/DECISIONS.md) \u2014 everything else in this table set is untouched, carried forward from the parser-generated document as-is.",
   "tables": [
     {
-      "id": "duke-sucellus:0:uniques",
+      "id": "the-leviathan:0:uniques",
       "mode": "weighted",
       "rolls": 1,
-      "denominator": 2160,
+      "denominator": 2304,
       "withoutReplacement": false,
       "entries": [
         {
           "node": {
             "kind": "item",
-            "itemId": 28281,
-            "itemKey": "magus-vestige",
-            "name": "Magus vestige",
+            "itemId": 28283,
+            "itemKey": "venator-vestige",
+            "name": "Venator vestige",
             "qty": {
               "kind": "exact",
               "n": 1
@@ -52,9 +46,9 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 28321,
-            "itemKey": "eye-of-the-duke",
-            "name": "Eye of the duke",
+            "itemId": 28325,
+            "itemKey": "leviathan-s-lure",
+            "name": "Leviathan's lure",
             "qty": {
               "kind": "exact",
               "n": 1
@@ -121,7 +115,7 @@
       "notes": "Uniques"
     },
     {
-      "id": "duke-sucellus:1:secondary-uniques",
+      "id": "the-leviathan:1:secondary-uniques",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -129,9 +123,9 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 28333,
-            "itemKey": "frozen-tablet",
-            "name": "Frozen tablet",
+            "itemId": 28332,
+            "itemKey": "scarred-tablet",
+            "name": "Scarred tablet",
             "qty": {
               "kind": "exact",
               "n": 1
@@ -159,15 +153,15 @@
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 48.5
+            "den": 53.6
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 28270,
-            "itemKey": "ice-quartz",
-            "name": "Ice quartz",
+            "itemId": 28274,
+            "itemKey": "smoke-quartz",
+            "name": "Smoke quartz",
             "qty": {
               "kind": "exact",
               "n": 1
@@ -176,14 +170,14 @@
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 206.6
+            "den": 206
           }
         }
       ],
       "notes": "Secondary uniques"
     },
     {
-      "id": "duke-sucellus:2:supplies",
+      "id": "the-leviathan:2:supplies",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 5.4,
@@ -192,7 +186,7 @@
         {
           "node": {
             "kind": "tableRef",
-            "ref": "duke-sucellus-supplies-bundle"
+            "ref": "the-leviathan-supplies-bundle"
           },
           "rate": {
             "kind": "weight",
@@ -203,7 +197,7 @@
       "notes": "Supplies"
     },
     {
-      "id": "duke-sucellus:3:weapons-and-armour-resources-runes-and-ammunition",
+      "id": "the-leviathan:3:resources-runes-and-ammunition",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 100,
@@ -212,86 +206,14 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 1103,
-            "itemKey": "bronze-chainbody",
-            "name": "Bronze chainbody",
+            "itemId": 30771,
+            "itemKey": "aether-catalyst",
+            "name": "Aether catalyst",
             "qty": {
               "kind": "range",
-              "min": 11,
-              "max": 17
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1109,
-            "itemKey": "mithril-chainbody",
-            "name": "Mithril chainbody",
-            "qty": {
-              "kind": "range",
-              "min": 5,
-              "max": 7
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1111,
-            "itemKey": "adamant-chainbody",
-            "name": "Adamant chainbody",
-            "qty": {
-              "kind": "range",
-              "min": 6,
-              "max": 10
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 4087,
-            "itemKey": "dragon-platelegs",
-            "name": "Dragon platelegs",
-            "qty": {
-              "kind": "range",
-              "min": 5,
-              "max": 7
+              "min": 1500,
+              "max": 2250
             }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 7936,
-            "itemKey": "pure-essence",
-            "name": "Pure essence",
-            "qty": {
-              "kind": "range",
-              "min": 200,
-              "max": 300
-            },
-            "noted": true
           },
           "rate": {
             "kind": "weight",
@@ -306,8 +228,26 @@
             "name": "Iron ore",
             "qty": {
               "kind": "range",
-              "min": 63,
-              "max": 95
+              "min": 57,
+              "max": 85
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 442,
+            "itemKey": "silver-ore",
+            "name": "Silver ore",
+            "qty": {
+              "kind": "range",
+              "min": 57,
+              "max": 85
             },
             "noted": true
           },
@@ -324,8 +264,8 @@
             "name": "Coal",
             "qty": {
               "kind": "range",
-              "min": 216,
-              "max": 325
+              "min": 195,
+              "max": 292
             },
             "noted": true
           },
@@ -337,13 +277,31 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 447,
-            "itemKey": "mithril-ore",
-            "name": "Mithril ore",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
             "qty": {
               "kind": "range",
-              "min": 33,
-              "max": 50
+              "min": 67,
+              "max": 101
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "range",
+              "min": 57,
+              "max": 85
             },
             "noted": true
           },
@@ -355,31 +313,13 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 449,
-            "itemKey": "adamantite-ore",
-            "name": "Adamantite ore",
-            "qty": {
-              "kind": "range",
-              "min": 75,
-              "max": 112
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 451,
             "itemKey": "runite-ore",
             "name": "Runite ore",
             "qty": {
               "kind": "range",
-              "min": 30,
-              "max": 45
+              "min": 27,
+              "max": 40
             },
             "noted": true
           },
@@ -396,8 +336,8 @@
             "name": "Sapphire",
             "qty": {
               "kind": "range",
-              "min": 28,
-              "max": 42
+              "min": 25,
+              "max": 38
             },
             "noted": true
           },
@@ -414,8 +354,8 @@
             "name": "Emerald",
             "qty": {
               "kind": "range",
-              "min": 28,
-              "max": 42
+              "min": 25,
+              "max": 38
             },
             "noted": true
           },
@@ -432,8 +372,8 @@
             "name": "Ruby",
             "qty": {
               "kind": "range",
-              "min": 28,
-              "max": 42
+              "min": 25,
+              "max": 38
             },
             "noted": true
           },
@@ -450,8 +390,8 @@
             "name": "Uncut ruby",
             "qty": {
               "kind": "range",
-              "min": 41,
-              "max": 62
+              "min": 37,
+              "max": 56
             },
             "noted": true
           },
@@ -468,8 +408,8 @@
             "name": "Uncut diamond",
             "qty": {
               "kind": "range",
-              "min": 41,
-              "max": 62
+              "min": 37,
+              "max": 56
             },
             "noted": true
           },
@@ -481,31 +421,30 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 2349,
-            "itemKey": "bronze-bar",
-            "name": "Bronze bar",
+            "itemId": 19582,
+            "itemKey": "dragon-javelin-tips",
+            "name": "Dragon javelin tips",
             "qty": {
               "kind": "range",
-              "min": 63,
-              "max": 95
-            },
-            "noted": true
+              "min": 54,
+              "max": 81
+            }
           },
           "rate": {
             "kind": "weight",
-            "weight": 1
+            "weight": 8
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 11237,
-            "itemKey": "dragon-arrowtips",
-            "name": "Dragon arrowtips",
+            "itemId": 21930,
+            "itemKey": "dragon-bolts-unf",
+            "name": "Dragon bolts (unf)",
             "qty": {
               "kind": "range",
-              "min": 166,
-              "max": 250
+              "min": 150,
+              "max": 225
             }
           },
           "rate": {
@@ -516,47 +455,30 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 19580,
-            "itemKey": "rune-javelin-tips",
-            "name": "Rune javelin tips",
+            "itemId": 9194,
+            "itemKey": "onyx-bolt-tips",
+            "name": "Onyx bolt tips",
             "qty": {
               "kind": "range",
-              "min": 60,
-              "max": 90
+              "min": 90,
+              "max": 135
             }
           },
           "rate": {
             "kind": "weight",
-            "weight": 8
+            "weight": 1
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 19582,
-            "itemKey": "dragon-javelin-tips",
-            "name": "Dragon javelin tips",
+            "itemId": 389,
+            "itemKey": "raw-manta-ray",
+            "name": "Raw manta ray",
             "qty": {
               "kind": "range",
-              "min": 60,
-              "max": 90
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 8
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 395,
-            "itemKey": "raw-sea-turtle",
-            "name": "Raw sea turtle",
-            "qty": {
-              "kind": "range",
-              "min": 200,
-              "max": 300
+              "min": 180,
+              "max": 270
             },
             "noted": true
           },
@@ -568,30 +490,13 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 556,
-            "itemKey": "air-rune",
-            "name": "Air rune",
+            "itemId": 13441,
+            "itemKey": "anglerfish",
+            "name": "Anglerfish",
             "qty": {
               "kind": "range",
-              "min": 200,
-              "max": 300
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 4695,
-            "itemKey": "mist-rune",
-            "name": "Mist rune",
-            "qty": {
-              "kind": "range",
-              "min": 100,
-              "max": 150
+              "min": 4,
+              "max": 6
             }
           },
           "rate": {
@@ -602,18 +507,120 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 562,
-            "itemKey": "chaos-rune",
-            "name": "Chaos rune",
+            "itemId": 882,
+            "itemKey": "bronze-arrow",
+            "name": "Bronze arrow",
             "qty": {
               "kind": "range",
-              "min": 100,
-              "max": 150
+              "min": 63,
+              "max": 94
             }
           },
           "rate": {
             "kind": "weight",
-            "weight": 9
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 888,
+            "itemKey": "mithril-arrow",
+            "name": "Mithril arrow",
+            "qty": {
+              "kind": "range",
+              "min": 63,
+              "max": 94
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 890,
+            "itemKey": "adamant-arrow",
+            "name": "Adamant arrow",
+            "qty": {
+              "kind": "range",
+              "min": 63,
+              "max": 94
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 892,
+            "itemKey": "rune-arrow",
+            "name": "Rune arrow",
+            "qty": {
+              "kind": "range",
+              "min": 54,
+              "max": 81
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 559,
+            "itemKey": "body-rune",
+            "name": "Body rune",
+            "qty": {
+              "kind": "range",
+              "min": 180,
+              "max": 270
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 180,
+              "max": 270
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4697,
+            "itemKey": "smoke-rune",
+            "name": "Smoke rune",
+            "qty": {
+              "kind": "range",
+              "min": 300,
+              "max": 450
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
           }
         },
         {
@@ -624,8 +631,8 @@
             "name": "Soul rune",
             "qty": {
               "kind": "range",
-              "min": 666,
-              "max": 1000
+              "min": 600,
+              "max": 900
             }
           },
           "rate": {
@@ -634,29 +641,14 @@
           }
         }
       ],
-      "notes": "Weapons and armour / Resources / Runes and ammunition"
+      "notes": "Resources / Runes and ammunition"
     },
     {
-      "id": "duke-sucellus:4:tertiary",
+      "id": "the-leviathan:4:tertiary",
       "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
       "entries": [
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 28430,
-            "itemKey": "odd-key",
-            "name": "Odd key",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "always"
-          }
-        },
         {
           "node": {
             "kind": "item",
@@ -682,7 +674,7 @@
       "notes": "Tertiary"
     },
     {
-      "id": "duke-sucellus:5:tertiary",
+      "id": "the-leviathan:5:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -781,9 +773,9 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 28250,
-            "itemKey": "baron",
-            "name": "Baron",
+            "itemId": 28252,
+            "itemKey": "lil-viathan",
+            "name": "Lil'viathan",
             "qty": {
               "kind": "exact",
               "n": 1
@@ -799,60 +791,5 @@
       ],
       "notes": "Tertiary"
     }
-  ],
-  "contextDefaults": {},
-  "status": "needs_review",
-  "statusTier": "unknown_scaling",
-  "statusReason": "Loot is a sequential roll-until-success chain described only in page prose, not in any drop row: 1/90 tradeable unique table (1/30 awakened), else 1/48 awakener's orb, else 1/25 frozen tablet, else 1/200 ice quartz, else 1/5 supply drop table, else the standard table; separately 1/2500 Baron and 1/40 clue after that. A perfect kill also gives 50% more loot from the standard table. The page's dropsline rows reconcile to a valid denominator on their own, so this source parses cleanly and would otherwise look verified — the chain order and the perfect-kill bonus are the parts that are invisible to the parser. Separately, data/overrides/duke-sucellus.json now gates the awakened-only Ancient blood ornament kit drop behind the new awakened toggle — that piece is fixed; the roll-chain order and perfect-kill bonus above are not.",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "1 tableRef node(s) resolved against 24 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "other: Loot is a sequential roll-until-success chain described only in page prose, not in any drop row: 1/90 tradeable unique table (1/30 awakened), else 1/48 awakener's orb, else 1/25 frozen tablet, else 1/200 ice quartz, else 1/5 supply drop table, else the standard table; separately 1/2500 Baron and 1/40 clue after that. A perfect kill also gives 50% more loot from the standard table. The page's dropsline rows reconcile to a valid denominator on their own, so this source parses cleanly and would otherwise look verified — the chain order and the perfect-kill bonus are the parts that are invisible to the parser. Separately, data/overrides/duke-sucellus.json now gates the awakened-only Ancient blood ornament kit drop behind the new awakened toggle — that piece is fixed; the roll-chain order and perfect-kill bonus above are not."
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 44 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

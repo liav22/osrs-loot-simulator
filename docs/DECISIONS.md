@@ -7077,3 +7077,82 @@ Verification: `pnpm -r typecheck && pnpm -r test && pnpm lint` clean, including
 `corpus-reproducibility.test.ts` (101 sources now) and the new `ev-matches`
 regression test. `item-icons` and `site-index` regenerated afterward for both
 new sources' items/portraits. Not committed — left for the user to review.
+
+## A fifth boolean `Condition`: DT2's Awakened-only ornament kit
+
+Requested by name: Duke Sucellus, The Leviathan, The Whisperer and Vardorvis
+all modelled their unique Ancient blood ornament kit (item 28336) as an
+unconditional `always` drop, when in reality it only drops from the Awakened
+encounter, and only on the last of the four killed that way — every one of
+the four pages states the exact same `raritynotes` ref verbatim: "Only when
+defeated in the awakened encounter as the last of the four." A single-boss
+simulator has no notion of "the other three bosses' order," so the fix
+collapses that compound real-world fact to the one thing it means for THIS
+boss's kill: was it the qualifying Awakened kill. Mirrors `onKonarTask`
+exactly rather than inventing a new mechanism — the fourth precedent for "a
+boolean gate that only renders where a boss's own document uses it," after
+`ringOfWealth`/`onKonarTask`/`members`:
+
+- New `Condition` kind `awakened` (`packages/loot-model/src/schema.ts`'s
+  `ConditionSchema`), a new `SimContext` field (default `false`), evaluated in
+  `conditions.ts` the same one-line way as `onKonarTask`.
+- `contextSurfaceOf` (`apps/web/src/lib/context-fields.ts`) and
+  `DropTableView`'s `conditionLabel` both needed their own `case 'awakened'`
+  — the latter is a `switch` over every `Condition` kind with no default arm,
+  specifically so a new kind fails the typecheck instead of rendering
+  nothing; it caught this one immediately (`typecheck` failed until the case
+  was added).
+- UI label "Awakened (last of the four)" in `SimContextControls.tsx`'s
+  `BOOLEAN_FIELDS`, URL param `awakened` in `url-state.ts`'s `BOOLEAN_PARAMS`
+  — both one-line additions to an existing generic map, the same shape the
+  Konar-toggle rename (`b6ab5e9`) made routine.
+
+**Chose an override over a parser change.** Unlike `onKonarTask` (parser-
+derived from the machine-readable `{{Brimstone rarity|N}}` template, firing
+on ~41 bosses uniformly), the DT2 condition lives only in prose inside a
+`raritynotes` `<ref>` with no dedicated template — the same "wiki never
+encoded the mechanic in `{{DropsLine}}` rows" shape `docs/OVERRIDES.md`
+reserves overrides for. Four new overrides
+(`data/overrides/{duke-sucellus,the-leviathan,the-whisperer,vardorvis}.json`),
+each carrying the boss's own generated `tables` verbatim (all-or-nothing
+replacement per `applyOverride`) with `conditions: [{kind:'awakened',
+value:true}]` added to just the one ornament-kit entry — nothing else in any
+of the four tables changed.
+
+**Status changes, and why Duke Sucellus alone stays `needs_review`.**
+The-leviathan/the-whisperer/vardorvis were `verified`, no watchlist entry, and
+this was the first anyone had modelled the gap at all — rather than
+watchlisting them and un-watchlisting them in the same session for no
+auditability gain, went straight to override + a wiki-figure-checking test
+(`docs/OVERRIDES.md` step 3), landing all three on `manual_override` in one
+move. Duke Sucellus already carries a watchlist entry for an unrelated,
+larger, still-unbuilt gap (its roll-until-success chain order and perfect-
+kill bonus) — `not_on_watchlist` keeps it `needs_review` regardless of this
+fix, which is correct: the ornament kit piece is now fixed, the roll-chain
+piece is not. Its `detail` was extended (not replaced) to cite
+`data/overrides/duke-sucellus.json` literally, per `checkWatchlistConsistency`
+rule 6 — omitting that citation was flagged immediately by `ingest parse`'s
+own consistency check the first time the override existed on disk.
+`data/index.json` regenerated afterward (69 verified/8 manual_override, was
+72/5).
+
+**Verification, per `docs/OVERRIDES.md` step 3** (not just deterministic
+checks passing, but checked against the wiki's own stated figure):
+`apps/ingest/test/dt2-awakened-ornament-kit.test.ts`, run against the real
+committed documents, asserts 0% with the toggle off and exactly 100% (one
+guaranteed drop) with it on, for all four, with every other expected drop in
+the document unchanged, plus a negative control (Vorkath) carrying no
+`awakened` condition anywhere. Mirrored at the UI layer: `SimContextControls.
+test.tsx` (positive on all four DT2 bosses, negative on Brutus, alongside the
+existing Konar pair) and `url-state.test.ts` (`awakened=1` round-trips).
+Mirrored again at the browser layer: `e2e/url-round-trip.spec.ts` gained the
+same positive/negative pair `konar=1` already had (Vardorvis vs. Zalcano), and
+a manual Playwright pass against a live dev server confirmed the actual
+simulated output: "Ancient blood ornament kit" absent from a 2,000-kill
+Vardorvis run with the toggle off, present with it checked, zero console
+errors either way.
+
+Verification: `pnpm -r typecheck && pnpm -r test && pnpm lint` clean
+(`typecheck` caught the missing `DropTableView` case before any test did),
+`playwright test` (all 51 specs, including the two new ones) clean. Not
+committed — left for the user to review.

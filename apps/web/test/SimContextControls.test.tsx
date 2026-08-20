@@ -73,6 +73,14 @@ describe('SimContextControls renders the controls each boss needs', () => {
     expect(screen.getByText('Konar task')).toBeDefined()
   })
 
+  it.each(['duke-sucellus', 'the-leviathan', 'the-whisperer', 'vardorvis'])(
+    '%s (Ancient blood ornament kit, awakened-only) gets an Awakened toggle',
+    (slug) => {
+      renderFor(slug)
+      expect(screen.getByText('Awakened (last of the four)')).toBeDefined()
+    }
+  )
+
   it('an ordinary boss is not cluttered with controls it ignores', () => {
     renderFor('brutus')
     expect(screen.queryByText('Delve level reached')).toBeNull()
@@ -81,6 +89,8 @@ describe('SimContextControls renders the controls each boss needs', () => {
     // Brutus has no Brimstone key entry (not Konar-eligible), unlike Ring of
     // wealth, which is universal because it reaches the shared RDT/gem tables.
     expect(screen.queryByText('Konar task')).toBeNull()
+    // Not a DT2 boss — no Ancient blood ornament kit entry to gate.
+    expect(screen.queryByText('Awakened (last of the four)')).toBeNull()
     // The universal ones still render.
     expect(screen.getByText('Ring of wealth')).toBeDefined()
   })

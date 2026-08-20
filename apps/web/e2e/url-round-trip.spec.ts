@@ -38,6 +38,18 @@ test('a Konar task deep link populates the control, only on a Konar-eligible bos
   await expect(page.getByLabel('Konar task')).toHaveCount(0)
 })
 
+test('an Awakened deep link populates the control, only on a DT2 boss with the ornament kit gate', async ({
+  page,
+}) => {
+  await page.goto('./boss/vardorvis?awakened=1')
+  await expect(page.getByRole('heading', { name: 'Vardorvis' })).toBeVisible()
+  await expect(page.getByLabel('Awakened (last of the four)')).toBeChecked()
+
+  await page.goto('./boss/zalcano')
+  await expect(page.getByRole('heading', { name: 'Zalcano' })).toBeVisible()
+  await expect(page.getByLabel('Awakened (last of the four)')).toHaveCount(0)
+})
+
 test('moving a control writes the URL back, and the URL survives a reload', async ({ page }) => {
   await page.goto('./boss/zalcano?hpdmg=500&shielddmg=40')
   await expect(page.getByLabel('Damage to shield')).toHaveValue('40')

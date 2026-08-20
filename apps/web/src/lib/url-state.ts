@@ -104,6 +104,7 @@ const BOOLEAN_PARAMS = {
   perfectKill: 'perfect',
   isMVP: 'mvp',
   onKonarTask: 'konar',
+  awakened: 'awakened',
 } as const satisfies Partial<Record<keyof SimContext, string>>
 
 const MOONS = ['blood', 'blue', 'eclipse'] as const

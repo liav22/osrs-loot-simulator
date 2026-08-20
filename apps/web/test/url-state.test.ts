@@ -21,13 +21,16 @@ describe('paramsFromSearch', () => {
 
   it('reads every field from the query string', () => {
     const params = paramsFromSearch(
-      new URLSearchParams('members=0&row=1&konar=1&quests=Dragon+Slayer,Legends%27+Quest&kc=50&variant=hard&seed=7&n=5000')
+      new URLSearchParams(
+        'members=0&row=1&konar=1&awakened=1&quests=Dragon+Slayer,Legends%27+Quest&kc=50&variant=hard&seed=7&n=5000'
+      )
     )
     expect(params.ctx).toEqual({
       ...DEFAULT_SIM_CONTEXT,
       members: false,
       ringOfWealth: true,
       onKonarTask: true,
+      awakened: true,
       questsComplete: ['Dragon Slayer', "Legends' Quest"],
       killCount: 50,
       variant: 'hard',
@@ -86,7 +89,15 @@ describe('searchFromParams', () => {
 
   it('round-trips through paramsFromSearch', () => {
     const original = {
-      ctx: { ...DEFAULT_SIM_CONTEXT, ringOfWealth: true, onKonarTask: true, questsComplete: ['Dragon Slayer'], killCount: 12, variant: 'hard' },
+      ctx: {
+        ...DEFAULT_SIM_CONTEXT,
+        ringOfWealth: true,
+        onKonarTask: true,
+        awakened: true,
+        questsComplete: ['Dragon Slayer'],
+        killCount: 12,
+        variant: 'hard',
+      },
       seed: 42,
       kills: 250_000,
       run: true,

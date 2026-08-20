@@ -668,7 +668,13 @@
           },
           "rate": {
             "kind": "always"
-          }
+          },
+          "conditions": [
+            {
+              "kind": "awakened",
+              "value": true
+            }
+          ]
         }
       ],
       "notes": "Tertiary"
@@ -793,8 +799,8 @@
     }
   ],
   "contextDefaults": {},
-  "status": "verified",
-  "statusTier": "verified",
+  "status": "manual_override",
+  "statusTier": null,
   "statusReason": null,
   "validation": {
     "ok": false,
@@ -839,11 +845,11 @@
       {
         "check": "heading_unambiguous",
         "ok": true,
-        "detail": "no ambiguous headings or unconfirmed bundle signals"
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },
-  "source": "generated",
+  "source": "merged",
   "parserVersion": 1,
   "repeatable": true
 }

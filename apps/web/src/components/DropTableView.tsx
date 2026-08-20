@@ -9,6 +9,8 @@ function conditionLabel(condition: Condition): string {
       return condition.value ? 'Ring of wealth' : 'No ring of wealth'
     case 'onKonarTask':
       return condition.value ? 'On Konar task' : 'Not on Konar task'
+    case 'awakened':
+      return condition.value ? 'Awakened (last of the four)' : 'Not the qualifying Awakened kill'
     case 'questComplete':
       return condition.quest
     case 'variant':

@@ -308,6 +308,15 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('members'), value: z.boolean() }).strict(),
   z.object({ kind: z.literal('ringOfWealth'), value: z.boolean() }).strict(),
   z.object({ kind: z.literal('onKonarTask'), value: z.boolean() }).strict(),
+  /**
+   * The four Desert Treasure II bosses' Awakened-only ornament kit. Each
+   * page's own `raritynotes` states the same condition verbatim: "Only when
+   * defeated in the awakened encounter as the last of the four." A
+   * single-boss simulator has no notion of "the other three bosses' order",
+   * so this collapses that compound fact to the one thing it means for THIS
+   * boss's kill: was it the qualifying Awakened kill. See docs/DECISIONS.md.
+   */
+  z.object({ kind: z.literal('awakened'), value: z.boolean() }).strict(),
   z.object({ kind: z.literal('questComplete'), quest: z.string().min(1) }).strict(),
   z.object({ kind: z.literal('variant'), name: z.string().min(1) }).strict(),
   /**
@@ -874,6 +883,8 @@ export const SimContextSchema = z
     ringOfWealth: z.boolean(),
     /** On a Slayer task assigned specifically by Konar quo Maten — any location, not Wilderness-restricted. Gates Brimstone key. */
     onKonarTask: z.boolean(),
+    /** Duke Sucellus/The Leviathan/The Whisperer/Vardorvis's Awakened-only ornament kit — see `ConditionSchema`'s `awakened` variant. */
+    awakened: z.boolean().default(false),
     questsComplete: z.array(z.string().min(1)),
     killCount: z.number().int().nonnegative(),
     variant: z.string().min(1),
@@ -985,6 +996,7 @@ export const DEFAULT_SIM_CONTEXT: SimContext = {
   members: true,
   ringOfWealth: false,
   onKonarTask: false,
+  awakened: false,
   questsComplete: [],
   killCount: 0,
   variant: 'normal',

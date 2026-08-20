@@ -168,6 +168,7 @@ function walkEntry(entry: Entry, walk: Walk): void {
         break
       case 'ringOfWealth':
       case 'onKonarTask':
+      case 'awakened':
       case 'variant':
         into.add(condition.kind === 'variant' ? 'variant' : condition.kind)
         break
