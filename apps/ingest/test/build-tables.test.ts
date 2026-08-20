@@ -356,6 +356,68 @@ describe('buildTableGroups', () => {
       expect(groups[0]?.confirmedBy).toMatch(/tradeable unique table/)
     })
 
+    it('confirms preroll from the block\'s own preamble, not any one row\'s raritynotes (Demonic gorilla "Herbs" shape)', () => {
+      const preamble =
+        'There is a 18/500 chance to get noted herbs. There is an equal chance of dropping 7 to 13 herbs of the same type.'
+      const groups = buildTableGroups(
+        groupByHeading([
+          line({ name: 'Grimy kwuarm', rarity: '1/88.9', heading: 'Herbs', blockPreamble: preamble }),
+          line({ name: 'Grimy cadantine', rarity: '1/111.1', heading: 'Herbs', blockPreamble: preamble }),
+          line({ name: 'Grimy lantadyme', rarity: '1/148.1', heading: 'Herbs', blockPreamble: preamble }),
+          line({ name: 'Grimy dwarf weed', rarity: '1/111.1', heading: 'Herbs', blockPreamble: preamble }),
+        ])
+      )
+      expect(groups).toHaveLength(1)
+      expect(groups[0]?.mode).toBe('preroll')
+      expect(groups[0]?.ambiguous).toBeNull()
+      expect(groups[0]?.confirmedBy).toMatch(/block's own preamble/)
+      expect(groups[0]?.confirmedBy).toMatch(/of the same type/)
+    })
+
+    it('confirms preroll from "chance of rolling the ... drop table" preamble (Phantom Muspah/Shellbane Gryphon "Seeds" shape)', () => {
+      const preamble = 'There is a 5/235 chance of rolling the [[tree-herb seed drop table]].'
+      const groups = buildTableGroups(
+        groupByHeading([
+          line({ name: 'Yew seed', rarity: '1/47', heading: 'Seeds', blockPreamble: preamble }),
+          line({ name: 'Spirit seed', rarity: '1/117.5', heading: 'Seeds', blockPreamble: preamble }),
+          line({ name: 'Ranarr seed', rarity: '1/391.7', heading: 'Seeds', blockPreamble: preamble }),
+          line({ name: 'Redwood tree seed', rarity: '1/2938', heading: 'Seeds', blockPreamble: preamble }),
+        ])
+      )
+      expect(groups).toHaveLength(1)
+      expect(groups[0]?.mode).toBe('preroll')
+      expect(groups[0]?.ambiguous).toBeNull()
+      expect(groups[0]?.confirmedBy).toMatch(/chance of rolling the/)
+    })
+
+    it('does not confirm from an unrelated preamble sentence', () => {
+      const groups = buildTableGroups(
+        groupByHeading([
+          line({
+            name: 'Nightmare staff',
+            rarity: '1/300',
+            heading: 'Uniques',
+            blockPreamble: 'This monster is found in the Sisterhood Sanctuary.',
+          }),
+          line({
+            name: "Inquisitor's great helm",
+            rarity: '1/420',
+            heading: 'Uniques',
+            blockPreamble: 'This monster is found in the Sisterhood Sanctuary.',
+          }),
+          line({
+            name: "Inquisitor's mace",
+            rarity: '1/750',
+            heading: 'Uniques',
+            blockPreamble: 'This monster is found in the Sisterhood Sanctuary.',
+          }),
+        ])
+      )
+      expect(groups[0]?.mode).toBe('preroll')
+      expect(groups[0]?.ambiguous).toMatch(/different denominators/)
+      expect(groups[0]?.confirmedBy).toBeUndefined()
+    })
+
     it('stays a flagged guess when no denominator or textual signal resolves it (The Nightmare shape)', () => {
       const groups = buildTableGroups(
         groupByHeading([
@@ -713,6 +775,61 @@ describe('co-drop bundles', () => {
     )
     expect(groups.flatMap((g) => g.entries).every((e) => e.bundle === undefined)).toBe(true)
   })
+
+  it(
+    'does not read an UNRELATED, adjacent footnote\'s text as the shared ref\'s own defining text ' +
+      '(Phantom Muspah "Unique" shape)',
+    () => {
+      // `<ref name=uniques />` is self-closing — it defines nothing on its
+      // own. The naive `<ref...name=X...>(.*?)<\/ref>` reading doesn't know
+      // tag boundaries, so on a row whose rarityNotes concatenates that
+      // self-closing tag with a SECOND, unrelated `<ref group=d>` right after
+      // it, it would capture straight through into the second ref's own text
+      // as if it belonged to the first — reading a plain "no regular loot
+      // drops alongside a unique" clarification as a co-drop bundle claim
+      // about two items that were never claimed to be bundled at all.
+      const groups = buildTableGroups(
+        groupByHeading([
+          line({
+            name: 'Frozen cache',
+            rarity: '4/100',
+            heading: 'Unique',
+            rarityNotes: '{{CiteNews|title=Secrets of the North Improvements|name=uniques}}',
+          }),
+          line({ name: 'Ancient icon', rarity: '2/100', heading: 'Unique', rarityNotes: '<ref name=uniques />' }),
+          line({
+            name: 'Venator shard',
+            rarity: '1/100',
+            heading: 'Unique',
+            rarityNotes:
+              '<ref name=uniques /><ref group=d>When a Venator shard is received, no regular loot ' +
+              'will be dropped alongside it.</ref>',
+          }),
+        ])
+      )
+      expect(groups.flatMap((g) => g.entries).every((e) => e.bundle === undefined)).toBe(true)
+      const signals = checkBundleSignals(
+        groupByHeading([
+          line({
+            name: 'Frozen cache',
+            rarity: '4/100',
+            heading: 'Unique',
+            rarityNotes: '{{CiteNews|title=Secrets of the North Improvements|name=uniques}}',
+          }),
+          line({ name: 'Ancient icon', rarity: '2/100', heading: 'Unique', rarityNotes: '<ref name=uniques />' }),
+          line({
+            name: 'Venator shard',
+            rarity: '1/100',
+            heading: 'Unique',
+            rarityNotes:
+              '<ref name=uniques /><ref group=d>When a Venator shard is received, no regular loot ' +
+              'will be dropped alongside it.</ref>',
+          }),
+        ])
+      )
+      expect(signals).toEqual([])
+    }
+  )
 
   describe('checkBundleSignals', () => {
     it('reports a confirmed bundle for every collapsed group', () => {

@@ -283,7 +283,7 @@ function tryHomogenizeDenominators(rates: readonly ParsedRate[]): number | null 
   return merged
 }
 
-/** Phrases the wiki uses in `raritynotes` to describe a shared, mutually-exclusive roll across several rows. */
+/** Phrases the wiki uses (in `raritynotes` or a block's own preamble) to describe a shared, mutually-exclusive roll across several rows. */
 const MUTUAL_EXCLUSIVITY_PHRASES = [
   /\bany\s+\S+\s+piece\b/i, // "the drop rate is ... for a specific piece, or 1/127 for any piece" (GWD generals)
   /\btradeable unique table\b/i, // "must roll an invisible 1/N drop on the tradeable unique table" (DT2 bosses)
@@ -292,6 +292,8 @@ const MUTUAL_EXCLUSIVITY_PHRASES = [
   /\bonly one\b/i,
   /\bone of (?:the|these)\b/i,
   /\breceive one\b/i,
+  /\bof the same type\b/i, // "an equal chance of dropping 7 to 13 herbs of the same type" (Demonic gorilla's Herbs block preamble)
+  /\bchance of rolling the\b[^.]*\bdrop table\b/i, // "chance of rolling the [[tree-herb seed drop table]]" — the wiki's own idiom for "a single roll into a named, canonically mutually-exclusive shared table"; confirmed against 13 occurrences across 9 named tables corpus-wide (rare/gem/combat herb/useful herb/tree-herb seed/allotment seed/shark/herb drop tables), never used for anything else
 ] as const
 
 /** Every `<ref name="X">` / `{{NamedRef|X}}` reference name a `raritynotes` string cites. */
@@ -310,7 +312,7 @@ function citedRefNames(rarityNotes: string): string[] {
  * Looks for wiki text that confirms a heterogeneous-denominator heading's
  * entries genuinely share one mutually-exclusive roll (`preroll`), instead
  * of guessing from the heading text or rarities alone (PROJECT_PLAN.md 6.5
- * heuristic 6). Two independent signals, either sufficient alone:
+ * heuristic 6). Three independent signals, any one sufficient alone:
  *
  *   - Two or more entries cite the SAME named footnote
  *     (`<ref name="news"/>`, `{{NamedRef|Halberd}}`) — confirmed against
@@ -321,6 +323,13 @@ function citedRefNames(rarityNotes: string): string[] {
  *     phrase — confirmed against Duke Sucellus/The Leviathan/The
  *     Whisperer/Vardorvis ("the tradeable unique table") and General
  *     Graardor/Kree'arra ("any piece").
+ *   - The BLOCK's own preamble (the italic prose above `{{DropsTableHead}}`,
+ *     not any one row's `raritynotes`) contains the same phrase — some
+ *     sources state the mutual-exclusivity claim once for the whole group
+ *     rather than repeating it per row. Demonic gorilla's Herbs heading:
+ *     "There is an equal chance of dropping 7 to 13 herbs of the same
+ *     type" — one sentence confirming all four Grimy-herb rows are one
+ *     mutually-exclusive roll, cited nowhere on any individual row.
  *
  * Deliberately NOT a signal: the heading text itself ("Unique"/"Uniques").
  * That was checked and rejected two sessions ago — only 2 of 10 bosses
@@ -330,7 +339,7 @@ function citedRefNames(rarityNotes: string): string[] {
  * undiscovered mechanic (The Nightmare's Uniques, no citation at all) stays
  * `needs_review` rather than being guessed into `verified`.
  */
-function findConfirmingSignal(lines: readonly WikitextDropLine[]): string | null {
+function findConfirmingSignal(lines: readonly WikitextDropLine[], preamble: string): string | null {
   const refCounts = new Map<string, number>()
   for (const line of lines) {
     for (const name of citedRefNames(line.rarityNotes)) {
@@ -349,6 +358,13 @@ function findConfirmingSignal(lines: readonly WikitextDropLine[]): string | null
       if (match !== null) {
         return `raritynotes on '${line.name}' says "${match[0]}"`
       }
+    }
+  }
+
+  for (const phrase of MUTUAL_EXCLUSIVITY_PHRASES) {
+    const match = phrase.exec(preamble)
+    if (match !== null) {
+      return `the block's own preamble says "${match[0]}"`
     }
   }
 
@@ -409,8 +425,20 @@ const COMPOSITE_RATE_PHRASES = [/\brolls? on (?:all|multiple|several) loot table
  */
 function definingRefText(lines: readonly WikitextDropLine[], refName: string): string | null {
   const escaped = refName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  // The `(?![^>]*\/>)` guard is load-bearing, not decorative: without it, a
+  // self-closing `<ref name="X" />` immediately followed by an UNRELATED
+  // `<ref group="d">real text</ref>` in the same `rarityNotes` string (e.g.
+  // Phantom Muspah's Venator shard: `<ref name=uniques /><ref group=d>When a
+  // Venator shard is received, no regular loot will be dropped alongside
+  // it.</ref>`) still satisfies the naive `<ref...name=X...>(.*?)<\/ref>`
+  // pattern — `[\s\S]*?` doesn't know tag boundaries, so it happily captures
+  // straight through into the SECOND ref's content as if it were the first
+  // ref's own text. That fabricated "defining text" then reads as a genuine
+  // co-drop bundle claim about an item it says nothing about at all. The
+  // guard rejects a self-closing opening tag outright, matching what the
+  // doc comment above already claimed this function did.
   const pattern = new RegExp(
-    `<ref\\b[^>]*\\bname\\s*=\\s*"?${escaped}"?[^>]*>([\\s\\S]*?)<\\/ref>`,
+    `<ref\\b(?![^>]*\\/>)[^>]*\\bname\\s*=\\s*"?${escaped}"?[^>]*>([\\s\\S]*?)<\\/ref>`,
     'i'
   )
   for (const line of lines) {
@@ -1238,7 +1266,7 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
     // table" language. Only when that ALSO comes up empty does this stay a
     // flagged guess, per heuristic 6.
     flushWeighted()
-    const confirmedBy = findConfirmingSignal(block.lines)
+    const confirmedBy = findConfirmingSignal(block.lines, block.preamble)
     const partition = transclusionPartition(
       block.lines,
       resolved.map((r) => r.resolution.rate!)

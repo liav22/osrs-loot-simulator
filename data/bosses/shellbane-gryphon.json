@@ -399,7 +399,7 @@
           }
         }
       ],
-      "notes": "Seeds and frags"
+      "notes": "Seeds and frags (confirmed preroll: the block's own preamble says \"chance of rolling the [[allotment seed drop table\")"
     },
     {
       "id": "shellbane-gryphon:4:herbs",
@@ -595,7 +595,7 @@
           }
         }
       ],
-      "notes": "Herbs"
+      "notes": "Herbs (confirmed preroll: the block's own preamble says \"chance of rolling the [[herb drop table]], plus a 5/128 chance of rolling the [[combat herb drop table\")"
     },
     {
       "id": "shellbane-gryphon:5:other",
@@ -836,9 +836,9 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
-  "statusTier": "unknown_scaling",
-  "statusReason": "heading \"Seeds and frags\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check; heading \"Herbs\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check",
+  "status": "verified",
+  "statusTier": "verified",
+  "statusReason": null,
   "validation": {
     "ok": false,
     "checks": [
@@ -881,8 +881,8 @@
       },
       {
         "check": "heading_unambiguous",
-        "ok": false,
-        "detail": "heading \"Seeds and frags\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check; heading \"Herbs\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check"
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
       }
     ]
   },

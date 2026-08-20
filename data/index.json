@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T20:19:17.177Z",
+  "generatedAt": "2026-08-20T21:48:51.826Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -315,8 +315,8 @@
       "slug": "demonic-gorilla",
       "name": "Demonic gorilla",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "status": "verified",
+      "statusTier": "verified",
       "image": "Demonic gorilla.png",
       "repeatable": true
     },
@@ -632,8 +632,8 @@
       "slug": "phantom-muspah",
       "name": "Phantom Muspah",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "status": "verified",
+      "statusTier": "verified",
       "image": "Phantom Muspah (ranged).png",
       "repeatable": true
     },
@@ -729,8 +729,8 @@
       "slug": "shellbane-gryphon",
       "name": "Shellbane gryphon",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "status": "verified",
+      "statusTier": "verified",
       "image": "Shellbane gryphon.png",
       "repeatable": true
     },

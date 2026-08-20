@@ -944,7 +944,7 @@
           }
         }
       ],
-      "notes": "Seeds"
+      "notes": "Seeds (confirmed preroll: the block's own preamble says \"chance of rolling the [[tree-herb seed drop table\")"
     },
     {
       "id": "phantom-muspah:5:resources-shark-drop-table",
@@ -1322,9 +1322,9 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
-  "statusTier": "unknown_scaling",
-  "statusReason": "heading \"Seeds\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check; bundle signal in \"Unique\" not confirmed for automatic modelling: footnote 'uniques' says \"dropped alongside\" (a co-drop bundle) across 2 rows, but they do not share one rate — needs a human check",
+  "status": "verified",
+  "statusTier": "verified",
+  "statusReason": null,
   "validation": {
     "ok": false,
     "checks": [
@@ -1367,8 +1367,8 @@
       },
       {
         "check": "heading_unambiguous",
-        "ok": false,
-        "detail": "heading \"Seeds\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check; bundle signal in \"Unique\" not confirmed for automatic modelling: footnote 'uniques' says \"dropped alongside\" (a co-drop bundle) across 2 rows, but they do not share one rate — needs a human check"
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
       }
     ]
   },

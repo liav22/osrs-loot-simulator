@@ -201,7 +201,152 @@
       "notes": "Weapons and armour / Runes and ammunition"
     },
     {
-      "id": "tormented-demon:3:seeds",
+      "id": "tormented-demon:3:herbs",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 40.8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 51
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 51
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 68
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 211,
+            "itemKey": "grimy-avantoe",
+            "name": "Grimy avantoe",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 81.6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 207,
+            "itemKey": "grimy-ranarr-weed",
+            "name": "Grimy ranarr weed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 102
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3051,
+            "itemKey": "grimy-snapdragon",
+            "name": "Grimy snapdragon",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 102
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 219,
+            "itemKey": "grimy-torstol",
+            "name": "Grimy torstol",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 136
+          }
+        }
+      ],
+      "notes": "Herbs (confirmed preroll: the block's own preamble says \"chance of rolling the [[combat herb drop table\")"
+    },
+    {
+      "id": "tormented-demon:4:seeds",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -478,7 +623,7 @@
       "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 1/51 (ratio 1.0000), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 1/51 — exact, not an approximation.)"
     },
     {
-      "id": "tormented-demon:4:consumables",
+      "id": "tormented-demon:5:consumables",
       "mode": "preroll",
       "rolls": 1,
       "withoutReplacement": false,
@@ -590,7 +735,7 @@
       "notes": "Consumables"
     },
     {
-      "id": "tormented-demon:5:other",
+      "id": "tormented-demon:6:other",
       "mode": "weighted",
       "rolls": 1,
       "denominator": 1020,
@@ -701,7 +846,7 @@
       "notes": "Other"
     },
     {
-      "id": "tormented-demon:6:tertiary",
+      "id": "tormented-demon:7:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -730,7 +875,7 @@
   "contextDefaults": {},
   "status": "needs_review",
   "statusTier": "unknown_scaling",
-  "statusReason": "8 of 47 wiki drop row(s) missing from the document: Grimy avantoe, Grimy cadantine, Grimy dwarf weed, Grimy kwuarm, Grimy lantadyme, Grimy ranarr weed, Grimy snapdragon, Grimy torstol",
+  "statusReason": "heading \"Consumables\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check",
   "validation": {
     "ok": false,
     "checks": [
@@ -756,7 +901,7 @@
       {
         "check": "ev_matches",
         "ok": false,
-        "detail": "80648.66 gp/kill vs wiki's 82852, 2.7% off"
+        "detail": "80542.09 gp/kill vs wiki's 82852, 2.8% off"
       },
       {
         "check": "items_known",
@@ -768,8 +913,8 @@
       },
       {
         "check": "drops_covered",
-        "ok": false,
-        "detail": "8 of 47 wiki drop row(s) missing from the document: Grimy avantoe, Grimy cadantine, Grimy dwarf weed, Grimy kwuarm, Grimy lantadyme, Grimy ranarr weed, Grimy snapdragon, Grimy torstol"
+        "ok": true,
+        "detail": "all 47 wiki drop row(s) reachable in the document"
       },
       {
         "check": "heading_unambiguous",

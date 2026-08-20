@@ -346,7 +346,7 @@
           }
         }
       ],
-      "notes": "Herbs"
+      "notes": "Herbs (confirmed preroll: the block's own preamble says \"of the same type\")"
     },
     {
       "id": "demonic-gorilla:4:seeds",
@@ -869,11 +869,11 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
-  "statusTier": "unknown_scaling",
-  "statusReason": "heading \"Herbs\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check",
+  "status": "verified",
+  "statusTier": "verified",
+  "statusReason": null,
   "validation": {
-    "ok": false,
+    "ok": true,
     "checks": [
       {
         "check": "weights_sum",
@@ -914,8 +914,8 @@
       },
       {
         "check": "heading_unambiguous",
-        "ok": false,
-        "detail": "heading \"Herbs\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check"
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
       }
     ]
   },

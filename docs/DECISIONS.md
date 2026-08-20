@@ -5689,6 +5689,12 @@ hand before assuming the standing check's universal reach was safe:
   invisible to `citedRefNames`, which requires a `name=` attribute to
   register anything at all. Never reaches the phrase check. Confirmed by
   reading the raw wikitext, not assumed safe from the shape alone.
+  **STALE as of a later session — see this doc's "A fourth bug, found
+  asking 'what's actually blocking these two now'" entry, near the end:**
+  the wiki page was edited since this snapshot, Venator shard's row gained
+  an adjacent `<ref name=uniques />`, and THAT exposed a real, distinct
+  `definingRefText` defect (reads across a self-closing tag into the next
+  one) this assessment had no way to anticipate. Fixed there, not here.
 
 **The `tableRef` target is GENERATED, not hand-authored, and gets written
 during `parseBoss` itself — the one real mechanical wrinkle the assessment
@@ -7156,3 +7162,163 @@ Verification: `pnpm -r typecheck && pnpm -r test && pnpm lint` clean
 (`typecheck` caught the missing `DropTableView` case before any test did),
 `playwright test` (all 51 specs, including the two new ones) clean. Not
 committed — left for the user to review.
+
+## `findConfirmingSignal` gains a block-preamble read and a second phrase — fixes 2 sources, 1 for free
+
+User pointed at wiki screenshots of Tormented Demon's and Demonic gorilla's
+Herbs/Seeds sections proving the wiki DOES state exact access rates for the
+mechanic that had them `needs_review` — not a case for an override (a
+per-source, per-mechanic hand-authored escape hatch), but two real, narrow
+gaps in shared parser code, exactly the kind CLAUDE.md's hard rule wants
+found and fixed at the model rather than routed around per boss.
+
+**Gap 1 — Tormented Demon's "Herbs" heading produced zero rows.** Its
+`{{CombatHerbDropLines}}`/`{{UsefulHerbDropLines}}`/`{{CombatHerbDropTableInfo}}`/
+`{{UsefulHerbDropTableInfo}}` template calls had no local snapshot, so
+`expandTransclusions` correctly left them untouched (per its own contract:
+"a template with no snapshot is left exactly as it was found") and
+`findRowlessTemplateBlocks` correctly flagged the empty result — this was
+never a parser bug, just an unfetched page, the same shape as Phase 3's
+`rare_drop_table`/`gem_drop_table` fetch. Confirmed all four templates are
+plain `#vardefine`/`#expr`/`{{DropsLine}}` wikitext (no `{{#invoke:}}` Lua,
+unlike `GeneralSeedDropLines`) before fetching — same idiom as the sibling
+`HerbDropLines`/`TreeHerbSeedDropLines` templates already on disk and already
+working for 8 other bosses. Fetched via `WikiClient` (4 requests, same
+rate-limited queue, snapshotted to `data/snapshots/wikitext/template-*.json`
+like any other page) — not a re-fetch to fix a parser bug, a first fetch of
+pages nothing had ever requested. Result: `drops_covered` now sees all 47
+wiki rows (was 39/47, 8 grimy herbs entirely missing).
+
+**Gap 2 — a heterogeneous-denominator heading confirms `preroll` from a
+row's own `raritynotes` only, never the block's shared preamble, and only
+against a narrow phrase list.** `findConfirmingSignal` (`build-tables.ts`)
+already had this exact mechanism for per-row footnotes; Demonic gorilla's
+"There is an equal chance of dropping 7 to 13 herbs of **the same type**" is
+the same claim, just stated once for the whole group instead of repeated per
+row. Added a third signal: scan `block.preamble` (already captured by
+`groupByHeading`, just never read here) against the same phrase list, plus
+one new phrase (`/\bof the same type\b/i`) — grepped the whole corpus first
+(`grep -rl "of the same type" data/snapshots/wikitext/`) to confirm it
+appears nowhere else with a different meaning.
+
+**Fetching Gap 1's templates surfaced a THIRD, structurally distinct case**
+in the same family: "chance of rolling the [[X drop table]]" — the wiki's
+own idiom for "one roll into a named, canonically single, mutually-exclusive
+shared table" (confirmed: 13 occurrences across 9 different named tables
+corpus-wide — rare/gem/combat herb/useful herb/tree-herb seed/allotment
+seed/shark/herb drop tables — never used any other way). Unlike a clean
+`{{RareDropTable}}`-style transclusion (which resolves via the existing,
+more precise `transclusionPartition` → `oneOf` mechanism, no guess involved
+at all), Phantom Muspah's and Shellbane gryphon's Seeds/Herbs sections mix
+hand-typed `{{DropsLine}}` rows with a partial template call — the same
+"something on the page overrides the plain transclusion" shape Vorkath's
+Seeds heading already fails partition on — so they fall through to the
+phrase-confirmation path instead. Added as a second new phrase
+(`/\bchance of rolling the\b[^.]*\bdrop table\b/i`); required fetching one
+more template (`Template:TreeHerbSeedDropTableInfo`, the same plain-wikitext
+shape) since the confirming prose only exists once that template's own
+literal call is expanded into rendered text.
+
+**Net effect, one full corpus re-parse (104 sources)**: only 4 documents
+changed — nothing else moved, confirmed via `git diff --stat data/bosses/`
+after the fact, and the 3 pre-existing `parse_failed` sources (revenant-
+maledictus/burnt-chest/sigmund — the README's own "no document" trio) were
+untouched.
+
+| source | before | after |
+|---|---|---|
+| `demonic-gorilla` | `needs_review` (Herbs guess) | `verified` |
+| `shellbane-gryphon` | `needs_review` (2 headings guessed) | `verified` — not the target of either fix, caught for free by the new "chance of rolling" phrase |
+| `phantom-muspah` | `needs_review` (Seeds guess + a "Uniques" bundle false-positive) | `verified` — see the `definingRefText` fix below; Seeds and the bundle false-positive are both resolved |
+| `tormented-demon` | `needs_review` (Herbs empty, 8/47 rows missing) | still `needs_review` (Herbs + Consumables headings still flagged) — but `drops_covered` now 47/47 |
+
+**Deliberately did NOT force Tormented Demon's "Herbs"/"Consumables"
+headings to confirm.** Its wikitext interleaves TWO separate templates
+(`CombatHerbDropLines` + `UsefulHerbDropLines`) under one heading, each its
+own independently-accessed pool (4/51 into combat herb drop table, 2/51 into
+useful herb drop table) — genuinely two disjoint mutually-exclusive draws,
+not one shared 8-way draw the way Demonic gorilla's/Shellbane gryphon's rows
+actually are (confirmed by reading each candidate's own wikitext before
+trusting any classification: Shellbane gryphon's overlapping items literally
+sum both pools' contributions into one combined per-row rate — `herb*5 +
+combatherb*5` — collapsing to a genuine single distribution; Tormented
+Demon's combat/useful herbs never overlap or combine at all). Forcing
+`preroll` across all 8 rows would silently understate the real outcome (both
+pools CAN hit in the same kill) to make a badge turn green. "Consumables"
+has no preamble or footnote at all — nothing to confirm, correctly still
+flagged. Per this project's own stated discipline: a source with a real but
+unconfirmed mechanic stays `needs_review` rather than being guessed into
+`verified`.
+
+Verification: new `build-tables.test.ts` cases isolate all three signal
+paths (block-preamble "of the same type", "chance of rolling the ... drop
+table", and a negative control proving an unrelated preamble sentence still
+doesn't confirm). Full corpus re-parse, `item-icons`/`site-index`
+regenerated, `pnpm -r typecheck && pnpm -r test && pnpm lint` clean
+(593 ingest tests, including `corpus-reproducibility.test.ts` against the
+regenerated corpus), manual Playwright pass against a live dev server
+against all 4 touched sources confirming render + simulate + zero console
+errors.
+
+### A fourth bug, found asking "what's actually blocking these two now": `definingRefText` reads across a self-closing tag into an unrelated one
+
+User asked what information they'd need to supply to get Tormented Demon and
+Phantom Muspah to `verified`. Answering that honestly meant re-checking each
+remaining flag against the CURRENT wikitext rather than repeating the
+existing `statusReason` — and Phantom Muspah's turned out to already be
+wrong, not just unconfirmed.
+
+**The earlier finding at this doc's "Grepped the whole corpus for the four
+phrases" entry (the `CO_DROP_PHRASES` corpus-wide check, several sessions
+ago) is now stale, not incorrect for what it checked at the time**: it found
+Phantom Muspah's one "dropped alongside" occurrence sat in an ANONYMOUS
+`<ref group=d>` (no `name=` attribute) on the Venator shard row alone, and
+concluded it was invisible to `citedRefNames` (which requires `name=`) and
+therefore safe. True for that snapshot. The wiki page has since been edited
+(re-fetched this session via `fetch --page`): Venator shard's `raritynotes`
+now ALSO carries `<ref name=uniques />` immediately before that same
+`<ref group=d>` note — `<ref name=uniques /><ref group=d>When a Venator
+shard is received, no regular loot will be dropped alongside it.</ref>` —
+citing the same `uniques` footnote Frozen cache and Ancient icon do (their
+shared `{{CiteNews|...|name=uniques}}` citation about the January 2023
+Secrets of the North drop-rate change).
+
+That NEW adjacency exposed a genuine, distinct defect in `definingRefText`
+(`build-tables.ts`): its regex, `<ref...name=X...>(.*?)<\/ref>`, doesn't
+understand tag boundaries. Matched against `<ref name=uniques /><ref
+group=d>...dropped alongside...</ref>` as one string, it happily opens on
+the FIRST (self-closing) tag and then captures everything up to the NEXT
+`</ref>` it finds — which is the SECOND, unrelated tag's closing — reading
+the group=d note's actual text ("no regular loot dropped alongside it", a
+plain clarification that a unique replaces the standard table, not a bundle
+claim about two items) as if it were `uniques`'s own defining text. The
+function's own doc comment already stated the intent ("deliberately
+requires the full open/close form, not a self-closing tag") — the
+implementation just didn't enforce it. Fixed with a negative lookahead,
+`<ref\b(?![^>]*\/>)[^>]*...`, rejecting a self-closing opening tag outright.
+Full corpus re-parse after the fix: only the 4 sources already listed above
+changed — nothing else, confirmed via `git diff --stat`.
+
+**Net answer to "what do you need from me":**
+- **Phantom Muspah needed nothing — it's `verified` now.** Both its
+  remaining flags (the Seeds heading and the Uniques bundle false-positive)
+  were parser gaps, not missing wiki information.
+- **Tormented Demon still needs something, but it's not "information" in
+  the sense of a fact to supply — see the two remaining headings' own
+  reasoning above.** "Consumables" has zero prose/footnote anywhere on the
+  page to confirm or deny mutual exclusivity — the wiki genuinely does not
+  state it, so this can only move if someone can point to a primary source
+  (a wiki talk page, dev Q&A, patch note) stating one or the other; a guess
+  is not an option per this project's own standing discipline. "Herbs" is
+  different again: not missing information at all, but a real modelling
+  gap — its 8 rows are two independently-accessed pools (4/51 combat herb,
+  2/51 useful herb) glued under one heading, and correctly splitting a
+  block by which of two known templates each row expanded from (rather than
+  forcing one guessed `preroll` across both) is a buildable parser feature,
+  not something the user needs to supply.
+
+Verification for this fourth fix specifically: new `build-tables.test.ts`
+case reproducing the exact Frozen cache/Ancient icon/Venator shard shape,
+asserting no bundle signal fires. `pnpm -r typecheck && pnpm -r test && pnpm
+lint` clean (594 ingest tests). Not committed — left for the user to
+review.
