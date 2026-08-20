@@ -53,9 +53,24 @@ export function formatNumber(n: number): string {
   return new Intl.NumberFormat('en-US').format(Math.round(n))
 }
 
+/**
+ * K/M/B/T-suffixed, for card grids where a full grouped number ("×2,048,338")
+ * would push everything else off the row. `formatNumber` is still what a
+ * hover title/log entry shows — this is a lossy display form, not a
+ * replacement.
+ */
+export function formatCompact(n: number): string {
+  const rounded = Math.round(n)
+  const abs = Math.abs(rounded)
+  if (abs >= 1_000_000_000_000) return `${(rounded / 1_000_000_000_000).toFixed(2)}T`
+  if (abs >= 1_000_000_000) return `${(rounded / 1_000_000_000).toFixed(2)}B`
+  if (abs >= 1_000_000) return `${(rounded / 1_000_000).toFixed(2)}M`
+  if (abs >= 1_000) return `${(rounded / 1_000).toFixed(1)}K`
+  return formatNumber(rounded)
+}
+
 export function formatGp(n: number): string {
   const rounded = Math.round(n)
-  if (Math.abs(rounded) >= 1_000_000) return `${(rounded / 1_000_000).toFixed(2)}M gp`
-  if (Math.abs(rounded) >= 1_000) return `${(rounded / 1_000).toFixed(1)}K gp`
+  if (Math.abs(rounded) >= 1_000) return `${formatCompact(rounded)} gp`
   return `${formatNumber(rounded)} gp`
 }

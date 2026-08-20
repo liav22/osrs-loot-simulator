@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { Boss, ExpectedValueResult, SimResult } from '@osrs-loot-simulator/loot-model'
-import { formatGp, formatNumber } from '../lib/format'
+import { formatCompact, formatGp, formatNumber } from '../lib/format'
 import { rarestItemKeys } from '../lib/rarity'
 import { useItemIcons } from '../hooks/useItemIcons'
 import { ItemIcon } from './ItemIcon'
@@ -112,7 +112,16 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
               >
                 <ItemIcon name={row.name} file={iconFiles?.get(row.name)} size={24} />
                 <span className="text-sm text-amber-100">{row.name}</span>
-                <span className="font-mono text-xs text-amber-300/80">×{formatNumber(row.quantity)}</span>
+                <span
+                  className="font-mono text-xs text-amber-300/80"
+                  title={
+                    row.quantity !== row.drops
+                      ? `${formatNumber(row.quantity)} (${formatNumber(row.drops)} drops)`
+                      : formatNumber(row.quantity)
+                  }
+                >
+                  ×{formatCompact(row.quantity)}
+                </span>
               </div>
             ))}
           </div>
@@ -172,15 +181,21 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                         isRarest ? 'text-neutral-300' : 'text-muted'
                       }`}
                     >
-                      {/* Stackable items (e.g. "50 Gold bars") drop fewer TIMES
-                          than the total units received. The occurrence count
-                          doesn't fit the card alongside quantity and value, so
-                          it's a hover title instead of a third visible field. */}
+                      {/* K/M/B-suffixed so a stack in the hundreds of
+                          thousands doesn't push the gp value off the card.
+                          The precise count — and the occurrence count for
+                          stackable items, which drop fewer TIMES than the
+                          total units received (e.g. "50 Gold bars") — is a
+                          hover title instead of fields that don't fit. */}
                       <span
                         className="truncate"
-                        title={row.quantity !== row.drops ? `${formatNumber(row.drops)} drops` : undefined}
+                        title={
+                          row.quantity !== row.drops
+                            ? `${formatNumber(row.quantity)} (${formatNumber(row.drops)} drops)`
+                            : formatNumber(row.quantity)
+                        }
                       >
-                        ×{formatNumber(row.quantity)}
+                        ×{formatCompact(row.quantity)}
                       </span>
                       {pricesAvailable && row.gp > 0 && (
                         <span className="shrink-0 truncate">{formatGp(row.gp)}</span>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatFraction, formatGp, formatPercent, formatQty, formatRate } from '../src/lib/format'
+import { formatCompact, formatFraction, formatGp, formatPercent, formatQty, formatRate } from '../src/lib/format'
 
 describe('formatFraction', () => {
   it('reduces to lowest terms', () => {
@@ -36,10 +36,21 @@ describe('formatRate', () => {
   })
 })
 
+describe('formatCompact', () => {
+  it('uses K/M/B/T suffixes at the right thresholds', () => {
+    expect(formatCompact(500)).toBe('500')
+    expect(formatCompact(1_500)).toBe('1.5K')
+    expect(formatCompact(2_500_000)).toBe('2.50M')
+    expect(formatCompact(55_026_420_000)).toBe('55.03B')
+    expect(formatCompact(1_200_000_000_000)).toBe('1.20T')
+  })
+})
+
 describe('formatGp', () => {
-  it('uses K/M suffixes at the right thresholds', () => {
+  it('uses K/M/B suffixes at the right thresholds', () => {
     expect(formatGp(500)).toBe('500 gp')
     expect(formatGp(1_500)).toBe('1.5K gp')
     expect(formatGp(2_500_000)).toBe('2.50M gp')
+    expect(formatGp(55_026_420_000)).toBe('55.03B gp')
   })
 })
