@@ -7005,3 +7005,75 @@ Verification: `pnpm -r typecheck && pnpm -r test && pnpm lint` clean,
 including `corpus-reproducibility.test.ts` against the regenerated corpus and
 new `SimContextControls.test.tsx`/e2e cases for the positive (Scorpia) and
 negative (Brutus/Zalcano) surface-discovery behaviour.
+
+## Two sources added outside `Category:Bosses`: Tormented Demon, Demonic gorilla
+
+Requested by name. Neither is a member of the wiki's `Category:Bosses` —
+verified live (`action=query&list=categorymembers&cmtitle=Category:Bosses`,
+341 members, neither title present). Both are tagged `Category:Slayer
+monsters` / `Category:Demons` instead. This runs straight into the standing
+rule a few sections up: **"The boss inventory is exactly what `Category:Bosses`
+returns, unfiltered... Filtering them would mean substituting judgement for
+the wiki as the source of the inventory."** That rule is about not
+*excluding* category members by hand; it says nothing about sources outside
+the category a human specifically wants included, which is a different
+question the spec doesn't cover. Asked the user rather than deciding
+silently; they chose to add both by hand through the same pipeline machinery
+(`WikiClient`, snapshot store, `classify`, `deriveRepeatable`) rather than
+skip them or fake a category membership. Logged here as the exception, the
+same shape as `rare_drop_table`/`gem_drop_table`/`mega_rare_drop_table`
+already being fetched despite not being `Category:Bosses` pages either (see
+"Fetched the real pages instead of reconstructing them from memory" above) —
+this project already has precedent for `fetch --page` reaching outside the
+category when a human names the target.
+
+**Both fetched through the normal rate-limited `WikiClient`** (same
+User-Agent, same serial queue, 10 requests total: wikitext + dropsline +
+page-HTML + revisions + categories, ×2), snapshotted under the normal
+`data/snapshots/*` kinds, then hand-inserted into `data/_inventory.json`'s
+`bosses`/`lootSources` arrays (alphabetically, re-validated against
+`InventorySchema` before writing) since `buildInventory` only ever derives
+from a `fetch --all` manifest and re-running that would re-fetch all 172
+existing pages to chase two new ones.
+
+- **Tormented Demon**: tier A (35/51, shortfall is implicit nothing),
+  `repeatable: true` (no quest-category tag), classification `own-table`.
+  Parses to `needs_review` — hits the same pre-existing gap as two other
+  corpus sources (README's "a Lua-transclusion the parser can't run"):
+  `CombatHerbDropTableInfo`/`UsefulHerbDropTableInfo` transclusions produce no
+  rows, so `drops_covered` correctly flags 8 grimy-herb rows as missing.
+- **Demonic gorilla**: tier C (reaches the rare drop table, 451/500), tagged
+  `Category:Quest monsters` (two are fought mid-`Monkey Madness II`) — the
+  default signal says `repeatable: false`, which is wrong the same way
+  Vorkath's was: the page states "After the quest is completed, more demonic
+  gorillas can be found in the caverns," plus a per-account kill-count
+  tracker (Nieve's gravestone), and they're heavily farmed post-quest for
+  ballista pieces and zenyte shards. Added as a second hand-verified
+  correction in `data/repeatable-overrides.json`, same shape as Vorkath's
+  entry. Parses to `needs_review` on one heading-shape guess ("Herbs" mixes
+  denominators); `ev_matches` passes within 2%.
+
+**Found and fixed a real bug along the way, not routed around:**
+`checkEvMatches` (`apps/ingest/src/validate/ev-matches.ts`) called
+`expectedValue(boss, ctx, { prices })` without ever passing `tables`, so any
+boss whose document contains a `tableRef` (44 of the 101 committed sources
+do, for `rare_drop_table` and friends) throws `UnresolvedTableRefError`
+uncaught the moment `expectedValue` actually runs. It never ran in practice:
+`ev_matches` short-circuits on `renderedHtml === null`, and bulk `fetch
+--all`/`sources` runs never populate the page-HTML snapshot that requires —
+only `fetch --page` does, which until this session had only ever been used
+for shared-table pages that carry no `tableRef` of their own. Parsing
+Demonic gorilla (tier C, page HTML fetched, has a `tableRef`) was the first
+real exercise of that combination and crashed the whole `parse` command
+uncaught rather than reporting `ev_matches` as failed. Fixed by threading the
+already-computed `sharedTables` map through `parseBoss` → `checkEvMatches` →
+`expectedValue`'s `options.tables` (the one place a `Table` map already
+existed at the call site); `sharedTables` param defaults to an empty map so
+the three no-tableRef tests didn't need touching. Added a trip-wire test
+(`ev-matches.test.ts`, "resolves a tableRef against the shared tables passed
+in, instead of throwing") so this can't silently regress back to dead code.
+
+Verification: `pnpm -r typecheck && pnpm -r test && pnpm lint` clean, including
+`corpus-reproducibility.test.ts` (101 sources now) and the new `ev-matches`
+regression test. `item-icons` and `site-index` regenerated afterward for both
+new sources' items/portraits. Not committed — left for the user to review.

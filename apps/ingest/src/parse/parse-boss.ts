@@ -242,7 +242,8 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     merged,
     ctx,
     gePriceLookup(options.gePrices),
-    renderedHtml
+    renderedHtml,
+    sharedTables
   )
 
   const checks = [

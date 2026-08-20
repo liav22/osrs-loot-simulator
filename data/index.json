@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:07:27.351Z",
+  "generatedAt": "2026-08-20T19:18:02.810Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -309,6 +309,15 @@
       "status": "verified",
       "statusTier": "verified",
       "image": "Demonic Brutus.png",
+      "repeatable": true
+    },
+    {
+      "slug": "demonic-gorilla",
+      "name": "Demonic gorilla",
+      "aliases": [],
+      "status": "needs_review",
+      "statusTier": "unknown_scaling",
+      "image": "Demonic gorilla.png",
       "repeatable": true
     },
     {
@@ -822,6 +831,15 @@
       "status": "verified",
       "statusTier": "verified",
       "image": "Thermonuclear smoke devil.png",
+      "repeatable": true
+    },
+    {
+      "slug": "tormented-demon",
+      "name": "Tormented Demon",
+      "aliases": [],
+      "status": "needs_review",
+      "statusTier": "unknown_scaling",
+      "image": "Tormented Demon (1).png",
       "repeatable": true
     },
     {

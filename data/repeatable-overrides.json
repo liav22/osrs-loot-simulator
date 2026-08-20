@@ -6,6 +6,11 @@
       "wikiPage": "Vorkath",
       "repeatable": true,
       "reason": "Tagged Category:Quest monsters (first fought during Dragon Slayer II), but the page states outright: 'After completing Dragon Slayer II, players may fight Vorkath again, with increased stats and rewards.' The infobox itself carries a 'Post-quest' version distinct from the 'Dragon Slayer II' one, and Vorkath is one of the most heavily farmed bosses in the game. The quest gates access; it does not consume the encounter."
+    },
+    {
+      "wikiPage": "Demonic gorilla",
+      "repeatable": true,
+      "reason": "Tagged Category:Quest monsters (two are fought during Monkey Madness II, in the penultimate stage), but the page states: 'After the quest is completed, more demonic gorillas can be found in the caverns alongside their tortured counterparts,' and documents a per-account kill-count tracker (Nieve's gravestone). The quest gates access to the Crash Site Cavern; it does not consume the encounter, and demonic gorillas are heavily farmed post-quest for ballista pieces and zenyte shards."
     }
   ]
 }

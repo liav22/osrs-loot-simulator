@@ -640,6 +640,18 @@
       "repeatable": true
     },
     {
+      "slug": "demonic-gorilla",
+      "title": "Demonic gorilla",
+      "pageid": 72329,
+      "revid": 15272668,
+      "lootSourceId": "demonic-gorilla",
+      "classification": "own-table",
+      "tier": "C",
+      "rowCount": 72,
+      "encounter": null,
+      "repeatable": true
+    },
+    {
       "slug": "deranged-archaeologist",
       "title": "Deranged archaeologist",
       "pageid": 103094,
@@ -1780,6 +1792,18 @@
       "repeatable": false
     },
     {
+      "slug": "tormented-demon",
+      "title": "Tormented Demon",
+      "pageid": 39414,
+      "revid": 15305103,
+      "lootSourceId": "tormented-demon",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 47,
+      "encounter": null,
+      "repeatable": true
+    },
+    {
       "slug": "tree-spirit-lost-city",
       "title": "Tree spirit (Lost City)",
       "pageid": 26487,
@@ -2696,6 +2720,19 @@
       "excludeReason": null,
       "bosses": [
         "demonic-brutus"
+      ],
+      "repeatable": true
+    },
+    {
+      "id": "demonic-gorilla",
+      "title": "Demonic gorilla",
+      "dropsPage": "Demonic gorilla",
+      "tier": "C",
+      "rowCount": 72,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "demonic-gorilla"
       ],
       "repeatable": true
     },
@@ -3762,6 +3799,19 @@
         "tolna"
       ],
       "repeatable": false
+    },
+    {
+      "id": "tormented-demon",
+      "title": "Tormented Demon",
+      "dropsPage": "Tormented Demon",
+      "tier": "A",
+      "rowCount": 47,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "tormented-demon"
+      ],
+      "repeatable": true
     },
     {
       "id": "tree-spirit-lost-city",

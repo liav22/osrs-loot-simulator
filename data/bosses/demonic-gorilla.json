@@ -1,0 +1,925 @@
+{
+  "slug": "demonic-gorilla",
+  "name": "Demonic gorilla",
+  "aliases": [],
+  "wikiPage": "Demonic gorilla",
+  "wikiRevId": 15272668,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "demonic-gorilla:0:100",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25772,
+            "itemKey": "malicious-ashes",
+            "name": "Malicious ashes",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "100%"
+    },
+    {
+      "id": "demonic-gorilla:1:uniques",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 1500,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19529,
+            "itemKey": "zenyte-shard",
+            "name": "Zenyte shard",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19592,
+            "itemKey": "ballista-limbs",
+            "name": "Ballista limbs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19601,
+            "itemKey": "ballista-spring",
+            "name": "Ballista spring",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19586,
+            "itemKey": "light-frame",
+            "name": "Light frame",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19589,
+            "itemKey": "heavy-frame",
+            "name": "Heavy frame",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19610,
+            "itemKey": "monkey-tail",
+            "name": "Monkey tail",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Uniques"
+    },
+    {
+      "id": "demonic-gorilla:2:weapons-and-armour-runes-and-ammunition",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 500,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1079,
+            "itemKey": "rune-platelegs",
+            "name": "Rune platelegs",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1093,
+            "itemKey": "rune-plateskirt",
+            "name": "Rune plateskirt",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1113,
+            "itemKey": "rune-chainbody",
+            "name": "Rune chainbody",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4587,
+            "itemKey": "dragon-scimitar",
+            "name": "Dragon scimitar",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 75
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 9144,
+            "itemKey": "runite-bolts",
+            "name": "Runite bolts",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          }
+        }
+      ],
+      "notes": "Weapons and armour / Runes and ammunition"
+    },
+    {
+      "id": "demonic-gorilla:3:herbs",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 213,
+            "itemKey": "grimy-kwuarm",
+            "name": "Grimy kwuarm",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 13
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 88.9
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 215,
+            "itemKey": "grimy-cadantine",
+            "name": "Grimy cadantine",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 13
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 111.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2485,
+            "itemKey": "grimy-lantadyme",
+            "name": "Grimy lantadyme",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 13
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 148.1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 217,
+            "itemKey": "grimy-dwarf-weed",
+            "name": "Grimy dwarf weed",
+            "qty": {
+              "kind": "range",
+              "min": 7,
+              "max": 13
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 111.1
+          }
+        }
+      ],
+      "notes": "Herbs"
+    },
+    {
+      "id": "demonic-gorilla:4:seeds",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5295,
+                  "itemKey": "ranarr-seed",
+                  "name": "Ranarr seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.00599880023995201
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5300,
+                  "itemKey": "snapdragon-seed",
+                  "name": "Snapdragon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.005599104143337066
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5304,
+                  "itemKey": "torstol-seed",
+                  "name": "Torstol seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004399472063352398
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5321,
+                  "itemKey": "watermelon-seed",
+                  "name": "Watermelon seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 30
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004199916001679967
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5313,
+                  "itemKey": "willow-seed",
+                  "name": "Willow seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.004
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 21488,
+                  "itemKey": "mahogany-seed",
+                  "name": "Mahogany seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0035997120230381566
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5314,
+                  "itemKey": "maple-seed",
+                  "name": "Maple seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0035997120230381566
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 21486,
+                  "itemKey": "teak-seed",
+                  "name": "Teak seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0035997120230381566
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5315,
+                  "itemKey": "yew-seed",
+                  "name": "Yew seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0035997120230381566
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5288,
+                  "itemKey": "papaya-tree-seed",
+                  "name": "Papaya tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.002800336040324839
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5316,
+                  "itemKey": "magic-seed",
+                  "name": "Magic seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0022002200220022
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5289,
+                  "itemKey": "palm-tree-seed",
+                  "name": "Palm tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.002
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 5317,
+                  "itemKey": "spirit-seed",
+                  "name": "Spirit seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0016
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22877,
+                  "itemKey": "dragonfruit-tree-seed",
+                  "name": "Dragonfruit tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.001200048001920077
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22869,
+                  "itemKey": "celastrus-seed",
+                  "name": "Celastrus seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0008
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22871,
+                  "itemKey": "redwood-tree-seed",
+                  "name": "Redwood tree seed",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 2
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.0008
+                }
+              }
+            ]
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 25,
+            "den": 500
+          }
+        }
+      ],
+      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 25/500 (ratio 0.9999), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 25/500 — exact, not an approximation.)"
+    },
+    {
+      "id": "demonic-gorilla:5:other",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 500,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 139,
+            "itemKey": "prayer-potion-3",
+            "name": "Prayer potion(3)",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 40
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 5000,
+              "max": 10000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 6689,
+            "itemKey": "saradomin-brew-2",
+            "name": "Saradomin brew(2)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2361,
+            "itemKey": "adamantite-bar",
+            "name": "Adamantite bar",
+            "qty": {
+              "kind": "exact",
+              "n": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19584,
+            "itemKey": "javelin-shaft",
+            "name": "Javelin shaft",
+            "qty": {
+              "kind": "range",
+              "min": 750,
+              "max": 1250
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19580,
+            "itemKey": "rune-javelin-tips",
+            "name": "Rune javelin tips",
+            "qty": {
+              "kind": "range",
+              "min": 45,
+              "max": 55
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 19582,
+            "itemKey": "dragon-javelin-tips",
+            "name": "Dragon javelin tips",
+            "qty": {
+              "kind": "range",
+              "min": 27,
+              "max": 33
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1601,
+            "itemKey": "diamond",
+            "name": "Diamond",
+            "qty": {
+              "kind": "range",
+              "min": 4,
+              "max": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 17
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2363,
+            "itemKey": "runite-bar",
+            "name": "Runite bar",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          }
+        }
+      ],
+      "notes": "Other"
+    },
+    {
+      "id": "demonic-gorilla:6:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-hard",
+            "name": "Clue scroll (hard)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": null,
+            "itemKey": "clue-scroll-elite",
+            "name": "Clue scroll (elite)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 500
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "demonic-gorilla:rdt-access:0",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rare_drop_table"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 5,
+            "den": 500
+          }
+        }
+      ],
+      "notes": "Access into rare_drop_table (from {{RareDropTable}})"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "needs_review",
+  "statusTier": "unknown_scaling",
+  "statusReason": "heading \"Herbs\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check",
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "4 tableRef node(s) resolved against 24 shared table(s)"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": true,
+        "detail": "73445.52 gp/kill vs wiki's 73918, within 2%"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 68 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": false,
+        "detail": "heading \"Herbs\" has entries at different denominators and is not named Pre-roll/Tertiary/Secondary; assumed mutually-exclusive (preroll) but this is a guess and needs a human check"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": true
+}

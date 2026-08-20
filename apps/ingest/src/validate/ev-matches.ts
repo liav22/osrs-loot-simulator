@@ -1,4 +1,4 @@
-import type { Boss, PriceLookup, SimContext } from '@osrs-loot-simulator/loot-model'
+import type { Boss, PriceLookup, SimContext, Table } from '@osrs-loot-simulator/loot-model'
 import { expectedValue } from '@osrs-loot-simulator/loot-model'
 
 /**
@@ -36,7 +36,8 @@ export function checkEvMatches(
   boss: Boss,
   ctx: SimContext,
   prices: PriceLookup,
-  renderedHtml: string | null
+  renderedHtml: string | null,
+  sharedTables: ReadonlyMap<string, Table> = new Map()
 ): EvMatchesResult {
   if (renderedHtml === null) {
     return {
@@ -54,7 +55,7 @@ export function checkEvMatches(
     }
   }
 
-  const { gpPerKill } = expectedValue(boss, ctx, { prices })
+  const { gpPerKill } = expectedValue(boss, ctx, { prices, tables: sharedTables })
   const relativeError = Math.abs(gpPerKill - wikiValue) / wikiValue
   const ok = relativeError <= EV_MATCHES_TOLERANCE
 

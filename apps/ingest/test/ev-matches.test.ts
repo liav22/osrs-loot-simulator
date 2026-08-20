@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { checkEvMatches, extractAverageKillValue } from '../src/validate/ev-matches.js'
 import { gePriceLookup } from '../src/prices/ge-prices.js'
-import { BossSchema, DEFAULT_SIM_CONTEXT } from '@osrs-loot-simulator/loot-model'
+import { BossSchema, DEFAULT_SIM_CONTEXT, TableSchema } from '@osrs-loot-simulator/loot-model'
 
 describe('extractAverageKillValue', () => {
   it('extracts the figure from a rendered "average ... kill is worth N" sentence', () => {
@@ -70,6 +70,50 @@ describe('checkEvMatches', () => {
     const result = checkEvMatches(boss, DEFAULT_SIM_CONTEXT, gePriceLookup(prices), html)
     expect(result.ok).toBe(false)
     expect(result.detail).toMatch(/50\.0% off/)
+  })
+
+  // A boss reaching a shared table (rare_drop_table and friends) compiles its
+  // own tables into a `tableRef` node — `compileBoss` throws
+  // `UnresolvedTableRefError` unless the referenced table is supplied. This
+  // check's own `expectedValue` call used to omit it entirely, which was
+  // invisible in practice because `renderedHtml` is null for the vast
+  // majority of the corpus (bulk `fetch --all` never populates the page-HTML
+  // snapshot ev_matches needs) — the crash only surfaced once a source was
+  // fetched with `fetch --page`, which does. See docs/DECISIONS.md.
+  it('resolves a tableRef against the shared tables passed in, instead of throwing', () => {
+    const bossWithRef = BossSchema.parse({
+      ...boss,
+      tables: [
+        {
+          id: 't',
+          mode: 'always',
+          entries: [
+            { node: { kind: 'tableRef', ref: 'shared' }, rate: { kind: 'always' } },
+          ],
+        },
+      ],
+    })
+    const shared = TableSchema.parse({
+      id: 'shared',
+      mode: 'always',
+      entries: [
+        {
+          node: { kind: 'item', itemId: 1, itemKey: 'a', name: 'A', qty: { kind: 'exact', n: 1 } },
+          rate: { kind: 'always' },
+        },
+      ],
+    })
+    const prices = new Map([[1, 100]])
+    const html = '<p>The average Test kill is worth 100.</p>'
+    const result = checkEvMatches(
+      bossWithRef,
+      DEFAULT_SIM_CONTEXT,
+      gePriceLookup(prices),
+      html,
+      new Map([['shared', shared]])
+    )
+    expect(result.ok).toBe(true)
+    expect(result.gpPerKill).toBe(100)
   })
 })
 
