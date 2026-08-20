@@ -72,7 +72,16 @@ export interface AssembleResult {
 
 function parseQuantity(raw: string): QtySpec {
   const cleaned = raw.replace(/\(noted\)/i, '').trim()
-  const range = /^(\d+)\s*[-–]\s*(\d+)$/.exec(cleaned)
+  // `-`/`–` is the usual range separator; DT2's four resource tables
+  // (Vardorvis, The Whisperer, Duke Sucellus, The Leviathan) write it as a
+  // comma instead — `quantity=1500,2250`. Checked against every `quantity=`
+  // value in the whole corpus: every comma-separated one is a genuine
+  // min,max pair (98 instances, all four sources), and none is ever a
+  // thousands-separated SINGLE number — so this is safe to treat as a range
+  // unconditionally, not just for these four sources. Before this fix,
+  // falling through to the exact-number branch below stripped the comma and
+  // concatenated the two numbers into one (`1500,2250` -> 15002250).
+  const range = /^(\d+)\s*[-–,]\s*(\d+)$/.exec(cleaned)
   if (range !== null) {
     return { kind: 'range', min: Number(range[1]), max: Number(range[2]) }
   }

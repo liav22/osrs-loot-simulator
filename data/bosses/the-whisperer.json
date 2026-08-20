@@ -216,8 +216,9 @@
             "itemKey": "bronze-longsword",
             "name": "Bronze longsword",
             "qty": {
-              "kind": "exact",
-              "n": 1624
+              "kind": "range",
+              "min": 16,
+              "max": 24
             },
             "noted": true
           },
@@ -233,8 +234,9 @@
             "itemKey": "mithril-longsword",
             "name": "Mithril longsword",
             "qty": {
-              "kind": "exact",
-              "n": 710
+              "kind": "range",
+              "min": 7,
+              "max": 10
             },
             "noted": true
           },
@@ -250,8 +252,9 @@
             "itemKey": "adamant-longsword",
             "name": "Adamant longsword",
             "qty": {
-              "kind": "exact",
-              "n": 914
+              "kind": "range",
+              "min": 9,
+              "max": 14
             },
             "noted": true
           },
@@ -267,8 +270,9 @@
             "itemKey": "battlestaff",
             "name": "Battlestaff",
             "qty": {
-              "kind": "exact",
-              "n": 70105
+              "kind": "range",
+              "min": 70,
+              "max": 105
             },
             "noted": true
           },
@@ -284,8 +288,9 @@
             "itemKey": "dragon-plateskirt",
             "name": "Dragon plateskirt",
             "qty": {
-              "kind": "exact",
-              "n": 710
+              "kind": "range",
+              "min": 7,
+              "max": 10
             }
           },
           "rate": {
@@ -317,8 +322,9 @@
             "itemKey": "iron-ore",
             "name": "Iron ore",
             "qty": {
-              "kind": "exact",
-              "n": 88133
+              "kind": "range",
+              "min": 88,
+              "max": 133
             },
             "noted": true
           },
@@ -334,8 +340,9 @@
             "itemKey": "coal",
             "name": "Coal",
             "qty": {
-              "kind": "exact",
-              "n": 303455
+              "kind": "range",
+              "min": 303,
+              "max": 455
             },
             "noted": true
           },
@@ -351,8 +358,9 @@
             "itemKey": "gold-ore",
             "name": "Gold ore",
             "qty": {
-              "kind": "exact",
-              "n": 88133
+              "kind": "range",
+              "min": 88,
+              "max": 133
             },
             "noted": true
           },
@@ -368,8 +376,9 @@
             "itemKey": "mithril-ore",
             "name": "Mithril ore",
             "qty": {
-              "kind": "exact",
-              "n": 88133
+              "kind": "range",
+              "min": 88,
+              "max": 133
             },
             "noted": true
           },
@@ -385,8 +394,9 @@
             "itemKey": "adamantite-ore",
             "name": "Adamantite ore",
             "qty": {
-              "kind": "exact",
-              "n": 105157
+              "kind": "range",
+              "min": 105,
+              "max": 157
             },
             "noted": true
           },
@@ -402,8 +412,9 @@
             "itemKey": "runite-ore",
             "name": "Runite ore",
             "qty": {
-              "kind": "exact",
-              "n": 4263
+              "kind": "range",
+              "min": 42,
+              "max": 63
             },
             "noted": true
           },
@@ -419,8 +430,9 @@
             "itemKey": "sapphire",
             "name": "Sapphire",
             "qty": {
-              "kind": "exact",
-              "n": 3959
+              "kind": "range",
+              "min": 39,
+              "max": 59
             },
             "noted": true
           },
@@ -436,8 +448,9 @@
             "itemKey": "emerald",
             "name": "Emerald",
             "qty": {
-              "kind": "exact",
-              "n": 3959
+              "kind": "range",
+              "min": 39,
+              "max": 59
             },
             "noted": true
           },
@@ -453,8 +466,9 @@
             "itemKey": "ruby",
             "name": "Ruby",
             "qty": {
-              "kind": "exact",
-              "n": 3959
+              "kind": "range",
+              "min": 39,
+              "max": 59
             },
             "noted": true
           },
@@ -470,8 +484,9 @@
             "itemKey": "uncut-ruby",
             "name": "Uncut ruby",
             "qty": {
-              "kind": "exact",
-              "n": 5887
+              "kind": "range",
+              "min": 58,
+              "max": 87
             },
             "noted": true
           },
@@ -487,8 +502,9 @@
             "itemKey": "uncut-diamond",
             "name": "Uncut diamond",
             "qty": {
-              "kind": "exact",
-              "n": 5887
+              "kind": "range",
+              "min": 58,
+              "max": 87
             },
             "noted": true
           },
@@ -504,8 +520,9 @@
             "itemKey": "dragon-javelin-tips",
             "name": "Dragon javelin tips",
             "qty": {
-              "kind": "exact",
-              "n": 84126
+              "kind": "range",
+              "min": 84,
+              "max": 126
             }
           },
           "rate": {
@@ -520,8 +537,9 @@
             "itemKey": "runite-bolts-unf",
             "name": "Runite bolts (unf)",
             "qty": {
-              "kind": "exact",
-              "n": 84126
+              "kind": "range",
+              "min": 84,
+              "max": 126
             }
           },
           "rate": {
@@ -536,8 +554,9 @@
             "itemKey": "raw-monkfish",
             "name": "Raw monkfish",
             "qty": {
-              "kind": "exact",
-              "n": 7001050
+              "kind": "range",
+              "min": 700,
+              "max": 1050
             },
             "noted": true
           },
@@ -553,8 +572,9 @@
             "itemKey": "water-rune",
             "name": "Water rune",
             "qty": {
-              "kind": "exact",
-              "n": 280420
+              "kind": "range",
+              "min": 280,
+              "max": 420
             }
           },
           "rate": {
@@ -569,8 +589,9 @@
             "itemKey": "steam-rune",
             "name": "Steam rune",
             "qty": {
-              "kind": "exact",
-              "n": 466700
+              "kind": "range",
+              "min": 466,
+              "max": 700
             }
           },
           "rate": {
@@ -585,8 +606,9 @@
             "itemKey": "chaos-rune",
             "name": "Chaos rune",
             "qty": {
-              "kind": "exact",
-              "n": 140210
+              "kind": "range",
+              "min": 140,
+              "max": 210
             }
           },
           "rate": {
@@ -601,8 +623,9 @@
             "itemKey": "death-rune",
             "name": "Death rune",
             "qty": {
-              "kind": "exact",
-              "n": 466700
+              "kind": "range",
+              "min": 466,
+              "max": 700
             }
           },
           "rate": {
@@ -617,8 +640,9 @@
             "itemKey": "soul-rune",
             "name": "Soul rune",
             "qty": {
-              "kind": "exact",
-              "n": 9331400
+              "kind": "range",
+              "min": 933,
+              "max": 1400
             }
           },
           "rate": {

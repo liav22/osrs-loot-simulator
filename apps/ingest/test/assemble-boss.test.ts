@@ -208,6 +208,38 @@ describe('assembleBoss', () => {
     expect(entry?.conditions).toEqual([{ kind: 'members', value: false }])
   })
 
+  it('parses a comma-separated quantity range (DT2\'s resource tables) rather than concatenating it', () => {
+    const groups: ParsedTableGroup[] = [
+      {
+        mode: 'weighted',
+        headings: ['Resources'],
+        section: '',
+        denominator: 100,
+        ambiguous: null,
+        entries: [
+          {
+            name: 'Aether catalyst',
+            quantity: '1500,2250',
+            noted: false,
+            members: false,
+            freeToPlay: false,
+            rarity: { kind: 'fixed', num: 1, den: 100 },
+            weight: 1,
+          },
+        ],
+      },
+    ]
+    const result = assembleBoss(groups, noRdtAccess, options)
+    const entry = result.boss?.tables[0]?.entries[0]
+    // Not `{ kind: 'exact', n: 15002250 }` — the pre-fix bug, stripping the
+    // comma and concatenating the two numbers into one.
+    expect(entry?.node.kind === 'item' ? entry.node.qty : undefined).toEqual({
+      kind: 'range',
+      min: 1500,
+      max: 2250,
+    })
+  })
+
   it('surfaces group-level ambiguity in ambiguousGroups without failing the parse', () => {
     const groups: ParsedTableGroup[] = [
       {
