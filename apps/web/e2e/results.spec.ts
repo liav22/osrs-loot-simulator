@@ -9,28 +9,25 @@ const HERE = dirname(fileURLToPath(import.meta.url))
 
 test.use({ viewport: { width: 1920, height: 1080 } })
 
-test('the rarest-drops strip appears only when something rare actually dropped', async ({ page }) => {
-  // 200,000 Vorkath kills at a fixed seed: visages are 1/5,000, so several
-  // land. The strip is the payoff for running a simulation and should not
-  // require scanning a grid to find.
+test('the uniques strip appears only when a curated unique or pet actually dropped', async ({ page }) => {
+  // 200,000 Vorkath kills at a fixed seed: Draconic visage is a curated
+  // unique at 1/5,000, so several land. The strip is the payoff for running
+  // a simulation and should not require scanning a grid to find.
   await page.goto('./boss/vorkath?n=200000&seed=21')
   await page.getByRole('button', { name: 'Simulate' }).click()
   await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 60_000 })
 
-  await expect(page.getByText('Rarest drops')).toBeVisible()
-  const strip = page.locator('div').filter({ hasText: /^Rarest drops/ }).first()
+  await expect(page.getByText('Uniques')).toBeVisible()
+  const strip = page.locator('div').filter({ hasText: /^Uniques/ }).first()
   await expect(strip.getByText('Draconic visage')).toBeVisible()
 
-  // One kill: nothing rare drops, and the strip is absent ENTIRELY rather than
-  // rendering an empty "no rare drops" state, which reads as a failed run.
-  //
-  // One rather than ten. Vorkath's rarest own-table drops sum to roughly 1/260
-  // per kill, so across ten kills something qualifies more often than not —
-  // which is what this originally asserted against and lost.
+  // One kill: no curated unique or pet drops, and the strip is absent
+  // ENTIRELY rather than rendering an empty "no uniques" state, which reads
+  // as a failed run.
   await page.goto('./boss/vorkath?n=1&seed=21')
   await page.getByRole('button', { name: 'Simulate' }).click()
   await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
-  await expect(page.getByText('Rarest drops')).toHaveCount(0)
+  await expect(page.getByText('Uniques')).toHaveCount(0)
 })
 
 test('every icon is requested at its resolved file name, not a guess', async ({ page }) => {
