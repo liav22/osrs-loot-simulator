@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   DEFAULT_KILLS,
   DEFAULT_SEED,
+  MAX_KILLS,
   paramsFromSearch,
   RANDOM_SEED,
   rollSeed,
@@ -33,6 +34,11 @@ describe('paramsFromSearch', () => {
     })
     expect(params.seed).toBe(7)
     expect(params.kills).toBe(5000)
+  })
+
+  it('clamps an oversized n= to MAX_KILLS, so a crafted link cannot lock up the tab', () => {
+    const params = paramsFromSearch(new URLSearchParams('n=999999999999'))
+    expect(params.kills).toBe(MAX_KILLS)
   })
 })
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import type { Boss, StatusTier, Table } from '@osrs-loot-simulator/loot-model'
 import { useItemIcons } from '../hooks/useItemIcons'
 import { bossImageUrl } from '../lib/wiki-images'
-import type { SimRunParams } from '../lib/url-state'
+import { MAX_KILLS, type SimRunParams } from '../lib/url-state'
 import { DropTableView } from './DropTableView'
 import { Modal } from './Modal'
 import { SimContextControls } from './SimContextControls'
@@ -202,9 +202,11 @@ export function BossPanel({
             <input
               type="number"
               min={1}
-              max={10_000_000}
+              max={MAX_KILLS}
               value={params.kills}
-              onChange={(e) => onChange({ ...params, kills: Math.max(1, Number(e.target.value) || 1) })}
+              onChange={(e) =>
+                onChange({ ...params, kills: Math.min(MAX_KILLS, Math.max(1, Number(e.target.value) || 1)) })
+              }
               className="min-h-11 w-full rounded-md border border-neutral-800 bg-neutral-900 px-3 py-2 text-sm"
             />
           </label>

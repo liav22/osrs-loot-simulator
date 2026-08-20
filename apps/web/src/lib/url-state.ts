@@ -30,6 +30,17 @@ export interface SimRunParams {
 export const DEFAULT_KILLS = 10_000
 
 /**
+ * A run this size is already exercised by `e2e/layout.spec.ts`'s "a large
+ * table at 1,000,000 kills collapses, expands, and overflows nothing" — the
+ * largest size actually verified not to lock up the tab. There was no upper
+ * bound at all before this: the input's `max` attribute doesn't stop a typed
+ * value or a `?n=` query param from exceeding it, so `simulate()` would
+ * happily try to run (and log/tally) an arbitrarily large kill count
+ * synchronously on the main thread.
+ */
+export const MAX_KILLS = 1_000_000
+
+/**
  * `0` is a sentinel meaning "pick a fresh seed for this run", and it is the
  * default.
  *
@@ -158,7 +169,7 @@ export function paramsFromSearch(
   return {
     ctx,
     seed: parseIntParam(search.get('seed'), DEFAULT_SEED),
-    kills: parseIntParam(search.get('n'), DEFAULT_KILLS),
+    kills: Math.min(MAX_KILLS, parseIntParam(search.get('n'), DEFAULT_KILLS)),
     run: parseBool(search.get('run'), false),
   }
 }
