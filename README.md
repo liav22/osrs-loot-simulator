@@ -1,5 +1,7 @@
 # OSRS Loot Simulator
 
+[![CI](https://github.com/liav22/osrs-loot-simulator/actions/workflows/ci.yml/badge.svg)](https://github.com/liav22/osrs-loot-simulator/actions/workflows/ci.yml)
+
 **[liav22.github.io/osrs-loot-simulator](https://liav22.github.io/osrs-loot-simulator/)**
 
 Search an Old School RuneScape boss, set a kill count, and simulate the drops.
@@ -174,6 +176,9 @@ unofficial fan project, not affiliated with or endorsed by Jagex Ltd.
 
 ## Further reading
 
+- [`PROJECT_PLAN.md`](./PROJECT_PLAN.md) — the original spec, written before
+  any code existed. Kept verbatim as the design record, not a live status
+  page — see its own banner for what's since diverged.
 - [`docs/DECISIONS.md`](./docs/DECISIONS.md) — the append-only log of judgement
   calls, including the ones that were measured and then reversed.
 - [`docs/HANDOFF.md`](./docs/HANDOFF.md) — current state and the landmines.
