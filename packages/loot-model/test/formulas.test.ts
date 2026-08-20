@@ -160,7 +160,7 @@ describe('FORMULA_CONTEXT_FIELDS matches what the formulas actually read', () =>
     switch (field) {
       case 'members':
       case 'ringOfWealth':
-      case 'onSlayerTask':
+      case 'onKonarTask':
       case 'perfectKill':
       case 'isMVP':
         return [false, true]

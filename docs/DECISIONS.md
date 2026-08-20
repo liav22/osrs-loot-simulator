@@ -6930,3 +6930,78 @@ staleness named in the scope note above is the visible proof the new
 instruction is necessary, not hypothetical: it is a currently-true instance
 of exactly the claim type the old instruction said to trust, sitting in
 files this session touched for an unrelated reason.
+
+## `onSlayerTask` renamed to `onKonarTask`, and the Inferno/TzHaar breadcrumb
+
+The "On slayer task" UI toggle is retired in favour of "Konar task", per
+request. Checked the real data before touching anything: **in the current
+corpus, `onSlayerTask` has exactly one generator and exactly one meaning.**
+`apps/ingest/src/parse/rarity-templates.ts`'s `brimstoneRarity()` evaluator is
+the sole emission site (a registry entry, not a per-boss branch — fires
+whenever a boss's wiki page carries `{{Brimstone rarity|N}}` on a
+`{{DropsLine}}` row), and it is the only place this condition is attached
+anywhere in `data/`. 41 sources use it, all identically — a `Brimstone key`
+tertiary gated `{ kind: 'onSlayerTask', value: true }` — zero uses in
+`data/overrides/*.json`. So this was a straight rename, not a new mechanic:
+`Condition`'s `onSlayerTask` member and `SimContext.onSlayerTask` both became
+`onKonarTask` (`packages/loot-model/src/schema.ts`, `conditions.ts`), the
+generator's emission updated to match
+(`apps/ingest/src/parse/rarity-templates.ts`), and `data/bosses/*.json`
+regenerated from committed snapshots (`ingest parse` + `ingest site-index`,
+no wiki hit) — the diff touched exactly the 41 sources, one paired
+`"onSlayerTask"` → `"onKonarTask"` swap each, confirmed by a line-level diff
+before trusting it, nothing else moved.
+
+**This also corrects an actual mislabel, not just a name.** The original
+`brimstoneRarity()` comment (and an earlier entry in this file, above) glossed
+the drop's real-game gate as "a Wilderness-Slayer task from Konar quo Maten."
+Checked directly against the live wiki's own "Brimstone key" page before
+finalizing the rename: the requirement is a task assigned **specifically by
+Konar quo Maten**, from **any location** — not Wilderness-restricted. The
+comment and this entry now say that precisely.
+
+**Corrected count**: earlier entries in this file cite "31" `onSlayerTask`
+uses (a snapshot from an earlier corpus state, left as written). The current
+count, measured fresh for this change, is **41**.
+
+**Deliberate scope boundary, logged so a future session doesn't collapse it
+back**: `docs/bosses/inferno.md` and `docs/bosses/tzhaar-fight-cave.md` both
+sketch a *different* mechanic — Fight Caves'/Inferno's pet rate (Jal-Nib-Rek /
+Tzrek-Jad) improving on **any** Slayer master's task, not Konar-specifically.
+Neither source is built as data yet (both pages have zero real
+`{{DropsLine}}` rows — prose/completion-reward only), so there is no current
+conflict. But `onKonarTask` must **not** be reused for that mechanic when
+either source is eventually built — it needs its own, separately-named,
+generic condition (e.g. a reintroduced `onSlayerTask` with its original
+general meaning). Left as a pointer, not built now: population of one (well,
+two unbuilt sources) is not a reason to add a second condition kind today.
+
+**UI behaviour actually changed, not just the label.** The old toggle was
+hardcoded and rendered unconditionally on every boss page
+(`SimContextControls.tsx`), unlike every other conditionally-relevant field
+(`perfectKill`, `isMVP`), which render only when `contextSurfaceOf` finds the
+boss's own document actually uses them. No test or comment defended the
+old toggle's universality (unlike "Ring of wealth," which stays universal on
+purpose — it reaches the shared RDT/gem tables most sources touch), so this
+reads as an oversight rather than a deliberate choice. Fixed as part of this
+change: `onKonarTask` moved into `BOOLEAN_FIELDS` and now renders only on the
+~41 Konar-eligible bosses, exactly matching "toggle where applicable." This
+also caught a live bug: `apps/web/e2e/url-round-trip.spec.ts` asserted the
+toggle against Zalcano, which is not Konar-eligible — it only ever passed
+because the control was unconditional. Split into its own test against
+Scorpia (which is eligible), with an explicit negative assertion that the
+control does not render on Zalcano at all.
+
+**URL query key renamed too**: `?slayer=1` → `?konar=1`, moved from a
+hand-rolled parse/serialize pair into the existing `BOOLEAN_PARAMS` map
+(matching `perfectKill`/`isMVP`'s convention, since the field moved from the
+always-shown bucket to the conditionally-shown one). A stale shared link
+carrying `slayer=1` now silently reverts to the new default
+(`onKonarTask: false`) rather than erroring — accepted, not shimmed for
+backwards compatibility, the same precedented cost as every other
+`data`-neutral field rename in this project's history.
+
+Verification: `pnpm -r typecheck && pnpm -r test && pnpm lint` clean,
+including `corpus-reproducibility.test.ts` against the regenerated corpus and
+new `SimContextControls.test.tsx`/e2e cases for the positive (Scorpia) and
+negative (Brutus/Zalcano) surface-discovery behaviour.

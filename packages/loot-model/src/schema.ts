@@ -307,7 +307,7 @@ export type QtySpec = z.infer<typeof QtySpecSchema>
 export const ConditionSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('members'), value: z.boolean() }).strict(),
   z.object({ kind: z.literal('ringOfWealth'), value: z.boolean() }).strict(),
-  z.object({ kind: z.literal('onSlayerTask'), value: z.boolean() }).strict(),
+  z.object({ kind: z.literal('onKonarTask'), value: z.boolean() }).strict(),
   z.object({ kind: z.literal('questComplete'), quest: z.string().min(1) }).strict(),
   z.object({ kind: z.literal('variant'), name: z.string().min(1) }).strict(),
   /**
@@ -872,7 +872,8 @@ export const SimContextSchema = z
   .object({
     members: z.boolean(),
     ringOfWealth: z.boolean(),
-    onSlayerTask: z.boolean(),
+    /** On a Slayer task assigned specifically by Konar quo Maten — any location, not Wilderness-restricted. Gates Brimstone key. */
+    onKonarTask: z.boolean(),
     questsComplete: z.array(z.string().min(1)),
     killCount: z.number().int().nonnegative(),
     variant: z.string().min(1),
@@ -983,7 +984,7 @@ export type PartialSimContext = z.infer<typeof PartialSimContextSchema>
 export const DEFAULT_SIM_CONTEXT: SimContext = {
   members: true,
   ringOfWealth: false,
-  onSlayerTask: false,
+  onKonarTask: false,
   questsComplete: [],
   killCount: 0,
   variant: 'normal',

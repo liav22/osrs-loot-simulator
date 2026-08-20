@@ -17,8 +17,8 @@ describe('evaluateCondition', () => {
     [{ kind: 'members', value: false }, { members: false }, true],
     [{ kind: 'ringOfWealth', value: true }, { ringOfWealth: true }, true],
     [{ kind: 'ringOfWealth', value: true }, { ringOfWealth: false }, false],
-    [{ kind: 'onSlayerTask', value: true }, { onSlayerTask: true }, true],
-    [{ kind: 'onSlayerTask', value: false }, { onSlayerTask: true }, false],
+    [{ kind: 'onKonarTask', value: true }, { onKonarTask: true }, true],
+    [{ kind: 'onKonarTask', value: false }, { onKonarTask: true }, false],
     [{ kind: 'questComplete', quest: "Legends' Quest" }, { questsComplete: ["Legends' Quest"] }, true],
     [{ kind: 'questComplete', quest: "Legends' Quest" }, { questsComplete: [] }, false],
     // `killCountAtLeast` was retired into `levelAtLeast`; this is its replacement spelling.
@@ -49,11 +49,11 @@ describe('conditionsHold', () => {
   it('ANDs every condition', () => {
     const conditions: Condition[] = [
       { kind: 'members', value: true },
-      { kind: 'onSlayerTask', value: true },
+      { kind: 'onKonarTask', value: true },
     ]
-    expect(conditionsHold(conditions, ctxWith({ members: true, onSlayerTask: true }))).toBe(true)
-    expect(conditionsHold(conditions, ctxWith({ members: true, onSlayerTask: false }))).toBe(false)
-    expect(conditionsHold(conditions, ctxWith({ members: false, onSlayerTask: true }))).toBe(false)
+    expect(conditionsHold(conditions, ctxWith({ members: true, onKonarTask: true }))).toBe(true)
+    expect(conditionsHold(conditions, ctxWith({ members: true, onKonarTask: false }))).toBe(false)
+    expect(conditionsHold(conditions, ctxWith({ members: false, onKonarTask: true }))).toBe(false)
   })
 })
 

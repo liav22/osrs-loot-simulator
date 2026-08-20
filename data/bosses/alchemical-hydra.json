@@ -1094,7 +1094,7 @@
           },
           "conditions": [
             {
-              "kind": "onSlayerTask",
+              "kind": "onKonarTask",
               "value": true
             }
           ]

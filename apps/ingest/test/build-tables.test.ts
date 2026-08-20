@@ -441,7 +441,7 @@ describe('buildTableGroups', () => {
     expect(groups[0]?.mode).toBe('independent')
     expect(groups[0]?.ambiguous).toBeNull()
     expect(groups[0]?.entries[0]?.rarity).toEqual({ kind: 'fixed', num: 1, den: 75 })
-    expect(groups[0]?.entries[0]?.extraConditions).toEqual([{ kind: 'onSlayerTask', value: true }])
+    expect(groups[0]?.entries[0]?.extraConditions).toEqual([{ kind: 'onKonarTask', value: true }])
   })
 
   it('applies the bonus=yes multiplier (Grotesque Guardians: combat 328, bonus -> 1/44)', () => {

@@ -14,15 +14,28 @@ import { expect, resultProjection, test } from './fixtures'
  */
 
 test('a pasted deep link populates the controls it names', async ({ page }) => {
-  await page.goto('./boss/zalcano?mvp=1&hpdmg=500&shielddmg=40&seed=7&n=1234&slayer=1')
+  await page.goto('./boss/zalcano?mvp=1&hpdmg=500&shielddmg=40&seed=7&n=1234')
   await expect(page.getByRole('heading', { name: 'Zalcano' })).toBeVisible()
 
   await expect(page.getByLabel('MVP (most damage dealt)')).toBeChecked()
-  await expect(page.getByLabel('On slayer task')).toBeChecked()
   await expect(page.getByLabel('Damage to hitpoints')).toHaveValue('500')
   await expect(page.getByLabel('Damage to shield')).toHaveValue('40')
   await expect(page.getByLabel('Seed')).toHaveValue('7')
   await expect(page.getByLabel('Kills to simulate')).toHaveValue('1234')
+})
+
+test('a Konar task deep link populates the control, only on a Konar-eligible boss', async ({ page }) => {
+  // Zalcano is not Konar-eligible (no Brimstone key on its table), so the
+  // control renders on neither page unless the boss's own document uses
+  // `onKonarTask` — Scorpia does. See `SimContextControls.test.tsx`'s
+  // surface-discovery tests for the positive/negative pair at the unit level.
+  await page.goto('./boss/scorpia?konar=1')
+  await expect(page.getByRole('heading', { name: 'Scorpia' })).toBeVisible()
+  await expect(page.getByLabel('Konar task')).toBeChecked()
+
+  await page.goto('./boss/zalcano')
+  await expect(page.getByRole('heading', { name: 'Zalcano' })).toBeVisible()
+  await expect(page.getByLabel('Konar task')).toHaveCount(0)
 })
 
 test('moving a control writes the URL back, and the URL survives a reload', async ({ page }) => {

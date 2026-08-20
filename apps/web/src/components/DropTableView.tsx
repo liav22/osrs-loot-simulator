@@ -7,8 +7,8 @@ function conditionLabel(condition: Condition): string {
       return condition.value ? 'Members' : 'F2P'
     case 'ringOfWealth':
       return condition.value ? 'Ring of wealth' : 'No ring of wealth'
-    case 'onSlayerTask':
-      return condition.value ? 'On slayer task' : 'Not on slayer task'
+    case 'onKonarTask':
+      return condition.value ? 'On Konar task' : 'Not on Konar task'
     case 'questComplete':
       return condition.quest
     case 'variant':

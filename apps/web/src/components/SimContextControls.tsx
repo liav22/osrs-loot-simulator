@@ -26,6 +26,7 @@ const NUMERIC_FIELDS: Partial<
 const BOOLEAN_FIELDS: Partial<Record<SimContextField, string>> = {
   perfectKill: 'Perfect kill (no avoidable damage)',
   isMVP: 'MVP (most damage dealt)',
+  onKonarTask: 'Konar task',
 }
 
 const MOONS: readonly SimContext['moonsKilled'][number][] = ['blood', 'blue', 'eclipse']
@@ -202,7 +203,6 @@ export function SimContextControls({ boss, sharedTables, params, onChange, iconF
           />
         )}
         <Toggle label="Ring of wealth" checked={params.ctx.ringOfWealth} onChange={(v) => setCtx({ ringOfWealth: v })} />
-        <Toggle label="On slayer task" checked={params.ctx.onSlayerTask} onChange={(v) => setCtx({ onSlayerTask: v })} />
       </div>
 
       {boss.variants.length > 1 && (

@@ -1409,7 +1409,7 @@
               "name": "Post-quest"
             },
             {
-              "kind": "onSlayerTask",
+              "kind": "onKonarTask",
               "value": true
             }
           ]

@@ -816,7 +816,7 @@
               "name": "Regular"
             },
             {
-              "kind": "onSlayerTask",
+              "kind": "onKonarTask",
               "value": true
             }
           ]

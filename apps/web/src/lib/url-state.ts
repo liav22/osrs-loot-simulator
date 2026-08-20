@@ -103,6 +103,7 @@ const NUMERIC_PARAMS = {
 const BOOLEAN_PARAMS = {
   perfectKill: 'perfect',
   isMVP: 'mvp',
+  onKonarTask: 'konar',
 } as const satisfies Partial<Record<keyof SimContext, string>>
 
 const MOONS = ['blood', 'blue', 'eclipse'] as const
@@ -151,7 +152,6 @@ export function paramsFromSearch(
     ...defaults,
     members: parseBool(search.get('members'), defaults.members),
     ringOfWealth: parseBool(search.get('row'), defaults.ringOfWealth),
-    onSlayerTask: parseBool(search.get('slayer'), defaults.onSlayerTask),
     questsComplete: questsRaw === null || questsRaw === '' ? defaults.questsComplete : questsRaw.split(','),
     killCount: parseIntParam(search.get('kc'), defaults.killCount),
     variant: search.get('variant') ?? defaults.variant,
@@ -179,7 +179,6 @@ export function searchFromParams(params: SimRunParams, contextDefaults: PartialS
   const search = new URLSearchParams()
   if (params.ctx.members !== defaults.members) search.set('members', params.ctx.members ? '1' : '0')
   if (params.ctx.ringOfWealth !== defaults.ringOfWealth) search.set('row', params.ctx.ringOfWealth ? '1' : '0')
-  if (params.ctx.onSlayerTask !== defaults.onSlayerTask) search.set('slayer', params.ctx.onSlayerTask ? '1' : '0')
   if (params.ctx.questsComplete.length > 0) search.set('quests', params.ctx.questsComplete.join(','))
   if (params.ctx.killCount !== defaults.killCount) search.set('kc', String(params.ctx.killCount))
   if (params.ctx.variant !== defaults.variant) search.set('variant', params.ctx.variant)

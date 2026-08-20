@@ -8,8 +8,8 @@ export function evaluateCondition(condition: Condition, ctx: SimContext): boolea
       return ctx.members === condition.value
     case 'ringOfWealth':
       return ctx.ringOfWealth === condition.value
-    case 'onSlayerTask':
-      return ctx.onSlayerTask === condition.value
+    case 'onKonarTask':
+      return ctx.onKonarTask === condition.value
     case 'questComplete':
       return ctx.questsComplete.includes(condition.quest)
     case 'variant':

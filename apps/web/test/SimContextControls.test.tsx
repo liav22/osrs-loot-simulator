@@ -68,11 +68,19 @@ describe('SimContextControls renders the controls each boss needs', () => {
     expect(screen.getByText('MVP (most damage dealt)')).toBeDefined()
   })
 
+  it('Scorpia (Konar-eligible, has a Brimstone key drop) gets a Konar task toggle', () => {
+    renderFor('scorpia')
+    expect(screen.getByText('Konar task')).toBeDefined()
+  })
+
   it('an ordinary boss is not cluttered with controls it ignores', () => {
     renderFor('brutus')
     expect(screen.queryByText('Delve level reached')).toBeNull()
     expect(screen.queryByText('MVP (most damage dealt)')).toBeNull()
     expect(screen.queryByText('Blood Moon')).toBeNull()
+    // Brutus has no Brimstone key entry (not Konar-eligible), unlike Ring of
+    // wealth, which is universal because it reaches the shared RDT/gem tables.
+    expect(screen.queryByText('Konar task')).toBeNull()
     // The universal ones still render.
     expect(screen.getByText('Ring of wealth')).toBeDefined()
   })

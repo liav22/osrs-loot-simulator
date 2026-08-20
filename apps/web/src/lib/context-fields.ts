@@ -167,7 +167,7 @@ function walkEntry(entry: Entry, walk: Walk): void {
         if (condition.value === false) walk.freeToPlay = true
         break
       case 'ringOfWealth':
-      case 'onSlayerTask':
+      case 'onKonarTask':
       case 'variant':
         into.add(condition.kind === 'variant' ? 'variant' : condition.kind)
         break

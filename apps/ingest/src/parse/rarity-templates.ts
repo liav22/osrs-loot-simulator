@@ -32,10 +32,14 @@ type RarityTemplateEvaluator = (params: ReadonlyMap<string, string>) => RarityTe
  * Matches all 18 known (combatLevel, resolved rarity) pairs exactly, with no
  * remainder — this is the game's real formula, not a guess. Every DropsLine
  * call carrying this template also carries a raritynotes footnote
- * restricting the drop to a Wilderness-Slayer task from Konar quo Maten, so
- * that gating is an `onSlayerTask` condition (PROJECT_PLAN.md 4.4), already
- * expressible without a formula — the RATE itself is a parse-time constant,
- * not a `Rate.formula`.
+ * restricting the drop to a Slayer task assigned specifically by Konar quo
+ * Maten — any location, not Wilderness-restricted (checked directly against
+ * the live wiki's own "Brimstone key" page, which corrects an earlier,
+ * imprecise "Wilderness-Slayer task" gloss). That gating is the `onKonarTask`
+ * condition (PROJECT_PLAN.md 4.4 names it `onSlayerTask`; renamed in
+ * docs/DECISIONS.md once it became clear the real corpus only ever uses this
+ * condition for Konar's task specifically, never any Slayer master's task)
+ * — the RATE itself is a parse-time constant, not a `Rate.formula`.
  */
 function brimstoneRarity(params: ReadonlyMap<string, string>): RarityTemplateEvaluation | null {
   const level = Number(params.get('1'))
@@ -46,7 +50,7 @@ function brimstoneRarity(params: ReadonlyMap<string, string>): RarityTemplateEva
   return {
     num: 1,
     den,
-    conditions: [{ kind: 'onSlayerTask', value: true }],
+    conditions: [{ kind: 'onKonarTask', value: true }],
   }
 }
 
