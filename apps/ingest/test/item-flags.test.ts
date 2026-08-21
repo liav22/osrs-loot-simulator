@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
+import type { Table } from '@osrs-loot-simulator/loot-model'
 import { assembleBoss } from '../src/parse/assemble-boss.js'
-import { itemFlagsFor, type ItemFlags } from '../src/items/item-flags.js'
+import { applyItemFlags, itemFlagsFor, type ItemFlags } from '../src/items/item-flags.js'
 import type { ItemAllowlist } from '../src/items/allowlist.js'
 import type { ItemIndex } from '../src/items/index.js'
 import type { ParsedTableGroup } from '../src/parse/build-tables.js'
@@ -124,6 +125,91 @@ describe('assembleBoss item flags', () => {
     for (const node of nodes) {
       expect(node.kind === 'item' && 'unique' in node ? node.unique : undefined).toBeUndefined()
       expect(node.kind === 'item' && 'pet' in node ? node.pet : undefined).toBeUndefined()
+    }
+  })
+})
+
+describe('applyItemFlags', () => {
+  // The bug this guards: a hand-authored `data/overrides/*.json` `tables`
+  // array (e.g. Doom of Mokhaiotl's) never passes through `assembleBoss`'s
+  // own item-node construction — `applyOverride` replaces tables wholesale.
+  // Without a SECOND, general stamping pass over the boss's final tables,
+  // every override boss whose author didn't hand-inline `unique`/`pet` into
+  // the override JSON itself silently ships with no curated flags at all,
+  // which is exactly what left Doom of Mokhaiotl showing no uniques in the
+  // UI despite `data/item-flags.json` correctly curating three of them.
+  const flags: ItemFlags = {
+    itemFlagsVersion: 1,
+    entries: [
+      { bossSlug: 'doom-of-mokhaiotl', itemKey: 'avernic-treads', flags: ['unique'], reason: 'unique drop' },
+      { bossSlug: 'doom-of-mokhaiotl', itemKey: 'dom', flags: ['pet'], reason: 'the pet' },
+    ],
+  }
+
+  // Shaped like a hand-authored override's `tables` — an item node built
+  // directly, never touched by `assembleBoss`.
+  const overrideTables: Table[] = [
+    {
+      id: 'doom:delve-4',
+      mode: 'independent',
+      rolls: 1,
+      withoutReplacement: false,
+      entries: [
+        {
+          node: {
+            kind: 'item',
+            itemId: 1,
+            itemKey: 'avernic-treads',
+            name: 'Avernic treads',
+            qty: { kind: 'exact', n: 1 },
+          },
+          rate: { kind: 'fixed', num: 1, den: 1000 },
+        },
+        {
+          node: {
+            kind: 'item',
+            itemId: 2,
+            itemKey: 'dom',
+            name: 'Dom',
+            qty: { kind: 'exact', n: 1 },
+          },
+          rate: { kind: 'fixed', num: 1, den: 3000 },
+        },
+        {
+          node: {
+            kind: 'item',
+            itemId: 3,
+            itemKey: 'demon-tear',
+            name: 'Demon tear',
+            qty: { kind: 'exact', n: 50 },
+          },
+          rate: { kind: 'always' },
+        },
+      ],
+    },
+  ]
+
+  it('stamps unique/pet onto override-authored item nodes assembleBoss never touched', () => {
+    const stamped = applyItemFlags(overrideTables, flags, 'doom-of-mokhaiotl')
+    const nodes = stamped[0]!.entries.map((e) => e.node)
+
+    const treads = nodes.find((n) => n.kind === 'item' && n.itemKey === 'avernic-treads')
+    expect(treads?.kind === 'item' ? treads.unique : undefined).toBe(true)
+
+    const pet = nodes.find((n) => n.kind === 'item' && n.itemKey === 'dom')
+    expect(pet?.kind === 'item' ? pet.pet : undefined).toBe(true)
+
+    const tear = nodes.find((n) => n.kind === 'item' && n.itemKey === 'demon-tear')
+    expect(tear?.kind === 'item' ? tear.unique : undefined).toBeUndefined()
+    expect(tear?.kind === 'item' ? tear.pet : undefined).toBeUndefined()
+  })
+
+  it('is a no-op for a boss with no curated entries', () => {
+    const emptyFlags: ItemFlags = { itemFlagsVersion: 1, entries: [] }
+    const stamped = applyItemFlags(overrideTables, emptyFlags, 'doom-of-mokhaiotl')
+    for (const entry of stamped[0]!.entries) {
+      expect(entry.node.kind === 'item' ? entry.node.unique : undefined).toBeUndefined()
+      expect(entry.node.kind === 'item' ? entry.node.pet : undefined).toBeUndefined()
     }
   })
 })

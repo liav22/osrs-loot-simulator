@@ -159,3 +159,45 @@ describe('Doom of Mokhaiotl: document status', () => {
     expect(boss.source).toBe('merged')
   })
 })
+
+describe('Doom of Mokhaiotl: curated unique/pet flags', () => {
+  // Regression for the bug fixed alongside this suite: an override's
+  // `tables` replace the generated ones wholesale and never pass through
+  // `assembleBoss`'s own item-node construction, so `data/item-flags.json`'s
+  // curated flags for this boss (avernic-treads, eye-of-ayak-uncharged: unique;
+  // dom: pet) were silently never embedded — the UI showed no uniques at
+  // all for Doom of Mokhaiotl despite the flags being correctly curated. See
+  // `apps/ingest/src/items/item-flags.ts`'s `applyItemFlags`.
+  it('every avernic-treads/eye-of-ayak-uncharged node is flagged unique, and every dom node is flagged pet', async () => {
+    const boss = await loadBoss()
+    const nodes = boss.tables.flatMap((t) => t.entries.map((e) => e.node))
+
+    const treads = nodes.filter((n) => n.kind === 'item' && n.itemKey === 'avernic-treads')
+    expect(treads.length).toBeGreaterThan(0)
+    expect(treads.every((n) => n.kind === 'item' && n.unique === true)).toBe(true)
+
+    const eyeOfAyak = nodes.filter((n) => n.kind === 'item' && n.itemKey === 'eye-of-ayak-uncharged')
+    expect(eyeOfAyak.length).toBeGreaterThan(0)
+    expect(eyeOfAyak.every((n) => n.kind === 'item' && n.unique === true)).toBe(true)
+
+    const dom = nodes.filter((n) => n.kind === 'item' && n.itemKey === 'dom')
+    expect(dom.length).toBeGreaterThan(0)
+    expect(dom.every((n) => n.kind === 'item' && n.pet === true)).toBe(true)
+  })
+
+  it("the web app's uniqueItemKeys() sees all three, matching the wiki's own list", async () => {
+    // Mirrors apps/web/src/lib/uniques.ts exactly (walks item/oneOf nodes,
+    // collecting `unique || pet`), without importing apps/web — packages/
+    // loot-model may not import from apps/*, and this file already avoids
+    // reaching into apps/web for the same reason its sibling suites do.
+    const boss = await loadBoss()
+    const keys = new Set<string>()
+    for (const table of boss.tables) {
+      for (const entry of table.entries) {
+        const node = entry.node
+        if (node.kind === 'item' && (node.unique || node.pet)) keys.add(node.itemKey)
+      }
+    }
+    expect(keys).toEqual(new Set(['avernic-treads', 'eye-of-ayak-uncharged', 'dom']))
+  })
+})

@@ -9,7 +9,7 @@ import { checkRatesValid } from '../validate/rates-valid.js'
 import { checkQtySane } from '../validate/qty-sane.js'
 import { checkDropsCovered } from '../validate/drops-covered.js'
 import type { ItemAllowlist } from '../items/allowlist.js'
-import type { ItemFlags } from '../items/item-flags.js'
+import { applyItemFlags, type ItemFlags } from '../items/item-flags.js'
 import type { ItemIndex } from '../items/index.js'
 import type { GePrices } from '../prices/ge-prices.js'
 import { gePriceLookup } from '../prices/ge-prices.js'
@@ -207,12 +207,20 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   // Everything downstream validates the MERGED document, not the generated
   // one — an override that introduces a broken table must fail the same
   // checks a bad parse would, never be rubber-stamped for being hand-written.
-  const merged =
+  const mergedBase =
     override === null
       ? result.boss!
       : BossSchema.parse(
           applyOverride(result.boss, override, options.parserVersion, options.repeatable)
         )
+
+  // Stamped on the FINAL tables, not inside `assembleBoss`: an override's
+  // `tables` replace the generated ones wholesale and never pass through
+  // `assembleBoss`'s own item-node construction, so without this second pass
+  // an override boss ships with no curated unique/pet flags at all unless its
+  // author hand-inlined them into the override JSON itself. See
+  // `applyItemFlags`'s own comment.
+  const merged = { ...mergedBase, tables: applyItemFlags(mergedBase.tables, options.itemFlags, options.slug) }
 
   const itemInputs = collectItemInputs(merged.tables)
 

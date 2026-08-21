@@ -7384,3 +7384,65 @@ cross-checks pinned as their own tests). 17/17 tests pass.
 approximation (a separate, already-flagged gap) and the Token (Varlamore)
 exclusion — both unrelated to this bug.
 
+## Curated unique/pet flags never reached override-authored tables — fixed generically, not per-boss
+
+User-reported bug: Doom of Mokhaiotl showed no unique items in the UI at
+all, despite `data/item-flags.json` correctly curating Avernic treads and
+Eye of ayak (uncharged) as `unique` and Dom as `pet`.
+
+**Root cause, and why it was silent**: `assembleBoss` (`apps/ingest/src/
+parse/assemble-boss.ts`) stamps `unique`/`pet` onto an item node at the
+moment it builds that node from parsed wikitext (`itemNodeFor`). A hand-
+authored `data/overrides/*.json` `tables` array never goes through
+`assembleBoss` — `applyOverride` replaces the generated tables wholesale
+(`docs/OVERRIDES.md`'s documented mechanism) — so an override boss's item
+nodes are built directly in the override JSON and never pass through that
+stamping step. Four DT2 overrides (duke-sucellus, the-leviathan,
+the-whisperer, vardorvis) happened to look fine because their authors
+hand-inlined `"unique": true`/`"pet": true` directly into the override
+JSON; every other override boss with curated `item-flags.json` entries
+(ancient-chest, chest-tombs-of-amascut, doom-of-mokhaiotl, mad-angel,
+monumental-chest, reward-pool, rewards-chest-fortis-colosseum, yama,
+zalcano — 9 in total, confirmed by cross-checking every `item-flags.json`
+entry's `itemKey` against its boss's built document) silently shipped with
+zero embedded flags.
+
+**Fixed generically, per CLAUDE.md's "special cases are data, not per-boss
+branches"**: added `applyItemFlags(tables, itemFlags, bossSlug)` to
+`apps/ingest/src/items/item-flags.ts` — a general, idempotent pass that
+walks every table's item (and `oneOf`-nested item) nodes and stamps
+curated flags via the existing `itemFlagsFor` lookup. Called once, in
+`parse-boss.ts`, on the FINAL merged tables (after `applyOverride`, not
+before), so it uniformly covers generated, merged, and override-only
+tables alike — not a per-boss patch, and not a per-boss `if`. `assembleBoss`'s
+own stamping was left in place rather than removed (it has its own
+passing test coverage and the second pass is a harmless idempotent
+recompute for generated-origin nodes), so the fix is additive only.
+
+Regenerated all 104 sources via `ingest parse` (no `--source` filter, to
+catch every boss this affected, not just the one reported) — diff touched
+exactly the 9 predicted `data/bosses/*.json` files, and every changed line
+is either a `"unique": true`/`"pet": true` addition or the resulting
+bracket/comma reflow, confirmed by grepping the diff for any other content
+change (none found). New tests: `apps/ingest/test/item-flags.test.ts` gets
+an `applyItemFlags` suite exercising an override-shaped table directly
+(never touched by `assembleBoss`), and `apps/ingest/test/
+doom-of-mokhaiotl.test.ts` gets a regression asserting the real built
+document's Avernic treads/Eye of ayak/Dom nodes carry their flags and that
+a `uniqueItemKeys()`-equivalent walk (mirroring `apps/web/src/lib/
+uniques.ts`) recovers exactly those three keys. `pnpm -r typecheck && pnpm
+-r test && pnpm lint` clean (880 tests total, including
+`corpus-reproducibility.test.ts`).
+
+**Separate, NOT fixed here — flagged for the user, not acted on**:
+`data/item-flags.json` curates only 3 entries for `doom-of-mokhaiotl`
+(avernic-treads, dom, eye-of-ayak-uncharged), but the wiki's own "Uniques"
+heading and `docs/bosses/doom-of-mokhaiotl.md`'s own prose group a fourth
+item, Mokhaiotl cloth, with the same three under one shared, level-gated
+mechanic (`docs/DECISIONS.md`'s "Phase 6 research item" entry above,
+1382-1395, already noted this grouping). Whether Mokhaiotl cloth should
+also be curated `unique` is a `data/item-flags.json` curation call, not an
+engine bug, and `item-flags.ts`'s own header comment calls this "the most
+re-litigated question in the project's history" — left for an explicit
+decision rather than assumed.
+

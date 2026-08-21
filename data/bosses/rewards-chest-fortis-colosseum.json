@@ -882,7 +882,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -906,7 +907,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -929,7 +931,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -952,7 +955,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -975,7 +979,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1169,7 +1174,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1193,7 +1199,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1216,7 +1223,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1239,7 +1247,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1262,7 +1271,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1456,7 +1466,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1480,7 +1491,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1503,7 +1515,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1526,7 +1539,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1549,7 +1563,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1881,7 +1896,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1905,7 +1921,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1928,7 +1945,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1951,7 +1969,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1974,7 +1993,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1997,7 +2017,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2329,7 +2350,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2353,7 +2375,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2376,7 +2399,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2399,7 +2423,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2422,7 +2447,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2445,7 +2471,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2731,7 +2758,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2755,7 +2783,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2778,7 +2807,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2801,7 +2831,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2824,7 +2855,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -2847,7 +2879,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3133,7 +3166,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3157,7 +3191,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3180,7 +3215,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3203,7 +3239,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3226,7 +3263,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3249,7 +3287,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3489,7 +3528,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3513,7 +3553,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3536,7 +3577,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3559,7 +3601,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3582,7 +3625,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3605,7 +3649,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3845,7 +3890,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3869,7 +3915,8 @@
               "kind": "range",
               "min": 2,
               "max": 3
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3892,7 +3939,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3915,7 +3963,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3938,7 +3987,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3961,7 +4011,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -3993,7 +4044,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "unique": true
           },
           "rate": {
             "kind": "always"
@@ -4015,7 +4067,8 @@
             "qty": {
               "kind": "exact",
               "n": 1
-            }
+            },
+            "pet": true
           },
           "rate": {
             "kind": "fixed",
