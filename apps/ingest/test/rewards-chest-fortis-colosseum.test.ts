@@ -25,13 +25,26 @@ import { REPO_ROOT } from '../src/snapshots/store.js'
  * file is that check, run against the REAL generated document so it fails if
  * a future re-parse stops emitting any of it.
  *
+ * CORRECTED 2026-08-21 (see `docs/DECISIONS.md`'s Fortis Colosseum
+ * accumulation-fix entry): loot is bankable and cumulative across every wave
+ * cleared — reaching wave N fires every wave 1..N's table, not just wave N's
+ * own row. `ctx.wavesReached` is gated with a plain `levelAtLeast('wavesReached',
+ * n)` (no `atMost`), the same shape already shipped for Doom of Mokhaiotl.
+ *
  * Every assertion is pinned to something cited on `Rewards Chest (Fortis
  * Colosseum)` (revid 15285141):
  *
  *   Wave 1: "80 sunfire splinters", Always
- *   Wave 4: echo crystal 1/310, sunfire fanatic armour (any piece) 1/206.67
- *   Wave 12: echo crystal 1/32, sunfire fanatic armour 1/21.33,
- *            Tonalztics of Ralos 1/192
+ *   Wave 4 only reached: echo crystal 1/310, sunfire fanatic armour (any
+ *            piece) 1/206.67 — unaffected by the accumulation fix since
+ *            those itemKeys don't exist in waves 1-3's tables.
+ *   Full wave-12 clear: the wiki's own per-wave "effective rates" table,
+ *            summed across every eligible wave (4-12 for echo
+ *            crystal/armour, 7-12 for Tonalztics), giving an overall unique
+ *            chance of ≈22% — matching widely-reported community figures for
+ *            a full clear (~20-25%), and a cumulative expected sunfire
+ *            splinters of ≈2014.6, matching the wiki's own cited "on
+ *            average... 2014.6 Sunfire splinters per full completion."
  *   "Players are guaranteed to receive a full set prior to receiving
  *    duplicate Sunfire Fanatic pieces" — NOT modelled (see override note);
  *    this file asserts the model matches the WITH-REPLACEMENT reading
@@ -61,9 +74,14 @@ function rateOf(boss: Boss, ctx: SimContext, itemKey: string): number {
   return ev.items.find((d) => d.itemKey === itemKey)?.expectedDrops ?? 0
 }
 
+function qtyOf(boss: Boss, ctx: SimContext, itemKey: string): number {
+  const ev = expectedValue(boss, ctx)
+  return ev.items.find((d) => d.itemKey === itemKey)?.expectedQuantity ?? 0
+}
+
 const ARMOUR_PIECES = ['sunfire-fanatic-helm', 'sunfire-fanatic-cuirass', 'sunfire-fanatic-chausses']
 
-describe('Fortis Colosseum: wavesReached selects exactly one wave’s table', () => {
+describe('Fortis Colosseum: wavesReached accumulates every wave cleared, not just the final one', () => {
   it('wave 1 gives exactly 80 sunfire splinters, deterministically', async () => {
     const boss = await loadBoss()
     const sim = simulate(boss, 500, ctxWith({ wavesReached: 1 }), 11)
@@ -72,17 +90,33 @@ describe('Fortis Colosseum: wavesReached selects exactly one wave’s table', ()
     expect(splinters.quantity / splinters.drops).toBe(80)
   })
 
-  it('never gives a wave-4+ unique item at wave 1, or wave 1’s own item at wave 4', async () => {
+  it('never gives a wave-4+ unique item at wave 1 (uniques are not yet unlocked)', async () => {
     const boss = await loadBoss()
     const wave1 = ctxWith({ wavesReached: 1 })
-    const wave4 = ctxWith({ wavesReached: 4 })
     expect(rateOf(boss, wave1, 'echo-crystal')).toBe(0)
     expect(rateOf(boss, wave1, 'sunfire-fanatic-helm')).toBe(0)
-    // Wave 4's own table does not carry an "Always 80 splinters" entry — it
-    // has its own weighted splinters row instead, at a different quantity.
-    const wave4Splinters = rateOf(boss, wave4, 'sunfire-splinters')
-    expect(wave4Splinters).toBeGreaterThan(0)
-    expect(wave4Splinters).toBeLessThan(1) // not a guaranteed Always hit like wave 1
+  })
+
+  it('reaching wave 4 still carries wave 1’s guaranteed 80 splinters, plus waves 2–4’s own rolls on top', async () => {
+    // This is the accumulation fix itself: before it, wave 4's context
+    // matched ONLY wave 4's own table (an exact-bracket `atMost: 4`), so
+    // wave 1's guaranteed splinters were silently dropped. Now wave
+    // 1..4 all fire, matching the wiki's own "walk away with the rewards
+    // you've accumulated so far".
+    const boss = await loadBoss()
+    const wave4Splinters = qtyOf(boss, ctxWith({ wavesReached: 4 }), 'sunfire-splinters')
+    expect(wave4Splinters).toBeGreaterThan(80) // more than wave 1's guaranteed baseline alone
+    expect(wave4Splinters).toBeCloseTo(154.0725806451613, 6)
+  })
+
+  it('a full wave-12 clear accumulates ≈2014.6 expected sunfire splinters, matching the wiki’s own cited average', async () => {
+    // "On average, players can expect to receive 2014.6 Sunfire splinters
+    // per full completion" (Rewards Chest (Fortis Colosseum)). Landing on
+    // this figure only happens if every wave's contribution is summed, not
+    // just wave 12's own row (which alone would be far short of this).
+    const boss = await loadBoss()
+    const wave12Splinters = qtyOf(boss, ctxWith({ wavesReached: 12 }), 'sunfire-splinters')
+    expect(wave12Splinters).toBeCloseTo(2014.6242309350648, 4)
   })
 
   it('every wave’s weighted table reconciles to its own published denominator', async () => {
@@ -110,7 +144,10 @@ describe('Fortis Colosseum: wavesReached selects exactly one wave’s table', ()
 })
 
 describe('Fortis Colosseum: unique-table rates match the wiki’s published "effective rates" table', () => {
-  it('wave 4: echo crystal 1/310, any armour piece 1/206.67', async () => {
+  it('wave 4 only reached: echo crystal 1/310, any armour piece 1/206.67', async () => {
+    // Unaffected by the accumulation fix — echo crystal/armour don't exist
+    // in waves 1-3's tables, so stopping exactly at wave 4 sees only wave
+    // 4's own unique-access roll.
     const boss = await loadBoss()
     const ctx = ctxWith({ wavesReached: 4 })
     const crystal = rateOf(boss, ctx, 'echo-crystal')
@@ -119,13 +156,36 @@ describe('Fortis Colosseum: unique-table rates match the wiki’s published "eff
     expect(anyArmour).toBeCloseTo(1 / 206.67, 4)
   })
 
-  it('wave 12: echo crystal 1/32, any armour piece 1/21.33, Tonalztics 1/192', async () => {
+  it('a full wave-12 clear accumulates every eligible wave’s unique-access roll, not just wave 12’s own row', async () => {
+    // Wave 12's OWN row alone gives echo crystal 1/32, armour 1/21.33,
+    // Tonalztics 1/192 — but a run that reached wave 12 passed through
+    // (and banked the rolls from) waves 4-11 too. Summing the wiki's own
+    // published per-wave "effective rates" table (echo crystal: 1/310,
+    // 1/275, 1/240, 1/218.67, 1/181.33, 1/144, 1/106.67, 1/69.33, 1/32 for
+    // waves 4-12; armour and Tonalztics analogously, Tonalztics only from
+    // wave 7) gives the cumulative figures below.
     const boss = await loadBoss()
     const ctx = ctxWith({ wavesReached: 12 })
-    expect(rateOf(boss, ctx, 'echo-crystal')).toBeCloseTo(1 / 32, 6)
+    expect(rateOf(boss, ctx, 'echo-crystal')).toBeCloseTo(0.08310923473622485, 6)
     const anyArmour = ARMOUR_PIECES.reduce((s, k) => s + rateOf(boss, ctx, k), 0)
-    expect(anyArmour).toBeCloseTo(1 / 21.33, 3)
-    expect(rateOf(boss, ctx, 'tonalztics-of-ralos-uncharged')).toBeCloseTo(1 / 192, 6)
+    expect(anyArmour).toBeCloseTo(0.12466385210433725, 6)
+    expect(rateOf(boss, ctx, 'tonalztics-of-ralos-uncharged')).toBeCloseTo(0.012013399663596939, 6)
+  })
+
+  it('a full wave-12 clear’s overall unique chance is ≈22%, matching widely-reported community figures for a full clear', async () => {
+    // Sanity check independent of the exact per-item split: crystal + armour
+    // + Tonalztics summed across every eligible wave should land near the
+    // commonly-cited ~20-25% "got a unique on a full clear" figure — the
+    // prior (buggy) exact-match model would have given only wave 12's own
+    // row, ≈8.3%.
+    const boss = await loadBoss()
+    const ctx = ctxWith({ wavesReached: 12 })
+    const overall =
+      rateOf(boss, ctx, 'echo-crystal') +
+      ARMOUR_PIECES.reduce((s, k) => s + rateOf(boss, ctx, k), 0) +
+      rateOf(boss, ctx, 'tonalztics-of-ralos-uncharged')
+    expect(overall).toBeGreaterThan(0.2)
+    expect(overall).toBeLessThan(0.25)
   })
 
   it('Tonalztics of Ralos is unreachable before wave 7, matching "a third item only unlocked from wave 7 on"', async () => {
@@ -138,17 +198,17 @@ describe('Fortis Colosseum: unique-table rates match the wiki’s published "eff
 
   it('a successful echo crystal roll can yield 2-3, at the stated 1/10 sub-chance', async () => {
     const boss = await loadBoss()
-    const ctx = ctxWith({ wavesReached: 12 })
-    const single = rateOf(boss, ctx, 'echo-crystal') // both rows share the itemKey, summed
-    // 135/4800 (qty 1) + 15/4800 (qty 2-3) = 150/4800 total; the 2-3 row is
-    // exactly 1/10 of that total, matching "a 1/10 chance of receiving either
-    // 2 or 3" GIVEN a successful roll.
-    expect(single).toBeCloseTo(150 / 4800, 9)
+    // Isolate wave 12's own table structure directly (not the cumulative
+    // ctx-driven rate) — this is a static check on that one table's rows.
     const table = boss.tables.find((t) => t.id === 'fortis:wave-12')!
     const crystalEntries = table.entries.filter((e) => e.node.kind === 'item' && e.node.itemKey === 'echo-crystal')
     expect(crystalEntries).toHaveLength(2)
     const weights = crystalEntries.map((e) => (e.rate.kind === 'weight' ? e.rate.weight : 0)) as number[]
     expect(weights.sort((a, b) => a - b)).toEqual([15, 135])
+    // 135/4800 (qty 1) + 15/4800 (qty 2-3) = 150/4800 total; the 2-3 row is
+    // exactly 1/10 of that total, matching "a 1/10 chance of receiving either
+    // 2 or 3" GIVEN a successful roll.
+    expect((weights[0]! + weights[1]!) / table.denominator!).toBeCloseTo(150 / 4800, 9)
   })
 })
 
@@ -166,7 +226,9 @@ describe('Fortis Colosseum: the with-replacement approximation matches its docum
     const rates = ARMOUR_PIECES.map((k) => rateOf(boss, ctx, k))
     expect(rates[0]).toBeCloseTo(rates[1]!, 9)
     expect(rates[1]).toBeCloseTo(rates[2]!, 9)
-    expect(rates[0]).toBeCloseTo(75 / 4800, 9)
+    // Cumulative across waves 4-12 (see the accumulation-fix test above),
+    // split evenly across the 3 pieces by symmetry.
+    expect(rates[0]).toBeCloseTo(0.04155461736811242, 6)
   })
 
   it('can sample two identical armour pieces in a single simulated wave-12 clear', async () => {

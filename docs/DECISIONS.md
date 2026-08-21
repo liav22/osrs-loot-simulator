@@ -7322,3 +7322,65 @@ case reproducing the exact Frozen cache/Ancient icon/Venator shard shape,
 asserting no bundle signal fires. `pnpm -r typecheck && pnpm -r test && pnpm
 lint` clean (594 ingest tests). Not committed — left for the user to
 review.
+
+## Fortis Colosseum accumulation fix: Phase 7's "exact-match wave selection" was wrong, corrected to cumulative
+
+User-reported bug: simulating "12 waves completed" returned only wave 12's
+own loot table, not the total loot from all 12 waves cleared — contradicting
+how the actual encounter works.
+
+**Root cause**: `data/overrides/rewards-chest-fortis-colosseum.json` gated
+every wave's ~170 entries with an *exact-match* condition,
+`levelAtLeast(field: 'wavesReached', n: W, atMost: W)`. Since
+`ctx.wavesReached` is one scalar, only the single table where `n === atMost
+=== wavesReached` could ever pass, so reaching wave 12 fired *only* wave
+12's table — waves 1–11's contributions were silently dropped.
+
+**Why this was a bug, not a re-litigation of a settled design call**: the
+Phase 7 entry above ("Fortis Colosseum shipped...") asserted "every wave is
+its own complete, self-contained weighted table, **not additive layers**,"
+citing as evidence that each wave's rows sum exactly to that wave's own
+denominator. That evidence only shows each wave's own pool is
+well-formed (sums to 100% at that stage) — it says nothing about whether
+waves stack across a run, and doesn't reconcile with the same override's own
+quoted wiki prose: "the player has the option to continue... or end their
+run and walk away with the rewards they've accumulated so far." The
+structurally identical Doom of Mokhaiotl (`docs/bosses/doom-of-mokhaiotl.md`)
+already shipped the *correct* pattern for this exact shape — plain
+`levelAtLeast('delveLevel', n)` with no `atMost`, "every level up to the one
+reached fires its own roll" — but Fortis was never checked against it.
+
+**Fix**: stripped `atMost` from all 169 `wavesReached` conditions in the
+override (mechanical, `field === 'wavesReached'` only — no other condition
+kind touched), then re-ran `ingest parse --source
+rewards-chest-fortis-colosseum` to regenerate `data/bosses/`. No engine or
+schema change needed — `conditions.ts`'s `levelAtLeast` already treats a
+missing `atMost` as "at least," and `expected-value.ts`/`simulate.ts`
+already sum every table in `boss.tables` whose conditions pass. Same
+conclusion Doom of Mokhaiotl's banner already reached for this table shape.
+
+**Corroboration, not just internal consistency**: summing the wiki's own
+published per-wave "effective rates" table
+(`docs/bosses/rewards-chest-fortis-colosseum.md`) across waves 4–12 gives an
+overall unique chance of ≈22% for a full wave-12 clear — matching
+widely-reported community figures (~20–25%) for a full clear. The prior
+exact-match model implied only ≈8.3% (wave 12's own row alone). Separately,
+the fixed model's cumulative expected sunfire splinters for a full wave-12
+clear computes to ≈2014.6, matching the wiki's own cited "on average...
+2014.6 Sunfire splinters per full completion" almost exactly — strong
+evidence the accumulation model, not the exact-match one, is what the page
+is actually describing.
+
+**Also updated**: the override's own `note` field (replaced the "not
+additive layers" claim with the corrected reasoning) and
+`apps/ingest/test/rewards-chest-fortis-colosseum.test.ts` (renamed its
+"selects exactly one wave's table" describe block, replaced the now-wrong
+"wave 4 must not carry wave 1's item" assertion with one asserting
+accumulation, and updated the wave-12 unique-rate assertions from wave 12's
+own row to the cumulative sums above, with the splinters/unique-chance
+cross-checks pinned as their own tests). 17/17 tests pass.
+
+**Not touched**: the wave-scoped armour-piece duplicate-avoidance
+approximation (a separate, already-flagged gap) and the Token (Varlamore)
+exclusion — both unrelated to this bug.
+

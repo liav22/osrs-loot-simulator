@@ -1,5 +1,25 @@
 # Rewards Chest (Fortis Colosseum)
 
+> ### 🛠 CORRECTED — 2026-08-21, see `docs/DECISIONS.md`'s "Fortis Colosseum
+> ### accumulation fix" entry
+>
+> **The Phase 7 build below shipped the wrong selection semantics — fixed.**
+> It claimed "each wave is its own complete, self-contained weighted table,
+> not additive layers" and gated every wave's entries with an *exact-match*
+> `levelAtLeast(n=atMost=W)`, so `ctx.wavesReached: 12` fired ONLY wave 12's
+> table. That contradicts this very doc's own quoted wiki prose two sections
+> down ("walk away with the rewards they've accumulated so far") and the
+> structurally identical Doom of Mokhaiotl, which already shipped the
+> correct cumulative pattern for this shape. Fixed to plain
+> `levelAtLeast('wavesReached', n)` with no `atMost`, so wave W's table fires
+> whenever `wavesReached >= W` — every wave up to the one reached
+> contributes, not just the last. Corroborated two ways: summed unique
+> chance across waves 4–12 now lands at ≈22% (matching community reports for
+> a full clear, vs ≈8.3% under the old exact-match reading), and cumulative
+> expected sunfire splinters for a full clear computes to ≈2014.6, matching
+> this page's own cited average almost exactly. No engine/schema change was
+> needed, same as Doom of Mokhaiotl's already-correct build.
+>
 > ### ✅ BUILT — `data/overrides/rewards-chest-fortis-colosseum.json`, 2026-08-16
 >
 > **This source is now implemented.** All 12 waves are modelled as their own
