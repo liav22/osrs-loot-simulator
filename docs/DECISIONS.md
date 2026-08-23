@@ -7446,3 +7446,54 @@ engine bug, and `item-flags.ts`'s own header comment calls this "the most
 re-litigated question in the project's history" — left for an explicit
 decision rather than assumed.
 
+## Alchemical Hydra's "Herbs" heading, corrected via override — `needs_review`/`unknown_scaling` -> `manual_override`
+
+User asked to fix Alchemical Hydra, reported by the site as `unknown_scaling`.
+The `heading_unambiguous` check was failing on the "Herbs" heading (8 rows at
+3 distinct denominators, unnamed Pre-roll/Tertiary/Secondary), which
+`build-tables.ts`'s final fallback defaults to a `preroll` guess and flags
+`needs_review` for — same shape as the `findConfirmingSignal` entry above
+(1166-ish) and the Tormented Demon Consumables/Herbs case (7166-, 7235-)
+that established this project's discipline here: don't force a guess into
+`verified` without a real confirming signal.
+
+**Checked directly against the live wiki page** (revid 15285801): the
+"Herbs" section's own prose states "There is a 10/101 chance to get noted
+herbs" (singular chance, one heading, one pool — not two disjoint templates
+glued together, which is what actually blocked Tormented Demon's same-named
+heading). The wikitext computes each row from one shared `#vardefine`d
+`herbbase = 10/101/32`, and the 8 rows' own displayed rarities (1/64.6 ×2,
+1/80.8 ×4, 1/107.7 ×2) sum to 0.09903, a 1.0003 ratio against the stated
+10/101 — the same tiny wiki-rounding overshoot already accepted elsewhere
+(Vorkath's 1.6665x, this same boss's own "Seeds" heading two sections below,
+which the parser already resolves automatically into a single `oneOf`
+because its rows come from a recognised template transclusion carrying a
+declared access rate).
+
+**Did not extend the general parser signal.** The existing block-preamble
+phrase check keys off `/\bof the same type\b/i` (Demonic gorilla's "There is
+an equal chance of dropping 7 to 13 herbs of the same type") — Alchemical
+Hydra's prose lacks that phrase, so the existing detector correctly doesn't
+fire on it. Grepped the corpus (`grep -rl "chance to get.*herbs\|chance to
+get.*seeds" data/snapshots/wikitext/*.json`) before generalizing anything:
+only 4 hits total, of which Demonic gorilla is already `verified` and Chest
+of ToA/Reward cart are already off this check for unrelated watchlist
+reasons — Alchemical Hydra is the only source this specific gap affects, so
+a new corpus-wide phrase rule would be generalizing from one instance. Used
+`data/overrides/alchemical-hydra.json` instead (the sanctioned tool for
+exactly this: a real, confirmed mechanic the general detector can't see),
+replacing only the "Herbs" table's shape — `preroll` (8 independently-
+triggered entries, a numerically-close but structurally-approximate model)
+-> `independent` wrapping a single `oneOf` at the access rate 10/101 (exact),
+matching this boss's own "Seeds" table's already-established pattern.
+Every other table is untouched.
+
+Result: `manual_override`, not `verified` — an override is a terminal
+success state per this project's own tier system, not a lesser one; nothing
+here was a fact the user needed to supply, so this needed no round trip.
+`ingest parse --source alchemical-hydra` + `ingest site-index` regenerated
+`data/bosses/alchemical-hydra.json` and `data/index.json`; diff touched only
+that one boss's "Herbs" table and its `status`/`statusTier`/`validation`
+fields. `pnpm -r typecheck && pnpm -r test && pnpm lint` clean (878 tests,
+including `corpus-reproducibility.test.ts`).
+

@@ -1,12 +1,6 @@
 {
   "slug": "alchemical-hydra",
-  "name": "Alchemical Hydra",
-  "aliases": [],
-  "wikiPage": "Alchemical Hydra",
-  "wikiRevId": 15285801,
-  "variants": [
-    "normal"
-  ],
+  "note": "Corrects the parser's ambiguous-heading guess on the \"Herbs\" heading (revid 15285801): its 8 rows (Grimy avantoe 1/64.6, Grimy kwuarm 1/64.6, Grimy ranarr weed 1/80.8, Grimy snapdragon 1/80.8, Grimy cadantine 1/80.8, Grimy dwarf weed 1/80.8, Grimy lantadyme 1/107.7, Grimy torstol 1/107.7) carry no Pre-roll/Tertiary/Secondary keyword, so build-tables.ts's final fallback flagged it needs_review and defaulted to a preroll guess. Checked directly against https://oldschool.runescape.wiki/w/Alchemical_Hydra: the section's own prose states \"There is a 10/101 chance to get noted herbs\", and the wiki's #vardefine/#expr source computes each row as 1/(multiplier*herbbase) with herbbase = 10/101/32 and multipliers 5,5,4,4,4,4,3,3 (summing to 32) \u2014 the exact same access-rate-partition shape as this boss's own \"Seeds\" heading two sections below, which the parser already resolves automatically into a single `oneOf` node at its declared access rate because that heading's rows come from a recognised template transclusion (TreeHerbSeedDropLines) carrying a declared access rate. \"Herbs\" fails that same auto-detection only because it is written as inline #vardefine/#expr wikitext rather than a transclusion \u2014 not because the underlying mechanic differs. Replaces only that heading's shape, preroll (8 independently-triggered entries) -> independent (a single oneOf partitioning the 10/101 access roll), matching the Seeds table's already-verified pattern; every other table is unchanged from the generated document.",
   "tables": [
     {
       "id": "alchemical-hydra:0:100",
@@ -653,7 +647,7 @@
           }
         }
       ],
-      "notes": "Herbs (confirmed independent: 8 entries whose hand-rolled #vardefine/#expr rates sum to the heading's own stated access rate 10/101 (ratio 1.0003), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 10/101 — exact, not an approximation, matching this boss's own \"Seeds\" heading's identical pre-existing pattern.)"
+      "notes": "Herbs (confirmed independent: 8 entries whose hand-rolled #vardefine/#expr rates sum to the heading's own stated access rate 10/101 (ratio 1.0003), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 10/101 \u2014 exact, not an approximation, matching this boss's own \"Seeds\" heading's identical pre-existing pattern.)"
     },
     {
       "id": "alchemical-hydra:4:seeds",
@@ -946,7 +940,7 @@
           }
         }
       ],
-      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 2/101 (ratio 1.0000), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 2/101 — exact, not an approximation.)"
+      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 2/101 (ratio 1.0000), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 2/101 \u2014 exact, not an approximation.)"
     },
     {
       "id": "alchemical-hydra:5:other",
@@ -1212,59 +1206,5 @@
       ],
       "notes": "Access into rare_drop_table (from {{RareDropTable}})"
     }
-  ],
-  "contextDefaults": {},
-  "status": "manual_override",
-  "statusTier": null,
-  "statusReason": null,
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "4 tableRef node(s) resolved against 24 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 86 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }
