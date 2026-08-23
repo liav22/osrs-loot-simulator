@@ -272,6 +272,19 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('per-item drop rates, composed', () => {
         'ancient-chest.test.ts.',
     ],
     [
+      'phosani-s-nightmare',
+      "\"Runes and ammunition\"/\"Resources\"/\"Consumables\"/\"Coins\" heading's 25 rows are each " +
+        "individually published at their own plain X/100 (Cosmic rune 4/100, ... Coins 2/100) " +
+        'AND the wiki\'s own rendered dropsline bucket confirms every one of those 25 figures ' +
+        'verbatim — but the 25 numerators sum to 101, not 100, so no single denominator can ' +
+        "reproduce all 25 published rates within tolerance at once. Modelled at denominator 101 " +
+        "(data/overrides/phosani-s-nightmare.json), which keeps every row's weight exactly as " +
+        'published and puts each of the 25 items ~0.99% below its own bucket figure — an even ' +
+        'spread of the wiki\'s own 1-part-in-101 inconsistency, not a guess about which single ' +
+        'item is "really" wrong. Same shape as black-knight-titan/obor below: a small, ' +
+        'quantified, wiki-side arithmetic gap this test cannot adjudicate either way.',
+    ],
+    [
       'black-knight-titan',
       "Seeds table (Module:GeneralSeedDropLines reimplementation) uses each seed's RAW per-item " +
         "probability, not the wiki's own floor()'d 1/N display figure — floor() rounds each of the " +
@@ -331,11 +344,14 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('per-item drop rates, composed', () => {
       // the compound shape in the corpus, so a hand-authored override was
       // proportionate; see the DECISIONS entry for the full reasoning.
       //
-      // The wiki's own published integer weights simply don't sum to their
-      // own stated denominator (101 vs a `/100` every row cites) — no bundle
-      // citation anywhere on this source at all. Not a parser bug; see
-      // docs/DECISIONS.md's "root-caused — not the same defect" entry.
-      'phosani-s-nightmare',
+      // 'phosani-s-nightmare' left this list once its own cause (the wiki's
+      // own published integer weights simply not summing to their stated
+      // denominator, 101 vs a `/100` every row cites — no bundle citation
+      // anywhere on this source at all; see docs/DECISIONS.md's
+      // "root-caused — not the same defect" entry) was shipped as
+      // data/overrides/phosani-s-nightmare.json, denominator 101 instead of
+      // 100, every row's weight kept exactly as published — it now compiles,
+      // and is in the AUTHORED map above instead.
       // 'yama' left this list as an incidental effect of the dropversion=
       // propagation fix (docs/DECISIONS.md's "dropversion= parser fix"
       // entry): it no longer hits WeightsExceedDenominatorError, but is

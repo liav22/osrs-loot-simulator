@@ -7497,3 +7497,221 @@ that one boss's "Herbs" table and its `status`/`statusTier`/`validation`
 fields. `pnpm -r typecheck && pnpm -r test && pnpm lint` clean (878 tests,
 including `corpus-reproducibility.test.ts`).
 
+## `{{{dropversion|}}}` leak: a real parser bug found auditing `needs_review`, not a data gap — fixed generically, 9 `verified` sources silently corrected
+
+User asked to work through the rest of the `needs_review` list. Investigating
+Black demon's missing rows surfaced something bigger: 9 sources already
+shipped `verified` (`artio`, `callisto`, `calvar-ion`, `chaos-fanatic`,
+`crazy-archaeologist`, `scorpia`, `spindel`, `vet-ion`, `venenatis`) carried
+the literal, un-substituted string `{{{dropversion|}}}` as a `variant`
+condition's `name` and as an entry in `variants` — visible in the built
+JSON, not just internally.
+
+**Root cause**: `Template:DropsTableHead` has no snapshot on disk and isn't
+in `TERMINAL_TEMPLATES`/`TABLEREF_TEMPLATES`, so `expand-transclusions.ts`'s
+fallback (`ctx.defs.get(name) === undefined`) returned its call VERBATIM,
+arguments included. Harmless when a page writes
+`{{DropsTableHead|dropversion=Regular}}` directly (a literal, already the
+final value) — corrupting when the call sits inside another template's OWN
+body as `{{DropsTableHead|dropversion={{{dropversion|}}}|...}}`
+(`CatacombsDropTable`/`WildernessSlayerDropTable`/
+`WildernessSlayerCaveDropTable`, confirmed by reading all three): the
+caller's own `dropversion=` argument never got substituted into the
+placeholder, so `wikitext-drops.ts`'s `currentVariant` read the
+un-substituted text off the call instead of the real value.
+
+**Actual severity, checked per source, lower than first feared**: `variant`
+conditions use exact string equality (`ctx.variant === condition.name`,
+`conditions.ts`). For a source whose ONLY dropversion-tagged heading uses
+this broken template shape, `variants` ends up `['{{{dropversion|}}}']` and
+`contextDefaults.variant` gets the SAME broken string (assemble-boss.ts's
+first-seen-value default) — garbage matching garbage, self-consistent, no
+observable output difference (confirmed on Callisto/Chaos Fanatic/etc. via
+`git diff`: every one of the 9 was this single-variant shape). Only a
+MULTIPLE-dropversion source (Black demon: `Regular` resolved correctly at
+its OWN call site, `Catacombs of Kourend`/`Wilderness Slayer Cave` did not,
+since those came from the SAME broken nested-template path) would have shown
+a real, wrong default. None of the 9 affected `verified` sources are that
+shape — still worth fixing regardless, since a future dropversion-splitting
+source would have silently repeated it, and the variant dropdown showed
+literal garbage text either way.
+
+**Fixed generically**: added a `HEADER_TEMPLATES` set (currently just
+`dropstablehead`) in `expand-transclusions.ts`, handled identically to
+`TERMINAL_TEMPLATES` (expand arguments, keep the call) but kept separate
+since it isn't a row. `wikitext-drops.ts`'s `currentVariant` assignment
+changed from `params.get('dropversion') ?? currentVariant` to only
+overwrite on a truthy value — the fix now correctly resolves a caller's
+OMITTED `dropversion=` to `''` (MediaWiki's own empty-default semantics for
+`{{{dropversion|}}}`), which is "no value", not "the value is empty string";
+the old `??` treated `''` as a real update and broke 4 further sources
+(`Scorpia`/`Spindel`/`Venenatis`/`Vet'ion`, whose own `WildernessSlayerDropTable`
+calls omit `dropversion=` entirely) into `parse_failed` on the first
+re-parse (`ConditionSchema`'s `name: z.string().min(1)` correctly rejecting
+the now-correctly-empty string) before this second fix.
+
+Full corpus re-parse: exactly the 12 predicted sources changed
+(11 dropversion-affected + Sarachnis, see below) — `git diff --stat
+data/bosses/` confirmed, `parse_failed` count back to the pre-existing
+3-source floor (`Burnt chest`/`Revenant maledictus`/`Sigmund`, the
+README's own "no document" trio).
+
+## Sarachnis "Seeds" resolved for free — a third missing template snapshot, same shape as the Gap-1 fetches
+
+Same session, same audit. Sarachnis' "Seeds" heading was flagged
+`needs_review`/`unknown_scaling` (ambiguous-heading guess) purely because
+`Template:RareSeedDropTableInfo` had never been fetched into
+`data/snapshots/wikitext/` — its rendered text is "There is a {{{1}}} chance
+of rolling the [[rare seed drop table]]", the exact phrase
+`findConfirmingSignal` already recognises (added for
+`TreeHerbSeedDropTableInfo` in the "Gap 1" entry above). Fetched it (one
+`action=parse&prop=wikitext` call, written via the same `writeSnapshot`
+mechanism every other `template-*.json` uses — no ad-hoc format), re-ran
+`ingest parse --source sarachnis`: straight to `verified`, zero data
+changes. `data/overrides/` was never touched for this one.
+
+Also fetched, same session, for Black demon's `drops_covered` gap (28 of 97
+rows missing, all traced to unfetched template snapshots, none a parser
+bug): `Template:WildernessSlayerCaveDropTable`, `Template:HerbDropTableInfo`,
+`Template:HerbDropLines` — took it from 28 missing rows to 2. The remaining
+2 (`Ancient shard`, `Slayer's enchantment`) come from formulas this
+project's offline expander cannot evaluate at all — `{{#iferror:...}}`
+(unsupported parser function) and `{{min|{{{hitpoints}}}|300}}` (`Template:
+Min` delegates to `{{#invoke:MinMax|min}}`, a Lua module) — computed by hand
+from the same formulas the OTHER rows in each table already correctly
+resolve against, shipped as `data/overrides/black-demon.json`. Result:
+`manual_override`, all checks pass.
+
+A small reusable tool came out of this: `apps/ingest/scripts/
+fetch-template.ts`, a `tsx`-run one-off that calls `WikiClient.wikitext()` +
+`writeSnapshot('wikitext', slugify(title), record)` for one or more
+`Template:` titles — the exact mechanism prior sessions used ad hoc for the
+existing `template-*.json` snapshots, now a committed, reusable command
+(`npx tsx scripts/fetch-template.ts "Template:Foo" "Template:Bar"`) instead
+of a throwaway script each time. `data/snapshots/` stays gitignored — this
+only ever touches the regenerable cache.
+
+## Four more headings resolved: Chaos Elemental's real parser bug, three confirming/correcting overrides
+
+Same audit, continued. Chaos Elemental's "Major drops" flag was NOT an
+ambiguous-heading guess like the others — a genuine parser bug. Its whole
+drop table sits under one `===Major drops===` heading (level 3) with EVERY
+real sub-table (Pre-roll, Weapons and armour, Runes and ammunition, Herbs,
+Resources, Materials, Rare drop table, Tertiary, Wilderness Slayer tertiary)
+nested one level deeper as `====` headings. `splitIntoBlocks` groups only at
+a section's shallowest heading level — correct for Barrows' per-brother
+groups and Monumental chest's Normal/Hard mode variants (both real mode
+splits inside one real table), wrong here because "Major drops" isn't a
+real table at all, just organisational chrome: its only level-3 sibling is
+"Minor drops" (parsed correctly, alone). Deliberately NOT touched
+`splitIntoBlocks` itself — the general "which deeper headings are real
+table boundaries vs. mode variants" question has no purely structural
+answer (heading depth alone can't distinguish them) and this is the only
+confirmed instance of the shape in the corpus; a per-boss override is the
+established, lower-risk tool for a page whose structure genuinely doesn't
+fit the canonical model (same precedent as Fortis Colosseum's Wave
+headings). Hand-split via `data/overrides/chaos-elemental.json`, verified
+by reconciliation rather than assumed: Weapons/Runes/Herbs/Resources/
+Materials' 31 rows sum to EXACTLY 120, and 120 + the already-separately-
+modelled RDT access roll (8/128, unaffected by this bug — extracted by a
+page-wide pass independent of heading grouping) = 128, the full declared
+denominator with zero slack — proof these five headings share one roll and
+that Tertiary's `Weapon poison(++)` (also written as `X/128` but NOT part
+of the 120, confirmed by the same exact reconciliation only working with it
+excluded) is its own independent roll, not an eleventh row in the shared
+pool. `manual_override`, all checks pass.
+
+Zulrah's "Mutagens" and Vorkath's "Seeds" both got CONFIRMING (not
+correcting) overrides — the parser's existing guess/fallback was already
+right, they just needed a human sign-off on record to clear the ambiguous-
+heading gate, the same treatment Alchemical Hydra's "Herbs" heading got
+last session. Zulrah: the wiki's own footnotes state each row's displayed
+rarity is already the item's fully-resolved final per-roll probability
+("the exact rarity is 10/249 * 5244/5264 per roll"), so sequential
+first-hit-wins `preroll` at each row's own rate was already correct.
+Vorkath: already shipped as `approximate` (independent rolls, preserving
+each row's own inflated rate) with a documented, checked residual — the
+page's own footnote for why Torstol/Snapdragon seed run ~1.6665x hot
+("rolled on both the main loot table as well as the tree-herb seed drop
+table") could not be independently verified against a separate main-table
+row (searched the full current page text; neither item name appears
+outside the one formula), so the existing approximation was confirmed and
+documented rather than guessed into something more precise.
+
+The Nightmare's "Uniques" got a real correction, twice — the first attempt
+was wrong, caught by this project's own `marginal-rates.test.ts` before it
+shipped. The page describes two INDEPENDENT access rolls (armour/mace/staff
+at a stated 1/83.33, orbs at a stated 1/320, "both table rolls can be
+successful with each kill") — not one 8-item preroll chain across both
+pools, the parser's default guess. First attempt modelled each pool as a
+`oneOf` rescaled to its DECLARED summary access rate; `marginal-rates.test.ts`
+(which composes the model and cross-checks against the wiki's own rendered
+dropsline BUCKET, independent of the wikitext an override is built from)
+caught that this put every armour/mace/staff item's composed probability
+~1.6% above its bucket-confirmed individual rate — the prose's rounded
+"1/83.33" summary is not more authoritative than the wiki's own
+individually-published, bucket-confirmed per-item figures (staff 1/300,
+each helm/hauberk/plateskirt 1/420, mace 1/750). Corrected to keep every
+item at its own published rate, just split into the two independent tables
+the page actually describes. Landed at `needs_review`/`approximate`
+(added to `data/mechanics-watchlist.json`) rather than `manual_override`,
+by design — the page's party-size-scaled SECOND roll of both tables
+("`(partySize-5)%`, clamped 0-75%") needs a `partySize` `SimContext` field
+and formula this project doesn't have yet: a real, buildable feature, not
+an unstated number, out of scope for a data-only fix. Bounded and named,
+not guessed: solo/small-team play (party size <= 5) is completely
+unaffected; even at the stated maximum the true combined rates are at most
+~1.75x what's modelled.
+
+Phosani's Nightmare's `weights_sum` failure (25 rows sum to 101 against a
+denominator every row cites as `/100`) turned out to already be root-caused
+by a prior session (this doc's "root-caused — not the same defect" entry,
+above) and left deliberately unfixed pending exactly this: no bundle
+citation anywhere on the page, so the overflow isn't the co-drop-bundle
+defect (unlike `maggot-king`'s superficially similar overflow, which IS
+that defect and is already fully explained, just not built yet); it's the
+wiki's own published integer weights not summing to their own stated total,
+with no signal anywhere on the page for which single row is "wrong."
+Shipped as `data/overrides/phosani-s-nightmare.json`, denominator 101
+instead of 100 — every row's weight kept exactly as published, the
+reconciled total corrected to match what the rows actually sum to rather
+than a literal transcription of the heading's own (evidently off-by-one)
+`/100` label, the same principle this corpus already uses for every other
+weighted table's denominator. `marginal-rates.test.ts`'s `DOES_NOT_COMPILE`
+list and `AUTHORED` map updated accordingly — it compiles now, so it moved
+from the former to the latter, with the same evenly-spread-~1% reasoning
+already accepted for Black Knight Titan/Obor's `floor()`-rounding overshoot.
+
+**Left deliberately untouched, and why**: `kalphite-queen` (Kq head
+(tattered), a guaranteed-exactly-on-kill-256 mechanic — an architecture gap,
+not a data gap, and literally the tier.ts's own canonical `minor_gaps`
+example) and `mad-angel` (missing hard clue — the wiki's own table lagging
+a documented patch note that already swapped it for a medium clue, the
+OTHER canonical `minor_gaps` example) are the tier's own reference cases,
+not bugs. `nex` (21 of 33 rows, cited BY NAME in `tier.ts`'s own
+`MINOR_GAP_RATIO` comment) has no exact rates anywhere on the wiki at all —
+most rows are qualitative "Common"/"Uncommon" tiers, Jagex never published
+exact numbers. `ancient-chest`/`chest-tombs-of-amascut`/`monumental-chest`/
+`reward-cart`/`reward-pool`/`rewards-chest-fortis-colosseum`/`zalcano` are
+already extensively researched, already override-shipped, and already
+`needs_review`/`approximate`-or-`unknown_scaling` BY DESIGN — the watchlist
+mechanism (`not_on_watchlist`) forces `needs_review` for a listed source
+regardless of override quality, on purpose (`data/mechanics-watchlist.json`'s
+own header note), so this is not a lesser or broken state. `duke-sucellus`
+needs a sequential roll-chain formula (fully stated in page prose, not
+missing information) — real engineering, not a data-only fix; not
+attempted without a scope decision. `maggot-king` (a July 2026 boss) has a
+genuine player-choice mechanic (Open-stomach vs. Take-eggs, needing its own
+dropversion split), a bundle (Stymphike tartare/Dull ancient medal, already
+root-caused above, precedented fix available), AND one genuinely-unstated
+number (the Nothing-vs-supply-drop split of the Take-eggs branch's
+remaining probability) — big enough for its own dedicated session, flagged
+rather than rushed.
+
+Verification: `pnpm -r typecheck && pnpm -r test && pnpm lint` clean (878
+tests) after every change in this and the two entries above, full corpus
+re-parse + `item-icons` + `site-index` regenerated once after the
+`dropversion` fix, then per-source re-parses after each subsequent override.
+Final count: 73 `verified`, 15 `manual_override`, 13 `needs_review` (was 72/
+10/19 at the start of this session).
+

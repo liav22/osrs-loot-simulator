@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T18:31:12.752Z",
+  "generatedAt": "2026-08-23T20:07:42.170Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -88,8 +88,8 @@
       "slug": "black-demon",
       "name": "Black demon",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "Black demon.png",
       "repeatable": true
     },
@@ -169,8 +169,8 @@
       "slug": "chaos-elemental",
       "name": "Chaos Elemental",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "Chaos Elemental.png",
       "repeatable": true
     },
@@ -641,8 +641,8 @@
       "slug": "phosani-s-nightmare",
       "name": "Phosani's Nightmare",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "minor_gaps",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "The Nightmare.png",
       "repeatable": true
     },
@@ -702,8 +702,8 @@
       "slug": "sarachnis",
       "name": "Sarachnis",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "status": "verified",
+      "statusTier": "verified",
       "image": "Sarachnis.png",
       "repeatable": true
     },
@@ -811,7 +811,7 @@
       "name": "The Nightmare",
       "aliases": [],
       "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "statusTier": "approximate",
       "image": "The Nightmare.png",
       "repeatable": true
     },
@@ -891,8 +891,8 @@
       "slug": "vorkath",
       "name": "Vorkath",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "approximate",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "Vorkath.png",
       "repeatable": true
     },
@@ -918,8 +918,8 @@
       "slug": "zulrah",
       "name": "Zulrah",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "Zulrah (serpentine).png",
       "repeatable": true
     }

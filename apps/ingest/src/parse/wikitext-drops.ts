@@ -492,7 +492,18 @@ function extractLinesFromSection(content: string, sectionTag: string): WikitextD
       const { params } = parseTemplateCall(call)
 
       if (templateName === 'DropsTableHead') {
-        currentVariant = params.get('dropversion') ?? currentVariant
+        // An empty string is not "no value supplied" here the way `?? ` would
+        // treat it: `expand-transclusions.ts`'s `HEADER_TEMPLATES` handling
+        // now substitutes a template-internal `{{DropsTableHead|dropversion=
+        // {{{dropversion|}}}|...}}` call's placeholder correctly, and its
+        // caller omitting `dropversion=` entirely resolves the empty default
+        // rather than leaving the placeholder text behind — so a genuinely
+        // absent value arrives here as `''`, not `undefined`, and must be
+        // ignored the same way absence always was (Scorpia/Spindel/
+        // Venenatis/Vet'ion's own `WildernessSlayerDropTable` calls, none of
+        // which pass `dropversion=` at all).
+        const dropversion = params.get('dropversion')
+        if (dropversion) currentVariant = dropversion
         continue
       }
 

@@ -1,12 +1,6 @@
 {
   "slug": "zulrah",
-  "name": "Zulrah",
-  "aliases": [],
-  "wikiPage": "Zulrah",
-  "wikiRevId": 15285439,
-  "variants": [
-    "normal"
-  ],
+  "note": "Confirms the parser's ambiguous-heading guess on the \"Mutagens\" heading (revid 15285439): its 3 rows (Flax 10/249, Tanzanite mutagen 1/13107, Magma mutagen 1/13107) sit at heterogeneous denominators and carry no Pre-roll/Tertiary/Secondary keyword, so build-tables.ts's final fallback flagged it needs_review and defaulted to a preroll guess. Checked directly against https://oldschool.runescape.wiki/w/Zulrah: the section's own prose describes a genuine two-stage nested gate -- \"There is a 10/249 chance to roll on the flax table, followed by a 10/2,632 chance to roll on the mutagen sub-table\" -- i.e. a mutagen REPLACES flax's own outcome on a tiny slice of the SAME roll, not a separate access roll with its own total to partition (unlike this boss's own herb/seed-style tables elsewhere in the corpus, there is no single stated total these three rows sum to). The wiki's own footnotes confirm each row's displayed rarity (10/249, 1/13107, 1/13107) is already the item's fully-resolved, final per-roll probability -- \"the exact rarity is 10/249 * 5244/5264 per roll\" for Flax and \"10/249 * 10/5264 per roll\" for each mutagen -- so this is exactly what `preroll` mode already computes: sequential trials at each row's own independent stated rate, first hit wins, same shape as this boss's own already-shipped Weapons/Runes/etc. tables and identical in kind to e.g. Alchemical Hydra's unique preroll table (data/bosses/alchemical-hydra.json's \"pre-roll\" heading). The guess was correct; this override changes nothing structurally and exists only to move the heading off the ambiguous-guess gate with a human confirmation on record. Every table is otherwise identical to the generated document.",
   "tables": [
     {
       "id": "zulrah:0:100",
@@ -896,59 +890,5 @@
       ],
       "notes": "Access into rare_drop_table (from {{RareDropTable}})"
     }
-  ],
-  "contextDefaults": {},
-  "status": "manual_override",
-  "statusTier": null,
-  "statusReason": null,
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "4 tableRef node(s) resolved against 24 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 71 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

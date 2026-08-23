@@ -1,12 +1,6 @@
 {
   "slug": "vorkath",
-  "name": "Vorkath",
-  "aliases": [],
-  "wikiPage": "Vorkath",
-  "wikiRevId": 15283387,
-  "variants": [
-    "Post-quest"
-  ],
+  "note": "Confirms and documents the parser's existing approximate model on the \"Seeds\" heading (revid 15283387), rather than changing it: its 17 rows come from {{TreeHerbSeedDropLines|3/150|...}}, but two of them (Torstol seed, Snapdragon seed) are passed custom `TorstolSeedRarity`/`SnapdragonSeedRarity` override params computing 1/(1/150 + 3/150*mult/250) instead of the template's own standard 1/(mult*rsdtbase) formula every other row (and every other TreeHerbSeedDropLines-using boss in this corpus) uses -- i.e. these two rows' displayed rate is a SUM of the normal tree-herb-seed-table share (3/150*mult/250) plus an extra 1/150 term, per the page's own footnote: \"This item is rolled on both the main loot table as well as the tree-herb seed drop table. The effective chance is written here.\" That is why the 17 rows sum to 1.6665x the declared 3/150 access rate instead of partitioning it cleanly, and it is a real, wiki-confirmed mechanic, not a wiki-side arithmetic slip (contrast Phosani's Nightmare's 101/100, which is). Checked directly against https://oldschool.runescape.wiki/w/Vorkath for the \"main loot table\" row the footnote refers to: no separate \"Torstol seed\"/\"Snapdragon seed\" DropsLine exists anywhere else on the current page (searched the full page text; both names appear nowhere outside this one template call), so the 1/150 term's own source cannot be independently verified or re-derived as a standalone row today -- it may be a stale cross-reference to a since-removed main-table line, or the current page may simply no longer show that half of the mechanic separately. Given that, the already-shipped model is kept: all 17 rows as independent per-kill rolls, at the wiki's own already-combined per-row figures (torstol/snapdragon's rates already fold in the extra 1/150, whatever its true source). What is NOT modelled, named rather than guessed: the single-access-roll mutual exclusivity among the 15 ordinary tree-herb-seed rows (independent rolls can, in principle, yield two different seed types on rolls where a true partition could only ever yield one) -- a small, bounded overstatement of getting multiple distinct seeds together, the same shape of residual already accepted for e.g. Fortis Colosseum's with-replacement armour approximation. Every table is unchanged from the generated document.",
   "tables": [
     {
       "id": "vorkath:0:100",
@@ -1053,7 +1047,7 @@
           ]
         }
       ],
-      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to 1.6665x its stated access rate 3/150 — so they are NOT a clean partition of that roll and something on the page overrides them)"
+      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to 1.6665x its stated access rate 3/150 \u2014 so they are NOT a clean partition of that roll and something on the page overrides them)"
     },
     {
       "id": "vorkath:4:shark-drop-table",
@@ -1585,61 +1579,5 @@
       ],
       "notes": "Access into rare_drop_table (from {{RareDropTable}})"
     }
-  ],
-  "contextDefaults": {
-    "variant": "Post-quest"
-  },
-  "status": "manual_override",
-  "statusTier": null,
-  "statusReason": null,
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "4 tableRef node(s) resolved against 24 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 83 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

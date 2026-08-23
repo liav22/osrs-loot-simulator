@@ -1,12 +1,6 @@
 {
   "slug": "the-nightmare",
-  "name": "The Nightmare",
-  "aliases": [],
-  "wikiPage": "The Nightmare",
-  "wikiRevId": 15264614,
-  "variants": [
-    "normal"
-  ],
+  "note": "Corrects the parser's ambiguous-heading guess on the \"Uniques\" heading (revid 15264614) and models the two pools the page describes, as far as they're expressible today. Page prose: \"With each kill, The Nightmare has a chance to roll two unique drop tables, one containing the armour, mace, and staff, and one containing the orbs; both table rolls can be successful with each kill.\" So this is two INDEPENDENT tables (either, both, or neither can hit on one kill) -- not one 8-way preroll chain across all 8 items, which is what build-tables.ts's final fallback defaulted to (heterogeneous denominators, heading not named Pre-roll/Tertiary/Secondary). Each of the 8 items keeps its own individually-published rate exactly as stated (staff 1/300, great helm/hauberk/plateskirt 1/420 each, mace 1/750, each orb 1/960) -- checked against this project's own marginal-rates.test.ts (which composes the model and compares against the wiki's rendered dropsline bucket, independent of the wikitext this override was built from): an earlier version of this override instead rescaled each pool to its DECLARED summary access rate (\"the armour, mace, and staff drop table has a 1/83.33 chance to roll\", \"the orb drop table has a 1/320 chance to roll\") via a `oneOf`, which composes each armour/mace/staff item's own probability ~1.6% above its bucket-confirmed figure -- the prose's rounded summary is not more authoritative than the wiki's own individually-published, bucket-confirmed per-item rates, so this version keeps those instead. The only structural difference from the previous (buggy) flat guess is which table each item sits in, and that it is no longer modelled as one mutually-exclusive preroll chain across both pools together -- both pools can now hit on the same kill, matching \"both table rolls can be successful with each kill.\" NOT modelled here, and why this source stays on the mechanics watchlist at 'approximate': the page's separate party-size-scaled SECOND roll of both tables (\"a chance that both are rolled a second time..., this chance being (partySize-5)%, clamped between 0 and 75 percent\") needs a `partySize` SimContext field and formula this project does not have yet -- a real, buildable feature, not an unstated number, but out of scope for a data-only fix. The residual is quantified and bounded: solo and small-team play (party size <= 5) is completely unaffected (the bonus roll's own chance is 0%), and even at the stated maximum (80-player parties, 75%) both pools' true combined rates are at most ~1.75x what is modelled here.",
   "tables": [
     {
       "id": "the-nightmare:0:100",
@@ -715,60 +709,5 @@
       ],
       "notes": "Tertiary"
     }
-  ],
-  "contextDefaults": {},
-  "status": "needs_review",
-  "statusTier": "approximate",
-  "statusReason": "The armour/mace/staff pool and orb pool are both modelled in data/overrides/the-nightmare.json, each item kept at its own individually-published, bucket-confirmed rate (not rescaled to the page's rounded 1/83.33 and 1/320 summary figures). NOT modelled: a party-size-scaled SECOND roll of both pools, stated exactly on the page (\"there is a chance that both are rolled a second time..., this chance being (partySize-5)%, clamped between 0 and 75 percent\") but needing a new partySize SimContext field and formula this project does not have yet -- a real, buildable feature, not an unstated number. Bounded: solo/small-team play (party size <= 5) is completely unaffected; even at the stated maximum (80-player parties, 75%) both pools' true combined rates are at most ~1.75x what is modelled.",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "no tableRef nodes"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "other: The armour/mace/staff pool and orb pool are both modelled in data/overrides/the-nightmare.json, each item kept at its own individually-published, bucket-confirmed rate (not rescaled to the page's rounded 1/83.33 and 1/320 summary figures). NOT modelled: a party-size-scaled SECOND roll of both pools, stated exactly on the page (\"there is a chance that both are rolled a second time..., this chance being (partySize-5)%, clamped between 0 and 75 percent\") but needing a new partySize SimContext field and formula this project does not have yet -- a real, buildable feature, not an unstated number. Bounded: solo/small-team play (party size <= 5) is completely unaffected; even at the stated maximum (80-player parties, 75%) both pools' true combined rates are at most ~1.75x what is modelled."
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 38 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

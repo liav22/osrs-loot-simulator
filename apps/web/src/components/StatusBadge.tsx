@@ -17,7 +17,7 @@ const STYLES: Record<BadgeKind, string> = {
   approximate: 'bg-amber-500/15 text-amber-400 ring-amber-500/30',
   unknown_scaling: 'bg-red-500/15 text-red-400 ring-red-500/30',
   manual_override: 'bg-sky-500/15 text-sky-300 ring-sky-500/30',
-  needs_review: 'bg-amber-500/15 text-amber-400 ring-amber-500/30',
+  needs_review: 'bg-neutral-500/15 text-neutral-400 ring-neutral-500/30',
 }
 
 const LABELS: Record<BadgeKind, string> = {

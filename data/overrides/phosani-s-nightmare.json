@@ -1,15 +1,9 @@
 {
-  "slug": "the-nightmare",
-  "name": "The Nightmare",
-  "aliases": [],
-  "wikiPage": "The Nightmare",
-  "wikiRevId": 15264614,
-  "variants": [
-    "normal"
-  ],
+  "slug": "phosani-s-nightmare",
+  "note": "Corrects a weights_sum failure caused by the wiki's own numbers, not a parser error (revid 15273922): the merged \"Runes and ammunition\"/\"Resources\"/\"Consumables\"/\"Coins\" heading's 25 rows are each individually written as a plain integer over a stated /100 (Cosmic rune 4/100 ... Coins 2/100), but the 25 numerators sum to 101, not 100 -- verified against the raw wikitext directly, transcribed verbatim, no row altered. There is no footnote, correction, or indication anywhere on the page of which single row's stated weight is the odd one out, so docking an arbitrary item by 1 to force a clean 100 would be a guess this project's own discipline rejects (see docs/DECISIONS.md's repeated refusals to invent a number the wiki doesn't state). Modelled instead as denominator 101 -- every row's own stated weight is kept EXACTLY as published, unchanged relative to every other row, and the reconciled total simply matches what the 25 rows actually sum to rather than the page's (evidently off-by-one) /100 label. This is the same principle already used throughout the corpus for a weighted table's denominator (the reconciled row total, not a literal transcription of the heading's own '/N' text) and is a roughly 1% correction, well inside the tolerance already accepted elsewhere for small wiki-side arithmetic slips (see Vorkath's accepted 1.6665x Seeds overshoot on the ambiguous-heading gate; this is the weights_sum analogue of the same kind of imprecision). Every other table is unchanged from the generated document.",
   "tables": [
     {
-      "id": "the-nightmare:0:100",
+      "id": "phosani-s-nightmare:0:100",
       "mode": "always",
       "rolls": 1,
       "withoutReplacement": false,
@@ -28,29 +22,15 @@
           "rate": {
             "kind": "always"
           }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 526,
-            "itemKey": "bones",
-            "name": "Bones",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "always"
-          }
         }
       ],
       "notes": "100%"
     },
     {
-      "id": "the-nightmare:1:armour-mace-and-staff",
-      "mode": "independent",
+      "id": "phosani-s-nightmare:1:uniques",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 280000,
       "withoutReplacement": false,
       "entries": [
         {
@@ -66,9 +46,8 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 300
+            "kind": "weight",
+            "weight": 552
           }
         },
         {
@@ -84,9 +63,8 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 420
+            "kind": "weight",
+            "weight": 400
           }
         },
         {
@@ -102,9 +80,8 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 420
+            "kind": "weight",
+            "weight": 400
           }
         },
         {
@@ -120,9 +97,8 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 420
+            "kind": "weight",
+            "weight": 400
           }
         },
         {
@@ -138,20 +114,10 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 750
+            "kind": "weight",
+            "weight": 248
           }
-        }
-      ],
-      "notes": "Armour, mace, and staff drop table"
-    },
-    {
-      "id": "the-nightmare:2:orbs",
-      "mode": "independent",
-      "rolls": 1,
-      "withoutReplacement": false,
-      "entries": [
+        },
         {
           "node": {
             "kind": "item",
@@ -165,9 +131,8 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 960
+            "kind": "weight",
+            "weight": 175
           }
         },
         {
@@ -183,9 +148,8 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 960
+            "kind": "weight",
+            "weight": 175
           }
         },
         {
@@ -201,19 +165,18 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 960
+            "kind": "weight",
+            "weight": 175
           }
         }
       ],
-      "notes": "Orb drop table"
+      "notes": "Uniques"
     },
     {
-      "id": "the-nightmare:2:runes-and-ammunition-resources-consumables-coins",
+      "id": "phosani-s-nightmare:2:runes-and-ammunition-resources-consumables-coins",
       "mode": "weighted",
       "rolls": 1,
-      "denominator": 100,
+      "denominator": 101,
       "withoutReplacement": false,
       "entries": [
         {
@@ -224,8 +187,8 @@
             "name": "Cosmic rune",
             "qty": {
               "kind": "range",
-              "min": 11,
-              "max": 242
+              "min": 247,
+              "max": 420
             }
           },
           "rate": {
@@ -241,8 +204,8 @@
             "name": "Nature rune",
             "qty": {
               "kind": "range",
-              "min": 8,
-              "max": 176
+              "min": 165,
+              "max": 305
             }
           },
           "rate": {
@@ -258,8 +221,8 @@
             "name": "Death rune",
             "qty": {
               "kind": "range",
-              "min": 7,
-              "max": 176
+              "min": 165,
+              "max": 305
             }
           },
           "rate": {
@@ -275,8 +238,8 @@
             "name": "Blood rune",
             "qty": {
               "kind": "range",
-              "min": 16,
-              "max": 440
+              "min": 343,
+              "max": 765
             }
           },
           "rate": {
@@ -292,8 +255,8 @@
             "name": "Soul rune",
             "qty": {
               "kind": "range",
-              "min": 8,
-              "max": 132
+              "min": 110,
+              "max": 228
             }
           },
           "rate": {
@@ -309,8 +272,8 @@
             "name": "Steel cannonball",
             "qty": {
               "kind": "range",
-              "min": 6,
-              "max": 220
+              "min": 137,
+              "max": 382
             }
           },
           "rate": {
@@ -326,8 +289,8 @@
             "name": "Rune arrow",
             "qty": {
               "kind": "range",
-              "min": 31,
-              "max": 547
+              "min": 412,
+              "max": 957
             }
           },
           "rate": {
@@ -343,14 +306,14 @@
             "name": "Mithril ore",
             "qty": {
               "kind": "range",
-              "min": 11,
-              "max": 176
+              "min": 165,
+              "max": 305
             },
             "noted": true
           },
           "rate": {
             "kind": "weight",
-            "weight": 4
+            "weight": 5
           }
         },
         {
@@ -361,8 +324,8 @@
             "name": "Coal",
             "qty": {
               "kind": "range",
-              "min": 15,
-              "max": 264
+              "min": 220,
+              "max": 458
             },
             "noted": true
           },
@@ -379,8 +342,8 @@
             "name": "Gold ore",
             "qty": {
               "kind": "range",
-              "min": 9,
-              "max": 176
+              "min": 165,
+              "max": 305
             },
             "noted": true
           },
@@ -415,8 +378,8 @@
             "name": "Magic logs",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 55
+              "min": 40,
+              "max": 95
             },
             "noted": true
           },
@@ -433,8 +396,8 @@
             "name": "Grimy cadantine",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 16
+              "min": 13,
+              "max": 26
             },
             "noted": true
           },
@@ -451,8 +414,8 @@
             "name": "Grimy torstol",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 16
+              "min": 13,
+              "max": 26
             },
             "noted": true
           },
@@ -469,8 +432,8 @@
             "name": "Snapdragon seed",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 7
+              "min": 5,
+              "max": 10
             }
           },
           "rate": {
@@ -486,8 +449,8 @@
             "name": "Uncut emerald",
             "qty": {
               "kind": "range",
-              "min": 2,
-              "max": 44
+              "min": 33,
+              "max": 75
             },
             "noted": true
           },
@@ -522,8 +485,8 @@
             "name": "Runite ore",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 16
+              "min": 11,
+              "max": 26
             },
             "noted": true
           },
@@ -540,8 +503,8 @@
             "name": "Bass",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 18
+              "min": 16,
+              "max": 29
             }
           },
           "rate": {
@@ -557,8 +520,8 @@
             "name": "Shark",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 16
+              "min": 13,
+              "max": 26
             }
           },
           "rate": {
@@ -574,8 +537,8 @@
             "name": "Prayer potion(3)",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 10
+              "min": 8,
+              "max": 15
             }
           },
           "rate": {
@@ -591,8 +554,8 @@
             "name": "Sanfew serum(3)",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 8
+              "min": 6,
+              "max": 12
             }
           },
           "rate": {
@@ -608,8 +571,8 @@
             "name": "Saradomin brew(3)",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 10
+              "min": 8,
+              "max": 15
             }
           },
           "rate": {
@@ -625,8 +588,8 @@
             "name": "Zamorak brew(3)",
             "qty": {
               "kind": "range",
-              "min": 1,
-              "max": 10
+              "min": 8,
+              "max": 15
             }
           },
           "rate": {
@@ -642,8 +605,8 @@
             "name": "Coins",
             "qty": {
               "kind": "range",
-              "min": 2291,
-              "max": 43958
+              "min": 41417,
+              "max": 74500
             }
           },
           "rate": {
@@ -655,7 +618,7 @@
       "notes": "Runes and ammunition / Resources / Consumables / Coins"
     },
     {
-      "id": "the-nightmare:3:tertiary",
+      "id": "phosani-s-nightmare:3:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -674,7 +637,41 @@
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 190
+            "den": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25837,
+            "itemKey": "slepey-tablet",
+            "name": "Slepey tablet",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 25
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25838,
+            "itemKey": "parasitic-egg",
+            "name": "Parasitic egg",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 200
           }
         },
         {
@@ -682,7 +679,7 @@
             "kind": "item",
             "itemId": 24491,
             "itemKey": "little-nightmare",
-            "name": "Little nightmare",
+            "name": "Little Nightmare",
             "qty": {
               "kind": "exact",
               "n": 1
@@ -692,7 +689,7 @@
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 800
+            "den": 1400
           }
         },
         {
@@ -709,66 +706,11 @@
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 1900
+            "den": 4000
           }
         }
       ],
       "notes": "Tertiary"
     }
-  ],
-  "contextDefaults": {},
-  "status": "needs_review",
-  "statusTier": "approximate",
-  "statusReason": "The armour/mace/staff pool and orb pool are both modelled in data/overrides/the-nightmare.json, each item kept at its own individually-published, bucket-confirmed rate (not rescaled to the page's rounded 1/83.33 and 1/320 summary figures). NOT modelled: a party-size-scaled SECOND roll of both pools, stated exactly on the page (\"there is a chance that both are rolled a second time..., this chance being (partySize-5)%, clamped between 0 and 75 percent\") but needing a new partySize SimContext field and formula this project does not have yet -- a real, buildable feature, not an unstated number. Bounded: solo/small-team play (party size <= 5) is completely unaffected; even at the stated maximum (80-player parties, 75%) both pools' true combined rates are at most ~1.75x what is modelled.",
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "no tableRef nodes"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": false,
-        "detail": "other: The armour/mace/staff pool and orb pool are both modelled in data/overrides/the-nightmare.json, each item kept at its own individually-published, bucket-confirmed rate (not rescaled to the page's rounded 1/83.33 and 1/320 summary figures). NOT modelled: a party-size-scaled SECOND roll of both pools, stated exactly on the page (\"there is a chance that both are rolled a second time..., this chance being (partySize-5)%, clamped between 0 and 75 percent\") but needing a new partySize SimContext field and formula this project does not have yet -- a real, buildable feature, not an unstated number. Bounded: solo/small-team play (party size <= 5) is completely unaffected; even at the stated maximum (80-player parties, 75%) both pools' true combined rates are at most ~1.75x what is modelled."
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 38 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

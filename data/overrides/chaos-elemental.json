@@ -1,12 +1,6 @@
 {
   "slug": "chaos-elemental",
-  "name": "Chaos Elemental",
-  "aliases": [],
-  "wikiPage": "Chaos Elemental",
-  "wikiRevId": 15260583,
-  "variants": [
-    "normal"
-  ],
+  "note": "Corrects a parser bug (not a per-boss ambiguity guess), found while fixing this and other needs_review sources: the page's whole drop table sits under one level-3 heading, \"===Major drops===\" (revid 15260583), with EVERY real sub-table (Pre-roll, Weapons and armour, Runes and ammunition, Herbs, Resources, Materials, Rare drop table, Tertiary, Wilderness Slayer tertiary) nested one level deeper as level-4 headings. `splitIntoBlocks` (wikitext-drops.ts) groups only at a section's SHALLOWEST heading level -- correct for Barrows' per-brother groups and Monumental chest's Normal/Hard mode variants nested inside one real table, wrong here because \"Major drops\" is not a real table at all, just organisational chrome: its only sibling at level 3 is \"Minor drops\" (which parsed correctly, on its own), so every genuinely different mechanic underneath it collapsed into one 39-entry blob guessed as a single `preroll` chain. Checked directly against https://oldschool.runescape.wiki/w/Chaos_Elemental and the page's own wikitext (`{{DropsLine|...}}` rows read verbatim, no figure altered) to split it correctly: Pre-roll (Dragon pickaxe 1/256) is unchanged; Weapons and armour/Runes and ammunition/Herbs/Resources/Materials (31 rows) reconcile EXACTLY to one shared weighted pool at denominator 128 with the access-into-`rare_drop_table` roll (8/128, already correctly modelled separately as `chaos-elemental:rdt-access:0` by the page-wide RDT pass, which runs independently of this heading bug) accounting for the remaining 8 -- 120 + 8 = 128 exactly, zero slack, confirming these five headings share one roll and Rare drop table is not an eleventh row inside it. Tertiary's five rows (Weapon poison(++), Looting bag, Brimstone key, Clue scroll (elite), Pet Chaos Elemental) keep their own independent rates -- Weapon poison(++) is written as `10/128` only for readability against the main pool's familiar scale (confirmed by the exact 120+8=128 reconciliation above, which only works if it is excluded); folding it into the shared pool would overshoot to 130/128, an impossible single-roll probability. Wilderness Slayer tertiary (Larran's key, Slayer's enchantment) is unchanged, already correctly independent. Minor drops and the rdt-access table are untouched.",
   "tables": [
     {
       "id": "chaos-elemental:0:minor-drops",
@@ -812,59 +806,5 @@
       ],
       "notes": "Access into rare_drop_table (from {{RareDropTable}})"
     }
-  ],
-  "contextDefaults": {},
-  "status": "manual_override",
-  "statusTier": null,
-  "statusReason": null,
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "4 tableRef node(s) resolved against 24 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 62 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

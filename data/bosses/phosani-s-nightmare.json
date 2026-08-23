@@ -182,7 +182,7 @@
       "id": "phosani-s-nightmare:2:runes-and-ammunition-resources-consumables-coins",
       "mode": "weighted",
       "rolls": 1,
-      "denominator": 100,
+      "denominator": 101,
       "withoutReplacement": false,
       "entries": [
         {
@@ -720,16 +720,15 @@
     }
   ],
   "contextDefaults": {},
-  "status": "needs_review",
-  "statusTier": "minor_gaps",
-  "statusReason": "table 'phosani-s-nightmare:2:runes-and-ammunition-resources-consumables-coins' flat sums to 101, denominator 100",
+  "status": "manual_override",
+  "statusTier": null,
+  "statusReason": null,
   "validation": {
     "ok": false,
     "checks": [
       {
         "check": "weights_sum",
-        "ok": false,
-        "detail": "table 'phosani-s-nightmare:2:runes-and-ammunition-resources-consumables-coins' flat sums to 101, denominator 100"
+        "ok": true
       },
       {
         "check": "refs_resolve",
@@ -767,11 +766,11 @@
       {
         "check": "heading_unambiguous",
         "ok": true,
-        "detail": "no ambiguous headings or unconfirmed bundle signals"
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },
-  "source": "generated",
+  "source": "merged",
   "parserVersion": 1,
   "repeatable": true
 }

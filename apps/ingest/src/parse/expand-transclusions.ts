@@ -75,6 +75,28 @@ const TERMINAL_TEMPLATES = new Set([
 ])
 
 /**
+ * `{{DropsTableHead}}` itself has no snapshot on disk and is not a row, so
+ * without this it falls through to the "no definition" branch below, which
+ * returns the call VERBATIM — arguments included. That is silent everywhere
+ * a page writes `{{DropsTableHead|dropversion=Catacombs of Kourend}}`
+ * directly, but corrupts data when this call sits inside another template's
+ * OWN body as `{{DropsTableHead|dropversion={{{dropversion|}}}|...}}`
+ * (`CatacombsDropTable`/`WildernessSlayerDropTable`/`WildernessSlayerCaveDropTable`,
+ * all confirmed): the caller's `dropversion=` argument never gets substituted
+ * into the placeholder, so `extractLinesFromSection`'s `currentVariant` reads
+ * the literal, un-substituted text `{{{dropversion|}}}` off the call instead
+ * of the real value — which then becomes a `variant` condition's `name` that
+ * can never equal a real `SimContext.variant`, silently making every row it
+ * gates unreachable. Found on Black demon; confirmed already shipped, unseen,
+ * in 9 further `verified` sources built from the same three templates
+ * (`artio`, `callisto`, `calvar-ion`, `chaos-fanatic`, `crazy-archaeologist`,
+ * `scorpia`, `spindel`, `vet-ion`, `venenatis`) plus `chaos-elemental`. Same
+ * treatment as `TERMINAL_TEMPLATES` — expand the arguments, keep the call —
+ * kept as its own set rather than folded in there since it is not a row.
+ */
+const HEADER_TEMPLATES = new Set(['dropstablehead'])
+
+/**
  * Templates that are NOT inlined because another parse stage already models
  * them, as a `tableRef` to a shared `data/tables/*.json` record.
  * `rdt-access.ts` owns these three: it reads the access RATE off the call and
@@ -495,6 +517,11 @@ function expandCall(inner: string, ctx: Context): string {
             `${PROVENANCE_ACCESS}=${ctx.transclusion.accessRate}`,
           ]
     return `{{${[emitted, ...expandedArgs, ...provenance].join('|')}}}`
+  }
+
+  if (HEADER_TEMPLATES.has(name)) {
+    const expandedArgs = parts.slice(1).map((part) => expand(part, ctx))
+    return `{{${[rawName.trim(), ...expandedArgs].join('|')}}}`
   }
 
   if (TABLEREF_TEMPLATES.has(name)) return `{{${inner}}}`

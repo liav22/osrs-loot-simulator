@@ -5,7 +5,7 @@
   "wikiPage": "Venenatis",
   "wikiRevId": 15285313,
   "variants": [
-    "{{{dropversion|}}}"
+    "normal"
   ],
   "tables": [
     {
@@ -961,13 +961,7 @@
             "kind": "fixed",
             "num": 1,
             "den": 50
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "{{{dropversion|}}}"
-            }
-          ]
+          }
         },
         {
           "node": {
@@ -984,21 +978,13 @@
             "kind": "fixed",
             "num": 1,
             "den": 30
-          },
-          "conditions": [
-            {
-              "kind": "variant",
-              "name": "{{{dropversion|}}}"
-            }
-          ]
+          }
         }
       ],
       "notes": "Wilderness Slayer tertiary"
     }
   ],
-  "contextDefaults": {
-    "variant": "{{{dropversion|}}}"
-  },
+  "contextDefaults": {},
   "status": "verified",
   "statusTier": "verified",
   "statusReason": null,
