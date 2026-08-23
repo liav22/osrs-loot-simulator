@@ -9,7 +9,7 @@ import type { BossStatus, StatusTier } from '@osrs-loot-simulator/loot-model'
  * `status` alone, since it is a separate terminal claim of completeness, not
  * a point on this scale.
  */
-type BadgeKind = StatusTier | 'manual_override' | 'needs_review'
+export type BadgeKind = StatusTier | 'manual_override' | 'needs_review'
 
 const STYLES: Record<BadgeKind, string> = {
   verified: 'bg-emerald-500/15 text-emerald-400 ring-emerald-500/30',
@@ -29,12 +29,43 @@ const LABELS: Record<BadgeKind, string> = {
   needs_review: 'Needs review',
 }
 
+/** One-line, user-facing explanation of each badge — shown by `StatusLegend`. */
+export const STATUS_DESCRIPTIONS: Record<BadgeKind, string> = {
+  verified: "Parsed straight from the wiki and checked automatically, no human judgement involved.",
+  minor_gaps: 'Missing a small, documented edge case — a rare item or two, not the core table.',
+  approximate: "A known simplification stands in for a mechanic that isn't modelled exactly.",
+  unknown_scaling: "Depends on a formula or mechanic the wiki doesn't fully state.",
+  manual_override: 'A human supplied or corrected part of the table; every check still passes.',
+  needs_review: "Failed a check and hasn't been triaged further yet.",
+}
+
+/** Every badge kind, in the order `StatusLegend` renders them. */
+export const BADGE_KINDS: readonly BadgeKind[] = [
+  'verified',
+  'manual_override',
+  'minor_gaps',
+  'approximate',
+  'unknown_scaling',
+  'needs_review',
+]
+
 function badgeKindOf(status: BossStatus, statusTier: StatusTier | null | undefined): BadgeKind {
   if (status === 'manual_override') return 'manual_override'
   // `statusTier` is `undefined` only for a caller that hasn't wired it up yet
   // (or `null` for a `needs_review` document parsed before this field
   // existed) — the old two-state label is the honest fallback, not a guess.
   return statusTier ?? 'needs_review'
+}
+
+/** The bare pill, keyed directly by kind — `StatusBadge` derives `kind` from a boss's own fields; `StatusLegend` already knows it. */
+export function BadgePill({ kind }: { kind: BadgeKind }) {
+  return (
+    <span
+      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${STYLES[kind]}`}
+    >
+      {LABELS[kind]}
+    </span>
+  )
 }
 
 export function StatusBadge({
@@ -44,12 +75,5 @@ export function StatusBadge({
   status: BossStatus
   statusTier?: StatusTier | null
 }) {
-  const kind = badgeKindOf(status, statusTier)
-  return (
-    <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${STYLES[kind]}`}
-    >
-      {LABELS[kind]}
-    </span>
-  )
+  return <BadgePill kind={badgeKindOf(status, statusTier)} />
 }

@@ -1,12 +1,6 @@
 {
   "slug": "tormented-demon",
-  "name": "Tormented Demon",
-  "aliases": [],
-  "wikiPage": "Tormented Demon",
-  "wikiRevId": 15305103,
-  "variants": [
-    "normal"
-  ],
+  "note": "Corrects the parser's ambiguous-heading guess on the \"Consumables\" heading (revid 15305103): its six rows (Smouldering gland 1/25, Smouldering pile of flesh 1/25, Smouldering heart 1/125, Manta ray 4/51, Prayer potion(4) 1/51, Prayer potion(2) 1/51) sit at three heterogeneous denominators that do not homogenise (25/125 vs 51 has no clean small-multiple LCM) and carry no Pre-roll/Tertiary/Secondary keyword or mutual-exclusivity prose, so build-tables.ts's final fallback flagged it needs_review and defaulted to a preroll guess. Checked directly against https://oldschool.runescape.wiki/w/Tormented_Demon: the Consumables heading is a same-shape sibling of the page's own Weapons and armour/Runes and ammunition and Other headings -- ordinary standard-table rows, each independently rolled at its own stated rate, not a mutually-exclusive pre-roll chain that would gate or short-circuit anything after it. Replaces only that heading's mode, preroll -> independent; every other table is unchanged from the generated document.",
   "tables": [
     {
       "id": "tormented-demon:0:100",
@@ -871,59 +865,5 @@
       ],
       "notes": "Tertiary"
     }
-  ],
-  "contextDefaults": {},
-  "status": "manual_override",
-  "statusTier": null,
-  "statusReason": null,
-  "validation": {
-    "ok": true,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "no tableRef nodes"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": true,
-        "detail": "81309.41 gp/kill vs wiki's 82852, within 2%"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 47 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
-      }
-    ]
-  },
-  "source": "merged",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

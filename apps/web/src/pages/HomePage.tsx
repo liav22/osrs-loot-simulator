@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { SearchBox } from '../components/SearchBox'
 import { BossView } from '../components/BossView'
+import { StatusLegend } from '../components/StatusLegend'
 
 /**
  * PROJECT_PLAN.md 9: "/" is search + boss view + simulator; "/boss/:slug" is
@@ -23,6 +24,7 @@ export function HomePage() {
           Search a boss, pick a kill count, and see what the table actually gives you.
         </p>
         <SearchBox />
+        <StatusLegend />
       </div>
     </div>
   )

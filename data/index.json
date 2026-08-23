@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T21:48:51.826Z",
+  "generatedAt": "2026-08-22T19:54:20.841Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -837,8 +837,8 @@
       "slug": "tormented-demon",
       "name": "Tormented Demon",
       "aliases": [],
-      "status": "needs_review",
-      "statusTier": "unknown_scaling",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "Tormented Demon (1).png",
       "repeatable": true
     },
