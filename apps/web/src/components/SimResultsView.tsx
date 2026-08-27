@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
-import type { Boss, ExpectedValueResult, SimResult } from '@osrs-loot-simulator/loot-model'
+import type { Boss, ExpectedValueResult, SimContext, SimResult, Table } from '@osrs-loot-simulator/loot-model'
 import { formatCompact, formatGp, formatNumber } from '../lib/format'
 import { uniqueItemKeys } from '../lib/uniques'
 import { useItemIcons } from '../hooks/useItemIcons'
 import { ItemIcon } from './ItemIcon'
+import { ItemProbabilityModal } from './ItemProbabilityModal'
 
 /** Enough to fill a 1080p results column; the rest is one click away. */
 const COLLAPSED_COUNT = 24
@@ -20,11 +21,15 @@ interface Props {
    * the GE fetch and the two can disagree.
    */
   pricesAvailable: boolean
+  /** The context this run used — for the item-probability modal, which recomputes odds rather than reading them off `result`. */
+  ctx: SimContext
+  sharedTables: ReadonlyMap<string, Table> | undefined
 }
 
-export function SimResultsView({ boss, result, expected, pricesAvailable }: Props) {
+export function SimResultsView({ boss, result, expected, pricesAvailable, ctx, sharedTables }: Props) {
   const [expandedGrid, setExpandedGrid] = useState(false)
   const [showLog, setShowLog] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<{ itemKey: string; name: string } | null>(null)
 
   const uniques = useMemo(() => uniqueItemKeys(boss), [boss])
   // One query for the whole view rather than one per card: the icon file names
@@ -106,9 +111,11 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
           </div>
           <div className="flex flex-wrap gap-1.5">
             {strip.map((row) => (
-              <div
+              <button
                 key={row.itemKey}
-                className="flex items-center gap-2 rounded border border-amber-500/40 bg-amber-500/10 px-2 py-1.5"
+                type="button"
+                onClick={() => setSelectedItem({ itemKey: row.itemKey, name: row.name })}
+                className="flex items-center gap-2 rounded border border-amber-500/40 bg-amber-500/10 px-2 py-1.5 hover:bg-amber-500/20"
               >
                 <ItemIcon name={row.name} file={iconFiles?.get(row.name)} size={24} />
                 <span className="text-sm text-amber-100">{row.name}</span>
@@ -122,7 +129,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                 >
                   ×{formatCompact(row.quantity)}
                 </span>
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -154,12 +161,14 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
             {visible.map((row) => {
               const isUnique = uniques.has(row.itemKey)
               return (
-                <div
+                <button
                   key={row.itemKey}
+                  type="button"
                   data-item-card=""
+                  onClick={() => setSelectedItem({ itemKey: row.itemKey, name: row.name })}
                   // Border AND background, never colour alone — the highlight
                   // has to survive being the only signal someone can see.
-                  className={`flex items-center gap-2 rounded-md border px-2.5 py-2 ${
+                  className={`flex items-center gap-2 rounded-md border px-2.5 py-2 text-left hover:brightness-125 ${
                     isUnique
                       ? 'border-amber-500/50 bg-amber-500/10'
                       : 'border-neutral-800 bg-neutral-900/60'
@@ -202,7 +211,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
                       )}
                     </div>
                   </div>
-                </div>
+                </button>
               )
             })}
           </div>
@@ -239,6 +248,17 @@ export function SimResultsView({ boss, result, expected, pricesAvailable }: Prop
             </div>
           )}
         </div>
+      )}
+
+      {selectedItem !== null && (
+        <ItemProbabilityModal
+          boss={boss}
+          ctx={ctx}
+          sharedTables={sharedTables}
+          itemKey={selectedItem.itemKey}
+          itemName={selectedItem.name}
+          onClose={() => setSelectedItem(null)}
+        />
       )}
     </div>
   )

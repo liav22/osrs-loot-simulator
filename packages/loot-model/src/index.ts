@@ -129,6 +129,7 @@ export {
 } from './simulate.js'
 
 export {
+  expectedDrawsWithoutReplacement,
   expectedValue,
   MAX_WITHOUT_REPLACEMENT_ROLLS,
   UnsupportedExpectedValueError,
@@ -136,3 +137,12 @@ export {
   type ExpectedValueOptions,
   type ExpectedValueResult,
 } from './expected-value.js'
+
+export {
+  itemMilestones,
+  killsForTarget,
+  MILESTONE_TARGETS,
+  type ItemMilestoneResult,
+  type ItemProbabilityClassification,
+  type MilestoneRow,
+} from './cumulative-probability.js'

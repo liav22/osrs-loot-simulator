@@ -112,7 +112,7 @@ export function expectedDrawsWithoutReplacement(
  * `OwnershipGateSchema`'s comment for why `expectedValue` needs nothing more
  * than this for correctness, unlike `simulate`.
  */
-function gateAllows(
+export function gateAllows(
   table: CompiledTable,
   i: number,
   ownedCounts: Readonly<Record<string, number>>
@@ -242,7 +242,7 @@ function accumulateTable(
 }
 
 /** Probability that at least one entry of a preroll table hits. */
-function prerollHitChance(table: CompiledTable): number {
+export function prerollHitChance(table: CompiledTable): number {
   let miss = 1
   for (let i = 0; i < table.probs.length; i++) miss *= 1 - table.probs[i]!
   const hit = 1 - miss
@@ -262,7 +262,7 @@ function prerollHitChance(table: CompiledTable): number {
  * treats it. No source combines the two features today; getting it right here
  * costs nothing and avoids a silent wrong answer if one ever does.
  */
-function independentHitChance(
+export function independentHitChance(
   table: CompiledTable,
   ownedCounts: Readonly<Record<string, number>>
 ): number {

@@ -249,6 +249,8 @@ export function BossView({ slug }: { slug: string }) {
             result={simState.result}
             expected={expected}
             pricesAvailable={ranWithPricesRef.current}
+            ctx={effectiveCtx}
+            sharedTables={tablesQuery.data}
           />
         )}
       </section>
