@@ -89,7 +89,38 @@ describe('itemMilestones: simple preroll pet', () => {
     expect(windowsWithHit / windows).toBeGreaterThan(0.47)
     expect(windowsWithHit / windows).toBeLessThan(0.53)
   })
+
+  it('targetCount > 1: matches an independently-computed Binomial tail exactly', () => {
+    const p = 0.01
+    const result = itemMilestones(boss, ctx, 'pet', 5)
+    expect(result.targetCount).toBe(5)
+    for (const row of result.milestones!) {
+      expect(binomialAtLeast(row.kills, p, 5)).toBeGreaterThanOrEqual(row.target - 1e-9)
+      expect(binomialAtLeast(row.kills - 1, p, 5)).toBeLessThan(row.target)
+    }
+  })
+
+  it('targetCount > 1 needs more kills than targetCount === 1 at every milestone', () => {
+    const one = itemMilestones(boss, ctx, 'pet', 1)
+    const five = itemMilestones(boss, ctx, 'pet', 5)
+    for (let i = 0; i < MILESTONE_TARGETS.length; i++) {
+      expect(five.milestones![i]!.kills).toBeGreaterThan(one.milestones![i]!.kills)
+    }
+  })
 })
+
+/** Independent re-derivation of P(Binomial(n, p) >= k), via a stable iterative PMF walk (no factorials/large powers). */
+function binomialAtLeast(n: number, p: number, k: number): number {
+  if (n < 0) return 0
+  if (k <= 0) return 1
+  let term = (1 - p) ** n
+  let cdf = term
+  for (let i = 0; i < Math.min(k - 1, n); i++) {
+    term *= ((n - i) / (i + 1)) * (p / (1 - p))
+    cdf += term
+  }
+  return 1 - cdf
+}
 
 describe('itemMilestones: withoutReplacement item', () => {
   const boss = makeBoss([
@@ -115,6 +146,53 @@ describe('itemMilestones: withoutReplacement item', () => {
     const result = itemMilestones(boss, ctx, 'a')
     expect(result.classification).toEqual({ kind: 'exact' })
     expect(result.constantPerKillProbability).toBeCloseTo(expected[0]!, 12)
+  })
+})
+
+describe('itemMilestones: withoutReplacement slot whose own node only SOMETIMES yields the item', () => {
+  // Ancient Chest's real shape: one without-replacement slot is itself a
+  // oneOf(herb, seed), so being drawn doesn't guarantee the herb specifically.
+  // Two equal-weight slots, denominator == total weight (no "nothing"
+  // remainder) and rolls == slot count, so BOTH slots are drawn with
+  // certainty every kill — the only question is whether slot 0's own
+  // internal 50/50 resolves to the target. A merge-based approach that
+  // treats "slot drawn" as "item obtained" would wrongly report 1.0 here;
+  // the correct answer is exactly 0.5.
+  const boss = makeBoss([
+    {
+      id: 't',
+      mode: 'weighted',
+      rolls: 2,
+      withoutReplacement: true,
+      denominator: 4,
+      entries: [
+        {
+          node: {
+            kind: 'oneOf',
+            entries: [
+              { node: item(1, 'target'), rate: { kind: 'weight', weight: 1 } },
+              { node: item(2, 'distractor-inner'), rate: { kind: 'weight', weight: 1 } },
+            ],
+          },
+          rate: { kind: 'weight', weight: 2 },
+        },
+        { node: item(3, 'other-slot'), rate: { kind: 'weight', weight: 2 } },
+      ],
+    },
+  ])
+  const ctx = ctxWith()
+
+  it('scales by the nested resolution chance rather than treating "slot drawn" as "item obtained"', () => {
+    const result = itemMilestones(boss, ctx, 'target')
+    expect(result.classification).toEqual({ kind: 'exact' })
+    expect(result.constantPerKillProbability).toBeCloseTo(0.5, 12)
+  })
+
+  it('agrees with simulation, not with the naive "slot drawn" reading of 1.0', () => {
+    const sim = simulate(boss, 200_000, ctx, 41)
+    const observed = (sim.drops.find((d) => d.itemId === 1)?.quantity ?? 0) / 200_000
+    expect(observed).toBeGreaterThan(0.47)
+    expect(observed).toBeLessThan(0.53)
   })
 })
 
@@ -190,12 +268,24 @@ describe('itemMilestones: Ancient-Chest-style multi-roll item', () => {
     expect(windowsWithHit / windows).toBeLessThan(0.53)
   })
 
+  it('targetCount > 1: a single kill can itself yield 2 copies (one from each independent roll), so this is a compound distribution, not a Binomial(N, p) over kills', () => {
+    // Per-kill occurrence count here is exactly Binomial(2, 0.05) (two
+    // independent 5% rolls), so summing N i.i.d. kills is exactly
+    // Binomial(2N, 0.05) — a closed form to cross-check the general
+    // compound-distribution machinery against, independent of it.
+    const result = itemMilestones(boss, ctx, 'unique', 3)
+    for (const row of result.milestones!) {
+      expect(binomialAtLeast(2 * row.kills, 0.05, 3)).toBeGreaterThanOrEqual(row.target - 1e-9)
+      expect(binomialAtLeast(2 * (row.kills - 1), 0.05, 3)).toBeLessThan(row.target)
+    }
+  })
+
   describe('regression: against the real corpus', () => {
     it('twisted-bow (reachable from 6 independent rolls of one table) classifies exact with sane-ballpark milestones', () => {
       const boss = loadRealBoss('ancient-chest')
       const sharedTables = loadSharedTables()
       const ctx = resolveSimContext(boss, {})
-      const result = itemMilestones(boss, ctx, 'twisted-bow', { tables: sharedTables })
+      const result = itemMilestones(boss, ctx, 'twisted-bow', 1, { tables: sharedTables })
       expect(result.classification).toEqual({ kind: 'exact' })
       const milestones = result.milestones!
       // Loose bounds, not a numeric pin — the exact math is covered by the
@@ -262,6 +352,14 @@ describe('itemMilestones: ToA bad-luck-mitigation item (kill-count ramp)', () =>
     }
   })
 
+  it('targetCount > 1: matches an independently-computed Poisson-binomial tail (different rate per kill during the ramp)', () => {
+    const result = itemMilestones(boss, ctxWith(), 'thread-of-elidinis', 4)
+    for (const row of result.milestones!) {
+      expect(poissonBinomialAtLeast(row.kills, rateAt, 4)).toBeGreaterThanOrEqual(row.target - 1e-9)
+      expect(poissonBinomialAtLeast(row.kills - 1, rateAt, 4)).toBeLessThan(row.target)
+    }
+  })
+
   // Monte Carlo cannot cross-check this case: `simulate()` never mutates
   // `ctx.killCount` mid-run (confirmed by inspection of simulate.ts), so a
   // continuous simulated run would sample a single frozen rate for its
@@ -269,6 +367,24 @@ describe('itemMilestones: ToA bad-luck-mitigation item (kill-count ramp)', () =>
   // models. This is an accepted gap in cross-validation coverage for this
   // one case, not an oversight.
 })
+
+/** P(>= k successes across n independent Bernoulli trials with per-trial rate `rateAt(i)`), via the standard DP recursion — independent of anything this module computes internally. */
+function poissonBinomialAtLeast(n: number, rateAt: (i: number) => number, k: number): number {
+  if (n < 0) return 0
+  let dist = [1]
+  for (let i = 0; i < n; i++) {
+    const r = rateAt(i)
+    const next = new Array(dist.length + 1).fill(0)
+    for (let j = 0; j < dist.length; j++) {
+      next[j] += dist[j]! * (1 - r)
+      next[j + 1] += dist[j]! * r
+    }
+    dist = next
+  }
+  let cdf = 0
+  for (let j = 0; j < Math.min(k, dist.length); j++) cdf += dist[j]!
+  return 1 - cdf
+}
 
 describe('itemMilestones: ownership-gated items (out of scope)', () => {
   it('Lunar-Chest-style weighted pool: any sibling gate disqualifies, even the queried item\'s own', () => {
@@ -415,7 +531,7 @@ describe('itemMilestones: item reachable from more than one top-level table', ()
       const boss = loadRealBoss('zulrah')
       const sharedTables = loadSharedTables()
       const ctx = resolveSimContext(boss, {})
-      const result = itemMilestones(boss, ctx, 'zulrah-s-scales', { tables: sharedTables })
+      const result = itemMilestones(boss, ctx, 'zulrah-s-scales', 1, { tables: sharedTables })
       expect(result.classification).toEqual({ kind: 'exact' })
       expect(result.constantPerKillProbability).toBe(1)
     })
@@ -442,7 +558,7 @@ describe('regression: every item in the real corpus classifies without throwing'
         continue // parse/resolve failures are covered by apps/ingest's own suite, not this one
       }
       for (const itemKey of boss.tables.flatMap(collectItemKeys)) {
-        expect(() => itemMilestones(boss, ctx, itemKey, { tables: sharedTables }), `${slug}: ${itemKey}`).not.toThrow()
+        expect(() => itemMilestones(boss, ctx, itemKey, 1, { tables: sharedTables }), `${slug}: ${itemKey}`).not.toThrow()
       }
     }
   })

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { itemMilestones, type Boss, type SimContext, type Table } from '@osrs-loot-simulator/loot-model'
 import { Modal } from './Modal'
 import { formatNumber, formatPercent } from '../lib/format'
@@ -19,15 +19,38 @@ const UNSUPPORTED_MESSAGES: Record<'ownership-gated' | 'item-not-found', string>
   'item-not-found': "This item's odds aren't available.",
 }
 
+/** Highest count the on-the-fly compound-distribution search stays comfortably fast at in the browser. */
+const MAX_TARGET_COUNT = 200
+
 export function ItemProbabilityModal({ boss, ctx, sharedTables, itemKey, itemName, onClose }: Props) {
+  // Kept as a string so the input can sit empty/mid-edit without snapping
+  // back to a number on every keystroke; parsed and clamped at use time.
+  const [targetCountInput, setTargetCountInput] = useState('1')
+  const targetCount = Math.min(MAX_TARGET_COUNT, Math.max(1, Math.round(Number(targetCountInput) || 1)))
+
   const result = useMemo(
-    () => itemMilestones(boss, ctx, itemKey, { tables: sharedTables }),
-    [boss, ctx, sharedTables, itemKey]
+    () => itemMilestones(boss, ctx, itemKey, targetCount, { tables: sharedTables }),
+    [boss, ctx, itemKey, targetCount, sharedTables]
   )
 
   return (
     <Modal title={itemName} onClose={onClose}>
       <p className="mb-3 text-xs text-muted">{contextSummary(boss, ctx)}</p>
+
+      <label className="mb-3 flex items-center gap-2 text-sm text-neutral-300">
+        Chance of at least
+        <input
+          type="number"
+          min={1}
+          max={MAX_TARGET_COUNT}
+          step={1}
+          value={targetCountInput}
+          onChange={(event) => setTargetCountInput(event.target.value)}
+          className="w-16 rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-center font-mono text-neutral-100"
+        />
+        {targetCount === 1 ? 'drop' : 'drops'}
+      </label>
+
       {result.classification.kind === 'unsupported' ? (
         <p className="rounded-md border border-neutral-800 px-3 py-4 text-sm text-muted">
           {UNSUPPORTED_MESSAGES[result.classification.reason]}
