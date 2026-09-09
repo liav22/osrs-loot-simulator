@@ -1,35 +1,11 @@
 # Corporeal Beast
 
-> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
->
-> The **mechanics, prose and cited numbers in this doc are accurate** and are
-> what to implement from. Its "What the mapping needs that doesn't exist"
-> section is **not** — it was written before Extensions A and B, step (c)
-> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
-> never been revised. Corrections for this source:
->
-> - **SHIPPED — this source is `verified` as of 2026-08-13.** Its single gap
->   is **RESOLVED** by `TableRefNode.drawsPerHit`, scoped exactly as this doc
->   proposed (a field on the `tableRef` node, not a new `TableMode`, and
->   `Table.rolls` untouched globally). Off the mechanics watchlist.
-> - **One claim here is overstated**: the default reading does *not* differ in
->   per-kill expectation at all — expectation is linear, so both readings give
->   `10p x E[draw]`. The real difference is distributional (2.3% of kills yield
->   loot vs 21.1%), which is a sharper argument for the fix, not a weaker one:
->   no mean-based check, `ev_matches` included, could ever have caught it.
->
-> Model capabilities now available: per-run `SimContext` scalars (`points`,
-> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
-> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
-> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
-> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
-> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
-> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
-> state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry — current status:
-> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
-> See `docs/DECISIONS.md`.
+> Historical source research. Numbers and citations below refer to the recorded
+> wiki revisions; capability verdicts and implementation plans may be superseded.
+> Start with [the current project guide](../PROJECT_GUIDE.md), then check this
+> source's generated document, override (if present), watchlist entry, and tests.
+> For model capabilities, inspect `packages/loot-model/src/schema.ts` and
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`.
 
 
 `lootSourceId: corporeal-beast`. Watchlisted (`other`). No blocked sources.
@@ -48,7 +24,7 @@ confirming the watchlist detail verbatim:
 the [[gem drop table]], whereupon its contents are rolled 10 times.}}
 ```
 
-`docs/DECISIONS.md`'s "Wired `tableRef` into the parser" entry already flags this as the
+[historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Wired `tableRef` into the parser" entry already flags this as the
 confirmed exception to `Table.rolls`' usual "N independent access attempts" meaning — "one access
 check, ten draws after, the opposite of the default reading" — and explicitly warns not to "fix"
 `Table.rolls` globally over this one case. Nothing found this session changes that conclusion;
@@ -64,7 +40,7 @@ this doc exists to give it a formal model-mapping writeup, not to re-investigate
    drawn 10 times from that single access** — i.e. one Bernoulli check gates a fixed *batch* of 10
    draws, not 10 independent Bernoulli checks each independently gating one draw. Every other
    `rolls=N` on an RDT/gem access line on the wiki (confirmed across the tier-C wiring session,
-   `docs/DECISIONS.md`) means the latter; this is the one confirmed exception.
+   [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)) means the latter; this is the one confirmed exception.
 4. Tertiary — not investigated further this session.
 
 ## Formulas
@@ -101,7 +77,7 @@ tables: [
    Chest/Reward pool/Reward Cart) — those need `rolls` itself to vary with a per-run scalar;
    Corporeal Beast's `10` is a *constant*, the issue is purely that today's `rolls` semantics
    (independent per-attempt access checks) is the wrong shape for this source regardless of what
-   number is plugged in. This is confirmed, by `docs/DECISIONS.md`'s own account, to be a
+   number is plugged in. This is confirmed, by [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s own account, to be a
    **genuine one-source exception** — not evidence `Table.rolls`' existing meaning is wrong in
    general, and not something to fix by changing `Table.rolls` globally. The narrowest fix is an
    escape-hatch field scoped to this one access pattern (e.g. a `drawsPerHit` on the `tableRef`

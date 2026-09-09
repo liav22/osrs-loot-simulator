@@ -222,7 +222,7 @@ exactly correct here, not an approximation.
 4. **`QtySpec` has no formula-driven kind.** `toa:common`'s per-item quantity is
    `Points / ItemDivisor × (mode-dependent multiplier)` — a value computed from `ctx` at
    evaluate time, not a static `exact`/`range`/`choice` spec (`QtySpecSchema`'s only three kinds,
-   audited as exhaustive in `docs/DECISIONS.md`'s "Constant-returning validation checks" entry).
+   audited as exhaustive in [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Constant-returning validation checks" entry).
    This recurs at every points-scaled common-reward table reviewed so far (also CoX, possibly) and
    at every conditional-multiplier source (Abyssal Sire's ×2, Duke Sucellus's perfect-kill +50%,
    Zalcano's MVP +10% — see those docs), so it's being tracked as one family, not restated as a

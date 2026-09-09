@@ -1,37 +1,15 @@
 # Inferno
 
-> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
->
-> The **mechanics, prose and cited numbers in this doc are accurate** and are
-> what to implement from. Its "What the mapping needs that doesn't exist"
-> section is **not** — it was written before Extensions A and B, step (c)
-> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
-> never been revised. Corrections for this source:
->
-> - Gap 1 (formula-driven `QtySpec` for Tokkul) — **RESOLVED**:
->   `QtySpec.formula`.
-> - Gap 2 (per-run scalar: wave reached) — **RESOLVED**: `ctx.wavesReached`.
-> - Gap 3 (cape-exchange pet reroll) — still deliberately out of scope: an NPC
->   transaction outside the kill event, not a model gap.
-> - **Still blocking**: the Tokkul-per-wave curve is **UNKNOWN** and
->   `inferno_tokkul` was never added to `FORMULA_IDS`. Research, not schema.
->
-> Model capabilities now available: per-run `SimContext` scalars (`points`,
-> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
-> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
-> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
-> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
-> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
-> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
-> state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry — current status:
-> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
-> See `docs/DECISIONS.md`.
+> Historical source research. Numbers and citations below refer to the recorded
+> wiki revisions; capability verdicts and implementation plans may be superseded.
+> Start with [the current project guide](../PROJECT_GUIDE.md), then check this
+> source's generated document, override (if present), watchlist entry, and tests.
+> For model capabilities, inspect `packages/loot-model/src/schema.ts` and
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`.
 
 
 Not in `data/mechanics-watchlist.json` (no `lootSourceId` assigned — this source has never
-resolved to a loot source at all; `docs/DECISIONS.md`'s discovery-pipeline entry recorded it as a
+resolved to a loot source at all; [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s discovery-pipeline entry recorded it as a
 recovered `component` encounter with "no reward-table page found linked from it," correctly not
 force-matched to anything). Covered here per this session's explicit brief to research the
 wave-structured sources as a group, not because it's watchlisted.
@@ -42,7 +20,7 @@ Source: **Inferno** — https://oldschool.runescape.wiki/w/Inferno — pageid `7
 
 ## Sanity check against the earlier "population of one" research
 
-`docs/DECISIONS.md`'s "Phase 6 research item" already checked this page and concluded correctly:
+[historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Phase 6 research item" already checked this page and concluded correctly:
 **"Inferno and TzHaar Fight Cave have zero `{{DropsLine}}` calls each... not a wave-scaled loot
 table at all — closer to a single `Boss` doc with two `always`/`fixed` entries than to Fortis
 Colosseum's per-wave chest."** Re-reading the `==Rewards==` section directly this session

@@ -2,203 +2,140 @@
 
 [![CI](https://github.com/liav22/osrs-loot-simulator/actions/workflows/ci.yml/badge.svg)](https://github.com/liav22/osrs-loot-simulator/actions/workflows/ci.yml)
 
-**[liav22.github.io/osrs-loot-simulator](https://liav22.github.io/osrs-loot-simulator/)**
+**[Open the simulator](https://liav22.github.io/osrs-loot-simulator/)**
 
-Search an Old School RuneScape boss, set a kill count, and simulate the drops.
-The whole thing runs in your browser — the simulation is a Web Worker, the
-dataset is static JSON, and there is no server or database anywhere in it.
+Search an Old School RuneScape boss, choose your kill count and encounter
+settings, and simulate the loot. Runs execute in a Web Worker in your browser,
+using a static dataset derived from the OSRS Wiki. No account, application
+server, or database is required.
 
-Runs are seeded and reproducible: the seed goes in the URL, so a link to
-5,000 Vorkath kills replays to exactly the same three visages for whoever you
-send it to. Leave the seed on `0` and each press of Simulate rolls a fresh one.
+- **Share a run:** the URL carries the seed and settings for reproducible drops.
+  Leave the seed at `0` to generate a fresh one each time you simulate.
+- **Explore item probabilities:** click an item to see the chance of obtaining
+  at least a target number of copies and kill-count milestones. Supported cases
+  use analytic calculations; unsupported ownership-dependent cases are identified.
+- **See data quality:** each source has a validation status. Unstated rates and
+  incomplete mechanics remain flagged rather than filled in with guesses.
 
-## What's in the box
+## Data coverage
 
-- **`packages/loot-model`** — the loot model and simulator. Pure TypeScript,
-  zero runtime dependencies beyond `zod`, no knowledge of the wiki or the web
-  app. It compiles a boss document into a flat form and simulates against a
-  seeded RNG. 10M kills runs in ~2 seconds.
-- **`apps/ingest`** — the pipeline that turns wiki pages into that model:
-  fetch, parse, validate, and a set of checks that decide whether a source is
-  trustworthy. Node only; it never runs in a browser.
-- **`apps/web`** — the site. Vite + React, deployed to GitHub Pages. Beyond
-  simulating a run, clicking an item opens an exact-math probability modal —
-  chance of at least N copies by kill count, computed closed-form rather than
-  sampled.
-- **`data/`** — the committed output. Git is the revision history, the diff
-  tool and the audit log; there is no database because there does not need to
-  be one.
+Snapshot of the committed dataset, checked **2026-09-09**:
 
-## Corpus status
+| Status | Sources | Meaning |
+|---|---:|---|
+| `verified` | 73 | Derived by the pipeline and passing deterministic checks |
+| `manual_override` | 15 | Hand-authored mechanics, passing the same checks |
+| `needs_review` | 13 | Incomplete data, an approximation, or a failing check |
+| No generated document | 3 | Included in the inventory but not yet represented |
+| **Total included** | **104** | Loot sources selected for coverage |
 
-The wiki's `Category:Bosses` resolves to 104 distinct loot sources that the
-project has decided to cover (`include: true` in `data/_inventory.json` — the
-denominator; not every page in the category is a real, independent loot
-source, and a few are quest-only encounters with no loot at all). **101 of
-those 104 (97.1%) have a generated document**, each carrying its own
-validation report:
+A loot source can be a boss, shared raid chest, or reward pool. The inventory
+also includes one-time quest encounters, which default search hides. Of the
+**74 repeatable sources**, 60 pass validation: 46 pipeline-derived and 14 using
+overrides. Validation measures agreement with available source evidence; it
+does not guarantee every in-game mechanic is known.
 
-| status | count | of 104 include:true | of 101 documents | meaning |
-|---|---|---|---|---|
-| `verified` | 73 | 70.2% | 72.3% | the pipeline derived this from the wiki unaided, and every check passes |
-| `manual_override` | 15 | 14.4% | 14.9% | a hand-authored document (`data/overrides/`) that passes every check — the mechanic exists in prose the parser cannot read |
-| `needs_review` | 13 | 12.5% | 12.9% | at least one check fails; the rates shown may be incomplete or wrong |
-| *(no document)* | 3 | 2.9% | — | not yet parseable at all — see below |
+Counts change as the corpus evolves. [The inventory](data/_inventory.json)
+defines inclusion; [the site index](data/index.json) lists generated sources.
+See [current limitations](docs/PROJECT_GUIDE.md#current-limitations-and-useful-next-work)
+for the remaining mechanics and data gaps. The development-only `/admin` page
+exposes source validation reports.
 
-**That 73 is inflated by content nobody would simulate, and the site's search
-already corrects for it.** Every source also carries `repeatable: boolean` —
-whether the same account can get more than one roll against it, `false` for a
-boss fought exactly once during a quest and never again (Bouncer, Sigmund,
-`Dad`). Split by that field:
+## Run locally
 
-| | total | documents | verified | manual_override |
-|---|---|---|---|---|
-| `repeatable: true` (farmable) | 74 | 73 (98.6%) | 46 (**62.2%**) | 14 (18.9%) |
-| `repeatable: false` (one-time) | 30 | 28 (93.3%) | 27 (90.0%) | 1 (3.3%) |
-
-27 of the 73 `verified` sources (37.0%) are one-time quest encounters, whose
-tiny `always`-only tables clear every deterministic check almost by
-construction. **46/74 = 62.2%, not 70.2%, is the number that answers "how
-much of what a user would actually simulate is verified."** Counting the 14
-`manual_override` farmable sources too (also a terminal, passes-every-check
-state — see `docs/OVERRIDES.md` — just hand-authored rather than
-pipeline-derived) brings farmable coverage to 60/74 = 81.1%. Nothing is
-deleted for this — the documents, and the flag itself, stay visible on
-`/admin` — but `apps/web`'s default search excludes non-repeatable sources,
-since a simulator has nothing meaningful to say about a source with exactly
-one possible sample. See `docs/DECISIONS.md`'s `repeatable` entry for the
-signal it's derived from (`Category:Quest monsters` membership, live from the
-wiki) and its measured false-positive/negative rates.
-
-The badge in the UI is the `status` field. **`needs_review` is now a small
-minority** — 13 sources, all of them `repeatable: true` — after two
-corpus-wide parser fixes (a stale `{{{dropversion|}}}` leak, and a
-case-sensitive item-name comparison inside `drops_covered`) moved over a
-dozen sources to `verified` outright, and the long-running "Uniques"/
-"Mutagens" heading-ambiguity question — the most re-litigated question in the
-project — was closed for good for the 7 sources it used to block, via a
-general parser fix rather than a per-source guess (`docs/DECISIONS.md` has
-both). What's left splits into four shapes: **7 sources** already ship a
-hand-authored override modelling the bulk of the mechanic, wiki-figure
-tested, and stay watchlisted for one remaining, deliberately-unmodelled
-remnant apiece — Tombs of Amascut, Theatre of Blood, Chambers of Xeric and
-Fortis Colosseum (each missing one named mechanic the wiki states but
-doesn't quantify enough to build), plus Zalcano (an unstated points-to-loot
-scaling curve), Reward pool (an unstated points-to-permit rounding rule) and
-The Nightmare (a party-size-scaled second roll, real but not yet wired up);
-**Duke Sucellus** ships a small override for one drop only — its main
-sequential roll-until-success chain and perfect-kill bonus exist purely in
-page prose the parser can't read, and are unbuilt; **Reward cart** has no
-override at all, genuinely blocked on two numbers the wiki names but never
-states; and **4 sources** carry a residual `drops_covered` coverage gap
-that's checked and confirmed genuinely unstated rather than unbuilt —
-Kalphite Queen (one row, a 256th-kill-guaranteed drop that isn't a per-kill
-rate at all), Mad Angel (one row, the wiki's own drop-line bucket lagging a
-real patch), Maggot King (3 items whose rarity is stated only as the words
-"Common"/"Uncommon", never a number), and Nex (21 of 33 rows in that same
-"named but never quantified" class). None of these are guessed around —
-`drops_covered` compares every document against the wiki's own drop rows and
-fails a source where they disagree, rather than shipping a `verified` badge
-that isn't true. The 3 sources with no document at all: `revenant-maledictus`
-(own open parse gap — no `{{DropsLine}}` template anywhere on the page),
-`burnt-chest` (a heading-matching gap) and `sigmund` (no real combat loot,
-only a quest-only pickpocket reward). See `docs/DECISIONS.md` and
-`docs/HANDOFF.md` for the full history and reasoning behind every number
-here — it changes as the corpus grows, this table will not always be
-current.
-
-## Running it
-
-Requires Node 22+ and [pnpm](https://pnpm.io) (24 in CI).
+Requires **Node.js 22+** (CI uses 24) and **pnpm 9.15.9**, pinned in `package.json`.
 
 ```sh
 pnpm install
-pnpm --filter @osrs-loot-simulator/web dev     # the site, on :5173
+pnpm --filter @osrs-loot-simulator/web dev
 ```
 
-Checks:
+Open the Vite URL, normally `http://localhost:5173`. The dev and build commands
+automatically copy the committed dataset into `apps/web/public/`.
 
 ```sh
 pnpm -r typecheck
 pnpm lint
-pnpm -r test                                   # unit tests, all three packages
-pnpm --filter @osrs-loot-simulator/web test:e2e  # Playwright, against a production build
+pnpm -r test
+pnpm --filter @osrs-loot-simulator/web build
 ```
 
-The e2e suite is deliberately not part of `pnpm -r test`: it downloads a
-browser and does a full production build, served through a GitHub Pages mimic,
-because the base path and the SPA 404 fallback only exist in that build.
-
-A dev-only admin page at `/admin` shows the validation report for every source.
-It is gated behind `import.meta.env.DEV` and is not in the production bundle.
-
-## How ingest works
-
-The pipeline is **snapshot-first**. Every wiki response is written to
-`data/snapshots/` verbatim, and every later step re-reads from disk. The wiki
-is never re-hit to fix a parser bug — you bump `parserVersion` and re-parse.
-That directory is gitignored: it is a regenerable cache, not a source.
+Browser tests run separately against a production build served under the
+GitHub Pages subpath, including deep links and the real simulation worker:
 
 ```sh
-cd apps/ingest
-pnpm ingest fetch --all      # snapshot the boss category, revisions, drop rows
-pnpm ingest item-index       # resolve item names to item ids
-pnpm ingest item-icons       # resolve every item's wiki icon file name
-pnpm ingest triage           # classify each source by how hard it is to parse
-pnpm ingest parse            # -> data/bosses/*.json (every include:true source; --tier narrows it)
-pnpm ingest site-index       # -> data/index.json (search index + boss portraits)
+pnpm --filter @osrs-loot-simulator/web exec playwright install chromium
+pnpm --filter @osrs-loot-simulator/web test:e2e
 ```
 
-Requests are serialised, one at a time, with a delay, `maxlag=5`, retry on 429,
-and a descriptive User-Agent — the wiki's `api.php` is robots-disallowed for
-generic crawlers, and this is meant to be distinguishable from a crawl.
+Snapshot-dependent ingest tests can skip on a fresh checkout because the raw
+wiki cache is gitignored. Ordinary frontend development uses committed JSON
+and does not require fetching the wiki.
 
-Parsing reads **wikitext**, not the rendered page, because wikitext is the only
-place carrying the heading text, quantity qualifiers like `(noted)`, and
-unambiguous template parameters. Each parsed document then goes through eight
-checks (`weights_sum`, `refs_resolve`, `rates_valid`, `qty_sane`, `items_known`,
-`not_on_watchlist`, `drops_covered`, and the advisory `ev_matches`). Seven of
-them are closed-world over the extracted document; `drops_covered` is the one
-that compares it back against the page it came from.
+## Repository layout
 
-Where the wiki states a mechanic the schema cannot express, the source goes on
-`data/mechanics-watchlist.json` and stays `needs_review` on purpose. **Nothing
-in `data/` is guessed** — a rate the wiki does not state is recorded as unknown
-rather than interpolated.
+| Path | Purpose |
+|---|---|
+| [`packages/loot-model`](packages/loot-model/) | Pure TypeScript schemas, seeded simulation, expected value and probabilities; `zod` is its only runtime dependency |
+| [`apps/ingest`](apps/ingest/) | Node CLI for fetching, parsing, item resolution, overrides and validation |
+| [`apps/web`](apps/web/) | Vite + React site, deployed to GitHub Pages |
+| [`data`](data/) | Versioned boss documents, shared tables, inventory and source metadata |
+| [`docs`](docs/) | Current engineering guide, override contract and source research |
 
-## Licensing
+## Updating the dataset
 
-This repository carries **two licences**, and the split is not cosmetic.
+Ingestion is **snapshot-first**: wiki responses are saved verbatim in ignored
+`data/snapshots/`, and parsing uses those local files. Fix a parser bug by
+re-parsing the existing snapshots. `parserVersion` records provenance; it is
+not a staleness switch and does not need bumping for each parser fix.
 
-| Path | Licence | Why |
-|---|---|---|
-| everything except `data/` | [MIT](./LICENSE) | original code |
-| `data/` | [CC BY-NC-SA 3.0](./data/LICENSE) | derived from the OSRS Wiki, which is itself CC BY-NC-SA 3.0 — the share-alike and non-commercial terms carry over |
+For initial collection or an intentional source refresh, run from the root:
 
-`data/` must never be relicensed as MIT. Images are **not** re-hosted for the
-same reason: boss portraits and item icons are hot-linked to the wiki, and
-`data/` stores only the file names.
+```sh
+pnpm --filter @osrs-loot-simulator/ingest ingest fetch --all
+pnpm --filter @osrs-loot-simulator/ingest ingest item-index
+```
 
-## Attribution
+These commands contact the wiki. The client serializes requests, uses a delay
+and descriptive User-Agent, sends `maxlag=5`, and retries rate-limited requests.
+To regenerate documents and the site data after collection:
 
-Drop table data is derived from the
-[Old School RuneScape Wiki](https://oldschool.runescape.wiki), licensed
-[CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/). The
-attribution also appears in the site footer on every page, which is a licence
-obligation rather than a courtesy.
+```sh
+pnpm --filter @osrs-loot-simulator/ingest ingest parse
+pnpm --filter @osrs-loot-simulator/ingest ingest item-icons
+pnpm --filter @osrs-loot-simulator/ingest ingest site-index
+```
+
+`item-icons` may also contact the wiki. Use `parse --source <slug>` for a
+focused re-parse; an unscoped parse attempts every included source. Review
+generated changes and run the relevant checks before publishing them.
+
+The parser reads wikitext and cached template definitions. Validation checks
+both model consistency and coverage against the wiki's drop rows. Mechanics
+that cannot be derived automatically can use [documented overrides](docs/OVERRIDES.md).
+Overrides still pass validation, and partially modeled sources retain their
+[watchlist entries](data/mechanics-watchlist.json). Price-based expected-value
+comparison is advisory, not part of the success gate.
+
+## Contributing and project context
+
+Start with [AGENTS.md](AGENTS.md) for Codex or [CLAUDE.md](CLAUDE.md) for
+Claude Code development rules, and [the project guide](docs/PROJECT_GUIDE.md) for architecture, decisions, regression
+guards and remaining work. [Boss research](docs/bosses/) retains the evidence
+behind individual mechanics. The [original build plan](PROJECT_PLAN.md) and
+[mechanics proposal](docs/mechanics-model-proposal.md) are historical references.
+
+## Licensing and attribution
+
+| Content | License |
+|---|---|
+| Code and other files outside `data/` | [MIT](LICENSE) |
+| Everything under `data/`, derived from the OSRS Wiki | [CC BY-NC-SA 3.0](data/LICENSE) |
+
+Drop data comes from the [Old School RuneScape Wiki](https://oldschool.runescape.wiki),
+licensed [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/).
+Preserve the data license and the site's wiki attribution. Boss portraits and
+item icons are hot-linked to the wiki rather than re-hosted.
 
 Old School RuneScape and RuneScape are trademarks of Jagex Ltd. This is an
 unofficial fan project, not affiliated with or endorsed by Jagex Ltd.
-
-## Further reading
-
-- [`PROJECT_PLAN.md`](./PROJECT_PLAN.md) — the original spec, written before
-  any code existed. Kept verbatim as the design record, not a live status
-  page — see its own banner for what's since diverged.
-- [`docs/DECISIONS.md`](./docs/DECISIONS.md) — the append-only log of judgement
-  calls, including the ones that were measured and then reversed.
-- [`docs/HANDOFF.md`](./docs/HANDOFF.md) — current state and the landmines.
-- [`docs/OVERRIDES.md`](./docs/OVERRIDES.md) — when a hand-authored document is
-  the right answer, and the four-step sequence for shipping one.
-- [`docs/bosses/`](./docs/bosses/) — per-source research notes for the hard
-  ones, with the wiki citations behind each modelled mechanic.

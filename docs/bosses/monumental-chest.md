@@ -35,7 +35,7 @@
 > `variant`-conditioned, with `Boss.variants` and `contextDefaults.variant`
 > derived from what the document actually uses rather than hardcoded to
 > `['normal']` (a pre-existing gap that also affected other sources —
-> black-demon, vorkath, amoxliatl — see `docs/DECISIONS.md`). This override
+> black-demon, vorkath, amoxliatl — see [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)). This override
 > still REPLACES the generated tables wholesale (its own hand-authored
 > `tob_points`-driven structure is more complete than what the parser alone
 > can reach — no formula, no `roomsSkipped`), so shipping the parser fix
@@ -74,7 +74,7 @@
 >   a plain numeric `SimContext` field, not a new capability class. See below.
 > - **The Normal/Hard variant blend is a live, separate, already-diagnosed
 >   parser gap — flagged explicitly per this session's task, not new
->   research**: `docs/DECISIONS.md`'s "corpus-reproducibility guard" entry
+>   research**: [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "corpus-reproducibility guard" entry
 >   ("What this does NOT fix") found that Monumental chest's `===Pre-roll===`
 >   section's `====Normal mode====`/`====Hard mode====` H4 sub-headings carry
 >   `{{DropsTableHead|dropversion=...}}` — the same field `rdt-access.ts`
@@ -107,9 +107,9 @@
 > field (see above — trivial to add, same shape as `deaths`), party/team
 > context, and real implementations for every `FORMULA_IDS` entry — current
 > status: `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`,
-> not a count restated here (see `docs/DECISIONS.md`'s formula-status entry).
+> not a count restated here (see [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s formula-status entry).
 > `data/overrides/` exists and is in use (ToA, Doom of Mokhaiotl,
-> Lunar Chest, Zalcano, Reward pool). See `docs/DECISIONS.md`.
+> Lunar Chest, Zalcano, Reward pool). See [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md).
 
 
 `lootSourceId: monumental-chest` (tier A, `include: true`, `repeatable: true`, 52 raw rows).
@@ -155,7 +155,7 @@ per-kill rarity") was **closer to correct than the first research pass's prose-o
 concluded** — the page's own prose genuinely never states a formula (confirmed again this session:
 zero occurrences of "point", "MVP", or "skip" in the page wikitext), but the calculator module the
 page links to does, and the module wins per the ToA precedent ("where the module and the page's
-prose disagree the difference is always flooring, and the module wins," `docs/DECISIONS.md`) —
+prose disagree the difference is always flooring, and the module wins," [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)) —
 here there's no disagreement, just a prose silence the module fills:
 
 1. **Unique pre-roll, now with an exact points formula (sourced from the calculator module, not
@@ -349,7 +349,7 @@ tables: [
 
 **Still the cleanest of the three raid chests to map** — `preroll` with `variant`-conditioned
 entries, exactly as the schema already supports (Vardorvis/Duke Sucellus/Whisperer/Leviathan's
-`variant`-conditioned tertiary entries are the established precedent per `docs/DECISIONS.md`).
+`variant`-conditioned tertiary entries are the established precedent per [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)).
 **Corrected from the earlier draft**: the unique gate's rate is now `formula`-kind, not `fixed` —
 the module's discovery that it scales with `points/32` (this doc's earlier "no formula is even
 strictly required" claim assumed a raid-mode constant, which turned out to be wrong, see above).
@@ -376,7 +376,7 @@ would produce.
    (`z.number().int().nonnegative().default(0)` on the `deaths` pattern), read by `tob_points`
    alongside `ctx.deaths`. Trivial to add per Extension A's established shape — not a new
    capability class, just a field nobody had asked for yet (the exact framing
-   `docs/HANDOFF.md`'s "lunar-chest lesson" warns about: having the *capability* to add a field
+   [historical session handoff](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/HANDOFF.md)'s "lunar-chest lesson" warns about: having the *capability* to add a field
    is not the same as having already added the specific one a source needs).
 3. ~~The magnitude of both scaling effects is UNKNOWN~~ **RESOLVED**: both are `points/32`-driven,
    sourced from `Module:Theatre of Blood calculator`, cited in full above. (`tob_points`'s

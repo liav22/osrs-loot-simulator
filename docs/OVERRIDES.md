@@ -17,8 +17,9 @@ so no parser improvement could reach it:
 
 **Do not use one to paper over a parser bug.** If the parser *can* read a page
 and gets it wrong, fix the parser and re-parse from `data/snapshots/`
-(CLAUDE.md's hard rule) — pinning the wrong answer in place with an override
-hides the defect from every other source sharing that code path.
+(the snapshot rule in [AGENTS.md](../AGENTS.md)). Pinning the wrong answer
+in place with an override hides the defect from every other source sharing
+that code path.
 
 ## File format
 
@@ -78,9 +79,9 @@ Status outcomes:
 
 `verified` and `manual_override` are kept distinct deliberately. `verified`
 asserts the pipeline derived the document from the wiki unaided — a claim that
-would be false for a hand-authored one. Both are terminal success states under
-PROJECT_PLAN.md 16's Phase 5 done-when ("every boss `verified` or
-`manual_override`, zero `needs_review`").
+would be false for a hand-authored one. Both are successful validation states.
+The original plan's zero-`needs_review` target is not a reason to guess unknown rates or clear a partial mechanic's
+watchlist entry; see [PROJECT_GUIDE.md](PROJECT_GUIDE.md) for current limitations.
 
 One asymmetry worth knowing: an override supplying `tables` also clears the
 parser's **ambiguous-group** guesses, because those guesses describe a
@@ -114,9 +115,9 @@ Skipping step 3 is how a plausible-looking-but-wrong model ships.
 Abyssal Sire and Corporeal Beast did **not** need overrides — their mechanics
 were readable from the access template once `qtyMultiplier` and `drawsPerHit`
 existed, so they were fixed in the parser instead. That is the preferred
-outcome and the reason `data/overrides/` is empty at the time of writing.
-Reach for an override only after establishing the parser genuinely cannot get
-there.
+outcome. The repository now contains overrides for other sources; inspect
+the current files rather than inferring status from this historical example.
+Reach for an override only after establishing the parser genuinely cannot get there.
 
 
 ## An override for a source the parser cannot reach at all
@@ -138,8 +139,9 @@ attempts every `include: true` source regardless of tier, and `--tier` is a
 narrowing filter for a targeted run, not a whitelist. This was a real bug
 before it was fixed: Reward pool is tier D, every documented parse invocation
 named tiers A–C, and a correct override for it sat in `data/overrides/` doing
-nothing, silently, for the whole project — see `docs/DECISIONS.md`, landmine
-#12 and "Should tier gate parsing at all?". An override file *is* the decision
+nothing, silently, for the whole project. See the current
+[ingestion workflow](../AGENTS.md#ingestion-workflow); the original investigation
+is available through [the historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md). An override file *is* the decision
 to build a source; tier was never supposed to be able to overrule that, or
 anything else `include: true` already decided.
 

@@ -3,7 +3,9 @@
 This repo's spec is [`PROJECT_PLAN.md`](./PROJECT_PLAN.md) at the root. Read it in
 full before making structural changes. Where it says **DECIDED**, don't
 re-litigate; where it says **VERIFY**, check reality before building against the
-assumption. Log judgement calls the spec doesn't cover in `docs/DECISIONS.md`.
+assumption. Record durable judgement calls by updating
+[`docs/PROJECT_GUIDE.md`](./docs/PROJECT_GUIDE.md) in place; it contains current
+engineering context and limitations.
 
 ## Hard rules
 
@@ -20,8 +22,9 @@ assumption. Log judgement calls the spec doesn't cover in `docs/DECISIONS.md`.
   against them. `apps/ingest/test/corpus-reproducibility.test.ts` (in `pnpm -r
   test`) re-parses every committed document from its snapshot and fails loudly
   on any drift, which is the actual staleness guard; `Boss.parserVersion` is
-  provenance metadata only (see `docs/DECISIONS.md`'s "`parserVersion` retired
-  as a staleness mechanism" entry for why it doesn't drive anything).
+  provenance metadata only (see
+  [Parsing and item resolution](./docs/PROJECT_GUIDE.md#parsing-and-item-resolution)
+  for the current workflow).
 - **Two licenses.** Code is MIT (`/LICENSE`); everything under `data/` is
   CC BY-NC-SA 3.0 (`data/LICENSE`) because it's derived from the OSRS Wiki. Never
   relicense `data/` as MIT.

@@ -6,9 +6,10 @@
 > wiki during implementation. Some particulars have since diverged in the
 > normal way a spec does once real code and real wiki data show up (there is
 > no `docs/LOOT_MODEL.md` or weekly `ingest.yml` cron, for two examples) — for
-> current state, corpus numbers, and the reasoning behind every judgement call
-> made along the way, see [`docs/HANDOFF.md`](./docs/HANDOFF.md) and
-> [`docs/DECISIONS.md`](./docs/DECISIONS.md) instead.
+> current engineering context, see [docs/PROJECT_GUIDE.md](./docs/PROJECT_GUIDE.md)
+> and [AGENTS.md](./AGENTS.md). Read this plan for historical intent; its phase
+> sequence and agent instructions below do not restart completed work. The old
+> decision and handoff journals are available in Git history only.
 
 A wiki-driven loot table database and kill simulator for Old School RuneScape.
 
@@ -26,7 +27,7 @@ re-litigate. Where it says **VERIFY**, check reality before building against the
    `if (boss === 'zulrah')`, the model is missing an expressive feature. Fix the model instead.
 4. Every phase ends with tests passing and a commit. Do not batch phases into one commit.
 5. When wiki data contradicts this document, trust the wiki and flag the contradiction in
-   `docs/DECISIONS.md`.
+   `docs/PROJECT_GUIDE.md`.
 
 ---
 
@@ -128,7 +129,7 @@ osrs-loot-sim/
 ├── docs/
 │   ├── LOOT_MODEL.md               # the schema, explained for contributors
 │   ├── OVERRIDES.md                # how to hand-author a boss
-│   └── DECISIONS.md                # running log of judgement calls
+│   └── PROJECT_GUIDE.md            # maintained engineering context and decisions
 ├── infra.example/                  # committed template, placeholders only
 ├── infra/                          # GITIGNORED. real IDs, scripts, secrets.
 ├── CLAUDE.md
@@ -696,7 +697,7 @@ against static JSON. The backend is additive, never load-bearing.
 - **ESLint** with an import-boundary rule: `loot-model` may not import from `apps/*`.
 - **Conventional commits**: `feat:`, `fix:`, `data:`, `chore:`.
 - No default exports except React components.
-- Write `docs/DECISIONS.md` entries whenever you make a judgement call the spec did not cover.
+- Update `docs/PROJECT_GUIDE.md` in place when a judgement call changes current guidance.
 
 ---
 
@@ -752,7 +753,7 @@ Only if wanted. See section 14.
 
 ## 17. Open questions
 
-Record answers in `docs/DECISIONS.md` as they are resolved.
+Record answers in `docs/PROJECT_GUIDE.md` as they are resolved.
 
 1. Exact `drops` bucket field names. **VERIFY against the live wiki before Phase 2.**
 2. Are pre-roll tables reliably distinguishable from the page structure, or does every pre-roll

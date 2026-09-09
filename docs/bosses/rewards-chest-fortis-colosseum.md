@@ -1,6 +1,6 @@
 # Rewards Chest (Fortis Colosseum)
 
-> ### 🛠 CORRECTED — 2026-08-21, see `docs/DECISIONS.md`'s "Fortis Colosseum
+> ### 🛠 CORRECTED — 2026-08-21, see [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Fortis Colosseum
 > ### accumulation fix" entry
 >
 > **The Phase 7 build below shipped the wrong selection semantics — fixed.**
@@ -125,8 +125,8 @@
 > state, deeper inline table nesting, party/team context, and real
 > implementations for every `FORMULA_IDS` entry — current status:
 > `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
-> See `docs/DECISIONS.md`.
+> count restated here (see [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s formula-status entry).
+> See [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md).
 
 
 `lootSourceId: rewards-chest-fortis-colosseum` (tier D, `include: true`, `repeatable: true`,
@@ -141,7 +141,7 @@ https://oldschool.runescape.wiki/w/Rewards_Chest_(Fortis_Colosseum) — pageid `
 
 ## Watchlist label sanity check
 
-**Correct**, and this doc's job is mostly to confirm the shape `docs/DECISIONS.md`'s "Phase 6
+**Correct**, and this doc's job is mostly to confirm the shape [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Phase 6
 research item" already inferred without reading this page's wave sections individually. It's
 right: each `Wave N` heading is a genuine, independent, well-formed drop table (`Wave 1` is a
 trivial `Always: 80 sunfire splinters`; `Wave 12` is a full 16-row weighted table), and loot is
@@ -266,7 +266,7 @@ override today.
    (`ownershipGate`/`OwnershipGate`), but scoped to "this run" rather than "lifetime, across the
    whole simulated batch." `docs/mechanics-model-proposal.md`'s Extension B section confirms all
    four shipped ownership sources (Duke Sucellus, ToA, Lunar Chest, Reward Cart) are
-   lifetime-scoped, and HANDOFF.md's Extension B summary still lists "run-scoped (within-kill)
+   lifetime-scoped, and [historical session handoff](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/HANDOFF.md)'s Extension B summary still lists "run-scoped (within-kill)
    dynamic state" as absent — unchanged by this session's fetches, since this is a schema/engine
    question, not a research one. **Ship the flagged with-replacement approximation instead of
    building it**, per the banner: treat the two armour pieces as ordinary weighted-pool draws with

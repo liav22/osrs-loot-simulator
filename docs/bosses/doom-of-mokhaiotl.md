@@ -1,45 +1,11 @@
 # Doom of Mokhaiotl
 
-> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
->
-> The **mechanics, prose and cited numbers in this doc are accurate** and are
-> what to implement from. Its "What the mapping needs that doesn't exist"
-> section is **not** — it was written before Extensions A and B, step (c)
-> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
-> never been revised. Corrections for this source:
->
-> - **The central verdict here is WRONG and should not be acted on.** This doc
->   says the mapping "cannot be meaningfully proposed without wave/level
->   machinery existing first," and treats the source as evidence that wave
->   structure needs a shared abstraction. It does not. Gating each level's
->   table on `levelAtLeast('delveLevel', n)` makes every level up to the one
->   reached fire its own roll — which IS per-level bankable loot — so this is
->   N tables in the existing `tables` array, not a new structural concept.
->   `docs/mechanics-model-proposal.md` reached this conclusion after reading
->   all 14 docs; it is confirmed against `conditions.ts`, where `levelAtLeast`
->   is a plain `ctx[field] >= n`. **No wave machinery is needed.**
-> - Consequently the "population of one" question this doc reopens does not
->   need re-deciding: neither this source nor Fortis Colosseum needs a wave
->   engine. What Fortis Colosseum still needs is *run-scoped* state for its
->   armour dedup, which is a different gap and remains deliberately deferred.
-> - Gap 2 (per-run scalar) — **RESOLVED**: `ctx.delveLevel`.
-> - The quantity rule `Qn = Q3 + trunc(Q3 * Mn)` is expressible as
->   `qtyMultiplier: 1 + Mn` with `qtyRounding: 'truncDelta'` — added
->   specifically for this rule, because rounding the *product* does not
->   reproduce it once `Mn` is negative.
->
-> Model capabilities now available: per-run `SimContext` scalars (`points`,
-> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
-> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
-> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
-> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
-> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
-> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
-> state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry — current status:
-> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
-> See `docs/DECISIONS.md`.
+> Historical source research. Numbers and citations below refer to the recorded
+> wiki revisions; capability verdicts and implementation plans may be superseded.
+> Start with [the current project guide](../PROJECT_GUIDE.md), then check this
+> source's generated document, override (if present), watchlist entry, and tests.
+> For model capabilities, inspect `packages/loot-model/src/schema.ts` and
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`.
 
 
 `lootSourceId: doom-of-mokhaiotl`. Watchlisted (`other`) via the ambiguous-heading path, not
@@ -51,10 +17,10 @@ fetched 2026-08-11T13:22:50Z) postdates this revid, current, no re-fetch needed.
 
 ## Watchlist label sanity check — the framing is materially wrong, not just imprecise
 
-`data/mechanics-watchlist.json`'s entry and `docs/DECISIONS.md`'s "Ambiguous-heading-guess"
+`data/mechanics-watchlist.json`'s entry and [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Ambiguous-heading-guess"
 entry both describe this as **"the same wave/level-scaling shape as Fortis Colosseum's wave
 scaling, one level deeper"** — correctly spotting the resemblance — but then file it as a
-plain `other`/ambiguous-preroll-guess case, and separately, `docs/DECISIONS.md`'s "Phase 6
+plain `other`/ambiguous-preroll-guess case, and separately, [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Phase 6
 research item" concluded **"Fortis Colosseum's wave structure is currently a population of
 one... no shared abstraction is justified by this evidence."** Read side by side, those two
 conclusions are in tension: the second was written without connecting it back to the first.
@@ -147,7 +113,7 @@ possible.
 1. **Wave/level-indexed table structure with per-level bankable loot** — the same gap Fortis
    Colosseum needs (see `docs/bosses/rewards-chest-fortis-colosseum.md`), not a new one. This
    doc's contribution is evidence that this gap has **two** real sources now, not one — directly
-   relevant to the open "population of one" question `docs/DECISIONS.md` raised.
+   relevant to the open "population of one" question [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md) raised.
 2. **Gap 1** (per-run scalar) still applies underneath the level machinery — "how many levels did
    the player clear this run" is exactly the same *shape* of per-run context value as ToA's raid
    level or Fortis Colosseum's waves-completed, just discrete and small-ranged (1–9+, unbounded

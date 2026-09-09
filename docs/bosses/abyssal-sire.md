@@ -1,33 +1,11 @@
 # Abyssal Sire
 
-> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
->
-> The **mechanics, prose and cited numbers in this doc are accurate** and are
-> what to implement from. Its "What the mapping needs that doesn't exist"
-> section is **not** — it was written before Extensions A and B, step (c)
-> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
-> never been revised. Corrections for this source:
->
-> - **SHIPPED — this source is `verified` as of 2026-08-13.** Its single gap
->   ("`TableRefNodeSchema` has no `multiplier`") is **RESOLVED** by
->   `TableRefNode.qtyMultiplier`; the parser emits it from `multiplier=2`, and
->   the wiki's "double the usual quantity" is verified in
->   `apps/ingest/test/rdt-access-mechanics.test.ts`. Off the mechanics
->   watchlist. The doc's prediction that this is the simplest member of the
->   quantity-scaling family, and the right one to build first, held exactly.
->
-> Model capabilities now available: per-run `SimContext` scalars (`points`,
-> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
-> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
-> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
-> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
-> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
-> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
-> state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry — current status:
-> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
-> See `docs/DECISIONS.md`.
+> Historical source research. Numbers and citations below refer to the recorded
+> wiki revisions; capability verdicts and implementation plans may be superseded.
+> Start with [the current project guide](../PROJECT_GUIDE.md), then check this
+> source's generated document, override (if present), watchlist entry, and tests.
+> For model capabilities, inspect `packages/loot-model/src/schema.ts` and
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`.
 
 
 `lootSourceId: abyssal-sire`. Watchlisted (`other`). No blocked sources.
@@ -45,7 +23,7 @@ Source: **Abyssal Sire** — https://oldschool.runescape.wiki/w/Abyssal_Sire —
 drop table]]. This monster will always drop double the usual quantity from this table.|multiplier=2}}
 ```
 
-This is the exact template shape `docs/DECISIONS.md`'s "Wired `tableRef` into the parser" entry
+This is the exact template shape [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Wired `tableRef` into the parser" entry
 already documents `rdt-access.ts` reading — including confirming `multiplier=N` is real and
 currently produces a watchlist hit rather than a silent wrong answer, per that entry: "scales the
 QUANTITY the RDT yields, which a single shared, unscaled `data/tables/rare_drop_table.json`

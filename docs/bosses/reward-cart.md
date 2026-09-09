@@ -1,36 +1,11 @@
 # Reward Cart — Wintertodt
 
-> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
->
-> The **mechanics, prose and cited numbers in this doc are accurate** and are
-> what to implement from. Its "What the mapping needs that doesn't exist"
-> section is **not** — it was written before Extensions A and B, step (c)
-> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
-> never been revised. Corrections for this source:
->
-> - Gap 1 (`SimContext` points) — **RESOLVED**: `ctx.points`.
-> - Gap 3 (warm gloves / bruma torch substitution after 3 owned) —
->   **RESOLVED**: `Entry.ownershipGate` with `n: 3`, `when: 'atLeast'` — the
->   threshold case the gate's `n` was generalised for.
-> - Gap 2 (`preroll` is schema-pinned to `rolls: 1`) — **STILL OPEN, and it is
->   now the only model-level blocker for this source.** The recommended fix is
->   NOT to lift the pin (that reopens repeat-suppression semantics for every
->   preroll table); it is a node kind wrapping a small local `Table[]`, rolled
->   `rolls(points)` times by an outer `independent` wrapper — the `z.lazy`
->   escape hatch Phase 1 anticipated. Not built.
->
-> Model capabilities now available: per-run `SimContext` scalars (`points`,
-> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
-> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
-> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
-> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
-> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
-> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
-> state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry — current status:
-> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
-> See `docs/DECISIONS.md`.
+> Historical source research. Numbers and citations below refer to the recorded
+> wiki revisions; capability verdicts and implementation plans may be superseded.
+> Start with [the current project guide](../PROJECT_GUIDE.md), then check this
+> source's generated document, override (if present), watchlist entry, and tests.
+> For model capabilities, inspect `packages/loot-model/src/schema.ts` and
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`.
 
 
 `lootSourceId: reward-cart`. Watchlisted (`point_scaled`).
@@ -134,7 +109,7 @@ tables: [
 
 The 7-tier ordered chain is a **textbook fit for `preroll` mode as it already exists** — "checked
 in order, first hit short-circuits, falls through to the next table" is exactly this mechanic,
-and (per `docs/DECISIONS.md`'s Phase 1 entry) a preroll hit already suppresses a later `weighted`
+and (per [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s Phase 1 entry) a preroll hit already suppresses a later `weighted`
 table, which is exactly "fall through to material table only if none of the 7 hit." **No model
 change is needed for the chain shape itself** — same conclusion as Duke Sucellus's roll-until-
 success chain (see that doc). The only real gap is running this chain `rolls(points)` times per
@@ -145,7 +120,7 @@ Wintertodt kill.
 1. **Gap 1** (`SimContext` needs a per-run `points` field) — shared with every other points-scaled
    source in this batch.
 2. **Beyond gap 1: `preroll` tables are schema-pinned to `rolls: 1`**
-   (`docs/DECISIONS.md`, Phase 1: "preroll tables must have `rolls: 1`... has no defined meaning
+   ([historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md), Phase 1: "preroll tables must have `rolls: 1`... has no defined meaning
    when repeated"). This is now the **third** source (after Lunar Chest, Reward pool) needing
    `rolls` to read an arbitrary context-derived integer rather than a static number or Bernoulli
    rate — but this one additionally needs that integer applied to a `preroll`-mode table

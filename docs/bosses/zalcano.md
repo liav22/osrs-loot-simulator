@@ -1,40 +1,11 @@
 # Zalcano
 
-> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
->
-> The **mechanics, prose and cited numbers in this doc are accurate** and are
-> what to implement from. Its "What the mapping needs that doesn't exist"
-> section is **not** — it was written before Extensions A and B, step (c)
-> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
-> never been revised. Corrections for this source:
->
-> - Gap 1 (`SimContext` points) — **RESOLVED**, and in the two-value shape this
->   doc argued for: `ctx.hitpointsDamage` + `ctx.shieldDamage` kept raw, with
->   `zalcano_points` (registered, still a stub) doing the derivation.
-> - Gap 3 (MVP's self-referential +10%) — **RESOLVED**: `Table.qtyMultiplier`
->   of 1.1 with `qtyRounding: 'ceilDelta'`. This doc's framing that the MVP
->   bonus needs a mechanism *distinct* from Duke Sucellus's perfect-kill +50%
->   is **wrong** — both are "scale this table's realized quantity by a scalar,
->   gated on a per-run boolean," one mechanism. But this doc's "(rounded up)"
->   detail was load-bearing and correct: it is why `ceilDelta` exists.
-> - Gap 2 (crystal shard as a discrete role-keyed tier) — **PARTIALLY
->   RESOLVED**: `QtySpec.formula` can return a stepped value, so the tiering is
->   expressible, but the *role* input has no `SimContext` field. Needs either a
->   role field or modelling as a `variant` condition.
-> - Gap 4 (team point-allocation) — out of scope, same as CoX.
->
-> Model capabilities now available: per-run `SimContext` scalars (`points`,
-> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
-> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
-> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
-> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
-> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
-> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
-> state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry — current status:
-> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
-> See `docs/DECISIONS.md`.
+> Historical source research. Numbers and citations below refer to the recorded
+> wiki revisions; capability verdicts and implementation plans may be superseded.
+> Start with [the current project guide](../PROJECT_GUIDE.md), then check this
+> source's generated document, override (if present), watchlist entry, and tests.
+> For model capabilities, inspect `packages/loot-model/src/schema.ts` and
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`.
 
 
 `lootSourceId: zalcano`. Watchlisted (`point_scaled`). No blocked sources.
@@ -82,7 +53,7 @@ and tertiary-table points are computed with *different* formulas (only the terti
 ## Formulas
 
 ### `zalcano_points` (no existing formula id matches; PROJECT_PLAN.md 4.6's registry has no
-Zalcano-shaped entry, as HANDOFF.md already flagged — "closest is a new points formula, or reuse
+Zalcano-shaped entry, as [historical session handoff](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/HANDOFF.md) already flagged — "closest is a new points formula, or reuse
 `tob_points`'s shape," but ToB turned out (see `docs/bosses/monumental-chest.md`) to *not* actually
 be points-driven, so there is nothing to reuse; this needs its own id.)
 

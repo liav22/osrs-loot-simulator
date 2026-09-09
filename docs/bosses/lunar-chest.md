@@ -1,45 +1,11 @@
 # Lunar Chest — Moons of Peril
 
-> ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-13
->
-> The **mechanics, prose and cited numbers in this doc are accurate** and are
-> what to implement from. Its "What the mapping needs that doesn't exist"
-> section is **not** — it was written before Extensions A and B, step (c)
-> (`suppressesFollowing`, `drawsPerHit`) and `qtyRounding` existed, and has
-> never been revised. Corrections for this source:
->
-> - **CORRECTION (2026-08-14): this banner previously claimed "fully unblocked
->   at the model level". That was wrong** — checked against `conditions.ts`
->   while implementing, not re-derived from the field list. `ctx.moonsKilled`
->   exists, but **no `Condition` kind can read it**: the seven kinds are
->   `members`/`ringOfWealth`/`onSlayerTask`/`questComplete`/`killCountAtLeast`/
->   `variant`/`levelAtLeast`, and none does set membership. Having a
->   `SimContext` field is not the same as being able to gate an entry on it.
-> - Gap 1 (per-run context, "which Moons were killed") — **PARTIALLY
->   RESOLVED**: `ctx.moonsKilled` is the right shape and a `formula` can read
->   it (so the 1x/3x/6x standard-loot roll count via `Table.rolls` is fine),
->   but per-Moon *entry gating* needs a set-membership condition that does not
->   exist. `variant` cannot substitute: it is single-valued and up to three
->   Moons apply at once.
-> - Gap 2 (`Table.rolls` cannot read an integer from context) — **RESOLVED**:
->   a `formula`-kind `Rate` used as `rolls` is evaluated as an integer count.
-> - Gap 3 (per-set duplicate protection needs "pieces not yet obtained") —
->   **RESOLVED**: `Entry.ownershipGate` plus `effectiveWeightedPool`, which
->   shrinks the drawn-from pool rather than leaving a chance-of-nothing.
-> - What remains is boss-document and formula work, not model work.
->
-> Model capabilities now available: per-run `SimContext` scalars (`points`,
-> `raidLevel`, `deaths`, `perfectKill`, `isMVP`, `delveLevel`, `wavesReached`,
-> `moonsKilled`, `fishingLevel`, `hitpointsDamage`, `shieldDamage`,
-> `ownedCounts`); `QtySpec.formula`; formula-driven `Table.rolls`;
-> `Table`/`TableRefNode` `qtyMultiplier` + `qtyRounding`;
-> `Condition.levelAtLeast`; `Entry.ownershipGate`; `Table.suppressesFollowing`;
-> `TableRefNode.drawsPerHit`. Still absent: run-scoped (within-kill) dynamic
-> state, deeper inline table nesting, `data/overrides/`, party/team context,
-> and real implementations for every `FORMULA_IDS` entry — current status:
-> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
-> See `docs/DECISIONS.md`.
+> Historical source research. Numbers and citations below refer to the recorded
+> wiki revisions; capability verdicts and implementation plans may be superseded.
+> Start with [the current project guide](../PROJECT_GUIDE.md), then check this
+> source's generated document, override (if present), watchlist entry, and tests.
+> For model capabilities, inspect `packages/loot-model/src/schema.ts` and
+> `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`.
 
 
 `lootSourceId: lunar-chest`. Watchlisted (`without_replacement`). Blocks: Blood Moon, Blue Moon,
@@ -126,7 +92,7 @@ The three per-Moon tables as separate `preroll` entries, each independently gate
 reproduces "any hit skips standard loot" via the existing `suppressedByPreroll` rule (a hit on any
 one of the three preroll tables suppresses `lunar:standard`, which is `weighted`) — this part
 needs no new suppression mechanism, unlike CoX. The *within-set* duplicate protection is exactly
-what `Table.withoutReplacement` already models, confirming HANDOFF.md's "cheapest real fix
+what `Table.withoutReplacement` already models, confirming [historical session handoff](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/HANDOFF.md)'s "cheapest real fix
 available" framing — **for the per-set sub-roll**, this source needs no model change, only
 wiring.
 

@@ -41,7 +41,7 @@
 > re-parse).
 >
 > `not_on_watchlist` still fails deliberately, left for the user — see
-> `docs/DECISIONS.md`'s "Phase 7: Chambers of Xeric" entry for the same
+> [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "Phase 7: Chambers of Xeric" entry for the same
 > shipped-vs-watchlisted judgement call ToB's own entry names.
 >
 > ### ⚠️ Capability verdicts below are STALE — re-audited 2026-08-16
@@ -71,9 +71,9 @@
 >   `floor(personalPoints / divisor)`, one divisor per item. See "The
 >   `Calculator:Chambers of Xeric loot` module" below — same shape of miss as
 >   ToA's own "missing source, not missing fact" interpolation gap
->   (`docs/DECISIONS.md`).
+>   ([historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)).
 > - **No longer `parse_failed`.** The `DROPS_SECTION_TITLE`/`HEADING_PATTERN`
->   widening (2026-08-16, `docs/DECISIONS.md`'s "DROPS_SECTION_TITLE
+>   widening (2026-08-16, [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s "DROPS_SECTION_TITLE
 >   widening" entry) now reaches `==Loot table==`. **A real document exists —
 >   `data/bosses/ancient-chest.json`, `status: needs_review`, every
 >   structural check green (`weights_sum`, `refs_resolve`, `rates_valid`,
@@ -98,9 +98,9 @@
 > state, deeper inline table nesting, party/team context, and real
 > implementations for every `FORMULA_IDS` entry — current status:
 > `IMPLEMENTED_FORMULA_IDS` in `packages/loot-model/src/formulas.ts`, not a
-> count restated here (see `docs/DECISIONS.md`'s formula-status entry).
+> count restated here (see [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s formula-status entry).
 > `data/overrides/` exists and is in use (ToA, Doom of Mokhaiotl, Lunar Chest,
-> Zalcano, Reward pool). See `docs/DECISIONS.md`.
+> Zalcano, Reward pool). See [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md).
 
 
 `lootSourceId: ancient-chest` (tier A, `include: true`, `repeatable: true`). Watchlisted
@@ -124,7 +124,7 @@ Sources:
   the actual formulas, fetched fresh this session (not previously in `data/snapshots/`) via
   `apps/ingest/src/fetch-wikitext-for.ts`, the same tool and etiquette queue ToA's Module fetches
   used. Not a parser-bug re-fetch (CLAUDE.md's rule is about re-parsing from `data/snapshots/`, not
-  about fetching pages never fetched before — `docs/DECISIONS.md`'s ToA entry states this
+  about fetching pages never fetched before — [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s ToA entry states this
   distinction explicitly).
 
 ## The reward mechanic, in prose
@@ -261,18 +261,18 @@ evenly"), and that ratio is applied directly as this player's own share of both 
 expectation and (implicitly) the recipient probability. For solo play `personalPoints ==
 groupPoints`, so `personalRatio = 1` and the whole mechanic collapses cleanly onto a single-player
 `SimContext` — exactly what this doc already recommended before the module was read. Team/party
-`SimContext` stays unbuilt and unrequested, per `docs/HANDOFF.md`'s Extension B section.
+`SimContext` stays unbuilt and unrequested, per [historical session handoff](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/HANDOFF.md)'s Extension B section.
 
 ## Why this now generates a document but must not ship `verified`
 
 **No longer `parse_failed` — see the corrected banner at the top of this file.** This section is
-kept for the history: HANDOFF.md's landmine notes called this "zero `{{DropsLine}}`-shaped content
+kept for the history: [historical session handoff](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/HANDOFF.md)'s landmine notes called this "zero `{{DropsLine}}`-shaped content
 on its page at all," true literally (the template used is `{{DropsLineReward}}`, confirmed present
 and well-formed throughout this page) but overstating the cause. The real reason `findDropsSections`
 found nothing before 2026-08-16: this page's heading is `==Loot table==`, and the *original*
 `DROPS_SECTION_TITLE` regex required the heading's own last significant word to be
 "drops"/"rewards" — "Loot table" matched neither. The `DROPS_SECTION_TITLE`/`HEADING_PATTERN`
-widening session (`docs/DECISIONS.md`) fixed exactly this class of gap, generically, not as an
+widening session ([historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)) fixed exactly this class of gap, generically, not as an
 Ancient-chest special case, and it now reaches `==Loot table==` and produces a real, structurally
 clean document. **What blocks `verified` today is `not_on_watchlist` alone** — the parser has no
 notion of the points-scaled preroll/suppression mechanic, so its naive read of the two tables it
@@ -320,7 +320,7 @@ tables: [
 
 `cox:common`'s `rolls: 2, withoutReplacement: true` is a **direct, already-supported use** of the
 schema field PROJECT_PLAN.md's Phase 1 decision log added for exactly this shape (see
-`docs/DECISIONS.md`, "Table.withoutReplacement?: boolean") — no new model feature needed for the
+[historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md), "Table.withoutReplacement?: boolean") — no new model feature needed for the
 "cannot roll the same drop twice" behaviour.
 
 ## What the mapping needs that doesn't exist

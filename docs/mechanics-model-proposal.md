@@ -1,5 +1,10 @@
 # Proposal: model and simulator extensions for the 17 non-verified sources
 
+> Historical proposal and implementation notes. For current behavior and open
+> limitations, start with [PROJECT_GUIDE.md](PROJECT_GUIDE.md). Check the schema,
+> formula registry and tests before relying on a capability or benchmark claim.
+> The former [decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md) remains in Git history.
+
 Written after reading all 14 `docs/bosses/*.md` research docs plus the current
 `packages/loot-model/src/{schema,compile,simulate,formulas}.ts`. No code
 changes are included here except the watchlist swap fix and the watchlist/
@@ -365,7 +370,7 @@ the boss doc's formulas already reference — or, more consistently with
 sources end up needing a leveled gate. I'd start narrow (two boss-specific
 conditions or one parametrized one) and widen only if a third source shows
 up, matching how this project has handled every other "is this general
-enough yet" call so far (see DECISIONS.md's repeated refusal to widen the
+enough yet" call so far (see [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)'s repeated refusal to widen the
 "Uniques" heading keyword on exactly this kind of "not yet, only one/two
 confirmed cases" reasoning).
 
@@ -415,7 +420,7 @@ the "a nested table's chain is local" rule Phase 1 already established for
 independently each time. `oneOf`'s current one-level-deep, leaf-only
 restriction was deliberately left narrow in Phase 1 pending exactly this kind
 of need ("If Phase 3 needs deeper inline nesting, swap in a `z.lazy` schema
-and accept the one annotation" — see DECISIONS.md). I'd recommend that here:
+and accept the one annotation" — see [historical decision journal](https://github.com/liav22/osrs-loot-simulator/blob/ff8bcffe22e97a40d06aff20ef12b71050968d00/docs/DECISIONS.md)). I'd recommend that here:
 a new node kind wrapping a small local `Table[]`, referenced the way
 `tableRef` is today, rolled `rolls(points)` times by an outer `independent`
 wrapper. This is a slightly bigger schema change than the rest of Extension
