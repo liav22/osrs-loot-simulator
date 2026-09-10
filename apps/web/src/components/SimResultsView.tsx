@@ -93,12 +93,18 @@ export function SimResultsView({ boss, result, expected, pricesAvailable, ctx, s
         <span className="text-neutral-300">
           <span className="font-mono text-neutral-100">{formatNumber(result.kills)}</span> kills
         </span>
-        <span className="text-neutral-300">
-          <span className="font-mono text-neutral-100">{formatGp(result.gpTotal)}</span> total
-        </span>
-        <span className="text-neutral-300">
-          <span className="font-mono text-neutral-100">{formatGp(result.gpPerKill)}</span> / kill
-        </span>
+        {pricesAvailable ? (
+          <>
+            <span className="text-neutral-300">
+              <span className="font-mono text-neutral-100">{formatGp(result.gpTotal)}</span> total
+            </span>
+            <span className="text-neutral-300">
+              <span className="font-mono text-neutral-100">{formatGp(result.gpPerKill)}</span> / kill
+            </span>
+          </>
+        ) : (
+          <span className="text-muted">Prices unavailable</span>
+        )}
         <span className="text-xs text-muted">seed {result.seed}</span>
       </div>
 

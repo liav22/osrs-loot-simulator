@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { expectedValue, type ExpectedValueResult } from '@osrs-loot-simulator/loot-model'
+import { expectedValue, type ExpectedValueResult, type SimContext } from '@osrs-loot-simulator/loot-model'
 import { useBoss, useSharedTables } from '../hooks/useBoss'
 import { useSimulationWorker } from '../hooks/useSimulationWorker'
 import { useGePrices } from '../hooks/useGePrices'
@@ -9,6 +9,20 @@ import { gePriceLookup } from '../lib/prices'
 import { paramsFromSearch, RANDOM_SEED, rollSeed, searchFromParams, type SimRunParams } from '../lib/url-state'
 import { BossPanel } from './BossPanel'
 import { SimResultsView } from './SimResultsView'
+
+// Compare the controls, including random-seed mode, independently of run=1.
+function settingsKey(params: SimRunParams): string {
+  return searchFromParams({
+    ...params,
+    run: false,
+    ctx: {
+      ...params.ctx,
+      questsComplete: [...params.ctx.questsComplete].sort(),
+      moonsKilled: [...params.ctx.moonsKilled].sort(),
+      ownedCounts: Object.fromEntries(Object.entries(params.ctx.ownedCounts).sort(([a], [b]) => a.localeCompare(b))),
+    },
+  }).toString()
+}
 
 export function BossView({ slug }: { slug: string }) {
   const bossQuery = useBoss(slug)
@@ -82,35 +96,38 @@ export function BossView({ slug }: { slug: string }) {
     [searchParams, bossQuery.data]
   )
 
+  // Keep result explanations tied to the dispatched run, even while controls
+  // change or prices finish loading.
+  const [runSnapshot, setRunSnapshot] = useState<{
+    ctx: SimContext
+    prices: ReadonlyMap<number, number>
+    settingsKey: string
+  } | null>(null)
+
   const expected: ExpectedValueResult | undefined = useMemo(() => {
-    if (bossQuery.data === undefined || tablesQuery.data === undefined) return undefined
+    if (bossQuery.data === undefined || tablesQuery.data === undefined || runSnapshot === null) return undefined
     try {
-      return expectedValue(bossQuery.data, effectiveCtx, {
+      return expectedValue(bossQuery.data, runSnapshot.ctx, {
         tables: tablesQuery.data,
-        prices: pricesQuery.data !== undefined ? gePriceLookup(pricesQuery.data) : undefined,
+        prices: runSnapshot.prices.size > 0 ? gePriceLookup(runSnapshot.prices) : undefined,
       })
     } catch {
       return undefined
     }
-  }, [bossQuery.data, tablesQuery.data, pricesQuery.data, effectiveCtx])
+  }, [bossQuery.data, tablesQuery.data, runSnapshot])
 
-  /**
-   * Whether the run currently on screen was priced — a property of that run,
-   * not of the price query right now.
-   *
-   * This must be recorded synchronously when the simulation is dispatched, not
-   * in a separate React state update that can lag behind the worker result.
-   * The price query can settle after the run has already landed, and the UI
-   * needs to label the result with the prices that actually ran, not the ones
-   * that happen to exist a moment later.
-   */
-  const ranWithPricesRef = useRef(false)
+  const settingsChanged = runSnapshot !== null &&
+    runSnapshot.settingsKey !== settingsKey({ ...params, ctx: effectiveCtx })
 
   const runWith = useCallback(
     (next: SimRunParams) => {
       if (bossQuery.data === undefined || tablesQuery.data === undefined) return
       const prices = pricesQuery.data ?? new Map<number, number>()
-      ranWithPricesRef.current = prices.size > 0
+      setRunSnapshot({
+        ctx: effectiveCtx,
+        prices,
+        settingsKey: settingsKey({ ...next, ctx: effectiveCtx, seed: params.seed }),
+      })
       run({
         boss: bossQuery.data,
         // `effectiveCtx`, not `next.ctx`: every caller builds `next` from
@@ -124,7 +141,7 @@ export function BossView({ slug }: { slug: string }) {
         prices,
       })
     },
-    [bossQuery.data, tablesQuery.data, pricesQuery.data, effectiveCtx, run]
+    [bossQuery.data, tablesQuery.data, pricesQuery.data, effectiveCtx, params.seed, run]
   )
 
   /**
@@ -172,8 +189,6 @@ export function BossView({ slug }: { slug: string }) {
     if (pricesQuery.isLoading || !pricesQuery.isFetched) return
 
     autoRan.current = true
-    const prices = pricesQuery.data ?? new Map<number, number>()
-    ranWithPricesRef.current = prices.size > 0
 
     // Every link this app produces carries a real seed, so the sentinel branch
     // is only reachable on a hand-edited `?run=1&seed=0`. Rolling is the right
@@ -243,15 +258,22 @@ export function BossView({ slug }: { slug: string }) {
             <p className="text-sm text-muted">Simulating…</p>
           </div>
         )}
-        {simState.status === 'done' && (
-          <SimResultsView
-            boss={boss}
-            result={simState.result}
-            expected={expected}
-            pricesAvailable={ranWithPricesRef.current}
-            ctx={effectiveCtx}
-            sharedTables={tablesQuery.data}
-          />
+        {simState.status === 'done' && runSnapshot !== null && (
+          <>
+            {settingsChanged && (
+              <p role="status" className="mb-3 shrink-0 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-200">
+                Settings changed. These results use your previous settings. Press Simulate to update them.
+              </p>
+            )}
+            <SimResultsView
+              boss={boss}
+              result={simState.result}
+              expected={expected}
+              pricesAvailable={runSnapshot.prices.size > 0}
+              ctx={runSnapshot.ctx}
+              sharedTables={tablesQuery.data}
+            />
+          </>
         )}
       </section>
     </div>

@@ -173,6 +173,12 @@ JSON is fetched at runtime; the site index supplies the shared-table manifest.
 `dev`/`build`. Data URLs and navigation must respect the Pages base path.
 The admin route is development-only and must stay out of the production bundle.
 
+Results retain the context and price availability used when dispatched. Editing
+controls shows a previous-settings notice until rerunning or restoring the
+original settings; item probability details continue to describe the displayed
+run. Unpriced runs show “Prices unavailable” in place of GP totals. Data caveats
+open in a scrollable dialog on both mobile and desktop.
+
 URL state preserves context and the actual RNG seed. UI seed zero requests a
 fresh seed for each run. Context controls derive from conditions, formula input
 metadata, and ownership gates; apply `Boss.contextDefaults` before URL overrides.

@@ -37,7 +37,10 @@ engineering context and limitations.
 - TypeScript strict, `noUncheckedIndexedAccess` on.
 - Zod at every boundary: wiki responses in, JSON files in and out, worker messages.
 - Vitest everywhere; `packages/loot-model` targets high coverage since it's pure.
-- Conventional commits: `feat:`, `fix:`, `data:`, `chore:`.
+- Commit messages use bracketed prefixes: `[feat]`, `[fix]`, `[data]`, `[docs]`, `[chore]`.
+- After implementing any change, finish the final response with a one-line
+  suggested commit message in the form `[type] concise description`, matching
+  the Git history. Providing this message does not authorize creating a commit.
 - No default exports except React components.
 
 ## Commands

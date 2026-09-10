@@ -53,6 +53,7 @@ export function BossPanel({
   onSimulate: () => void
   running: boolean
 }) {
+  const [reasonOpen, setReasonOpen] = useState(false)
   const [tableOpen, setTableOpen] = useState(false)
   const src = bossImageUrl(image, 300)
   // `staleTime: Infinity` (see the hook) and the same query key `SimResultsView`
@@ -128,19 +129,17 @@ export function BossPanel({
       */}
       {boss.status === 'needs_review' && (
         <div className={`rounded-md border px-2.5 py-1.5 text-xs ${reasonBoxStyle(boss.statusTier)}`}>
-          {/*
-            `line-clamp-3`, not the full paragraph: a specific reason
-            (nex's 21-item list, ancient-chest's raid override note) can run
-            to hundreds of words, and this box sits in the panel's FIXED
-            header — above the `min-h-0 flex-1 overflow-y-auto` controls
-            region, not inside it — so an unclamped reason pushes Simulate
-            off a short viewport instead of scrolling under it. `title`
-            carries the untruncated text for a hover; the admin link (below,
-            never clamped) is the reliable way to read the rest.
-          */}
-          <p className="line-clamp-3" title={boss.statusReason ?? undefined}>
+          <p className="line-clamp-3">
             {boss.statusReason ?? "Hasn't cleared every check — rates may be wrong."}
           </p>
+          <button
+            type="button"
+            aria-haspopup="dialog"
+            onClick={() => setReasonOpen(true)}
+            className="mt-1 flex min-h-11 items-center underline"
+          >
+            Read full caveat
+          </button>
           {/* The admin page is dev-only, so the link is too. Without this guard
               production would render a link to a route that no longer exists,
               which lands on the search page and reads as a broken app.
@@ -243,6 +242,14 @@ export function BossPanel({
           {running ? 'Simulating…' : 'Simulate'}
         </button>
       </div>
+
+      {reasonOpen && (
+        <Modal title={`${boss.name} — data caveat`} onClose={() => setReasonOpen(false)}>
+          <p className="whitespace-pre-wrap text-sm text-neutral-300">
+            {boss.statusReason ?? "Hasn't cleared every check — rates may be wrong."}
+          </p>
+        </Modal>
+      )}
 
       {tableOpen && (
         <Modal title={`${boss.name} — loot table`} onClose={() => setTableOpen(false)}>

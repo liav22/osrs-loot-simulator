@@ -155,8 +155,13 @@ pnpm --filter @osrs-loot-simulator/web test:e2e
 
 Inspect the working tree before editing and preserve unrelated user changes.
 The user handles Git operations: do not stage, commit, push, or otherwise mutate
-Git state unless asked. Read-only Git checks are encouraged. If commits are requested, use conventional prefixes such as
-`feat:`, `fix:`, `data:`, or `chore:` and keep implementation phases separate.
+Git state unless asked. Read-only Git checks are encouraged. If commits are
+requested, use the repository's bracketed prefixes such as `[feat]`, `[fix]`,
+`[data]`, `[docs]`, or `[chore]` and keep implementation phases separate.
+
+After implementing any change, finish the final response with a one-line
+suggested commit message in the form `[type] concise description`, matching
+the Git history. Providing this message does not authorize creating a commit.
 
 Keep changes scoped to the request. Explain what changed, which checks ran,
 and any remaining limitations. Update relevant documentation when behavior
