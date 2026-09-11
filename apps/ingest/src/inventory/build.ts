@@ -22,6 +22,7 @@ import {
   type LootSource,
 } from './schema.js'
 import { deriveRepeatable, loadRepeatableOverrides } from './repeatable.js'
+import { appendAdditionalSources, loadAdditionalSources } from './additional-sources.js'
 
 /**
  * Reclassifies the page inventory into loot sources (PROJECT_PLAN.md 6.1).
@@ -449,6 +450,8 @@ export async function buildInventory(
     log(`  ${boss.title} adopts the loot source of a page it links: ${target}`)
   }
   if (adopted > 0) log(`  ${adopted} pages re-homed by link\n`)
+
+  appendAdditionalSources(bosses, sources, await loadAdditionalSources())
 
   const inventory = InventorySchema.parse({
     inventoryVersion: INVENTORY_VERSION,

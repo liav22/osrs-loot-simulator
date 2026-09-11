@@ -119,7 +119,7 @@ export function gateAllows(
 ): boolean {
   if (table.ownershipGates === null) return true
   const gate = table.ownershipGates[i] ?? null
-  return gate === null || ownershipGateSatisfied(gate, ownedCounts[gate.itemKey] ?? 0)
+  return gate === null || ownershipGateSatisfied(gate, (key) => ownedCounts[key] ?? 0)
 }
 
 /**

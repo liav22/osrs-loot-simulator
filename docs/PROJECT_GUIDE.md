@@ -54,6 +54,12 @@ agree on semantics. Important distinctions to retain:
 - Fixed simulation context and formulas are resolved at compilation where
   possible. Ownership gates have evolving run state. Do not turn a static
   condition into a per-kill counter accidentally.
+- `ownershipGate.resetPerSet` subtracts completed sets (the minimum tracked
+  count across the specified item keys) before checking its threshold. This
+  supports repeating component protection while retaining cumulative loot
+  counts. Simulation and single-attempt expected value share this rule;
+  ownership-dependent milestones remain unsupported. See the
+  [repeating-set tests](../packages/loot-model/test/repeating-set.test.ts).
 - Probability calculations distinguish supported exact results from unsupported
   ownership-dependent cases. Preserve that classification rather than labeling
   every distribution exact. Exact here means relative to the modeled data,
@@ -67,6 +73,13 @@ changing these rules. `IMPLEMENTED_FORMULA_IDS` is the implementation inventory;
 a registered formula ID alone does not mean the formula is implemented.
 
 ## Parsing and item resolution
+
+Reward entities outside Category:Bosses can be registered in
+`data/additional-sources.json`. Inventory rebuilding validates and appends
+these explicit boss/source pairs, rejecting collisions with discovered sources.
+[Unsired](bosses/unsired.md) uses this route: each attempt offers one Unsired,
+with pet removal and repeating bludgeon-piece protection. Its displayed GP
+excludes the assembled bludgeon's value.
 
 Parser fixes reuse `data/snapshots/`; new research and deliberate refreshes are
 separate fetch operations. Missing cache files must be reported rather than

@@ -522,8 +522,23 @@ export const OwnershipGateSchema = z
     n: z.number().int().nonnegative(),
     /** 'below' = applies while owned < n (not yet reached); 'atLeast' = applies once owned >= n. */
     when: z.enum(['below', 'atLeast']),
+    /** Subtract completed sets (the minimum count across these keys) before testing n. */
+    resetPerSet: z.array(z.string().min(1)).min(2).optional(),
   })
   .strict()
+  .superRefine((gate, ctx) => {
+    if (
+      gate.resetPerSet !== undefined &&
+      (!gate.resetPerSet.includes(gate.itemKey) ||
+        new Set(gate.resetPerSet).size !== gate.resetPerSet.length)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'resetPerSet must contain distinct item keys including the gated item',
+        path: ['resetPerSet'],
+      })
+    }
+  })
 
 export type OwnershipGate = z.infer<typeof OwnershipGateSchema>
 

@@ -3033,6 +3033,54 @@
         "unique"
       ],
       "reason": "One of Zulrah's own unique drops, per the OSRS Wiki's drop table."
+    },
+    {
+      "bossSlug": "unsired",
+      "itemKey": "bludgeon-claw",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Unsired reward listed in the OSRS Wiki Rewards table, revision 15328493."
+    },
+    {
+      "bossSlug": "unsired",
+      "itemKey": "bludgeon-spine",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Unsired reward listed in the OSRS Wiki Rewards table, revision 15328493."
+    },
+    {
+      "bossSlug": "unsired",
+      "itemKey": "bludgeon-axon",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Unsired reward listed in the OSRS Wiki Rewards table, revision 15328493."
+    },
+    {
+      "bossSlug": "unsired",
+      "itemKey": "jar-of-miasma",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Unsired reward listed in the OSRS Wiki Rewards table, revision 15328493."
+    },
+    {
+      "bossSlug": "unsired",
+      "itemKey": "abyssal-head",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Unsired reward listed in the OSRS Wiki Rewards table, revision 15328493."
+    },
+    {
+      "bossSlug": "unsired",
+      "itemKey": "abyssal-orphan",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Unsired reward listed in the OSRS Wiki Rewards table, revision 15328493."
     }
   ]
 }

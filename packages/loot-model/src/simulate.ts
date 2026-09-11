@@ -262,7 +262,7 @@ function runTable(
         } else {
           for (let i = 0; i < table.nodes.length; i++) {
             const gate = gates[i] ?? null
-            if (gate !== null && !ownershipGateSatisfied(gate, owned.get(gate.itemKey))) continue
+            if (gate !== null && !ownershipGateSatisfied(gate, (key) => owned.get(key))) continue
             emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
           }
         }
@@ -277,7 +277,7 @@ function runTable(
           // it buys. `gates !== null` is a null check on a hoisted local.
           if (gates !== null) {
             const gate = gates[i] ?? null
-            if (gate !== null && !ownershipGateSatisfied(gate, owned.get(gate.itemKey))) continue
+            if (gate !== null && !ownershipGateSatisfied(gate, (key) => owned.get(key))) continue
           }
           if (rng.nextFloat() < table.probs[i]!) {
             emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)
@@ -296,7 +296,7 @@ function runTable(
         for (let i = 0; i < table.nodes.length; i++) {
           if (gates !== null) {
             const gate = gates[i] ?? null
-            if (gate !== null && !ownershipGateSatisfied(gate, owned.get(gate.itemKey))) continue
+            if (gate !== null && !ownershipGateSatisfied(gate, (key) => owned.get(key))) continue
           }
           if (rng.nextFloat() < table.probs[i]!) {
             emit(table.nodes[i]!, compiled, tally, rng, effectiveQty, effectiveRounding, owned)

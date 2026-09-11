@@ -124,13 +124,14 @@ function classifyTableGating(table: CompiledTable, itemSlot: number, itemKey: st
       const soleSelfGate =
         gateEntries.length === 1 &&
         gateEntries[0]!.gate.itemKey === itemKey &&
+        gateEntries[0]!.gate.resetPerSet === undefined &&
         nodeReachesItem(table.nodes[gateEntries[0]!.i]!, itemSlot)
       if (!soleSelfGate) return 'gated'
     } else {
       for (let i = 0; i < table.nodes.length; i++) {
         if (!nodeReachesItem(table.nodes[i]!, itemSlot)) continue
         const gate = gates[i] ?? null
-        if (gate !== null && gate.itemKey !== itemKey) return 'gated'
+        if (gate !== null && (gate.itemKey !== itemKey || gate.resetPerSet !== undefined)) return 'gated'
       }
     }
   }

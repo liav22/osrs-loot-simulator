@@ -192,6 +192,18 @@ async function deviations(
   const stated = await statedRates(boss.wikiPage)
   if (stated === null) return null
 
+  // Unsired revision 15328493 labels 62/128 as ANY bludgeon piece; each
+  // DropsLineReward repeats that pool rate. With no entering pieces the
+  // three alternatives are equiprobable. Correct the oracle's meaning,
+  // keeping every component in this comparison rather than excluding it.
+  // unsired.test.ts also checks the 123 denominator and evolving ownership.
+  if (slug === 'unsired') {
+    for (const name of ['Bludgeon claw', 'Bludgeon spine', 'Bludgeon axon']) {
+      expect(stated.get(name), `${name}: published pool access rate`).toBe(62 / 128)
+      stated.set(name, 62 / 128 / 3)
+    }
+  }
+
   const counts = occurrences(boss.tables)
   const shadowed = viaSharedTables(boss.tables, shared)
   const suppressed = excludedTableIndices(boss.tables)
@@ -222,6 +234,9 @@ async function deviations(
   }
 
   const found: Deviation[] = []
+  if (slug === 'unsired') {
+    expect(result.items.map((item) => item.name)).toEqual(expect.arrayContaining([...stated.keys()]))
+  }
   for (const item of result.items) {
     const expected = stated.get(item.name)
     if (expected === undefined) continue

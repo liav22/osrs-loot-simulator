@@ -128,3 +128,18 @@ test('Lunar Chest simulates with a Moon selected, rather than failing on an unre
   await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
   await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
 })
+
+test('Unsired loads ownership controls and simulates offerings in the real worker', async ({ page }) => {
+  await page.goto('./boss/unsired?n=500&seed=53')
+  await expect(page.getByRole('heading', { name: /^Unsired/ })).toBeVisible()
+  for (const name of ['Bludgeon claw', 'Bludgeon spine', 'Bludgeon axon', 'Abyssal orphan']) {
+    await expect(page.getByRole('button', { name, exact: true })).toBeVisible()
+  }
+  await page.getByRole('button', { name: 'Abyssal orphan', exact: true }).click()
+  const run = page.getByRole('button', { name: 'Simulate', exact: true })
+  await expect(run).toBeEnabled()
+  await run.click()
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
+  await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
+  await expect(page.locator('[data-item-card]').filter({ hasText: 'Bludgeon claw' })).toBeVisible()
+})

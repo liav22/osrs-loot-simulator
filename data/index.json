@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T20:07:42.170Z",
+  "generatedAt": "2026-09-11T08:22:04.780Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -859,6 +859,19 @@
       "statusTier": "verified",
       "image": "Ulfric.png",
       "repeatable": false
+    },
+    {
+      "slug": "unsired",
+      "name": "Unsired",
+      "aliases": [
+        "Font of Consumption",
+        "The Font of Consumption",
+        "Abyssal Sire rewards"
+      ],
+      "status": "manual_override",
+      "statusTier": null,
+      "image": "Unsired.png",
+      "repeatable": true
     },
     {
       "slug": "vardorvis",

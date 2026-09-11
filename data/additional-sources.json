@@ -1,0 +1,29 @@
+[
+  {
+    "boss": {
+      "slug": "unsired",
+      "title": "Unsired",
+      "pageid": 65210,
+      "revid": 15328493,
+      "lootSourceId": "unsired",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 8,
+      "encounter": null,
+      "repeatable": true
+    },
+    "source": {
+      "id": "unsired",
+      "title": "Unsired",
+      "dropsPage": "Unsired",
+      "tier": "D",
+      "rowCount": 8,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "unsired"
+      ],
+      "repeatable": true
+    }
+  }
+]

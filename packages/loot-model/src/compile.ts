@@ -290,7 +290,10 @@ export function compileBoss(
     const oneOfGates = rawOneOfGates.some((gate) => gate !== null) ? rawOneOfGates : null
     if (oneOfGates !== null) {
       for (const gate of oneOfGates) {
-        if (gate !== null) trackedItemKeys.add(gate.itemKey)
+        if (gate !== null) {
+          trackedItemKeys.add(gate.itemKey)
+          for (const key of gate.resetPerSet ?? []) trackedItemKeys.add(key)
+        }
       }
     }
 
@@ -338,7 +341,10 @@ export function compileBoss(
     const ownershipGates = rawGates.some((gate) => gate !== null) ? rawGates : null
     if (ownershipGates !== null) {
       for (const gate of ownershipGates) {
-        if (gate !== null) trackedItemKeys.add(gate.itemKey)
+        if (gate !== null) {
+          trackedItemKeys.add(gate.itemKey)
+          for (const key of gate.resetPerSet ?? []) trackedItemKeys.add(key)
+        }
       }
     }
 
@@ -399,8 +405,16 @@ export function compileBoss(
   return { boss, ctx, items: items.items, tables, trackedItemKeys }
 }
 
-/** Whether a gate currently permits its entry, given a live or static owned count. */
-export function ownershipGateSatisfied(gate: OwnershipGate, owned: number): boolean {
+/** Whether a gate permits its entry, using live or entering ownership counts. */
+export function ownershipGateSatisfied(
+  gate: OwnershipGate,
+  ownedCountFor: (itemKey: string) => number
+): boolean {
+  let owned = ownedCountFor(gate.itemKey)
+  if (gate.resetPerSet !== undefined) {
+    const completed = Math.min(...gate.resetPerSet.map(ownedCountFor))
+    owned -= completed
+  }
   return gate.when === 'below' ? owned < gate.n : owned >= gate.n
 }
 
@@ -437,7 +451,7 @@ export function effectiveWeightedPool(
   for (let i = 0; i < gates.length; i++) {
     const gate = gates[i] ?? null
     if (gate === null) continue
-    if (!ownershipGateSatisfied(gate, ownedCountFor(gate.itemKey))) {
+    if (!ownershipGateSatisfied(gate, ownedCountFor)) {
       denominator -= weights[i]!
       weights[i] = 0
     }

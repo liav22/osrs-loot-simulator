@@ -1,0 +1,262 @@
+{
+  "slug": "unsired",
+  "name": "Unsired",
+  "aliases": [
+    "Font of Consumption",
+    "The Font of Consumption",
+    "Abyssal Sire rewards"
+  ],
+  "wikiPage": "Unsired",
+  "wikiRevId": 15328493,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "unsired:rewards",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 13275,
+                  "itemKey": "bludgeon-claw",
+                  "name": "Bludgeon claw",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 1
+                },
+                "ownershipGate": {
+                  "itemKey": "bludgeon-claw",
+                  "n": 1,
+                  "when": "below",
+                  "resetPerSet": [
+                    "bludgeon-claw",
+                    "bludgeon-spine",
+                    "bludgeon-axon"
+                  ]
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 13274,
+                  "itemKey": "bludgeon-spine",
+                  "name": "Bludgeon spine",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 1
+                },
+                "ownershipGate": {
+                  "itemKey": "bludgeon-spine",
+                  "n": 1,
+                  "when": "below",
+                  "resetPerSet": [
+                    "bludgeon-claw",
+                    "bludgeon-spine",
+                    "bludgeon-axon"
+                  ]
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 13276,
+                  "itemKey": "bludgeon-axon",
+                  "name": "Bludgeon axon",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 1
+                },
+                "ownershipGate": {
+                  "itemKey": "bludgeon-axon",
+                  "n": 1,
+                  "when": "below",
+                  "resetPerSet": [
+                    "bludgeon-claw",
+                    "bludgeon-spine",
+                    "bludgeon-axon"
+                  ]
+                }
+              }
+            ]
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 62
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13265,
+            "itemKey": "abyssal-dagger",
+            "name": "Abyssal dagger",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 26
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 4151,
+            "itemKey": "abyssal-whip",
+            "name": "Abyssal whip",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13277,
+            "itemKey": "jar-of-miasma",
+            "name": "Jar of Miasma",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 13
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7979,
+            "itemKey": "abyssal-head",
+            "name": "Abyssal head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 13262,
+            "itemKey": "abyssal-orphan",
+            "name": "Abyssal orphan",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "pet": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          },
+          "ownershipGate": {
+            "itemKey": "abyssal-orphan",
+            "n": 1,
+            "when": "below"
+          }
+        }
+      ],
+      "notes": "One attempt consumes one Unsired at the Font of Consumption. Rewards roll on offering (2 September 2026 update). Weights are 62 for any bludgeon piece, 26 dagger, 12 whip, 13 jar, 10 head, 5 pet. Owning the pet removes its five slots (128 to 123); leave pet ownership at zero if reclaimable from Probita. Bludgeon pieces are uniform among missing pieces, with protection restarting after each complete set. Enter pieces held toward the current bludgeon; completed sets are treated as assembled. Results retain component drops, not assembled bludgeons, so GP excludes their assembled value. Source: Unsired, Rewards, wiki revision 15328493."
+    }
+  ],
+  "contextDefaults": {
+    "members": true
+  },
+  "status": "manual_override",
+  "statusTier": null,
+  "statusReason": null,
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "no rendered page snapshot available to read the average kill value from"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 8 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
+      }
+    ]
+  },
+  "source": "merged",
+  "parserVersion": 1,
+  "repeatable": true
+}
