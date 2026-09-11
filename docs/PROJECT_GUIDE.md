@@ -60,6 +60,12 @@ agree on semantics. Important distinctions to retain:
   counts. Simulation and single-attempt expected value share this rule;
   ownership-dependent milestones remain unsupported. See the
   [repeating-set tests](../packages/loot-model/test/repeating-set.test.ts).
+  [Araxxor's halberd pieces](bosses/araxxor.md) use this protection behind
+  one combined 1/200 access roll, keeping empty-start component counts within
+  one of each other across repeated sets.
+  [Alchemical Hydra's ring pieces](bosses/alchemical-hydra.md) follow fixed
+  eye, fang, heart order behind one ring access roll at the end of its unique
+  preroll chain, with the same protection restarting after each set.
 - `ownershipGate.allOf` adds conjunctive ownership requirements while tracking
   all referenced items during a run. It supports ordered pouch acquisition and
   replacement-item exclusion. `questComplete.value: false` expresses the

@@ -143,3 +143,23 @@ test('Unsired loads ownership controls and simulates offerings in the real worke
   await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
   await expect(page.locator('[data-item-card]').filter({ hasText: 'Bludgeon claw' })).toBeVisible()
 })
+
+for (const [slug, name, pieces] of [
+  ['araxxor', 'Araxxor', ['Noxious pommel', 'Noxious point', 'Noxious blade']],
+  ['alchemical-hydra', 'Alchemical Hydra', ["Hydra's eye", "Hydra's fang", "Hydra's heart"]],
+] as const) {
+  test(`${name} loads repeating-set ownership controls and component rewards in the worker`, async ({ page }) => {
+    await page.goto(`./boss/${slug}?n=10000&seed=7`)
+    await expect(page.getByRole('heading', { name, exact: true })).toBeVisible()
+    for (const piece of pieces) {
+      await expect(page.getByRole('button', { name: piece, exact: true })).toBeVisible()
+    }
+    await page.getByRole('button', { name: 'Simulate', exact: true }).click()
+    await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
+    await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
+    await page.getByRole('button', { name: /^Show all \d+$/ }).click()
+    for (const piece of pieces) {
+      await expect(page.locator('[data-item-card]').filter({ hasText: piece })).toBeVisible()
+    }
+  })
+}

@@ -1,25 +1,112 @@
 {
-  "slug": "abyssal-sire",
-  "name": "Abyssal Sire",
-  "aliases": [],
-  "wikiPage": "Abyssal Sire",
-  "wikiRevId": 15283163,
-  "variants": [
-    "normal"
-  ],
+  "slug": "araxxor",
+  "note": "Araxxor, Unique section and Halberd footnote, wiki revision 15290082 (https://oldschool.runescape.wiki/w/Araxxor?oldid=15290082#Unique): each component row repeats the combined 1/200 halberd-piece rate, not its individual rate. Prose specifies no duplicate pieces until each full set is obtained. Model one weight-3 choice out of 600, uniform among missing parts using repeating-set ownership gates; preserve the weight-1 Araxyte fang and all other generated tables. This stateful selection cannot be expressed by DropsLine rows.",
   "tables": [
     {
-      "id": "abyssal-sire:0:pre-roll",
-      "mode": "preroll",
+      "id": "araxxor:0:unique",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 600,
       "withoutReplacement": false,
       "entries": [
         {
           "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 29794,
+                  "itemKey": "noxious-pommel",
+                  "name": "Noxious pommel",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 1
+                },
+                "ownershipGate": {
+                  "itemKey": "noxious-pommel",
+                  "n": 1,
+                  "when": "below",
+                  "resetPerSet": [
+                    "noxious-pommel",
+                    "noxious-point",
+                    "noxious-blade"
+                  ]
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 29790,
+                  "itemKey": "noxious-point",
+                  "name": "Noxious point",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 1
+                },
+                "ownershipGate": {
+                  "itemKey": "noxious-point",
+                  "n": 1,
+                  "when": "below",
+                  "resetPerSet": [
+                    "noxious-pommel",
+                    "noxious-point",
+                    "noxious-blade"
+                  ]
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 29792,
+                  "itemKey": "noxious-blade",
+                  "name": "Noxious blade",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 1
+                },
+                "ownershipGate": {
+                  "itemKey": "noxious-blade",
+                  "n": 1,
+                  "when": "below",
+                  "resetPerSet": [
+                    "noxious-pommel",
+                    "noxious-point",
+                    "noxious-blade"
+                  ]
+                }
+              }
+            ]
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
             "kind": "item",
-            "itemId": 13273,
-            "itemKey": "unsired",
-            "name": "Unsired",
+            "itemId": 29799,
+            "itemKey": "araxyte-fang",
+            "name": "Araxyte fang",
             "qty": {
               "kind": "exact",
               "n": 1
@@ -27,130 +114,113 @@
             "unique": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 100
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
-      "notes": "Pre-roll"
+      "notes": "Unique: any noxious halberd piece is 1/200; choose uniformly among missing pieces and restart duplicate protection after each complete set. Araxyte fang is 1/600, for 1/150 total unique access. Enter owned pieces toward the current set; results retain cumulative component drops."
     },
     {
-      "id": "abyssal-sire:1:100",
-      "mode": "always",
+      "id": "araxxor:1:supplies",
+      "mode": "weighted",
       "rolls": 1,
+      "denominator": 16,
       "withoutReplacement": false,
       "entries": [
         {
           "node": {
             "kind": "item",
-            "itemId": 25775,
-            "itemKey": "abyssal-ashes",
-            "name": "Abyssal ashes",
+            "itemId": 29784,
+            "itemKey": "araxyte-venom-sac",
+            "name": "Araxyte venom sac",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 12701,
+            "itemKey": "super-combat-potion-1",
+            "name": "Super combat potion(1)",
             "qty": {
               "kind": "exact",
               "n": 1
             }
           },
           "rate": {
-            "kind": "always"
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2434,
+            "itemKey": "prayer-potion-4",
+            "name": "Prayer potion(4)",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 385,
+            "itemKey": "shark",
+            "name": "Shark",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7208,
+            "itemKey": "wild-pie",
+            "name": "Wild pie",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
-      "notes": "100%"
+      "notes": "Supplies"
     },
     {
-      "id": "abyssal-sire:2:weapons-and-armour-runes-and-ammunition",
+      "id": "araxxor:2:weapons-and-armour-runes-and-ammunition-seeds",
       "mode": "weighted",
       "rolls": 1,
-      "denominator": 139,
+      "denominator": 115,
       "withoutReplacement": false,
       "entries": [
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1391,
-            "itemKey": "battlestaff",
-            "name": "Battlestaff",
-            "qty": {
-              "kind": "exact",
-              "n": 10
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 6
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1163,
-            "itemKey": "rune-full-helm",
-            "name": "Rune full helm",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 4
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 3054,
-            "itemKey": "mystic-lava-staff",
-            "name": "Mystic lava staff",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 4
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1289,
-            "itemKey": "rune-sword",
-            "name": "Rune sword",
-            "qty": {
-              "kind": "exact",
-              "n": 3
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 4
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1127,
-            "itemKey": "rune-platebody",
-            "name": "Rune platebody",
-            "qty": {
-              "kind": "exact",
-              "n": 2
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 4
-          }
-        },
         {
           "node": {
             "kind": "item",
@@ -165,15 +235,15 @@
           },
           "rate": {
             "kind": "weight",
-            "weight": 3
+            "weight": 8
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 1405,
-            "itemKey": "mystic-air-staff",
-            "name": "Mystic air staff",
+            "itemId": 1079,
+            "itemKey": "rune-platelegs",
+            "name": "Rune platelegs",
             "qty": {
               "kind": "exact",
               "n": 2
@@ -182,41 +252,56 @@
           },
           "rate": {
             "kind": "weight",
-            "weight": 2
+            "weight": 8
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 1397,
-            "itemKey": "air-battlestaff",
-            "name": "Air battlestaff",
+            "itemId": 1434,
+            "itemKey": "dragon-mace",
+            "name": "Dragon mace",
             "qty": {
               "kind": "exact",
-              "n": 6
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1319,
+            "itemKey": "rune-2h-sword",
+            "name": "Rune 2h sword",
+            "qty": {
+              "kind": "exact",
+              "n": 5
             },
             "noted": true
           },
           "rate": {
             "kind": "weight",
-            "weight": 2
+            "weight": 1
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 565,
-            "itemKey": "blood-rune",
-            "name": "Blood rune",
+            "itemId": 4087,
+            "itemKey": "dragon-platelegs",
+            "name": "Dragon platelegs",
             "qty": {
-              "kind": "range",
-              "min": 190,
-              "max": 210
+              "kind": "exact",
+              "n": 2
             }
           },
           "rate": {
             "kind": "weight",
-            "weight": 5
+            "weight": 1
           }
         },
         {
@@ -225,23 +310,6 @@
             "itemId": 560,
             "itemKey": "death-rune",
             "name": "Death rune",
-            "qty": {
-              "kind": "range",
-              "min": 330,
-              "max": 370
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 563,
-            "itemKey": "law-rune",
-            "name": "Law rune",
             "qty": {
               "kind": "exact",
               "n": 250
@@ -255,29 +323,60 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 566,
-            "itemKey": "soul-rune",
-            "name": "Soul rune",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
             "qty": {
-              "kind": "range",
-              "min": 225,
-              "max": 275
+              "kind": "exact",
+              "n": 80
             }
           },
           "rate": {
             "kind": "weight",
-            "weight": 5
+            "weight": 2
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 564,
-            "itemKey": "cosmic-rune",
-            "name": "Cosmic rune",
+            "itemId": 4698,
+            "itemKey": "mud-rune",
+            "name": "Mud rune",
             "qty": {
               "kind": "exact",
-              "n": 350
+              "n": 100
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 180
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5315,
+            "itemKey": "yew-seed",
+            "name": "Yew seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
             }
           },
           "rate": {
@@ -288,102 +387,72 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 2,
-            "itemKey": "steel-cannonball",
-            "name": "Steel cannonball",
+            "itemId": 5296,
+            "itemKey": "toadflax-seed",
+            "name": "Toadflax seed",
             "qty": {
               "kind": "exact",
-              "n": 300
+              "n": 4
             }
           },
           "rate": {
             "kind": "weight",
-            "weight": 4
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
-      "notes": "Weapons and armour / Runes and ammunition"
+      "notes": "Weapons and armour / Runes and ammunition / Seeds"
     },
     {
-      "id": "abyssal-sire:3:herbs",
-      "mode": "weighted",
-      "rolls": 1,
-      "denominator": 2224,
-      "withoutReplacement": false,
-      "entries": [
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 213,
-            "itemKey": "grimy-kwuarm",
-            "name": "Grimy kwuarm",
-            "qty": {
-              "kind": "exact",
-              "n": 25
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 25
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 217,
-            "itemKey": "grimy-dwarf-weed",
-            "name": "Grimy dwarf weed",
-            "qty": {
-              "kind": "exact",
-              "n": 25
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 20
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 215,
-            "itemKey": "grimy-cadantine",
-            "name": "Grimy cadantine",
-            "qty": {
-              "kind": "exact",
-              "n": 25
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 20
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 2485,
-            "itemKey": "grimy-lantadyme",
-            "name": "Grimy lantadyme",
-            "qty": {
-              "kind": "exact",
-              "n": 25
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 15
-          }
-        }
-      ],
-      "notes": "Herbs"
-    },
-    {
-      "id": "abyssal-sire:4:seeds",
+      "id": "araxxor:3:tree-herb-seed-drop-table",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -400,12 +469,12 @@
                   "name": "Ranarr seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0043159257660768235
+                  "weight": 0.0010435145570280705
                 }
               },
               {
@@ -416,12 +485,12 @@
                   "name": "Snapdragon seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.004029008863819501
+                  "weight": 0.0009738994935722634
                 }
               },
               {
@@ -432,12 +501,12 @@
                   "name": "Torstol seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.003165558721114277
+                  "weight": 0.0007652280379553107
                 }
               },
               {
@@ -448,12 +517,12 @@
                   "name": "Watermelon seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 30
+                    "n": 15
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0030211480362537764
+                  "weight": 0.0007304601899196494
                 }
               },
               {
@@ -464,12 +533,12 @@
                   "name": "Willow seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0028776978417266188
+                  "weight": 0.0006956521739130435
                 }
               },
               {
@@ -480,12 +549,12 @@
                   "name": "Mahogany seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.00259000259000259
+                  "weight": 0.0006260956674179815
                 }
               },
               {
@@ -496,12 +565,12 @@
                   "name": "Maple seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.00259000259000259
+                  "weight": 0.0006260956674179815
                 }
               },
               {
@@ -512,12 +581,12 @@
                   "name": "Teak seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.00259000259000259
+                  "weight": 0.0006260956674179815
                 }
               },
               {
@@ -528,12 +597,12 @@
                   "name": "Yew seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.00259000259000259
+                  "weight": 0.0006260956674179815
                 }
               },
               {
@@ -544,12 +613,12 @@
                   "name": "Papaya tree seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0020145044319097504
+                  "weight": 0.0004869497467861317
                 }
               },
               {
@@ -560,12 +629,12 @@
                   "name": "Magic seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0015827793605571385
+                  "weight": 0.00038261401897765536
                 }
               },
               {
@@ -576,12 +645,12 @@
                   "name": "Palm tree seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0014388489208633094
+                  "weight": 0.00034782608695652176
                 }
               },
               {
@@ -592,12 +661,12 @@
                   "name": "Spirit seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0011510128913443832
+                  "weight": 0.0002782569981635038
                 }
               },
               {
@@ -608,12 +677,12 @@
                   "name": "Dragonfruit tree seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.00086333419666753
+                  "weight": 0.00020869420038817122
                 }
               },
               {
@@ -624,12 +693,12 @@
                   "name": "Celastrus seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0005755395683453237
+                  "weight": 0.00013913043478260868
                 }
               },
               {
@@ -640,102 +709,32 @@
                   "name": "Redwood tree seed",
                   "qty": {
                     "kind": "exact",
-                    "n": 2
+                    "n": 1
                   }
                 },
                 "rate": {
                   "kind": "weight",
-                  "weight": 0.0005755395683453237
+                  "weight": 0.00013913043478260868
                 }
               }
             ]
           },
           "rate": {
             "kind": "fixed",
-            "num": 5,
-            "den": 139
+            "num": 1,
+            "den": 115
           }
         }
       ],
-      "notes": "Seeds (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 5/139 (ratio 1.0000), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 5/139 — exact, not an approximation.)"
+      "notes": "Tree-herb seed drop table (confirmed independent: 16 entries expanded from one {{treeherbseeddroplines}} transclusion, whose rates sum to its stated access rate 1/115 (ratio 1.0000), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 1/115 \u2014 exact, not an approximation.)"
     },
     {
-      "id": "abyssal-sire:5:materials",
+      "id": "araxxor:4:resources",
       "mode": "weighted",
       "rolls": 1,
-      "denominator": 139,
+      "denominator": 115,
       "withoutReplacement": false,
       "entries": [
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 575,
-            "itemKey": "earth-orb",
-            "name": "Earth orb",
-            "qty": {
-              "kind": "range",
-              "min": 47,
-              "max": 53
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 7936,
-            "itemKey": "pure-essence",
-            "name": "Pure essence",
-            "qty": {
-              "kind": "exact",
-              "n": 600
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1513,
-            "itemKey": "magic-logs",
-            "name": "Magic logs",
-            "qty": {
-              "kind": "range",
-              "min": 50,
-              "max": 70
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 5
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 1617,
-            "itemKey": "uncut-diamond",
-            "name": "Uncut diamond",
-            "qty": {
-              "kind": "exact",
-              "n": 15
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 5
-          }
-        },
         {
           "node": {
             "kind": "item",
@@ -743,15 +742,65 @@
             "itemKey": "coal",
             "name": "Coal",
             "qty": {
-              "kind": "range",
-              "min": 380,
-              "max": 420
+              "kind": "exact",
+              "n": 120
             },
             "noted": true
           },
           "rate": {
             "kind": "weight",
             "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 449,
+            "itemKey": "adamantite-ore",
+            "name": "Adamantite ore",
+            "qty": {
+              "kind": "exact",
+              "n": 85
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "exact",
+              "n": 21
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1515,
+            "itemKey": "yew-logs",
+            "name": "Yew logs",
+            "qty": {
+              "kind": "exact",
+              "n": 70
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
           }
         },
         {
@@ -762,40 +811,7 @@
             "name": "Runite ore",
             "qty": {
               "kind": "exact",
-              "n": 6
-            },
-            "noted": true
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 4
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 9194,
-            "itemKey": "onyx-bolt-tips",
-            "name": "Onyx bolt tips",
-            "qty": {
-              "kind": "exact",
-              "n": 10
-            }
-          },
-          "rate": {
-            "kind": "weight",
-            "weight": 3
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 2363,
-            "itemKey": "runite-bar",
-            "name": "Runite bar",
-            "qty": {
-              "kind": "exact",
-              "n": 5
+              "n": 12
             },
             "noted": true
           },
@@ -807,238 +823,108 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 30771,
-            "itemKey": "aether-catalyst",
-            "name": "Aether catalyst",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
             "qty": {
-              "kind": "range",
-              "min": 220,
-              "max": 270
-            }
+              "kind": "exact",
+              "n": 100
+            },
+            "noted": true
           },
           "rate": {
             "kind": "weight",
-            "weight": 2
+            "weight": 1
           }
-        }
-      ],
-      "notes": "Materials"
-    },
-    {
-      "id": "abyssal-sire:6:talismans",
-      "mode": "independent",
-      "rolls": 1,
-      "withoutReplacement": false,
-      "entries": [
+        },
         {
           "node": {
-            "kind": "oneOf",
-            "entries": [
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1438,
-                  "itemKey": "air-talisman",
-                  "name": "Air talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.003083564600678384
-                }
-              },
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1446,
-                  "itemKey": "body-talisman",
-                  "name": "Body talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.003083564600678384
-                }
-              },
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1440,
-                  "itemKey": "earth-talisman",
-                  "name": "Earth talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.003083564600678384
-                }
-              },
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1442,
-                  "itemKey": "fire-talisman",
-                  "name": "Fire talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.003083564600678384
-                }
-              },
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1448,
-                  "itemKey": "mind-talisman",
-                  "name": "Mind talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.003083564600678384
-                }
-              },
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1444,
-                  "itemKey": "water-talisman",
-                  "name": "Water talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.003083564600678384
-                }
-              },
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1454,
-                  "itemKey": "cosmic-talisman",
-                  "name": "Cosmic talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.00123334977799704
-                }
-              },
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1452,
-                  "itemKey": "chaos-talisman",
-                  "name": "Chaos talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.0009249838127832763
-                }
-              },
-              {
-                "node": {
-                  "kind": "item",
-                  "itemId": 1462,
-                  "itemKey": "nature-talisman",
-                  "name": "Nature talisman",
-                  "qty": {
-                    "kind": "exact",
-                    "n": 1
-                  }
-                },
-                "rate": {
-                  "kind": "weight",
-                  "weight": 0.0009249838127832763
-                }
-              }
-            ]
+            "kind": "item",
+            "itemId": 7944,
+            "itemKey": "raw-monkfish",
+            "name": "Raw monkfish",
+            "qty": {
+              "kind": "exact",
+              "n": 120
+            },
+            "noted": true
           },
           "rate": {
-            "kind": "fixed",
-            "num": 3,
-            "den": 139
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7936,
+            "itemKey": "pure-essence",
+            "name": "Pure essence",
+            "qty": {
+              "kind": "exact",
+              "n": 1200
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
           }
         }
       ],
-      "notes": "Talismans (confirmed independent: 9 entries expanded from one {{talismandroplines}} transclusion, whose rates sum to its stated access rate 3/139 (ratio 1.0001), so its rows are one mutually-exclusive roll. Modelled as a single `oneOf` at the access rate 3/139 — exact, not an approximation.)"
+      "notes": "Resources"
     },
     {
-      "id": "abyssal-sire:7:other",
+      "id": "araxxor:5:other",
       "mode": "weighted",
       "rolls": 1,
-      "denominator": 139,
+      "denominator": 115,
       "withoutReplacement": false,
       "entries": [
         {
           "node": {
             "kind": "item",
-            "itemId": 995,
-            "itemKey": "coins",
-            "name": "Coins",
+            "itemId": 29782,
+            "itemKey": "spider-cave-teleport",
+            "name": "Spider cave teleport",
             "qty": {
-              "kind": "range",
-              "min": 48000,
-              "max": 52000
+              "kind": "exact",
+              "n": 3
             }
           },
           "rate": {
             "kind": "weight",
-            "weight": 11
+            "weight": 8
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 7054,
-            "itemKey": "chilli-potato",
-            "name": "Chilli potato",
+            "itemId": 575,
+            "itemKey": "earth-orb",
+            "name": "Earth orb",
             "qty": {
               "kind": "exact",
-              "n": 10
-            }
+              "n": 45
+            },
+            "noted": true
           },
           "rate": {
             "kind": "weight",
-            "weight": 7
+            "weight": 6
           }
         },
         {
           "node": {
             "kind": "item",
-            "itemId": 3024,
-            "itemKey": "super-restore-4",
-            "name": "Super restore(4)",
+            "itemId": 29784,
+            "itemKey": "araxyte-venom-sac",
+            "name": "Araxyte venom sac",
             "qty": {
               "kind": "exact",
-              "n": 4
-            }
+              "n": 6
+            },
+            "unique": true
           },
           "rate": {
             "kind": "weight",
@@ -1048,12 +934,12 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 5521,
-            "itemKey": "binding-necklace",
-            "name": "Binding necklace",
+            "itemId": 2970,
+            "itemKey": "mort-myre-fungus",
+            "name": "Mort myre fungus",
             "qty": {
               "kind": "exact",
-              "n": 25
+              "n": 24
             },
             "noted": true
           },
@@ -1065,13 +951,48 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 6687,
-            "itemKey": "saradomin-brew-3",
-            "name": "Saradomin brew(3)",
+            "itemId": 5954,
+            "itemKey": "antidote-3",
+            "name": "Antidote++(3)",
             "qty": {
               "kind": "exact",
               "n": 6
-            }
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23489,
+            "itemKey": "wine-of-zamorak",
+            "name": "Wine of zamorak",
+            "qty": {
+              "kind": "exact",
+              "n": 8
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 223,
+            "itemKey": "red-spiders-eggs",
+            "name": "Red spiders' eggs",
+            "qty": {
+              "kind": "exact",
+              "n": 40
+            },
+            "noted": true
           },
           "rate": {
             "kind": "weight",
@@ -1081,26 +1002,109 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 1937,
-            "itemKey": "jug-of-water",
-            "name": "Jug of water",
+            "itemId": 29784,
+            "itemKey": "araxyte-venom-sac",
+            "name": "Araxyte venom sac",
             "qty": {
-              "kind": "range",
-              "min": 250,
-              "max": 350
+              "kind": "exact",
+              "n": 12
             },
-            "noted": true
+            "unique": true
           },
           "rate": {
             "kind": "weight",
             "weight": 2
           }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3239,
+            "itemKey": "bark",
+            "name": "Bark",
+            "qty": {
+              "kind": "exact",
+              "n": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
         }
       ],
-      "notes": "Other"
+      "notes": "Other (confirmed weighted: 9 of 11 entries share denominator 115; 2 rarer outlier(s) split into their own independent table)"
     },
     {
-      "id": "abyssal-sire:8:tertiary",
+      "id": "araxxor:6:other-outliers",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29788,
+            "itemKey": "araxyte-head",
+            "name": "Araxyte head",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 250
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29786,
+            "itemKey": "jar-of-venom",
+            "name": "Jar of venom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1500
+          }
+        }
+      ],
+      "notes": "Other (outliers) (confirmed independent: rarer than the 9-entry /115 pool in \"Other\"; modelled as separate independent rolls)"
+    },
+    {
+      "id": "araxxor:7:tertiary",
+      "mode": "always",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29781,
+            "itemKey": "coagulated-venom",
+            "name": "Coagulated venom",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "always"
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    },
+    {
+      "id": "araxxor:8:tertiary",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -1142,14 +1146,32 @@
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 180
+            "den": 50
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 29836,
+            "itemKey": "nid",
+            "name": "Nid",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "pet": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 3000
           }
         }
       ],
       "notes": "Tertiary"
     },
     {
-      "id": "abyssal-sire:rdt-access:0",
+      "id": "araxxor:rdt-access:0",
       "mode": "independent",
       "rolls": 1,
       "withoutReplacement": false,
@@ -1157,71 +1179,16 @@
         {
           "node": {
             "kind": "tableRef",
-            "ref": "rare_drop_table",
-            "qtyMultiplier": 2
+            "ref": "rare_drop_table"
           },
           "rate": {
             "kind": "fixed",
-            "num": 3,
-            "den": 139
+            "num": 1,
+            "den": 115
           }
         }
       ],
-      "notes": "Access into rare_drop_table (from {{RareDropTable}}); wiki states multiplier=2: every quantity from this access is scaled by it"
+      "notes": "Access into rare_drop_table (from {{RareDropTable}}); approximate rate per the wiki"
     }
-  ],
-  "contextDefaults": {},
-  "status": "verified",
-  "statusTier": "verified",
-  "statusReason": null,
-  "validation": {
-    "ok": false,
-    "checks": [
-      {
-        "check": "weights_sum",
-        "ok": true
-      },
-      {
-        "check": "refs_resolve",
-        "ok": true,
-        "detail": "4 tableRef node(s) resolved against 30 shared table(s)"
-      },
-      {
-        "check": "rates_valid",
-        "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
-      },
-      {
-        "check": "qty_sane",
-        "ok": true,
-        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
-      },
-      {
-        "check": "ev_matches",
-        "ok": false,
-        "detail": "no rendered page snapshot available to read the average kill value from"
-      },
-      {
-        "check": "items_known",
-        "ok": true
-      },
-      {
-        "check": "not_on_watchlist",
-        "ok": true
-      },
-      {
-        "check": "drops_covered",
-        "ok": true,
-        "detail": "all 81 wiki drop row(s) reachable in the document"
-      },
-      {
-        "check": "heading_unambiguous",
-        "ok": true,
-        "detail": "no ambiguous headings or unconfirmed bundle signals"
-      }
-    ]
-  },
-  "source": "generated",
-  "parserVersion": 1,
-  "repeatable": true
+  ]
 }

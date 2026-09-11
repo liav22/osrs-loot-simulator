@@ -1,0 +1,93 @@
+{
+  "id": "brimstone_ring_pieces",
+  "mode": "preroll",
+  "rolls": 1,
+  "withoutReplacement": false,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 22973,
+        "itemKey": "hydra-s-eye",
+        "name": "Hydra's eye",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "unique": true
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "ownershipGate": {
+        "itemKey": "hydra-s-eye",
+        "n": 1,
+        "when": "below",
+        "resetPerSet": [
+          "hydra-s-eye",
+          "hydra-s-fang",
+          "hydra-s-heart"
+        ]
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 22971,
+        "itemKey": "hydra-s-fang",
+        "name": "Hydra's fang",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "unique": true
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "ownershipGate": {
+        "itemKey": "hydra-s-fang",
+        "n": 1,
+        "when": "below",
+        "resetPerSet": [
+          "hydra-s-eye",
+          "hydra-s-fang",
+          "hydra-s-heart"
+        ]
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 22969,
+        "itemKey": "hydra-s-heart",
+        "name": "Hydra's heart",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "unique": true
+      },
+      "rate": {
+        "kind": "fixed",
+        "num": 1,
+        "den": 1
+      },
+      "ownershipGate": {
+        "itemKey": "hydra-s-heart",
+        "n": 1,
+        "when": "below",
+        "resetPerSet": [
+          "hydra-s-eye",
+          "hydra-s-fang",
+          "hydra-s-heart"
+        ]
+      }
+    }
+  ],
+  "notes": "Alchemical Hydra, Unique footnote (wiki revision 15285801): award the first missing component in eye, fang, heart order. Restart protection after each complete set. Access probability belongs to the calling table."
+}

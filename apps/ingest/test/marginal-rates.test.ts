@@ -204,6 +204,16 @@ async function deviations(
     }
   }
 
+  // Araxxor's Halberd footnote (revision 15290082) gives 1/200 for ANY
+  // piece. With an empty set each of the three pieces therefore has 1/600.
+  // araxxor.test.ts checks partial sets and protection across repeated sets.
+  if (slug === 'araxxor') {
+    for (const name of ['Noxious pommel', 'Noxious point', 'Noxious blade']) {
+      expect(stated.get(name), `${name}: published pool access rate`).toBe(1 / 200)
+      stated.set(name, 1 / 600)
+    }
+  }
+
   const counts = occurrences(boss.tables)
   const shadowed = viaSharedTables(boss.tables, shared)
   const suppressed = excludedTableIndices(boss.tables)

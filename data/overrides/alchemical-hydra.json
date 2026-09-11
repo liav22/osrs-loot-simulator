@@ -1,6 +1,6 @@
 {
   "slug": "alchemical-hydra",
-  "note": "Corrects the parser's ambiguous-heading guess on the \"Herbs\" heading (revid 15285801): its 8 rows (Grimy avantoe 1/64.6, Grimy kwuarm 1/64.6, Grimy ranarr weed 1/80.8, Grimy snapdragon 1/80.8, Grimy cadantine 1/80.8, Grimy dwarf weed 1/80.8, Grimy lantadyme 1/107.7, Grimy torstol 1/107.7) carry no Pre-roll/Tertiary/Secondary keyword, so build-tables.ts's final fallback flagged it needs_review and defaulted to a preroll guess. Checked directly against https://oldschool.runescape.wiki/w/Alchemical_Hydra: the section's own prose states \"There is a 10/101 chance to get noted herbs\", and the wiki's #vardefine/#expr source computes each row as 1/(multiplier*herbbase) with herbbase = 10/101/32 and multipliers 5,5,4,4,4,4,3,3 (summing to 32) \u2014 the exact same access-rate-partition shape as this boss's own \"Seeds\" heading two sections below, which the parser already resolves automatically into a single `oneOf` node at its declared access rate because that heading's rows come from a recognised template transclusion (TreeHerbSeedDropLines) carrying a declared access rate. \"Herbs\" fails that same auto-detection only because it is written as inline #vardefine/#expr wikitext rather than a transclusion \u2014 not because the underlying mechanic differs. Replaces only that heading's shape, preroll (8 independently-triggered entries) -> independent (a single oneOf partitioning the 10/101 access roll), matching the Seeds table's already-verified pattern; every other table is unchanged from the generated document.",
+  "note": "Corrects the parser's ambiguous-heading guess on the \"Herbs\" heading (revid 15285801): its 8 rows (Grimy avantoe 1/64.6, Grimy kwuarm 1/64.6, Grimy ranarr weed 1/80.8, Grimy snapdragon 1/80.8, Grimy cadantine 1/80.8, Grimy dwarf weed 1/80.8, Grimy lantadyme 1/107.7, Grimy torstol 1/107.7) carry no Pre-roll/Tertiary/Secondary keyword, so build-tables.ts's final fallback flagged it needs_review and defaulted to a preroll guess. Checked directly against https://oldschool.runescape.wiki/w/Alchemical_Hydra: the section's own prose states \"There is a 10/101 chance to get noted herbs\", and the wiki's #vardefine/#expr source computes each row as 1/(multiplier*herbbase) with herbbase = 10/101/32 and multipliers 5,5,4,4,4,4,3,3 (summing to 32) \u2014 the exact same access-rate-partition shape as this boss's own \"Seeds\" heading two sections below, which the parser already resolves automatically into a single `oneOf` node at its declared access rate because that heading's rows come from a recognised template transclusion (TreeHerbSeedDropLines) carrying a declared access rate. \"Herbs\" fails that same auto-detection only because it is written as inline #vardefine/#expr wikitext rather than a transclusion \u2014 not because the underlying mechanic differs. Replaces only that heading's shape, preroll (8 independently-triggered entries) -> independent (a single oneOf partitioning the 10/101 access roll), matching the Seeds table's already-verified pattern; other non-unique tables are unchanged from the generated document. Also corrects the Unique pre-roll chain using the same revision's prose and exact conditional denominators: thrownaxe 2000, knife 2000, claw 1000, tail 512, leather 512, ring piece 180. The displayed ~1/181.1 rate is for any ring piece after earlier failures, not each component. The brimstone_ring footnote specifies eye, fang, heart order. A shared ordered preroll with resetPerSet ownership gates enforce that order for every complete set without source-specific simulator logic.",
   "tables": [
     {
       "id": "alchemical-hydra:0:100",
@@ -35,113 +35,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 22973,
-            "itemKey": "hydra-s-eye",
-            "name": "Hydra's eye",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 181.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22971,
-            "itemKey": "hydra-s-fang",
-            "name": "Hydra's fang",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 181.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22969,
-            "itemKey": "hydra-s-heart",
-            "name": "Hydra's heart",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 181.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22988,
-            "itemKey": "hydra-tail",
-            "name": "Hydra tail",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 513
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22983,
-            "itemKey": "hydra-leather",
-            "name": "Hydra leather",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 514
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22966,
-            "itemKey": "hydra-s-claw",
-            "name": "Hydra's claw",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1001
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 20849,
             "itemKey": "dragon-thrownaxe",
             "name": "Dragon thrownaxe",
@@ -172,11 +65,75 @@
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 2001
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22966,
+            "itemKey": "hydra-s-claw",
+            "name": "Hydra's claw",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22988,
+            "itemKey": "hydra-tail",
+            "name": "Hydra tail",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 512
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22983,
+            "itemKey": "hydra-leather",
+            "name": "Hydra leather",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 512
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "brimstone_ring_pieces"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 180
           }
         }
       ],
-      "notes": "Pre-roll"
+      "notes": "Unique rolls in order: dragon thrownaxe (1/2000), dragon knife (1/2000), claw (1/1000), tail (1/512), leather (1/512), then any ring piece (1/180). First success replaces regular loot. Ring pieces follow eye, fang, heart order with protection restarting after every complete set; enter owned components toward the current set."
     },
     {
       "id": "alchemical-hydra:2:weapons-and-armour-runes-and-ammunition",

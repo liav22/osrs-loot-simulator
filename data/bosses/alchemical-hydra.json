@@ -41,113 +41,6 @@
         {
           "node": {
             "kind": "item",
-            "itemId": 22973,
-            "itemKey": "hydra-s-eye",
-            "name": "Hydra's eye",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 181.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22971,
-            "itemKey": "hydra-s-fang",
-            "name": "Hydra's fang",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 181.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22969,
-            "itemKey": "hydra-s-heart",
-            "name": "Hydra's heart",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 181.1
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22988,
-            "itemKey": "hydra-tail",
-            "name": "Hydra tail",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 513
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22983,
-            "itemKey": "hydra-leather",
-            "name": "Hydra leather",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            }
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 514
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
-            "itemId": 22966,
-            "itemKey": "hydra-s-claw",
-            "name": "Hydra's claw",
-            "qty": {
-              "kind": "exact",
-              "n": 1
-            },
-            "unique": true
-          },
-          "rate": {
-            "kind": "fixed",
-            "num": 1,
-            "den": 1001
-          }
-        },
-        {
-          "node": {
-            "kind": "item",
             "itemId": 20849,
             "itemKey": "dragon-thrownaxe",
             "name": "Dragon thrownaxe",
@@ -178,11 +71,75 @@
           "rate": {
             "kind": "fixed",
             "num": 1,
-            "den": 2001
+            "den": 2000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22966,
+            "itemKey": "hydra-s-claw",
+            "name": "Hydra's claw",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1000
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22988,
+            "itemKey": "hydra-tail",
+            "name": "Hydra tail",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 512
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22983,
+            "itemKey": "hydra-leather",
+            "name": "Hydra leather",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 512
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "brimstone_ring_pieces"
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 180
           }
         }
       ],
-      "notes": "Pre-roll"
+      "notes": "Unique rolls in order: dragon thrownaxe (1/2000), dragon knife (1/2000), claw (1/1000), tail (1/512), leather (1/512), then any ring piece (1/180). First success replaces regular loot. Ring pieces follow eye, fang, heart order with protection restarting after every complete set; enter owned components toward the current set."
     },
     {
       "id": "alchemical-hydra:2:weapons-and-armour-runes-and-ammunition",
@@ -1227,7 +1184,7 @@
       {
         "check": "refs_resolve",
         "ok": true,
-        "detail": "4 tableRef node(s) resolved against 29 shared table(s)"
+        "detail": "5 tableRef node(s) resolved against 30 shared table(s)"
       },
       {
         "check": "rates_valid",

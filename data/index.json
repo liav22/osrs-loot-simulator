@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T14:38:45.613Z",
+  "generatedAt": "2026-09-11T21:14:33.779Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -61,8 +61,8 @@
       "slug": "araxxor",
       "name": "Araxxor",
       "aliases": [],
-      "status": "verified",
-      "statusTier": "verified",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "Araxxor.png",
       "repeatable": true
     },
@@ -970,6 +970,7 @@
     }
   ],
   "tables": [
+    "brimstone_ring_pieces",
     "chaos-fanatic-other-bundle",
     "chaos-fanatic-weapons-and-armour-bundle",
     "commander-zilyana-potions-bundle",
