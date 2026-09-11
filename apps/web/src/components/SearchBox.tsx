@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSiteIndex } from '../hooks/useSiteIndex'
 import { fuzzySearch } from '../lib/fuzzy'
 import { pickSuggestedBosses } from '../lib/suggestions'
+import { sourceDisplayName } from '../lib/source-display-name'
 import { StatusBadge } from './StatusBadge'
 import { BossThumb } from './BossThumb'
 
@@ -121,7 +122,7 @@ export function SearchBox({ autoFocus = true }: { autoFocus?: boolean }) {
                 }`}
               >
                 <span className="truncate">
-                  {entry.name}
+                  {sourceDisplayName(entry.name, entry.aliases)}
                   {/* A many-to-one source's own literal page name (e.g. "Ancient
                       chest") is what it's findable under by MATCHING an alias,
                       but on its own gives no sign this is Chambers of Xeric's

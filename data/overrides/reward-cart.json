@@ -1,0 +1,5 @@
+{
+  "slug": "reward-cart",
+  "note": "Search metadata only: Reward Cart belongs to Wintertodt, as recorded by data/_inventory.json and docs/bosses/reward-cart.md. Preserve the generated loot tables and their existing validation gaps.",
+  "aliases": ["Wintertodt"]
+}

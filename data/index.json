@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T08:22:04.780Z",
+  "generatedAt": "2026-09-11T14:22:12.323Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -649,7 +649,9 @@
     {
       "slug": "reward-cart",
       "name": "Reward Cart",
-      "aliases": [],
+      "aliases": [
+        "Wintertodt"
+      ],
       "status": "needs_review",
       "statusTier": "unknown_scaling",
       "image": "Reward Cart (empty).png",

@@ -155,7 +155,7 @@ not a promise that an unknown can never become known.
 | Duke Sucellus | Build the prose-defined sequential roll chain and perfect-kill bonus. The awakened ornament-kit gate exists. Research also records an unstated frozen-tablet curve; separate implementable rules from that uncertainty. |
 | The Nightmare | Two independent unique pools exist; a party-size-dependent second roll is stated but unbuilt. Adding party context is a scope change. |
 | Maggot King | Qualitative rarities remain unresolved. Historical research also identifies player-choice/variant and bundle work; investigate these together without inventing the missing probability split. |
-| Reward cart | No override; many `Varies` rows lack numeric rates. Points scaling and relative ownership selection need work. A source-data gap and missing model capabilities coexist. |
+| Reward cart | A metadata-only override adds the Wintertodt search alias; many `Varies` rows lack numeric rates. Points scaling and relative ownership selection need work. A source-data gap and missing model capabilities coexist. |
 | Reward pool | Implemented per reward permit. Conversion of encounter points into permits has an unstated rounding rule. |
 | Zalcano | Eligibility, MVP and several rewards are modeled; points-to-loot and contribution-to-shard curves remain unstated in the researched sources. |
 | Tombs of Amascut | Five remnant rewards need invocation-composition conditions. Other exclusions include the elite combat achievement clue multiplier and duplicate jewels after all are owned. |
@@ -197,7 +197,9 @@ fresh seed for each run. The kill-count input may stay blank while editing;
 Simulate is disabled until a count is entered, and the URL retains the last
 numeric count. Context controls derive from conditions, formula input
 metadata, and ownership gates; apply `Boss.contextDefaults` before URL overrides.
-Default search hides non-repeatable sources. Empty-state suggestions are random
+Default search hides non-repeatable sources. When an activity qualifier is also
+an alias, search results and the simulation heading show it only in the grey
+alias text. Empty-state suggestions are random
 from the eligible pool; alias count was investigated and rejected as a popularity
 proxy. Preserve visible wiki attribution and the code/data license split.
 

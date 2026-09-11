@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import type { Boss, StatusTier, Table } from '@osrs-loot-simulator/loot-model'
 import { useItemIcons } from '../hooks/useItemIcons'
 import { bossImageUrl } from '../lib/wiki-images'
+import { sourceDisplayName } from '../lib/source-display-name'
 import { MAX_KILLS, type SimRunParams } from '../lib/url-state'
 import { DropTableView } from './DropTableView'
 import { Modal } from './Modal'
@@ -96,7 +97,7 @@ export function BossPanel({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="truncate text-lg font-semibold text-neutral-100">
-              {boss.name}
+              {sourceDisplayName(boss.name, boss.aliases)}
               {/* Same reasoning as `SearchBox`: a many-to-one source's own
                   page name (e.g. "Ancient chest") doesn't say on its own that
                   this is Chambers of Xeric's loot. */}
