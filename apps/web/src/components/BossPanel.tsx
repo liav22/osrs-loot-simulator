@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Boss, StatusTier, Table } from '@osrs-loot-simulator/loot-model'
 import { useItemIcons } from '../hooks/useItemIcons'
@@ -55,6 +55,9 @@ export function BossPanel({
 }) {
   const [reasonOpen, setReasonOpen] = useState(false)
   const [tableOpen, setTableOpen] = useState(false)
+  const [killsEmpty, setKillsEmpty] = useState(false)
+  // Blank is an editing state; URL and worker parameters retain a numeric count.
+  useEffect(() => setKillsEmpty(false), [params.kills])
   const src = bossImageUrl(image, 300)
   // `staleTime: Infinity` (see the hook) and the same query key `SimResultsView`
   // already uses, so this shares one cached fetch rather than duplicating it —
@@ -202,10 +205,13 @@ export function BossPanel({
               type="number"
               min={1}
               max={MAX_KILLS}
-              value={params.kills}
-              onChange={(e) =>
+              value={killsEmpty ? '' : params.kills}
+              onChange={(e) => {
+                const empty = e.target.value === ''
+                setKillsEmpty(empty)
+                if (empty) return
                 onChange({ ...params, kills: Math.min(MAX_KILLS, Math.max(1, Number(e.target.value) || 1)) })
-              }
+              }}
               className="min-h-11 w-full rounded-md border border-neutral-800 bg-neutral-900 px-3 py-2 text-sm"
             />
           </label>
@@ -236,7 +242,7 @@ export function BossPanel({
         <button
           type="button"
           onClick={onSimulate}
-          disabled={running || sharedTables === undefined}
+          disabled={killsEmpty || running || sharedTables === undefined}
           className="min-h-12 w-full rounded-md bg-amber-500 px-4 py-3 text-base font-semibold text-neutral-950 transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {running ? 'Simulating…' : 'Simulate'}

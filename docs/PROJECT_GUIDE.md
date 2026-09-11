@@ -193,7 +193,9 @@ run. Unpriced runs show “Prices unavailable” in place of GP totals. Data cav
 open in a scrollable dialog on both mobile and desktop.
 
 URL state preserves context and the actual RNG seed. UI seed zero requests a
-fresh seed for each run. Context controls derive from conditions, formula input
+fresh seed for each run. The kill-count input may stay blank while editing;
+Simulate is disabled until a count is entered, and the URL retains the last
+numeric count. Context controls derive from conditions, formula input
 metadata, and ownership gates; apply `Boss.contextDefaults` before URL overrides.
 Default search hides non-repeatable sources. Empty-state suggestions are random
 from the eligible pool; alias count was investigated and rejected as a popularity
