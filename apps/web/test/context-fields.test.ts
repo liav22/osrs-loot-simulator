@@ -176,3 +176,13 @@ describe('ownership item reconciliation (maxN)', () => {
     ])
   })
 })
+
+describe('Rewards Guardian context', () => {
+  it('finds quests in nested shared choices and every compound ownership requirement', () => {
+    const surface = contextSurfaceOf(loadBoss('rewards-guardian'), shared)
+    expect(surface.quests).toEqual(["Mourning's End Part II", 'Troll Stronghold'])
+    expect(surface.ownershipItemKeys).toEqual(expect.arrayContaining(['small-pouch', 'medium-pouch', 'large-pouch', 'giant-pouch', 'colossal-pouch', 'atlax-s-diary', 'abyssal-needle']))
+    expect(surface.ownershipItems.find(i => i.itemKey === 'large-pouch')?.name).toBe('Large pouch')
+    expect(surface.ownershipItems.find(i => i.itemKey === 'colossal-pouch')?.name).toBe('Colossal pouch')
+  })
+})

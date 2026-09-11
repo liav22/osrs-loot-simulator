@@ -1,0 +1,611 @@
+{
+  "slug": "rewards-guardian",
+  "name": "Rewards Guardian",
+  "aliases": [
+    "Guardians of the Rift",
+    "GotR"
+  ],
+  "wikiPage": "Rewards Guardian",
+  "wikiRevId": 15338032,
+  "note": "Per search (one elemental + one catalytic point, or 25 pearls). Rewards Guardian revision 15338032: prose defines a separate rare table, one main reward, a 15/140 pouch slot removed when all pouches or a colossal pouch are owned, and a 16/140 talisman sub-table with quest replacements. Drops rows cannot encode these relationships or evolving ownership. Lower-tier pouches must be owned before larger pouches (Large pouch and Giant pouch pages); pouch bundles contain 2/4/6/8 pure essence. Ownership controls count degraded pouches too; diary and abyssal needle mean ever received. Intricate pouches remain unopened items. Rune quantities use the published full-level ranges; below-required-level quantity reduction is not modeled because the source comment does not define complete bounds and integer rounding. Rare rewards are modeled as one mutually exclusive pool separate from main and pet; the page states marginals but does not explicitly confirm within-rare co-occurrence. The watchlist preserves these limitations. The opening prose average of 2.14 pearls conflicts with the precise 18/140 and 18/125 rows; use the exact rows (270/140 or 270/125 pearls/search).",
+  "contextDefaults": {
+    "members": true,
+    "questsComplete": [
+      "Troll Stronghold",
+      "Mourning's End Part II"
+    ],
+    "ownedCounts": {
+      "small-pouch": 1,
+      "medium-pouch": 1,
+      "large-pouch": 1,
+      "giant-pouch": 1
+    }
+  },
+  "tables": [
+    {
+      "id": "rewards-guardian:main",
+      "mode": "weighted",
+      "denominator": 185,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 556,
+            "itemKey": "air-rune",
+            "name": "Air rune",
+            "qty": {
+              "kind": "range",
+              "min": 400,
+              "max": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 555,
+            "itemKey": "water-rune",
+            "name": "Water rune",
+            "qty": {
+              "kind": "range",
+              "min": 400,
+              "max": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 557,
+            "itemKey": "earth-rune",
+            "name": "Earth rune",
+            "qty": {
+              "kind": "range",
+              "min": 400,
+              "max": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 554,
+            "itemKey": "fire-rune",
+            "name": "Fire rune",
+            "qty": {
+              "kind": "range",
+              "min": 400,
+              "max": 500
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 558,
+            "itemKey": "mind-rune",
+            "name": "Mind rune",
+            "qty": {
+              "kind": "range",
+              "min": 250,
+              "max": 400
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 559,
+            "itemKey": "body-rune",
+            "name": "Body rune",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 562,
+            "itemKey": "chaos-rune",
+            "name": "Chaos rune",
+            "qty": {
+              "kind": "range",
+              "min": 61,
+              "max": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 564,
+            "itemKey": "cosmic-rune",
+            "name": "Cosmic rune",
+            "qty": {
+              "kind": "range",
+              "min": 20,
+              "max": 30
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "range",
+              "min": 28,
+              "max": 150
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 563,
+            "itemKey": "law-rune",
+            "name": "Law rune",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 120
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 120
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "range",
+              "min": 5,
+              "max": 120
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rewards-guardian-small-pouch"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "ownershipGate": {
+            "itemKey": "small-pouch",
+            "n": 1,
+            "when": "below",
+            "allOf": [
+              {
+                "itemKey": "colossal-pouch",
+                "n": 1,
+                "when": "below"
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rewards-guardian-medium-pouch"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "ownershipGate": {
+            "itemKey": "medium-pouch",
+            "n": 1,
+            "when": "below",
+            "allOf": [
+              {
+                "itemKey": "colossal-pouch",
+                "n": 1,
+                "when": "below"
+              },
+              {
+                "itemKey": "small-pouch",
+                "n": 1,
+                "when": "atLeast"
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rewards-guardian-large-pouch"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "ownershipGate": {
+            "itemKey": "large-pouch",
+            "n": 1,
+            "when": "below",
+            "allOf": [
+              {
+                "itemKey": "colossal-pouch",
+                "n": 1,
+                "when": "below"
+              },
+              {
+                "itemKey": "small-pouch",
+                "n": 1,
+                "when": "atLeast"
+              },
+              {
+                "itemKey": "medium-pouch",
+                "n": 1,
+                "when": "atLeast"
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rewards-guardian-giant-pouch"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          },
+          "ownershipGate": {
+            "itemKey": "giant-pouch",
+            "n": 1,
+            "when": "below",
+            "allOf": [
+              {
+                "itemKey": "colossal-pouch",
+                "n": 1,
+                "when": "below"
+              },
+              {
+                "itemKey": "small-pouch",
+                "n": 1,
+                "when": "atLeast"
+              },
+              {
+                "itemKey": "medium-pouch",
+                "n": 1,
+                "when": "atLeast"
+              },
+              {
+                "itemKey": "large-pouch",
+                "n": 1,
+                "when": "atLeast"
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "kind": "tableRef",
+            "ref": "rewards-guardian-talismans"
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 16
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26792,
+            "itemKey": "abyssal-pearls",
+            "name": "Abyssal pearls",
+            "qty": {
+              "kind": "range",
+              "min": 14,
+              "max": 16
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 18
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26908,
+            "itemKey": "intricate-pouch",
+            "name": "Intricate pouch",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 25775,
+            "itemKey": "abyssal-ashes",
+            "name": "Abyssal ashes",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1733,
+            "itemKey": "needle",
+            "name": "Needle",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "125 ordinary slots plus four mutually exclusive 15-slot pouch entries. Ownership exclusion leaves 140 slots with a missing pouch or 125 with all pouches/colossal pouch."
+    },
+    {
+      "id": "rewards-guardian:rare",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 8400,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 26876,
+                  "itemKey": "atlax-s-diary",
+                  "name": "Atlax's diary",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 1
+                },
+                "ownershipGate": {
+                  "itemKey": "atlax-s-diary",
+                  "n": 1,
+                  "when": "below"
+                }
+              }
+            ]
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 420
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26798,
+            "itemKey": "catalytic-talisman",
+            "name": "Catalytic talisman",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 42
+          }
+        },
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 26813,
+                  "itemKey": "abyssal-needle",
+                  "name": "Abyssal needle",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  }
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 1
+                },
+                "ownershipGate": {
+                  "itemKey": "abyssal-needle",
+                  "n": 1,
+                  "when": "below"
+                }
+              }
+            ]
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 28
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26822,
+            "itemKey": "abyssal-lantern",
+            "name": "Abyssal lantern",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 12
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26811,
+            "itemKey": "abyssal-red-dye",
+            "name": "Abyssal red dye",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26807,
+            "itemKey": "abyssal-green-dye",
+            "name": "Abyssal green dye",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26809,
+            "itemKey": "abyssal-blue-dye",
+            "name": "Abyssal blue dye",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 7
+          }
+        }
+      ],
+      "notes": "Rare reward table"
+    },
+    {
+      "id": "rewards-guardian:4:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 26901,
+            "itemKey": "abyssal-protector",
+            "name": "Abyssal protector",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 4000
+          }
+        }
+      ],
+      "notes": "Tertiary"
+    }
+  ]
+}

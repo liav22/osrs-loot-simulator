@@ -32,19 +32,6 @@ const BOOLEAN_FIELDS: Partial<Record<SimContextField, string>> = {
 
 const MOONS: readonly SimContext['moonsKilled'][number][] = ['blood', 'blue', 'eclipse']
 
-/** Every distinct quest a boss's own conditions reference — no point showing a free-text field for this. */
-function questsReferencedBy(boss: Boss): string[] {
-  const quests = new Set<string>()
-  for (const table of boss.tables) {
-    for (const entry of table.entries) {
-      for (const condition of entry.conditions ?? []) {
-        if (condition.kind === 'questComplete') quests.add(condition.quest)
-      }
-    }
-  }
-  return [...quests].sort()
-}
-
 /**
  * Only the per-boss context surface. The kill count, seed and Simulate button
  * used to live here too; they moved into `BossPanel`, which pins them to the
@@ -145,8 +132,8 @@ function OwnershipChip({
 }
 
 export function SimContextControls({ boss, sharedTables, params, onChange, iconFiles }: Props) {
-  const quests = useMemo(() => questsReferencedBy(boss), [boss])
   const surface = useMemo(() => contextSurfaceOf(boss, sharedTables), [boss, sharedTables])
+  const quests = surface.quests
   const uses = (field: SimContextField) => surface.fields.has(field)
 
   function setCtx(patch: Partial<SimContext>) {

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T14:28:34.054Z",
+  "generatedAt": "2026-09-11T14:38:45.613Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -701,6 +701,18 @@
       "repeatable": true
     },
     {
+      "slug": "rewards-guardian",
+      "name": "Rewards Guardian",
+      "aliases": [
+        "Guardians of the Rift",
+        "GotR"
+      ],
+      "status": "needs_review",
+      "statusTier": "approximate",
+      "image": "Rewards Guardian.png",
+      "repeatable": true
+    },
+    {
       "slug": "salarin-the-twisted",
       "name": "Salarin the twisted",
       "aliases": [],
@@ -978,6 +990,11 @@
     "mega_rare_drop_table",
     "rare_drop_table",
     "reward_pool_fish",
+    "rewards-guardian-giant-pouch",
+    "rewards-guardian-large-pouch",
+    "rewards-guardian-medium-pouch",
+    "rewards-guardian-small-pouch",
+    "rewards-guardian-talismans",
     "the-leviathan-supplies-bundle",
     "the-whisperer-supplies-bundle",
     "vardorvis-supplies-bundle",

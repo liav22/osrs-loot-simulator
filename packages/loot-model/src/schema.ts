@@ -317,7 +317,7 @@ export const ConditionSchema = z.discriminatedUnion('kind', [
    * boss's kill: was it the qualifying Awakened kill. See docs/DECISIONS.md.
    */
   z.object({ kind: z.literal('awakened'), value: z.boolean() }).strict(),
-  z.object({ kind: z.literal('questComplete'), quest: z.string().min(1) }).strict(),
+  z.object({ kind: z.literal('questComplete'), quest: z.string().min(1), value: z.boolean().optional() }).strict(),
   z.object({ kind: z.literal('variant'), name: z.string().min(1) }).strict(),
   /**
    * Gates an entry on a numeric `SimContext` field lying in `[n, atMost]`.
@@ -524,6 +524,12 @@ export const OwnershipGateSchema = z
     when: z.enum(['below', 'atLeast']),
     /** Subtract completed sets (the minimum count across these keys) before testing n. */
     resetPerSet: z.array(z.string().min(1)).min(2).optional(),
+    /** Additional ownership requirements, ANDed with this gate (e.g. lower-tier pouches). */
+    allOf: z.array(z.object({
+      itemKey: z.string().min(1),
+      n: z.number().int().nonnegative(),
+      when: z.enum(['below', 'atLeast']),
+    }).strict()).min(1).optional(),
   })
   .strict()
   .superRefine((gate, ctx) => {

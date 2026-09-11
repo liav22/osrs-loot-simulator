@@ -224,7 +224,12 @@ async function deviations(
   // abort this whole suite on the first such source; record it and move on.
   let result
   try {
-    result = expectedValue(boss, resolveSimContext(boss, {}), { tables: shared })
+    // GotR's primary bucket rates use /140 while a pouch is missing;
+    // its UI defaults own all pouches and use the alternate /125 rates.
+    // Keep the primary-rate comparison active using its stated entering state.
+    // rewards-guardian.test.ts checks both denominators and every pouch subset.
+    const ctx = resolveSimContext(boss, slug === 'rewards-guardian' ? { ownedCounts: {} } : {})
+    result = expectedValue(boss, ctx, { tables: shared })
   } catch (error) {
     if (error instanceof WeightsExceedDenominatorError) {
       DOES_NOT_COMPILE.push(slug)

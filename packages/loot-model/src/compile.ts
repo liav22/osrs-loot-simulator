@@ -293,6 +293,7 @@ export function compileBoss(
         if (gate !== null) {
           trackedItemKeys.add(gate.itemKey)
           for (const key of gate.resetPerSet ?? []) trackedItemKeys.add(key)
+          for (const requirement of gate.allOf ?? []) trackedItemKeys.add(requirement.itemKey)
         }
       }
     }
@@ -344,6 +345,7 @@ export function compileBoss(
         if (gate !== null) {
           trackedItemKeys.add(gate.itemKey)
           for (const key of gate.resetPerSet ?? []) trackedItemKeys.add(key)
+          for (const requirement of gate.allOf ?? []) trackedItemKeys.add(requirement.itemKey)
         }
       }
     }
@@ -410,6 +412,7 @@ export function ownershipGateSatisfied(
   gate: OwnershipGate,
   ownedCountFor: (itemKey: string) => number
 ): boolean {
+  if (gate.allOf?.some((requirement) => !ownershipGateSatisfied(requirement, ownedCountFor))) return false
   let owned = ownedCountFor(gate.itemKey)
   if (gate.resetPerSet !== undefined) {
     const completed = Math.min(...gate.resetPerSet.map(ownedCountFor))

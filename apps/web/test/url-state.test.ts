@@ -166,3 +166,18 @@ describe('SimContext fields beyond the original six', () => {
     expect([...search.keys()]).toContain('shielddmg')
   })
 })
+
+describe('clearing source-specific quest and ownership defaults', () => {
+  it('round-trips explicit empty sets instead of restoring the defaults', () => {
+    const defaults = { questsComplete: ['Troll Stronghold'], ownedCounts: { 'small-pouch': 1 } }
+    const params = paramsFromSearch(new URLSearchParams(), defaults)
+    params.ctx.questsComplete = []
+    params.ctx.ownedCounts = {}
+    const search = searchFromParams(params, defaults)
+    expect(search.get('quests')).toBe('')
+    expect(search.get('owned')).toBe('')
+    const restored = paramsFromSearch(search, defaults)
+    expect(restored.ctx.questsComplete).toEqual([])
+    expect(restored.ctx.ownedCounts).toEqual({})
+  })
+})

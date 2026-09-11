@@ -1,0 +1,36 @@
+{
+  "id": "rewards-guardian-medium-pouch",
+  "mode": "always",
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 5510,
+        "itemKey": "medium-pouch",
+        "name": "Medium pouch",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 7936,
+        "itemKey": "pure-essence",
+        "name": "Pure essence",
+        "qty": {
+          "kind": "exact",
+          "n": 4
+        }
+      },
+      "rate": {
+        "kind": "always"
+      }
+    }
+  ]
+}

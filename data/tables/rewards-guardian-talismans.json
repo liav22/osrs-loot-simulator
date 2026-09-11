@@ -1,0 +1,291 @@
+{
+  "id": "rewards-guardian-talismans",
+  "mode": "weighted",
+  "denominator": 35,
+  "entries": [
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1438,
+        "itemKey": "air-talisman",
+        "name": "Air talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1444,
+        "itemKey": "water-talisman",
+        "name": "Water talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1440,
+        "itemKey": "earth-talisman",
+        "name": "Earth talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1442,
+        "itemKey": "fire-talisman",
+        "name": "Fire talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 3
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1448,
+        "itemKey": "mind-talisman",
+        "name": "Mind talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 4
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1446,
+        "itemKey": "body-talisman",
+        "name": "Body talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 4
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1452,
+        "itemKey": "chaos-talisman",
+        "name": "Chaos talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 4
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1454,
+        "itemKey": "cosmic-talisman",
+        "name": "Cosmic talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 4
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 1462,
+        "itemKey": "nature-talisman",
+        "name": "Nature talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        },
+        "noted": true
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 4
+      }
+    },
+    {
+      "node": {
+        "kind": "item",
+        "itemId": 5516,
+        "itemKey": "elemental-talisman",
+        "name": "Elemental talisman",
+        "qty": {
+          "kind": "exact",
+          "n": 1
+        }
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 1458,
+              "itemKey": "law-talisman",
+              "name": "Law talisman",
+              "qty": {
+                "kind": "exact",
+                "n": 1
+              }
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            },
+            "conditions": [
+              {
+                "kind": "questComplete",
+                "quest": "Troll Stronghold"
+              }
+            ]
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 1438,
+              "itemKey": "air-talisman",
+              "name": "Air talisman",
+              "qty": {
+                "kind": "exact",
+                "n": 1
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            },
+            "conditions": [
+              {
+                "kind": "questComplete",
+                "quest": "Troll Stronghold",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    },
+    {
+      "node": {
+        "kind": "oneOf",
+        "entries": [
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 1456,
+              "itemKey": "death-talisman",
+              "name": "Death talisman",
+              "qty": {
+                "kind": "exact",
+                "n": 1
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            },
+            "conditions": [
+              {
+                "kind": "questComplete",
+                "quest": "Mourning's End Part II"
+              }
+            ]
+          },
+          {
+            "node": {
+              "kind": "item",
+              "itemId": 1438,
+              "itemKey": "air-talisman",
+              "name": "Air talisman",
+              "qty": {
+                "kind": "exact",
+                "n": 1
+              },
+              "noted": true
+            },
+            "rate": {
+              "kind": "weight",
+              "weight": 1
+            },
+            "conditions": [
+              {
+                "kind": "questComplete",
+                "quest": "Mourning's End Part II",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      "rate": {
+        "kind": "weight",
+        "weight": 1
+      }
+    }
+  ]
+}

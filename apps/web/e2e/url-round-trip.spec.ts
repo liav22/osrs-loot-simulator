@@ -181,3 +181,27 @@ test('a shared link reproduces the same simulation result', async ({ page }) => 
   const different = await runAndRead('./boss/vorkath?seed=100&n=5000')
   expect(different).not.toBe(first)
 })
+
+test('GotR searches expose nested controls and preserve cleared defaults in a replay', async ({ page }) => {
+  await page.goto('./boss/rewards-guardian?n=10000&seed=42')
+  await expect(page.getByRole('heading', { name: 'Rewards Guardian' })).toBeVisible()
+  for (const quest of ['Troll Stronghold', "Mourning's End Part II"]) {
+    await expect(page.getByLabel(quest)).toBeChecked()
+    await page.getByLabel(quest).uncheck()
+  }
+  for (const name of ['Small pouch', 'Medium pouch', 'Large pouch', 'Giant pouch']) {
+    const chip = page.getByRole('button', { name, exact: true })
+    await expect(chip).toHaveAttribute('aria-pressed', 'true')
+    await chip.click()
+  }
+  await page.reload()
+  for (const quest of ['Troll Stronghold', "Mourning's End Part II"]) await expect(page.getByLabel(quest)).not.toBeChecked()
+  for (const name of ['Small pouch', 'Medium pouch', 'Large pouch', 'Giant pouch']) await expect(page.getByRole('button', { name, exact: true })).toHaveAttribute('aria-pressed', 'false')
+  await expect(page.getByRole('button', { name: 'Colossal pouch', exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Simulate', exact: true }).click()
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
+  const result = await resultProjection(page)
+  await page.reload()
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
+  expect(await resultProjection(page)).toEqual(result)
+})

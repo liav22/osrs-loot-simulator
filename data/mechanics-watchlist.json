@@ -101,6 +101,14 @@
       "detail": "The armour/mace/staff pool and orb pool are both modelled in data/overrides/the-nightmare.json, each item kept at its own individually-published, bucket-confirmed rate (not rescaled to the page's rounded 1/83.33 and 1/320 summary figures). NOT modelled: a party-size-scaled SECOND roll of both pools, stated exactly on the page (\"there is a chance that both are rolled a second time..., this chance being (partySize-5)%, clamped between 0 and 75 percent\") but needing a new partySize SimContext field and formula this project does not have yet -- a real, buildable feature, not an unstated number. Bounded: solo/small-team play (party size <= 5) is completely unaffected; even at the stated maximum (80-player parties, 75%) both pools' true combined rates are at most ~1.75x what is modelled.",
       "tier": "approximate",
       "blockedBy": []
+    },
+    {
+      "lootSourceId": "rewards-guardian",
+      "title": "Rewards Guardian",
+      "mechanic": "other",
+      "tier": "approximate",
+      "blockedBy": [],
+      "detail": "The override in data/overrides/rewards-guardian.json models one search, main/rare/pet separation, evolving pouch ownership with prepacked essence, one-time diary/needle, and quest talisman substitutions. Rune quantities use the published full-level ranges: the below-required-Runecraft-level reduction remains unmodeled; the source comment omits complete bounds and rounding. The rare table is a mutually exclusive pool preserving stated marginal rates, but within-rare co-occurrence is not explicitly confirmed. Intricate pouches are awarded unopened. See docs/bosses/rewards-guardian.md and apps/ingest/test/rewards-guardian.test.ts."
     }
   ]
 }

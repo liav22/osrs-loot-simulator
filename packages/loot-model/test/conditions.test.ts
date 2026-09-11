@@ -21,6 +21,8 @@ describe('evaluateCondition', () => {
     [{ kind: 'onKonarTask', value: false }, { onKonarTask: true }, false],
     [{ kind: 'questComplete', quest: "Legends' Quest" }, { questsComplete: ["Legends' Quest"] }, true],
     [{ kind: 'questComplete', quest: "Legends' Quest" }, { questsComplete: [] }, false],
+    [{ kind: 'questComplete', quest: 'Troll Stronghold', value: false }, { questsComplete: [] }, true],
+    [{ kind: 'questComplete', quest: 'Troll Stronghold', value: false }, { questsComplete: ['Troll Stronghold'] }, false],
     // `killCountAtLeast` was retired into `levelAtLeast`; this is its replacement spelling.
     [{ kind: 'levelAtLeast', field: 'killCount', n: 50 }, { killCount: 50 }, true],
     [{ kind: 'levelAtLeast', field: 'killCount', n: 50 }, { killCount: 49 }, false],

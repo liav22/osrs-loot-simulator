@@ -153,7 +153,7 @@ export function paramsFromSearch(
     ...defaults,
     members: parseBool(search.get('members'), defaults.members),
     ringOfWealth: parseBool(search.get('row'), defaults.ringOfWealth),
-    questsComplete: questsRaw === null || questsRaw === '' ? defaults.questsComplete : questsRaw.split(','),
+    questsComplete: questsRaw === null ? defaults.questsComplete : questsRaw === '' ? [] : questsRaw.split(','),
     killCount: parseIntParam(search.get('kc'), defaults.killCount),
     variant: search.get('variant') ?? defaults.variant,
     moonsKilled: search.get('moons') === null ? defaults.moonsKilled : parseMoons(search.get('moons')),
@@ -180,13 +180,13 @@ export function searchFromParams(params: SimRunParams, contextDefaults: PartialS
   const search = new URLSearchParams()
   if (params.ctx.members !== defaults.members) search.set('members', params.ctx.members ? '1' : '0')
   if (params.ctx.ringOfWealth !== defaults.ringOfWealth) search.set('row', params.ctx.ringOfWealth ? '1' : '0')
-  if (params.ctx.questsComplete.length > 0) search.set('quests', params.ctx.questsComplete.join(','))
+  if (params.ctx.questsComplete.length > 0 || defaults.questsComplete.length > 0) search.set('quests', params.ctx.questsComplete.join(','))
   if (params.ctx.killCount !== defaults.killCount) search.set('kc', String(params.ctx.killCount))
   if (params.ctx.variant !== defaults.variant) search.set('variant', params.ctx.variant)
   if (params.ctx.moonsKilled.length > 0) search.set('moons', params.ctx.moonsKilled.join(','))
 
   const owned = Object.entries(params.ctx.ownedCounts).filter(([, n]) => n > 0)
-  if (owned.length > 0) {
+  if (owned.length > 0 || Object.values(defaults.ownedCounts).some((n) => n > 0)) {
     search.set('owned', owned.map(([key, n]) => `${key}:${n}`).join(','))
   }
 

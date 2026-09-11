@@ -13,7 +13,7 @@ export function evaluateCondition(condition: Condition, ctx: SimContext): boolea
     case 'awakened':
       return ctx.awakened === condition.value
     case 'questComplete':
-      return ctx.questsComplete.includes(condition.quest)
+      return ctx.questsComplete.includes(condition.quest) === (condition.value ?? true)
     case 'variant':
       return ctx.variant === condition.name
     case 'levelAtLeast': {

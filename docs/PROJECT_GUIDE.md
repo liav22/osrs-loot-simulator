@@ -60,6 +60,10 @@ agree on semantics. Important distinctions to retain:
   counts. Simulation and single-attempt expected value share this rule;
   ownership-dependent milestones remain unsupported. See the
   [repeating-set tests](../packages/loot-model/test/repeating-set.test.ts).
+- `ownershipGate.allOf` adds conjunctive ownership requirements while tracking
+  all referenced items during a run. It supports ordered pouch acquisition and
+  replacement-item exclusion. `questComplete.value: false` expresses the
+  complementary quest outcome without changing existing positive gates.
 - Probability calculations distinguish supported exact results from unsupported
   ownership-dependent cases. Preserve that classification rather than labeling
   every distribution exact. Exact here means relative to the modeled data,
@@ -83,6 +87,10 @@ excludes the assembled bludgeon's value.
 [Mahogany Homes supply crates](bosses/supply-crate-mahogany-homes.md) use the same
 registration path, with one noted stack per opening. Their exact quantity
 weights parse directly from the row-bearing “Possible loot” section.
+[Rewards Guardian](bosses/rewards-guardian.md) uses the same route for GotR
+searches, with pouch progression, quest substitutions and separate rare/pet
+rolls. It remains approximate for low-level rune quantities and within-rare
+co-occurrence.
 
 Parser fixes reuse `data/snapshots/`; new research and deliberate refreshes are
 separate fetch operations. Missing cache files must be reported rather than
@@ -159,6 +167,7 @@ not a promise that an unknown can never become known.
 | The Nightmare | Two independent unique pools exist; a party-size-dependent second roll is stated but unbuilt. Adding party context is a scope change. |
 | Maggot King | Qualitative rarities remain unresolved. Historical research also identifies player-choice/variant and bundle work; investigate these together without inventing the missing probability split. |
 | Reward cart | A metadata-only override adds the Wintertodt search alias; many `Varies` rows lack numeric rates. Points scaling and relative ownership selection need work. A source-data gap and missing model capabilities coexist. |
+| Rewards Guardian | Full-level rune ranges only; low-level quantity bounds/rounding remain unclear. The rare pool preserves published marginals but assumes mutually exclusive outcomes. |
 | Reward pool | Implemented per reward permit. Conversion of encounter points into permits has an unstated rounding rule. |
 | Zalcano | Eligibility, MVP and several rewards are modeled; points-to-loot and contribution-to-shard curves remain unstated in the researched sources. |
 | Tombs of Amascut | Five remnant rewards need invocation-composition conditions. Other exclusions include the elite combat achievement clue multiplier and duplicate jewels after all are owned. |
@@ -202,6 +211,8 @@ fresh seed for each run. The kill-count input may stay blank while editing;
 Simulate is disabled until a count is entered, and the URL retains the last
 numeric count. Context controls derive from conditions, formula input
 metadata, and ownership gates; apply `Boss.contextDefaults` before URL overrides.
+Quest controls follow nested choices and shared tables. Explicitly cleared
+quest and ownership defaults survive URL sharing.
 Default search hides non-repeatable sources. When an activity qualifier is also
 an alias, search results and the simulation heading show it only in the grey
 alias text. Empty-state suggestions are random

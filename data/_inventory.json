@@ -1384,6 +1384,18 @@
       "repeatable": true
     },
     {
+      "slug": "rewards-guardian",
+      "title": "Rewards Guardian",
+      "pageid": 351235,
+      "revid": 15338032,
+      "lootSourceId": "rewards-guardian",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 40,
+      "encounter": null,
+      "repeatable": true
+    },
+    {
       "slug": "royal-titans",
       "title": "Royal Titans",
       "pageid": 553602,
@@ -3457,6 +3469,19 @@
       "excludeReason": null,
       "bosses": [
         "sol-heredit"
+      ],
+      "repeatable": true
+    },
+    {
+      "id": "rewards-guardian",
+      "title": "Rewards Guardian",
+      "dropsPage": "Rewards Guardian",
+      "tier": "D",
+      "rowCount": 40,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "rewards-guardian"
       ],
       "repeatable": true
     },

@@ -3081,6 +3081,62 @@
         "pet"
       ],
       "reason": "Unsired reward listed in the OSRS Wiki Rewards table, revision 15328493."
+    },
+    {
+      "bossSlug": "rewards-guardian",
+      "itemKey": "abyssal-needle",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Guardians of the Rift unique reward or pet, Rewards Guardian wiki revision 15338032."
+    },
+    {
+      "bossSlug": "rewards-guardian",
+      "itemKey": "abyssal-lantern",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Guardians of the Rift unique reward or pet, Rewards Guardian wiki revision 15338032."
+    },
+    {
+      "bossSlug": "rewards-guardian",
+      "itemKey": "abyssal-red-dye",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Guardians of the Rift unique reward or pet, Rewards Guardian wiki revision 15338032."
+    },
+    {
+      "bossSlug": "rewards-guardian",
+      "itemKey": "abyssal-green-dye",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Guardians of the Rift unique reward or pet, Rewards Guardian wiki revision 15338032."
+    },
+    {
+      "bossSlug": "rewards-guardian",
+      "itemKey": "abyssal-blue-dye",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Guardians of the Rift unique reward or pet, Rewards Guardian wiki revision 15338032."
+    },
+    {
+      "bossSlug": "rewards-guardian",
+      "itemKey": "catalytic-talisman",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Guardians of the Rift unique reward or pet, Rewards Guardian wiki revision 15338032."
+    },
+    {
+      "bossSlug": "rewards-guardian",
+      "itemKey": "abyssal-protector",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Guardians of the Rift unique reward or pet, Rewards Guardian wiki revision 15338032."
     }
   ]
 }

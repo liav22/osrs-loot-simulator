@@ -43,11 +43,9 @@ import {
 export interface OwnershipItem {
   itemKey: string
   /**
-   * Display name, read off the same item node the gate lives on (every
-   * `ownershipGate` in the corpus sits on a plain `{ kind: 'item' }` node, so
-   * this always resolves in practice; `itemKey` is the fallback for the
-   * structural case — a gate on a `oneOf`/`tableRef` entry — that does not
-   * exist today but the schema does not rule out).
+   * Display name from a reachable item node, including shared-table rewards.
+   * External ownership requirements without a reward node use a readable
+   * item-key fallback (for example, GotR's colossal pouch).
    */
   name: string
   /**
@@ -62,6 +60,7 @@ export interface OwnershipItem {
 }
 
 export interface BossContextSurface {
+  quests: string[]
   fields: ReadonlySet<SimContextField>
   /** Item keys some entry gates on owning, for the `ownedCounts` controls. Derived from `ownershipItems`; kept for callers that only need the keys. */
   ownershipItemKeys: readonly string[]
@@ -124,6 +123,8 @@ function collectFormula(value: unknown, into: Set<SimContextField>): void {
 }
 
 interface Walk {
+  quests: Set<string>
+  itemNames: Map<string, string>
   into: Set<SimContextField>
   /** itemKey -> the richest info seen for it so far. A `Map` because the same item can be gated by more than one entry (ToA's thread-of-elidinis: one `below` grant, one `atLeast` bonus) and `maxN` has to reconcile across all of them. */
   ownership: Map<string, { name: string; maxN: number }>
@@ -135,6 +136,7 @@ interface Walk {
 
 function walkNode(node: Node, walk: Walk): void {
   if (node.kind === 'item') {
+    walk.itemNames.set(node.itemKey, node.name)
     collectFormula(node.qty, walk.into)
     return
   }
@@ -173,22 +175,26 @@ function walkEntry(entry: Entry, walk: Walk): void {
         into.add(condition.kind === 'variant' ? 'variant' : condition.kind)
         break
       case 'questComplete':
+        walk.quests.add(condition.quest)
         into.add('questsComplete')
         break
       case 'levelAtLeast':
         into.add(condition.field)
         break
       case 'includes':
+        if (condition.field === 'questsComplete') for (const quest of condition.values) walk.quests.add(quest)
         into.add(condition.field)
         break
     }
   }
   if (entry.ownershipGate !== undefined) {
     into.add('ownedCounts')
-    const { itemKey, n } = entry.ownershipGate
-    const name = entry.node.kind === 'item' ? entry.node.name : itemKey
-    const existing = walk.ownership.get(itemKey)
-    walk.ownership.set(itemKey, { name, maxN: Math.max(existing?.maxN ?? 0, n) })
+    for (const { itemKey, n } of [entry.ownershipGate, ...(entry.ownershipGate.allOf ?? [])]) {
+      const existing = walk.ownership.get(itemKey)
+      const name = entry.node.kind === 'item' && entry.node.itemKey === itemKey
+        ? entry.node.name : existing?.name ?? itemKey
+      walk.ownership.set(itemKey, { name, maxN: Math.max(existing?.maxN ?? 0, n) })
+    }
   }
   collectFormula(entry.rate, into)
   walkNode(entry.node, walk)
@@ -207,6 +213,8 @@ export function contextSurfaceOf(
   const found = new Set<SimContextField>()
   const ownership = new Map<string, { name: string; maxN: number }>()
   const walk: Walk = {
+    quests: new Set(),
+    itemNames: new Map(),
     into: found,
     ownership,
     shared: sharedTables,
@@ -228,11 +236,17 @@ export function contextSurfaceOf(
   }
 
   const ownershipItems = [...ownership.entries()]
-    .map(([itemKey, { name, maxN }]) => ({ itemKey, name, maxN }))
+    .map(([itemKey, { name, maxN }]) => ({
+      itemKey,
+      name: walk.itemNames.get(itemKey) ?? (name === itemKey
+        ? name.charAt(0).toUpperCase() + name.slice(1).replace(/-/g, ' ') : name),
+      maxN,
+    }))
     .sort((a, b) => a.name.localeCompare(b.name))
 
   return {
     fields,
+    quests: [...walk.quests].sort(),
     ownershipItemKeys: ownershipItems.map((item) => item.itemKey),
     ownershipItems,
     freeToPlayVariant: walk.freeToPlay,
