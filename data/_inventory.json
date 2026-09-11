@@ -1588,6 +1588,18 @@
       "repeatable": true
     },
     {
+      "slug": "supply-crate-mahogany-homes",
+      "title": "Supply crate (Mahogany Homes)",
+      "pageid": 272546,
+      "revid": 15189848,
+      "lootSourceId": "supply-crate-mahogany-homes",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 18,
+      "encounter": null,
+      "repeatable": true
+    },
+    {
       "slug": "tarn",
       "title": "Tarn",
       "pageid": 23545,
@@ -3640,6 +3652,19 @@
       "excludeReason": null,
       "bosses": [
         "spindel"
+      ],
+      "repeatable": true
+    },
+    {
+      "id": "supply-crate-mahogany-homes",
+      "title": "Supply crate (Mahogany Homes)",
+      "dropsPage": "Supply crate (Mahogany Homes)",
+      "tier": "A",
+      "rowCount": 18,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "supply-crate-mahogany-homes"
       ],
       "repeatable": true
     },

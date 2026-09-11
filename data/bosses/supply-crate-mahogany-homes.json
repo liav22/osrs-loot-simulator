@@ -1,0 +1,382 @@
+{
+  "slug": "supply-crate-mahogany-homes",
+  "name": "Supply crate (Mahogany Homes)",
+  "aliases": [],
+  "wikiPage": "Supply crate (Mahogany Homes)",
+  "wikiRevId": 15189848,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "supply-crate-mahogany-homes:0:untitled",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 144,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8790,
+            "itemKey": "bolt-of-cloth",
+            "name": "Bolt of cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 9
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8790,
+            "itemKey": "bolt-of-cloth",
+            "name": "Bolt of cloth",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3420,
+            "itemKey": "limestone-brick",
+            "name": "Limestone brick",
+            "qty": {
+              "kind": "exact",
+              "n": 9
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 3420,
+            "itemKey": "limestone-brick",
+            "name": "Limestone brick",
+            "qty": {
+              "kind": "exact",
+              "n": 10
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8782,
+            "itemKey": "mahogany-plank",
+            "name": "Mahogany plank",
+            "qty": {
+              "kind": "exact",
+              "n": 6
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8782,
+            "itemKey": "mahogany-plank",
+            "name": "Mahogany plank",
+            "qty": {
+              "kind": "exact",
+              "n": 7
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8778,
+            "itemKey": "oak-plank",
+            "name": "Oak plank",
+            "qty": {
+              "kind": "exact",
+              "n": 28
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8778,
+            "itemKey": "oak-plank",
+            "name": "Oak plank",
+            "qty": {
+              "kind": "exact",
+              "n": 29
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 15
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8778,
+            "itemKey": "oak-plank",
+            "name": "Oak plank",
+            "qty": {
+              "kind": "exact",
+              "n": 30
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1761,
+            "itemKey": "soft-clay",
+            "name": "Soft clay",
+            "qty": {
+              "kind": "exact",
+              "n": 45
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1761,
+            "itemKey": "soft-clay",
+            "name": "Soft clay",
+            "qty": {
+              "kind": "exact",
+              "n": 46
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1761,
+            "itemKey": "soft-clay",
+            "name": "Soft clay",
+            "qty": {
+              "kind": "exact",
+              "n": 47
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 10
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1761,
+            "itemKey": "soft-clay",
+            "name": "Soft clay",
+            "qty": {
+              "kind": "exact",
+              "n": 48
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2353,
+            "itemKey": "steel-bar",
+            "name": "Steel bar",
+            "qty": {
+              "kind": "exact",
+              "n": 23
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2353,
+            "itemKey": "steel-bar",
+            "name": "Steel bar",
+            "qty": {
+              "kind": "exact",
+              "n": 24
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2353,
+            "itemKey": "steel-bar",
+            "name": "Steel bar",
+            "qty": {
+              "kind": "exact",
+              "n": 25
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8780,
+            "itemKey": "teak-plank",
+            "name": "Teak plank",
+            "qty": {
+              "kind": "exact",
+              "n": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 20
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 8780,
+            "itemKey": "teak-plank",
+            "name": "Teak plank",
+            "qty": {
+              "kind": "exact",
+              "n": 16
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        }
+      ],
+      "notes": ""
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "statusTier": "verified",
+  "statusReason": null,
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "the rendered page has no \"average ... kill is worth N\" sentence to compare against"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 7 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": true
+}

@@ -28,6 +28,17 @@ Not a drops section.
 `
 
 describe('extractDropLines', () => {
+  it('reads loot headings only with reward rows and stops at sibling sections', () => {
+    const row = '{{DropsLineReward|name=Oak plank|quantity=28 (noted)|rarity=10/144}}'
+    for (const heading of ['Possible loot', 'Loot']) {
+      const lines = extractDropLines(`intro\n==${heading}==\n${row}\n==Rewards value==\n${row}\n`)
+      expect(lines).toHaveLength(1)
+      expect(lines[0]?.name).toBe('Oak plank')
+      expect(lines[0]?.noted).toBe(true)
+      expect(extractDropLines(`intro\n==${heading}==\nProse only.\n`)).toEqual([])
+    }
+  })
+
   it('returns nothing when there is no Drops heading', () => {
     expect(extractDropLines('==Location==\nNothing here.\n==Dialogue==\nMore.')).toEqual([])
   })

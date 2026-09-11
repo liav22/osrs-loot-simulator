@@ -80,6 +80,9 @@ these explicit boss/source pairs, rejecting collisions with discovered sources.
 [Unsired](bosses/unsired.md) uses this route: each attempt offers one Unsired,
 with pet removal and repeating bludgeon-piece protection. Its displayed GP
 excludes the assembled bludgeon's value.
+[Mahogany Homes supply crates](bosses/supply-crate-mahogany-homes.md) use the same
+registration path, with one noted stack per opening. Their exact quantity
+weights parse directly from the row-bearing “Possible loot” section.
 
 Parser fixes reuse `data/snapshots/`; new research and deliberate refreshes are
 separate fetch operations. Missing cache files must be reported rather than
@@ -169,8 +172,10 @@ not a promise that an unknown can never become known.
 Raid chests are modeled per player with solo assumptions. Team allocation is an
 explicit scope exclusion, not evidence that the wiki lacks the formulas.
 
-Included sources without generated documents: `burnt-chest` (heading parsing
-gap), `revenant-maledictus` (prose-only mechanic, no DropsLine calls in the
+The row-content-gated loot heading rule also parses Burnt chest's guaranteed
+Warm key from its `Loot` section.
+
+Included sources without generated documents: `revenant-maledictus` (prose-only mechanic, no DropsLine calls in the
 researched page), and `sigmund` (quest pickpocket reward rather than combat loot).
 Reassess the current snapshot before treating these diagnoses as unchanged.
 

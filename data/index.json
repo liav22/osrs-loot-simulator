@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T14:22:12.323Z",
+  "generatedAt": "2026-09-11T14:28:34.054Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -137,6 +137,15 @@
       "statusTier": "verified",
       "image": "Bryophyta.png",
       "repeatable": true
+    },
+    {
+      "slug": "burnt-chest",
+      "name": "Burnt chest",
+      "aliases": [],
+      "status": "verified",
+      "statusTier": "verified",
+      "image": "Burnt chest (closed).png",
+      "repeatable": false
     },
     {
       "slug": "callisto",
@@ -779,6 +788,15 @@
       "status": "verified",
       "statusTier": "verified",
       "image": "Spindel.png",
+      "repeatable": true
+    },
+    {
+      "slug": "supply-crate-mahogany-homes",
+      "name": "Supply crate (Mahogany Homes)",
+      "aliases": [],
+      "status": "verified",
+      "statusTier": "verified",
+      "image": "Supply crate (Mahogany Homes).png",
       "repeatable": true
     },
     {

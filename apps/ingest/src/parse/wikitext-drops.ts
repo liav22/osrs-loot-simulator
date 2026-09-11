@@ -318,7 +318,8 @@ const DROPS_SECTION_TITLE = /^(?:\S+\s+)?(drops?|rewards?)\s*(\(.*\))?$/i
  * `findRowlessTemplateBlocks` needs the tight rule's sections to survive with
  * zero rows, precisely to report that they have none.
  */
-const LOOSE_DROPS_SECTION_TITLE = /^.+?\b(drops?|rewards?|table)\s*(\(.*\))?$/i
+// Loot headings (including "Possible loot") use the same row-content gate.
+const LOOSE_DROPS_SECTION_TITLE = /^(?:.+?\b(?:drops?|rewards?|table)|(?:.+?\b)?loot)\s*(\(.*\))?$/i
 
 /**
  * Strips inline HTML MediaWiki tolerates inside a heading — Reward Chest (The
