@@ -34,7 +34,20 @@ export function ItemProbabilityModal({ boss, ctx, sharedTables, itemKey, itemNam
   )
 
   return (
-    <Modal title={itemName} onClose={onClose}>
+    <Modal
+      title={itemName}
+      titleAccessory={(
+        <a
+          href={`https://oldschool.runescape.wiki/w/${encodeURIComponent(itemName.replace(/ /g, '_'))}`}
+          target="_blank"
+          rel="noreferrer"
+          className="shrink-0 text-xs font-normal text-muted hover:text-amber-400 hover:underline"
+        >
+          OSRS Wiki ↗
+        </a>
+      )}
+      onClose={onClose}
+    >
       <p className="mb-3 text-xs text-muted">{contextSummary(boss, ctx)}</p>
 
       <label className="mb-3 flex items-center gap-2 text-sm text-neutral-300">

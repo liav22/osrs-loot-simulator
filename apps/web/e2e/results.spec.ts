@@ -29,7 +29,17 @@ test('the uniques strip appears only when a curated unique or pet actually dropp
 
   await expect(page.getByText('Uniques')).toBeVisible()
   const strip = page.locator('div').filter({ hasText: /^Uniques/ }).first()
-  await expect(strip.getByText('Draconic visage')).toBeVisible()
+  const visage = strip.getByText('Draconic visage')
+  await expect(visage).toBeVisible()
+  await visage.click()
+  const wikiLink = page.getByRole('dialog', { name: 'Draconic visage' }).getByRole('link', { name: 'OSRS Wiki ↗' })
+  await expect(wikiLink).toHaveAttribute(
+    'href',
+    'https://oldschool.runescape.wiki/w/Draconic_visage'
+  )
+  await expect(wikiLink).toHaveAttribute('target', '_blank')
+  await expect(wikiLink).toHaveAttribute('rel', 'noreferrer')
+  await page.getByRole('button', { name: 'Close', exact: true }).click()
 
   // One kill: no curated unique or pet drops, and the strip is absent
   // ENTIRELY rather than rendering an empty "no uniques" state, which reads

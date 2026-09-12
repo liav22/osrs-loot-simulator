@@ -19,10 +19,12 @@ const FOCUSABLE =
  */
 export function Modal({
   title,
+  titleAccessory,
   onClose,
   children,
 }: {
   title: string
+  titleAccessory?: ReactNode
   onClose: () => void
   children: ReactNode
 }) {
@@ -94,7 +96,10 @@ export function Modal({
         className="flex h-full w-full flex-col border-neutral-800 bg-neutral-950 outline-none sm:h-auto sm:max-h-[80dvh] sm:max-w-3xl sm:rounded-lg sm:border"
       >
         <div className="flex shrink-0 items-center justify-between gap-3 border-b border-neutral-800 px-4 py-3">
-          <h2 className="text-sm font-semibold text-neutral-200">{title}</h2>
+          <div className="flex min-w-0 items-center gap-3">
+            <h2 className="truncate text-sm font-semibold text-neutral-200">{title}</h2>
+            {titleAccessory}
+          </div>
           <button
             type="button"
             onClick={onClose}
