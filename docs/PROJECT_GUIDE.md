@@ -123,7 +123,8 @@ conditions, not just item names and rates.
 Item IDs are resolved using infobox defaults, qualified-page relationships, and
 exact page-name matches. Unresolved collisions stay unresolved or use the
 reviewed allowlist; never select the first ID. Icon filenames are resolved by
-ingest, not inferred from item names. Unique/pet display uses curated flags,
+ingest, not inferred from item names. Unique/pet display follows references
+into shared tables as well as inline choices and uses curated flags,
 not a rarity threshold. `GeneralSeedDropLines` uses raw weights rather than the
 wiki's rounded display figures; its dedicated test preserves that distinction.
 

@@ -9,6 +9,16 @@ const HERE = dirname(fileURLToPath(import.meta.url))
 
 test.use({ viewport: { width: 1920, height: 1080 } })
 
+test('Hydra highlights shared ring components and leather in the uniques strip', async ({ page }) => {
+  await page.goto('./boss/alchemical-hydra?n=10000&seed=7')
+  await page.getByRole('button', { name: 'Simulate' }).click()
+  await expect(page.getByTestId('results-summary')).toBeVisible({ timeout: 30_000 })
+  const strip = page.getByText('Uniques', { exact: true }).locator('..')
+  for (const name of ["Hydra's eye", "Hydra's fang", "Hydra's heart", "Hydra's claw", 'Hydra tail', 'Hydra leather']) {
+    await expect(strip.getByText(name, { exact: true })).toBeVisible()
+  }
+})
+
 test('the uniques strip appears only when a curated unique or pet actually dropped', async ({ page }) => {
   // 200,000 Vorkath kills at a fixed seed: Draconic visage is a curated
   // unique at 1/5,000, so several land. The strip is the payoff for running

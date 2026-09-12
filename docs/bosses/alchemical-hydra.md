@@ -30,6 +30,10 @@ restarts that order after every full set while retaining cumulative loot.
 This reuses the general model without source-specific simulator changes.
 The override's prior herb correction and other non-unique tables are preserved.
 
+The three ring components, claw, tail and leather are curated uniques; Ikkle
+Hydra is the pet. The results view follows the shared ring table's flags so
+its components appear in the uniques strip and receive unique highlighting.
+
 Entering owned components contribute to the current set but are not counted
 as newly earned loot. Results retain components rather than assembled rings.
 Expected value describes the next kill's entering state; component milestones

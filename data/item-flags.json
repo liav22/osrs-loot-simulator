@@ -3,6 +3,14 @@
   "note": "Curated per-(bossSlug, itemKey) facts: which items are a boss's actual unique drops and which is its pet. Neither is derivable from wiki structure (see apps/ingest/src/items/item-flags.ts). Hand-curated from OSRS domain knowledge, cross-checked against each boss's own committed item list.",
   "entries": [
     {
+      "bossSlug": "alchemical-hydra",
+      "itemKey": "hydra-leather",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Alchemical Hydra's unique leather used to make ferocious gloves; OSRS Wiki Alchemical Hydra, Unique section, revision 15285801."
+    },
+    {
       "bossSlug": "abyssal-sire",
       "itemKey": "unsired",
       "flags": [

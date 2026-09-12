@@ -31,7 +31,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable, ctx, s
   const [showLog, setShowLog] = useState(false)
   const [selectedItem, setSelectedItem] = useState<{ itemKey: string; name: string } | null>(null)
 
-  const uniques = useMemo(() => uniqueItemKeys(boss), [boss])
+  const uniques = useMemo(() => uniqueItemKeys(boss, sharedTables), [boss, sharedTables])
   // One query for the whole view rather than one per card: the icon file names
   // are a single ~30KB document, and threading the lookup down beats sixty
   // components each subscribing to the same cache entry.

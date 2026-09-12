@@ -1,7 +1,7 @@
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { BossSchema, type Boss, type BossInput } from '@osrs-loot-simulator/loot-model'
+import { BossSchema, SharedTableSchema, type Boss, type BossInput } from '@osrs-loot-simulator/loot-model'
 import { uniqueItemKeys } from '../src/lib/uniques'
 
 /**
@@ -95,9 +95,36 @@ describe('uniqueItemKeys', () => {
   it('is empty for a boss with no curated flags', () => {
     expect(uniqueItemKeys(makeBoss([])).size).toBe(0)
   })
+
+  it('follows shared references inside choices, guards cycles, and excludes unreachable flags', () => {
+    const ref = { kind: 'tableRef' as const, ref: 'shared' }
+    const boss = makeBoss([{ id: 'main', mode: 'always', entries: [{
+      node: { kind: 'oneOf', entries: [{ node: ref, rate: { kind: 'weight', weight: 1 } }] },
+      rate: { kind: 'always' },
+    }] }])
+    const shared = SharedTableSchema.parse({ id: 'shared', mode: 'always', entries: [
+      { node: ref, rate: { kind: 'always' } },
+      { node: { kind: 'item', itemId: 1, itemKey: 'shared-pet', name: 'Pet', qty: { kind: 'exact', n: 1 }, pet: true }, rate: { kind: 'always' } },
+    ] })
+    const unreachable = SharedTableSchema.parse({ ...shared, id: 'unreachable', entries: [
+      { node: { kind: 'item', itemId: 2, itemKey: 'unreachable-unique', name: 'Unique', qty: { kind: 'exact', n: 1 }, unique: true }, rate: { kind: 'always' } },
+    ] })
+    expect(uniqueItemKeys(boss)).toEqual(new Set())
+    expect(uniqueItemKeys(boss, new Map([['shared', shared], ['unreachable', unreachable]])))
+      .toEqual(new Set(['shared-pet']))
+  })
 })
 
 describe('uniqueItemKeys against the real corpus', () => {
+  it('includes all six Hydra uniques and its pet, including shared ring pieces', () => {
+    const tables = new Map(readdirSync(join(ROOT, 'tables')).filter((file) => file.endsWith('.json')).map((file) => {
+      const table = SharedTableSchema.parse(JSON.parse(readFileSync(join(ROOT, 'tables', file), 'utf8')))
+      return [table.id, table] as const
+    }))
+    expect(uniqueItemKeys(loadBoss('alchemical-hydra'), tables)).toEqual(new Set([
+      'hydra-s-eye', 'hydra-s-fang', 'hydra-s-heart', 'hydra-s-claw', 'hydra-tail', 'hydra-leather', 'ikkle-hydra',
+    ]))
+  })
   it('picks up Zulrah’s uniques and pet', () => {
     const keys = uniqueItemKeys(loadBoss('zulrah'))
     expect(keys.has('tanzanite-fang')).toBe(true)
