@@ -5,7 +5,7 @@
     "Theatre of Blood"
   ],
   "wikiPage": "Monumental chest",
-  "wikiRevId": 15299363,
+  "wikiRevId": 15341590,
   "variants": [
     "normal",
     "hard",
@@ -1579,7 +1579,7 @@
     }
   ],
   "contextDefaults": {
-    "variant": "Normal Mode"
+    "variant": "normal"
   },
   "status": "needs_review",
   "statusTier": "approximate",

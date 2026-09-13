@@ -20,6 +20,16 @@
 > interaction (unconfirmed either way — its -80% is a flat constant, not
 > ratio-scaled).
 >
+> **Fresh source audit — 2026-09-13.** Monumental chest revid `15341590`
+> and `Module:Theatre of Blood calculator` revid `15316895` were fetched via
+> the repository's serialized wiki client. Comparing the chest with the prior
+> pinned revid `15299363` found no mechanic or numeric changes (only redirect,
+> collection-log, and capitalization edits). The audit did uncover one local
+> integration gap: the generated base's `Normal Mode` context default did not
+> match the override's normalized `normal` conditions. The override now pins
+> `contextDefaults.variant` to `normal`, with a regression test proving the
+> initial/default simulation receives the 1/9.1 Normal Mode unique roll.
+>
 > **The dropversion= Normal/Hard blend gap is now FIXED, separately, as
 > planned — 2026-08-16, after this override shipped.** `wikitext-drops.ts`
 > now propagates `{{DropsTableHead|dropversion=X}}` to regular
@@ -122,9 +132,9 @@ above — a real, separate parser-shaped issue, not the watchlist mechanic.
 
 Sources:
 - **Monumental chest** — https://oldschool.runescape.wiki/w/Monumental_chest — pageid `250011`,
-  revid `15293917`. Re-fetched fresh in an earlier research session (2026-08-13); one cosmetic diff
-  against the 2026-08-11 local snapshot ("Wine of zamorak" → "Wine of Zamorak" capitalization), no
-  mechanic/number changes. Re-checked this session for any prose mention of "points", "MVP", or
+  revid `15341590`. Re-fetched on 2026-09-13; its diff from the prior pinned revid `15299363`
+  contains no mechanic/number changes, only redirect and collection-log metadata plus Scythe of
+  Vitur capitalization. Re-checked this session for any prose mention of "points", "MVP", or
   "skip" (the module's own vocabulary, below) — **none exists**: the page's only related sentence is
   "weighting based on deaths and damage dealt to each boss. The MVP is the most likely to receive
   the item," with no numbers. The points formula below is sourced entirely from the module, not the
@@ -136,7 +146,7 @@ Sources:
   transcluding `Calculator:Theatre of Blood/Template`, which is
   `{{#invoke:Theatre of Blood calculator|main}}`. **`Module:Theatre of Blood calculator`** —
   https://oldschool.runescape.wiki/w/Module:Theatre_of_Blood_calculator — the Lua source with the
-  actual points/quantity formulas, fetched fresh this session (not previously in
+  actual points/quantity formulas, revid `15316895`, fetched fresh on 2026-09-13 (not previously in
   `data/snapshots/`) via `apps/ingest/src/fetch-wikitext-for.ts`, same tool/etiquette queue as
   every other page fetch in this project. Found by checking `Category:Calculators` directly for
   Theatre-of-Blood-adjacent entries, per this session's task instruction to check for a
@@ -259,7 +269,7 @@ prior version of this doc, and no page prose, ever named.
 | Justiciar legguards | 2 | 2 |
 | Scythe of vitur (uncharged) | 1 | 1 |
 
-Source: `====Normal mode====`/`====Hard mode====`, revid `15293917`.
+Source: `====Normal mode====`/`====Hard mode====`, revid `15341590`.
 
 ### Common-table quantity scaling — RESOLVED: `floor(item.min × modeMultiplier × ratio)`, ranged
 
@@ -325,7 +335,7 @@ in case the page has since been corrected (do not silently "fix" the page's numb
 whether it changed).
 
 Source: `Module:Theatre of Blood calculator` (`normies` table + the `quantity` expression in
-`p.calc`), cross-referenced against `===Common rewards===` prose, revid `15293917`, for the
+`p.calc`), cross-referenced against `===Common rewards===` prose, revid `15341590`, for the
 Entry-Mode −80% figure the module does not cover (Entry Mode has no calculator option at all) and
 the general "deaths reduce quantity" direction the module now quantifies precisely via `ratio`.
 

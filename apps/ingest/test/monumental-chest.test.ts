@@ -6,6 +6,7 @@ import {
   DEFAULT_SIM_CONTEXT,
   defaultFormulaRegistry,
   expectedValue,
+  resolveSimContext,
   simulate,
   withDerivedContext,
   type Boss,
@@ -273,6 +274,14 @@ describe('ToB: the document still carries what the override authored', () => {
       'tob:tertiary',
     ])
     expect(boss.variants).toEqual(['normal', 'hard', 'hard-fast', 'entry'])
+    expect(boss.contextDefaults.variant).toBe('normal')
+  })
+
+  it('uses the override’s normalized Normal Mode default', async () => {
+    const boss = await loadBoss()
+    const defaultContext = resolveSimContext(boss)
+    expect(defaultContext.variant).toBe('normal')
+    expect(uniqueChance(boss, defaultContext)).toBeCloseTo(1 / 9.1, 9)
   })
 
   it('still fails not_on_watchlist — the point-scaled mechanic stays watchlisted', async () => {
