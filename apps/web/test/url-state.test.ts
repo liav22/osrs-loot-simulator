@@ -127,6 +127,7 @@ describe('SimContext fields beyond the original six', () => {
         shieldDamage: 300,
         perfectKill: true,
         isMVP: true,
+        rogueOutfit: true,
         moonsKilled: ['blood', 'eclipse'],
         ownedCounts: { 'blood-moon-helm': 1, 'eclipse-moon-chestplate': 2 },
       },

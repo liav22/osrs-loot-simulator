@@ -79,5 +79,59 @@
       ],
       "repeatable": true
     }
+  },
+  {
+    "boss": {
+      "slug": "elf-pickpocketing",
+      "title": "Celebrian",
+      "pageid": 227830,
+      "revid": 14864691,
+      "lootSourceId": "elf-pickpocketing",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 9,
+      "encounter": null,
+      "repeatable": true
+    },
+    "source": {
+      "id": "elf-pickpocketing",
+      "title": "Elf (pickpocketing)",
+      "dropsPage": "Celebrian",
+      "tier": "A",
+      "rowCount": 9,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "elf-pickpocketing"
+      ],
+      "repeatable": true
+    }
+  },
+  {
+    "boss": {
+      "slug": "vyre-pickpocketing",
+      "title": "Haemas Lamescus",
+      "pageid": 266058,
+      "revid": 14813304,
+      "lootSourceId": "vyre-pickpocketing",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 8,
+      "encounter": null,
+      "repeatable": true
+    },
+    "source": {
+      "id": "vyre-pickpocketing",
+      "title": "Vyre (pickpocketing)",
+      "dropsPage": "Haemas Lamescus",
+      "tier": "A",
+      "rowCount": 8,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "vyre-pickpocketing"
+      ],
+      "repeatable": true
+    }
   }
 ]

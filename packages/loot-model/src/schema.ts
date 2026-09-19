@@ -116,6 +116,8 @@ export const FORMULA_IDS = [
   'toa_elite_clue',
   'toa_pet',
   'toa_bad_luck_mitigation',
+  /** Full rogue equipment guarantees double loot from a successful NPC pickpocket. */
+  'rogue_outfit_multiplier',
 ] as const
 
 export const FormulaIdSchema = z.enum(FORMULA_IDS)
@@ -910,10 +912,9 @@ export const SimContextSchema = z
     killCount: z.number().int().nonnegative(),
     variant: z.string().min(1),
     // Added for docs/mechanics-model-proposal.md's Extension A. All static
-    // per-run scalars, resolved once at compile time exactly like the six
-    // fields above — none of the 36 currently-verified sources reference
-    // any of them, so their defaults below are inert for every boss doc
-    // that doesn't opt in.
+    // per-run scalars, resolved once at compile time exactly like the fields
+    // above. Their defaults below are inert for every source document that
+    // doesn't opt in.
     /** ToA, CoX, Tempoross, Wintertodt — this run's activity-points total. */
     points: z.number().int().nonnegative().default(0),
     /** ToA's configured raid invocation level (0-500). */
@@ -934,6 +935,8 @@ export const SimContextSchema = z
     perfectKill: z.boolean().default(false),
     /** Zalcano's MVP-of-the-kill bonus. */
     isMVP: z.boolean().default(false),
+    /** Whether the full rogue equipment set doubles all loot from a successful pickpocket. */
+    rogueOutfit: z.boolean().default(false),
     /** Doom of Mokhaiotl's deepest delve level reached this run. */
     delveLevel: z.number().int().nonnegative().default(0),
     /** Fortis Colosseum's deepest wave reached this run. */
@@ -1027,6 +1030,7 @@ export const DEFAULT_SIM_CONTEXT: SimContext = {
   roomsSkipped: 0,
   perfectKill: false,
   isMVP: false,
+  rogueOutfit: false,
   delveLevel: 0,
   wavesReached: 0,
   moonsKilled: [],
@@ -1136,6 +1140,11 @@ export const BossSchema = z
       .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'slug must be lowercase kebab-case'),
     name: z.string().min(1),
     aliases: z.array(z.string().min(1)).default([]),
+    /** Optional user-facing terminology for non-combat loot sources. Internal simulation still counts one table roll per attempt. */
+    attemptLabel: z
+      .object({ singular: z.string().min(1), plural: z.string().min(1) })
+      .strict()
+      .optional(),
     wikiPage: z.string().min(1),
     wikiRevId: z.number().int().nonnegative(),
     variants: z.array(z.string().min(1)).min(1).default(['normal']),

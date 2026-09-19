@@ -39,6 +39,14 @@ describe('extractDropLines', () => {
     }
   })
 
+  it('reads row-bearing Pickpocketing sections but rejects prose-only ones', () => {
+    const row = '{{DropsLine|name=Coins|quantity=250-315|rarity=109/132}}'
+    expect(extractDropLines(`intro\n==Pickpocketing==\n${row}\n==Dialogue==\nend`)).toMatchObject([
+      { name: 'Coins', heading: 'Pickpocketing' },
+    ])
+    expect(extractDropLines('intro\n==Pickpocketing==\nRequires 82 Thieving.\n')).toEqual([])
+  })
+
   it('returns nothing when there is no Drops heading', () => {
     expect(extractDropLines('==Location==\nNothing here.\n==Dialogue==\nMore.')).toEqual([])
   })

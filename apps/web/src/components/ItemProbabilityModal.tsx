@@ -3,6 +3,7 @@ import { itemMilestones, type Boss, type SimContext, type Table } from '@osrs-lo
 import { Modal } from './Modal'
 import { formatNumber, formatPercent } from '../lib/format'
 import { contextSummary } from '../lib/context-summary'
+import { attemptLabelFor, capitalizeLabel } from '../lib/attempt-label'
 
 interface Props {
   boss: Boss
@@ -32,6 +33,7 @@ export function ItemProbabilityModal({ boss, ctx, sharedTables, itemKey, itemNam
     () => itemMilestones(boss, ctx, itemKey, targetCount, { tables: sharedTables }),
     [boss, ctx, itemKey, targetCount, sharedTables]
   )
+  const attemptLabel = attemptLabelFor(boss)
 
   return (
     <Modal
@@ -73,7 +75,7 @@ export function ItemProbabilityModal({ boss, ctx, sharedTables, itemKey, itemNam
           <thead>
             <tr className="text-left text-xs uppercase tracking-wide text-muted">
               <th className="py-1 pr-4">Chance</th>
-              <th className="py-1">Kills needed</th>
+              <th className="py-1">{capitalizeLabel(attemptLabel.plural)} needed</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-neutral-900">

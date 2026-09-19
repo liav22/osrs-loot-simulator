@@ -1,0 +1,230 @@
+{
+  "slug": "vyre-pickpocketing",
+  "name": "Vyre (pickpocketing)",
+  "aliases": [],
+  "wikiPage": "Haemas Lamescus",
+  "wikiRevId": 14813304,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "vyre-pickpocketing:0:pickpocketing",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 132,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 250,
+              "max": 315
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 109
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 565,
+            "itemKey": "blood-rune",
+            "name": "Blood rune",
+            "qty": {
+              "kind": "exact",
+              "n": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24774,
+            "itemKey": "blood-pint",
+            "name": "Blood pint",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1601,
+            "itemKey": "diamond",
+            "name": "Diamond",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24785,
+            "itemKey": "cooked-mystery-meat",
+            "name": "Cooked mystery meat",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Pickpocketing (confirmed weighted: 7 of 8 entries share denominator 132; 1 rarer outlier(s) split into their own independent table)",
+      "qtyMultiplier": {
+        "kind": "formula",
+        "id": "rogue_outfit_multiplier",
+        "params": {}
+      }
+    },
+    {
+      "id": "vyre-pickpocketing:1:pickpocketing-outliers",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 24777,
+            "itemKey": "blood-shard",
+            "name": "Blood shard",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 5000
+          }
+        }
+      ],
+      "notes": "Pickpocketing (outliers) (confirmed independent: rarer than the 7-entry /132 pool in \"Pickpocketing\"; modelled as separate independent rolls)",
+      "qtyMultiplier": {
+        "kind": "formula",
+        "id": "rogue_outfit_multiplier",
+        "params": {}
+      }
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "statusTier": "verified",
+  "statusReason": null,
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "2 formula-driven quantity/rolls/multiplier value(s) evaluated successfully"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "the rendered page has no \"average ... kill is worth N\" sentence to compare against"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 0 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": true,
+  "attemptLabel": {
+    "singular": "successful pickpocket",
+    "plural": "successful pickpockets"
+  }
+}

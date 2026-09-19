@@ -5,6 +5,7 @@ import { uniqueItemKeys } from '../lib/uniques'
 import { useItemIcons } from '../hooks/useItemIcons'
 import { ItemIcon } from './ItemIcon'
 import { ItemProbabilityModal } from './ItemProbabilityModal'
+import { attemptLabelFor } from '../lib/attempt-label'
 
 /** Enough to fill a 1080p results column; the rest is one click away. */
 const COLLAPSED_COUNT = 24
@@ -79,6 +80,8 @@ export function SimResultsView({ boss, result, expected, pricesAvailable, ctx, s
   const hasMoreRows = rows.length > COLLAPSED_COUNT
   const visible = expandedGrid ? rows : rows.slice(0, COLLAPSED_COUNT)
   const strip = rows.filter((row) => uniques.has(row.itemKey))
+  const attemptLabel = attemptLabelFor(boss)
+  const attemptUnit = result.kills === 1 ? attemptLabel.singular : attemptLabel.plural
 
   return (
     <div className="flex min-h-0 flex-col gap-3">
@@ -91,7 +94,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable, ctx, s
         className="flex shrink-0 flex-wrap items-baseline gap-x-4 gap-y-1 text-sm"
       >
         <span className="text-neutral-300">
-          <span className="font-mono text-neutral-100">{formatNumber(result.kills)}</span> kills
+          <span className="font-mono text-neutral-100">{formatNumber(result.kills)}</span> {attemptUnit}
         </span>
         {pricesAvailable ? (
           <>
@@ -99,7 +102,7 @@ export function SimResultsView({ boss, result, expected, pricesAvailable, ctx, s
               <span className="font-mono text-neutral-100">{formatGp(result.gpTotal)}</span> total
             </span>
             <span className="text-neutral-300">
-              <span className="font-mono text-neutral-100">{formatGp(result.gpPerKill)}</span> / kill
+              <span className="font-mono text-neutral-100">{formatGp(result.gpPerKill)}</span> / {attemptLabel.singular}
             </span>
           </>
         ) : (
@@ -231,7 +234,8 @@ export function SimResultsView({ boss, result, expected, pricesAvailable, ctx, s
             onClick={() => setShowLog((v) => !v)}
             className="text-xs text-muted hover:text-amber-400 hover:underline"
           >
-            {showLog ? 'Hide' : 'Show'} per-kill log (first {formatNumber(result.log.length)} kills)
+            {showLog ? 'Hide' : 'Show'} per-{attemptLabel.singular} log (first{' '}
+            {formatNumber(result.log.length)} {attemptLabel.plural})
           </button>
           {showLog && (
             <div className="mt-2 max-h-48 overflow-y-auto rounded-md border border-neutral-800">

@@ -34,6 +34,8 @@ import { deriveStatusTier } from '../tier.js'
 export const BOSSES_DIR = join(REPO_ROOT, 'data', 'bosses')
 
 export interface ParseOptions {
+  /** Public loot-source name; may differ from the representative wiki page in `title`. */
+  sourceName: string
   title: string
   slug: string
   wikiRevId: number
@@ -185,6 +187,35 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     }
   }
 
+  // Pickpocket tables publish the quantities from one successful base roll.
+  // Full rogue equipment doubles every item from that roll, including
+  // independent rare rewards. The wiki expresses all supported NPC pools via
+  // `Pickpocket/*` transclusions, so this stays source-generic: no NPC slug or
+  // item name is special-cased. Each table gets the same compile-time
+  // multiplier and the web derives the toggle from its declared formula input.
+  const isPickpocketSource = expansion.expanded.some((name) => name.startsWith('pickpocket/'))
+  const generatedBoss =
+    result.boss === null || !isPickpocketSource
+      ? result.boss
+      : {
+          ...result.boss,
+          // Pickpocket tables belong to an NPC class, even though one concrete
+          // NPC page supplies the revision-bound rows and image. Promote the
+          // inventory source name so that representative NPC never becomes
+          // the public entity name.
+          name: options.sourceName,
+          aliases: result.boss.aliases.filter((alias) => alias !== options.sourceName),
+          attemptLabel: { singular: 'successful pickpocket', plural: 'successful pickpockets' },
+          tables: result.boss.tables.map((table) => ({
+            ...table,
+            qtyMultiplier: {
+              kind: 'formula' as const,
+              id: 'rogue_outfit_multiplier' as const,
+              params: {},
+            },
+          })),
+        }
+
   // Every confirmed bundle's shared table, written to disk and folded into a
   // LOCAL copy of the shared-tables map — this document's own `refs_resolve`/
   // `drops_covered` checks (below) need to see it, and `options.sharedTables`
@@ -209,9 +240,9 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   // checks a bad parse would, never be rubber-stamped for being hand-written.
   const mergedBase =
     override === null
-      ? result.boss!
+      ? generatedBoss!
       : BossSchema.parse(
-          applyOverride(result.boss, override, options.parserVersion, options.repeatable)
+          applyOverride(generatedBoss, override, options.parserVersion, options.repeatable)
         )
 
   // Stamped on the FINAL tables, not inside `assembleBoss`: an override's
@@ -376,7 +407,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
       )
     }
   }
-  if (override !== null) reasons.push(overrideSummary(override, result.boss !== null))
+  if (override !== null) reasons.push(overrideSummary(override, generatedBoss !== null))
   if (!weightsSum.ok) {
     reasons.push(
       ...weightsSum.failures.map(

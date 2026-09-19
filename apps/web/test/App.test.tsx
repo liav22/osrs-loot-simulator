@@ -62,7 +62,7 @@ describe('App', () => {
    */
   it('renders the search box and shows nothing until a query is typed', async () => {
     renderApp('/')
-    const input = screen.getByPlaceholderText(/search a boss/i)
+    const input = screen.getByPlaceholderText(/search a loot source/i)
     expect(input).toBeInTheDocument()
 
     // The index request settles; the list stays empty regardless.
@@ -75,7 +75,7 @@ describe('App', () => {
     renderApp('/')
     // `fireEvent.change` rather than user-event: this repo doesn't carry that
     // dependency, and a single controlled-input change is all this asserts.
-    fireEvent.change(screen.getByPlaceholderText(/search a boss/i), { target: { value: 'mole' } })
+    fireEvent.change(screen.getByPlaceholderText(/search a loot source/i), { target: { value: 'mole' } })
 
     await waitFor(() => expect(screen.getByText('Giant Mole')).toBeInTheDocument())
     expect(screen.queryByText('Abyssal Sire')).not.toBeInTheDocument()
@@ -89,7 +89,7 @@ describe('App', () => {
    */
   it('excludes a non-repeatable source from search, even on an exact match', async () => {
     renderApp('/')
-    fireEvent.change(screen.getByPlaceholderText(/search a boss/i), { target: { value: 'Me' } })
+    fireEvent.change(screen.getByPlaceholderText(/search a loot source/i), { target: { value: 'Me' } })
 
     await waitFor(() => expect(fetch).toHaveBeenCalled())
     expect(screen.queryByText('Me')).not.toBeInTheDocument()

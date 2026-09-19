@@ -24,7 +24,7 @@ test.describe('1920x1080', () => {
     await page.goto('./')
     expect(await pageScrolls(page)).toBe(false)
 
-    await page.getByPlaceholder(/search a boss/i).fill('vorkath')
+    await page.getByPlaceholder(/search a loot source/i).fill('vorkath')
     await expect(page.getByRole('option', { name: /Vorkath/ })).toBeVisible()
     expect(await pageScrolls(page)).toBe(false)
 

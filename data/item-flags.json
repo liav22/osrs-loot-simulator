@@ -3145,6 +3145,22 @@
         "pet"
       ],
       "reason": "Guardians of the Rift unique reward or pet, Rewards Guardian wiki revision 15338032."
+    },
+    {
+      "bossSlug": "elf-pickpocketing",
+      "itemKey": "enhanced-crystal-teleport-seed",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Rare Elf pickpocket reward in Template:Pickpocket/Elf revision 14994099, as transcluded by Celebrian revision 14864691."
+    },
+    {
+      "bossSlug": "vyre-pickpocketing",
+      "itemKey": "blood-shard",
+      "flags": [
+        "unique"
+      ],
+      "reason": "Rare Vyre pickpocket reward in Template:Pickpocket/Vyre revision 14994098, as transcluded by Haemas Lamescus revision 14813304."
     }
   ]
 }

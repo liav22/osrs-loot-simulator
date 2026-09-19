@@ -45,6 +45,7 @@ describe('formula registry', () => {
       'cox_points',
       'doom_of_mokhaiotl_deep_rolls',
       'lunar_chest_standard_rolls',
+      'rogue_outfit_multiplier',
       'toa_bad_luck_mitigation',
       'toa_common_qty',
       'toa_elite_clue',
@@ -163,6 +164,7 @@ describe('FORMULA_CONTEXT_FIELDS matches what the formulas actually read', () =>
       case 'onKonarTask':
       case 'perfectKill':
       case 'isMVP':
+      case 'rogueOutfit':
         return [false, true]
       case 'questsComplete':
         return [[], ['Dragon Slayer II']]

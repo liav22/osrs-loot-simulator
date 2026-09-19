@@ -4,10 +4,10 @@
 
 **[Open the simulator](https://liav22.github.io/osrs-loot-simulator/)**
 
-Search an Old School RuneScape boss, choose your kill count and encounter
-settings, and simulate the loot. Runs execute in a Web Worker in your browser,
-using a static dataset derived from the OSRS Wiki. No account, application
-server, or database is required.
+Search an Old School RuneScape loot source, choose an attempt count and
+encounter settings, and simulate the loot. Runs execute in a Web Worker in your
+browser, using a static dataset derived from the OSRS Wiki. No account,
+application server, or database is required.
 
 - **Share a run:** the URL carries the seed and settings for reproducible drops.
   Leave the seed at `0` to generate a fresh one each time you simulate.
@@ -19,21 +19,22 @@ server, or database is required.
 
 ## Data coverage
 
-Snapshot of the committed dataset, checked **2026-09-12**:
+Snapshot of the committed dataset, checked **2026-09-18**:
 
 | Status | Sources | Meaning |
 |---|---:|---|
-| `verified` | 74 | Derived by the pipeline and passing deterministic checks |
+| `verified` | 76 | Derived by the pipeline and passing deterministic checks |
 | `manual_override` | 17 | Hand-authored mechanics, passing the same checks |
 | `needs_review` | 14 | Incomplete data, an approximation, or a failing check |
 | No generated document | 2 | Included in the inventory but not yet represented |
-| **Total included** | **107** | Loot sources selected for coverage |
+| **Total included** | **109** | Loot sources selected for coverage |
 
-A loot source can be a boss, shared raid chest, or reward pool. The inventory
-also includes one-time quest encounters, which default search hides. Of the
-**77 repeatable sources**, 62 pass validation: 46 pipeline-derived and 16 using
-overrides. Validation measures agreement with available source evidence; it
-does not guarantee every in-game mechanic is known.
+A loot source can be a boss, pickpocketable NPC, shared raid chest, or reward
+pool. The inventory also includes one-time quest encounters, which default
+search hides. Of the **79 repeatable sources**, 64 pass validation: 48
+pipeline-derived and 16 using overrides. Validation measures agreement with
+available source evidence; it does not guarantee every in-game mechanic is
+known.
 
 Counts change as the corpus evolves. [The inventory](data/_inventory.json)
 defines inclusion; [the site index](data/index.json) lists generated sources.

@@ -68,6 +68,11 @@ describe('SimContextControls renders the controls each boss needs', () => {
     expect(screen.getByText('MVP (most damage dealt)')).toBeDefined()
   })
 
+  it('pickpocket sources get a full rogue outfit toggle', () => {
+    renderFor('elf-pickpocketing')
+    expect(screen.getByText('Full rogue outfit (double loot)')).toBeDefined()
+  })
+
   it('Scorpia (Konar-eligible, has a Brimstone key drop) gets a Konar task toggle', () => {
     renderFor('scorpia')
     expect(screen.getByText('Konar task')).toBeDefined()

@@ -28,7 +28,9 @@ export function AdminPage() {
   }, [data])
 
   if (isLoading) return <p className="p-8 text-sm text-muted">Loading…</p>
-  if (isError || data === undefined) return <p className="p-8 text-sm text-red-400">Failed to load the boss index.</p>
+  if (isError || data === undefined) {
+    return <p className="p-8 text-sm text-red-400">Failed to load the loot source index.</p>
+  }
 
   return (
     // `min-h-0 flex-1 overflow-y-auto`: `App.tsx`'s shell is a fixed
@@ -138,7 +140,7 @@ function AdminRow({
           {/* `Link`, not a root-absolute href — see the note in BossView.tsx: on
               GitHub Pages this app lives under /osrs-loot-simulator/. */}
           <Link to={`/boss/${slug}`} className="mt-2 inline-block text-amber-400 hover:underline">
-            View boss →
+            View source →
           </Link>
         </div>
       )}

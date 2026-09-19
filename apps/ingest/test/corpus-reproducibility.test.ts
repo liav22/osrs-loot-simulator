@@ -125,6 +125,7 @@ describe.skipIf(!SNAPSHOTS_PRESENT)('every committed document reproduces from a 
         const committed: unknown = JSON.parse(await readFile(join(BOSSES_DIR, file), 'utf8'))
 
         const outcome = await parseBoss({
+          sourceName: source.title,
           title: source.dropsPage,
           slug: source.id,
           wikiRevId: revid ?? 0,

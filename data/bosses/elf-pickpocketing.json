@@ -1,0 +1,247 @@
+{
+  "slug": "elf-pickpocketing",
+  "name": "Elf (pickpocketing)",
+  "aliases": [],
+  "wikiPage": "Celebrian",
+  "wikiRevId": 14864691,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "elf-pickpocketing:0:loot",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 128,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 280,
+              "max": 350
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 105
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 560,
+            "itemKey": "death-rune",
+            "name": "Death rune",
+            "qty": {
+              "kind": "exact",
+              "n": 2
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 8
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 561,
+            "itemKey": "nature-rune",
+            "name": "Nature rune",
+            "qty": {
+              "kind": "exact",
+              "n": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1993,
+            "itemKey": "jug-of-wine",
+            "name": "Jug of wine",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 6
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1601,
+            "itemKey": "diamond",
+            "name": "Diamond",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 569,
+            "itemKey": "fire-orb",
+            "name": "Fire orb",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        }
+      ],
+      "notes": "Loot (confirmed weighted: 7 of 9 entries share denominator 128; 2 rarer outlier(s) split into their own independent table)",
+      "qtyMultiplier": {
+        "kind": "formula",
+        "id": "rogue_outfit_multiplier",
+        "params": {}
+      }
+    },
+    {
+      "id": "elf-pickpocketing:1:loot-outliers",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23962,
+            "itemKey": "crystal-shard",
+            "name": "Crystal shard",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 35
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 23959,
+            "itemKey": "enhanced-crystal-teleport-seed",
+            "name": "Enhanced crystal teleport seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "unique": true
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 1024
+          }
+        }
+      ],
+      "notes": "Loot (outliers) (confirmed independent: rarer than the 7-entry /128 pool in \"Loot\"; modelled as separate independent rolls)",
+      "qtyMultiplier": {
+        "kind": "formula",
+        "id": "rogue_outfit_multiplier",
+        "params": {}
+      }
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "statusTier": "verified",
+  "statusReason": null,
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "2 formula-driven quantity/rolls/multiplier value(s) evaluated successfully"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "the rendered page has no \"average ... kill is worth N\" sentence to compare against"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 0 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": true,
+  "attemptLabel": {
+    "singular": "successful pickpocket",
+    "plural": "successful pickpockets"
+  }
+}

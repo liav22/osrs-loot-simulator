@@ -82,6 +82,29 @@ test('Reward pool gets a Fishing level control and simulates through its bracket
   await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
 })
 
+test('Elf pickpocketing uses successful-attempt language and exposes the rogue outfit toggle', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('./boss/elf-pickpocketing?rogue=1&n=250&seed=7')
+  await expect(page.getByRole('heading', { name: 'Elf (pickpocketing)' })).toBeVisible()
+
+  const attempts = page.getByLabel('Successful pickpockets to simulate')
+  const seed = page.getByLabel('Seed (0 = random)')
+  await expect(attempts).toHaveValue('250')
+  await expect(seed).toHaveValue('7')
+  const [attemptsBox, seedBox] = await Promise.all([attempts.boundingBox(), seed.boundingBox()])
+  expect(attemptsBox?.y).toBe(seedBox?.y)
+  await expect(page.getByLabel('Full rogue outfit (double loot)')).toBeChecked()
+  await expect(page.getByText(/Set the successful pickpocket count/)).toBeVisible()
+
+  await page.getByRole('button', { name: 'Simulate', exact: true }).click()
+  const summary = page.getByTestId('results-summary')
+  await expect(summary).toBeVisible({ timeout: 30_000 })
+  await expect(summary).toContainText('250 successful pickpockets')
+  await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
+})
+
 test('Brutus gets none of the extension fields', async ({ page }) => {
   await page.goto('./boss/brutus')
   await expect(page.getByRole('heading', { name: 'Brutus' })).toBeVisible()

@@ -4,7 +4,7 @@ test.use({ viewport: { width: 1920, height: 1080 } })
 
 test('is empty until typed into, then shows at most five results', async ({ page }) => {
   await page.goto('./')
-  const input = page.getByPlaceholder(/search a boss/i)
+  const input = page.getByPlaceholder(/search a loot source/i)
   await expect(input).toBeFocused()
   await expect(page.getByRole('option')).toHaveCount(0)
 
@@ -16,7 +16,7 @@ test('is empty until typed into, then shows at most five results', async ({ page
 
 test('is navigable by keyboard alone', async ({ page }) => {
   await page.goto('./')
-  const input = page.getByPlaceholder(/search a boss/i)
+  const input = page.getByPlaceholder(/search a loot source/i)
 
   await input.fill('dagannoth')
   const options = page.getByRole('option')
@@ -34,7 +34,7 @@ test('is navigable by keyboard alone', async ({ page }) => {
 
 test('escape clears the query and hides the list', async ({ page }) => {
   await page.goto('./')
-  const input = page.getByPlaceholder(/search a boss/i)
+  const input = page.getByPlaceholder(/search a loot source/i)
   await input.fill('vorkath')
   await expect(page.getByRole('option')).toHaveCount(1)
 
@@ -43,11 +43,22 @@ test('escape clears the query and hides the list', async ({ page }) => {
   await expect(page.getByRole('option')).toHaveCount(0)
 })
 
-test('selecting a boss replaces search, and "change boss" comes back', async ({ page }) => {
+test('finds the generic Elf and Vyre pickpocket sources', async ({ page }) => {
+  await page.goto('./')
+  const input = page.getByPlaceholder(/search a loot source/i)
+
+  await input.fill('elf pickpocketing')
+  await expect(page.getByRole('option', { name: /Elf \(pickpocketing\)/ })).toBeVisible()
+
+  await input.fill('vyre pickpocketing')
+  await expect(page.getByRole('option', { name: /Vyre \(pickpocketing\)/ })).toBeVisible()
+})
+
+test('selecting a source replaces search, and "change source" comes back', async ({ page }) => {
   await page.goto('./boss/vorkath')
   await expect(page.getByRole('heading', { name: 'Vorkath' })).toBeVisible()
-  await expect(page.getByPlaceholder(/search a boss/i)).toHaveCount(0)
+  await expect(page.getByPlaceholder(/search a loot source/i)).toHaveCount(0)
 
-  await page.getByRole('link', { name: /change boss/ }).click()
-  await expect(page.getByPlaceholder(/search a boss/i)).toBeVisible()
+  await page.getByRole('link', { name: /change source/ }).click()
+  await expect(page.getByPlaceholder(/search a loot source/i)).toBeVisible()
 })

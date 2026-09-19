@@ -136,9 +136,21 @@ async function fetchAll(client: WikiClient, delayMs: number): Promise<void> {
 /** Fetch one extra page's drops without touching the inventory. */
 async function fetchPage(client: WikiClient, title: string): Promise<void> {
   const slug = slugify(title)
+
+  const { revisions, records: revisionRecords } = await client.revisions([title])
+  for (const [index, record] of revisionRecords.entries()) {
+    await writeSnapshot('revisions', `${slug}-${index}`, record)
+  }
+  const revision = revisions.get(title)
+  log(`${title} revision ${revision?.revid ?? 'unavailable'} snapshotted`)
+
   const { response, record } = await client.dropsFor(title)
   await writeSnapshot('dropsline', slug, record)
   log(`${title} -> ${response.bucket?.length ?? 0} rows (${response.error ?? 'ok'})`)
+
+  const { record: wikitextRecord } = await client.wikitext(title)
+  await writeSnapshot('wikitext', slug, wikitextRecord)
+  log(`${title} wikitext snapshotted`)
 
   const { record: htmlRecord } = await client.pageHtml(title)
   await writeSnapshot('page', slug, htmlRecord)
@@ -319,6 +331,7 @@ async function parseCommand(argv: readonly string[]): Promise<void> {
     const revid =
       inventory.bosses.find((boss) => boss.lootSourceId === source.id)?.revid ?? 0
     const outcome = await parseBoss({
+      sourceName: source.title,
       title: source.dropsPage,
       slug: source.id,
       wikiRevId: revid ?? 0,

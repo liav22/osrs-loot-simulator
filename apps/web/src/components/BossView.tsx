@@ -7,6 +7,7 @@ import { useGePrices } from '../hooks/useGePrices'
 import { useSiteIndex } from '../hooks/useSiteIndex'
 import { gePriceLookup } from '../lib/prices'
 import { paramsFromSearch, RANDOM_SEED, rollSeed, searchFromParams, type SimRunParams } from '../lib/url-state'
+import { attemptLabelFor } from '../lib/attempt-label'
 import { BossPanel } from './BossPanel'
 import { SimResultsView } from './SimResultsView'
 
@@ -207,6 +208,7 @@ export function BossView({ slug }: { slug: string }) {
   }
   if (bossQuery.data === undefined) return null
   const boss = bossQuery.data
+  const attemptLabel = attemptLabelFor(boss)
 
   const image = indexQuery.data?.entries.find((entry) => entry.slug === slug)?.image
 
@@ -247,7 +249,7 @@ export function BossView({ slug }: { slug: string }) {
         {simState.status === 'idle' && (
           <div className="flex flex-1 items-center justify-center px-6 text-center">
             <p className="text-sm text-muted">
-              Set the kill count and press Simulate.
+              Set the {attemptLabel.singular} count and press Simulate.
               <br />
               Results appear here.
             </p>

@@ -25,7 +25,7 @@ test('the app root loads under the /osrs-loot-simulator/ subpath', async ({ page
   // under the subpath at all — while not pinning markup the rework changed on
   // purpose.
   await expect(page.getByRole('link', { name: 'OSRS Loot Simulator' })).toBeVisible()
-  await expect(page.getByPlaceholder(/search a boss/i)).toBeVisible()
+  await expect(page.getByPlaceholder(/search a loot source/i)).toBeVisible()
 })
 
 test('every asset the page requests resolves — no 404 under the subpath', async ({ page }) => {
@@ -90,7 +90,7 @@ test('in-app links stay inside the base path', async ({ page }) => {
   //
   // Zalcano because it is not `verified`, so it renders the most in-app links
   // of any page. (Its admin link is gone in production now; the header brand
-  // and "change boss" remain, which is what this sweeps.)
+  // and "change source" remain, which is what this sweeps.)
   await page.goto('./boss/zalcano')
   await expect(page.getByRole('heading', { name: 'Zalcano' })).toBeVisible()
 
@@ -110,7 +110,7 @@ test('the admin page does NOT ship to production', async ({ page }) => {
   // no route registered it falls through to the catch-all and renders search.
   const response = await page.goto('./admin')
   expect(response?.status()).toBe(404) // the 404.html mechanism again
-  await expect(page.getByPlaceholder(/search a boss/i)).toBeVisible()
+  await expect(page.getByPlaceholder(/search a loot source/i)).toBeVisible()
   await expect(page.getByText('Validation report')).toHaveCount(0)
 
   // And no link offers it, on any page — including a non-verified boss, which

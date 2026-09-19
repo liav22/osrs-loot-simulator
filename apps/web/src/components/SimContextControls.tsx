@@ -26,6 +26,7 @@ const NUMERIC_FIELDS: Partial<
 const BOOLEAN_FIELDS: Partial<Record<SimContextField, string>> = {
   perfectKill: 'Perfect kill (no avoidable damage)',
   isMVP: 'MVP (most damage dealt)',
+  rogueOutfit: 'Full rogue outfit (double loot)',
   onKonarTask: 'Konar task',
   awakened: 'Awakened (last of the four)',
 }

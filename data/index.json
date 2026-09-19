@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T19:56:41.384Z",
+  "generatedAt": "2026-09-18T16:59:28.989Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -372,6 +372,15 @@
       "status": "verified",
       "statusTier": "verified",
       "image": "Eldric the Ice King.png",
+      "repeatable": true
+    },
+    {
+      "slug": "elf-pickpocketing",
+      "name": "Elf (pickpocketing)",
+      "aliases": [],
+      "status": "verified",
+      "statusTier": "verified",
+      "image": "Celebrian.png",
       "repeatable": true
     },
     {
@@ -939,6 +948,15 @@
       "status": "manual_override",
       "statusTier": null,
       "image": "Vorkath.png",
+      "repeatable": true
+    },
+    {
+      "slug": "vyre-pickpocketing",
+      "name": "Vyre (pickpocketing)",
+      "aliases": [],
+      "status": "verified",
+      "statusTier": "verified",
+      "image": "Haemas Lamescus.png",
       "repeatable": true
     },
     {

@@ -14,12 +14,22 @@ function booleanLabel(field: keyof SimContext, value: boolean): string {
       return value ? 'Perfect kill' : 'Not a perfect kill'
     case 'isMVP':
       return value ? 'MVP' : 'Not MVP'
+    case 'rogueOutfit':
+      return value ? 'Full rogue outfit' : 'No rogue outfit'
     default:
       return String(value)
   }
 }
 
-const BOOLEAN_FIELDS = ['members', 'ringOfWealth', 'onKonarTask', 'awakened', 'perfectKill', 'isMVP'] as const
+const BOOLEAN_FIELDS = [
+  'members',
+  'ringOfWealth',
+  'onKonarTask',
+  'awakened',
+  'perfectKill',
+  'isMVP',
+  'rogueOutfit',
+] as const
 
 const NUMERIC_LABELS: Partial<Record<keyof SimContext, string>> = {
   killCount: 'KC',

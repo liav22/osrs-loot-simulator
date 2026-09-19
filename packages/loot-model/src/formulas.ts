@@ -349,6 +349,14 @@ export function toaCommonQtyScale(raidLevel: number): number {
  */
 const IMPLEMENTED: Partial<Record<FormulaId, FormulaFn>> = {
   /**
+   * Full rogue equipment guarantees double loot from a successful NPC
+   * pickpocket; without the full set, the base wiki quantities apply.
+   * Consumed as a `Table.qtyMultiplier` on tables expanded from the wiki's
+   * `Pickpocket/*` templates.
+   */
+  rogue_outfit_multiplier: (_params, ctx) => (ctx.rogueOutfit ? 2 : 1),
+
+  /**
    * One roll of the ">8" loot row per deep-delve level.
    *
    * Doom of Mokhaiotl's Mechanics section: "Each delve level rolls once on the
@@ -691,6 +699,7 @@ export const FORMULA_CONTEXT_FIELDS: Record<FormulaId, readonly SimContextField[
   toa_elite_clue: ['points'],
   toa_pet: ['points', 'raidLevel'],
   toa_bad_luck_mitigation: ['killCount'],
+  rogue_outfit_multiplier: ['rogueOutfit'],
 }
 
 export function createFormulaRegistry(

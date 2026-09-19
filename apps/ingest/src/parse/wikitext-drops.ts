@@ -301,6 +301,10 @@ const DROPS_SECTION_TITLE = /^(?:\S+\s+)?(drops?|rewards?)\s*(\(.*\))?$/i
  *    fix to be visible as a heading at all, since each carries a trailing
  *    `<span id="...">` anchor `stripInlineTags` removes before either title
  *    regex runs).
+ *  - **A row-bearing `Pickpocketing` section.** Skill-loot NPC pages expand a
+ *    `{{Pickpocket/*}}` transclusion into `{{DropsLineSkill}}` rows under this
+ *    heading rather than under `Drops`. The same content gate keeps ordinary
+ *    pickpocketing prose from becoming a loot section.
  *
  * **Deliberately NOT trusted on its own — content is the tie-breaker, checked
  * at the call site.** `Salarin the Twisted`'s `===Training and Rewards===` (a
@@ -319,7 +323,8 @@ const DROPS_SECTION_TITLE = /^(?:\S+\s+)?(drops?|rewards?)\s*(\(.*\))?$/i
  * zero rows, precisely to report that they have none.
  */
 // Loot headings (including "Possible loot") use the same row-content gate.
-const LOOSE_DROPS_SECTION_TITLE = /^(?:.+?\b(?:drops?|rewards?|table)|(?:.+?\b)?loot)\s*(\(.*\))?$/i
+const LOOSE_DROPS_SECTION_TITLE =
+  /^(?:.+?\b(?:drops?|rewards?|table)|(?:.+?\b)?loot|pickpocketing)\s*(\(.*\))?$/i
 
 /**
  * Strips inline HTML MediaWiki tolerates inside a heading — Reward Chest (The
@@ -564,7 +569,13 @@ export function extractDropLines(wikitext: string): WikitextDropLine[] {
   const sections = findDropsSections(wikitext)
   if (sections.length === 0) return []
   const qualify = sections.length > 1
-  return sections.flatMap((section) => extractLinesFromSection(section.content, qualify ? section.title : ''))
+  return sections.flatMap((section) =>
+    extractLinesFromSection(section.content, qualify ? section.title : '').map((line) =>
+      /^pickpocketing$/i.test(section.title) && line.heading === ''
+        ? { ...line, heading: section.title }
+        : line
+    )
+  )
 }
 
 /**

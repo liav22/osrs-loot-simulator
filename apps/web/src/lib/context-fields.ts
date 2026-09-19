@@ -11,8 +11,8 @@ import {
 /**
  * Which `SimContext` fields a given boss actually responds to.
  *
- * Rendering all sixteen fields on every boss would bury the two that matter
- * behind fourteen that do nothing; rendering none is how Doom of Mokhaiotl
+ * Rendering every field on every boss would bury the few that matter behind
+ * controls that do nothing; rendering none is how Doom of Mokhaiotl
  * shipped without a `delveLevel` control and Lunar Chest without
  * `moonsKilled`. So the control set is derived from the document, the same way
  * the existing quest toggles are built from the boss's own `questComplete`

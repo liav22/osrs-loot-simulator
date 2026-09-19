@@ -97,6 +97,14 @@ weights parse directly from the row-bearing “Possible loot” section.
 searches, with pouch progression, quest substitutions and separate rare/pet
 rolls. It remains approximate for low-level rune quantities and within-rare
 co-occurrence.
+[Elf (pickpocketing)](bosses/elf-pickpocketing.md) and
+[Vyre (pickpocketing)](bosses/vyre-pickpocketing.md) use representative NPC
+pages for revision-bound evidence while registering generic loot sources. Their
+`Pickpocket/*` templates expand into skill-drop rows: one weighted ordinary
+reward plus independent rare rolls. A successful-pickpocket attempt label
+keeps combat wording out of the UI, and the shared `rogue_outfit_multiplier`
+doubles realized quantities when the full outfit control is enabled without
+changing any drop rate.
 
 Parser fixes reuse `data/snapshots/`; new research and deliberate refreshes are
 separate fetch operations. Missing cache files must be reported rather than
@@ -214,10 +222,13 @@ run. Unpriced runs show “Prices unavailable” in place of GP totals. Data cav
 open in a scrollable dialog on both mobile and desktop.
 
 URL state preserves context and the actual RNG seed. UI seed zero requests a
-fresh seed for each run. The kill-count input may stay blank while editing;
+fresh seed for each run. The attempt-count input may stay blank while editing;
 Simulate is disabled until a count is entered, and the URL retains the last
 numeric count. Context controls derive from conditions, formula input
 metadata, and ownership gates; apply `Boss.contextDefaults` before URL overrides.
+Non-combat sources can provide `Boss.attemptLabel`; the simulator still counts
+one table roll per attempt while controls, summaries, logs and probability
+milestones use the source-specific wording.
 Quest controls follow nested choices and shared tables. Explicitly cleared
 quest and ownership defaults survive URL sharing.
 Default search hides non-repeatable sources. When an activity qualifier is also

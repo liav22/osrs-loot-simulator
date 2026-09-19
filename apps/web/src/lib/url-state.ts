@@ -103,6 +103,7 @@ const NUMERIC_PARAMS = {
 const BOOLEAN_PARAMS = {
   perfectKill: 'perfect',
   isMVP: 'mvp',
+  rogueOutfit: 'rogue',
   onKonarTask: 'konar',
   awakened: 'awakened',
 } as const satisfies Partial<Record<keyof SimContext, string>>

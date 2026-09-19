@@ -4,6 +4,7 @@ import type { Boss, StatusTier, Table } from '@osrs-loot-simulator/loot-model'
 import { useItemIcons } from '../hooks/useItemIcons'
 import { bossImageUrl } from '../lib/wiki-images'
 import { sourceDisplayName } from '../lib/source-display-name'
+import { attemptLabelFor, capitalizeLabel } from '../lib/attempt-label'
 import { MAX_KILLS, type SimRunParams } from '../lib/url-state'
 import { DropTableView } from './DropTableView'
 import { Modal } from './Modal'
@@ -64,6 +65,7 @@ export function BossPanel({
   // already uses, so this shares one cached fetch rather than duplicating it —
   // just for the ownership chips' icons, which fall back to a letter without it.
   const { data: iconFiles } = useItemIcons()
+  const attemptLabel = attemptLabelFor(boss)
 
   return (
     /*
@@ -109,7 +111,7 @@ export function BossPanel({
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-3 text-xs">
             <Link to="/" className="text-muted hover:text-amber-400 hover:underline">
-              ← change boss
+              ← change source
             </Link>
             <a
               href={`https://oldschool.runescape.wiki/w/${encodeURIComponent(boss.wikiPage.replace(/ /g, '_'))}`}
@@ -199,9 +201,11 @@ export function BossPanel({
         own flex layout.
       */}
       <div className="fixed inset-x-0 bottom-0 z-30 shrink-0 space-y-2 border-t border-neutral-800 bg-neutral-950 p-3 min-[600px]:static min-[600px]:border-t min-[600px]:p-0 min-[600px]:pt-3">
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 items-end gap-2">
           <label className="block text-sm">
-            <span className="mb-1 block text-xs text-neutral-400">Kills to simulate</span>
+            <span className="mb-1 block text-xs text-neutral-400">
+              {capitalizeLabel(attemptLabel.plural)} to simulate
+            </span>
             <input
               type="number"
               min={1}
