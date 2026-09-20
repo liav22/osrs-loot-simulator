@@ -3161,6 +3161,60 @@
         "unique"
       ],
       "reason": "Rare Vyre pickpocket reward in Template:Pickpocket/Vyre revision 14994098, as transcluded by Haemas Lamescus revision 14813304."
+    },
+    {
+      "bossSlug": "brimstone-chest",
+      "itemKey": "broken-dragon-hasta",
+      "flags": ["unique"],
+      "reason": "Brimstone chest collection-log unique, OSRS Wiki revision 15338725."
+    },
+    {
+      "bossSlug": "brimstone-chest",
+      "itemKey": "mystic-hat-dusk",
+      "flags": ["unique"],
+      "reason": "Brimstone chest collection-log unique, OSRS Wiki revision 15338725."
+    },
+    {
+      "bossSlug": "brimstone-chest",
+      "itemKey": "mystic-robe-top-dusk",
+      "flags": ["unique"],
+      "reason": "Brimstone chest collection-log unique, OSRS Wiki revision 15338725."
+    },
+    {
+      "bossSlug": "brimstone-chest",
+      "itemKey": "mystic-robe-bottom-dusk",
+      "flags": ["unique"],
+      "reason": "Brimstone chest collection-log unique, OSRS Wiki revision 15338725."
+    },
+    {
+      "bossSlug": "brimstone-chest",
+      "itemKey": "mystic-gloves-dusk",
+      "flags": ["unique"],
+      "reason": "Brimstone chest collection-log unique, OSRS Wiki revision 15338725."
+    },
+    {
+      "bossSlug": "brimstone-chest",
+      "itemKey": "mystic-boots-dusk",
+      "flags": ["unique"],
+      "reason": "Brimstone chest collection-log unique, OSRS Wiki revision 15338725."
+    },
+    {
+      "bossSlug": "larran-s-big-chest",
+      "itemKey": "dagon-hai-hat",
+      "flags": ["unique"],
+      "reason": "Larran's big chest collection-log unique, OSRS Wiki revision 15338728."
+    },
+    {
+      "bossSlug": "larran-s-big-chest",
+      "itemKey": "dagon-hai-robe-top",
+      "flags": ["unique"],
+      "reason": "Larran's big chest collection-log unique, OSRS Wiki revision 15338728."
+    },
+    {
+      "bossSlug": "larran-s-big-chest",
+      "itemKey": "dagon-hai-robe-bottom",
+      "flags": ["unique"],
+      "reason": "Larran's big chest collection-log unique, OSRS Wiki revision 15338728."
     }
   ]
 }

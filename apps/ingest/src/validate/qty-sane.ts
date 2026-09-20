@@ -17,7 +17,7 @@ export interface QtySaneResult {
 /**
  * PROJECT_PLAN.md 7: ranges have `min <= max`; no negative quantities.
  *
- * `exact`/`range`/`choice` are fully enforced by `QtySpecSchema` at parse
+ * `exact`/`range`/`scaledRange`/`choice` are fully enforced by `QtySpecSchema` at parse
  * time, with no runtime-only case — this was audited and correctly left
  * hardcoded `true` (see docs/DECISIONS.md's "Constant-returning validation
  * checks" entry and `apps/ingest/test/qty-sane-constant.test.ts`'s trip

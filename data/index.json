@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T16:59:28.989Z",
+  "generatedAt": "2026-09-20T08:18:07.411Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -118,6 +118,15 @@
       "status": "verified",
       "statusTier": "verified",
       "image": "Branda the Fire Queen.png",
+      "repeatable": true
+    },
+    {
+      "slug": "brimstone-chest",
+      "name": "Brimstone chest",
+      "aliases": [],
+      "status": "verified",
+      "statusTier": "verified",
+      "image": "Brimstone chest.png",
       "repeatable": true
     },
     {
@@ -561,6 +570,15 @@
       "status": "verified",
       "statusTier": "verified",
       "image": "Kree'arra.png",
+      "repeatable": true
+    },
+    {
+      "slug": "larran-s-big-chest",
+      "name": "Larran's big chest",
+      "aliases": [],
+      "status": "verified",
+      "statusTier": "verified",
+      "image": "Larran's big chest.png",
       "repeatable": true
     },
     {

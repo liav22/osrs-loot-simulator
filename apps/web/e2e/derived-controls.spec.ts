@@ -105,6 +105,21 @@ test('Elf pickpocketing uses successful-attempt language and exposes the rogue o
   await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
 })
 
+test("Larran's big chest exposes Fishing level and simulates floor-scaled rewards", async ({
+  page,
+}) => {
+  await page.goto('./boss/larran-s-big-chest?fishing=99&n=250&seed=7')
+  await expect(page.getByRole('heading', { name: "Larran's big chest" })).toBeVisible()
+  await expect(page.getByLabel('Fishing level')).toHaveValue('99')
+  await expect(page.getByLabel('Openings to simulate')).toHaveValue('250')
+
+  await page.getByRole('button', { name: 'Simulate', exact: true }).click()
+  const summary = page.getByTestId('results-summary')
+  await expect(summary).toBeVisible({ timeout: 30_000 })
+  await expect(summary).toContainText('250 openings')
+  await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
+})
+
 test('Brutus gets none of the extension fields', async ({ page }) => {
   await page.goto('./boss/brutus')
   await expect(page.getByRole('heading', { name: 'Brutus' })).toBeVisible()

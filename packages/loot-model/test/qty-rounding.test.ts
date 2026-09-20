@@ -97,6 +97,24 @@ describe('why the mode rounds the delta and not the product', () => {
 })
 
 describe('meanScaledQty: the analytic path is exact, not a scaled mean', () => {
+  it('preserves a floor-scaled uniform range exactly', () => {
+    const larranFish = {
+      kind: 'scaledRange',
+      min: 100,
+      max: 350,
+      numerator: 3,
+      denominator: 2,
+    } as const
+    expect(meanScaledQty(larranFish, 1, 'round')).toBeCloseTo(337.251, 3)
+    expect(
+      meanScaledQty(
+        { kind: 'scaledRange', min: 80, max: 250, numerator: 3, denominator: 1 },
+        1,
+        'round'
+      )
+    ).toBe(495)
+  })
+
   it('enumerates the distribution rather than scaling its mean', () => {
     const qty = { kind: 'range', min: 1, max: 4 } as const
     // Scaling the mean would give 2.5 * 0.65 = 1.625. The true mean of the

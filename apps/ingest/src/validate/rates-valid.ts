@@ -30,10 +30,10 @@ export interface RatesValidResult {
  * be a `FormulaRef` (Tombs of Amascut's raid-level-scaled unique pool — see
  * `WeightRateSchema`), and a formula's output is exactly as invisible to the
  * schema as a formula rate's: `params` is an opaque record and the number only
- * exists once evaluated. A formula weight that resolved to zero or NaN would
- * silently delete its entry from the pool and leave a plausible distribution
- * over the rest, so it is evaluated here alongside formula rates. A plain
- * numeric weight is still schema-enforced positive and needs nothing.
+ * exists once evaluated. A formula weight may legitimately resolve to zero
+ * when context removes an outcome, but a negative or non-finite value is
+ * invalid, so every formula weight is evaluated here alongside formula rates.
+ * A plain numeric weight is still schema-enforced positive and needs nothing.
  *
  * `formula` rates are the one kind the schema CANNOT validate: `params` is
  * an opaque `Record<string, unknown>`, and a formula's actual numeric output

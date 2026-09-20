@@ -1,4 +1,4 @@
-import type { Condition } from '@osrs-loot-simulator/loot-model'
+import type { Condition, FormulaRef, QtySpec } from '@osrs-loot-simulator/loot-model'
 import { ALWAYS_RARITY, FRACTION_RARITY } from '../wiki/fields.js'
 import type { WikitextDropLine } from './wikitext-drops.js'
 import { evaluateRarityTemplate } from './rarity-templates.js'
@@ -48,7 +48,9 @@ export interface ParsedEntry {
   freeToPlay: boolean
   rarity: ParsedRate
   /** Share of the group's denominator, when the group is `weighted`. */
-  weight: number | null
+  weight: number | FormulaRef | null
+  /** Exact quantity distribution when the displayed wiki range is lossy. */
+  qtyOverride?: QtySpec
   /** Conditions a rarity template's evaluation contributed (e.g. `onSlayerTask`). */
   extraConditions?: Condition[]
   /**
@@ -821,6 +823,81 @@ export interface HeadingBlock {
   preamble: string
 }
 
+const SLAYER_CHEST_FISH: Readonly<
+  Record<string, { key: string; minimumLevel: number }>
+> = {
+  'Raw tuna': { key: 'raw-tuna', minimumLevel: 1 },
+  'Raw lobster': { key: 'raw-lobster', minimumLevel: 1 },
+  'Raw swordfish': { key: 'raw-swordfish', minimumLevel: 1 },
+  'Raw monkfish': { key: 'raw-monkfish', minimumLevel: 1 },
+  'Raw shark': { key: 'raw-shark', minimumLevel: 17 },
+  'Shark lure': { key: 'shark-lure', minimumLevel: 17 },
+  'Raw sea turtle': { key: 'raw-sea-turtle', minimumLevel: 17 },
+  'Raw manta ray': { key: 'raw-manta-ray', minimumLevel: 33 },
+}
+
+/**
+ * Parses the shared Slayer-chest fish shape without naming either chest.
+ * The wiki intentionally prints `rarity=Varies`; the exact probabilities
+ * live in `Module:Slayer chest fish chart`, while the block prose identifies
+ * both the 1/20 access slot and Larran-style 50%-higher quantities.
+ */
+function slayerChestFishEntries(block: HeadingBlock): ParsedEntry[] | null {
+  if (!/^fish drop table$/i.test(block.heading)) return null
+  if (!/\b1\s*\/\s*20\b/.test(block.preamble)) return null
+  if (block.lines.length !== Object.keys(SLAYER_CHEST_FISH).length) return null
+  if (block.lines.some((line) => !/^varies$/i.test(line.rarity.trim()))) return null
+
+  const chestNumerator = /\b50% higher\b/i.test(block.preamble) ? 3 : 1
+  const chestDenominator = /\b50% higher\b/i.test(block.preamble) ? 2 : 1
+  const entries: ParsedEntry[] = []
+
+  for (const line of block.lines) {
+    const fish = SLAYER_CHEST_FISH[line.name]
+    const range = /^(\d[\d,]*)\s*[-–]\s*(\d[\d,]*)/.exec(line.quantity.trim())
+    if (fish === undefined || range === null) return null
+
+    const lureFactor = line.name === 'Shark lure' ? 2 : 1
+    const rawNumerator = chestNumerator * lureFactor
+    const rawDenominator = chestDenominator
+    const divisor = gcd(rawNumerator, rawDenominator)
+    const numerator = rawNumerator / divisor
+    const denominator = rawDenominator / divisor
+    const shownMin = Number(range[1]!.replace(/,/g, ''))
+    const shownMax = Number(range[2]!.replace(/,/g, ''))
+    const baseMin = (shownMin * denominator) / numerator
+    const baseMax = (shownMax * denominator) / numerator
+    if (!Number.isInteger(baseMin) || !Number.isInteger(baseMax)) return null
+
+    const qtyOverride: QtySpec =
+      numerator === denominator
+        ? { kind: 'range', min: baseMin, max: baseMax }
+        : { kind: 'scaledRange', min: baseMin, max: baseMax, numerator, denominator }
+    const conditions: Condition[] =
+      fish.minimumLevel === 1
+        ? []
+        : [{ kind: 'levelAtLeast', field: 'fishingLevel', n: fish.minimumLevel }]
+
+    entries.push({
+      name: line.name,
+      quantity: line.quantity,
+      noted: line.noted,
+      members: line.members,
+      freeToPlay: line.freeToPlay,
+      rarity: { kind: 'fixed', num: 0, den: 1 },
+      weight: {
+        kind: 'formula',
+        id: 'slayer_chest_fish_weight',
+        params: { fish: fish.key },
+      },
+      qtyOverride,
+      ...(conditions.length > 0 ? { extraConditions: conditions } : {}),
+    })
+  }
+
+  return entries
+}
+
 /** Join character for the (section, heading) grouping key — never appears in wiki heading text. */
 const GROUP_KEY_SEP = ' '
 
@@ -880,6 +957,62 @@ export function buildTableGroups(blocks: readonly HeadingBlock[]): ParsedTableGr
   }
 
   for (const block of blocks) {
+    const fishEntries = slayerChestFishEntries(block)
+    if (fishEntries !== null) {
+      if (
+        pendingWeighted === null ||
+        pendingWeighted.denominator !== 60 ||
+        pendingWeighted.section !== block.section
+      ) {
+        flushWeighted()
+        groups.push({
+          mode: 'weighted',
+          headings: [block.heading],
+          section: block.section,
+          denominator: null,
+          entries: [],
+          ambiguous:
+            'recognised Slayer-chest fish probabilities, but found no adjacent /60 main table to hold their 3/60 access slot',
+        })
+        continue
+      }
+
+      pendingWeighted.headings.push(block.heading)
+      pendingWeighted.entries.push(...fishEntries)
+
+      // These chests publish absolute, mutually-exclusive unique rates. Wrap
+      // them in one `oneOf` behind their summed access chance: the single
+      // preroll hit suppresses the main table, while the inner weighted draw
+      // preserves every listed marginal exactly. Leaving N flat preroll
+      // entries would check them sequentially and suppress every later unique.
+      const unique = [...groups]
+        .reverse()
+        .find(
+          (group) =>
+            group.mode === 'preroll' &&
+            group.section === block.section &&
+            group.headings.some((heading) => PREROLL_HEADINGS.test(heading))
+        )
+      if (unique !== undefined) {
+        const denominator = unique.entries.reduce(
+          (value, entry) => lcm(value, entry.rarity.den),
+          1
+        )
+        const accessNumerator = unique.entries.reduce(
+          (sum, entry) => sum + (entry.rarity.num * denominator) / entry.rarity.den,
+          0
+        )
+        const divisor = gcd(accessNumerator, denominator)
+        unique.oneOfAccess = {
+          num: accessNumerator / divisor,
+          den: denominator / divisor,
+        }
+        unique.confirmedBy =
+          'the same source exposes the shared Slayer-chest fish pool; its unique rows are one mutually-exclusive draw behind their summed access chance'
+      }
+      continue
+    }
+
     let resolved = block.lines.map((line) => ({ line, resolution: parseRarity(line.rarity) }))
 
     if (resolved.some(({ resolution }) => resolution.rate === null)) {

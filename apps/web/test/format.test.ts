@@ -23,6 +23,9 @@ describe('formatQty', () => {
   it('formats exact, range and choice kinds', () => {
     expect(formatQty({ kind: 'exact', n: 3 })).toBe('3')
     expect(formatQty({ kind: 'range', min: 2, max: 5 })).toBe('2-5')
+    expect(
+      formatQty({ kind: 'scaledRange', min: 100, max: 350, numerator: 3, denominator: 2 })
+    ).toBe('150-525')
     expect(formatQty({ kind: 'choice', values: [1, 5, 10] })).toBe('1/5/10')
   })
 })

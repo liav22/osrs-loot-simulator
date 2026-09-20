@@ -352,6 +352,18 @@
       "repeatable": true
     },
     {
+      "slug": "brimstone-chest",
+      "title": "Brimstone chest",
+      "pageid": 210246,
+      "revid": 15338725,
+      "lootSourceId": "brimstone-chest",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 37,
+      "encounter": null,
+      "repeatable": true
+    },
+    {
       "slug": "bryophyta",
       "title": "Bryophyta",
       "pageid": 115742,
@@ -1032,6 +1044,18 @@
       "classification": "own-table",
       "tier": "A",
       "rowCount": 8,
+      "encounter": null,
+      "repeatable": true
+    },
+    {
+      "slug": "larran-s-big-chest",
+      "title": "Larran's big chest",
+      "pageid": 222072,
+      "revid": 15338728,
+      "lootSourceId": "larran-s-big-chest",
+      "classification": "own-table",
+      "tier": "A",
+      "rowCount": 34,
       "encounter": null,
       "repeatable": true
     },
@@ -2459,6 +2483,19 @@
       "repeatable": true
     },
     {
+      "id": "brimstone-chest",
+      "title": "Brimstone chest",
+      "dropsPage": "Brimstone chest",
+      "tier": "A",
+      "rowCount": 37,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "brimstone-chest"
+      ],
+      "repeatable": true
+    },
+    {
       "id": "bryophyta",
       "title": "Bryophyta",
       "dropsPage": "Bryophyta",
@@ -3120,6 +3157,19 @@
       "excludeReason": null,
       "bosses": [
         "vyre-pickpocketing"
+      ],
+      "repeatable": true
+    },
+    {
+      "id": "larran-s-big-chest",
+      "title": "Larran's big chest",
+      "dropsPage": "Larran's big chest",
+      "tier": "A",
+      "rowCount": 34,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "larran-s-big-chest"
       ],
       "repeatable": true
     },

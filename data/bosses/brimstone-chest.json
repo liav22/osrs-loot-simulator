@@ -1,0 +1,826 @@
+{
+  "slug": "brimstone-chest",
+  "name": "Brimstone chest",
+  "aliases": [],
+  "wikiPage": "Brimstone chest",
+  "wikiRevId": 15338725,
+  "variants": [
+    "normal"
+  ],
+  "tables": [
+    {
+      "id": "brimstone-chest:0:pre-roll",
+      "mode": "preroll",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 22963,
+                  "itemKey": "broken-dragon-hasta",
+                  "name": "Broken dragon hasta",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.005
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 23047,
+                  "itemKey": "mystic-hat-dusk",
+                  "name": "Mystic hat (dusk)",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.001
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 23050,
+                  "itemKey": "mystic-robe-top-dusk",
+                  "name": "Mystic robe top (dusk)",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.001
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 23053,
+                  "itemKey": "mystic-robe-bottom-dusk",
+                  "name": "Mystic robe bottom (dusk)",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.001
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 23056,
+                  "itemKey": "mystic-gloves-dusk",
+                  "name": "Mystic gloves (dusk)",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.001
+                }
+              },
+              {
+                "node": {
+                  "kind": "item",
+                  "itemId": 23059,
+                  "itemKey": "mystic-boots-dusk",
+                  "name": "Mystic boots (dusk)",
+                  "qty": {
+                    "kind": "exact",
+                    "n": 1
+                  },
+                  "unique": true
+                },
+                "rate": {
+                  "kind": "weight",
+                  "weight": 0.001
+                }
+              }
+            ]
+          },
+          "rate": {
+            "kind": "fixed",
+            "num": 1,
+            "den": 100
+          }
+        }
+      ],
+      "notes": "Pre-roll (confirmed preroll: the same source exposes the shared Slayer-chest fish pool; its unique rows are one mutually-exclusive draw behind their summed access chance)"
+    },
+    {
+      "id": "brimstone-chest:1:main-table-fish-drop-table",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 60,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1617,
+            "itemKey": "uncut-diamond",
+            "name": "Uncut diamond",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1619,
+            "itemKey": "uncut-ruby",
+            "name": "Uncut ruby",
+            "qty": {
+              "kind": "range",
+              "min": 25,
+              "max": 35
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 453,
+            "itemKey": "coal",
+            "name": "Coal",
+            "qty": {
+              "kind": "range",
+              "min": 300,
+              "max": 500
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 995,
+            "itemKey": "coins",
+            "name": "Coins",
+            "qty": {
+              "kind": "range",
+              "min": 50000,
+              "max": 150000
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 5
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 444,
+            "itemKey": "gold-ore",
+            "name": "Gold ore",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 200
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11237,
+            "itemKey": "dragon-arrowtips",
+            "name": "Dragon arrowtips",
+            "qty": {
+              "kind": "range",
+              "min": 50,
+              "max": 200
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 4
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 440,
+            "itemKey": "iron-ore",
+            "name": "Iron ore",
+            "qty": {
+              "kind": "range",
+              "min": 350,
+              "max": 500
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1163,
+            "itemKey": "rune-full-helm",
+            "name": "Rune full helm",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1127,
+            "itemKey": "rune-platebody",
+            "name": "Rune platebody",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1079,
+            "itemKey": "rune-platelegs",
+            "name": "Rune platelegs",
+            "qty": {
+              "kind": "range",
+              "min": 1,
+              "max": 2
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 3
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 451,
+            "itemKey": "runite-ore",
+            "name": "Runite ore",
+            "qty": {
+              "kind": "range",
+              "min": 10,
+              "max": 15
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 2353,
+            "itemKey": "steel-bar",
+            "name": "Steel bar",
+            "qty": {
+              "kind": "range",
+              "min": 300,
+              "max": 500
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 1513,
+            "itemKey": "magic-logs",
+            "name": "Magic logs",
+            "qty": {
+              "kind": "range",
+              "min": 120,
+              "max": 160
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 11232,
+            "itemKey": "dragon-dart-tip",
+            "name": "Dragon dart tip",
+            "qty": {
+              "kind": "range",
+              "min": 40,
+              "max": 160
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 2
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5289,
+            "itemKey": "palm-tree-seed",
+            "name": "Palm tree seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5316,
+            "itemKey": "magic-seed",
+            "name": "Magic seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 3
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22869,
+            "itemKey": "celastrus-seed",
+            "name": "Celastrus seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22877,
+            "itemKey": "dragonfruit-tree-seed",
+            "name": "Dragonfruit tree seed",
+            "qty": {
+              "kind": "range",
+              "min": 2,
+              "max": 4
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 22871,
+            "itemKey": "redwood-tree-seed",
+            "name": "Redwood tree seed",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5304,
+            "itemKey": "torstol-seed",
+            "name": "Torstol seed",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5300,
+            "itemKey": "snapdragon-seed",
+            "name": "Snapdragon seed",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 5295,
+            "itemKey": "ranarr-seed",
+            "name": "Ranarr seed",
+            "qty": {
+              "kind": "range",
+              "min": 3,
+              "max": 5
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7936,
+            "itemKey": "pure-essence",
+            "name": "Pure essence",
+            "qty": {
+              "kind": "range",
+              "min": 3000,
+              "max": 6000
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": 1
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 359,
+            "itemKey": "raw-tuna",
+            "name": "Raw tuna",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 350
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": {
+              "kind": "formula",
+              "id": "slayer_chest_fish_weight",
+              "params": {
+                "fish": "raw-tuna"
+              }
+            }
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 377,
+            "itemKey": "raw-lobster",
+            "name": "Raw lobster",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 350
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": {
+              "kind": "formula",
+              "id": "slayer_chest_fish_weight",
+              "params": {
+                "fish": "raw-lobster"
+              }
+            }
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 371,
+            "itemKey": "raw-swordfish",
+            "name": "Raw swordfish",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": {
+              "kind": "formula",
+              "id": "slayer_chest_fish_weight",
+              "params": {
+                "fish": "raw-swordfish"
+              }
+            }
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 7944,
+            "itemKey": "raw-monkfish",
+            "name": "Raw monkfish",
+            "qty": {
+              "kind": "range",
+              "min": 100,
+              "max": 300
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": {
+              "kind": "formula",
+              "id": "slayer_chest_fish_weight",
+              "params": {
+                "fish": "raw-monkfish"
+              }
+            }
+          }
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 383,
+            "itemKey": "raw-shark",
+            "name": "Raw shark",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 250
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": {
+              "kind": "formula",
+              "id": "slayer_chest_fish_weight",
+              "params": {
+                "fish": "raw-shark"
+              }
+            }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "fishingLevel",
+              "n": 17
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 30900,
+            "itemKey": "shark-lure",
+            "name": "Shark lure",
+            "qty": {
+              "kind": "scaledRange",
+              "min": 80,
+              "max": 250,
+              "numerator": 2,
+              "denominator": 1
+            }
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": {
+              "kind": "formula",
+              "id": "slayer_chest_fish_weight",
+              "params": {
+                "fish": "shark-lure"
+              }
+            }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "fishingLevel",
+              "n": 17
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 395,
+            "itemKey": "raw-sea-turtle",
+            "name": "Raw sea turtle",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 200
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": {
+              "kind": "formula",
+              "id": "slayer_chest_fish_weight",
+              "params": {
+                "fish": "raw-sea-turtle"
+              }
+            }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "fishingLevel",
+              "n": 17
+            }
+          ]
+        },
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 389,
+            "itemKey": "raw-manta-ray",
+            "name": "Raw manta ray",
+            "qty": {
+              "kind": "range",
+              "min": 80,
+              "max": 160
+            },
+            "noted": true
+          },
+          "rate": {
+            "kind": "weight",
+            "weight": {
+              "kind": "formula",
+              "id": "slayer_chest_fish_weight",
+              "params": {
+                "fish": "raw-manta-ray"
+              }
+            }
+          },
+          "conditions": [
+            {
+              "kind": "levelAtLeast",
+              "field": "fishingLevel",
+              "n": 33
+            }
+          ]
+        }
+      ],
+      "notes": "Main table / Fish drop table"
+    }
+  ],
+  "contextDefaults": {},
+  "status": "verified",
+  "statusTier": "verified",
+  "statusReason": null,
+  "validation": {
+    "ok": false,
+    "checks": [
+      {
+        "check": "weights_sum",
+        "ok": true
+      },
+      {
+        "check": "refs_resolve",
+        "ok": true,
+        "detail": "no tableRef nodes"
+      },
+      {
+        "check": "rates_valid",
+        "ok": true,
+        "detail": "8 formula rate(s)/weight(s) evaluated successfully"
+      },
+      {
+        "check": "qty_sane",
+        "ok": true,
+        "detail": "exact/range/choice quantities are schema-enforced; no formula-driven quantity, rolls, or qtyMultiplier present"
+      },
+      {
+        "check": "ev_matches",
+        "ok": false,
+        "detail": "the rendered page has no \"average ... kill is worth N\" sentence to compare against"
+      },
+      {
+        "check": "items_known",
+        "ok": true
+      },
+      {
+        "check": "not_on_watchlist",
+        "ok": true
+      },
+      {
+        "check": "drops_covered",
+        "ok": true,
+        "detail": "all 37 wiki drop row(s) reachable in the document"
+      },
+      {
+        "check": "heading_unambiguous",
+        "ok": true,
+        "detail": "no ambiguous headings or unconfirmed bundle signals"
+      }
+    ]
+  },
+  "source": "generated",
+  "parserVersion": 1,
+  "repeatable": true,
+  "attemptLabel": {
+    "singular": "opening",
+    "plural": "openings"
+  }
+}

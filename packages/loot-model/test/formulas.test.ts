@@ -4,6 +4,7 @@ import {
   FORMULA_CONTEXT_FIELDS,
   IMPLEMENTED_FORMULA_IDS,
   evaluateQuantity,
+  evaluateWeight,
   createFormulaRegistry,
   defaultFormulaRegistry,
   evaluateFormula,
@@ -46,6 +47,7 @@ describe('formula registry', () => {
       'doom_of_mokhaiotl_deep_rolls',
       'lunar_chest_standard_rolls',
       'rogue_outfit_multiplier',
+      'slayer_chest_fish_weight',
       'toa_bad_luck_mitigation',
       'toa_common_qty',
       'toa_elite_clue',
@@ -151,7 +153,57 @@ const REQUIRED_PARAMS: Partial<Record<(typeof FORMULA_IDS)[number], Record<strin
   tob_points: { urate: 9.1 },
   cox_points: { kind: 'roll', rollIndex: 1 },
   cox_common_qty: { divisor: 20 },
+  slayer_chest_fish_weight: { fish: 'raw-lobster' },
 }
+
+describe('Slayer chest fish weights', () => {
+  const fish = [
+    'raw-tuna',
+    'raw-lobster',
+    'raw-swordfish',
+    'raw-monkfish',
+    'raw-shark',
+    'shark-lure',
+    'raw-sea-turtle',
+    'raw-manta-ray',
+  ] as const
+
+  it.each([1, 17, 33, 99])(
+    'fills exactly three slots of the /60 table at Fishing level %i',
+    (fishingLevel) => {
+      const total = fish.reduce(
+        (sum, name) =>
+          sum +
+          defaultFormulaRegistry.get('slayer_chest_fish_weight')!(
+            { fish: name },
+            { ...ctx, fishingLevel }
+          ),
+        0
+      )
+      expect(total).toBeCloseTo(3, 12)
+    }
+  )
+
+  it('matches the module’s level gates and rejects an unknown fish', () => {
+    expect(() =>
+      evaluateWeight(
+        'slayer_chest_fish_weight',
+        { fish: 'raw-manta-ray' },
+        { ...ctx, fishingLevel: 33 }
+      )
+    ).not.toThrow()
+    expect(
+      evaluateWeight(
+        'slayer_chest_fish_weight',
+        { fish: 'raw-manta-ray' },
+        { ...ctx, fishingLevel: 1 }
+      )
+    ).toBe(0)
+    expect(() => evaluateWeight('slayer_chest_fish_weight', { fish: 'shrimp' }, ctx)).toThrow(
+      TypeError
+    )
+  })
+})
 
 describe('FORMULA_CONTEXT_FIELDS matches what the formulas actually read', () => {
   const ALL_FIELDS = Object.keys(ctxWith()) as SimContextField[]

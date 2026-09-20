@@ -349,6 +349,71 @@ export function toaCommonQtyScale(raidLevel: number): number {
  */
 const IMPLEMENTED: Partial<Record<FormulaId, FormulaFn>> = {
   /**
+   * `Module:Slayer chest fish chart`'s exact sequential Fishing-level roll.
+   * Its probabilities are conditional on reaching the fish table; multiplying
+   * by 3 turns them into weights in the chests' /60 main table, where the fish
+   * branch occupies exactly 3/60 (1/20).
+   */
+  slayer_chest_fish_weight: (params, ctx) => {
+    const fish = params['fish']
+    if (typeof fish !== 'string') {
+      throw new TypeError(`slayer_chest_fish_weight needs params.fish to be a string, got ${String(fish)}`)
+    }
+
+    const interpolate = (low: number, high: number): number => {
+      const value = Math.floor(
+        (low * (99 - ctx.fishingLevel)) / 98 +
+          (high * (ctx.fishingLevel - 1)) / 98 +
+          0.5
+      ) + 1
+      return Math.max(0, Math.min(1, value / 256))
+    }
+
+    const mantaRoll = interpolate(-10, 20)
+    const turtleRoll = interpolate(-10, 50)
+    const sharkRoll = interpolate(-60, 40)
+    const monkfishRoll = interpolate(0, 170)
+    const swordfishRoll = interpolate(25, 200)
+    const tunaRoll = interpolate(160, 0)
+
+    const manta = mantaRoll
+    const turtle = turtleRoll * (1 - mantaRoll)
+    const shark = sharkRoll * (1 - mantaRoll) * (1 - turtleRoll)
+    const monkfish = monkfishRoll * (1 - mantaRoll) * (1 - turtleRoll) * (1 - sharkRoll)
+    const swordfish =
+      swordfishRoll *
+      (1 - mantaRoll) *
+      (1 - turtleRoll) *
+      (1 - sharkRoll) *
+      (1 - monkfishRoll)
+    const tuna =
+      tunaRoll *
+      (1 - mantaRoll) *
+      (1 - turtleRoll) *
+      (1 - sharkRoll) *
+      (1 - monkfishRoll) *
+      (1 - swordfishRoll)
+    const lobster = 1 - manta - turtle - shark - monkfish - swordfish - tuna
+    const highTier = manta + turtle + shark
+
+    const probabilities: Readonly<Record<string, number>> = {
+      'raw-tuna': tuna,
+      'raw-lobster': lobster,
+      'raw-swordfish': swordfish,
+      'raw-monkfish': monkfish,
+      'raw-shark': shark * (2 / 8) + highTier * (3 / 8),
+      'shark-lure': highTier * (3 / 8),
+      'raw-sea-turtle': turtle * (2 / 8),
+      'raw-manta-ray': manta * (2 / 8),
+    }
+    const probability = probabilities[fish]
+    if (probability === undefined) {
+      throw new TypeError(`slayer_chest_fish_weight needs a supported params.fish, got ${fish}`)
+    }
+    return probability * 3
+  },
+
+  /**
    * Full rogue equipment guarantees double loot from a successful NPC
    * pickpocket; without the full set, the base wiki quantities apply.
    * Consumed as a `Table.qtyMultiplier` on tables expanded from the wiki's
@@ -700,6 +765,7 @@ export const FORMULA_CONTEXT_FIELDS: Record<FormulaId, readonly SimContextField[
   toa_pet: ['points', 'raidLevel'],
   toa_bad_luck_mitigation: ['killCount'],
   rogue_outfit_multiplier: ['rogueOutfit'],
+  slayer_chest_fish_weight: ['fishingLevel'],
 }
 
 export function createFormulaRegistry(
@@ -792,16 +858,17 @@ export function evaluateMultiplier(
 }
 
 /**
- * Positive-weight contract — a formula used as a `weight` inside a `weighted`
+ * Non-negative-weight contract — a formula used as a `weight` inside a `weighted`
  * table or a `oneOf` pool. Resolved once at compile time, like every other
  * Extension A formula position.
  *
  * Not rounded, and deliberately so: ToA's out-of-invocation-range uniques
  * carry a weight divided by 50, which is fractional by construction. A weight
  * is a share of a denominator, not a count, so there is nothing to round to.
- * Zero is rejected along with negatives — a zero weight would silently delete
- * an entry from its pool while leaving a plausible distribution over the rest,
- * which is the failure mode `toa_unique_weight` throws on rather than risks.
+ * Zero is permitted because a context-dependent pool can legitimately make an
+ * outcome unavailable (the Slayer-chest fish curve is exactly zero below a
+ * species' Fishing-level gate). Static numeric weights remain schema-required
+ * to be positive; negative and non-finite formula outputs still fail loudly.
  */
 export function evaluateWeight(
   formulaId: FormulaId,
@@ -810,8 +877,8 @@ export function evaluateWeight(
   registry: FormulaRegistry = defaultFormulaRegistry
 ): number {
   const value = callFormula(formulaId, params, ctx, registry)
-  if (!Number.isFinite(value) || value <= 0) {
-    throw new RangeError(`Formula '${formulaId}' returned ${value}, expected a positive weight`)
+  if (!Number.isFinite(value) || value < 0) {
+    throw new RangeError(`Formula '${formulaId}' returned ${value}, expected a non-negative weight`)
   }
   return value
 }

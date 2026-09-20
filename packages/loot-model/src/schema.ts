@@ -118,6 +118,8 @@ export const FORMULA_IDS = [
   'toa_bad_luck_mitigation',
   /** Full rogue equipment guarantees double loot from a successful NPC pickpocket. */
   'rogue_outfit_multiplier',
+  /** Fishing-level-dependent weight of one reward in the shared Slayer-chest fish pool. */
+  'slayer_chest_fish_weight',
 ] as const
 
 export const FormulaIdSchema = z.enum(FORMULA_IDS)
@@ -172,8 +174,9 @@ const AlwaysRateSchema = z.object({ kind: z.literal('always') }).strict()
  *
  * Note what does NOT change: `weight` is still relative to a denominator and
  * still has no standalone probability (`rateToProbability` rejects it either
- * way), and a resolved weight must still be finite and positive, which
- * `evaluateWeight` enforces at compile time rather than here.
+ * way). Static numeric weights remain positive; a formula weight may resolve
+ * to zero when context legitimately removes an outcome, while
+ * `evaluateWeight` still enforces non-negative finiteness at compile time.
  */
 const WeightRateSchema = z
   .object({
@@ -270,6 +273,23 @@ const RangeQtySchema = z
   })
   .strict()
 
+/**
+ * A uniformly rolled integer range whose result is scaled and rounded down.
+ * Slayer chests are the first source that needs this exact distribution:
+ * Larran's big chest rolls the Brimstone quantity first, then awards
+ * `floor(base * 3 / 2)`, so a plain displayed min/max range would invent
+ * quantities that can never occur.
+ */
+const ScaledRangeQtySchema = z
+  .object({
+    kind: z.literal('scaledRange'),
+    min: z.number().int().nonnegative(),
+    max: z.number().int().nonnegative(),
+    numerator: z.number().int().positive(),
+    denominator: z.number().int().positive(),
+  })
+  .strict()
+
 const ChoiceQtySchema = z
   .object({
     kind: z.literal('choice'),
@@ -289,9 +309,15 @@ const ChoiceQtySchema = z
  * vs. continuous shapes).
  */
 export const QtySpecSchema = z
-  .discriminatedUnion('kind', [ExactQtySchema, RangeQtySchema, ChoiceQtySchema, FormulaRefSchema])
+  .discriminatedUnion('kind', [
+    ExactQtySchema,
+    RangeQtySchema,
+    ScaledRangeQtySchema,
+    ChoiceQtySchema,
+    FormulaRefSchema,
+  ])
   .superRefine((qty, ctx) => {
-    if (qty.kind === 'range' && qty.min > qty.max) {
+    if ((qty.kind === 'range' || qty.kind === 'scaledRange') && qty.min > qty.max) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `qty range min (${qty.min}) exceeds max (${qty.max})`,

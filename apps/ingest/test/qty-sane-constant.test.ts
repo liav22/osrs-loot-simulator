@@ -27,8 +27,8 @@ function discriminatorKinds(schema: z.ZodTypeAny): string[] {
  * `formula`-kind rates. See `qty-sane.test.ts` for that check's own coverage.
  */
 describe('QtySpec kind precondition', () => {
-  it('QtySpec has exactly the four kinds qty_sane is audited against', () => {
-    expect(discriminatorKinds(QtySpecSchema)).toEqual(['choice', 'exact', 'formula', 'range'])
+  it('QtySpec has exactly the five kinds qty_sane is audited against', () => {
+    expect(discriminatorKinds(QtySpecSchema)).toEqual(['choice', 'exact', 'formula', 'range', 'scaledRange'])
   })
 
   it('every schema-enforced kind still rejects the shape of bad input that would make quantities insane', () => {
@@ -37,6 +37,8 @@ describe('QtySpec kind precondition', () => {
     expect(QtySpecSchema.safeParse({ kind: 'exact', n: 1.5 }).success).toBe(false)
     expect(QtySpecSchema.safeParse({ kind: 'range', min: 5, max: 2 }).success).toBe(false)
     expect(QtySpecSchema.safeParse({ kind: 'range', min: -1, max: 2 }).success).toBe(false)
+    expect(QtySpecSchema.safeParse({ kind: 'scaledRange', min: 5, max: 2, numerator: 3, denominator: 2 }).success).toBe(false)
+    expect(QtySpecSchema.safeParse({ kind: 'scaledRange', min: 2, max: 5, numerator: 0, denominator: 2 }).success).toBe(false)
     // choice: empty array, or a negative value in it
     expect(QtySpecSchema.safeParse({ kind: 'choice', values: [] }).success).toBe(false)
     expect(QtySpecSchema.safeParse({ kind: 'choice', values: [1, -2] }).success).toBe(false)

@@ -575,6 +575,14 @@ export function meanScaledQty(
       for (let v = qty.min; v <= qty.max; v++) total += applyQtyMultiplier(v, multiplier, rounding)
       return total / (qty.max - qty.min + 1)
     }
+    case 'scaledRange': {
+      let total = 0
+      for (let v = qty.min; v <= qty.max; v++) {
+        const scaled = Math.floor((v * qty.numerator) / qty.denominator)
+        total += applyQtyMultiplier(scaled, multiplier, rounding)
+      }
+      return total / (qty.max - qty.min + 1)
+    }
     case 'choice': {
       let total = 0
       for (const v of qty.values) total += applyQtyMultiplier(v, multiplier, rounding)
@@ -589,6 +597,13 @@ export function meanQty(qty: ResolvedQtySpec): number {
       return qty.n
     case 'range':
       return (qty.min + qty.max) / 2
+    case 'scaledRange': {
+      let total = 0
+      for (let v = qty.min; v <= qty.max; v++) {
+        total += Math.floor((v * qty.numerator) / qty.denominator)
+      }
+      return total / (qty.max - qty.min + 1)
+    }
     case 'choice': {
       let total = 0
       for (const value of qty.values) total += value

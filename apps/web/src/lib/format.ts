@@ -42,6 +42,8 @@ export function formatQty(qty: QtySpec): string {
       return String(qty.n)
     case 'range':
       return `${qty.min}-${qty.max}`
+    case 'scaledRange':
+      return `${Math.floor((qty.min * qty.numerator) / qty.denominator)}-${Math.floor((qty.max * qty.numerator) / qty.denominator)}`
     case 'choice':
       return qty.values.join('/')
     case 'formula':

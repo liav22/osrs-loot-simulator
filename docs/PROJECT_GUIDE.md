@@ -105,6 +105,15 @@ reward plus independent rare rolls. A successful-pickpocket attempt label
 keeps combat wording out of the UI, and the shared `rogue_outfit_multiplier`
 doubles realized quantities when the full outfit control is enabled without
 changing any drop rate.
+[Brimstone chest](bosses/brimstone-chest.md) and
+[Larran's big chest](bosses/larran-s-big-chest.md) use the same registration
+path and share the wiki's Fishing-level-dependent Slayer-chest fish formula.
+Their fish outcomes fill the missing 3/60 main-table slots. `scaledRange`
+preserves Larran's floor-after-50%-scaling quantity distribution instead of
+inventing every integer between the displayed endpoints, and `attemptLabel`
+is derived from the pages' Drop Log `type=openings` metadata.
+Formula-driven weights may resolve to zero when context makes an outcome
+unavailable (the level-locked fish); static authored weights remain positive.
 
 Parser fixes reuse `data/snapshots/`; new research and deliberate refreshes are
 separate fetch operations. Missing cache files must be reported rather than

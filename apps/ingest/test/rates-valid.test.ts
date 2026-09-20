@@ -102,7 +102,7 @@ describe('checkRatesValid', () => {
     // ToA's unique pool weights are formulas, and they live only inside a
     // `oneOf`, so a top-level-only walk would report a confident pass having
     // checked nothing — the vacuous green of landmine #11f.
-    const badRegistry = createFormulaRegistry({ wilderness_slayer: () => 0 })
+    const badRegistry = createFormulaRegistry({ wilderness_slayer: () => -1 })
     const oneOfBoss = boss([
       {
         id: 't',
@@ -127,8 +127,7 @@ describe('checkRatesValid', () => {
         ],
       },
     ])
-    // A zero weight would silently delete the entry from its pool, so it must
-    // be reported rather than accepted.
+    // A negative weight cannot be part of a pool, so it must be reported.
     const bad = checkRatesValid(oneOfBoss, badRegistry)
     expect(bad.ok).toBe(false)
     expect(bad.detail).toMatch(/formula weight 'wilderness_slayer'/)

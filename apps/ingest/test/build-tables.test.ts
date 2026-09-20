@@ -49,6 +49,67 @@ describe('groupByHeading', () => {
 })
 
 describe('buildTableGroups', () => {
+  it('merges the shared Slayer-chest fish roll into the missing 3/60 main slots', () => {
+    const fish = [
+      ['Raw tuna', '150-525 (noted)'],
+      ['Raw lobster', '150-525 (noted)'],
+      ['Raw swordfish', '150-450 (noted)'],
+      ['Raw monkfish', '150-450 (noted)'],
+      ['Raw shark', '120-375 (noted)'],
+      ['Shark lure', '240-750'],
+      ['Raw sea turtle', '120-300 (noted)'],
+      ['Raw manta ray', '120-240 (noted)'],
+    ] as const
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({ name: 'Unique A', rarity: '1/256', heading: 'Pre-roll' }),
+        line({ name: 'Unique B', rarity: '1/256', heading: 'Pre-roll' }),
+        line({ name: 'Unique C', rarity: '1/256', heading: 'Pre-roll' }),
+        line({ name: 'Main', rarity: '57/60', heading: 'Main table' }),
+        ...fish.map(([name, quantity]) =>
+          line({
+            name,
+            quantity,
+            rarity: 'Varies',
+            heading: 'Fish drop table',
+            blockPreamble:
+              'There is a 1/20 chance to receive raw fish. Possible quantities are 50% higher, rounded down.',
+          })
+        ),
+      ])
+    )
+
+    expect(groups).toHaveLength(2)
+    expect(groups[0]).toMatchObject({
+      mode: 'preroll',
+      oneOfAccess: { num: 3, den: 256 },
+      ambiguous: null,
+    })
+    expect(groups[1]).toMatchObject({
+      mode: 'weighted',
+      denominator: 60,
+      headings: ['Main table', 'Fish drop table'],
+      ambiguous: null,
+    })
+    expect(groups[1]?.entries).toHaveLength(9)
+    expect(groups[1]?.entries.at(-1)).toMatchObject({
+      name: 'Raw manta ray',
+      qtyOverride: {
+        kind: 'scaledRange',
+        min: 80,
+        max: 160,
+        numerator: 3,
+        denominator: 2,
+      },
+      weight: {
+        kind: 'formula',
+        id: 'slayer_chest_fish_weight',
+        params: { fish: 'raw-manta-ray' },
+      },
+      extraConditions: [{ kind: 'levelAtLeast', field: 'fishingLevel', n: 33 }],
+    })
+  })
+
   it('classifies an all-Always heading as always mode', () => {
     const groups = buildTableGroups(
       groupByHeading([

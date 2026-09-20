@@ -130,6 +130,10 @@ export function rollQty(qty: ResolvedQtySpec, rng: Rng): number {
       return qty.n
     case 'range':
       return qty.min + rng.nextInt(qty.max - qty.min + 1)
+    case 'scaledRange': {
+      const base = qty.min + rng.nextInt(qty.max - qty.min + 1)
+      return Math.floor((base * qty.numerator) / qty.denominator)
+    }
     case 'choice': {
       const value = qty.values[rng.nextInt(qty.values.length)]
       if (value === undefined) throw new Error('choice qty had no values')

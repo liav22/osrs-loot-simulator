@@ -213,7 +213,7 @@ export function assembleBoss(
   const contextDefaults = variants.includes('normal') ? {} : { variant: variants[0] }
 
   const itemNodeFor = (
-    item: { name: string; quantity: string; noted: boolean },
+    item: { name: string; quantity: string; noted: boolean; qtyOverride?: QtySpec },
     warnings: string[]
   ): Record<string, unknown> => {
     const { itemId, itemKey } = resolveItem(item.name, options.itemIndex, options.allowlist, warnings)
@@ -223,7 +223,7 @@ export function assembleBoss(
       itemId,
       itemKey,
       name: item.name,
-      qty: parseQuantity(item.quantity),
+      qty: item.qtyOverride ?? parseQuantity(item.quantity),
       ...(item.noted ? { noted: true } : {}),
       ...(flags.has('unique') ? { unique: true } : {}),
       ...(flags.has('pet') ? { pet: true } : {}),

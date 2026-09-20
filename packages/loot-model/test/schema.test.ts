@@ -39,6 +39,8 @@ describe('QtySpecSchema', () => {
   it('rejects an inverted range and an empty choice', () => {
     expect(QtySpecSchema.safeParse({ kind: 'range', min: 5, max: 2 }).success).toBe(false)
     expect(QtySpecSchema.safeParse({ kind: 'range', min: 2, max: 5 }).success).toBe(true)
+    expect(QtySpecSchema.safeParse({ kind: 'scaledRange', min: 2, max: 5, numerator: 3, denominator: 2 }).success).toBe(true)
+    expect(QtySpecSchema.safeParse({ kind: 'scaledRange', min: 5, max: 2, numerator: 3, denominator: 2 }).success).toBe(false)
     expect(QtySpecSchema.safeParse({ kind: 'choice', values: [] }).success).toBe(false)
   })
 

@@ -689,5 +689,9 @@
   },
   "source": "generated",
   "parserVersion": 1,
-  "repeatable": true
+  "repeatable": true,
+  "attemptLabel": {
+    "singular": "opening",
+    "plural": "openings"
+  }
 }

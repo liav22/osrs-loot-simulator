@@ -149,6 +149,22 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
 
   const blocks = groupByHeading(lines)
   const groups = buildTableGroups(blocks)
+  // This Lua-backed chart is not itself a hidden drop table: the surrounding
+  // Fish drop table rows plus their prose are parsed into formula-weighted
+  // entries by `buildTableGroups`. Once those entries exist, treating the
+  // chart's expected `#invoke` as an unresolved loot transclusion would keep
+  // an otherwise complete source in `needs_review`.
+  const modelsSlayerChestFish = groups.some((group) =>
+    group.entries.some(
+      (entry) =>
+        entry.weight !== null &&
+        typeof entry.weight === 'object' &&
+        entry.weight.id === 'slayer_chest_fish_weight'
+    )
+  )
+  const unresolvedTransclusions = expansion.unexpandable.filter(
+    ({ template }) => !(modelsSlayerChestFish && template === 'slayer chest fish chart')
+  )
   // Standing, on every transcluded block — not just the ones whose mode it
   // decides. A sub-table whose rows do not sum to its own declared access rate
   // is telling you the page overrides them (Vorkath states EFFECTIVE seed
@@ -194,27 +210,40 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   // item name is special-cased. Each table gets the same compile-time
   // multiplier and the web derives the toggle from its declared formula input.
   const isPickpocketSource = expansion.expanded.some((name) => name.startsWith('pickpocket/'))
-  const generatedBoss =
-    result.boss === null || !isPickpocketSource
-      ? result.boss
-      : {
-          ...result.boss,
-          // Pickpocket tables belong to an NPC class, even though one concrete
-          // NPC page supplies the revision-bound rows and image. Promote the
-          // inventory source name so that representative NPC never becomes
-          // the public entity name.
-          name: options.sourceName,
-          aliases: result.boss.aliases.filter((alias) => alias !== options.sourceName),
-          attemptLabel: { singular: 'successful pickpocket', plural: 'successful pickpockets' },
-          tables: result.boss.tables.map((table) => ({
-            ...table,
-            qtyMultiplier: {
-              kind: 'formula' as const,
-              id: 'rogue_outfit_multiplier' as const,
-              params: {},
-            },
-          })),
-        }
+  let generatedBoss = result.boss
+  if (generatedBoss !== null && isPickpocketSource) {
+    generatedBoss = {
+      ...generatedBoss,
+      // Pickpocket tables belong to an NPC class, even though one concrete
+      // NPC page supplies the revision-bound rows and image. Promote the
+      // inventory source name so that representative NPC never becomes
+      // the public entity name.
+      name: options.sourceName,
+      aliases: generatedBoss.aliases.filter((alias) => alias !== options.sourceName),
+      attemptLabel: { singular: 'successful pickpocket', plural: 'successful pickpockets' },
+      tables: generatedBoss.tables.map((table) => ({
+        ...table,
+        qtyMultiplier: {
+          kind: 'formula' as const,
+          id: 'rogue_outfit_multiplier' as const,
+          params: {},
+        },
+      })),
+    }
+  }
+
+  // Reward containers identify their Drop Log unit as `openings`. Derive the
+  // user-facing attempt label from that source metadata instead of maintaining
+  // a list of chest slugs.
+  const isOpeningSource = /\{\{\s*DropLogProject\b[^}]*\btype\s*=\s*openings\b/i.test(
+    expansion.wikitext
+  )
+  if (generatedBoss !== null && isOpeningSource) {
+    generatedBoss = {
+      ...generatedBoss,
+      attemptLabel: { singular: 'opening', plural: 'openings' },
+    }
+  }
 
   // Every confirmed bundle's shared table, written to disk and folded into a
   // LOCAL copy of the shared-tables map — this document's own `refs_resolve`/
@@ -357,7 +386,7 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
     // no wikitext expansion could ever reach, hand-modelled instead (see
     // their own override `note`s) — without this exemption a correct,
     // wiki-verified override could never lift the source off `needs_review`.
-    (overrideCarriesTables || expansion.unexpandable.length === 0) &&
+    (overrideCarriesTables || unresolvedTransclusions.length === 0) &&
     // An override supplying its own tables replaces exactly the structure the
     // parser was unsure about, so its ambiguous-group guesses (and an
     // unconfirmed bundle signal, which describes the GENERATED document, not
@@ -392,8 +421,8 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   // surfaced only when there is a shortfall to explain, and a named
   // sub-heading is what separates a real sub-table from the section preamble
   // where page furniture (drop logs, average-value boxes) legitimately lives.
-  if (!dropsCovered.ok || expansion.unexpandable.length > 0) {
-    for (const { template, reason } of expansion.unexpandable) {
+  if (!dropsCovered.ok || unresolvedTransclusions.length > 0) {
+    for (const { template, reason } of unresolvedTransclusions) {
       reasons.push(`transclusion not expanded: '${template}' — ${reason}`)
     }
       for (const check of partitions.filter((p) => p.verdict === 'not-a-partition')) {
