@@ -123,6 +123,8 @@ describe('SimContext fields beyond the original six', () => {
         raidLevel: 300,
         deaths: 2,
         fishingLevel: 99,
+        farmingLevel: 85,
+        thievingLevel: 94,
         hitpointsDamage: 400,
         shieldDamage: 300,
         perfectKill: true,

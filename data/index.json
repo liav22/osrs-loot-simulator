@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T08:18:07.411Z",
+  "generatedAt": "2026-09-21T21:29:56.467Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -606,6 +606,15 @@
       "status": "needs_review",
       "statusTier": "unknown_scaling",
       "image": "Maggot King.png",
+      "repeatable": true
+    },
+    {
+      "slug": "master-farmer",
+      "name": "Master Farmer",
+      "aliases": [],
+      "status": "manual_override",
+      "statusTier": null,
+      "image": "Master Farmer.png",
       "repeatable": true
     },
     {

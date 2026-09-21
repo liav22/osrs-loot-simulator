@@ -46,6 +46,8 @@ describe('formula registry', () => {
       'cox_points',
       'doom_of_mokhaiotl_deep_rolls',
       'lunar_chest_standard_rolls',
+      'master_farmer_herb_weight',
+      'master_farmer_rocky_rate',
       'rogue_outfit_multiplier',
       'slayer_chest_fish_weight',
       'toa_bad_luck_mitigation',
@@ -153,8 +155,51 @@ const REQUIRED_PARAMS: Partial<Record<(typeof FORMULA_IDS)[number], Record<strin
   tob_points: { urate: 9.1 },
   cox_points: { kind: 'roll', rollIndex: 1 },
   cox_common_qty: { divisor: 20 },
+  master_farmer_herb_weight: { seed: 'ranarr-seed' },
   slayer_chest_fish_weight: { fish: 'raw-lobster' },
 }
+
+describe('Master Farmer formulas', () => {
+  const scalingSeeds = ['guam-seed', 'ranarr-seed', 'snapdragon-seed', 'torstol-seed'] as const
+
+  it.each([1, 38, 75, 85, 99])(
+    'keeps the four scaling herb weights at 401/1000 at Farming level %i',
+    (farmingLevel) => {
+      const total = scalingSeeds.reduce(
+        (sum, seed) =>
+          sum +
+          evaluateWeight(
+            'master_farmer_herb_weight',
+            { seed },
+            { ...ctx, farmingLevel }
+          ),
+        0
+      )
+      expect(total).toBeCloseTo(401 / 1000, 12)
+    }
+  )
+
+  it('matches the wiki calculator at the published Farming-level endpoints', () => {
+    const weight = (seed: string, farmingLevel: number) =>
+      evaluateWeight('master_farmer_herb_weight', { seed }, { ...ctx, farmingLevel })
+
+    expect((48 / 1000) * weight('guam-seed', 38)).toBeCloseTo(1 / 58.36, 4)
+    expect((48 / 1000) * weight('ranarr-seed', 38)).toBeCloseTo(1 / 555.83, 5)
+    expect((48 / 1000) * weight('snapdragon-seed', 85)).toBeCloseTo(1 / 1854.4, 7)
+    expect((48 / 1000) * weight('torstol-seed', 85)).toBeCloseTo(1 / 9271.98, 8)
+    expect(weight('ranarr-seed', 99)).toBe(weight('ranarr-seed', 85))
+    expect(() => weight('irit-seed', 85)).toThrow(TypeError)
+  })
+
+  it('matches Rocky rates at the required and maximum Thieving levels', () => {
+    expect(
+      evaluateFormula('master_farmer_rocky_rate', {}, { ...ctx, thievingLevel: 38 })
+    ).toBeCloseTo(1 / 256_261, 15)
+    expect(
+      evaluateFormula('master_farmer_rocky_rate', {}, { ...ctx, thievingLevel: 99 })
+    ).toBeCloseTo(1 / 254_736, 15)
+  })
+})
 
 describe('Slayer chest fish weights', () => {
   const fish = [
@@ -227,6 +272,8 @@ describe('FORMULA_CONTEXT_FIELDS matches what the formulas actually read', () =>
       case 'ownedCounts':
         return [{}, { 'crystal-shard': 5 }]
       case 'fishingLevel':
+      case 'farmingLevel':
+      case 'thievingLevel':
         return [1, 99]
       default:
         return [0, 500]

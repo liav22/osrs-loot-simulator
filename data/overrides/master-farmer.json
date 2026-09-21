@@ -1,0 +1,262 @@
+{
+  "slug": "master-farmer",
+  "note": "Master Farmer revision 15267392 states a two-stage seed mechanic in prose that the flat DropsLineSkill rows cannot encode: one category roll out of 1000 (Allotments 485, Hops 243, Flowers 122, Bushes 97, Special 5, Herbs 48), followed by exactly one seed from that category. Static within-category weights are normalized from the page's explicitly 3-significant-figure marginal rows. Herb weights use the exact redistribution in Module:Master farmer special seed calculator revision 14718052: (6 + min(85, Farming level))/1000 moves weight from Guam to Ranarr, Snapdragon, and Torstol while the herb category remains 48/1000. Rocky revision 15352783 states the exact pet formula 1/(B - 25 * Thieving level) and lists B=257211 for Master Farmer; this independent tertiary roll is not doubled by rogue equipment, while the selected seed quantity is doubled. The parser's flat preroll interpretation would incorrectly allow no seed or stop on whichever of 46 ordered rows hit first, so the tables are replaced wholesale.",
+  "tables": [
+    {
+      "id": "master-farmer:seeds",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 1000,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": { "kind": "item", "itemId": 5318, "itemKey": "potato-seed", "name": "Potato seed", "qty": { "kind": "range", "min": 1, "max": 4 } },
+                "rate": { "kind": "weight", "weight": 0.364738447113747 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5319, "itemKey": "onion-seed", "name": "Onion seed", "qty": { "kind": "range", "min": 1, "max": 3 } },
+                "rate": { "kind": "weight", "weight": 0.273674930437273 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5324, "itemKey": "cabbage-seed", "name": "Cabbage seed", "qty": { "kind": "range", "min": 1, "max": 3 } },
+                "rate": { "kind": "weight", "weight": 0.143109182374491 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5322, "itemKey": "tomato-seed", "name": "Tomato seed", "qty": { "kind": "range", "min": 1, "max": 2 } },
+                "rate": { "kind": "weight", "weight": 0.131259377464501 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5320, "itemKey": "sweetcorn-seed", "name": "Sweetcorn seed", "qty": { "kind": "range", "min": 1, "max": 2 } },
+                "rate": { "kind": "weight", "weight": 0.0455923058892183 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5323, "itemKey": "strawberry-seed", "name": "Strawberry seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.0227961529446092 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5321, "itemKey": "watermelon-seed", "name": "Watermelon seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.0109035567523422 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 22879, "itemKey": "snape-grass-seed", "name": "Snape grass seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.00792604702381796 }
+              }
+            ]
+          },
+          "rate": { "kind": "weight", "weight": 485 }
+        },
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": { "kind": "item", "itemId": 5305, "itemKey": "barley-seed", "name": "Barley seed", "qty": { "kind": "range", "min": 1, "max": 12 } },
+                "rate": { "kind": "weight", "weight": 0.228586630592209 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5307, "itemKey": "hammerstone-seed", "name": "Hammerstone seed", "qty": { "kind": "range", "min": 1, "max": 9 } },
+                "rate": { "kind": "weight", "weight": 0.228586630592209 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5308, "itemKey": "asgarnian-seed", "name": "Asgarnian seed", "qty": { "kind": "range", "min": 1, "max": 6 } },
+                "rate": { "kind": "weight", "weight": 0.172157295006685 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5306, "itemKey": "jute-seed", "name": "Jute seed", "qty": { "kind": "range", "min": 1, "max": 9 } },
+                "rate": { "kind": "weight", "weight": 0.170728603761816 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5309, "itemKey": "yanillian-seed", "name": "Yanillian seed", "qty": { "kind": "range", "min": 1, "max": 6 } },
+                "rate": { "kind": "weight", "weight": 0.113976713314675 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5310, "itemKey": "krandorian-seed", "name": "Krandorian seed", "qty": { "kind": "range", "min": 1, "max": 6 } },
+                "rate": { "kind": "weight", "weight": 0.0569883566573375 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5311, "itemKey": "wildblood-seed", "name": "Wildblood seed", "qty": { "kind": "range", "min": 1, "max": 3 } },
+                "rate": { "kind": "weight", "weight": 0.0289757700750688 }
+              }
+            ]
+          },
+          "rate": { "kind": "weight", "weight": 243 }
+        },
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": { "kind": "item", "itemId": 5096, "itemKey": "marigold-seed", "name": "Marigold seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.375952214669262 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5098, "itemKey": "nasturtium-seed", "name": "Nasturtium seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.249111193914587 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5097, "itemKey": "rosemary-seed", "name": "Rosemary seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.161016862078387 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5099, "itemKey": "woad-seed", "name": "Woad seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.118951498980986 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5100, "itemKey": "limpwurt-seed", "name": "Limpwurt seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.0949682303567777 }
+              }
+            ]
+          },
+          "rate": { "kind": "weight", "weight": 122 }
+        },
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": { "kind": "item", "itemId": 5101, "itemKey": "redberry-seed", "name": "Redberry seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.399637357582291 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5102, "itemKey": "cadavaberry-seed", "name": "Cadavaberry seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.280180538739759 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5103, "itemKey": "dwellberry-seed", "name": "Dwellberry seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.200206676225691 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5104, "itemKey": "jangerberry-seed", "name": "Jangerberry seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.0799274715164582 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5105, "itemKey": "whiteberry-seed", "name": "Whiteberry seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.0290440671144313 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5106, "itemKey": "poison-ivy-seed", "name": "Poison ivy seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.0110038888213694 }
+              }
+            ]
+          },
+          "rate": { "kind": "weight", "weight": 97 }
+        },
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": { "kind": "item", "itemId": 5282, "itemKey": "mushroom-spore", "name": "Mushroom spore", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.406497078033689 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5281, "itemKey": "belladonna-seed", "name": "Belladonna seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.243898246820213 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5280, "itemKey": "cactus-seed", "name": "Cactus seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.162598831213475 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 21490, "itemKey": "seaweed-spore", "name": "Seaweed spore", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.105706428325885 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 22873, "itemKey": "potato-cactus-seed", "name": "Potato cactus seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.0812994156067377 }
+              }
+            ]
+          },
+          "rate": { "kind": "weight", "weight": 5 }
+        },
+        {
+          "node": {
+            "kind": "oneOf",
+            "entries": [
+              {
+                "node": { "kind": "item", "itemId": 5291, "itemKey": "guam-seed", "name": "Guam seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": { "kind": "formula", "id": "master_farmer_herb_weight", "params": { "seed": "guam-seed" } } }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5292, "itemKey": "marrentill-seed", "name": "Marrentill seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.218 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5293, "itemKey": "tarromin-seed", "name": "Tarromin seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.149 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5294, "itemKey": "harralander-seed", "name": "Harralander seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.101 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5295, "itemKey": "ranarr-seed", "name": "Ranarr seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": { "kind": "formula", "id": "master_farmer_herb_weight", "params": { "seed": "ranarr-seed" } } }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5296, "itemKey": "toadflax-seed", "name": "Toadflax seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.047 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5297, "itemKey": "irit-seed", "name": "Irit seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.032 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5298, "itemKey": "avantoe-seed", "name": "Avantoe seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.022 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5299, "itemKey": "kwuarm-seed", "name": "Kwuarm seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.015 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5300, "itemKey": "snapdragon-seed", "name": "Snapdragon seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": { "kind": "formula", "id": "master_farmer_herb_weight", "params": { "seed": "snapdragon-seed" } } }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5301, "itemKey": "cadantine-seed", "name": "Cadantine seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.007 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5302, "itemKey": "lantadyme-seed", "name": "Lantadyme seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.005 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5303, "itemKey": "dwarf-weed-seed", "name": "Dwarf weed seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": 0.003 }
+              },
+              {
+                "node": { "kind": "item", "itemId": 5304, "itemKey": "torstol-seed", "name": "Torstol seed", "qty": { "kind": "exact", "n": 1 } },
+                "rate": { "kind": "weight", "weight": { "kind": "formula", "id": "master_farmer_herb_weight", "params": { "seed": "torstol-seed" } } }
+              }
+            ]
+          },
+          "rate": { "kind": "weight", "weight": 48 }
+        }
+      ],
+      "notes": "Exactly one category roll out of 1000, then exactly one seed from that category. Static inner weights are normalized from the page's 3-significant-figure marginal rates; herb scaling uses the wiki calculator module's exact weights.",
+      "qtyMultiplier": { "kind": "formula", "id": "rogue_outfit_multiplier", "params": {} }
+    },
+    {
+      "id": "master-farmer:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": { "kind": "item", "itemId": 20663, "itemKey": "rocky", "name": "Rocky", "qty": { "kind": "exact", "n": 1 } },
+          "rate": { "kind": "formula", "id": "master_farmer_rocky_rate", "params": {} }
+        }
+      ],
+      "notes": "Independent skilling-pet roll; denominator is 257211 - 25 × Thieving level. Rogue equipment does not duplicate pets."
+    }
+  ],
+  "contextDefaults": {
+    "farmingLevel": 85,
+    "thievingLevel": 38
+  }
+}

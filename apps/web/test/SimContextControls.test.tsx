@@ -73,6 +73,13 @@ describe('SimContextControls renders the controls each boss needs', () => {
     expect(screen.getByText('Full rogue outfit (double loot)')).toBeDefined()
   })
 
+  it('Master Farmer gets Farming, Thieving, and rogue outfit controls', () => {
+    renderFor('master-farmer')
+    expect(screen.getByText('Farming level')).toBeDefined()
+    expect(screen.getByText('Thieving level')).toBeDefined()
+    expect(screen.getByText('Full rogue outfit (double loot)')).toBeDefined()
+  })
+
   it('Scorpia (Konar-eligible, has a Brimstone key drop) gets a Konar task toggle', () => {
     renderFor('scorpia')
     expect(screen.getByText('Konar task')).toBeDefined()

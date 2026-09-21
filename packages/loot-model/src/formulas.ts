@@ -349,6 +349,38 @@ export function toaCommonQtyScale(raidLevel: number): number {
  */
 const IMPLEMENTED: Partial<Record<FormulaId, FormulaFn>> = {
   /**
+   * `Module:Master farmer special seed calculator`'s exact redistribution
+   * within the herb-seed pool. The pool itself remains 48/1000; these four
+   * weights always sum to 401/1000, while the other ten fixed weights sum to
+   * 599/1000. Farming's effect caps at level 85.
+   */
+  master_farmer_herb_weight: (params, ctx) => {
+    const seed = params['seed']
+    const scalingShare = (6 + Math.min(85, ctx.farmingLevel)) / 1000
+    switch (seed) {
+      case 'guam-seed':
+        return 320 / 1000 + 81 / 1000 - scalingShare
+      case 'ranarr-seed':
+        return (69 / 81) * scalingShare
+      case 'snapdragon-seed':
+        return (10 / 81) * scalingShare
+      case 'torstol-seed':
+        return (2 / 81) * scalingShare
+      default:
+        throw new TypeError(
+          `master_farmer_herb_weight needs params.seed to name a scaling herb seed, got ${String(seed)}`
+        )
+    }
+  },
+
+  /**
+   * Rocky revision 15352783 states `1 / (B - 25 * Thieving level)` and lists
+   * B=257,211 for Master Farmer. This also reproduces Master Farmer revision
+   * 15267392's displayed 1/256,261 at level 38 and 1/254,736 at level 99.
+   */
+  master_farmer_rocky_rate: (_params, ctx) => 1 / (257_211 - 25 * ctx.thievingLevel),
+
+  /**
    * `Module:Slayer chest fish chart`'s exact sequential Fishing-level roll.
    * Its probabilities are conditional on reaching the fish table; multiplying
    * by 3 turns them into weights in the chests' /60 main table, where the fish
@@ -765,6 +797,8 @@ export const FORMULA_CONTEXT_FIELDS: Record<FormulaId, readonly SimContextField[
   toa_pet: ['points', 'raidLevel'],
   toa_bad_luck_mitigation: ['killCount'],
   rogue_outfit_multiplier: ['rogueOutfit'],
+  master_farmer_herb_weight: ['farmingLevel'],
+  master_farmer_rocky_rate: ['thievingLevel'],
   slayer_chest_fish_weight: ['fishingLevel'],
 }
 

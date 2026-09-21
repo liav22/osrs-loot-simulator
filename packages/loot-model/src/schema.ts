@@ -118,6 +118,10 @@ export const FORMULA_IDS = [
   'toa_bad_luck_mitigation',
   /** Full rogue equipment guarantees double loot from a successful NPC pickpocket. */
   'rogue_outfit_multiplier',
+  /** Farming-level-dependent weights for Master Farmer's four scaling herb seeds. */
+  'master_farmer_herb_weight',
+  /** Thieving-level-dependent Rocky chance from a successful Master Farmer pickpocket. */
+  'master_farmer_rocky_rate',
   /** Fishing-level-dependent weight of one reward in the shared Slayer-chest fish pool. */
   'slayer_chest_fish_weight',
 ] as const
@@ -971,6 +975,10 @@ export const SimContextSchema = z
     moonsKilled: z.array(z.enum(['blood', 'blue', 'eclipse'])).default([]),
     /** Reward pool — Fishing level at time of redemption. */
     fishingLevel: z.number().int().min(1).max(99).default(1),
+    /** Master Farmer — Farming level controls four herb-seed weights, capped at 85. */
+    farmingLevel: z.number().int().min(1).max(99).default(1),
+    /** Master Farmer — Thieving level controls the tertiary Rocky chance. */
+    thievingLevel: z.number().int().min(1).max(99).default(1),
     /** Zalcano's two damage inputs — kept raw rather than pre-derived into one `points`, since `zalcano_points` needs both `H` and `S` under different caps. */
     hitpointsDamage: z.number().int().nonnegative().default(0),
     shieldDamage: z.number().int().nonnegative().default(0),
@@ -1061,6 +1069,8 @@ export const DEFAULT_SIM_CONTEXT: SimContext = {
   wavesReached: 0,
   moonsKilled: [],
   fishingLevel: 1,
+  farmingLevel: 1,
+  thievingLevel: 1,
   hitpointsDamage: 0,
   shieldDamage: 0,
   totalDamage: 0,

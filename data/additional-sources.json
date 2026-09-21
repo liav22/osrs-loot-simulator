@@ -136,6 +136,33 @@
   },
   {
     "boss": {
+      "slug": "master-farmer",
+      "title": "Master Farmer",
+      "pageid": 17438,
+      "revid": 15267392,
+      "lootSourceId": "master-farmer",
+      "classification": "own-table",
+      "tier": "D",
+      "rowCount": 46,
+      "encounter": null,
+      "repeatable": true
+    },
+    "source": {
+      "id": "master-farmer",
+      "title": "Master Farmer",
+      "dropsPage": "Master Farmer",
+      "tier": "D",
+      "rowCount": 46,
+      "include": true,
+      "excludeReason": null,
+      "bosses": [
+        "master-farmer"
+      ],
+      "repeatable": true
+    }
+  },
+  {
+    "boss": {
       "slug": "brimstone-chest",
       "title": "Brimstone chest",
       "pageid": 210246,

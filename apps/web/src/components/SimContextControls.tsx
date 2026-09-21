@@ -19,6 +19,8 @@ const NUMERIC_FIELDS: Partial<
   delveLevel: { label: 'Delve level reached', min: 0 },
   wavesReached: { label: 'Waves completed', min: 0 },
   fishingLevel: { label: 'Fishing level', min: 1, max: 99 },
+  farmingLevel: { label: 'Farming level', min: 1, max: 99 },
+  thievingLevel: { label: 'Thieving level', min: 1, max: 99 },
   hitpointsDamage: { label: 'Damage to hitpoints', min: 0 },
   shieldDamage: { label: 'Damage to shield', min: 0 },
 }

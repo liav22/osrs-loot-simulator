@@ -104,6 +104,13 @@ describe('contextSurfaceOf: the controls a boss actually needs', () => {
     expect(contextSurfaceOf(loadBoss('vyre-pickpocketing')).fields.has('rogueOutfit')).toBe(true)
   })
 
+  it('finds Master Farmer skill controls from nested formula rates and weights', () => {
+    const fields = contextSurfaceOf(loadBoss('master-farmer')).fields
+    expect(fields.has('farmingLevel')).toBe(true)
+    expect(fields.has('thievingLevel')).toBe(true)
+    expect(fields.has('rogueOutfit')).toBe(true)
+  })
+
   it('does not offer unrelated controls on an ordinary boss', () => {
     // Brutus reads none of the Extension A fields; showing them all would
     // bury the ones that matter behind a dozen that do nothing.

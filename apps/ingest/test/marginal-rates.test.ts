@@ -56,11 +56,27 @@ async function statedRates(title: string): Promise<Map<string, number> | null> {
       const name = row.item_name
       const json = row.drop_json
       if (typeof name !== 'string' || typeof json !== 'string') continue
-      const parsed = JSON.parse(json) as { Rarity?: string; Rolls?: number }
+      const parsed = JSON.parse(json) as {
+        Rarity?: string
+        Rolls?: number
+        'Alt Rarity'?: string
+        'Alt Rarity Dash'?: string
+      }
       const match = /^~?\s*([\d,.]+)\s*\/\s*([\d,.]+)\s*$/.exec(parsed.Rarity ?? '')
       // `Rolls > 1` means the wiki's figure is per-roll, not per-kill, so the
       // comparison would need the roll count folded in — out of scope here.
-      if (match === null || (parsed.Rolls ?? 1) !== 1) continue
+      // A dashed Alt Rarity means the row describes a context-dependent range
+      // rather than one unambiguous fixed rate (Master Farmer's Farming-scaled
+      // herb seeds and Thieving-scaled Rocky are concrete examples). Dedicated
+      // mechanic tests check those endpoints; choosing either end here would
+      // make the corpus oracle disagree with every other context. A plain alt
+      // rarity may instead be a discrete variant and remains comparable here.
+      if (
+        match === null ||
+        (parsed.Rolls ?? 1) !== 1 ||
+        ((parsed['Alt Rarity'] ?? '').trim() !== '' &&
+          /yes/i.test(parsed['Alt Rarity Dash'] ?? ''))
+      ) continue
       const rate = Number(match[1]!.replace(/,/g, '')) / Number(match[2]!.replace(/,/g, ''))
       if (!Number.isFinite(rate)) continue
       byName.set(name, [...(byName.get(name) ?? []), rate])

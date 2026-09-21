@@ -19,20 +19,20 @@ application server, or database is required.
 
 ## Data coverage
 
-Snapshot of the committed dataset, checked **2026-09-20**:
+Snapshot of the committed dataset, checked **2026-09-22**:
 
 | Status | Sources | Meaning |
 |---|---:|---|
 | `verified` | 78 | Derived by the pipeline and passing deterministic checks |
-| `manual_override` | 17 | Hand-authored mechanics, passing the same checks |
+| `manual_override` | 18 | Hand-authored mechanics, passing the same checks |
 | `needs_review` | 14 | Incomplete data, an approximation, or a failing check |
 | No generated document | 2 | Included in the inventory but not yet represented |
-| **Total included** | **111** | Loot sources selected for coverage |
+| **Total included** | **112** | Loot sources selected for coverage |
 
 A loot source can be a boss, pickpocketable NPC, shared raid chest, or reward
 pool. The inventory also includes one-time quest encounters, which default
-search hides. Of the **81 repeatable sources**, 66 pass validation: 50
-pipeline-derived and 16 using overrides. Validation measures agreement with
+search hides. Of the **82 repeatable sources**, 67 pass validation: 50
+pipeline-derived and 17 using overrides. Validation measures agreement with
 available source evidence; it does not guarantee every in-game mechanic is
 known.
 

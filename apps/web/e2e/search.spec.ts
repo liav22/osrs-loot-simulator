@@ -43,7 +43,7 @@ test('escape clears the query and hides the list', async ({ page }) => {
   await expect(page.getByRole('option')).toHaveCount(0)
 })
 
-test('finds the generic Elf and Vyre pickpocket sources', async ({ page }) => {
+test('finds the supported pickpocket sources', async ({ page }) => {
   await page.goto('./')
   const input = page.getByPlaceholder(/search a loot source/i)
 
@@ -52,6 +52,9 @@ test('finds the generic Elf and Vyre pickpocket sources', async ({ page }) => {
 
   await input.fill('vyre pickpocketing')
   await expect(page.getByRole('option', { name: /Vyre \(pickpocketing\)/ })).toBeVisible()
+
+  await input.fill('master farmer')
+  await expect(page.getByRole('option', { name: /Master Farmer/ })).toBeVisible()
 })
 
 test('selecting a source replaces search, and "change source" comes back', async ({ page }) => {

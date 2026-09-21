@@ -19,6 +19,7 @@ function loadBoss(slug: string): Boss {
 
 const elf = loadBoss('elf-pickpocketing')
 const vyre = loadBoss('vyre-pickpocketing')
+const masterFarmer = loadBoss('master-farmer')
 
 const cases = [
   {
@@ -111,10 +112,106 @@ describe.each(cases)('$label pickpocketing', ({ boss, name, denominator, main, t
   })
 })
 
+describe('Master Farmer pickpocketing', () => {
+  const categoryItems = [
+    ['potato-seed', 'onion-seed', 'cabbage-seed', 'tomato-seed', 'sweetcorn-seed', 'strawberry-seed', 'watermelon-seed', 'snape-grass-seed'],
+    ['barley-seed', 'hammerstone-seed', 'asgarnian-seed', 'jute-seed', 'yanillian-seed', 'krandorian-seed', 'wildblood-seed'],
+    ['marigold-seed', 'nasturtium-seed', 'rosemary-seed', 'woad-seed', 'limpwurt-seed'],
+    ['redberry-seed', 'cadavaberry-seed', 'dwellberry-seed', 'jangerberry-seed', 'whiteberry-seed', 'poison-ivy-seed'],
+    ['mushroom-spore', 'belladonna-seed', 'cactus-seed', 'seaweed-spore', 'potato-cactus-seed'],
+    ['guam-seed', 'marrentill-seed', 'tarromin-seed', 'harralander-seed', 'ranarr-seed', 'toadflax-seed', 'irit-seed', 'avantoe-seed', 'kwuarm-seed', 'snapdragon-seed', 'cadantine-seed', 'lantadyme-seed', 'dwarf-weed-seed', 'torstol-seed'],
+  ] as const
+  const categoryWeights = [485, 243, 122, 97, 5, 48] as const
+  const seedKeys = categoryItems.flat()
+
+  function ratesAt(farmingLevel: number, thievingLevel: number) {
+    const ev = expectedValue(
+      masterFarmer,
+      resolveSimContext(masterFarmer, { farmingLevel, thievingLevel })
+    )
+    return new Map(ev.items.map((item) => [item.itemKey, item]))
+  }
+
+  it('selects exactly one seed through the published category partition', () => {
+    const main = masterFarmer.tables[0]
+    expect(main).toMatchObject({ mode: 'weighted', denominator: 1000 })
+    expect(main?.entries.map((entry) => entry.rate)).toEqual(
+      categoryWeights.map((weight) => ({ kind: 'weight', weight }))
+    )
+    expect(main?.entries.map((entry) => entry.node.kind)).toEqual(Array(6).fill('oneOf'))
+
+    const rates = ratesAt(85, 38)
+    for (const [index, keys] of categoryItems.entries()) {
+      const total = keys.reduce((sum, key) => sum + (rates.get(key)?.expectedDrops ?? 0), 0)
+      expect(total, `category ${index}`).toBeCloseTo(categoryWeights[index]! / 1000, 12)
+    }
+    expect(seedKeys.reduce((sum, key) => sum + (rates.get(key)?.expectedDrops ?? 0), 0)).toBeCloseTo(1, 12)
+
+    const simulated = simulate(masterFarmer, 20_000, resolveSimContext(masterFarmer, {}), 42)
+    const drops = new Map(simulated.drops.map((drop) => [drop.itemKey, drop.drops]))
+    expect(seedKeys.reduce((sum, key) => sum + (drops.get(key) ?? 0), 0)).toBe(20_000)
+  })
+
+  it('matches the Farming-scaled herb rates and the Thieving-scaled Rocky rate', () => {
+    const level38 = ratesAt(38, 38)
+    const level85 = ratesAt(85, 99)
+
+    expect(level38.get('guam-seed')?.expectedDrops).toBeCloseTo(1 / 58.36, 4)
+    expect(level38.get('ranarr-seed')?.expectedDrops).toBeCloseTo(1 / 555.83, 5)
+    expect(level38.get('snapdragon-seed')?.expectedDrops).toBeCloseTo(1 / 3835.23, 7)
+    expect(level38.get('torstol-seed')?.expectedDrops).toBeCloseTo(1 / 19_176.14, 8)
+
+    expect(level85.get('guam-seed')?.expectedDrops).toBeCloseTo(1 / 67.2, 5)
+    expect(level85.get('ranarr-seed')?.expectedDrops).toBeCloseTo(1 / 268.75, 6)
+    expect(level85.get('snapdragon-seed')?.expectedDrops).toBeCloseTo(1 / 1854.4, 7)
+    expect(level85.get('torstol-seed')?.expectedDrops).toBeCloseTo(1 / 9271.98, 8)
+
+    expect(level38.get('rocky')?.expectedDrops).toBeCloseTo(1 / 256_261, 15)
+    expect(level85.get('rocky')?.expectedDrops).toBeCloseTo(1 / 254_736, 15)
+  })
+
+  it('doubles seed quantities with rogue equipment without duplicating Rocky', () => {
+    const plain = expectedValue(
+      masterFarmer,
+      resolveSimContext(masterFarmer, { rogueOutfit: false })
+    )
+    const rogue = expectedValue(
+      masterFarmer,
+      resolveSimContext(masterFarmer, { rogueOutfit: true })
+    )
+    const rogueByKey = new Map(rogue.items.map((item) => [item.itemKey, item]))
+
+    for (const item of plain.items) {
+      const doubled = rogueByKey.get(item.itemKey)
+      expect(doubled?.expectedDrops, `${item.itemKey} rate`).toBeCloseTo(item.expectedDrops, 15)
+      expect(doubled?.expectedQuantity, `${item.itemKey} quantity`).toBeCloseTo(
+        item.expectedQuantity * (item.itemKey === 'rocky' ? 1 : 2),
+        15
+      )
+    }
+  })
+
+  it('is a manual, repeatable successful-pickpocket source with Rocky flagged as its pet', () => {
+    expect(masterFarmer).toMatchObject({
+      name: 'Master Farmer',
+      source: 'merged',
+      status: 'manual_override',
+      repeatable: true,
+      contextDefaults: { farmingLevel: 85, thievingLevel: 38 },
+      attemptLabel: {
+        singular: 'successful pickpocket',
+        plural: 'successful pickpockets',
+      },
+    })
+    const rocky = masterFarmer.tables[1]?.entries[0]?.node
+    expect(rocky).toMatchObject({ kind: 'item', itemKey: 'rocky', pet: true })
+  })
+})
+
 describe('pickpocket source registration', () => {
-  it('keeps both non-boss entities in rebuilt inventory', async () => {
+  it('keeps all non-boss entities in rebuilt inventory', async () => {
     const additions = await loadAdditionalSources()
-    for (const slug of ['elf-pickpocketing', 'vyre-pickpocketing']) {
+    for (const slug of ['elf-pickpocketing', 'vyre-pickpocketing', 'master-farmer']) {
       const addition = additions.find(({ source }) => source.id === slug)
       expect(addition?.source).toMatchObject({ include: true, repeatable: true })
       expect(addition?.boss).toMatchObject({ classification: 'own-table', repeatable: true })

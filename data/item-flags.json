@@ -3215,6 +3215,12 @@
       "itemKey": "dagon-hai-robe-bottom",
       "flags": ["unique"],
       "reason": "Larran's big chest collection-log unique, OSRS Wiki revision 15338728."
+    },
+    {
+      "bossSlug": "master-farmer",
+      "itemKey": "rocky",
+      "flags": ["pet"],
+      "reason": "Master Farmer's tertiary skilling pet, OSRS Wiki revision 15267392."
     }
   ]
 }

@@ -101,10 +101,14 @@ co-occurrence.
 [Vyre (pickpocketing)](bosses/vyre-pickpocketing.md) use representative NPC
 pages for revision-bound evidence while registering generic loot sources. Their
 `Pickpocket/*` templates expand into skill-drop rows: one weighted ordinary
-reward plus independent rare rolls. A successful-pickpocket attempt label
-keeps combat wording out of the UI, and the shared `rogue_outfit_multiplier`
-doubles realized quantities when the full outfit control is enabled without
-changing any drop rate.
+reward plus independent rare rolls. [Master Farmer](bosses/master-farmer.md)
+uses an inline pickpocketing section and a documented override for its
+prose-defined category roll; Farming level redistributes four herb-seed weights
+and Thieving level controls the independent Rocky roll. A
+successful-pickpocket attempt label keeps combat wording out of the UI, and the
+shared `rogue_outfit_multiplier` doubles realized loot quantities when the full
+outfit control is enabled without changing any drop rate. Master Farmer applies
+that multiplier only to seeds, not its tertiary pet.
 [Brimstone chest](bosses/brimstone-chest.md) and
 [Larran's big chest](bosses/larran-s-big-chest.md) use the same registration
 path and share the wiki's Fishing-level-dependent Slayer-chest fish formula.

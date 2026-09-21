@@ -96,6 +96,8 @@ const NUMERIC_PARAMS = {
   delveLevel: 'delve',
   wavesReached: 'wave',
   fishingLevel: 'fishing',
+  farmingLevel: 'farming',
+  thievingLevel: 'thieving',
   hitpointsDamage: 'hpdmg',
   shieldDamage: 'shielddmg',
 } as const satisfies Partial<Record<keyof SimContext, string>>

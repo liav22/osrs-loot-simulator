@@ -206,10 +206,17 @@ export async function parseBoss(options: ParseOptions): Promise<ParseOutcome> {
   // Pickpocket tables publish the quantities from one successful base roll.
   // Full rogue equipment doubles every item from that roll, including
   // independent rare rewards. The wiki expresses all supported NPC pools via
-  // `Pickpocket/*` transclusions, so this stays source-generic: no NPC slug or
-  // item name is special-cased. Each table gets the same compile-time
-  // multiplier and the web derives the toggle from its declared formula input.
-  const isPickpocketSource = expansion.expanded.some((name) => name.startsWith('pickpocket/'))
+  // `Pickpocket/*` transclusions or inline `DropsLineSkill` rows under a
+  // Pickpocketing section, so this stays source-generic: no NPC slug or item
+  // name is special-cased. Master Farmer uses the latter shape. Each table
+  // gets the same compile-time multiplier and the web derives the toggle from
+  // its declared formula input; an authored override may replace those tables
+  // when the page describes exceptions (for example, a tertiary pet roll).
+  const hasInlinePickpocketRows =
+    /^==+\s*Pickpocketing\s*==+\s*$/im.test(wikitext) &&
+    /\{\{\s*DropsLineSkill\b(?=[\s\S]*?\bskill\s*=\s*Thieving\b)/i.test(wikitext)
+  const isPickpocketSource =
+    expansion.expanded.some((name) => name.startsWith('pickpocket/')) || hasInlinePickpocketRows
   let generatedBoss = result.boss
   if (generatedBoss !== null && isPickpocketSource) {
     generatedBoss = {

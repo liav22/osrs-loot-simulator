@@ -40,6 +40,8 @@ const NUMERIC_LABELS: Partial<Record<keyof SimContext, string>> = {
   delveLevel: 'Delve level',
   wavesReached: 'Wave',
   fishingLevel: 'Fishing level',
+  farmingLevel: 'Farming level',
+  thievingLevel: 'Thieving level',
 }
 
 /**

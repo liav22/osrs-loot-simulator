@@ -105,6 +105,23 @@ test('Elf pickpocketing uses successful-attempt language and exposes the rogue o
   await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
 })
 
+test('Master Farmer exposes both skill curves and simulates a successful pickpocket run', async ({
+  page,
+}) => {
+  await page.goto('./boss/master-farmer?farming=38&thieving=99&rogue=1&n=250&seed=7')
+  await expect(page.getByRole('heading', { name: 'Master Farmer' })).toBeVisible()
+  await expect(page.getByLabel('Farming level')).toHaveValue('38')
+  await expect(page.getByLabel('Thieving level')).toHaveValue('99')
+  await expect(page.getByLabel('Full rogue outfit (double loot)')).toBeChecked()
+  await expect(page.getByLabel('Successful pickpockets to simulate')).toHaveValue('250')
+
+  await page.getByRole('button', { name: 'Simulate', exact: true }).click()
+  const summary = page.getByTestId('results-summary')
+  await expect(summary).toBeVisible({ timeout: 30_000 })
+  await expect(summary).toContainText('250 successful pickpockets')
+  await expect(page.getByText(/Simulation failed/)).toHaveCount(0)
+})
+
 test("Larran's big chest exposes Fishing level and simulates floor-scaled rewards", async ({
   page,
 }) => {
