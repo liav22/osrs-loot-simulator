@@ -27,6 +27,7 @@ const cases = [
     name: 'Elf (pickpocketing)',
     boss: elf,
     denominator: 128,
+    thievingLevel: 85,
     main: [
       ['coins', 105],
       ['death-rune', 8],
@@ -47,6 +48,7 @@ const cases = [
     name: 'Vyre (pickpocketing)',
     boss: vyre,
     denominator: 132,
+    thievingLevel: 82,
     main: [
       ['coins', 109],
       ['death-rune', 8],
@@ -61,56 +63,74 @@ const cases = [
   },
 ] as const
 
-describe.each(cases)('$label pickpocketing', ({ boss, name, denominator, main, tertiary, unique }) => {
-  it('preserves the published main and independent rates', () => {
-    expect(boss.tables).toHaveLength(2)
-    expect(boss.tables[0]).toMatchObject({ mode: 'weighted', denominator })
-    expect(boss.tables[1]).toMatchObject({ mode: 'independent' })
+describe.each(cases)(
+  '$label pickpocketing',
+  ({ boss, name, denominator, thievingLevel, main, tertiary, unique }) => {
+    it('preserves the published main and independent rates', () => {
+      expect(boss.tables).toHaveLength(3)
+      expect(boss.tables[0]).toMatchObject({ mode: 'weighted', denominator })
+      expect(boss.tables[1]).toMatchObject({ mode: 'independent' })
+      expect(boss.tables[2]).toMatchObject({ mode: 'independent' })
 
-    const ev = expectedValue(boss, resolveSimContext(boss, {}))
-    const rates = new Map(ev.items.map((item) => [item.itemKey, item.expectedDrops]))
-    for (const [itemKey, weight] of main) {
-      expect(rates.get(itemKey), itemKey).toBeCloseTo(weight / denominator, 12)
-    }
-    for (const [itemKey, num, den] of tertiary) {
-      expect(rates.get(itemKey), itemKey).toBeCloseTo(num / den, 12)
-    }
-  })
-
-  it('gives exactly one ordinary reward per successful pickpocket', () => {
-    const result = simulate(boss, 20_000, resolveSimContext(boss, {}), 42)
-    const drops = new Map(result.drops.map((drop) => [drop.itemKey, drop.drops]))
-    expect(main.reduce((sum, [itemKey]) => sum + (drops.get(itemKey) ?? 0), 0)).toBe(20_000)
-  })
-
-  it('doubles quantities, not rates, with full rogue equipment', () => {
-    const plain = simulate(boss, 20_000, resolveSimContext(boss, { rogueOutfit: false }), 73)
-    const rogue = simulate(boss, 20_000, resolveSimContext(boss, { rogueOutfit: true }), 73)
-    const rogueByKey = new Map(rogue.drops.map((drop) => [drop.itemKey, drop]))
-
-    for (const drop of plain.drops) {
-      const doubled = rogueByKey.get(drop.itemKey)
-      expect(doubled?.drops, `${drop.itemKey} rate`).toBe(drop.drops)
-      expect(doubled?.quantity, `${drop.itemKey} quantity`).toBe(drop.quantity * 2)
-    }
-  })
-
-  it('is generated, verified, repeatable, and flags its signature rare reward', () => {
-    expect(boss.name).toBe(name)
-    expect(boss.aliases).toEqual([])
-    expect(boss.source).toBe('generated')
-    expect(boss.status).toBe('verified')
-    expect(boss.repeatable).toBe(true)
-    expect(boss.attemptLabel).toEqual({
-      singular: 'successful pickpocket',
-      plural: 'successful pickpockets',
+      const ev = expectedValue(boss, resolveSimContext(boss, {}))
+      const rates = new Map(ev.items.map((item) => [item.itemKey, item.expectedDrops]))
+      for (const [itemKey, weight] of main) {
+        expect(rates.get(itemKey), itemKey).toBeCloseTo(weight / denominator, 12)
+      }
+      for (const [itemKey, num, den] of tertiary) {
+        expect(rates.get(itemKey), itemKey).toBeCloseTo(num / den, 12)
+      }
+      expect(rates.get('rocky')).toBeCloseTo(1 / (99_175 - 25 * thievingLevel), 15)
+      const maxLevelRates = new Map(
+        expectedValue(boss, resolveSimContext(boss, { thievingLevel: 99 })).items.map((item) => [
+          item.itemKey,
+          item.expectedDrops,
+        ])
+      )
+      expect(maxLevelRates.get('rocky')).toBeCloseTo(1 / 96_700, 15)
     })
-    const rareNode = boss.tables
-      .flatMap((table) => table.entries)
-      .find((entry) => entry.node.kind === 'item' && entry.node.itemKey === unique)?.node
-    expect(rareNode).toMatchObject({ kind: 'item', unique: true })
-  })
-})
+
+    it('gives exactly one ordinary reward per successful pickpocket', () => {
+      const result = simulate(boss, 20_000, resolveSimContext(boss, {}), 42)
+      const drops = new Map(result.drops.map((drop) => [drop.itemKey, drop.drops]))
+      expect(main.reduce((sum, [itemKey]) => sum + (drops.get(itemKey) ?? 0), 0)).toBe(20_000)
+    })
+
+    it('doubles quantities, not rates, with full rogue equipment', () => {
+      const plain = expectedValue(boss, resolveSimContext(boss, { rogueOutfit: false }))
+      const rogue = expectedValue(boss, resolveSimContext(boss, { rogueOutfit: true }))
+      const rogueByKey = new Map(rogue.items.map((item) => [item.itemKey, item]))
+
+      for (const item of plain.items) {
+        const doubled = rogueByKey.get(item.itemKey)
+        expect(doubled?.expectedDrops, `${item.itemKey} rate`).toBeCloseTo(item.expectedDrops, 15)
+        expect(doubled?.expectedQuantity, `${item.itemKey} quantity`).toBeCloseTo(
+          item.expectedQuantity * (item.itemKey === 'rocky' ? 1 : 2),
+          15
+        )
+      }
+    })
+
+    it('is a manual, repeatable source and flags its signature rare reward and pet', () => {
+      expect(boss.name).toBe(name)
+      expect(boss.aliases).toEqual([])
+      expect(boss.source).toBe('merged')
+      expect(boss.status).toBe('manual_override')
+      expect(boss.repeatable).toBe(true)
+      expect(boss.contextDefaults.thievingLevel).toBe(thievingLevel)
+      expect(boss.attemptLabel).toEqual({
+        singular: 'successful pickpocket',
+        plural: 'successful pickpockets',
+      })
+      const rareNode = boss.tables
+        .flatMap((table) => table.entries)
+        .find((entry) => entry.node.kind === 'item' && entry.node.itemKey === unique)?.node
+      expect(rareNode).toMatchObject({ kind: 'item', unique: true })
+      const rocky = boss.tables[2]?.entries[0]?.node
+      expect(rocky).toMatchObject({ kind: 'item', itemKey: 'rocky', pet: true })
+    })
+  }
+)
 
 describe('Master Farmer pickpocketing', () => {
   const categoryItems = [

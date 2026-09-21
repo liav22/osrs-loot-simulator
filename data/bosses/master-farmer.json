@@ -869,8 +869,10 @@
           },
           "rate": {
             "kind": "formula",
-            "id": "master_farmer_rocky_rate",
-            "params": {}
+            "id": "rocky_rate",
+            "params": {
+              "base": 257211
+            }
           }
         }
       ],

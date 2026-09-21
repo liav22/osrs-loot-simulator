@@ -1,0 +1,75 @@
+{
+  "slug": "vyre-pickpocketing",
+  "note": "Haemas Lamescus revision 14813304 and Template:Pickpocket/Vyre revision 14994098 provide the two loot tables. Rocky revision 15352783 separately states the exact skilling-pet formula 1/(B - 25 * Thieving level) and lists B=99175 for Vyre; this independent pet roll is not doubled by rogue equipment, while both pickpocket loot tables are. Because the Rocky roll is absent from the transcluded pickpocket template, the complete tables are replaced wholesale.",
+  "contextDefaults": {
+    "thievingLevel": 82
+  },
+  "tables": [
+    {
+      "id": "vyre-pickpocketing:0:pickpocketing",
+      "mode": "weighted",
+      "rolls": 1,
+      "denominator": 132,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": { "kind": "item", "itemId": 995, "itemKey": "coins", "name": "Coins", "qty": { "kind": "range", "min": 250, "max": 315 } },
+          "rate": { "kind": "weight", "weight": 109 }
+        },
+        {
+          "node": { "kind": "item", "itemId": 560, "itemKey": "death-rune", "name": "Death rune", "qty": { "kind": "exact", "n": 2 } },
+          "rate": { "kind": "weight", "weight": 8 }
+        },
+        {
+          "node": { "kind": "item", "itemId": 565, "itemKey": "blood-rune", "name": "Blood rune", "qty": { "kind": "exact", "n": 4 } },
+          "rate": { "kind": "weight", "weight": 2 }
+        },
+        {
+          "node": { "kind": "item", "itemId": 24774, "itemKey": "blood-pint", "name": "Blood pint", "qty": { "kind": "exact", "n": 1 } },
+          "rate": { "kind": "weight", "weight": 6 }
+        },
+        {
+          "node": { "kind": "item", "itemId": 1619, "itemKey": "uncut-ruby", "name": "Uncut ruby", "qty": { "kind": "exact", "n": 1 } },
+          "rate": { "kind": "weight", "weight": 5 }
+        },
+        {
+          "node": { "kind": "item", "itemId": 1601, "itemKey": "diamond", "name": "Diamond", "qty": { "kind": "exact", "n": 1 } },
+          "rate": { "kind": "weight", "weight": 1 }
+        },
+        {
+          "node": { "kind": "item", "itemId": 24785, "itemKey": "cooked-mystery-meat", "name": "Cooked mystery meat", "qty": { "kind": "exact", "n": 1 } },
+          "rate": { "kind": "weight", "weight": 1 }
+        }
+      ],
+      "notes": "Pickpocketing (confirmed weighted: 7 of 8 entries share denominator 132; 1 rarer outlier(s) split into their own independent table)",
+      "qtyMultiplier": { "kind": "formula", "id": "rogue_outfit_multiplier", "params": {} }
+    },
+    {
+      "id": "vyre-pickpocketing:1:pickpocketing-outliers",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": { "kind": "item", "itemId": 24777, "itemKey": "blood-shard", "name": "Blood shard", "qty": { "kind": "exact", "n": 1 }, "unique": true },
+          "rate": { "kind": "fixed", "num": 1, "den": 5000 }
+        }
+      ],
+      "notes": "Pickpocketing (outliers) (confirmed independent: rarer than the 7-entry /132 pool in \"Pickpocketing\"; modelled as separate independent rolls)",
+      "qtyMultiplier": { "kind": "formula", "id": "rogue_outfit_multiplier", "params": {} }
+    },
+    {
+      "id": "vyre-pickpocketing:2:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": { "kind": "item", "itemId": 20663, "itemKey": "rocky", "name": "Rocky", "qty": { "kind": "exact", "n": 1 } },
+          "rate": { "kind": "formula", "id": "rocky_rate", "params": { "base": 99175 } }
+        }
+      ],
+      "notes": "Independent skilling-pet roll; denominator is 99175 - 25 × Thieving level. Rogue equipment does not duplicate pets."
+    }
+  ]
+}

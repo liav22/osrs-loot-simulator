@@ -47,7 +47,7 @@ describe('formula registry', () => {
       'doom_of_mokhaiotl_deep_rolls',
       'lunar_chest_standard_rolls',
       'master_farmer_herb_weight',
-      'master_farmer_rocky_rate',
+      'rocky_rate',
       'rogue_outfit_multiplier',
       'slayer_chest_fish_weight',
       'toa_bad_luck_mitigation',
@@ -156,6 +156,7 @@ const REQUIRED_PARAMS: Partial<Record<(typeof FORMULA_IDS)[number], Record<strin
   cox_points: { kind: 'roll', rollIndex: 1 },
   cox_common_qty: { divisor: 20 },
   master_farmer_herb_weight: { seed: 'ranarr-seed' },
+  rocky_rate: { base: 257_211 },
   slayer_chest_fish_weight: { fish: 'raw-lobster' },
 }
 
@@ -193,11 +194,14 @@ describe('Master Farmer formulas', () => {
 
   it('matches Rocky rates at the required and maximum Thieving levels', () => {
     expect(
-      evaluateFormula('master_farmer_rocky_rate', {}, { ...ctx, thievingLevel: 38 })
+      evaluateFormula('rocky_rate', { base: 257_211 }, { ...ctx, thievingLevel: 38 })
     ).toBeCloseTo(1 / 256_261, 15)
     expect(
-      evaluateFormula('master_farmer_rocky_rate', {}, { ...ctx, thievingLevel: 99 })
+      evaluateFormula('rocky_rate', { base: 257_211 }, { ...ctx, thievingLevel: 99 })
     ).toBeCloseTo(1 / 254_736, 15)
+    expect(() =>
+      evaluateFormula('rocky_rate', {}, { ...ctx, thievingLevel: 38 })
+    ).toThrow(TypeError)
   })
 })
 

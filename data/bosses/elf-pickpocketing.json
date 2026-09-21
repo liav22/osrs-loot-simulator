@@ -2,6 +2,10 @@
   "slug": "elf-pickpocketing",
   "name": "Elf (pickpocketing)",
   "aliases": [],
+  "attemptLabel": {
+    "singular": "successful pickpocket",
+    "plural": "successful pickpockets"
+  },
   "wikiPage": "Celebrian",
   "wikiRevId": 14864691,
   "variants": [
@@ -184,11 +188,42 @@
         "id": "rogue_outfit_multiplier",
         "params": {}
       }
+    },
+    {
+      "id": "elf-pickpocketing:2:tertiary",
+      "mode": "independent",
+      "rolls": 1,
+      "withoutReplacement": false,
+      "entries": [
+        {
+          "node": {
+            "kind": "item",
+            "itemId": 20663,
+            "itemKey": "rocky",
+            "name": "Rocky",
+            "qty": {
+              "kind": "exact",
+              "n": 1
+            },
+            "pet": true
+          },
+          "rate": {
+            "kind": "formula",
+            "id": "rocky_rate",
+            "params": {
+              "base": 99175
+            }
+          }
+        }
+      ],
+      "notes": "Independent skilling-pet roll; denominator is 99175 - 25 × Thieving level. Rogue equipment does not duplicate pets."
     }
   ],
-  "contextDefaults": {},
-  "status": "verified",
-  "statusTier": "verified",
+  "contextDefaults": {
+    "thievingLevel": 85
+  },
+  "status": "manual_override",
+  "statusTier": null,
   "statusReason": null,
   "validation": {
     "ok": false,
@@ -205,7 +240,7 @@
       {
         "check": "rates_valid",
         "ok": true,
-        "detail": "fixed/always rates and numeric weights are schema-enforced; no formula rates or weights present"
+        "detail": "1 formula rate(s)/weight(s) evaluated successfully"
       },
       {
         "check": "qty_sane",
@@ -233,15 +268,11 @@
       {
         "check": "heading_unambiguous",
         "ok": true,
-        "detail": "no ambiguous headings or unconfirmed bundle signals"
+        "detail": "override supplies its own tables; parser-side heading guesses do not apply"
       }
     ]
   },
-  "source": "generated",
+  "source": "merged",
   "parserVersion": 1,
-  "repeatable": true,
-  "attemptLabel": {
-    "singular": "successful pickpocket",
-    "plural": "successful pickpockets"
-  }
+  "repeatable": true
 }

@@ -120,8 +120,8 @@ export const FORMULA_IDS = [
   'rogue_outfit_multiplier',
   /** Farming-level-dependent weights for Master Farmer's four scaling herb seeds. */
   'master_farmer_herb_weight',
-  /** Thieving-level-dependent Rocky chance from a successful Master Farmer pickpocket. */
-  'master_farmer_rocky_rate',
+  /** Thieving-level-dependent Rocky chance; `params.base` selects the pickpocket target. */
+  'rocky_rate',
   /** Fishing-level-dependent weight of one reward in the shared Slayer-chest fish pool. */
   'slayer_chest_fish_weight',
 ] as const
@@ -977,7 +977,7 @@ export const SimContextSchema = z
     fishingLevel: z.number().int().min(1).max(99).default(1),
     /** Master Farmer — Farming level controls four herb-seed weights, capped at 85. */
     farmingLevel: z.number().int().min(1).max(99).default(1),
-    /** Master Farmer — Thieving level controls the tertiary Rocky chance. */
+    /** Pickpocketing sources — Thieving level controls the tertiary Rocky chance. */
     thievingLevel: z.number().int().min(1).max(99).default(1),
     /** Zalcano's two damage inputs — kept raw rather than pre-derived into one `points`, since `zalcano_points` needs both `H` and `S` under different caps. */
     hitpointsDamage: z.number().int().nonnegative().default(0),

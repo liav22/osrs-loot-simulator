@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T21:29:56.467Z",
+  "generatedAt": "2026-09-21T21:50:01.257Z",
   "entries": [
     {
       "slug": "abyssal-sire",
@@ -387,8 +387,8 @@
       "slug": "elf-pickpocketing",
       "name": "Elf (pickpocketing)",
       "aliases": [],
-      "status": "verified",
-      "statusTier": "verified",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "Celebrian.png",
       "repeatable": true
     },
@@ -981,8 +981,8 @@
       "slug": "vyre-pickpocketing",
       "name": "Vyre (pickpocketing)",
       "aliases": [],
-      "status": "verified",
-      "statusTier": "verified",
+      "status": "manual_override",
+      "statusTier": null,
       "image": "Haemas Lamescus.png",
       "repeatable": true
     },

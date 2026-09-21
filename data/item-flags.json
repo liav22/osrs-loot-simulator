@@ -3155,12 +3155,28 @@
       "reason": "Rare Elf pickpocket reward in Template:Pickpocket/Elf revision 14994099, as transcluded by Celebrian revision 14864691."
     },
     {
+      "bossSlug": "elf-pickpocketing",
+      "itemKey": "rocky",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Elf's tertiary Thieving pet, Rocky wiki revision 15352783."
+    },
+    {
       "bossSlug": "vyre-pickpocketing",
       "itemKey": "blood-shard",
       "flags": [
         "unique"
       ],
       "reason": "Rare Vyre pickpocket reward in Template:Pickpocket/Vyre revision 14994098, as transcluded by Haemas Lamescus revision 14813304."
+    },
+    {
+      "bossSlug": "vyre-pickpocketing",
+      "itemKey": "rocky",
+      "flags": [
+        "pet"
+      ],
+      "reason": "Vyre's tertiary Thieving pet, Rocky wiki revision 15352783."
     },
     {
       "bossSlug": "brimstone-chest",

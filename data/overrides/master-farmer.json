@@ -249,7 +249,7 @@
       "entries": [
         {
           "node": { "kind": "item", "itemId": 20663, "itemKey": "rocky", "name": "Rocky", "qty": { "kind": "exact", "n": 1 } },
-          "rate": { "kind": "formula", "id": "master_farmer_rocky_rate", "params": {} }
+          "rate": { "kind": "formula", "id": "rocky_rate", "params": { "base": 257211 } }
         }
       ],
       "notes": "Independent skilling-pet roll; denominator is 257211 - 25 × Thieving level. Rogue equipment does not duplicate pets."

@@ -375,10 +375,19 @@ const IMPLEMENTED: Partial<Record<FormulaId, FormulaFn>> = {
 
   /**
    * Rocky revision 15352783 states `1 / (B - 25 * Thieving level)` and lists
-   * B=257,211 for Master Farmer. This also reproduces Master Farmer revision
-   * 15267392's displayed 1/256,261 at level 38 and 1/254,736 at level 99.
+   * B per pickpocket target: 257,211 for Master Farmer and 99,175 for Elf and
+   * Vyre. Keeping B in the document makes this one sourced mechanic reusable
+   * without hiding target-specific constants in simulator code.
    */
-  master_farmer_rocky_rate: (_params, ctx) => 1 / (257_211 - 25 * ctx.thievingLevel),
+  rocky_rate: (params, ctx) => {
+    const base = params['base']
+    if (typeof base !== 'number' || !Number.isInteger(base) || base <= 25 * ctx.thievingLevel) {
+      throw new TypeError(
+        `rocky_rate needs params.base to be an integer greater than 25 * Thieving level, got ${String(base)}`
+      )
+    }
+    return 1 / (base - 25 * ctx.thievingLevel)
+  },
 
   /**
    * `Module:Slayer chest fish chart`'s exact sequential Fishing-level roll.
@@ -798,7 +807,7 @@ export const FORMULA_CONTEXT_FIELDS: Record<FormulaId, readonly SimContextField[
   toa_bad_luck_mitigation: ['killCount'],
   rogue_outfit_multiplier: ['rogueOutfit'],
   master_farmer_herb_weight: ['farmingLevel'],
-  master_farmer_rocky_rate: ['thievingLevel'],
+  rocky_rate: ['thievingLevel'],
   slayer_chest_fish_weight: ['fishingLevel'],
 }
 
