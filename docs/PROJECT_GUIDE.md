@@ -149,6 +149,10 @@ ingest, not inferred from item names. Unique/pet display follows references
 into shared tables as well as inline choices and uses curated flags,
 not a rarity threshold. `GeneralSeedDropLines` uses raw weights rather than the
 wiki's rounded display figures; its dedicated test preserves that distinction.
+An explicit row note of the form “Awarded if the player does not already have
+that same item” becomes a lifetime-scoped `ownershipGate`; compound notes
+that also depend on an item having been used elsewhere are not simplified to
+possession alone. The Corrupted Gauntlet cape is the regression case.
 
 Entry points: [parse-boss.ts](../apps/ingest/src/parse/parse-boss.ts),
 [build-tables.ts](../apps/ingest/src/parse/build-tables.ts),

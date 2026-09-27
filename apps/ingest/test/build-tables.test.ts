@@ -123,6 +123,42 @@ describe('buildTableGroups', () => {
     expect(groups[0]?.entries).toHaveLength(2)
   })
 
+  it('turns an explicit not-already-owned reward note into a self-ownership gate', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({
+          name: 'Gauntlet cape',
+          rarity: 'Always',
+          heading: '100%',
+          rarityNotes:
+            '<ref group=d>Awarded if the player does not already have a Gauntlet cape</ref>',
+        }),
+      ])
+    )
+
+    expect(groups[0]?.entries[0]?.ownershipGate).toEqual({
+      itemKey: 'gauntlet-cape',
+      n: 1,
+      when: 'below',
+    })
+  })
+
+  it('does not simplify compound possession-or-pet-use notes into an ownership gate', () => {
+    const groups = buildTableGroups(
+      groupByHeading([
+        line({
+          name: 'Araxyte head',
+          rarity: 'Always',
+          heading: '100%',
+          rarityNotes:
+            'Guaranteed reward, provided that the player does not already have one in their possession, or has not already used one on Nid.',
+        }),
+      ])
+    )
+
+    expect(groups[0]?.entries[0]?.ownershipGate).toBeUndefined()
+  })
+
   it('classifies a Tertiary heading as independent regardless of rarity shape', () => {
     const groups = buildTableGroups(
       groupByHeading([

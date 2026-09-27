@@ -1,5 +1,6 @@
-import type { Condition, FormulaRef, QtySpec } from '@osrs-loot-simulator/loot-model'
+import type { Condition, FormulaRef, OwnershipGate, QtySpec } from '@osrs-loot-simulator/loot-model'
 import { ALWAYS_RARITY, FRACTION_RARITY } from '../wiki/fields.js'
+import { slugify } from '../snapshots/store.js'
 import type { WikitextDropLine } from './wikitext-drops.js'
 import { evaluateRarityTemplate } from './rarity-templates.js'
 
@@ -53,6 +54,8 @@ export interface ParsedEntry {
   qtyOverride?: QtySpec
   /** Conditions a rarity template's evaluation contributed (e.g. `onSlayerTask`). */
   extraConditions?: Condition[]
+  /** Run-evolving ownership requirement stated by this row's own rarity note. */
+  ownershipGate?: OwnershipGate
   /**
    * Set when this entry is a confirmed co-drop bundle — one access roll that
    * grants every named member together — rather than a single item. Produced
@@ -209,6 +212,7 @@ function toEntry(
   const variantCondition: Condition[] =
     line.variant !== null ? [{ kind: 'variant', name: line.variant }] : []
   const allConditions = [...variantCondition, ...(conditions ?? [])]
+  const ownershipGate = ownershipGateFor(line)
   return {
     // A bundle's synthetic line carries no real item name of its own — the
     // descriptive placeholder is never read as an item (`assembleBoss` checks
@@ -221,8 +225,30 @@ function toEntry(
     rarity: rate,
     weight: denominator === null ? null : (rate.num * denominator) / rate.den,
     ...(allConditions.length > 0 ? { extraConditions: allConditions } : {}),
+    ...(ownershipGate !== undefined ? { ownershipGate } : {}),
     ...(line.bundle !== undefined ? { bundle: line.bundle } : {}),
   }
+}
+
+/**
+ * The wiki sometimes marks an `Always` row as conditional in its own
+ * `raritynotes`. Keep this deliberately narrow: the Gauntlet cape's note says
+ * exactly "Awarded if the player does not already have a Gauntlet cape", which
+ * is the model's ordinary lifetime-scoped self-ownership gate. Similar-looking
+ * notes on Araxxor and Phantom Muspah also mention whether an item was used on
+ * a pet; reducing those compound rules to possession alone would be wrong.
+ */
+function ownershipGateFor(line: WikitextDropLine): OwnershipGate | undefined {
+  const notes = line.rarityNotes
+    .replace(/\[\[|\]\]/g, '')
+    .replace(/\s+/g, ' ')
+    .toLowerCase()
+  const itemName = line.name.toLowerCase()
+  const prefix = 'awarded if the player does not already have '
+  const matchesSelf = [itemName, `a ${itemName}`, `an ${itemName}`].some((suffix) =>
+    notes.includes(`${prefix}${suffix}`)
+  )
+  return matchesSelf ? { itemKey: slugify(line.name), n: 1, when: 'below' } : undefined
 }
 
 function gcd(a: number, b: number): number {

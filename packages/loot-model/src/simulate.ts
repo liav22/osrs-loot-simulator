@@ -93,8 +93,8 @@ class Tally {
 }
 
 /**
- * Live, mutating ownership counts for Extension B's four sources (Duke
- * Sucellus, ToA, Lunar Chest, Reward Cart — see `OwnershipGateSchema`'s
+ * Live, mutating ownership counts for sources such as Duke Sucellus, ToA,
+ * Lunar Chest, Reward Cart, and the Corrupted Gauntlet — see `OwnershipGateSchema`'s
  * comment). Starts from `ctx.ownedCounts` and is updated after each item
  * emission that matches a tracked `itemKey`, so a kill partway through a
  * large batch can see an item a prior kill in the SAME batch obtained.

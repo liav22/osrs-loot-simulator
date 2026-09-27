@@ -1500,7 +1500,12 @@
               "kind": "variant",
               "name": "Corrupted"
             }
-          ]
+          ],
+          "ownershipGate": {
+            "itemKey": "gauntlet-cape",
+            "n": 1,
+            "when": "below"
+          }
         }
       ],
       "notes": "100%"

@@ -520,7 +520,8 @@ export type Condition = z.infer<typeof ConditionSchema>
  * Gates an `Entry` on how many of a specific item the player owns *entering
  * this simulated run* (`SimContext.ownedCounts[itemKey]`) — Duke Sucellus'
  * ice quartz/frozen tablet, ToA's thread/jewels, Lunar Chest's per-set
- * duplicate protection, Reward Cart's 3rd+-owned substitution. All four are
+ * duplicate protection, Reward Cart's 3rd+-owned substitution, and the
+ * Corrupted Gauntlet's first-completion cape. All of these are
  * **lifetime-scoped**: the count only ever grows, persists for the whole
  * simulated batch (and beyond it), and starts from the caller-supplied
  * entering value — never resets mid-batch. None of them are *run-scoped* the

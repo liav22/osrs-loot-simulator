@@ -294,6 +294,7 @@ export function assembleBoss(
             node: itemNodeFor(entry, warnings),
             rate: { kind: 'weight' as const, weight: entry.rarity.num / entry.rarity.den },
             ...(conditions ? { conditions } : {}),
+            ...(entry.ownershipGate !== undefined ? { ownershipGate: entry.ownershipGate } : {}),
           }
         })
 
@@ -318,15 +319,22 @@ export function assembleBoss(
             node,
             rate: { kind: 'weight' as const, weight: entry.weight ?? entry.rarity.num },
             ...(conditions ? { conditions } : {}),
+            ...(entry.ownershipGate !== undefined ? { ownershipGate: entry.ownershipGate } : {}),
           }
         }
         if (entry.rarity.kind === 'always') {
-          return { node, rate: { kind: 'always' as const }, ...(conditions ? { conditions } : {}) }
+          return {
+            node,
+            rate: { kind: 'always' as const },
+            ...(conditions ? { conditions } : {}),
+            ...(entry.ownershipGate !== undefined ? { ownershipGate: entry.ownershipGate } : {}),
+          }
         }
         return {
           node,
           rate: { kind: 'fixed' as const, num: entry.rarity.num, den: entry.rarity.den },
           ...(conditions ? { conditions } : {}),
+          ...(entry.ownershipGate !== undefined ? { ownershipGate: entry.ownershipGate } : {}),
         }
       })
 
